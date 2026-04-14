@@ -1,7 +1,6 @@
 (function () {
   var cfg = window.DEV_SYSTEM_CONFIG || {};
   var mlCfg = cfg.mercadolibre || {};
-  var links = mlCfg.paymentLinks || {};
   var monthlyLinks = mlCfg.paymentLinksByMonth || {};
   var monthlyProgram = window.DevSystemState.getMonthlyProgram();
 
@@ -100,7 +99,7 @@
 
     localStorage.setItem("devsystem_pending_checkout", JSON.stringify(pending));
 
-    var selectedLink = monthlyLinks[String(monthId)] || links[currentSelection.plan];
+    var selectedLink = monthlyLinks[String(monthId)];
     if (selectedLink) {
       checkoutMessage.textContent = "Redirigiendo a Mercado Libre para pago seguro...";
       checkoutButton.disabled = true;

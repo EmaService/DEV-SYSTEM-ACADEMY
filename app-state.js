@@ -2,23 +2,19 @@
   var STORE_KEY = "devsystem_store_v3";
   var SESSION_KEY = "devsystem_session_v3";
 
-  // Pricing structure:
-  // Plan Base (meses 1-4):        $8,000 → $22,000 MXN  (step ~$4,666)
-  // Plan Profesional (meses 5-8): $10,000 → $30,000 MXN (step ~$6,666)
-  // Plan Expert (meses 9-12):     $15,000 → $50,000 MXN (step ~$11,666)
   var monthlyProgram = [
-    { monthId: 1,  phaseId: "p1", phaseName: "Etapa 1", planName: "Plan Base",         monthName: "Mes 1 · Fundamentos Web",         price: "$8,000 MXN",  priceNum: 8000  },
-    { monthId: 2,  phaseId: "p1", phaseName: "Etapa 1", planName: "Plan Base",         monthName: "Mes 2 · JavaScript Aplicado",     price: "$12,666 MXN", priceNum: 12666 },
-    { monthId: 3,  phaseId: "p1", phaseName: "Etapa 1", planName: "Plan Base",         monthName: "Mes 3 · Backend Inicial",         price: "$17,333 MXN", priceNum: 17333 },
-    { monthId: 4,  phaseId: "p1", phaseName: "Etapa 1", planName: "Plan Base",         monthName: "Mes 4 · Bases de Datos",          price: "$22,000 MXN", priceNum: 22000 },
-    { monthId: 5,  phaseId: "p2", phaseName: "Etapa 2", planName: "Plan Profesional",  monthName: "Mes 5 · Arquitectura API",        price: "$10,000 MXN", priceNum: 10000 },
-    { monthId: 6,  phaseId: "p2", phaseName: "Etapa 2", planName: "Plan Profesional",  monthName: "Mes 6 · Frontend Avanzado",       price: "$16,666 MXN", priceNum: 16666 },
-    { monthId: 7,  phaseId: "p2", phaseName: "Etapa 2", planName: "Plan Profesional",  monthName: "Mes 7 · Cloud y Deploy",          price: "$23,333 MXN", priceNum: 23333 },
-    { monthId: 8,  phaseId: "p2", phaseName: "Etapa 2", planName: "Plan Profesional",  monthName: "Mes 8 · Testing y Calidad",       price: "$30,000 MXN", priceNum: 30000 },
-    { monthId: 9,  phaseId: "p3", phaseName: "Etapa 3", planName: "Plan Expert",       monthName: "Mes 9 · Integracion Inteligente", price: "$15,000 MXN", priceNum: 15000 },
-    { monthId: 10, phaseId: "p3", phaseName: "Etapa 3", planName: "Plan Expert",       monthName: "Mes 10 · Automatizacion",         price: "$26,666 MXN", priceNum: 26666 },
-    { monthId: 11, phaseId: "p3", phaseName: "Etapa 3", planName: "Plan Expert",       monthName: "Mes 11 · Escalabilidad y Producto",price: "$38,333 MXN", priceNum: 38333 },
-    { monthId: 12, phaseId: "p3", phaseName: "Etapa 3", planName: "Plan Expert",       monthName: "Mes 12 · SaaS Final",             price: "$50,000 MXN", priceNum: 50000 },
+    { monthId: 1,  phaseId: "p1", phaseName: "Etapa 1", planName: "Plan Base",        monthName: "Mes 1 · Fundamentos Web",          price: "$7,900 MXN",  priceNum: 7900  },
+    { monthId: 2,  phaseId: "p1", phaseName: "Etapa 1", planName: "Plan Base",        monthName: "Mes 2 · JavaScript Aplicado",      price: "$9,100 MXN",  priceNum: 9100  },
+    { monthId: 3,  phaseId: "p1", phaseName: "Etapa 1", planName: "Plan Base",        monthName: "Mes 3 · Backend Inicial",          price: "$10,500 MXN", priceNum: 10500 },
+    { monthId: 4,  phaseId: "p1", phaseName: "Etapa 1", planName: "Plan Base",        monthName: "Mes 4 · Bases de Datos",           price: "$11,900 MXN", priceNum: 11900 },
+    { monthId: 5,  phaseId: "p2", phaseName: "Etapa 2", planName: "Plan Profesional", monthName: "Mes 5 · Arquitectura API",         price: "$13,100 MXN", priceNum: 13100 },
+    { monthId: 6,  phaseId: "p2", phaseName: "Etapa 2", planName: "Plan Profesional", monthName: "Mes 6 · Frontend Avanzado",        price: "$14,500 MXN", priceNum: 14500 },
+    { monthId: 7,  phaseId: "p2", phaseName: "Etapa 2", planName: "Plan Profesional", monthName: "Mes 7 · Cloud y Deploy",           price: "$15,900 MXN", priceNum: 15900 },
+    { monthId: 8,  phaseId: "p2", phaseName: "Etapa 2", planName: "Plan Profesional", monthName: "Mes 8 · Testing y Calidad",        price: "$17,100 MXN", priceNum: 17100 },
+    { monthId: 9,  phaseId: "p3", phaseName: "Etapa 3", planName: "Plan Expert",      monthName: "Mes 9 · Integración Inteligente",  price: "$18,500 MXN", priceNum: 18500 },
+    { monthId: 10, phaseId: "p3", phaseName: "Etapa 3", planName: "Plan Expert",      monthName: "Mes 10 · Automatización",          price: "$19,900 MXN", priceNum: 19900 },
+    { monthId: 11, phaseId: "p3", phaseName: "Etapa 3", planName: "Plan Expert",      monthName: "Mes 11 · Escalabilidad y Producto", price: "$21,100 MXN", priceNum: 21100 },
+    { monthId: 12, phaseId: "p3", phaseName: "Etapa 3", planName: "Plan Expert",      monthName: "Mes 12 · SaaS Final",              price: "$21,900 MXN", priceNum: 21900 },
   ];
 
   var curriculum = monthlyProgram.map(function (m) {
