@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DEV SYSTEM | Inscripción</title>
+    <meta
+      name="description"
+      content="Inscríbete a DEV SYSTEM y desbloquea el acceso a la plataforma de formación."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script defer src="platform-config.js"></script>
+    <script defer src="cloud-state.js"></script>
+    <script defer src="app-state.js"></script>
+    <script defer src="checkout.js"></script>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container nav-wrap">
+        <a href="index.html" class="brand">DEV SYSTEM</a>
+        <nav class="nav">
+          <a href="index.html#programa">Programa</a>
+          <a href="index.html#fases">Fases</a>
+          <a href="login.html">Acceder</a>
+        </nav>
+        <a href="portal.html" class="btn btn-sm">Portal</a>
+      </div>
+    </header>
+
+    <main class="section">
+      <div class="container checkout-grid">
+        <section class="reveal">
+          <p class="eyebrow">Inscripción</p>
+          <h1 class="page-title">Paga tu mes de formacion en DEV SYSTEM</h1>
+          <p class="lead">
+            El programa dura 12 meses. Cada mes es un curso nuevo y se paga por
+            separado segun la etapa.
+          </p>
+
+          <form id="buyer-form" class="auth-form buyer-form">
+            <label for="buyer-name">Nombre completo</label>
+            <input id="buyer-name" name="buyer-name" type="text" required />
+
+            <label for="buyer-email">Correo electrónico</label>
+            <input id="buyer-email" name="buyer-email" type="email" required />
+
+            <label for="buyer-phone">WhatsApp</label>
+            <input id="buyer-phone" name="buyer-phone" type="tel" placeholder="+52 55..." required />
+          </form>
+
+          <div class="plan-grid">
+            <article class="card plan-card selected" data-plan="Plan Base">
+              <p class="plan-level">Etapa 1</p>
+              <h3>Plan Base · $5,000 a $7,700 MXN / mes</h3>
+              <p>Meses 1 al 4: fundamentos, web, backend inicial y datos.</p>
+            </article>
+            <article class="card plan-card" data-plan="Plan Profesional">
+              <p class="plan-level">Etapa 2</p>
+              <h3>Plan Profesional · $8,600 a $11,300 MXN / mes</h3>
+              <p>Meses 5 al 8: arquitectura, cloud, calidad y deploy.</p>
+            </article>
+            <article class="card plan-card" data-plan="Plan Expert">
+              <p class="plan-level">Etapa 3</p>
+              <h3>Plan Expert · $12,200 a $15,000 MXN / mes</h3>
+              <p>Meses 9 al 12: automatizacion, escalabilidad y SaaS final.</p>
+            </article>
+          </div>
+        </section>
+
+        <aside class="card checkout-panel reveal">
+          <h2>Resumen de inscripción</h2>
+          <div class="summary-row">
+            <span>Plan/etapa</span>
+            <strong id="selected-plan">Plan Base</strong>
+          </div>
+          <div class="summary-row">
+            <span>Mes a pagar</span>
+            <select id="selected-month" class="month-select">
+              <option value="1">Mes 1</option>
+              <option value="2">Mes 2</option>
+              <option value="3">Mes 3</option>
+              <option value="4">Mes 4</option>
+            </select>
+          </div>
+          <div class="summary-row">
+            <span>Pago mensual</span>
+            <strong id="selected-price">$5,000 MXN</strong>
+          </div>
+          <div class="summary-row">
+            <span>Acceso</span>
+            <strong>Portal de alumnos</strong>
+          </div>
+          <p class="small">
+            Si Stripe está configurado, pasarás a checkout seguro y volverás para
+            activar tu cuenta. Si no, funciona en modo local de prueba.
+          </p>
+          <button id="checkout-button" class="btn btn-block">Confirmar pago mensual</button>
+          <p id="checkout-message" class="notice" aria-live="polite"></p>
+          <a class="btn btn-ghost btn-block" href="login.html">Ya tengo cuenta</a>
+        </aside>
+      </div>
+    </main>
+  </body>
+</html>

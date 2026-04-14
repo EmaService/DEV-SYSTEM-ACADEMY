@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DEV SYSTEM | Acceso de Alumnos</title>
+    <meta name="description" content="Accede o activa tu cuenta de DEV SYSTEM." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script defer src="platform-config.js"></script>
+    <script defer src="cloud-state.js"></script>
+    <script defer src="app-state.js"></script>
+    <script defer src="login.js"></script>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container nav-wrap">
+        <a href="index.html" class="brand">DEV SYSTEM</a>
+        <nav class="nav">
+          <a href="checkout.html">Inscripción</a>
+          <a href="portal.html">Portal</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="section">
+      <div class="container auth-wrap">
+        <section class="card auth-card reveal">
+          <p class="eyebrow">Portal de alumnos</p>
+          <h1 class="page-title">Acceso y activación de cuenta</h1>
+
+          <div class="auth-tabs">
+            <button id="tab-login" class="tab-btn active" type="button">Iniciar sesión</button>
+            <button id="tab-register" class="tab-btn" type="button">Activar cuenta</button>
+          </div>
+
+          <form id="login-form" class="auth-form auth-panel active">
+            <label for="login-email">Correo electrónico</label>
+            <input id="login-email" type="email" required />
+
+            <label for="login-password">Contraseña</label>
+            <input id="login-password" type="password" minlength="6" required />
+
+            <button class="btn btn-block" type="submit">Entrar al portal</button>
+          </form>
+
+          <form id="register-form" class="auth-form auth-panel">
+            <label for="reg-name">Nombre completo</label>
+            <input id="reg-name" type="text" required />
+
+            <label for="reg-email">Correo con el que compraste</label>
+            <input id="reg-email" type="email" required />
+
+            <label for="reg-password">Crear contraseña</label>
+            <input id="reg-password" type="password" minlength="6" required />
+
+            <label for="reg-password-confirm">Confirmar contraseña</label>
+            <input id="reg-password-confirm" type="password" minlength="6" required />
+
+            <button class="btn btn-block" type="submit">Activar y entrar</button>
+          </form>
+
+          <p id="login-message" class="notice" aria-live="polite"></p>
+          <a class="btn btn-ghost btn-block" href="checkout.html">Ir a inscripción</a>
+        </section>
+      </div>
+    </main>
+  </body>
+</html>

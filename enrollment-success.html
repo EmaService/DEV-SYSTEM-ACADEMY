@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DEV SYSTEM | Pago confirmado</title>
+    <meta name="description" content="Pago confirmado en DEV SYSTEM." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script defer src="platform-config.js"></script>
+    <script defer src="cloud-state.js"></script>
+    <script defer src="app-state.js"></script>
+    <script defer src="enrollment-success.js"></script>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container nav-wrap">
+        <a href="index.html" class="brand">DEV SYSTEM</a>
+        <nav class="nav">
+          <a href="index.html">Landing</a>
+          <a href="login.html">Acceso</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="section">
+      <div class="container auth-wrap">
+        <section class="card auth-card reveal">
+          <p class="eyebrow">Pago confirmado</p>
+          <h1 class="page-title">Tu inscripción fue registrada</h1>
+          <p class="lead">
+            Ahora activa tu cuenta para entrar a la plataforma y comenzar tu ruta.
+          </p>
+          <p id="success-message" class="notice"></p>
+          <a id="success-cta" class="btn btn-block" href="login.html?mode=register">Activar cuenta</a>
+          <a class="btn btn-ghost btn-block" href="index.html">Volver al inicio</a>
+        </section>
+      </div>
+    </main>
+  </body>
+</html>

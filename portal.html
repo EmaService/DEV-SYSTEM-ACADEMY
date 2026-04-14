@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DEV SYSTEM | Portal de Alumnos</title>
+    <meta
+      name="description"
+      content="Portal de DEV SYSTEM con roadmap, lecciones y progreso del alumno."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script defer src="platform-config.js"></script>
+    <script defer src="cloud-state.js"></script>
+    <script defer src="app-state.js"></script>
+    <script defer src="portal.js"></script>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container nav-wrap">
+        <a href="index.html" class="brand">DEV SYSTEM</a>
+        <nav class="nav">
+          <a href="index.html">Landing</a>
+          <a href="checkout.html">Inscripción</a>
+          <a href="login.html">Acceso</a>
+        </nav>
+        <button id="logout-btn" class="btn btn-sm" type="button">Cerrar sesión</button>
+      </div>
+    </header>
+
+    <main class="section">
+      <div class="container portal-layout">
+        <section class="card reveal">
+          <p class="eyebrow">Portal de alumno</p>
+          <h1 id="welcome-name" class="page-title">Panel del alumno</h1>
+          <p id="welcome-text" class="lead">
+            Sigue tu plan por fases y marca lecciones completadas.
+          </p>
+
+          <div class="summary-grid">
+            <div class="summary-item">
+              <span>Etapa actual</span>
+              <strong id="student-plan">-</strong>
+            </div>
+            <div class="summary-item">
+              <span>Meses pagados</span>
+              <strong id="months-summary">0/12</strong>
+            </div>
+            <div class="summary-item">
+              <span>Lecciones completadas</span>
+              <strong id="lessons-summary">0/0</strong>
+            </div>
+            <div class="summary-item">
+              <span>Progreso total</span>
+              <strong id="progress-percent">0%</strong>
+            </div>
+          </div>
+
+          <div class="progress-bar">
+            <div id="progress-fill" class="progress-fill"></div>
+          </div>
+
+          <p id="certificate-status" class="notice"></p>
+        </section>
+
+        <section class="card reveal">
+          <h2>Tu ruta completa de formación</h2>
+          <div id="curriculum-root" class="portal-curriculum"></div>
+        </section>
+
+        <section class="card reveal">
+          <h2>Detalle de inscripción</h2>
+          <div class="summary-row">
+            <span>Correo de acceso</span>
+            <strong id="student-email">-</strong>
+          </div>
+          <div class="summary-row">
+            <span>Nivel</span>
+            <strong id="billing-plan">-</strong>
+          </div>
+          <div class="summary-row">
+            <span>Monto</span>
+            <strong id="billing-price">-</strong>
+          </div>
+          <div class="summary-row">
+            <span>Estado</span>
+            <strong>Pagado</strong>
+          </div>
+        </section>
+      </div>
+    </main>
+  </body>
+</html>
