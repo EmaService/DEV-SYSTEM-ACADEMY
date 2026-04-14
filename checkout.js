@@ -1,8 +1,8 @@
 (function () {
   var cfg = window.DEV_SYSTEM_CONFIG || {};
-  var stripeCfg = cfg.stripe || {};
-  var links = stripeCfg.paymentLinks || {};
-  var monthlyLinks = stripeCfg.paymentLinksByMonth || {};
+  var mlCfg = cfg.mercadolibre || {};
+  var links = mlCfg.paymentLinks || {};
+  var monthlyLinks = mlCfg.paymentLinksByMonth || {};
   var monthlyProgram = window.DevSystemState.getMonthlyProgram();
 
   var cards = Array.prototype.slice.call(document.querySelectorAll(".plan-card"));
@@ -102,12 +102,10 @@
 
     var selectedLink = monthlyLinks[String(monthId)] || links[currentSelection.plan];
     if (selectedLink) {
-      checkoutMessage.textContent = "Redirigiendo a pago seguro...";
+      checkoutMessage.textContent = "Redirigiendo a Mercado Libre para pago seguro...";
       checkoutButton.disabled = true;
-      checkoutButton.textContent = "Abriendo checkout";
-      var url = new URL(selectedLink);
-      url.searchParams.set("prefilled_email", email);
-      window.location.href = url.toString();
+      checkoutButton.textContent = "Abriendo Mercado Libre...";
+      window.location.href = selectedLink;
       return;
     }
 

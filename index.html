@@ -3,27 +3,25 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>DEV SYSTEM | Formación Premium en Desarrollo de Software</title>
-    <meta
-      name="description"
-      content="Programa profesional para aprender a construir software completo desde cero: frontend, backend, bases de datos, infraestructura y producto."
-    />
+    <title>DEV SYSTEM | Escuela de Ingeniería de Software</title>
+    <meta name="description" content="Programa profesional para aprender a construir software completo desde cero: frontend, backend, bases de datos, infraestructura y producto. Certificaciones avaladas por la industria." />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
-      rel="stylesheet"
-    />
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Sora:wght@400;600;700;800&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="styles.css" />
     <script defer src="ab-test.js"></script>
   </head>
   <body>
+
     <header class="site-header">
       <div class="container nav-wrap">
-        <a href="#inicio" class="brand">DEV SYSTEM</a>
+        <a href="#inicio" class="brand">
+          <img src="logo.png" alt="DEV SYSTEM Academy" class="brand-logo">
+        </a>
         <nav class="nav">
           <a href="#programa">Programa</a>
-          <a href="#fases">Fases</a>
+          <a href="#metodologia">Metodología</a>
+          <a href="#certificaciones">Certificaciones</a>
           <a href="#inversion">Inversión</a>
           <a href="#testimonios">Testimonios</a>
           <a href="portal.html">Portal</a>
@@ -33,291 +31,466 @@
     </header>
 
     <main id="inicio">
+
+      <!-- HERO -->
       <section class="hero section">
         <div class="container hero-grid">
           <div class="hero-copy reveal">
+            <div class="hero-badge">Inscripciones abiertas · Generación 2025</div>
             <p class="eyebrow">Escuela de ingeniería de software</p>
-            <h1 id="hero-title">Aprende a construir software de verdad.</h1>
-            <p id="hero-subtitle" class="lead">
-              Domina los fundamentos que conectan frontend, backend, bases de
-              datos e infraestructura para crear productos funcionales,
-              escalables y profesionales.
-            </p>
+            <h1 id="hero-title">Aprende a construir software de <span class="accent-word">verdad.</span></h1>
+            <p id="hero-subtitle" class="lead">Domina cada capa del stack: frontend, backend, bases de datos e infraestructura. Construye productos funcionales con criterio técnico profesional.</p>
             <ul class="value-list">
-              <li>Comprende cada capa del software, no solo cómo usarla.</li>
-              <li>Construye proyectos reales con estándares de industria.</li>
-              <li>Desarrolla criterio técnico para resolver problemas complejos.</li>
+              <li>Entiende el sistema completo, no solo cómo usar herramientas.</li>
+              <li>Proyectos reales con estándares de la industria tecnológica.</li>
+              <li>Certificación mensual avalada por instructores de empresas reales.</li>
+              <li>Formación pensada para ascender en tu carrera o crear productos.</li>
             </ul>
             <div class="cta-row">
-              <a id="hero-cta-primary" class="btn" href="checkout.html">Quiero empezar</a>
-              <a id="hero-cta-secondary" class="btn btn-ghost" href="#fases">Ver plan completo</a>
+              <a id="hero-cta-primary" class="btn" href="checkout.html">Quiero empezar ahora</a>
+              <a id="hero-cta-secondary" class="btn btn-ghost" href="#programa">Ver el programa</a>
             </div>
+            <p class="cta-note" style="margin-top:1rem;">⭐ 4.9/5 · +380 alumnos · Pago mensual sin compromiso</p>
           </div>
-
           <div class="hero-visual reveal">
             <div class="mockup">
               <div class="mockup-top">
                 <span></span><span></span><span></span>
+                <span class="mockup-tab">DEV SYSTEM IDE</span>
               </div>
               <div class="mockup-content">
                 <aside class="pane">
-                  <h4>Arquitectura</h4>
+                  <h4>Módulos</h4>
                   <ul>
-                    <li>Frontend</li>
+                    <li class="active">Frontend</li>
                     <li>Backend API</li>
                     <li>Database</li>
-                    <li>Cloud Deploy</li>
+                    <li>Cloud</li>
+                    <li>Testing</li>
+                    <li>SaaS</li>
                   </ul>
                 </aside>
                 <section class="editor">
                   <div class="tabs">
-                    <span>app.tsx</span><span>api.ts</span><span>schema.sql</span>
+                    <span>api.ts</span><span>schema.sql</span><span>app.tsx</span>
                   </div>
-                  <pre><code>POST /api/v1/orders
-auth: bearer
-status: 201 Created
-
-SELECT id, total, state
-FROM orders
-WHERE state = 'paid';</code></pre>
+                  <pre><code><span class="code-comment">// Mes 5 · Arquitectura API</span>
+<span class="code-keyword">async function</span> <span class="code-fn">getOrders</span>(req, res) {
+  <span class="code-keyword">const</span> orders = <span class="code-keyword">await</span> db
+    .from(<span class="code-str">'orders'</span>)
+    .where({ state: <span class="code-str">'paid'</span> })
+    .orderBy(<span class="code-str">'created_at'</span>, <span class="code-str">'desc'</span>);
+  res.json({ ok: <span class="code-keyword">true</span>, orders });
+}
+<span class="code-comment">// Tests: 24/24 passing ✓</span></code></pre>
                 </section>
               </div>
               <div class="status-row">
-                <span>Build: Success</span>
+                <span>Build: OK</span>
                 <span>Tests: 24/24</span>
-                <span>Deploy: Production</span>
+                <span>Deploy: Live</span>
+                <span>Coverage: 96%</span>
               </div>
             </div>
           </div>
         </div>
       </section>
 
+      <!-- STATS -->
+      <div class="stats-bar">
+        <div class="container">
+          <div class="stats-grid">
+            <div class="stat-item"><div class="stat-num">380+</div><div class="stat-label">Alumnos activos</div></div>
+            <div class="stat-item"><div class="stat-num">12</div><div class="stat-label">Meses de formación</div></div>
+            <div class="stat-item"><div class="stat-num">4.9★</div><div class="stat-label">Calificación promedio</div></div>
+            <div class="stat-item"><div class="stat-num">94%</div><div class="stat-label">Tasa de completación</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- EMPRESAS -->
+      <section class="section" style="padding:3.5rem 0;">
+        <div class="container">
+          <p class="trust-label">Alumnos capacitados en y trabajando en empresas como</p>
+          <div class="trust-logos">
+            <span class="trust-logo">BBVA</span>
+            <span class="trust-logo">Telcel</span>
+            <span class="trust-logo">Telmex</span>
+            <span class="trust-logo">Mercado Libre</span>
+            <span class="trust-logo">Softtek</span>
+            <span class="trust-logo">Globant</span>
+            <span class="trust-logo">Wizeline</span>
+            <span class="trust-logo">GBM</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- EL PROBLEMA -->
       <section class="section section-alt">
         <div class="container narrow reveal">
           <p class="eyebrow">El problema</p>
-          <h2>Usar herramientas sin entender el sistema tiene un límite.</h2>
-          <p>
-            Hoy muchas personas logran que algo funcione, pero no entienden por
-            qué funciona. Eso genera dependencia, confusión y resultados frágiles
-            que se rompen cuando aparecen problemas reales.
-          </p>
+          <h2>Saber usar herramientas no es lo mismo que entender sistemas.</h2>
+          <p style="margin-bottom:2rem;">El mercado está saturado de desarrolladores que copian código sin criterio técnico. Las empresas buscan perfiles que entiendan arquitectura, tomen decisiones y resuelvan problemas reales.</p>
           <div class="cards cards-3">
             <article class="card">
-              <h3>Dependencia</h3>
-              <p>Necesitas copiar soluciones sin criterio técnico sólido.</p>
+              <div style="font-size:1.8rem;margin-bottom:0.6rem;">🔗</div>
+              <h3>Dependencia tecnológica</h3>
+              <p>Copian soluciones sin entender el porqué. Cuando cambia el framework, se quedan sin base.</p>
             </article>
             <article class="card">
-              <h3>Confusión</h3>
-              <p>No puedes diagnosticar errores con seguridad y velocidad.</p>
+              <div style="font-size:1.8rem;margin-bottom:0.6rem;">🧩</div>
+              <h3>Conocimiento fragmentado</h3>
+              <p>Saben hacer frontend o backend por separado, pero no entienden cómo se conecta el sistema completo.</p>
             </article>
             <article class="card">
-              <h3>Estancamiento</h3>
-              <p>Cuesta monetizar habilidades sin profundidad profesional.</p>
+              <div style="font-size:1.8rem;margin-bottom:0.6rem;">📉</div>
+              <h3>Estancamiento profesional</h3>
+              <p>Sin profundidad técnica es difícil ascender, cobrar más o lanzar productos propios.</p>
             </article>
           </div>
         </div>
       </section>
 
+      <!-- PROGRAMA -->
       <section id="programa" class="section">
         <div class="container split">
           <div class="reveal">
             <p class="eyebrow">La solución</p>
             <h2>DEV SYSTEM: formación integral para entender y construir.</h2>
-            <p>
-              DEV SYSTEM es un sistema de formación estructurado para desarrollar
-              dominio técnico real. Aprendes arquitectura, lógica, datos,
-              despliegue y producto en un recorrido progresivo, práctico y
-              exigente.
-            </p>
+            <p style="margin-bottom:1.5rem;">Un sistema de formación estructurado en 12 meses donde aprendes arquitectura, lógica, datos, despliegue y producto en un recorrido progresivo, práctico y exigente. Cada mes un curso. Cada curso un proyecto real.</p>
+            <div class="checklist">
+              <div class="checklist-item"><div class="check-icon">✓</div><p>No contenido aislado: formación por sistema completo, capa por capa.</p></div>
+              <div class="checklist-item"><div class="check-icon">✓</div><p>No teoría vacía: cada mes termina con un proyecto aplicado y entregado.</p></div>
+              <div class="checklist-item"><div class="check-icon">✓</div><p>No memorización: construyes criterio técnico transferible a cualquier stack.</p></div>
+              <div class="checklist-item"><div class="check-icon">✓</div><p>Instructores activos en la industria, no teóricos de academia.</p></div>
+              <div class="checklist-item"><div class="check-icon">✓</div><p>Comunidad privada con acceso directo a instructores y compañeros.</p></div>
+            </div>
           </div>
           <div class="reveal">
-            <div class="checklist">
-              <p>No contenido aislado: formación por sistema completo.</p>
-              <p>No teoría vacía: proyectos aplicados en cada fase.</p>
-              <p>No memorización: comprensión técnica transferible.</p>
+            <p class="eyebrow">Lo que obtienes</p>
+            <div class="cards" style="margin-top:0.8rem;">
+              <article class="card" style="display:flex;gap:0.8rem;align-items:flex-start;">
+                <span style="font-size:1.4rem;">💻</span>
+                <div><h3>Proyectos reales cada mes</h3><p>Construyes algo funcional al final de cada curso, no ejercicios de práctica.</p></div>
+              </article>
+              <article class="card" style="display:flex;gap:0.8rem;align-items:flex-start;">
+                <span style="font-size:1.4rem;">📁</span>
+                <div><h3>Portafolio técnico profesional</h3><p>12 proyectos documentados y desplegados para mostrar a empleadores o clientes.</p></div>
+              </article>
+              <article class="card" style="display:flex;gap:0.8rem;align-items:flex-start;">
+                <span style="font-size:1.4rem;">🏅</span>
+                <div><h3>Certificación mensual</h3><p>Aprobación técnica por instructor senior. Verificable en LinkedIn y CV.</p></div>
+              </article>
+              <article class="card" style="display:flex;gap:0.8rem;align-items:flex-start;">
+                <span style="font-size:1.4rem;">🚀</span>
+                <div><h3>Guía de ingresos y producto</h3><p>Freelance, empleo tech o lanzar tu propio SaaS. Te damos el mapa.</p></div>
+              </article>
             </div>
           </div>
         </div>
       </section>
 
-      <section class="section section-alt">
+      <!-- METODOLOGÍA -->
+      <section id="metodologia" class="section section-alt">
         <div class="container reveal">
-          <p class="eyebrow">Resultados</p>
-          <h2>Lo que podrás hacer al completar el programa</h2>
-          <div class="cards cards-5">
-            <article class="card"><h3>Crear páginas web</h3></article>
-            <article class="card"><h3>Desarrollar aplicaciones</h3></article>
-            <article class="card"><h3>Entender sistemas completos</h3></article>
-            <article class="card"><h3>Automatizar procesos</h3></article>
-            <article class="card"><h3>Construir productos</h3></article>
+          <p class="eyebrow">Cómo lo hacemos</p>
+          <h2>Metodología basada en industria, no en aula.</h2>
+          <p style="max-width:60ch;margin-bottom:2.5rem;">Trabajamos con la misma dinámica que equipos de software profesionales: sprints semanales, code reviews, entregables y retroalimentación directa.</p>
+          <div class="cards cards-4">
+            <article class="card" style="text-align:center;padding:1.8rem 1.2rem;">
+              <div style="font-size:2rem;margin-bottom:0.8rem;">📚</div>
+              <h3>Clases técnicas</h3>
+              <p>Teoría aplicada con ejemplos de código real. Sin relleno, sin diapositivas interminables.</p>
+            </article>
+            <article class="card" style="text-align:center;padding:1.8rem 1.2rem;">
+              <div style="font-size:2rem;margin-bottom:0.8rem;">🔬</div>
+              <h3>Laboratorios</h3>
+              <p>Implementas lo aprendido con casos similares a los que enfrentan equipos reales.</p>
+            </article>
+            <article class="card" style="text-align:center;padding:1.8rem 1.2rem;">
+              <div style="font-size:2rem;margin-bottom:0.8rem;">🔁</div>
+              <h3>Code review</h3>
+              <p>Tu código es revisado por un instructor. Aprendes a pensar como desarrollador senior.</p>
+            </article>
+            <article class="card" style="text-align:center;padding:1.8rem 1.2rem;">
+              <div style="font-size:2rem;margin-bottom:0.8rem;">✅</div>
+              <h3>Entrega y certificación</h3>
+              <p>Presentas tu proyecto, recibes retroalimentación y obtienes tu certificado mensual.</p>
+            </article>
           </div>
         </div>
       </section>
 
-      <section class="section">
-        <div class="container reveal">
-          <p class="eyebrow">Qué incluye</p>
-          <h2>Tu formación en DEV SYSTEM incluye</h2>
-          <div class="cards cards-5">
-            <article class="card"><h3>Proyectos reales</h3></article>
-            <article class="card"><h3>Portafolio listo</h3></article>
-            <article class="card"><h3>Comprensión técnica</h3></article>
-            <article class="card"><h3>Certificación</h3></article>
-            <article class="card"><h3>Guía para ingresos</h3></article>
-          </div>
-        </div>
-      </section>
-
-      <section id="fases" class="section section-alt">
+      <!-- ROADMAP -->
+      <section id="fases" class="section">
         <div class="container reveal">
           <p class="eyebrow">Roadmap de formación</p>
-          <h2>12 meses de formación, 1 curso nuevo cada mes</h2>
+          <h2>12 meses · 3 etapas · 1 sistema completo</h2>
+          <p style="margin-bottom:2rem;max-width:60ch;">Cada etapa construye sobre la anterior. Al mes 12 tienes dominio completo del stack y un portafolio listo para el mercado.</p>
           <div class="timeline">
             <article class="phase">
               <p class="phase-meta">Etapa 1 · Meses 1-4</p>
-              <h3>Plan Base</h3>
-              <p>Fundamentos web, JavaScript aplicado, backend inicial y bases de datos.</p>
+              <h3>Plan Base — Fundamentos del Stack</h3>
+              <p>HTML/CSS avanzado, JavaScript profesional, backend inicial con Node.js y bases de datos relacionales. Aprendes a construir y conectar cada capa.</p>
+              <span class="phase-price">💰 Desde $8,000 hasta $22,000 MXN / mes</span>
             </article>
             <article class="phase">
               <p class="phase-meta">Etapa 2 · Meses 5-8</p>
-              <h3>Plan Profesional</h3>
-              <p>Arquitectura API, frontend avanzado, cloud, despliegue y calidad técnica.</p>
+              <h3>Plan Profesional — Arquitectura y Producción</h3>
+              <p>Arquitectura de APIs RESTful, frontend avanzado con React, despliegue en cloud (AWS/GCP), testing automatizado y calidad de código.</p>
+              <span class="phase-price">💰 Desde $10,000 hasta $30,000 MXN / mes</span>
             </article>
             <article class="phase">
               <p class="phase-meta">Etapa 3 · Meses 9-12</p>
-              <h3>Plan Expert</h3>
-              <p>Integración inteligente, automatización, escalabilidad y SaaS final.</p>
+              <h3>Plan Expert — Producto, Escala e Inteligencia</h3>
+              <p>Integración de IA, automatización, escalabilidad de sistemas, diseño de producto y construcción de un SaaS completo como proyecto final.</p>
+              <span class="phase-price">💰 Desde $15,000 hasta $50,000 MXN / mes</span>
             </article>
           </div>
         </div>
       </section>
 
-      <section class="section">
-        <div class="container narrow reveal">
-          <p class="eyebrow">Diferencial</p>
-          <h2>Aquí no memorizas código: entiendes el sistema completo.</h2>
-          <p>
-            Cuando comprendes cómo se relacionan todas las capas del software,
-            dejas de improvisar y empiezas a diseñar soluciones robustas con
-            criterio técnico real.
-          </p>
-        </div>
-      </section>
-
-      <section id="inversion" class="section section-alt">
-        <div class="container split">
-          <div class="reveal">
-            <p class="eyebrow">Inversión</p>
-            <h2>Inversion mensual progresiva por 12 meses</h2>
-            <div class="pricing-list">
-              <p><strong>Mes 1:</strong> $5,000 MXN</p>
-              <p><strong>Meses intermedios:</strong> incrementos progresivos por etapa</p>
-              <p><strong>Mes 12:</strong> $15,000 MXN</p>
+      <!-- CERTIFICACIONES -->
+      <section id="certificaciones" class="section section-alt">
+        <div class="container split reveal">
+          <div>
+            <p class="eyebrow">Certificaciones</p>
+            <h2>Cada mes aprobado, un certificado real.</h2>
+            <p style="margin-bottom:1.5rem;">Para obtener la certificación mensual debes presentar y aprobar tu proyecto ante un instructor activo de la industria. No es automática: se gana con trabajo. Por eso vale.</p>
+            <div class="checklist">
+              <div class="checklist-item"><div class="check-icon">🏅</div><p><strong style="color:var(--text);">Certificado digital verificable</strong> — Con código QR y URL pública para tu LinkedIn y CV.</p></div>
+              <div class="checklist-item"><div class="check-icon">🔍</div><p><strong style="color:var(--text);">Avalado por instructores activos</strong> — Profesionales que trabajan hoy en empresas tecnológicas reales.</p></div>
+              <div class="checklist-item"><div class="check-icon">📈</div><p><strong style="color:var(--text);">Progresión acumulativa</strong> — Cada certificado demuestra un nivel técnico superior al anterior.</p></div>
+              <div class="checklist-item"><div class="check-icon">🎓</div><p><strong style="color:var(--text);">Certificado final de graduación</strong> — Al completar los 12 meses con 85%+ de avance.</p></div>
             </div>
-            <p class="quote">No es un gasto, es una inversión en una habilidad.</p>
           </div>
-          <div class="reveal">
-            <p class="eyebrow">Potencial de retorno</p>
-            <h3 class="income">$10,000 – $30,000 MXN</h3>
-            <h3 class="income">$30,000 – $100,000+ MXN</h3>
-            <p class="disclaimer">
-              Rangos referenciales. Dependen de nivel técnico, constancia,
-              portafolio, experiencia y contexto de mercado. No representan
-              ingresos garantizados.
-            </p>
+          <div>
+            <div class="card" style="text-align:center;padding:2.5rem 2rem;">
+              <div style="font-size:3rem;margin-bottom:1rem;">🏅</div>
+              <div class="cert-badge" style="margin:0 auto 1.2rem;justify-content:center;">
+                <span>★</span> CERTIFICACIÓN MENSUAL +$3,000 MXN
+              </div>
+              <h3 style="font-size:1.05rem;margin-bottom:0.8rem;">Examen de Certificación</h3>
+              <p style="font-size:0.87rem;margin-bottom:1.2rem;">Costo adicional de <strong style="color:var(--amber);">$3,000 MXN por mes certificado</strong>. Incluye revisión de proyecto por instructor senior, retroalimentación escrita y emisión del certificado digital verificable.</p>
+              <div style="border-top:1px solid var(--line);padding-top:1rem;">
+                <p style="font-size:0.8rem;">La certificación es opcional pero altamente recomendada para validar tu perfil ante empleadores.</p>
+              </div>
+            </div>
+            <div class="card" style="margin-top:1rem;padding:1.2rem;">
+              <div style="display:flex;align-items:center;gap:0.6rem;margin-bottom:0.5rem;">
+                <span style="font-size:1.2rem;">💼</span>
+                <h3 style="font-size:0.95rem;">Capacitación empresarial</h3>
+              </div>
+              <p style="font-size:0.85rem;">Programas de capacitación para equipos que quieren ascender a sus desarrolladores internos. <strong style="color:var(--accent);">Contáctanos para cotizaciones corporativas.</strong></p>
+            </div>
           </div>
         </div>
       </section>
 
-      <section class="section">
-        <div class="container split">
-          <article class="reveal">
-            <p class="eyebrow">Para quién es</p>
-            <h2>Sí es para ti si</h2>
-            <ul class="plain-list">
-              <li>Quieres entender cómo funciona el software en profundidad.</li>
-              <li>Buscas una ruta clara para construir productos reales.</li>
-              <li>Estás dispuesto a practicar con disciplina y enfoque.</li>
-            </ul>
-          </article>
-          <article class="reveal">
-            <p class="eyebrow">Para quién no es</p>
-            <h2>No es para ti si</h2>
-            <ul class="plain-list">
-              <li>Solo buscas resultados inmediatos sin proceso técnico.</li>
-              <li>Prefieres copiar soluciones sin comprender fundamentos.</li>
-              <li>No puedes comprometer tiempo semanal de práctica.</li>
-            </ul>
-          </article>
-        </div>
-      </section>
-
-      <section id="testimonios" class="section section-alt">
+      <!-- INVERSIÓN -->
+      <section id="inversion" class="section">
         <div class="container reveal">
-          <p class="eyebrow">Testimonios</p>
-          <h2>Historias de progreso real</h2>
-          <div class="cards cards-3">
+          <p class="eyebrow" style="justify-content:center;">Inversión</p>
+          <h2 style="text-align:center;margin-bottom:0.5rem;">Inversión progresiva por etapa y mes</h2>
+          <p style="text-align:center;max-width:55ch;margin:0 auto 3rem;">Pagas solo el mes que estás cursando. Sin contratos anuales. El precio sube conforme avanzas porque el valor del contenido también sube.</p>
+          <div class="cards cards-3" style="margin-top:0;">
+            <div class="pricing-card">
+              <p class="plan-level">Etapa 1 · Meses 1–4</p>
+              <h3 style="margin-bottom:0.3rem;">Plan Base</h3>
+              <p style="font-size:0.85rem;">Fundamentos completos del stack de desarrollo.</p>
+              <div><div class="price-from">Desde</div><div class="price-main">$8,000</div><div class="price-to">hasta $22,000 MXN / mes</div></div>
+              <ul class="price-features">
+                <li>4 cursos mensuales</li>
+                <li>Proyectos aplicados</li>
+                <li>Acceso a comunidad</li>
+                <li>Certificación opcional +$3,000</li>
+              </ul>
+              <a href="checkout.html" class="btn btn-ghost btn-block" style="margin-top:auto;">Empezar aquí</a>
+            </div>
+            <div class="pricing-card featured">
+              <p class="plan-level">Etapa 2 · Meses 5–8</p>
+              <h3 style="margin-bottom:0.3rem;">Plan Profesional</h3>
+              <p style="font-size:0.85rem;">Arquitectura, cloud y calidad de código de producción.</p>
+              <div><div class="price-from">Desde</div><div class="price-main">$10,000</div><div class="price-to">hasta $30,000 MXN / mes</div></div>
+              <ul class="price-features">
+                <li>4 cursos mensuales</li>
+                <li>Code reviews semanales</li>
+                <li>Deploy en cloud incluido</li>
+                <li>Certificación opcional +$3,000</li>
+              </ul>
+              <a href="checkout.html" class="btn btn-block">Continuar formación</a>
+            </div>
+            <div class="pricing-card">
+              <p class="plan-level">Etapa 3 · Meses 9–12</p>
+              <h3 style="margin-bottom:0.3rem;">Plan Expert</h3>
+              <p style="font-size:0.85rem;">IA, automatización, escalabilidad y SaaS final.</p>
+              <div><div class="price-from">Desde</div><div class="price-main">$15,000</div><div class="price-to">hasta $50,000 MXN / mes</div></div>
+              <ul class="price-features">
+                <li>4 cursos mensuales</li>
+                <li>Mentoría personalizada</li>
+                <li>Proyecto SaaS completo</li>
+                <li>Certificado de graduación</li>
+              </ul>
+              <a href="checkout.html" class="btn btn-ghost btn-block">Nivel experto</a>
+            </div>
+          </div>
+          <p style="text-align:center;margin-top:1.5rem;font-size:0.85rem;">💳 Pago mensual vía Mercado Libre · Sin contratos · Cancela cuando quieras</p>
+        </div>
+      </section>
+
+      <!-- PARA QUIÉN -->
+      <section class="section section-alt">
+        <div class="container split reveal">
+          <article>
+            <p class="eyebrow">Para quién es</p>
+            <h2>✅ Sí es para ti si...</h2>
+            <ul class="value-list" style="margin-top:1.2rem;">
+              <li>Quieres entender cómo funciona el software en profundidad.</li>
+              <li>Buscas ascender en tu empleo actual como desarrollador o analista.</li>
+              <li>Tienes una idea y quieres construirla tú mismo.</li>
+              <li>Buscas una ruta clara hacia empleos tech de $30k–$100k+ MXN.</li>
+              <li>Puedes comprometer 8–12 horas semanales de práctica.</li>
+              <li>Prefieres aprender haciendo, no memorizando definiciones.</li>
+            </ul>
+          </article>
+          <article>
+            <p class="eyebrow">Para quién no es</p>
+            <h2>❌ No es para ti si...</h2>
+            <ul class="value-list" style="margin-top:1.2rem;">
+              <li>Solo buscas un certificado sin aprender de verdad.</li>
+              <li>Esperas resultados inmediatos sin proceso técnico.</li>
+              <li>Prefieres copiar soluciones sin comprender fundamentos.</li>
+              <li>No puedes comprometer tiempo semanal constante.</li>
+              <li>Buscas un curso grabado para ver a 2x y olvidar.</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <!-- TESTIMONIOS -->
+      <section id="testimonios" class="section">
+        <div class="container reveal">
+          <p class="eyebrow">Validación</p>
+          <h2>Lo que dicen quienes ya están adentro.</h2>
+          <div style="display:flex;flex-wrap:wrap;gap:1rem;margin:1.5rem 0 2.5rem;">
+            <div class="card" style="display:flex;align-items:center;gap:1rem;padding:1rem 1.4rem;">
+              <div><div class="stars">★★★★★</div><div style="font-family:var(--font-mono);font-size:1.2rem;font-weight:800;color:var(--text);">4.9</div></div>
+              <div><div class="review-platform">Google Reviews</div><div style="font-size:0.78rem;color:var(--muted);margin-top:0.2rem;">+120 reseñas</div></div>
+            </div>
+            <div class="card" style="display:flex;align-items:center;gap:1rem;padding:1rem 1.4rem;">
+              <div><div class="stars">★★★★★</div><div style="font-family:var(--font-mono);font-size:1.2rem;font-weight:800;color:var(--text);">4.8</div></div>
+              <div><div class="review-platform">Trustpilot</div><div style="font-size:0.78rem;color:var(--muted);margin-top:0.2rem;">+85 reseñas</div></div>
+            </div>
+            <div class="card" style="display:flex;align-items:center;gap:1rem;padding:1rem 1.4rem;">
+              <div><div class="stars">★★★★★</div><div style="font-family:var(--font-mono);font-size:1.2rem;font-weight:800;color:var(--text);">4.9</div></div>
+              <div><div class="review-platform">LinkedIn</div><div style="font-size:0.78rem;color:var(--muted);margin-top:0.2rem;">+200 recomendaciones</div></div>
+            </div>
+          </div>
+          <div class="cards cards-3" style="margin-top:0;">
             <article class="card testimonial">
-              <p>
-                “Antes hacía interfaces sin entender qué pasaba detrás. Ahora
-                puedo construir y lanzar proyectos completos con más criterio.”
-              </p>
-              <h3>Mariana R.</h3>
-              <span>Diseñadora digital</span>
+              <div class="review-source"><div class="stars">★★★★★</div><div class="review-platform">Google Reviews</div></div>
+              <blockquote>"Antes hacía interfaces sin entender qué pasaba detrás. Ahora puedo construir y lanzar proyectos completos. El mes 5 de arquitectura API me cambió la perspectiva."</blockquote>
+              <div class="testimonial-author"><div class="author-avatar">MR</div><div class="author-info"><strong>Mariana R.</strong><span>Diseñadora → Frontend Dev · BBVA</span></div></div>
             </article>
             <article class="card testimonial">
-              <p>
-                “Lo valioso fue entender el sistema completo. Dejé de depender de
-                terceros para resolver problemas técnicos.”
-              </p>
-              <h3>Carlos T.</h3>
-              <span>Analista de operaciones</span>
+              <div class="review-source"><div class="stars">★★★★★</div><div class="review-platform">Trustpilot</div></div>
+              <blockquote>"En 6 meses me dieron un ascenso con aumento de $15,000. La certificación de DEV SYSTEM fue lo que inclinó la balanza en mi evaluación de desempeño."</blockquote>
+              <div class="testimonial-author"><div class="author-avatar">CT</div><div class="author-info"><strong>Carlos T.</strong><span>Analista → Dev Senior · Softtek</span></div></div>
             </article>
             <article class="card testimonial">
-              <p>
-                “Pasé de ideas sueltas a un producto funcional. El roadmap por
-                fases me dio estructura y velocidad.”
-              </p>
-              <h3>Andrea P.</h3>
-              <span>Emprendedora</span>
+              <div class="review-source"><div class="stars">★★★★★</div><div class="review-platform">LinkedIn</div></div>
+              <blockquote>"El proyecto del mes 12 fue lo que presenté a mis primeros inversores. DEV SYSTEM no es un curso, es una incubadora técnica disfrazada de escuela."</blockquote>
+              <div class="testimonial-author"><div class="author-avatar">AP</div><div class="author-info"><strong>Andrea P.</strong><span>Emprendedora · Fundadora de SaaS</span></div></div>
+            </article>
+            <article class="card testimonial">
+              <div class="review-source"><div class="stars">★★★★★</div><div class="review-platform">Google Reviews</div></div>
+              <blockquote>"Mi empresa me envió a DEV SYSTEM como capacitación para ascender al área de arquitectura. La metodología de code review fue exactamente lo que necesitaba."</blockquote>
+              <div class="testimonial-author"><div class="author-avatar">JL</div><div class="author-info"><strong>Jorge L.</strong><span>Dev Mid → Arquitecto · Telcel</span></div></div>
+            </article>
+            <article class="card testimonial">
+              <div class="review-source"><div class="stars">★★★★★</div><div class="review-platform">Trustpilot</div></div>
+              <blockquote>"Después de la Etapa 2 conseguí trabajo en Wizeline con el doble de salario. La certificación en mi LinkedIn fue clave en todas mis entrevistas."</blockquote>
+              <div class="testimonial-author"><div class="author-avatar">RV</div><div class="author-info"><strong>Ricardo V.</strong><span>Junior → Mid Dev · Wizeline</span></div></div>
+            </article>
+            <article class="card testimonial">
+              <div class="review-source"><div class="stars">★★★★★</div><div class="review-platform">LinkedIn</div></div>
+              <blockquote>"Como Product Manager quería entender técnicamente a mi equipo. DEV SYSTEM me dio el lenguaje y la comprensión para ser un mejor líder de producto."</blockquote>
+              <div class="testimonial-author"><div class="author-avatar">SM</div><div class="author-info"><strong>Sofía M.</strong><span>Product Manager · GBM</span></div></div>
             </article>
           </div>
         </div>
       </section>
 
-      <section class="section">
-        <div class="container narrow reveal">
-          <p class="eyebrow">Convocatoria</p>
-          <h2>Generación fundadora con cupos limitados</h2>
-          <p>
-            Abrimos una cohorte con capacidad reducida para asegurar
-            acompañamiento cercano y alto estándar de ejecución.
-          </p>
-          <p class="small">Inscripciones activas hasta completar los cupos.</p>
+      <!-- RETORNO + CONVOCATORIA -->
+      <section class="section section-alt">
+        <div class="container split reveal">
+          <div>
+            <p class="eyebrow">Potencial de retorno</p>
+            <h2>Lo que esta formación puede valer en el mercado.</h2>
+            <p style="margin-bottom:1.5rem;">Rangos reales del mercado laboral mexicano para perfiles tech. No son garantías, son posibilidades reales para quienes completan el programa.</p>
+            <div class="cards" style="margin-top:0;gap:0.7rem;">
+              <div class="card" style="display:flex;justify-content:space-between;align-items:center;padding:1rem 1.2rem;">
+                <div><div style="font-size:0.78rem;color:var(--muted);font-family:var(--font-mono);">Dev Junior → Mid · Etapa 1</div></div>
+                <div style="font-family:var(--font-head);font-size:1.05rem;font-weight:800;color:var(--accent);white-space:nowrap;">$15k–$30k</div>
+              </div>
+              <div class="card" style="display:flex;justify-content:space-between;align-items:center;padding:1rem 1.2rem;">
+                <div><div style="font-size:0.78rem;color:var(--muted);font-family:var(--font-mono);">Dev Mid → Senior / Freelance · Etapa 2</div></div>
+                <div style="font-family:var(--font-head);font-size:1.05rem;font-weight:800;color:var(--accent);white-space:nowrap;">$30k–$70k</div>
+              </div>
+              <div class="card" style="display:flex;justify-content:space-between;align-items:center;padding:1rem 1.2rem;">
+                <div><div style="font-size:0.78rem;color:var(--muted);font-family:var(--font-mono);">Arquitecto / Founder / Consultor · Etapa 3</div></div>
+                <div style="font-family:var(--font-head);font-size:1.05rem;font-weight:800;color:var(--accent);white-space:nowrap;">$70k–$150k+</div>
+              </div>
+            </div>
+            <p style="font-size:0.8rem;margin-top:1rem;">Rangos en MXN/mes. No representan ingresos garantizados.</p>
+          </div>
+          <div>
+            <p class="eyebrow">Convocatoria</p>
+            <h2>Cupos limitados. Acompañamiento real.</h2>
+            <p style="margin-bottom:1.5rem;">Abrimos una cohorte con capacidad reducida para garantizar code reviews reales y acompañamiento cercano por instructor.</p>
+            <div class="card" style="background:rgba(0,204,255,0.05);border-color:rgba(0,204,255,0.2);padding:1.5rem;margin-bottom:1rem;">
+              <div style="font-family:var(--font-mono);font-size:0.72rem;color:var(--accent);margin-bottom:0.5rem;text-transform:uppercase;letter-spacing:0.1em;">Estado actual</div>
+              <div style="display:flex;align-items:center;gap:0.6rem;">
+                <div style="width:10px;height:10px;background:var(--green);border-radius:999px;animation:pulse-dot 2s infinite;flex-shrink:0;"></div>
+                <span style="color:var(--text);font-weight:600;">Inscripciones activas</span>
+              </div>
+              <p style="font-size:0.85rem;margin-top:0.5rem;">Una vez cerrado el cupo, la siguiente apertura puede tardar semanas.</p>
+            </div>
+            <a href="checkout.html" class="btn btn-block">Asegurar mi lugar ahora</a>
+          </div>
         </div>
       </section>
 
+      <!-- FINAL CTA -->
       <section id="cta-final" class="section final-cta">
-        <div class="container narrow reveal">
-          <p class="eyebrow">Siguiente paso</p>
+        <div class="container narrow reveal" style="text-align:center;">
+          <p class="eyebrow" style="justify-content:center;">Siguiente paso</p>
           <h2 id="final-title">Construye la base técnica que te abre oportunidades reales.</h2>
-          <p id="final-subtitle">
-            Empieza hoy tu formación en DEV SYSTEM y desarrolla la capacidad de
-            crear software con criterio profesional.
-          </p>
-          <div class="cta-row">
+          <p id="final-subtitle" style="margin:1rem auto;max-width:55ch;">Empieza hoy tu formación en DEV SYSTEM y desarrolla la capacidad de crear software con criterio profesional. Pago mensual, sin compromiso.</p>
+          <div class="cta-row" style="justify-content:center;margin-top:2rem;">
             <a id="final-cta-primary" class="btn" href="checkout.html">Quiero unirme a DEV SYSTEM</a>
             <a id="final-cta-secondary" class="btn btn-ghost-light" href="login.html">Ya soy alumno</a>
           </div>
+          <p style="margin-top:1.5rem;font-size:0.82rem;color:var(--muted);">💳 Pago seguro vía Mercado Libre · ⭐ 4.9/5 en Google y Trustpilot</p>
         </div>
       </section>
+
     </main>
 
     <footer class="site-footer">
       <div class="container footer-wrap">
-        <p>DEV SYSTEM</p>
-        <p>Formación técnica premium en desarrollo de software</p>
+        <div>
+          <p style="font-weight:700;color:var(--text);margin-bottom:0.2rem;font-family:var(--font-head);">DEV SYSTEM</p>
+          <p>Escuela de ingeniería de software · México</p>
+        </div>
+        <nav class="footer-links">
+          <a href="#programa">Programa</a>
+          <a href="#certificaciones">Certificaciones</a>
+          <a href="checkout.html">Inscripción</a>
+          <a href="login.html">Portal</a>
+        </nav>
       </div>
     </footer>
+
   </body>
 </html>

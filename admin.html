@@ -1,0 +1,672 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DEV SYSTEM | Panel de Administración</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Sora:wght@400;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+    <style>
+      .admin-login-wrap {
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        padding: 2rem 1rem;
+      }
+      .admin-card {
+        width: min(480px, 100%);
+        background: #fff;
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        padding: 2rem;
+        box-shadow: var(--shadow);
+      }
+      .admin-card h1 {
+        font-size: 1.5rem;
+        margin-bottom: 0.3rem;
+      }
+      .admin-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 1rem;
+        padding: 1.2rem 0 1.4rem;
+        border-bottom: 1px solid var(--line);
+        margin-bottom: 2rem;
+      }
+      .admin-header h1 {
+        font-size: 1.3rem;
+        margin: 0;
+      }
+      .admin-body {
+        display: none;
+      }
+      .admin-body.visible {
+        display: block;
+      }
+      .stat-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 1rem;
+        margin-bottom: 2rem;
+      }
+      .stat-card {
+        background: #fff;
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        padding: 1.1rem;
+      }
+      .stat-card .stat-label {
+        font-size: 0.82rem;
+        color: var(--muted);
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        margin-bottom: 0.3rem;
+      }
+      .stat-card .stat-value {
+        font-size: 1.8rem;
+        font-weight: 800;
+        color: var(--text);
+        line-height: 1;
+      }
+      .section-title {
+        font-size: 1rem;
+        font-weight: 700;
+        color: var(--text);
+        margin-bottom: 1rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+      .activate-form {
+        background: #fff;
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        padding: 1.4rem;
+        margin-bottom: 2rem;
+      }
+      .activate-form h2 {
+        font-size: 1.1rem;
+        margin-bottom: 1rem;
+      }
+      .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr auto;
+        gap: 0.7rem;
+        align-items: end;
+      }
+      .form-group {
+        display: grid;
+        gap: 0.3rem;
+      }
+      .form-group label {
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: var(--text);
+      }
+      .form-group input,
+      .form-group select {
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        padding: 0.72rem 0.85rem;
+        font: inherit;
+        color: var(--text);
+        background: #fff;
+        font-size: 0.93rem;
+      }
+      .form-group input:focus,
+      .form-group select:focus {
+        outline: 2px solid var(--accent-soft);
+        border-color: var(--accent);
+      }
+      .btn-activate {
+        white-space: nowrap;
+        background: var(--accent);
+        padding: 0.72rem 1.2rem;
+        border-radius: 10px;
+        border: none;
+        color: #fff;
+        font: inherit;
+        font-weight: 700;
+        cursor: pointer;
+        font-size: 0.93rem;
+        transition: background 0.2s;
+      }
+      .btn-activate:hover { background: #1d4ed8; }
+      .activate-msg {
+        margin-top: 0.75rem;
+        font-size: 0.9rem;
+        font-weight: 600;
+        min-height: 1.2rem;
+        color: var(--accent);
+      }
+      .activate-msg.error { color: #dc2626; }
+      .activate-msg.success { color: #16a34a; }
+      .students-table {
+        width: 100%;
+        border-collapse: collapse;
+        background: #fff;
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        overflow: hidden;
+        font-size: 0.9rem;
+      }
+      .students-table th {
+        background: #f8fafc;
+        text-align: left;
+        padding: 0.75rem 1rem;
+        font-size: 0.8rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: var(--muted);
+        border-bottom: 1px solid var(--line);
+      }
+      .students-table td {
+        padding: 0.85rem 1rem;
+        border-bottom: 1px solid #f1f5f9;
+        color: var(--text);
+        vertical-align: middle;
+      }
+      .students-table tr:last-child td { border-bottom: 0; }
+      .students-table tr:hover td { background: #fafafa; }
+      .badge {
+        display: inline-block;
+        padding: 0.2rem 0.55rem;
+        border-radius: 999px;
+        font-size: 0.75rem;
+        font-weight: 700;
+      }
+      .badge-base    { background: #e8f0ff; color: #2563eb; }
+      .badge-pro     { background: #fef3c7; color: #b45309; }
+      .badge-expert  { background: #fce7f3; color: #be185d; }
+      .badge-paid    { background: #dcfce7; color: #16a34a; }
+      .btn-revoke {
+        background: none;
+        border: 1px solid #fca5a5;
+        color: #dc2626;
+        border-radius: 8px;
+        padding: 0.3rem 0.65rem;
+        font: inherit;
+        font-size: 0.8rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background 0.15s;
+      }
+      .btn-revoke:hover { background: #fef2f2; }
+      .empty-state {
+        text-align: center;
+        padding: 3rem 1rem;
+        color: var(--muted);
+      }
+      .search-bar {
+        margin-bottom: 1rem;
+        display: flex;
+        gap: 0.7rem;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+      .search-bar input {
+        flex: 1;
+        min-width: 200px;
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        padding: 0.65rem 0.9rem;
+        font: inherit;
+        font-size: 0.93rem;
+        color: var(--text);
+      }
+      .search-bar input:focus {
+        outline: 2px solid var(--accent-soft);
+        border-color: var(--accent);
+      }
+      .filter-select {
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        padding: 0.65rem 0.85rem;
+        font: inherit;
+        font-size: 0.93rem;
+        color: var(--text);
+        background: #fff;
+      }
+      .payments-section {
+        margin-top: 2rem;
+      }
+      .table-wrap {
+        overflow-x: auto;
+        border-radius: var(--radius);
+      }
+      @media (max-width: 760px) {
+        .form-row { grid-template-columns: 1fr; }
+        .stat-grid { grid-template-columns: 1fr 1fr; }
+      }
+      @media (max-width: 480px) {
+        .stat-grid { grid-template-columns: 1fr; }
+      }
+    </style>
+  </head>
+  <body>
+
+    <!-- LOGIN -->
+    <div id="admin-login-screen" class="admin-login-wrap">
+      <div class="admin-card">
+        <p class="eyebrow">DEV SYSTEM</p>
+        <h1>Panel de Administración</h1>
+        <p style="margin-top:0.5rem;">Acceso exclusivo para el administrador.</p>
+        <form id="admin-login-form" class="auth-form" style="margin-top:1.4rem;">
+          <label for="admin-pass">Contraseña</label>
+          <input id="admin-pass" type="password" placeholder="••••••••" autocomplete="current-password" />
+          <button type="submit" class="btn" style="margin-top:0.4rem;border-radius:10px;">Entrar al panel</button>
+          <p id="login-error" class="activate-msg error" style="display:none;"></p>
+        </form>
+      </div>
+    </div>
+
+    <!-- ADMIN PANEL -->
+    <div id="admin-body" class="admin-body">
+      <div class="container" style="padding-top:1.5rem; padding-bottom:4rem;">
+
+        <div class="admin-header">
+          <div>
+            <p class="eyebrow" style="margin-bottom:0.2rem;">DEV SYSTEM</p>
+            <h1>Panel de Administración</h1>
+          </div>
+          <div style="display:flex;gap:0.7rem;align-items:center;">
+            <a href="index.html" class="btn btn-ghost btn-sm">Ver sitio</a>
+            <button id="admin-logout" class="btn btn-sm" style="background:#dc2626;">Cerrar sesión</button>
+          </div>
+        </div>
+
+        <!-- STATS -->
+        <div class="stat-grid" id="stats-grid">
+          <div class="stat-card">
+            <div class="stat-label">Alumnos activos</div>
+            <div class="stat-value" id="stat-students">0</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Pagos registrados</div>
+            <div class="stat-value" id="stat-payments">0</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Meses vendidos</div>
+            <div class="stat-value" id="stat-months">0</div>
+          </div>
+        </div>
+
+        <!-- ACTIVATE FORM -->
+        <div class="activate-form">
+          <h2>✅ Activar acceso a alumno</h2>
+          <p style="margin-bottom:1rem;font-size:0.9rem;">Ingresa los datos del alumno que ya realizó su pago en Mercado Libre.</p>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="act-email">Correo del alumno</label>
+              <input id="act-email" type="email" placeholder="alumno@correo.com" />
+            </div>
+            <div class="form-group">
+              <label for="act-plan">Plan</label>
+              <select id="act-plan">
+                <option value="Plan Base">Plan Base</option>
+                <option value="Plan Profesional">Plan Profesional</option>
+                <option value="Plan Expert">Plan Expert</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="act-month">Mes que pagó</label>
+              <select id="act-month">
+                <option value="1">Mes 1 — $8,000</option>
+                <option value="2">Mes 2 — $12,666</option>
+                <option value="3">Mes 3 — $17,333</option>
+                <option value="4">Mes 4 — $22,000</option>
+                <option value="5">Mes 5 — $10,000</option>
+                <option value="6">Mes 6 — $16,666</option>
+                <option value="7">Mes 7 — $23,333</option>
+                <option value="8">Mes 8 — $30,000</option>
+                <option value="9">Mes 9 — $15,000</option>
+                <option value="10">Mes 10 — $26,666</option>
+                <option value="11">Mes 11 — $38,333</option>
+                <option value="12">Mes 12 — $50,000</option>
+              </select>
+            </div>
+            <button id="btn-activate" class="btn-activate">Activar acceso</button>
+          </div>
+          <p id="activate-msg" class="activate-msg"></p>
+        </div>
+
+        <!-- STUDENTS TABLE -->
+        <div class="section-title">👥 Alumnos con acceso activo</div>
+        <div class="search-bar">
+          <input id="search-input" type="text" placeholder="Buscar por correo o nombre..." />
+          <select id="filter-plan" class="filter-select">
+            <option value="">Todos los planes</option>
+            <option value="Plan Base">Plan Base</option>
+            <option value="Plan Profesional">Plan Profesional</option>
+            <option value="Plan Expert">Plan Expert</option>
+          </select>
+        </div>
+        <div class="table-wrap">
+          <table class="students-table">
+            <thead>
+              <tr>
+                <th>Correo</th>
+                <th>Plan activo</th>
+                <th>Meses pagados</th>
+                <th>Último mes</th>
+                <th>Cuenta creada</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody id="students-tbody"></tbody>
+          </table>
+          <div id="students-empty" class="empty-state" style="display:none;">
+            <p>Aún no hay alumnos activos.<br>Activa el primer acceso arriba.</p>
+          </div>
+        </div>
+
+        <!-- PAYMENTS TABLE -->
+        <div class="payments-section">
+          <div class="section-title" style="margin-bottom:1rem;">💳 Historial de pagos registrados</div>
+          <div class="table-wrap">
+            <table class="students-table">
+              <thead>
+                <tr>
+                  <th>Correo</th>
+                  <th>Plan</th>
+                  <th>Mes</th>
+                  <th>Monto</th>
+                  <th>Fecha activación</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody id="payments-tbody"></tbody>
+            </table>
+            <div id="payments-empty" class="empty-state" style="display:none;">
+              <p>No hay pagos registrados aún.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <script defer src="app-state.js"></script>
+    <script>
+    (function () {
+      var ADMIN_PASSWORD = "Polkmn/1";
+      var ADMIN_SESSION_KEY = "devsystem_admin_session";
+
+      var loginScreen = document.getElementById("admin-login-screen");
+      var adminBodyEl = document.getElementById("admin-body");
+      var loginForm   = document.getElementById("admin-login-form");
+      var loginError  = document.getElementById("login-error");
+      var adminPassEl = document.getElementById("admin-pass");
+      var adminLogout = document.getElementById("admin-logout");
+
+      function showPanel() {
+        loginScreen.style.display = "none";
+        adminBodyEl.classList.add("visible");
+        renderAll();
+      }
+
+      function showLogin() {
+        loginScreen.style.display = "";
+        adminBodyEl.classList.remove("visible");
+      }
+
+      // Check existing session
+      if (sessionStorage.getItem(ADMIN_SESSION_KEY) === "ok") {
+        showPanel();
+      }
+
+      loginForm.addEventListener("submit", function (e) {
+        e.preventDefault();
+        if (adminPassEl.value === ADMIN_PASSWORD) {
+          sessionStorage.setItem(ADMIN_SESSION_KEY, "ok");
+          loginError.style.display = "none";
+          showPanel();
+        } else {
+          loginError.textContent = "Contraseña incorrecta.";
+          loginError.style.display = "block";
+          adminPassEl.value = "";
+          adminPassEl.focus();
+        }
+      });
+
+      adminLogout.addEventListener("click", function () {
+        sessionStorage.removeItem(ADMIN_SESSION_KEY);
+        showLogin();
+      });
+
+      // ---- Activate ----
+      var actEmail  = document.getElementById("act-email");
+      var actPlan   = document.getElementById("act-plan");
+      var actMonth  = document.getElementById("act-month");
+      var btnActivate = document.getElementById("btn-activate");
+      var activateMsg = document.getElementById("activate-msg");
+
+      // Sync month options with plan
+      actPlan.addEventListener("change", function () {
+        var plan = actPlan.value;
+        var monthSelect = actMonth;
+        var monthRanges = {
+          "Plan Base":        [[1,"$8,000"],[2,"$12,666"],[3,"$17,333"],[4,"$22,000"]],
+          "Plan Profesional": [[5,"$10,000"],[6,"$16,666"],[7,"$23,333"],[8,"$30,000"]],
+          "Plan Expert":      [[9,"$15,000"],[10,"$26,666"],[11,"$38,333"],[12,"$50,000"]],
+        };
+        var opts = monthRanges[plan] || [];
+        monthSelect.innerHTML = "";
+        opts.forEach(function (o) {
+          var opt = document.createElement("option");
+          opt.value = String(o[0]);
+          opt.textContent = "Mes " + o[0] + " — " + o[1];
+          monthSelect.appendChild(opt);
+        });
+      });
+
+      btnActivate.addEventListener("click", function () {
+        var email = actEmail.value.trim().toLowerCase();
+        var monthId = Number(actMonth.value);
+        var plan = actPlan.value;
+
+        if (!email || email.indexOf("@") === -1) {
+          setMsg("Ingresa un correo válido.", "error");
+          return;
+        }
+
+        var result = window.DevSystemState.registerMonthlyPayment({
+          email: email,
+          monthId: monthId,
+          plan: plan,
+          fullName: "",
+          phone: "",
+        });
+
+        if (!result.ok) {
+          setMsg(result.message, "error");
+          return;
+        }
+
+        setMsg("✅ Acceso activado para " + email + " — Mes " + monthId + " (" + plan + ")", "success");
+        actEmail.value = "";
+        renderAll();
+      });
+
+      function setMsg(msg, type) {
+        activateMsg.textContent = msg;
+        activateMsg.className = "activate-msg " + (type || "");
+      }
+
+      // ---- Search & filter ----
+      var searchInput = document.getElementById("search-input");
+      var filterPlan  = document.getElementById("filter-plan");
+      searchInput.addEventListener("input", renderStudents);
+      filterPlan.addEventListener("change", renderStudents);
+
+      // ---- Render ----
+      function getStore() {
+        var raw = localStorage.getItem("devsystem_store_v3");
+        if (!raw) return { users: [], payments: [], progress: {} };
+        try { return JSON.parse(raw); } catch(e) { return { users: [], payments: [], progress: {} }; }
+      }
+
+      function saveStore(store) {
+        localStorage.setItem("devsystem_store_v3", JSON.stringify(store));
+      }
+
+      function renderAll() {
+        renderStats();
+        renderStudents();
+        renderPayments();
+      }
+
+      function renderStats() {
+        var store = getStore();
+        var paidEmails = {};
+        store.payments.forEach(function (p) {
+          if (p.status === "paid") paidEmails[p.email] = true;
+        });
+        document.getElementById("stat-students").textContent = Object.keys(paidEmails).length;
+        document.getElementById("stat-payments").textContent = store.payments.filter(function(p){ return p.status==="paid"; }).length;
+        var months = {};
+        store.payments.forEach(function (p) {
+          if (p.status === "paid") months[p.email + "_" + p.monthId] = true;
+        });
+        document.getElementById("stat-months").textContent = Object.keys(months).length;
+      }
+
+      function renderStudents() {
+        var store = getStore();
+        var search = searchInput.value.trim().toLowerCase();
+        var planFilter = filterPlan.value;
+
+        // Group payments by email
+        var byEmail = {};
+        store.payments.forEach(function (p) {
+          if (p.status !== "paid") return;
+          if (!byEmail[p.email]) byEmail[p.email] = [];
+          byEmail[p.email].push(p);
+        });
+
+        var rows = Object.keys(byEmail).map(function (email) {
+          var payments = byEmail[email];
+          payments.sort(function(a,b){ return b.monthId - a.monthId; });
+          var latest = payments[0];
+          var user = null;
+          for (var i = 0; i < store.users.length; i++) {
+            if (store.users[i].email === email) { user = store.users[i]; break; }
+          }
+          return {
+            email: email,
+            plan: latest.plan,
+            monthsPaid: payments.length,
+            latestMonth: latest.monthId,
+            hasAccount: !!user,
+            createdAt: user ? user.createdAt : null,
+          };
+        });
+
+        // Filter
+        rows = rows.filter(function (r) {
+          var matchSearch = !search || r.email.indexOf(search) >= 0;
+          var matchPlan   = !planFilter || r.plan === planFilter;
+          return matchSearch && matchPlan;
+        });
+
+        var tbody = document.getElementById("students-tbody");
+        var empty = document.getElementById("students-empty");
+        tbody.innerHTML = "";
+
+        if (rows.length === 0) {
+          empty.style.display = "";
+          return;
+        }
+        empty.style.display = "none";
+
+        rows.forEach(function (r) {
+          var tr = document.createElement("tr");
+          var planBadge = r.plan === "Plan Base" ? "badge-base" : r.plan === "Plan Profesional" ? "badge-pro" : "badge-expert";
+          var accountStatus = r.hasAccount
+            ? '<span class="badge badge-paid">Cuenta activa</span>'
+            : '<span style="font-size:0.8rem;color:var(--muted);">Sin cuenta aún</span>';
+          var createdAt = r.createdAt ? new Date(r.createdAt).toLocaleDateString("es-MX") : "—";
+          tr.innerHTML =
+            '<td>' + r.email + '</td>' +
+            '<td><span class="badge ' + planBadge + '">' + r.plan + '</span></td>' +
+            '<td>' + r.monthsPaid + '/12</td>' +
+            '<td>Mes ' + r.latestMonth + '</td>' +
+            '<td>' + accountStatus + '<br><span style="font-size:0.78rem;color:var(--muted);">' + createdAt + '</span></td>' +
+            '<td><button class="btn-revoke" data-email="' + r.email + '">Revocar acceso</button></td>';
+          tbody.appendChild(tr);
+        });
+
+        // Revoke buttons
+        tbody.querySelectorAll(".btn-revoke").forEach(function (btn) {
+          btn.addEventListener("click", function () {
+            var email = btn.getAttribute("data-email");
+            if (!confirm("¿Seguro que quieres revocar el acceso de " + email + "?\nSe eliminarán todos sus pagos y cuenta.")) return;
+            revokeAccess(email);
+          });
+        });
+      }
+
+      function renderPayments() {
+        var store = getStore();
+        var payments = store.payments.filter(function(p){ return p.status === "paid"; });
+        payments.sort(function(a,b){ return new Date(b.createdAt) - new Date(a.createdAt); });
+
+        var tbody = document.getElementById("payments-tbody");
+        var empty = document.getElementById("payments-empty");
+        tbody.innerHTML = "";
+
+        if (payments.length === 0) {
+          empty.style.display = "";
+          return;
+        }
+        empty.style.display = "none";
+
+        payments.forEach(function (p) {
+          var planBadge = p.plan === "Plan Base" ? "badge-base" : p.plan === "Plan Profesional" ? "badge-pro" : "badge-expert";
+          var date = p.createdAt ? new Date(p.createdAt).toLocaleDateString("es-MX") : "—";
+          var tr = document.createElement("tr");
+          tr.innerHTML =
+            '<td>' + p.email + '</td>' +
+            '<td><span class="badge ' + planBadge + '">' + p.plan + '</span></td>' +
+            '<td>Mes ' + p.monthId + '</td>' +
+            '<td>' + (p.amountLabel || "—") + '</td>' +
+            '<td>' + date + '</td>' +
+            '<td><button class="btn-revoke" data-payid="' + p.id + '">Eliminar</button></td>';
+          tbody.appendChild(tr);
+        });
+
+        tbody.querySelectorAll(".btn-revoke").forEach(function (btn) {
+          btn.addEventListener("click", function () {
+            var payId = btn.getAttribute("data-payid");
+            if (!confirm("¿Eliminar este pago del historial?")) return;
+            deletePayment(payId);
+          });
+        });
+      }
+
+      function revokeAccess(email) {
+        var store = getStore();
+        store.payments = store.payments.filter(function(p){ return p.email !== email; });
+        store.users    = store.users.filter(function(u){ return u.email !== email; });
+        if (store.progress[email]) delete store.progress[email];
+        saveStore(store);
+        renderAll();
+      }
+
+      function deletePayment(payId) {
+        var store = getStore();
+        store.payments = store.payments.filter(function(p){ return p.id !== payId; });
+        saveStore(store);
+        renderAll();
+      }
+
+    })();
+    </script>
+  </body>
+</html>

@@ -11,11 +11,11 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Sora:wght@400;600;700;800&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="styles.css" />
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
     <script defer src="platform-config.js"></script>
     <script defer src="cloud-state.js"></script>
     <script defer src="app-state.js"></script>
@@ -24,7 +24,7 @@
   <body>
     <header class="site-header">
       <div class="container nav-wrap">
-        <a href="index.html" class="brand">DEV SYSTEM</a>
+        <a href="index.html" class="brand"><img src="logo.png" alt="DEV SYSTEM Academy" class="brand-logo"></a>
         <nav class="nav">
           <a href="index.html#programa">Programa</a>
           <a href="index.html#fases">Fases</a>
@@ -57,19 +57,22 @@
 
           <div class="plan-grid">
             <article class="card plan-card selected" data-plan="Plan Base">
-              <p class="plan-level">Etapa 1</p>
-              <h3>Plan Base · $5,000 a $7,700 MXN / mes</h3>
-              <p>Meses 1 al 4: fundamentos, web, backend inicial y datos.</p>
+              <p class="plan-level">Etapa 1 · Meses 1-4</p>
+              <h3>Plan Base</h3>
+              <p>Desde <strong>$8,000</strong> hasta <strong>$22,000 MXN / mes</strong></p>
+              <p>Fundamentos web, JavaScript, backend inicial y bases de datos.</p>
             </article>
             <article class="card plan-card" data-plan="Plan Profesional">
-              <p class="plan-level">Etapa 2</p>
-              <h3>Plan Profesional · $8,600 a $11,300 MXN / mes</h3>
-              <p>Meses 5 al 8: arquitectura, cloud, calidad y deploy.</p>
+              <p class="plan-level">Etapa 2 · Meses 5-8</p>
+              <h3>Plan Profesional</h3>
+              <p>Desde <strong>$10,000</strong> hasta <strong>$30,000 MXN / mes</strong></p>
+              <p>Arquitectura API, cloud, calidad técnica y deploy.</p>
             </article>
             <article class="card plan-card" data-plan="Plan Expert">
-              <p class="plan-level">Etapa 3</p>
-              <h3>Plan Expert · $12,200 a $15,000 MXN / mes</h3>
-              <p>Meses 9 al 12: automatizacion, escalabilidad y SaaS final.</p>
+              <p class="plan-level">Etapa 3 · Meses 9-12</p>
+              <h3>Plan Expert</h3>
+              <p>Desde <strong>$15,000</strong> hasta <strong>$50,000 MXN / mes</strong></p>
+              <p>Automatización, escalabilidad, integración inteligente y SaaS final.</p>
             </article>
           </div>
         </section>
@@ -98,10 +101,9 @@
             <strong>Portal de alumnos</strong>
           </div>
           <p class="small">
-            Si Stripe está configurado, pasarás a checkout seguro y volverás para
-            activar tu cuenta. Si no, funciona en modo local de prueba.
+            Al confirmar, serás redirigido a Mercado Libre para completar tu pago de forma segura. Una vez pagado, activa tu cuenta desde aquí.
           </p>
-          <button id="checkout-button" class="btn btn-block">Confirmar pago mensual</button>
+          <button id="checkout-button" class="btn btn-block">Pagar con Mercado Libre</button>
           <p id="checkout-message" class="notice" aria-live="polite"></p>
           <a class="btn btn-ghost btn-block" href="login.html">Ya tengo cuenta</a>
         </aside>
