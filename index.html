@@ -1,822 +1,670 @@
-<!doctype html>
-<html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>DEV SYSTEM | Escuela de Ingeniería de Software</title>
-    <meta name="description" content="Programa profesional para aprender a construir software completo desde cero. Certificaciones avaladas por la industria." />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Sora:wght@400;600;700;800&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="styles.css" />
-    <style>
-      /* ---- HERO OVERRIDE ---- */
-      .hero { padding: 0; min-height: 100vh; display: flex; align-items: center; position: relative; overflow: hidden; }
-      #matrix-canvas { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0.13; pointer-events: none; z-index: 0; }
-      .hero-inner { position: relative; z-index: 2; display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; padding: 7rem 0 6rem; width: 100%; }
-      .hero-copy { max-width: 580px; }
-      .hero-visual-wrap { display: flex; justify-content: center; align-items: center; }
-
-      /* Developer illustration */
-      .dev-illustration { width: 100%; max-width: 500px; filter: drop-shadow(0 0 40px rgba(0,204,255,0.15)); }
-
-      /* Floating cards on illustration */
-      .float-card {
-        position: absolute;
-        background: rgba(13,21,38,0.92);
-        border: 1px solid rgba(0,204,255,0.25);
-        border-radius: 10px;
-        padding: 0.6rem 0.9rem;
-        font-family: var(--font-mono);
-        font-size: 0.75rem;
-        color: var(--accent);
-        backdrop-filter: blur(8px);
-        animation: float 4s ease-in-out infinite;
-      }
-      .float-card:nth-child(2) { animation-delay: 1.5s; }
-      .float-card:nth-child(3) { animation-delay: 3s; }
-      @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
-
-      .illus-wrap { position: relative; display: inline-block; }
-
-      /* SVG icons for cards/sections */
-      .icon-box {
-        width: 44px; height: 44px; border-radius: 10px;
-        background: var(--accent-soft);
-        border: 1px solid rgba(0,204,255,0.2);
-        display: flex; align-items: center; justify-content: center;
-        flex-shrink: 0;
-      }
-      .icon-box svg { width: 22px; height: 22px; }
-
-      /* Company logos */
-      .logo-item {
-        display: flex; align-items: center; justify-content: center;
-        padding: 0.6rem 1.4rem;
-        background: rgba(255,255,255,0.03);
-        border: 1px solid var(--line);
-        border-radius: 10px;
-        transition: border-color 0.2s, background 0.2s;
-        min-width: 120px;
-      }
-      .logo-item:hover { border-color: rgba(0,204,255,0.2); background: rgba(0,204,255,0.04); }
-      .logo-item svg { height: 22px; width: auto; fill: var(--muted); opacity: 0.6; transition: opacity 0.2s; }
-      .logo-item:hover svg { opacity: 0.9; }
-      .logo-item span { font-family: var(--font-head); font-weight: 700; font-size: 0.95rem; color: var(--muted); opacity: 0.55; transition: opacity 0.2s; letter-spacing: -0.02em; }
-      .logo-item:hover span { opacity: 0.85; }
-      .trust-logos-grid { display: flex; flex-wrap: wrap; gap: 0.75rem; justify-content: center; margin-top: 1.5rem; }
-
-      /* Cert badge SVG */
-      .cert-visual { width: 80px; height: 80px; margin: 0 auto 1rem; }
-
-      /* Problem cards with SVG icons */
-      .problem-card-icon { width: 48px; height: 48px; margin-bottom: 1rem; }
-
-      /* Method steps */
-      .method-step { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 1rem; padding: 2rem 1.2rem; }
-      .method-num { font-family: var(--font-mono); font-size: 0.7rem; color: var(--accent); font-weight: 700; letter-spacing: 0.1em; margin-bottom: -0.5rem; }
-
-      /* Para quién icons */
-      .list-icon { display: inline-flex; align-items: center; justify-content: center; width: 20px; height: 20px; border-radius: 999px; flex-shrink: 0; }
-      .list-icon.yes { background: rgba(0,230,118,0.15); }
-      .list-icon.no  { background: rgba(255,77,106,0.12); }
-
-      @media (max-width: 860px) {
-        .hero-inner { grid-template-columns: 1fr; padding: 5rem 0 4rem; }
-        .hero-visual-wrap { display: none; }
-        .hero { min-height: auto; }
-      }
-    </style>
-    <script defer src="ab-test.js"></script>
-  </head>
-  <body>
-
-    <!-- HEADER -->
-    <header class="site-header">
-      <div class="container nav-wrap">
-        <a href="#inicio" class="brand">
-          <img src="logo.png" alt="DEV SYSTEM Academy" class="brand-logo">
-        </a>
-        <nav class="nav">
-          <a href="#programa">Programa</a>
-          <a href="#metodologia">Metodología</a>
-          <a href="#certificaciones">Certificaciones</a>
-          <a href="#inversion">Inversión</a>
-          <a href="#testimonios">Testimonios</a>
-          <a href="portal.html">Portal</a>
-        </nav>
-        <a href="checkout.html" class="btn btn-sm">Inscribirme</a>
-      </div>
-    </header>
-
-    <main id="inicio">
-
-      <!-- ===== HERO ===== -->
-      <section class="hero" id="hero-section">
-        <canvas id="matrix-canvas"></canvas>
-        <div class="container">
-          <div class="hero-inner">
-
-            <!-- Copy -->
-            <div class="hero-copy reveal">
-              <div class="hero-badge">Inscripciones abiertas · Generación 2025</div>
-              <p class="eyebrow">Escuela de ingeniería de software</p>
-              <h1 id="hero-title">Aprende a construir software de <span class="accent-word">verdad.</span></h1>
-              <p id="hero-subtitle" class="lead">Domina cada capa del stack: frontend, backend, bases de datos e infraestructura. Construye productos funcionales con criterio técnico profesional.</p>
-              <ul class="value-list">
-                <li>Entiende el sistema completo, no solo cómo usar herramientas.</li>
-                <li>Proyectos reales con estándares de la industria tecnológica.</li>
-                <li>Certificación mensual avalada por instructores de empresas reales.</li>
-                <li>Formación pensada para ascender en tu carrera o crear productos.</li>
-              </ul>
-              <div class="cta-row">
-                <a id="hero-cta-primary" class="btn" href="checkout.html">Quiero empezar ahora</a>
-                <a id="hero-cta-secondary" class="btn btn-ghost" href="#programa">Ver el programa</a>
-              </div>
-              <p class="cta-note" style="margin-top:1.2rem;">
-                <svg style="display:inline;vertical-align:middle;margin-right:4px;" width="14" height="14" viewBox="0 0 24 24" fill="#ffb300"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-                4.9/5 · +380 alumnos · Pago mensual sin compromiso
-              </p>
-            </div>
-
-            <!-- Developer illustration -->
-            <div class="hero-visual-wrap reveal">
-              <div class="illus-wrap">
-                <!-- Developer at desk SVG illustration -->
-                <svg class="dev-illustration" viewBox="0 0 480 420" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <!-- Desk -->
-                  <rect x="40" y="310" width="400" height="18" rx="4" fill="#0d1f3c"/>
-                  <rect x="70" y="328" width="16" height="60" rx="3" fill="#0a1628"/>
-                  <rect x="394" y="328" width="16" height="60" rx="3" fill="#0a1628"/>
-                  <!-- Monitor stand -->
-                  <rect x="218" y="265" width="44" height="48" rx="3" fill="#0a1628"/>
-                  <rect x="190" y="308" width="100" height="8" rx="3" fill="#0d1f3c"/>
-                  <!-- Monitor -->
-                  <rect x="90" y="100" width="300" height="170" rx="12" fill="#060d1a"/>
-                  <rect x="90" y="100" width="300" height="170" rx="12" stroke="#00ccff" stroke-width="1.5" stroke-opacity="0.3"/>
-                  <rect x="98" y="108" width="284" height="154" rx="8" fill="#080e1a"/>
-                  <!-- Code on screen -->
-                  <rect x="110" y="120" width="80" height="6" rx="3" fill="#c792ea" opacity="0.8"/>
-                  <rect x="198" y="120" width="50" height="6" rx="3" fill="#00ccff" opacity="0.8"/>
-                  <rect x="256" y="120" width="30" height="6" rx="3" fill="#00e676" opacity="0.7"/>
-                  <rect x="120" y="136" width="60" height="5" rx="2.5" fill="#546e7a" opacity="0.6"/>
-                  <rect x="188" y="136" width="90" height="5" rx="2.5" fill="#00ccff" opacity="0.6"/>
-                  <rect x="286" y="136" width="40" height="5" rx="2.5" fill="#ffb300" opacity="0.7"/>
-                  <rect x="120" y="150" width="140" height="5" rx="2.5" fill="#7a90b8" opacity="0.5"/>
-                  <rect x="120" y="164" width="50" height="5" rx="2.5" fill="#c792ea" opacity="0.7"/>
-                  <rect x="178" y="164" width="80" height="5" rx="2.5" fill="#00e676" opacity="0.7"/>
-                  <rect x="266" y="164" width="60" height="5" rx="2.5" fill="#7a90b8" opacity="0.5"/>
-                  <rect x="120" y="178" width="30" height="5" rx="2.5" fill="#00ccff" opacity="0.8"/>
-                  <rect x="158" y="178" width="100" height="5" rx="2.5" fill="#7a90b8" opacity="0.5"/>
-                  <rect x="120" y="192" width="70" height="5" rx="2.5" fill="#c792ea" opacity="0.6"/>
-                  <rect x="198" y="192" width="50" height="5" rx="2.5" fill="#00ccff" opacity="0.7"/>
-                  <rect x="120" y="206" width="110" height="5" rx="2.5" fill="#00e676" opacity="0.6"/>
-                  <rect x="238" y="206" width="80" height="5" rx="2.5" fill="#7a90b8" opacity="0.4"/>
-                  <rect x="120" y="220" width="40" height="5" rx="2.5" fill="#ffb300" opacity="0.6"/>
-                  <rect x="168" y="220" width="70" height="5" rx="2.5" fill="#00ccff" opacity="0.5"/>
-                  <!-- Cursor blink -->
-                  <rect x="120" y="234" width="8" height="10" rx="1" fill="#00ccff" opacity="0.9">
-                    <animate attributeName="opacity" values="0.9;0;0.9" dur="1.2s" repeatCount="indefinite"/>
-                  </rect>
-                  <!-- Keyboard -->
-                  <rect x="130" y="320" width="220" height="28" rx="6" fill="#0a1628" stroke="#1a2840" stroke-width="1"/>
-                  <rect x="137" y="326" width="14" height="10" rx="2" fill="#0f1e35"/>
-                  <rect x="155" y="326" width="14" height="10" rx="2" fill="#0f1e35"/>
-                  <rect x="173" y="326" width="14" height="10" rx="2" fill="#0f1e35"/>
-                  <rect x="191" y="326" width="14" height="10" rx="2" fill="#0f1e35"/>
-                  <rect x="209" y="326" width="14" height="10" rx="2" fill="#0f1e35"/>
-                  <rect x="227" y="326" width="14" height="10" rx="2" fill="#0f1e35"/>
-                  <rect x="245" y="326" width="14" height="10" rx="2" fill="#0f1e35"/>
-                  <rect x="263" y="326" width="14" height="10" rx="2" fill="#0f1e35"/>
-                  <rect x="281" y="326" width="14" height="10" rx="2" fill="#0f1e35"/>
-                  <rect x="152" y="340" width="80" height="4" rx="2" fill="#0d1a2e" opacity="0.5"/>
-                  <!-- Mouse -->
-                  <rect x="365" y="318" width="30" height="22" rx="8" fill="#0a1628" stroke="#1a2840" stroke-width="1"/>
-                  <line x1="380" y1="318" x2="380" y2="332" stroke="#1a2840" stroke-width="1"/>
-                  <!-- Coffee mug -->
-                  <rect x="68" y="294" width="26" height="18" rx="4" fill="#0a1628" stroke="#1a2840" stroke-width="1"/>
-                  <path d="M94 299 Q104 299 104 305 Q104 311 94 311" stroke="#1a2840" stroke-width="1.5" fill="none"/>
-                  <rect x="72" y="290" width="18" height="5" rx="2" fill="#00ccff" opacity="0.3"/>
-                  <!-- Plant -->
-                  <rect x="400" y="284" width="20" height="26" rx="4" fill="#0a1628" stroke="#1a2840" stroke-width="1"/>
-                  <ellipse cx="410" cy="282" rx="10" ry="14" fill="#0d2d1a"/>
-                  <ellipse cx="403" cy="276" rx="7" ry="10" fill="#0f3320"/>
-                  <ellipse cx="417" cy="276" rx="7" ry="10" fill="#0f3320"/>
-                  <line x1="410" y1="272" x2="410" y2="285" stroke="#1a4a2a" stroke-width="1.5"/>
-                  <!-- Developer person -->
-                  <!-- Chair -->
-                  <rect x="198" y="340" width="84" height="8" rx="3" fill="#0a1628"/>
-                  <rect x="210" y="348" width="10" height="35" rx="3" fill="#0a1628"/>
-                  <rect x="260" y="348" width="10" height="35" rx="3" fill="#0a1628"/>
-                  <rect x="200" y="358" width="80" height="40" rx="6" fill="#0d1f3c" stroke="#1a2840" stroke-width="1"/>
-                  <rect x="203" y="335" width="74" height="26" rx="6" fill="#0d1f3c" stroke="#1a2840" stroke-width="1"/>
-                  <!-- Body -->
-                  <rect x="215" y="270" width="50" height="68" rx="8" fill="#1a3a6e"/>
-                  <!-- Arms -->
-                  <rect x="175" y="278" width="44" height="16" rx="8" fill="#1a3a6e"/>
-                  <rect x="261" y="278" width="44" height="16" rx="8" fill="#1a3a6e"/>
-                  <!-- Hands on keyboard -->
-                  <ellipse cx="195" cy="323" rx="12" ry="8" fill="#c8a882"/>
-                  <ellipse cx="285" cy="323" rx="12" ry="8" fill="#c8a882"/>
-                  <!-- Neck -->
-                  <rect x="229" y="255" width="22" height="20" rx="5" fill="#c8a882"/>
-                  <!-- Head -->
-                  <ellipse cx="240" cy="240" rx="32" ry="30" fill="#c8a882"/>
-                  <!-- Hair -->
-                  <path d="M210 230 Q212 210 240 208 Q268 210 270 230 Q265 215 240 213 Q215 215 210 230Z" fill="#2c1810"/>
-                  <!-- Eyes -->
-                  <ellipse cx="230" cy="238" rx="4" ry="4.5" fill="#1a1a2e"/>
-                  <ellipse cx="250" cy="238" rx="4" ry="4.5" fill="#1a1a2e"/>
-                  <ellipse cx="231" cy="237" rx="1.5" ry="1.5" fill="white"/>
-                  <ellipse cx="251" cy="237" rx="1.5" ry="1.5" fill="white"/>
-                  <!-- Glasses -->
-                  <rect x="222" y="233" width="16" height="11" rx="4" fill="none" stroke="#00ccff" stroke-width="1.5" opacity="0.8"/>
-                  <rect x="242" y="233" width="16" height="11" rx="4" fill="none" stroke="#00ccff" stroke-width="1.5" opacity="0.8"/>
-                  <line x1="238" y1="238" x2="242" y2="238" stroke="#00ccff" stroke-width="1.5" opacity="0.8"/>
-                  <!-- Logo on shirt -->
-                  <text x="228" y="298" font-family="monospace" font-size="7" fill="#00ccff" opacity="0.8">&lt;/&gt;</text>
-                  <!-- Headphones -->
-                  <path d="M210 232 Q210 208 240 208 Q270 208 270 232" stroke="#1a3a6e" stroke-width="4" fill="none"/>
-                  <rect x="205" y="230" width="10" height="14" rx="4" fill="#1a3a6e"/>
-                  <rect x="265" y="230" width="10" height="14" rx="4" fill="#1a3a6e"/>
-                  <!-- Monitor glow on face -->
-                  <ellipse cx="240" cy="238" rx="32" ry="30" fill="rgba(0,204,255,0.04)"/>
-                  <!-- Screen glow -->
-                  <rect x="90" y="100" width="300" height="170" rx="12" fill="none" stroke="#00ccff" stroke-width="1" opacity="0.4">
-                    <animate attributeName="opacity" values="0.4;0.15;0.4" dur="3s" repeatCount="indefinite"/>
-                  </rect>
-                </svg>
-
-                <!-- Floating stat cards -->
-                <div class="float-card" style="top:8%;right:-10%;box-shadow:0 4px 20px rgba(0,204,255,0.12);">
-                  <div style="color:var(--green);margin-bottom:2px;">✓ Build passed</div>
-                  <div style="color:var(--muted);">Tests: 24/24</div>
-                </div>
-                <div class="float-card" style="bottom:28%;left:-12%;box-shadow:0 4px 20px rgba(0,204,255,0.12);">
-                  <div style="color:var(--accent);margin-bottom:2px;">🎓 Certificado</div>
-                  <div style="color:var(--muted);">Mes 3 · Aprobado</div>
-                </div>
-                <div class="float-card" style="bottom:5%;right:5%;font-size:0.7rem;box-shadow:0 4px 20px rgba(0,204,255,0.12);">
-                  <div style="color:var(--amber);">⚡ Deploy live</div>
-                  <div style="color:var(--muted);">prod · 99.9% uptime</div>
-                </div>
-              </div>
-            </div>
-
-          </div>
-        </div>
-      </section>
-
-      <!-- STATS -->
-      <div class="stats-bar">
-        <div class="container">
-          <div class="stats-grid">
-            <div class="stat-item"><div class="stat-num">380+</div><div class="stat-label">Alumnos activos</div></div>
-            <div class="stat-item"><div class="stat-num">12</div><div class="stat-label">Meses de formación</div></div>
-            <div class="stat-item"><div class="stat-num">4.9★</div><div class="stat-label">Calificación promedio</div></div>
-            <div class="stat-item"><div class="stat-num">94%</div><div class="stat-label">Tasa de completación</div></div>
-          </div>
-        </div>
-      </div>
-
-      <!-- EMPRESAS -->
-      <section class="section" style="padding:3.5rem 0;">
-        <div class="container">
-          <p class="trust-label">Alumnos trabajando y capacitados en empresas como</p>
-          <div class="trust-logos-grid">
-            <!-- BBVA -->
-            <div class="logo-item">
-              <svg viewBox="0 0 120 40" xmlns="http://www.w3.org/2000/svg"><text x="10" y="28" font-family="Arial Black,sans-serif" font-weight="900" font-size="22" fill="currentColor">BBVA</text></svg>
-            </div>
-            <!-- Telcel -->
-            <div class="logo-item">
-              <svg viewBox="0 0 120 40" xmlns="http://www.w3.org/2000/svg"><text x="5" y="28" font-family="Arial,sans-serif" font-weight="700" font-size="20" fill="currentColor">Telcel</text></svg>
-            </div>
-            <!-- Telmex -->
-            <div class="logo-item">
-              <svg viewBox="0 0 130 40" xmlns="http://www.w3.org/2000/svg"><text x="5" y="28" font-family="Arial,sans-serif" font-weight="700" font-size="20" fill="currentColor">Telmex</text></svg>
-            </div>
-            <!-- Mercado Libre -->
-            <div class="logo-item" style="min-width:150px;">
-              <svg viewBox="0 0 200 40" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="20" cy="20" r="18" fill="#FFE600" opacity="0.9"/>
-                <text x="18" y="26" font-family="Arial,sans-serif" font-weight="900" font-size="16" fill="#333" text-anchor="middle">ML</text>
-                <text x="50" y="26" font-family="Arial,sans-serif" font-weight="700" font-size="16" fill="currentColor">Mercado Libre</text>
-              </svg>
-            </div>
-            <!-- Softtek -->
-            <div class="logo-item">
-              <svg viewBox="0 0 140 40" xmlns="http://www.w3.org/2000/svg"><text x="5" y="28" font-family="Arial,sans-serif" font-weight="700" font-size="20" fill="currentColor">Softtek</text></svg>
-            </div>
-            <!-- Globant -->
-            <div class="logo-item">
-              <svg viewBox="0 0 130 40" xmlns="http://www.w3.org/2000/svg"><text x="5" y="28" font-family="Arial,sans-serif" font-weight="700" font-size="20" fill="currentColor">Globant</text></svg>
-            </div>
-            <!-- Wizeline -->
-            <div class="logo-item">
-              <svg viewBox="0 0 140 40" xmlns="http://www.w3.org/2000/svg"><text x="5" y="28" font-family="Arial,sans-serif" font-weight="700" font-size="20" fill="currentColor">Wizeline</text></svg>
-            </div>
-            <!-- GBM -->
-            <div class="logo-item">
-              <svg viewBox="0 0 80 40" xmlns="http://www.w3.org/2000/svg"><text x="5" y="28" font-family="Arial Black,sans-serif" font-weight="900" font-size="22" fill="currentColor">GBM</text></svg>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- EL PROBLEMA -->
-      <section class="section section-alt">
-        <div class="container narrow reveal">
-          <p class="eyebrow">El problema</p>
-          <h2>Saber usar herramientas no es lo mismo que entender sistemas.</h2>
-          <p style="margin-bottom:2rem;">El mercado está saturado de desarrolladores que copian código sin criterio técnico. Las empresas buscan perfiles que entiendan arquitectura, tomen decisiones y resuelvan problemas reales.</p>
-          <div class="cards cards-3">
-            <article class="card">
-              <svg class="problem-card-icon" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <rect width="48" height="48" rx="10" fill="rgba(0,204,255,0.06)"/>
-                <path d="M16 24 C16 18 20 14 24 14 C28 14 32 18 32 24" stroke="#00ccff" stroke-width="2" stroke-linecap="round"/>
-                <circle cx="24" cy="28" r="4" stroke="#00ccff" stroke-width="2"/>
-                <path d="M20 36 L28 36" stroke="#00ccff" stroke-width="2" stroke-linecap="round"/>
-                <path d="M14 30 L10 34 M34 30 L38 34" stroke="#ff4d6a" stroke-width="1.5" stroke-linecap="round"/>
-              </svg>
-              <h3>Dependencia tecnológica</h3>
-              <p>Copian soluciones sin entender el porqué. Cuando cambia el framework, se quedan sin base.</p>
-            </article>
-            <article class="card">
-              <svg class="problem-card-icon" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <rect width="48" height="48" rx="10" fill="rgba(0,204,255,0.06)"/>
-                <rect x="10" y="10" width="12" height="12" rx="3" stroke="#00ccff" stroke-width="2"/>
-                <rect x="26" y="10" width="12" height="12" rx="3" stroke="#7a90b8" stroke-width="2" stroke-dasharray="3 2"/>
-                <rect x="10" y="26" width="12" height="12" rx="3" stroke="#7a90b8" stroke-width="2" stroke-dasharray="3 2"/>
-                <rect x="26" y="26" width="12" height="12" rx="3" stroke="#00ccff" stroke-width="2"/>
-                <line x1="22" y1="16" x2="26" y2="16" stroke="#ff4d6a" stroke-width="2" stroke-linecap="round"/>
-                <line x1="16" y1="22" x2="16" y2="26" stroke="#ff4d6a" stroke-width="2" stroke-linecap="round"/>
-                <line x1="32" y1="22" x2="32" y2="26" stroke="#ff4d6a" stroke-width="2" stroke-linecap="round"/>
-              </svg>
-              <h3>Conocimiento fragmentado</h3>
-              <p>Saben hacer frontend o backend por separado, pero no entienden cómo se conecta el sistema completo.</p>
-            </article>
-            <article class="card">
-              <svg class="problem-card-icon" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <rect width="48" height="48" rx="10" fill="rgba(0,204,255,0.06)"/>
-                <polyline points="10,36 18,24 26,28 34,16 38,20" stroke="#ff4d6a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                <polyline points="10,36 18,24 26,28 34,16" stroke="#00ccff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="3 2" opacity="0.4"/>
-                <line x1="10" y1="38" x2="38" y2="38" stroke="#1a2840" stroke-width="1.5"/>
-                <line x1="10" y1="10" x2="10" y2="38" stroke="#1a2840" stroke-width="1.5"/>
-              </svg>
-              <h3>Estancamiento profesional</h3>
-              <p>Sin profundidad técnica es difícil ascender, cobrar más o lanzar productos propios.</p>
-            </article>
-          </div>
-        </div>
-      </section>
-
-      <!-- PROGRAMA -->
-      <section id="programa" class="section">
-        <div class="container split">
-          <div class="reveal">
-            <p class="eyebrow">La solución</p>
-            <h2>DEV SYSTEM: formación integral para entender y construir.</h2>
-            <p style="margin-bottom:1.5rem;">Un sistema de formación en 12 meses donde aprendes arquitectura, lógica, datos, despliegue y producto en un recorrido progresivo, práctico y exigente. Cada mes un curso. Cada curso un proyecto real.</p>
-            <div class="checklist">
-              <div class="checklist-item">
-                <div class="check-icon">
-                  <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M1.5 5.5L3.5 7.5L8.5 2.5" stroke="#00ccff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                </div>
-                <p>No contenido aislado: formación por sistema completo, capa por capa.</p>
-              </div>
-              <div class="checklist-item">
-                <div class="check-icon">
-                  <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M1.5 5.5L3.5 7.5L8.5 2.5" stroke="#00ccff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                </div>
-                <p>No teoría vacía: cada mes termina con un proyecto aplicado y entregado.</p>
-              </div>
-              <div class="checklist-item">
-                <div class="check-icon">
-                  <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M1.5 5.5L3.5 7.5L8.5 2.5" stroke="#00ccff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                </div>
-                <p>No memorización: construyes criterio técnico transferible a cualquier stack.</p>
-              </div>
-              <div class="checklist-item">
-                <div class="check-icon">
-                  <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M1.5 5.5L3.5 7.5L8.5 2.5" stroke="#00ccff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                </div>
-                <p>Instructores activos en la industria, no teóricos de academia.</p>
-              </div>
-              <div class="checklist-item">
-                <div class="check-icon">
-                  <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M1.5 5.5L3.5 7.5L8.5 2.5" stroke="#00ccff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                </div>
-                <p>Comunidad privada con acceso directo a instructores y compañeros.</p>
-              </div>
-            </div>
-          </div>
-          <div class="reveal">
-            <p class="eyebrow">Lo que obtienes</p>
-            <div class="cards" style="margin-top:0.8rem;">
-              <article class="card" style="display:flex;gap:0.9rem;align-items:flex-start;">
-                <div class="icon-box">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="#00ccff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><polyline points="8 21 12 17 16 21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
-                </div>
-                <div><h3>Proyectos reales cada mes</h3><p>Construyes algo funcional al final de cada curso, no ejercicios de práctica.</p></div>
-              </article>
-              <article class="card" style="display:flex;gap:0.9rem;align-items:flex-start;">
-                <div class="icon-box">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="#00ccff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/><line x1="12" y1="11" x2="12" y2="17"/><line x1="9" y1="14" x2="15" y2="14"/></svg>
-                </div>
-                <div><h3>Portafolio técnico profesional</h3><p>12 proyectos documentados y desplegados para mostrar a empleadores o clientes.</p></div>
-              </article>
-              <article class="card" style="display:flex;gap:0.9rem;align-items:flex-start;">
-                <div class="icon-box">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="#00ccff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg>
-                </div>
-                <div><h3>Certificación mensual</h3><p>Aprobación técnica por instructor senior. Verificable en LinkedIn y CV.</p></div>
-              </article>
-              <article class="card" style="display:flex;gap:0.9rem;align-items:flex-start;">
-                <div class="icon-box">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="#00ccff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
-                </div>
-                <div><h3>Guía de ingresos y producto</h3><p>Freelance, empleo tech o lanzar tu propio SaaS. Te damos el mapa.</p></div>
-              </article>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- METODOLOGÍA -->
-      <section id="metodologia" class="section section-alt">
-        <div class="container reveal">
-          <p class="eyebrow">Cómo lo hacemos</p>
-          <h2>Metodología basada en industria, no en aula.</h2>
-          <p style="max-width:60ch;margin-bottom:2.5rem;">Trabajamos con la misma dinámica que equipos de software profesionales: sprints semanales, code reviews, entregables y retroalimentación directa.</p>
-          <div class="cards cards-4">
-            <article class="card method-step">
-              <div class="method-num">PASO 01</div>
-              <div class="icon-box" style="width:56px;height:56px;">
-                <svg viewBox="0 0 24 24" fill="none" stroke="#00ccff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:28px;height:28px;"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
-              </div>
-              <h3>Clases técnicas</h3>
-              <p>Teoría aplicada con código real. Sin relleno, sin diapositivas interminables.</p>
-            </article>
-            <article class="card method-step">
-              <div class="method-num">PASO 02</div>
-              <div class="icon-box" style="width:56px;height:56px;">
-                <svg viewBox="0 0 24 24" fill="none" stroke="#00ccff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:28px;height:28px;"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
-              </div>
-              <h3>Laboratorios</h3>
-              <p>Implementas lo aprendido con casos similares a los de equipos reales.</p>
-            </article>
-            <article class="card method-step">
-              <div class="method-num">PASO 03</div>
-              <div class="icon-box" style="width:56px;height:56px;">
-                <svg viewBox="0 0 24 24" fill="none" stroke="#00ccff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:28px;height:28px;"><circle cx="18" cy="18" r="3"/><circle cx="6" cy="6" r="3"/><path d="M13 6h3a2 2 0 0 1 2 2v7"/><line x1="6" y1="9" x2="6" y2="21"/></svg>
-              </div>
-              <h3>Code review</h3>
-              <p>Tu código es revisado por un instructor. Aprendes a pensar como desarrollador senior.</p>
-            </article>
-            <article class="card method-step">
-              <div class="method-num">PASO 04</div>
-              <div class="icon-box" style="width:56px;height:56px;">
-                <svg viewBox="0 0 24 24" fill="none" stroke="#00ccff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:28px;height:28px;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-              </div>
-              <h3>Entrega y certificación</h3>
-              <p>Presentas tu proyecto, recibes retroalimentación y obtienes tu certificado.</p>
-            </article>
-          </div>
-        </div>
-      </section>
-
-      <!-- ROADMAP -->
-      <section id="fases" class="section">
-        <div class="container reveal">
-          <p class="eyebrow">Roadmap de formación</p>
-          <h2>12 meses · 3 etapas · 1 sistema completo</h2>
-          <p style="margin-bottom:2rem;max-width:60ch;">Cada etapa construye sobre la anterior. Al mes 12 tienes dominio completo del stack y un portafolio listo para el mercado.</p>
-          <div class="timeline">
-            <article class="phase">
-              <p class="phase-meta">Etapa 1 · Meses 1-4</p>
-              <h3>Plan Base — Fundamentos del Stack</h3>
-              <p>HTML/CSS avanzado, JavaScript profesional, backend inicial con Node.js y bases de datos relacionales. Aprendes a construir y conectar cada capa.</p>
-              <span class="phase-price">Desde $8,000 hasta $22,000 MXN / mes</span>
-            </article>
-            <article class="phase">
-              <p class="phase-meta">Etapa 2 · Meses 5-8</p>
-              <h3>Plan Profesional — Arquitectura y Producción</h3>
-              <p>Arquitectura de APIs RESTful, frontend avanzado con React, despliegue en cloud (AWS/GCP), testing automatizado y calidad de código.</p>
-              <span class="phase-price">Desde $10,000 hasta $30,000 MXN / mes</span>
-            </article>
-            <article class="phase">
-              <p class="phase-meta">Etapa 3 · Meses 9-12</p>
-              <h3>Plan Expert — Producto, Escala e Inteligencia</h3>
-              <p>Integración de IA, automatización, escalabilidad de sistemas, diseño de producto y construcción de un SaaS completo como proyecto final.</p>
-              <span class="phase-price">Desde $15,000 hasta $50,000 MXN / mes</span>
-            </article>
-          </div>
-        </div>
-      </section>
-
-      <!-- CERTIFICACIONES -->
-      <section id="certificaciones" class="section section-alt">
-        <div class="container split reveal">
-          <div>
-            <p class="eyebrow">Certificaciones</p>
-            <h2>Cada mes aprobado, un certificado real.</h2>
-            <p style="margin-bottom:1.5rem;">Para obtener la certificación mensual debes presentar y aprobar tu proyecto ante un instructor activo. No es automática: se gana con trabajo. Por eso vale.</p>
-            <div class="checklist">
-              <div class="checklist-item">
-                <div class="check-icon">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="#00ccff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:10px;height:10px;"><path d="M20 6L9 17l-5-5"/></svg>
-                </div>
-                <p><strong style="color:var(--text);">Certificado digital verificable</strong> — Con código QR y URL pública para LinkedIn y CV.</p>
-              </div>
-              <div class="checklist-item">
-                <div class="check-icon">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="#00ccff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:10px;height:10px;"><path d="M20 6L9 17l-5-5"/></svg>
-                </div>
-                <p><strong style="color:var(--text);">Avalado por instructores activos</strong> — Profesionales que trabajan hoy en empresas tecnológicas reales.</p>
-              </div>
-              <div class="checklist-item">
-                <div class="check-icon">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="#00ccff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:10px;height:10px;"><path d="M20 6L9 17l-5-5"/></svg>
-                </div>
-                <p><strong style="color:var(--text);">Progresión acumulativa</strong> — Cada certificado demuestra un nivel técnico superior al anterior.</p>
-              </div>
-              <div class="checklist-item">
-                <div class="check-icon">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="#00ccff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:10px;height:10px;"><path d="M20 6L9 17l-5-5"/></svg>
-                </div>
-                <p><strong style="color:var(--text);">Certificado final de graduación</strong> — Al completar los 12 meses con 85%+ de avance.</p>
-              </div>
-            </div>
-          </div>
-          <div>
-            <div class="card" style="text-align:center;padding:2.5rem 2rem;">
-              <!-- Badge SVG illustration -->
-              <svg class="cert-visual" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="40" cy="36" r="28" fill="rgba(0,204,255,0.07)" stroke="rgba(0,204,255,0.3)" stroke-width="1.5"/>
-                <circle cx="40" cy="36" r="20" fill="rgba(0,204,255,0.06)" stroke="rgba(0,204,255,0.2)" stroke-width="1"/>
-                <path d="M40 20 L43 30 L54 30 L45 37 L48 47 L40 41 L32 47 L35 37 L26 30 L37 30 Z" fill="#00ccff" opacity="0.85"/>
-                <line x1="33" y1="64" x2="40" y2="56" stroke="rgba(255,179,0,0.7)" stroke-width="2"/>
-                <line x1="47" y1="64" x2="40" y2="56" stroke="rgba(255,179,0,0.7)" stroke-width="2"/>
-                <rect x="26" y="63" width="28" height="10" rx="3" fill="rgba(255,179,0,0.15)" stroke="rgba(255,179,0,0.4)" stroke-width="1"/>
-              </svg>
-              <div class="cert-badge" style="margin:0 auto 1.2rem;justify-content:center;">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="#ffb300"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-                CERTIFICACIÓN MENSUAL +$3,000 MXN
-              </div>
-              <h3 style="font-size:1.05rem;margin-bottom:0.8rem;">Examen de Certificación</h3>
-              <p style="font-size:0.87rem;margin-bottom:1.2rem;">Costo adicional de <strong style="color:var(--amber);">$3,000 MXN por mes certificado</strong>. Incluye revisión de proyecto por instructor senior, retroalimentación escrita y emisión del certificado digital verificable.</p>
-              <div style="border-top:1px solid var(--line);padding-top:1rem;"><p style="font-size:0.8rem;">Opcional, pero altamente recomendada para validar tu perfil ante empleadores.</p></div>
-            </div>
-            <div class="card" style="margin-top:1rem;padding:1.2rem;display:flex;gap:0.8rem;align-items:flex-start;">
-              <div class="icon-box" style="flex-shrink:0;">
-                <svg viewBox="0 0 24 24" fill="none" stroke="#00ccff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><line x1="12" y1="12" x2="12" y2="16"/><line x1="10" y1="14" x2="14" y2="14"/></svg>
-              </div>
-              <div><h3 style="font-size:0.95rem;margin-bottom:0.3rem;">Capacitación empresarial</h3><p style="font-size:0.85rem;">Programas para equipos que quieren ascender a sus desarrolladores internos. <strong style="color:var(--accent);">Contáctanos para cotizaciones corporativas.</strong></p></div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- INVERSIÓN -->
-      <section id="inversion" class="section">
-        <div class="container reveal">
-          <p class="eyebrow" style="justify-content:center;">Inversión</p>
-          <h2 style="text-align:center;margin-bottom:0.5rem;">Inversión progresiva por etapa y mes</h2>
-          <p style="text-align:center;max-width:55ch;margin:0 auto 3rem;">Pagas solo el mes que estás cursando. Sin contratos anuales. El precio sube conforme avanzas porque el valor del contenido también sube.</p>
-          <div class="cards cards-3" style="margin-top:0;">
-            <div class="pricing-card">
-              <p class="plan-level">Etapa 1 · Meses 1–4</p>
-              <h3 style="margin-bottom:0.3rem;">Plan Base</h3>
-              <p style="font-size:0.85rem;">Fundamentos completos del stack de desarrollo.</p>
-              <div><div class="price-from">Desde</div><div class="price-main">$8,000</div><div class="price-to">hasta $22,000 MXN / mes</div></div>
-              <ul class="price-features">
-                <li>4 cursos mensuales</li><li>Proyectos aplicados</li><li>Acceso a comunidad</li><li>Certificación opcional +$3,000</li>
-              </ul>
-              <a href="checkout.html" class="btn btn-ghost btn-block" style="margin-top:auto;">Empezar aquí</a>
-            </div>
-            <div class="pricing-card featured">
-              <p class="plan-level">Etapa 2 · Meses 5–8</p>
-              <h3 style="margin-bottom:0.3rem;">Plan Profesional</h3>
-              <p style="font-size:0.85rem;">Arquitectura, cloud y calidad de código de producción.</p>
-              <div><div class="price-from">Desde</div><div class="price-main">$10,000</div><div class="price-to">hasta $30,000 MXN / mes</div></div>
-              <ul class="price-features">
-                <li>4 cursos mensuales</li><li>Code reviews semanales</li><li>Deploy en cloud incluido</li><li>Certificación opcional +$3,000</li>
-              </ul>
-              <a href="checkout.html" class="btn btn-block">Continuar formación</a>
-            </div>
-            <div class="pricing-card">
-              <p class="plan-level">Etapa 3 · Meses 9–12</p>
-              <h3 style="margin-bottom:0.3rem;">Plan Expert</h3>
-              <p style="font-size:0.85rem;">IA, automatización, escalabilidad y SaaS final.</p>
-              <div><div class="price-from">Desde</div><div class="price-main">$15,000</div><div class="price-to">hasta $50,000 MXN / mes</div></div>
-              <ul class="price-features">
-                <li>4 cursos mensuales</li><li>Mentoría personalizada</li><li>Proyecto SaaS completo</li><li>Certificado de graduación</li>
-              </ul>
-              <a href="checkout.html" class="btn btn-ghost btn-block">Nivel experto</a>
-            </div>
-          </div>
-          <p style="text-align:center;margin-top:1.5rem;font-size:0.85rem;color:var(--muted);">Pago mensual vía Mercado Libre · Sin contratos · Cancela cuando quieras</p>
-        </div>
-      </section>
-
-      <!-- PARA QUIÉN -->
-      <section class="section section-alt">
-        <div class="container split reveal">
-          <article>
-            <p class="eyebrow">Para quién es</p>
-            <h2>Sí es para ti si...</h2>
-            <ul class="value-list" style="margin-top:1.2rem;">
-              <li>Quieres entender cómo funciona el software en profundidad.</li>
-              <li>Buscas ascender en tu empleo como desarrollador o analista.</li>
-              <li>Tienes una idea y quieres construirla tú mismo.</li>
-              <li>Buscas empleos tech de $30k–$100k+ MXN.</li>
-              <li>Puedes comprometer 8–12 horas semanales de práctica.</li>
-              <li>Prefieres aprender haciendo, no memorizando definiciones.</li>
-            </ul>
-          </article>
-          <article>
-            <p class="eyebrow">Para quién no es</p>
-            <h2>No es para ti si...</h2>
-            <ul class="value-list" style="margin-top:1.2rem;">
-              <li>Solo buscas un certificado sin aprender de verdad.</li>
-              <li>Esperas resultados inmediatos sin proceso técnico.</li>
-              <li>Prefieres copiar soluciones sin comprender fundamentos.</li>
-              <li>No puedes comprometer tiempo semanal constante.</li>
-              <li>Buscas un curso grabado para ver a 2x y olvidar.</li>
-            </ul>
-          </article>
-        </div>
-      </section>
-
-      <!-- TESTIMONIOS -->
-      <section id="testimonios" class="section">
-        <div class="container reveal">
-          <p class="eyebrow">Validación</p>
-          <h2>Lo que dicen quienes ya están adentro.</h2>
-          <div style="display:flex;flex-wrap:wrap;gap:1rem;margin:1.5rem 0 2.5rem;">
-            <div class="card" style="display:flex;align-items:center;gap:1rem;padding:1rem 1.4rem;">
-              <div><div class="stars">★★★★★</div><div style="font-family:var(--font-mono);font-size:1.2rem;font-weight:800;color:var(--text);">4.9</div></div>
-              <div><div class="review-platform">Google Reviews</div><div style="font-size:0.78rem;color:var(--muted);margin-top:0.2rem;">+120 reseñas</div></div>
-            </div>
-            <div class="card" style="display:flex;align-items:center;gap:1rem;padding:1rem 1.4rem;">
-              <div><div class="stars">★★★★★</div><div style="font-family:var(--font-mono);font-size:1.2rem;font-weight:800;color:var(--text);">4.8</div></div>
-              <div><div class="review-platform">Trustpilot</div><div style="font-size:0.78rem;color:var(--muted);margin-top:0.2rem;">+85 reseñas</div></div>
-            </div>
-            <div class="card" style="display:flex;align-items:center;gap:1rem;padding:1rem 1.4rem;">
-              <div><div class="stars">★★★★★</div><div style="font-family:var(--font-mono);font-size:1.2rem;font-weight:800;color:var(--text);">4.9</div></div>
-              <div><div class="review-platform">LinkedIn</div><div style="font-size:0.78rem;color:var(--muted);margin-top:0.2rem;">+200 recomendaciones</div></div>
-            </div>
-          </div>
-          <div class="cards cards-3" style="margin-top:0;">
-            <article class="card testimonial">
-              <div class="review-source"><div class="stars">★★★★★</div><div class="review-platform">Google Reviews</div></div>
-              <blockquote>"Antes hacía interfaces sin entender qué pasaba detrás. Ahora puedo construir y lanzar proyectos completos. El mes 5 me cambió la perspectiva."</blockquote>
-              <div class="testimonial-author"><div class="author-avatar">MR</div><div class="author-info"><strong>Mariana R.</strong><span>Diseñadora → Frontend Dev · BBVA</span></div></div>
-            </article>
-            <article class="card testimonial">
-              <div class="review-source"><div class="stars">★★★★★</div><div class="review-platform">Trustpilot</div></div>
-              <blockquote>"En 6 meses me dieron un ascenso con aumento de $15,000. La certificación fue lo que inclinó la balanza en mi evaluación de desempeño."</blockquote>
-              <div class="testimonial-author"><div class="author-avatar">CT</div><div class="author-info"><strong>Carlos T.</strong><span>Analista → Dev Senior · Softtek</span></div></div>
-            </article>
-            <article class="card testimonial">
-              <div class="review-source"><div class="stars">★★★★★</div><div class="review-platform">LinkedIn</div></div>
-              <blockquote>"El proyecto del mes 12 fue lo que presenté a mis primeros inversores. DEV SYSTEM no es un curso, es una incubadora técnica disfrazada de escuela."</blockquote>
-              <div class="testimonial-author"><div class="author-avatar">AP</div><div class="author-info"><strong>Andrea P.</strong><span>Emprendedora · Fundadora de SaaS</span></div></div>
-            </article>
-            <article class="card testimonial">
-              <div class="review-source"><div class="stars">★★★★★</div><div class="review-platform">Google Reviews</div></div>
-              <blockquote>"Mi empresa me envió a DEV SYSTEM para ascender al área de arquitectura. La metodología de code review fue exactamente lo que necesitaba."</blockquote>
-              <div class="testimonial-author"><div class="author-avatar">JL</div><div class="author-info"><strong>Jorge L.</strong><span>Dev Mid → Arquitecto · Telcel</span></div></div>
-            </article>
-            <article class="card testimonial">
-              <div class="review-source"><div class="stars">★★★★★</div><div class="review-platform">Trustpilot</div></div>
-              <blockquote>"Después de la Etapa 2 conseguí trabajo en Wizeline con el doble de salario. La certificación en mi LinkedIn fue clave en todas mis entrevistas."</blockquote>
-              <div class="testimonial-author"><div class="author-avatar">RV</div><div class="author-info"><strong>Ricardo V.</strong><span>Junior → Mid Dev · Wizeline</span></div></div>
-            </article>
-            <article class="card testimonial">
-              <div class="review-source"><div class="stars">★★★★★</div><div class="review-platform">LinkedIn</div></div>
-              <blockquote>"Como Product Manager quería entender a mi equipo técnico. DEV SYSTEM me dio el lenguaje y la comprensión para ser un mejor líder de producto."</blockquote>
-              <div class="testimonial-author"><div class="author-avatar">SM</div><div class="author-info"><strong>Sofía M.</strong><span>Product Manager · GBM</span></div></div>
-            </article>
-          </div>
-        </div>
-      </section>
-
-      <!-- RETORNO + CONVOCATORIA -->
-      <section class="section section-alt">
-        <div class="container split reveal">
-          <div>
-            <p class="eyebrow">Potencial de retorno</p>
-            <h2>Lo que esta formación puede valer en el mercado.</h2>
-            <p style="margin-bottom:1.5rem;">Rangos reales del mercado laboral mexicano para perfiles tech. Posibilidades reales para quienes completan el programa con disciplina.</p>
-            <div class="cards" style="margin-top:0;gap:0.7rem;">
-              <div class="card" style="display:flex;justify-content:space-between;align-items:center;padding:1rem 1.2rem;">
-                <div>
-                  <div style="font-size:0.78rem;color:var(--muted);font-family:var(--font-mono);">Dev Junior → Mid · Etapa 1</div>
-                </div>
-                <div style="font-family:var(--font-head);font-size:1.05rem;font-weight:800;color:var(--accent);white-space:nowrap;">$15k–$30k</div>
-              </div>
-              <div class="card" style="display:flex;justify-content:space-between;align-items:center;padding:1rem 1.2rem;">
-                <div><div style="font-size:0.78rem;color:var(--muted);font-family:var(--font-mono);">Dev Mid → Senior / Freelance · Etapa 2</div></div>
-                <div style="font-family:var(--font-head);font-size:1.05rem;font-weight:800;color:var(--accent);white-space:nowrap;">$30k–$70k</div>
-              </div>
-              <div class="card" style="display:flex;justify-content:space-between;align-items:center;padding:1rem 1.2rem;">
-                <div><div style="font-size:0.78rem;color:var(--muted);font-family:var(--font-mono);">Arquitecto / Founder / Consultor · Etapa 3</div></div>
-                <div style="font-family:var(--font-head);font-size:1.05rem;font-weight:800;color:var(--accent);white-space:nowrap;">$70k–$150k+</div>
-              </div>
-            </div>
-            <p style="font-size:0.8rem;margin-top:1rem;">Rangos en MXN/mes. No representan ingresos garantizados.</p>
-          </div>
-          <div>
-            <p class="eyebrow">Inscríbete ahora</p>
-            <h2>Cupos limitados. Acompañamiento real.</h2>
-            <p style="margin-bottom:1.5rem;">Abrimos una nueva generación con capacidad reducida para garantizar code reviews reales y acompañamiento cercano por instructor.</p>
-            <div class="card" style="background:rgba(0,204,255,0.05);border-color:rgba(0,204,255,0.2);padding:1.5rem;margin-bottom:1rem;">
-              <div style="font-family:var(--font-mono);font-size:0.72rem;color:var(--accent);margin-bottom:0.5rem;text-transform:uppercase;letter-spacing:0.1em;">Estado actual</div>
-              <div style="display:flex;align-items:center;gap:0.6rem;">
-                <div style="width:10px;height:10px;background:var(--green);border-radius:999px;animation:pulse-dot 2s infinite;flex-shrink:0;"></div>
-                <span style="color:var(--text);font-weight:600;">Inscripciones activas</span>
-              </div>
-              <p style="font-size:0.85rem;margin-top:0.5rem;">Una vez cerrado el cupo, la siguiente apertura puede tardar semanas.</p>
-            </div>
-            <a href="checkout.html" class="btn btn-block">Asegurar mi lugar ahora</a>
-          </div>
-        </div>
-      </section>
-
-      <!-- FINAL CTA -->
-      <section id="cta-final" class="section final-cta">
-        <div class="container narrow reveal" style="text-align:center;">
-          <p class="eyebrow" style="justify-content:center;">Siguiente paso</p>
-          <h2 id="final-title">Construye la base técnica que te abre oportunidades reales.</h2>
-          <p id="final-subtitle" style="margin:1rem auto;max-width:55ch;">Empieza hoy tu formación en DEV SYSTEM y desarrolla la capacidad de crear software con criterio profesional. Pago mensual, sin compromiso.</p>
-          <div class="cta-row" style="justify-content:center;margin-top:2rem;">
-            <a id="final-cta-primary" class="btn" href="checkout.html">Quiero unirme a DEV SYSTEM</a>
-            <a id="final-cta-secondary" class="btn btn-ghost-light" href="login.html">Ya soy alumno</a>
-          </div>
-          <p style="margin-top:1.5rem;font-size:0.82rem;color:var(--muted);">Pago seguro vía Mercado Libre · 4.9/5 en Google y Trustpilot</p>
-        </div>
-      </section>
-
-    </main>
-
-    <footer class="site-footer">
-      <div class="container footer-wrap">
-        <div>
-          <p style="font-weight:700;color:var(--text);margin-bottom:0.2rem;font-family:var(--font-head);">DEV SYSTEM ACADEMY</p>
-          <p>Escuela de ingeniería de software · México</p>
-        </div>
-        <nav class="footer-links">
-          <a href="#programa">Programa</a>
-          <a href="#certificaciones">Certificaciones</a>
-          <a href="checkout.html">Inscripción</a>
-          <a href="login.html">Portal</a>
-        </nav>
-      </div>
-    </footer>
-
-    <!-- MATRIX RAIN SCRIPT -->
-    <script>
-    (function() {
-      var canvas = document.getElementById('matrix-canvas');
-      var ctx = canvas.getContext('2d');
-      var chars = '01アイウエオカキクケコサシスセソタチツテトナニヌネノ{}[]()<>/\\|=+-*&^%$#@!;:,.?ABCDEFGHIJKLMNabcdefghijklmn';
-      var fontSize = 13;
-      var columns, drops;
-
-      function resize() {
-        canvas.width = canvas.offsetWidth;
-        canvas.height = canvas.offsetHeight;
-        columns = Math.floor(canvas.width / fontSize);
-        drops = new Array(columns).fill(1);
-      }
-
-      function draw() {
-        ctx.fillStyle = 'rgba(8, 14, 26, 0.05)';
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-        ctx.font = fontSize + 'px JetBrains Mono, monospace';
-        for (var i = 0; i < drops.length; i++) {
-          var char = chars[Math.floor(Math.random() * chars.length)];
-          var brightness = Math.random();
-          if (brightness > 0.95) {
-            ctx.fillStyle = '#ffffff';
-          } else if (brightness > 0.7) {
-            ctx.fillStyle = '#00ccff';
-          } else {
-            ctx.fillStyle = 'rgba(0, 204, 255, 0.35)';
+<!DOCTYPE html>
+<html class="dark" lang="es">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>DEV SYSTEM ACADEMY | Escuela de Ingeniería de Software</title>
+  <meta name="description" content="Programa profesional para aprender a construir software completo desde cero. Certificaciones avaladas por la industria. México."/>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "on-secondary": "#223240",
+            "surface-container-lowest": "#010e24",
+            "primary-container": "#00183c",
+            "on-tertiary": "#003919",
+            "surface-variant": "#27354c",
+            "on-error": "#690005",
+            "primary-fixed-dim": "#adc7ff",
+            "on-surface-variant": "#c5c6cd",
+            "secondary-fixed": "#d4e4f6",
+            "surface-tint": "#adc7ff",
+            "secondary-fixed-dim": "#b8c8da",
+            "surface-bright": "#2c3951",
+            "on-primary": "#002e68",
+            "tertiary-fixed": "#83fba5",
+            "on-primary-fixed": "#001a41",
+            "background": "#041329",
+            "error-container": "#93000a",
+            "outline": "#8f9097",
+            "inverse-surface": "#d6e3ff",
+            "surface-container-high": "#1c2a41",
+            "error": "#ffb4ab",
+            "on-primary-fixed-variant": "#004493",
+            "on-tertiary-fixed": "#00210c",
+            "surface": "#041329",
+            "surface-container-low": "#0d1c32",
+            "secondary": "#b8c8da",
+            "inverse-on-surface": "#233148",
+            "tertiary-container": "#001e0a",
+            "primary": "#adc7ff",
+            "on-tertiary-container": "#01954c",
+            "primary-fixed": "#d8e2ff",
+            "outline-variant": "#44474d",
+            "on-secondary-fixed-variant": "#394857",
+            "surface-container-highest": "#27354c",
+            "on-tertiary-fixed-variant": "#005227",
+            "on-error-container": "#ffdad6",
+            "on-secondary-container": "#a7b7c8",
+            "inverse-primary": "#005bc0",
+            "surface-dim": "#041329",
+            "on-primary-container": "#167eff",
+            "tertiary": "#66dd8b",
+            "tertiary-fixed-dim": "#66dd8b",
+            "on-background": "#d6e3ff",
+            "on-surface": "#d6e3ff",
+            "on-secondary-fixed": "#0d1d2a",
+            "surface-container": "#112036",
+            "secondary-container": "#394857"
+          },
+          borderRadius: {
+            "DEFAULT": "0.125rem",
+            "lg": "0.25rem",
+            "xl": "0.5rem",
+            "full": "0.75rem"
+          },
+          fontFamily: {
+            "headline": ["Space Grotesk"],
+            "body": ["Inter"],
+            "label": ["Inter"]
           }
-          ctx.fillText(char, i * fontSize, drops[i] * fontSize);
-          if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
-          drops[i]++;
         }
       }
+    }
+  </script>
+  <style>
+    .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+    .glass-nav { background: rgba(4, 19, 41, 0.75); backdrop-filter: blur(24px); }
+    .hero-gradient { background: radial-gradient(circle at 50% -20%, #167eff2a 0%, #041329 65%); }
+    .ghost-border { outline: 1px solid rgba(143,144,151,0.15); }
+    .technical-glow { border-top: 2px solid #adc7ff; }
+    .glass-card { background: rgba(28,42,65,0.6); backdrop-filter: blur(24px); }
+  </style>
+</head>
+<body class="bg-surface text-on-surface font-body selection:bg-primary-container selection:text-primary">
 
-      resize();
-      window.addEventListener('resize', resize);
-      setInterval(draw, 50);
-    })();
-    </script>
+  <!-- NAV -->
+  <nav class="fixed top-0 w-full z-50 flex justify-between items-center px-6 md:px-12 py-4 glass-nav shadow-[0_20px_40px_rgba(0,0,0,0.3)]">
+    <a href="#inicio" class="flex items-center gap-3">
+      <img src="logo.png" alt="DEV SYSTEM ACADEMY" class="h-9 w-auto" style="filter:drop-shadow(0 0 8px rgba(173,199,255,0.4))"/>
+      <span class="text-base font-bold tracking-tight text-[#adc7ff] font-headline hidden sm:block">DEV SYSTEM ACADEMY</span>
+    </a>
+    <div class="hidden md:flex items-center space-x-8">
+      <a class="text-[#a7b7c8] hover:text-[#adc7ff] transition-colors font-headline tracking-tight text-sm" href="#programa">Programa</a>
+      <a class="text-[#a7b7c8] hover:text-[#adc7ff] transition-colors font-headline tracking-tight text-sm" href="#metodologia">Metodología</a>
+      <a class="text-[#a7b7c8] hover:text-[#adc7ff] transition-colors font-headline tracking-tight text-sm" href="#certificaciones">Certificaciones</a>
+      <a class="text-[#a7b7c8] hover:text-[#adc7ff] transition-colors font-headline tracking-tight text-sm" href="#inversion">Inversión</a>
+      <a class="text-[#a7b7c8] hover:text-[#adc7ff] transition-colors font-headline tracking-tight text-sm" href="#testimonios">Testimonios</a>
+      <a class="text-[#a7b7c8] hover:text-[#adc7ff] transition-colors font-headline tracking-tight text-sm" href="portal.html">Portal</a>
+    </div>
+    <a href="checkout.html" class="bg-gradient-to-r from-primary to-on-primary-container text-on-primary-fixed font-bold px-5 py-2.5 rounded-lg text-sm hover:scale-105 active:scale-95 transition-transform">
+      Inscribirme
+    </a>
+  </nav>
 
-  </body>
+  <main id="inicio" class="pt-20">
+
+    <!-- HERO -->
+    <section class="hero-gradient min-h-screen flex flex-col items-center justify-center text-center px-6 relative overflow-hidden">
+      <div class="max-w-5xl mx-auto space-y-8 relative z-10">
+        <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-surface-container-high ghost-border">
+          <span class="material-symbols-outlined text-tertiary text-lg" style="font-variation-settings:'FILL' 1;">verified</span>
+          <span class="text-xs font-label uppercase tracking-[0.2em] font-semibold text-secondary">Escuela Premium de Ingeniería · México</span>
+        </div>
+        <h1 class="font-headline text-5xl md:text-7xl font-bold tracking-tighter text-on-surface leading-[0.95]">
+          Aprende a construir<br/>software de <span class="text-primary">verdad.</span>
+        </h1>
+        <p class="max-w-2xl mx-auto text-on-surface-variant text-lg md:text-xl font-light leading-relaxed">
+          Domina cada capa del stack: frontend, backend, bases de datos e infraestructura.
+          Construye productos funcionales con criterio técnico profesional.
+        </p>
+        <div class="flex flex-col md:flex-row items-center justify-center gap-6 pt-4">
+          <a href="checkout.html" class="bg-gradient-to-r from-primary to-on-primary-container text-on-primary-fixed px-10 py-4 rounded-lg font-black text-lg shadow-lg hover:scale-105 transition-transform">
+            Quiero empezar ahora
+          </a>
+          <div class="flex flex-col items-start gap-1">
+            <div class="flex items-center gap-1 text-tertiary">
+              <span class="material-symbols-outlined text-xl" style="font-variation-settings:'FILL' 1;">star</span>
+              <span class="material-symbols-outlined text-xl" style="font-variation-settings:'FILL' 1;">star</span>
+              <span class="material-symbols-outlined text-xl" style="font-variation-settings:'FILL' 1;">star</span>
+              <span class="material-symbols-outlined text-xl" style="font-variation-settings:'FILL' 1;">star</span>
+              <span class="material-symbols-outlined text-xl" style="font-variation-settings:'FILL' 1;">star</span>
+              <span class="ml-2 font-bold text-on-surface">4.9/5</span>
+            </div>
+            <span class="text-xs font-label text-on-secondary-container uppercase tracking-wider">Google Reviews · Trustpilot</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Company logos -->
+      <div class="w-full max-w-5xl mt-28 px-6 relative z-10">
+        <p class="text-center font-label text-[10px] uppercase tracking-[0.3em] text-on-secondary-container mb-8">Alumnos trabajando y capacitados en empresas como</p>
+        <div class="flex flex-wrap justify-center items-center gap-10 md:gap-16 opacity-50 hover:opacity-80 transition-opacity">
+          <span class="font-headline font-black text-xl text-on-secondary-container tracking-tighter hover:text-white transition-colors cursor-default">BBVA</span>
+          <span class="font-headline font-black text-xl text-on-secondary-container tracking-tighter hover:text-white transition-colors cursor-default">TELCEL</span>
+          <span class="font-headline font-black text-xl text-on-secondary-container tracking-tighter hover:text-white transition-colors cursor-default">TELMEX</span>
+          <span class="font-headline font-black text-xl text-on-secondary-container tracking-tighter hover:text-white transition-colors cursor-default">MERCADO LIBRE</span>
+          <span class="font-headline font-black text-xl text-on-secondary-container tracking-tighter hover:text-white transition-colors cursor-default">SOFTTEK</span>
+          <span class="font-headline font-black text-xl text-on-secondary-container tracking-tighter hover:text-white transition-colors cursor-default">GLOBANT</span>
+          <span class="font-headline font-black text-xl text-on-secondary-container tracking-tighter hover:text-white transition-colors cursor-default">WIZELINE</span>
+          <span class="font-headline font-black text-xl text-on-secondary-container tracking-tighter hover:text-white transition-colors cursor-default">GBM</span>
+        </div>
+        <p class="text-center mt-6 text-on-surface-variant font-label text-sm italic">+380 alumnos activos escalando sus carreras.</p>
+      </div>
+    </section>
+
+    <!-- STATS BENTO -->
+    <section class="py-24 px-6 md:px-12 max-w-7xl mx-auto">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="md:col-span-2 bg-surface-container-low rounded-xl p-12 flex flex-col justify-between min-h-[280px] hover:bg-surface-container transition-colors">
+          <div class="space-y-4">
+            <span class="font-label text-tertiary text-xs uppercase tracking-widest font-bold">Rendimiento académico</span>
+            <h2 class="font-headline text-4xl font-bold tracking-tight text-on-surface">94% Tasa de completación</h2>
+          </div>
+          <p class="text-on-surface-variant max-w-md">Nuestro programa está diseñado para intensidad y enfoque. No solo enseñamos sintaxis; construimos el criterio técnico requerido para resolver problemas complejos.</p>
+        </div>
+        <div class="bg-primary-container rounded-xl p-12 flex flex-col justify-center items-center text-center space-y-4 hover:scale-[1.02] transition-transform">
+          <span class="text-6xl font-headline font-black text-primary">380+</span>
+          <span class="font-label text-on-primary-container text-sm uppercase tracking-widest font-bold">Alumnos activos</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- EL PROBLEMA -->
+    <section class="py-24 bg-surface-container-low px-6 md:px-12">
+      <div class="max-w-7xl mx-auto">
+        <div class="mb-16 space-y-4">
+          <span class="text-tertiary font-label text-xs uppercase tracking-[0.4em] font-bold">El problema</span>
+          <h2 class="font-headline text-4xl md:text-5xl font-bold tracking-tighter text-on-surface">Saber usar herramientas no es lo mismo que entender sistemas.</h2>
+          <p class="text-on-surface-variant max-w-2xl">El mercado está saturado de desarrolladores que copian código sin criterio técnico. Las empresas buscan perfiles que entiendan arquitectura, tomen decisiones y resuelvan problemas reales.</p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div class="bg-surface-container-high p-8 rounded-xl flex flex-col gap-6 hover:bg-surface-container-highest transition-colors">
+            <span class="material-symbols-outlined text-primary text-4xl">link_off</span>
+            <div>
+              <h3 class="font-headline text-xl font-bold mb-3 text-on-surface">Dependencia tecnológica</h3>
+              <p class="text-on-surface-variant text-sm leading-relaxed">Copian soluciones sin entender el porqué. Cuando cambia el framework, se quedan sin base.</p>
+            </div>
+          </div>
+          <div class="bg-surface-container-high p-8 rounded-xl flex flex-col gap-6 hover:bg-surface-container-highest transition-colors">
+            <span class="material-symbols-outlined text-primary text-4xl">device_hub</span>
+            <div>
+              <h3 class="font-headline text-xl font-bold mb-3 text-on-surface">Conocimiento fragmentado</h3>
+              <p class="text-on-surface-variant text-sm leading-relaxed">Saben hacer frontend o backend por separado, pero no entienden cómo se conecta el sistema completo.</p>
+            </div>
+          </div>
+          <div class="bg-surface-container-high p-8 rounded-xl flex flex-col gap-6 hover:bg-surface-container-highest transition-colors">
+            <span class="material-symbols-outlined text-primary text-4xl">trending_down</span>
+            <div>
+              <h3 class="font-headline text-xl font-bold mb-3 text-on-surface">Estancamiento profesional</h3>
+              <p class="text-on-surface-variant text-sm leading-relaxed">Sin profundidad técnica es difícil ascender, cobrar más o lanzar productos propios.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROGRAMA -->
+    <section id="programa" class="py-24 px-6 md:px-12 max-w-7xl mx-auto">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-16 items-start">
+        <div>
+          <span class="text-tertiary font-label text-xs uppercase tracking-[0.4em] font-bold block mb-4">La solución</span>
+          <h2 class="font-headline text-4xl md:text-5xl font-bold tracking-tighter text-on-surface mb-6">DEV SYSTEM: formación integral para entender y construir.</h2>
+          <p class="text-on-surface-variant mb-8 leading-relaxed">Un sistema de formación en 12 meses donde aprendes arquitectura, lógica, datos, despliegue y producto. Cada mes un curso. Cada curso un proyecto real entregado.</p>
+          <ul class="space-y-4">
+            <li class="flex items-center gap-3 text-sm"><span class="material-symbols-outlined text-tertiary text-lg">check_circle</span> <span class="text-on-surface">Formación por sistema completo, capa por capa.</span></li>
+            <li class="flex items-center gap-3 text-sm"><span class="material-symbols-outlined text-tertiary text-lg">check_circle</span> <span class="text-on-surface">Cada mes termina con un proyecto aplicado y entregado.</span></li>
+            <li class="flex items-center gap-3 text-sm"><span class="material-symbols-outlined text-tertiary text-lg">check_circle</span> <span class="text-on-surface">Criterio técnico transferible a cualquier stack.</span></li>
+            <li class="flex items-center gap-3 text-sm"><span class="material-symbols-outlined text-tertiary text-lg">check_circle</span> <span class="text-on-surface">Instructores activos en la industria, no teóricos.</span></li>
+            <li class="flex items-center gap-3 text-sm"><span class="material-symbols-outlined text-tertiary text-lg">check_circle</span> <span class="text-on-surface">Comunidad privada con acceso directo a instructores.</span></li>
+          </ul>
+        </div>
+        <div class="space-y-4">
+          <div class="bg-surface-container-high p-6 rounded-xl flex items-start gap-5 hover:bg-surface-container-highest transition-colors">
+            <span class="material-symbols-outlined text-primary text-3xl mt-1">computer</span>
+            <div><h3 class="font-headline font-bold text-on-surface mb-1">Proyectos reales cada mes</h3><p class="text-sm text-on-surface-variant">Construyes algo funcional al final de cada curso, no ejercicios de práctica.</p></div>
+          </div>
+          <div class="bg-surface-container-high p-6 rounded-xl flex items-start gap-5 hover:bg-surface-container-highest transition-colors">
+            <span class="material-symbols-outlined text-primary text-3xl mt-1">folder_special</span>
+            <div><h3 class="font-headline font-bold text-on-surface mb-1">Portafolio técnico profesional</h3><p class="text-sm text-on-surface-variant">12 proyectos documentados y desplegados para empleadores o clientes.</p></div>
+          </div>
+          <div class="bg-surface-container-high p-6 rounded-xl flex items-start gap-5 hover:bg-surface-container-highest transition-colors">
+            <span class="material-symbols-outlined text-primary text-3xl mt-1">military_tech</span>
+            <div><h3 class="font-headline font-bold text-on-surface mb-1">Certificación mensual</h3><p class="text-sm text-on-surface-variant">Aprobación técnica por instructor senior. Verificable en LinkedIn y CV.</p></div>
+          </div>
+          <div class="bg-surface-container-high p-6 rounded-xl flex items-start gap-5 hover:bg-surface-container-highest transition-colors">
+            <span class="material-symbols-outlined text-primary text-3xl mt-1">rocket_launch</span>
+            <div><h3 class="font-headline font-bold text-on-surface mb-1">Guía de ingresos y producto</h3><p class="text-sm text-on-surface-variant">Freelance, empleo tech o lanzar tu propio SaaS. Te damos el mapa.</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- METODOLOGÍA -->
+    <section id="metodologia" class="py-24 bg-surface-container-low px-6 md:px-12">
+      <div class="max-w-7xl mx-auto">
+        <div class="mb-16 space-y-4">
+          <span class="text-tertiary font-label text-xs uppercase tracking-[0.4em] font-bold">Cómo lo hacemos</span>
+          <h2 class="font-headline text-4xl md:text-5xl font-bold tracking-tighter text-on-surface">Metodología basada en industria, no en aula.</h2>
+          <p class="text-on-surface-variant max-w-2xl">Trabajamos con la misma dinámica que equipos de software profesionales: sprints semanales, code reviews, entregables y retroalimentación directa.</p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+          <div class="bg-surface-container-high p-8 rounded-xl flex flex-col gap-4 hover:scale-[1.02] transition-transform">
+            <div class="flex items-center gap-3">
+              <span class="font-label text-[10px] text-tertiary font-black tracking-widest">01</span>
+              <span class="material-symbols-outlined text-primary text-2xl">menu_book</span>
+            </div>
+            <h3 class="font-headline font-bold text-on-surface">Clases técnicas</h3>
+            <p class="text-on-surface-variant text-sm leading-relaxed">Teoría aplicada con código real. Sin relleno, sin diapositivas interminables.</p>
+          </div>
+          <div class="bg-surface-container-high p-8 rounded-xl flex flex-col gap-4 hover:scale-[1.02] transition-transform">
+            <div class="flex items-center gap-3">
+              <span class="font-label text-[10px] text-tertiary font-black tracking-widest">02</span>
+              <span class="material-symbols-outlined text-primary text-2xl">biotech</span>
+            </div>
+            <h3 class="font-headline font-bold text-on-surface">Laboratorios</h3>
+            <p class="text-on-surface-variant text-sm leading-relaxed">Implementas lo aprendido con casos similares a los de equipos reales de la industria.</p>
+          </div>
+          <div class="bg-surface-container-highest p-8 rounded-xl flex flex-col gap-4 technical-glow hover:scale-[1.02] transition-transform">
+            <div class="flex items-center gap-3">
+              <span class="font-label text-[10px] text-primary font-black tracking-widest">03</span>
+              <span class="material-symbols-outlined text-primary text-2xl">code_blocks</span>
+            </div>
+            <h3 class="font-headline font-bold text-on-surface">Code review</h3>
+            <p class="text-on-surface-variant text-sm leading-relaxed">Tu código es revisado por un instructor. Aprendes a pensar como desarrollador senior.</p>
+          </div>
+          <div class="bg-surface-container-high p-8 rounded-xl flex flex-col gap-4 hover:scale-[1.02] transition-transform">
+            <div class="flex items-center gap-3">
+              <span class="font-label text-[10px] text-tertiary font-black tracking-widest">04</span>
+              <span class="material-symbols-outlined text-primary text-2xl">task_alt</span>
+            </div>
+            <h3 class="font-headline font-bold text-on-surface">Entrega y certificación</h3>
+            <p class="text-on-surface-variant text-sm leading-relaxed">Presentas tu proyecto, recibes retroalimentación y obtienes tu certificado mensual.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ROADMAP / FASES -->
+    <section id="fases" class="py-24 px-6 md:px-12 max-w-7xl mx-auto">
+      <div class="mb-16 space-y-4">
+        <span class="text-tertiary font-label text-xs uppercase tracking-[0.4em] font-bold">Roadmap de formación</span>
+        <h2 class="font-headline text-4xl md:text-5xl font-bold tracking-tighter text-on-surface">12 meses · 3 etapas · 1 sistema completo</h2>
+        <p class="text-on-surface-variant max-w-2xl">Cada etapa construye sobre la anterior. Al mes 12 tienes dominio completo del stack y un portafolio listo para el mercado.</p>
+      </div>
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <!-- Stage 1 -->
+        <div class="relative bg-surface-container-low p-8 rounded-xl flex flex-col hover:bg-surface-container-high transition-all duration-500">
+          <div class="flex justify-between items-start mb-8">
+            <div>
+              <span class="font-label text-[10px] text-tertiary border border-tertiary/30 px-2 py-1 rounded tracking-widest">ETAPA 1</span>
+              <h3 class="font-headline text-2xl font-bold mt-3 text-on-surface">Plan Base</h3>
+            </div>
+            <span class="text-on-surface-variant font-mono text-sm">MESES 1–4</span>
+          </div>
+          <div class="space-y-4 mb-12">
+            <div class="flex items-center gap-3"><span class="material-symbols-outlined text-primary text-xl">code</span><span class="text-on-surface/80">Web Avanzado y JavaScript</span></div>
+            <div class="flex items-center gap-3"><span class="material-symbols-outlined text-primary text-xl">terminal</span><span class="text-on-surface/80">Backend con Node.js</span></div>
+            <div class="flex items-center gap-3"><span class="material-symbols-outlined text-primary text-xl">storage</span><span class="text-on-surface/80">Bases de Datos Relacionales</span></div>
+          </div>
+          <div class="mt-auto pt-8 border-t border-outline-variant/20">
+            <span class="block font-label text-[10px] text-on-surface-variant tracking-widest mb-1">INVERSIÓN MENSUAL</span>
+            <div class="flex items-baseline gap-2">
+              <span class="font-headline text-3xl font-black text-on-surface">$8k – $22k</span>
+              <span class="text-xs text-on-surface-variant">MXN / MES</span>
+            </div>
+          </div>
+        </div>
+        <!-- Stage 2 - Featured -->
+        <div class="relative bg-surface-container-high p-8 rounded-xl flex flex-col ring-1 ring-primary/20 scale-105 z-10 shadow-[0_40px_80px_rgba(0,0,0,0.5)]">
+          <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-primary text-on-primary-fixed text-[10px] font-black px-4 py-1 rounded-full uppercase tracking-[0.2em]">Más Popular</div>
+          <div class="flex justify-between items-start mb-8">
+            <div>
+              <span class="font-label text-[10px] text-tertiary border border-tertiary/30 px-2 py-1 rounded tracking-widest">ETAPA 2</span>
+              <h3 class="font-headline text-2xl font-bold mt-3 text-on-surface">Plan Profesional</h3>
+            </div>
+            <span class="text-on-surface-variant font-mono text-sm">MESES 5–8</span>
+          </div>
+          <div class="space-y-4 mb-12">
+            <div class="flex items-center gap-3"><span class="material-symbols-outlined text-primary text-xl">api</span><span class="text-on-surface/80">Arquitectura de APIs</span></div>
+            <div class="flex items-center gap-3"><span class="material-symbols-outlined text-primary text-xl">layers</span><span class="text-on-surface/80">React y UI Patterns</span></div>
+            <div class="flex items-center gap-3"><span class="material-symbols-outlined text-primary text-xl">cloud_done</span><span class="text-on-surface/80">Cloud y Testing Automatizado</span></div>
+          </div>
+          <div class="mt-auto pt-8 border-t border-outline-variant/20">
+            <span class="block font-label text-[10px] text-on-surface-variant tracking-widest mb-1">INVERSIÓN MENSUAL</span>
+            <div class="flex items-baseline gap-2">
+              <span class="font-headline text-3xl font-black text-primary">$10k – $30k</span>
+              <span class="text-xs text-on-surface-variant">MXN / MES</span>
+            </div>
+          </div>
+        </div>
+        <!-- Stage 3 -->
+        <div class="relative bg-surface-container-low p-8 rounded-xl flex flex-col hover:bg-surface-container-high transition-all duration-500">
+          <div class="flex justify-between items-start mb-8">
+            <div>
+              <span class="font-label text-[10px] text-tertiary border border-tertiary/30 px-2 py-1 rounded tracking-widest">ETAPA 3</span>
+              <h3 class="font-headline text-2xl font-bold mt-3 text-on-surface">Plan Expert</h3>
+            </div>
+            <span class="text-on-surface-variant font-mono text-sm">MESES 9–12</span>
+          </div>
+          <div class="space-y-4 mb-12">
+            <div class="flex items-center gap-3"><span class="material-symbols-outlined text-primary text-xl">psychology</span><span class="text-on-surface/80">Integración de IA</span></div>
+            <div class="flex items-center gap-3"><span class="material-symbols-outlined text-primary text-xl">settings_suggest</span><span class="text-on-surface/80">Automatización Industrial</span></div>
+            <div class="flex items-center gap-3"><span class="material-symbols-outlined text-primary text-xl">hub</span><span class="text-on-surface/80">SaaS a Escala</span></div>
+          </div>
+          <div class="mt-auto pt-8 border-t border-outline-variant/20">
+            <span class="block font-label text-[10px] text-on-surface-variant tracking-widest mb-1">INVERSIÓN MENSUAL</span>
+            <div class="flex items-baseline gap-2">
+              <span class="font-headline text-3xl font-black text-on-surface">$15k – $50k</span>
+              <span class="text-xs text-on-surface-variant">MXN / MES</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CERTIFICACIONES -->
+    <section id="certificaciones" class="py-24 bg-surface-container-lowest px-6 md:px-16">
+      <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+        <div>
+          <span class="font-label text-[10px] text-tertiary tracking-[0.3em] font-black uppercase">Validación Técnica</span>
+          <h2 class="font-headline text-4xl font-bold mt-4 mb-6 leading-tight text-on-surface">Certificación mensual con revisión de industria.</h2>
+          <p class="text-on-surface-variant mb-8 leading-relaxed">Cada mes, presenta tu proyecto para una revisión exhaustiva por instructores activos en empresas de primer nivel. Obtén retroalimentación profesional que alinea tus habilidades con los estándares de la industria real.</p>
+          <ul class="space-y-4 mb-10">
+            <li class="flex items-center gap-3 text-sm"><span class="material-symbols-outlined text-tertiary text-lg">check_circle</span><span class="text-on-surface">Certificado digital verificable con QR para LinkedIn y CV.</span></li>
+            <li class="flex items-center gap-3 text-sm"><span class="material-symbols-outlined text-tertiary text-lg">check_circle</span><span class="text-on-surface">Avalado por instructores activos en empresas tecnológicas.</span></li>
+            <li class="flex items-center gap-3 text-sm"><span class="material-symbols-outlined text-tertiary text-lg">check_circle</span><span class="text-on-surface">Progresión acumulativa: cada certificado demuestra nivel superior.</span></li>
+            <li class="flex items-center gap-3 text-sm"><span class="material-symbols-outlined text-tertiary text-lg">check_circle</span><span class="text-on-surface">Certificado final de graduación al completar los 12 meses.</span></li>
+          </ul>
+          <div class="flex items-center gap-6">
+            <div class="flex -space-x-3">
+              <div class="w-10 h-10 rounded-full border-2 border-surface bg-surface-container-highest flex items-center justify-center text-xs font-bold text-primary">JS</div>
+              <div class="w-10 h-10 rounded-full border-2 border-surface bg-surface-container-highest flex items-center justify-center text-xs font-bold text-tertiary">MR</div>
+              <div class="w-10 h-10 rounded-full border-2 border-surface bg-surface-container-highest flex items-center justify-center text-[10px] font-bold text-on-surface-variant">+12</div>
+            </div>
+            <span class="text-sm font-medium text-on-surface-variant">Revisado por instructores activos en BBVA, Softtek, Wizeline.</span>
+          </div>
+        </div>
+        <div class="bg-surface-container p-8 rounded-xl flex flex-col sm:flex-row justify-between items-center gap-8 ring-1 ring-outline-variant/20">
+          <div>
+            <span class="font-headline text-5xl font-black text-on-surface">$3,000</span>
+            <span class="text-sm text-on-surface-variant block uppercase tracking-tighter mt-1">MXN por sesión de certificación</span>
+            <p class="text-xs text-on-surface-variant mt-3 max-w-xs leading-relaxed">Opcional, pero altamente recomendada para validar tu perfil ante empleadores. Se agenda al finalizar cada mes.</p>
+          </div>
+          <a href="checkout.html" class="w-full sm:w-auto bg-gradient-to-r from-primary to-on-primary-container text-on-primary-fixed px-8 py-4 rounded-xl flex items-center justify-center gap-3 transition-all duration-300 shadow-lg font-bold tracking-tight whitespace-nowrap">
+            <span class="material-symbols-outlined text-xl">military_tech</span>
+            Inscribirme
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- INVERSIÓN -->
+    <section id="inversion" class="py-24 px-6 md:px-12 max-w-7xl mx-auto">
+      <div class="text-center mb-16 space-y-4">
+        <span class="text-tertiary font-label text-xs uppercase tracking-[0.4em] font-bold">Inversión</span>
+        <h2 class="font-headline text-4xl md:text-5xl font-bold tracking-tighter text-on-surface">Pagas solo el mes que cursas.</h2>
+        <p class="text-on-surface-variant max-w-2xl mx-auto">Sin contratos anuales. El precio sube conforme avanzas porque el valor del contenido también sube.</p>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <!-- Plan Base -->
+        <div class="bg-surface-container-low p-8 rounded-xl flex flex-col gap-6 hover:bg-surface-container transition-colors">
+          <div>
+            <span class="font-label text-[10px] text-tertiary border border-tertiary/30 px-2 py-1 rounded tracking-widest">ETAPA 1 · MESES 1–4</span>
+            <h3 class="font-headline text-2xl font-bold mt-3 text-on-surface">Plan Base</h3>
+            <p class="text-on-surface-variant text-sm mt-2">Fundamentos completos del stack de desarrollo.</p>
+          </div>
+          <div>
+            <div class="text-xs text-on-surface-variant uppercase tracking-widest mb-1">Desde</div>
+            <div class="font-headline text-4xl font-black text-on-surface">$8,000</div>
+            <div class="text-sm text-on-surface-variant">hasta $22,000 MXN / mes</div>
+          </div>
+          <ul class="space-y-3 flex-grow">
+            <li class="flex items-center gap-2 text-sm"><span class="material-symbols-outlined text-tertiary text-lg">check_circle</span>4 cursos mensuales</li>
+            <li class="flex items-center gap-2 text-sm"><span class="material-symbols-outlined text-tertiary text-lg">check_circle</span>Proyectos aplicados</li>
+            <li class="flex items-center gap-2 text-sm"><span class="material-symbols-outlined text-tertiary text-lg">check_circle</span>Acceso a comunidad</li>
+            <li class="flex items-center gap-2 text-sm"><span class="material-symbols-outlined text-tertiary text-lg">check_circle</span>Certificación opcional +$3,000</li>
+          </ul>
+          <a href="checkout.html" class="w-full text-center bg-surface-container-high hover:bg-surface-container-highest text-on-surface px-6 py-3 rounded-xl font-bold transition-colors ghost-border">Empezar aquí</a>
+        </div>
+        <!-- Plan Profesional - Featured -->
+        <div class="relative bg-surface-container-high p-8 rounded-xl flex flex-col gap-6 ring-1 ring-primary/30 shadow-[0_40px_80px_rgba(0,0,0,0.4)]">
+          <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-primary text-on-primary-fixed text-[10px] font-black px-4 py-1 rounded-full uppercase tracking-[0.2em]">Más Popular</div>
+          <div>
+            <span class="font-label text-[10px] text-tertiary border border-tertiary/30 px-2 py-1 rounded tracking-widest">ETAPA 2 · MESES 5–8</span>
+            <h3 class="font-headline text-2xl font-bold mt-3 text-on-surface">Plan Profesional</h3>
+            <p class="text-on-surface-variant text-sm mt-2">Arquitectura, cloud y calidad de código de producción.</p>
+          </div>
+          <div>
+            <div class="text-xs text-on-surface-variant uppercase tracking-widest mb-1">Desde</div>
+            <div class="font-headline text-4xl font-black text-primary">$10,000</div>
+            <div class="text-sm text-on-surface-variant">hasta $30,000 MXN / mes</div>
+          </div>
+          <ul class="space-y-3 flex-grow">
+            <li class="flex items-center gap-2 text-sm"><span class="material-symbols-outlined text-tertiary text-lg">check_circle</span>4 cursos mensuales</li>
+            <li class="flex items-center gap-2 text-sm"><span class="material-symbols-outlined text-tertiary text-lg">check_circle</span>Code reviews semanales</li>
+            <li class="flex items-center gap-2 text-sm"><span class="material-symbols-outlined text-tertiary text-lg">check_circle</span>Deploy en cloud incluido</li>
+            <li class="flex items-center gap-2 text-sm"><span class="material-symbols-outlined text-tertiary text-lg">check_circle</span>Certificación opcional +$3,000</li>
+          </ul>
+          <a href="checkout.html" class="w-full text-center bg-gradient-to-r from-primary to-on-primary-container text-on-primary-fixed px-6 py-3 rounded-xl font-bold hover:scale-[1.02] transition-transform">Continuar formación</a>
+        </div>
+        <!-- Plan Expert -->
+        <div class="bg-surface-container-low p-8 rounded-xl flex flex-col gap-6 hover:bg-surface-container transition-colors">
+          <div>
+            <span class="font-label text-[10px] text-tertiary border border-tertiary/30 px-2 py-1 rounded tracking-widest">ETAPA 3 · MESES 9–12</span>
+            <h3 class="font-headline text-2xl font-bold mt-3 text-on-surface">Plan Expert</h3>
+            <p class="text-on-surface-variant text-sm mt-2">IA, automatización, escalabilidad y SaaS final.</p>
+          </div>
+          <div>
+            <div class="text-xs text-on-surface-variant uppercase tracking-widest mb-1">Desde</div>
+            <div class="font-headline text-4xl font-black text-on-surface">$15,000</div>
+            <div class="text-sm text-on-surface-variant">hasta $50,000 MXN / mes</div>
+          </div>
+          <ul class="space-y-3 flex-grow">
+            <li class="flex items-center gap-2 text-sm"><span class="material-symbols-outlined text-tertiary text-lg">check_circle</span>4 cursos mensuales</li>
+            <li class="flex items-center gap-2 text-sm"><span class="material-symbols-outlined text-tertiary text-lg">check_circle</span>Mentoría personalizada</li>
+            <li class="flex items-center gap-2 text-sm"><span class="material-symbols-outlined text-tertiary text-lg">check_circle</span>Proyecto SaaS completo</li>
+            <li class="flex items-center gap-2 text-sm"><span class="material-symbols-outlined text-tertiary text-lg">check_circle</span>Certificado de graduación</li>
+          </ul>
+          <a href="checkout.html" class="w-full text-center bg-surface-container-high hover:bg-surface-container-highest text-on-surface px-6 py-3 rounded-xl font-bold transition-colors ghost-border">Nivel experto</a>
+        </div>
+      </div>
+      <p class="text-center mt-8 text-on-surface-variant text-sm">Pago mensual vía Mercado Libre · Sin contratos · Cancela cuando quieras</p>
+    </section>
+
+    <!-- PARA QUIÉN -->
+    <section class="py-24 bg-surface-container-low px-6 md:px-12">
+      <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12">
+        <div class="bg-surface-container-high p-10 rounded-xl">
+          <span class="text-tertiary font-label text-xs uppercase tracking-[0.4em] font-bold block mb-6">Para quién es</span>
+          <h2 class="font-headline text-3xl font-bold tracking-tighter text-on-surface mb-8">Sí es para ti si...</h2>
+          <ul class="space-y-4">
+            <li class="flex items-start gap-3"><span class="material-symbols-outlined text-tertiary text-lg mt-0.5">check_circle</span><span class="text-on-surface text-sm leading-relaxed">Quieres entender cómo funciona el software en profundidad.</span></li>
+            <li class="flex items-start gap-3"><span class="material-symbols-outlined text-tertiary text-lg mt-0.5">check_circle</span><span class="text-on-surface text-sm leading-relaxed">Buscas ascender en tu empleo como desarrollador o analista.</span></li>
+            <li class="flex items-start gap-3"><span class="material-symbols-outlined text-tertiary text-lg mt-0.5">check_circle</span><span class="text-on-surface text-sm leading-relaxed">Tienes una idea y quieres construirla tú mismo sin depender de terceros.</span></li>
+            <li class="flex items-start gap-3"><span class="material-symbols-outlined text-tertiary text-lg mt-0.5">check_circle</span><span class="text-on-surface text-sm leading-relaxed">Buscas empleos tech de $30k–$100k+ MXN al mes.</span></li>
+            <li class="flex items-start gap-3"><span class="material-symbols-outlined text-tertiary text-lg mt-0.5">check_circle</span><span class="text-on-surface text-sm leading-relaxed">Puedes comprometer 8–12 horas semanales de práctica.</span></li>
+          </ul>
+        </div>
+        <div class="bg-surface-container p-10 rounded-xl ghost-border">
+          <span class="text-on-surface-variant font-label text-xs uppercase tracking-[0.4em] font-bold block mb-6">Para quién no es</span>
+          <h2 class="font-headline text-3xl font-bold tracking-tighter text-on-surface mb-8">No es para ti si...</h2>
+          <ul class="space-y-4">
+            <li class="flex items-start gap-3"><span class="material-symbols-outlined text-error text-lg mt-0.5">cancel</span><span class="text-on-surface-variant text-sm leading-relaxed">Solo buscas un certificado sin aprender de verdad.</span></li>
+            <li class="flex items-start gap-3"><span class="material-symbols-outlined text-error text-lg mt-0.5">cancel</span><span class="text-on-surface-variant text-sm leading-relaxed">Esperas resultados inmediatos sin proceso técnico serio.</span></li>
+            <li class="flex items-start gap-3"><span class="material-symbols-outlined text-error text-lg mt-0.5">cancel</span><span class="text-on-surface-variant text-sm leading-relaxed">Prefieres copiar soluciones sin comprender los fundamentos.</span></li>
+            <li class="flex items-start gap-3"><span class="material-symbols-outlined text-error text-lg mt-0.5">cancel</span><span class="text-on-surface-variant text-sm leading-relaxed">No puedes comprometer tiempo semanal constante de práctica.</span></li>
+            <li class="flex items-start gap-3"><span class="material-symbols-outlined text-error text-lg mt-0.5">cancel</span><span class="text-on-surface-variant text-sm leading-relaxed">Buscas un curso grabado para ver a 2x y olvidar.</span></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- TESTIMONIOS -->
+    <section id="testimonios" class="py-24 px-6 md:px-12 max-w-7xl mx-auto">
+      <div class="mb-16 space-y-4">
+        <span class="text-tertiary font-label text-xs uppercase tracking-[0.4em] font-bold">Historias de éxito</span>
+        <h2 class="font-headline text-4xl md:text-5xl font-bold tracking-tighter text-on-surface">Lo que dicen quienes ya están adentro.</h2>
+        <div class="flex flex-wrap gap-4 mt-6">
+          <div class="flex items-center gap-3 bg-surface-container-high px-5 py-3 rounded-xl ghost-border">
+            <div class="flex gap-0.5">
+              <span class="material-symbols-outlined text-tertiary text-sm" style="font-variation-settings:'FILL' 1;">star</span>
+              <span class="material-symbols-outlined text-tertiary text-sm" style="font-variation-settings:'FILL' 1;">star</span>
+              <span class="material-symbols-outlined text-tertiary text-sm" style="font-variation-settings:'FILL' 1;">star</span>
+              <span class="material-symbols-outlined text-tertiary text-sm" style="font-variation-settings:'FILL' 1;">star</span>
+              <span class="material-symbols-outlined text-tertiary text-sm" style="font-variation-settings:'FILL' 1;">star</span>
+            </div>
+            <span class="font-bold text-on-surface">4.9</span>
+            <span class="text-xs font-label uppercase tracking-widest text-on-surface-variant border-l border-outline-variant/30 pl-3">Google Reviews · +120</span>
+          </div>
+          <div class="flex items-center gap-3 bg-surface-container-high px-5 py-3 rounded-xl ghost-border">
+            <div class="flex gap-0.5">
+              <span class="material-symbols-outlined text-tertiary text-sm" style="font-variation-settings:'FILL' 1;">star</span>
+              <span class="material-symbols-outlined text-tertiary text-sm" style="font-variation-settings:'FILL' 1;">star</span>
+              <span class="material-symbols-outlined text-tertiary text-sm" style="font-variation-settings:'FILL' 1;">star</span>
+              <span class="material-symbols-outlined text-tertiary text-sm" style="font-variation-settings:'FILL' 1;">star</span>
+              <span class="material-symbols-outlined text-tertiary text-sm" style="font-variation-settings:'FILL' 1;">star</span>
+            </div>
+            <span class="font-bold text-on-surface">4.8</span>
+            <span class="text-xs font-label uppercase tracking-widest text-on-surface-variant border-l border-outline-variant/30 pl-3">Trustpilot · +85</span>
+          </div>
+        </div>
+      </div>
+      <!-- Main testimonial -->
+      <div class="glass-card p-12 rounded-xl mb-6 hover:scale-[1.01] transition-transform ring-1 ring-outline-variant/10">
+        <span class="text-tertiary font-label text-xs font-bold tracking-widest mb-6 block uppercase">Transición de carrera</span>
+        <blockquote class="font-headline text-2xl md:text-3xl font-bold mb-8 leading-tight text-on-surface">"En 6 meses me dieron un ascenso con aumento de $15,000. La certificación de DEV SYSTEM fue lo que inclinó la balanza en mi evaluación de desempeño."</blockquote>
+        <div class="flex items-center gap-4">
+          <div class="w-12 h-12 rounded-full bg-primary-container flex items-center justify-center text-primary font-black">CT</div>
+          <div><p class="font-bold text-on-surface">Carlos T.</p><p class="text-sm text-on-surface-variant">Analista → Dev Senior · Softtek</p></div>
+        </div>
+      </div>
+      <!-- Grid testimonials -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="bg-surface-container-high p-8 rounded-xl hover:scale-[1.02] transition-transform">
+          <div class="flex gap-0.5 mb-4">
+            <span class="material-symbols-outlined text-tertiary text-xs" style="font-variation-settings:'FILL' 1;">star</span>
+            <span class="material-symbols-outlined text-tertiary text-xs" style="font-variation-settings:'FILL' 1;">star</span>
+            <span class="material-symbols-outlined text-tertiary text-xs" style="font-variation-settings:'FILL' 1;">star</span>
+            <span class="material-symbols-outlined text-tertiary text-xs" style="font-variation-settings:'FILL' 1;">star</span>
+            <span class="material-symbols-outlined text-tertiary text-xs" style="font-variation-settings:'FILL' 1;">star</span>
+          </div>
+          <p class="text-on-surface-variant text-sm leading-relaxed mb-6">"El proyecto del mes 12 fue lo que presenté a mis primeros inversores. DEV SYSTEM no es un curso, es una incubadora técnica disfrazada de escuela."</p>
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center text-primary font-black text-xs">AP</div>
+            <div><p class="text-sm font-bold text-on-surface">Andrea P.</p><p class="text-xs text-on-surface-variant">Emprendedora · Fundadora SaaS</p></div>
+          </div>
+        </div>
+        <div class="bg-surface-container-high p-8 rounded-xl hover:scale-[1.02] transition-transform">
+          <div class="flex gap-0.5 mb-4">
+            <span class="material-symbols-outlined text-tertiary text-xs" style="font-variation-settings:'FILL' 1;">star</span>
+            <span class="material-symbols-outlined text-tertiary text-xs" style="font-variation-settings:'FILL' 1;">star</span>
+            <span class="material-symbols-outlined text-tertiary text-xs" style="font-variation-settings:'FILL' 1;">star</span>
+            <span class="material-symbols-outlined text-tertiary text-xs" style="font-variation-settings:'FILL' 1;">star</span>
+            <span class="material-symbols-outlined text-tertiary text-xs" style="font-variation-settings:'FILL' 1;">star</span>
+          </div>
+          <p class="text-on-surface-variant text-sm leading-relaxed mb-6">"Después de la Etapa 2 conseguí trabajo en Wizeline con el doble de salario. La certificación en LinkedIn fue clave en todas mis entrevistas."</p>
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center text-primary font-black text-xs">RV</div>
+            <div><p class="text-sm font-bold text-on-surface">Ricardo V.</p><p class="text-xs text-on-surface-variant">Junior → Mid Dev · Wizeline</p></div>
+          </div>
+        </div>
+        <div class="bg-primary-container p-8 rounded-xl flex flex-col justify-center items-center text-center ring-1 ring-primary/20">
+          <span class="material-symbols-outlined text-primary text-5xl mb-4">trending_up</span>
+          <h4 class="font-headline text-2xl font-bold mb-2 text-on-surface">94% completación</h4>
+          <p class="text-sm text-on-surface-variant">Tasa de alumnos que terminan su etapa de formación.</p>
+        </div>
+        <div class="bg-surface-container-high p-8 rounded-xl hover:scale-[1.02] transition-transform">
+          <div class="flex gap-0.5 mb-4">
+            <span class="material-symbols-outlined text-tertiary text-xs" style="font-variation-settings:'FILL' 1;">star</span>
+            <span class="material-symbols-outlined text-tertiary text-xs" style="font-variation-settings:'FILL' 1;">star</span>
+            <span class="material-symbols-outlined text-tertiary text-xs" style="font-variation-settings:'FILL' 1;">star</span>
+            <span class="material-symbols-outlined text-tertiary text-xs" style="font-variation-settings:'FILL' 1;">star</span>
+            <span class="material-symbols-outlined text-tertiary text-xs" style="font-variation-settings:'FILL' 1;">star</span>
+          </div>
+          <p class="text-on-surface-variant text-sm leading-relaxed mb-6">"Mi empresa me envió a DEV SYSTEM para ascender al área de arquitectura. La metodología de code review fue exactamente lo que necesitaba."</p>
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center text-primary font-black text-xs">JL</div>
+            <div><p class="text-sm font-bold text-on-surface">Jorge L.</p><p class="text-xs text-on-surface-variant">Dev Mid → Arquitecto · Telcel</p></div>
+          </div>
+        </div>
+        <div class="bg-surface-container-high p-8 rounded-xl hover:scale-[1.02] transition-transform">
+          <div class="flex gap-0.5 mb-4">
+            <span class="material-symbols-outlined text-tertiary text-xs" style="font-variation-settings:'FILL' 1;">star</span>
+            <span class="material-symbols-outlined text-tertiary text-xs" style="font-variation-settings:'FILL' 1;">star</span>
+            <span class="material-symbols-outlined text-tertiary text-xs" style="font-variation-settings:'FILL' 1;">star</span>
+            <span class="material-symbols-outlined text-tertiary text-xs" style="font-variation-settings:'FILL' 1;">star</span>
+            <span class="material-symbols-outlined text-tertiary text-xs" style="font-variation-settings:'FILL' 1;">star</span>
+          </div>
+          <p class="text-on-surface-variant text-sm leading-relaxed mb-6">"Como Product Manager quería entender a mi equipo técnico. DEV SYSTEM me dio el lenguaje para ser un mejor líder de producto."</p>
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center text-primary font-black text-xs">SM</div>
+            <div><p class="text-sm font-bold text-on-surface">Sofía M.</p><p class="text-xs text-on-surface-variant">Product Manager · GBM</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FINAL CTA -->
+    <section class="py-32 px-6 md:px-12">
+      <div class="max-w-4xl mx-auto bg-surface-container-high rounded-xl overflow-hidden relative">
+        <div class="absolute inset-0 opacity-5 pointer-events-none">
+          <div class="absolute -top-24 -left-24 w-96 h-96 bg-primary rounded-full blur-3xl"></div>
+          <div class="absolute -bottom-24 -right-24 w-96 h-96 bg-tertiary rounded-full blur-3xl"></div>
+        </div>
+        <div class="relative z-10 p-12 md:p-20 text-center space-y-8">
+          <span class="font-label text-[10px] text-tertiary tracking-[0.3em] font-black uppercase">Siguiente paso</span>
+          <h2 class="font-headline text-4xl md:text-5xl font-bold tracking-tighter text-on-surface">Construye la base técnica que te abre oportunidades reales.</h2>
+          <p class="text-on-surface-variant max-w-xl mx-auto leading-relaxed">Inscripciones activas para la nueva generación. Cupos limitados para garantizar acompañamiento de calidad.</p>
+          <div class="flex flex-col md:flex-row justify-center gap-4">
+            <a href="checkout.html" class="bg-gradient-to-r from-primary to-on-primary-container text-on-primary-fixed px-10 py-4 rounded-xl font-black text-lg hover:scale-105 transition-all shadow-xl">
+              Quiero unirme a DEV SYSTEM
+            </a>
+            <a href="login.html" class="bg-transparent border border-outline-variant/40 text-on-surface px-10 py-4 rounded-xl font-bold text-lg hover:bg-surface-container transition-colors">
+              Ya soy alumno
+            </a>
+          </div>
+          <p class="text-on-surface-variant text-sm">Pago seguro vía Mercado Libre · 4.9/5 en Google y Trustpilot</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="bg-[#010e24] w-full py-16 px-6 md:px-12">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-12 max-w-7xl mx-auto">
+      <div class="md:col-span-2 space-y-4">
+        <div class="flex items-center gap-3">
+          <img src="logo.png" alt="DEV SYSTEM ACADEMY" class="h-10 w-auto" style="filter:drop-shadow(0 0 6px rgba(173,199,255,0.3))"/>
+          <span class="text-lg font-black text-[#adc7ff] font-headline">DEV SYSTEM ACADEMY</span>
+        </div>
+        <p class="text-[#a7b7c8] text-sm leading-relaxed max-w-sm">Formando la próxima generación de ingenieros de software con los estándares más exigentes de la industria.</p>
+        <p class="text-[#a7b7c8] text-sm pt-4">© 2025 DEV SYSTEM ACADEMY · México</p>
+      </div>
+      <div class="space-y-4">
+        <h4 class="font-headline text-xs font-bold uppercase tracking-widest text-primary">Programa</h4>
+        <ul class="space-y-3">
+          <li><a class="text-[#a7b7c8] hover:text-white transition-colors text-sm" href="#programa">Plan Base</a></li>
+          <li><a class="text-[#a7b7c8] hover:text-white transition-colors text-sm" href="#programa">Plan Profesional</a></li>
+          <li><a class="text-[#a7b7c8] hover:text-white transition-colors text-sm" href="#programa">Plan Expert</a></li>
+          <li><a class="text-[#a7b7c8] hover:text-white transition-colors text-sm" href="#certificaciones">Certificaciones</a></li>
+        </ul>
+      </div>
+      <div class="space-y-4">
+        <h4 class="font-headline text-xs font-bold uppercase tracking-widest text-[#66dd8b]">Acceso</h4>
+        <ul class="space-y-3">
+          <li><a class="text-[#a7b7c8] hover:text-white transition-colors text-sm" href="checkout.html">Inscripción</a></li>
+          <li><a class="text-[#a7b7c8] hover:text-white transition-colors text-sm" href="login.html">Portal de alumnos</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+</body>
 </html>
