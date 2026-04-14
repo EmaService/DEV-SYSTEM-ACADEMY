@@ -4,15 +4,94 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>DEV SYSTEM | Escuela de Ingeniería de Software</title>
-    <meta name="description" content="Programa profesional para aprender a construir software completo desde cero: frontend, backend, bases de datos, infraestructura y producto. Certificaciones avaladas por la industria." />
+    <meta name="description" content="Programa profesional para aprender a construir software completo desde cero. Certificaciones avaladas por la industria." />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Sora:wght@400;600;700;800&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="styles.css" />
+    <style>
+      /* ---- HERO OVERRIDE ---- */
+      .hero { padding: 0; min-height: 100vh; display: flex; align-items: center; position: relative; overflow: hidden; }
+      #matrix-canvas { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0.13; pointer-events: none; z-index: 0; }
+      .hero-inner { position: relative; z-index: 2; display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; padding: 7rem 0 6rem; width: 100%; }
+      .hero-copy { max-width: 580px; }
+      .hero-visual-wrap { display: flex; justify-content: center; align-items: center; }
+
+      /* Developer illustration */
+      .dev-illustration { width: 100%; max-width: 500px; filter: drop-shadow(0 0 40px rgba(0,204,255,0.15)); }
+
+      /* Floating cards on illustration */
+      .float-card {
+        position: absolute;
+        background: rgba(13,21,38,0.92);
+        border: 1px solid rgba(0,204,255,0.25);
+        border-radius: 10px;
+        padding: 0.6rem 0.9rem;
+        font-family: var(--font-mono);
+        font-size: 0.75rem;
+        color: var(--accent);
+        backdrop-filter: blur(8px);
+        animation: float 4s ease-in-out infinite;
+      }
+      .float-card:nth-child(2) { animation-delay: 1.5s; }
+      .float-card:nth-child(3) { animation-delay: 3s; }
+      @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
+
+      .illus-wrap { position: relative; display: inline-block; }
+
+      /* SVG icons for cards/sections */
+      .icon-box {
+        width: 44px; height: 44px; border-radius: 10px;
+        background: var(--accent-soft);
+        border: 1px solid rgba(0,204,255,0.2);
+        display: flex; align-items: center; justify-content: center;
+        flex-shrink: 0;
+      }
+      .icon-box svg { width: 22px; height: 22px; }
+
+      /* Company logos */
+      .logo-item {
+        display: flex; align-items: center; justify-content: center;
+        padding: 0.6rem 1.4rem;
+        background: rgba(255,255,255,0.03);
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        transition: border-color 0.2s, background 0.2s;
+        min-width: 120px;
+      }
+      .logo-item:hover { border-color: rgba(0,204,255,0.2); background: rgba(0,204,255,0.04); }
+      .logo-item svg { height: 22px; width: auto; fill: var(--muted); opacity: 0.6; transition: opacity 0.2s; }
+      .logo-item:hover svg { opacity: 0.9; }
+      .logo-item span { font-family: var(--font-head); font-weight: 700; font-size: 0.95rem; color: var(--muted); opacity: 0.55; transition: opacity 0.2s; letter-spacing: -0.02em; }
+      .logo-item:hover span { opacity: 0.85; }
+      .trust-logos-grid { display: flex; flex-wrap: wrap; gap: 0.75rem; justify-content: center; margin-top: 1.5rem; }
+
+      /* Cert badge SVG */
+      .cert-visual { width: 80px; height: 80px; margin: 0 auto 1rem; }
+
+      /* Problem cards with SVG icons */
+      .problem-card-icon { width: 48px; height: 48px; margin-bottom: 1rem; }
+
+      /* Method steps */
+      .method-step { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 1rem; padding: 2rem 1.2rem; }
+      .method-num { font-family: var(--font-mono); font-size: 0.7rem; color: var(--accent); font-weight: 700; letter-spacing: 0.1em; margin-bottom: -0.5rem; }
+
+      /* Para quién icons */
+      .list-icon { display: inline-flex; align-items: center; justify-content: center; width: 20px; height: 20px; border-radius: 999px; flex-shrink: 0; }
+      .list-icon.yes { background: rgba(0,230,118,0.15); }
+      .list-icon.no  { background: rgba(255,77,106,0.12); }
+
+      @media (max-width: 860px) {
+        .hero-inner { grid-template-columns: 1fr; padding: 5rem 0 4rem; }
+        .hero-visual-wrap { display: none; }
+        .hero { min-height: auto; }
+      }
+    </style>
     <script defer src="ab-test.js"></script>
   </head>
   <body>
 
+    <!-- HEADER -->
     <header class="site-header">
       <div class="container nav-wrap">
         <a href="#inicio" class="brand">
@@ -32,66 +111,158 @@
 
     <main id="inicio">
 
-      <!-- HERO -->
-      <section class="hero section">
-        <div class="container hero-grid">
-          <div class="hero-copy reveal">
-            <div class="hero-badge">Inscripciones abiertas · Generación 2025</div>
-            <p class="eyebrow">Escuela de ingeniería de software</p>
-            <h1 id="hero-title">Aprende a construir software de <span class="accent-word">verdad.</span></h1>
-            <p id="hero-subtitle" class="lead">Domina cada capa del stack: frontend, backend, bases de datos e infraestructura. Construye productos funcionales con criterio técnico profesional.</p>
-            <ul class="value-list">
-              <li>Entiende el sistema completo, no solo cómo usar herramientas.</li>
-              <li>Proyectos reales con estándares de la industria tecnológica.</li>
-              <li>Certificación mensual avalada por instructores de empresas reales.</li>
-              <li>Formación pensada para ascender en tu carrera o crear productos.</li>
-            </ul>
-            <div class="cta-row">
-              <a id="hero-cta-primary" class="btn" href="checkout.html">Quiero empezar ahora</a>
-              <a id="hero-cta-secondary" class="btn btn-ghost" href="#programa">Ver el programa</a>
+      <!-- ===== HERO ===== -->
+      <section class="hero" id="hero-section">
+        <canvas id="matrix-canvas"></canvas>
+        <div class="container">
+          <div class="hero-inner">
+
+            <!-- Copy -->
+            <div class="hero-copy reveal">
+              <div class="hero-badge">Inscripciones abiertas · Generación 2025</div>
+              <p class="eyebrow">Escuela de ingeniería de software</p>
+              <h1 id="hero-title">Aprende a construir software de <span class="accent-word">verdad.</span></h1>
+              <p id="hero-subtitle" class="lead">Domina cada capa del stack: frontend, backend, bases de datos e infraestructura. Construye productos funcionales con criterio técnico profesional.</p>
+              <ul class="value-list">
+                <li>Entiende el sistema completo, no solo cómo usar herramientas.</li>
+                <li>Proyectos reales con estándares de la industria tecnológica.</li>
+                <li>Certificación mensual avalada por instructores de empresas reales.</li>
+                <li>Formación pensada para ascender en tu carrera o crear productos.</li>
+              </ul>
+              <div class="cta-row">
+                <a id="hero-cta-primary" class="btn" href="checkout.html">Quiero empezar ahora</a>
+                <a id="hero-cta-secondary" class="btn btn-ghost" href="#programa">Ver el programa</a>
+              </div>
+              <p class="cta-note" style="margin-top:1.2rem;">
+                <svg style="display:inline;vertical-align:middle;margin-right:4px;" width="14" height="14" viewBox="0 0 24 24" fill="#ffb300"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                4.9/5 · +380 alumnos · Pago mensual sin compromiso
+              </p>
             </div>
-            <p class="cta-note" style="margin-top:1rem;">⭐ 4.9/5 · +380 alumnos · Pago mensual sin compromiso</p>
-          </div>
-          <div class="hero-visual reveal">
-            <div class="mockup">
-              <div class="mockup-top">
-                <span></span><span></span><span></span>
-                <span class="mockup-tab">DEV SYSTEM IDE</span>
-              </div>
-              <div class="mockup-content">
-                <aside class="pane">
-                  <h4>Módulos</h4>
-                  <ul>
-                    <li class="active">Frontend</li>
-                    <li>Backend API</li>
-                    <li>Database</li>
-                    <li>Cloud</li>
-                    <li>Testing</li>
-                    <li>SaaS</li>
-                  </ul>
-                </aside>
-                <section class="editor">
-                  <div class="tabs">
-                    <span>api.ts</span><span>schema.sql</span><span>app.tsx</span>
-                  </div>
-                  <pre><code><span class="code-comment">// Mes 5 · Arquitectura API</span>
-<span class="code-keyword">async function</span> <span class="code-fn">getOrders</span>(req, res) {
-  <span class="code-keyword">const</span> orders = <span class="code-keyword">await</span> db
-    .from(<span class="code-str">'orders'</span>)
-    .where({ state: <span class="code-str">'paid'</span> })
-    .orderBy(<span class="code-str">'created_at'</span>, <span class="code-str">'desc'</span>);
-  res.json({ ok: <span class="code-keyword">true</span>, orders });
-}
-<span class="code-comment">// Tests: 24/24 passing ✓</span></code></pre>
-                </section>
-              </div>
-              <div class="status-row">
-                <span>Build: OK</span>
-                <span>Tests: 24/24</span>
-                <span>Deploy: Live</span>
-                <span>Coverage: 96%</span>
+
+            <!-- Developer illustration -->
+            <div class="hero-visual-wrap reveal">
+              <div class="illus-wrap">
+                <!-- Developer at desk SVG illustration -->
+                <svg class="dev-illustration" viewBox="0 0 480 420" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <!-- Desk -->
+                  <rect x="40" y="310" width="400" height="18" rx="4" fill="#0d1f3c"/>
+                  <rect x="70" y="328" width="16" height="60" rx="3" fill="#0a1628"/>
+                  <rect x="394" y="328" width="16" height="60" rx="3" fill="#0a1628"/>
+                  <!-- Monitor stand -->
+                  <rect x="218" y="265" width="44" height="48" rx="3" fill="#0a1628"/>
+                  <rect x="190" y="308" width="100" height="8" rx="3" fill="#0d1f3c"/>
+                  <!-- Monitor -->
+                  <rect x="90" y="100" width="300" height="170" rx="12" fill="#060d1a"/>
+                  <rect x="90" y="100" width="300" height="170" rx="12" stroke="#00ccff" stroke-width="1.5" stroke-opacity="0.3"/>
+                  <rect x="98" y="108" width="284" height="154" rx="8" fill="#080e1a"/>
+                  <!-- Code on screen -->
+                  <rect x="110" y="120" width="80" height="6" rx="3" fill="#c792ea" opacity="0.8"/>
+                  <rect x="198" y="120" width="50" height="6" rx="3" fill="#00ccff" opacity="0.8"/>
+                  <rect x="256" y="120" width="30" height="6" rx="3" fill="#00e676" opacity="0.7"/>
+                  <rect x="120" y="136" width="60" height="5" rx="2.5" fill="#546e7a" opacity="0.6"/>
+                  <rect x="188" y="136" width="90" height="5" rx="2.5" fill="#00ccff" opacity="0.6"/>
+                  <rect x="286" y="136" width="40" height="5" rx="2.5" fill="#ffb300" opacity="0.7"/>
+                  <rect x="120" y="150" width="140" height="5" rx="2.5" fill="#7a90b8" opacity="0.5"/>
+                  <rect x="120" y="164" width="50" height="5" rx="2.5" fill="#c792ea" opacity="0.7"/>
+                  <rect x="178" y="164" width="80" height="5" rx="2.5" fill="#00e676" opacity="0.7"/>
+                  <rect x="266" y="164" width="60" height="5" rx="2.5" fill="#7a90b8" opacity="0.5"/>
+                  <rect x="120" y="178" width="30" height="5" rx="2.5" fill="#00ccff" opacity="0.8"/>
+                  <rect x="158" y="178" width="100" height="5" rx="2.5" fill="#7a90b8" opacity="0.5"/>
+                  <rect x="120" y="192" width="70" height="5" rx="2.5" fill="#c792ea" opacity="0.6"/>
+                  <rect x="198" y="192" width="50" height="5" rx="2.5" fill="#00ccff" opacity="0.7"/>
+                  <rect x="120" y="206" width="110" height="5" rx="2.5" fill="#00e676" opacity="0.6"/>
+                  <rect x="238" y="206" width="80" height="5" rx="2.5" fill="#7a90b8" opacity="0.4"/>
+                  <rect x="120" y="220" width="40" height="5" rx="2.5" fill="#ffb300" opacity="0.6"/>
+                  <rect x="168" y="220" width="70" height="5" rx="2.5" fill="#00ccff" opacity="0.5"/>
+                  <!-- Cursor blink -->
+                  <rect x="120" y="234" width="8" height="10" rx="1" fill="#00ccff" opacity="0.9">
+                    <animate attributeName="opacity" values="0.9;0;0.9" dur="1.2s" repeatCount="indefinite"/>
+                  </rect>
+                  <!-- Keyboard -->
+                  <rect x="130" y="320" width="220" height="28" rx="6" fill="#0a1628" stroke="#1a2840" stroke-width="1"/>
+                  <rect x="137" y="326" width="14" height="10" rx="2" fill="#0f1e35"/>
+                  <rect x="155" y="326" width="14" height="10" rx="2" fill="#0f1e35"/>
+                  <rect x="173" y="326" width="14" height="10" rx="2" fill="#0f1e35"/>
+                  <rect x="191" y="326" width="14" height="10" rx="2" fill="#0f1e35"/>
+                  <rect x="209" y="326" width="14" height="10" rx="2" fill="#0f1e35"/>
+                  <rect x="227" y="326" width="14" height="10" rx="2" fill="#0f1e35"/>
+                  <rect x="245" y="326" width="14" height="10" rx="2" fill="#0f1e35"/>
+                  <rect x="263" y="326" width="14" height="10" rx="2" fill="#0f1e35"/>
+                  <rect x="281" y="326" width="14" height="10" rx="2" fill="#0f1e35"/>
+                  <rect x="152" y="340" width="80" height="4" rx="2" fill="#0d1a2e" opacity="0.5"/>
+                  <!-- Mouse -->
+                  <rect x="365" y="318" width="30" height="22" rx="8" fill="#0a1628" stroke="#1a2840" stroke-width="1"/>
+                  <line x1="380" y1="318" x2="380" y2="332" stroke="#1a2840" stroke-width="1"/>
+                  <!-- Coffee mug -->
+                  <rect x="68" y="294" width="26" height="18" rx="4" fill="#0a1628" stroke="#1a2840" stroke-width="1"/>
+                  <path d="M94 299 Q104 299 104 305 Q104 311 94 311" stroke="#1a2840" stroke-width="1.5" fill="none"/>
+                  <rect x="72" y="290" width="18" height="5" rx="2" fill="#00ccff" opacity="0.3"/>
+                  <!-- Plant -->
+                  <rect x="400" y="284" width="20" height="26" rx="4" fill="#0a1628" stroke="#1a2840" stroke-width="1"/>
+                  <ellipse cx="410" cy="282" rx="10" ry="14" fill="#0d2d1a"/>
+                  <ellipse cx="403" cy="276" rx="7" ry="10" fill="#0f3320"/>
+                  <ellipse cx="417" cy="276" rx="7" ry="10" fill="#0f3320"/>
+                  <line x1="410" y1="272" x2="410" y2="285" stroke="#1a4a2a" stroke-width="1.5"/>
+                  <!-- Developer person -->
+                  <!-- Chair -->
+                  <rect x="198" y="340" width="84" height="8" rx="3" fill="#0a1628"/>
+                  <rect x="210" y="348" width="10" height="35" rx="3" fill="#0a1628"/>
+                  <rect x="260" y="348" width="10" height="35" rx="3" fill="#0a1628"/>
+                  <rect x="200" y="358" width="80" height="40" rx="6" fill="#0d1f3c" stroke="#1a2840" stroke-width="1"/>
+                  <rect x="203" y="335" width="74" height="26" rx="6" fill="#0d1f3c" stroke="#1a2840" stroke-width="1"/>
+                  <!-- Body -->
+                  <rect x="215" y="270" width="50" height="68" rx="8" fill="#1a3a6e"/>
+                  <!-- Arms -->
+                  <rect x="175" y="278" width="44" height="16" rx="8" fill="#1a3a6e"/>
+                  <rect x="261" y="278" width="44" height="16" rx="8" fill="#1a3a6e"/>
+                  <!-- Hands on keyboard -->
+                  <ellipse cx="195" cy="323" rx="12" ry="8" fill="#c8a882"/>
+                  <ellipse cx="285" cy="323" rx="12" ry="8" fill="#c8a882"/>
+                  <!-- Neck -->
+                  <rect x="229" y="255" width="22" height="20" rx="5" fill="#c8a882"/>
+                  <!-- Head -->
+                  <ellipse cx="240" cy="240" rx="32" ry="30" fill="#c8a882"/>
+                  <!-- Hair -->
+                  <path d="M210 230 Q212 210 240 208 Q268 210 270 230 Q265 215 240 213 Q215 215 210 230Z" fill="#2c1810"/>
+                  <!-- Eyes -->
+                  <ellipse cx="230" cy="238" rx="4" ry="4.5" fill="#1a1a2e"/>
+                  <ellipse cx="250" cy="238" rx="4" ry="4.5" fill="#1a1a2e"/>
+                  <ellipse cx="231" cy="237" rx="1.5" ry="1.5" fill="white"/>
+                  <ellipse cx="251" cy="237" rx="1.5" ry="1.5" fill="white"/>
+                  <!-- Glasses -->
+                  <rect x="222" y="233" width="16" height="11" rx="4" fill="none" stroke="#00ccff" stroke-width="1.5" opacity="0.8"/>
+                  <rect x="242" y="233" width="16" height="11" rx="4" fill="none" stroke="#00ccff" stroke-width="1.5" opacity="0.8"/>
+                  <line x1="238" y1="238" x2="242" y2="238" stroke="#00ccff" stroke-width="1.5" opacity="0.8"/>
+                  <!-- Logo on shirt -->
+                  <text x="228" y="298" font-family="monospace" font-size="7" fill="#00ccff" opacity="0.8">&lt;/&gt;</text>
+                  <!-- Headphones -->
+                  <path d="M210 232 Q210 208 240 208 Q270 208 270 232" stroke="#1a3a6e" stroke-width="4" fill="none"/>
+                  <rect x="205" y="230" width="10" height="14" rx="4" fill="#1a3a6e"/>
+                  <rect x="265" y="230" width="10" height="14" rx="4" fill="#1a3a6e"/>
+                  <!-- Monitor glow on face -->
+                  <ellipse cx="240" cy="238" rx="32" ry="30" fill="rgba(0,204,255,0.04)"/>
+                  <!-- Screen glow -->
+                  <rect x="90" y="100" width="300" height="170" rx="12" fill="none" stroke="#00ccff" stroke-width="1" opacity="0.4">
+                    <animate attributeName="opacity" values="0.4;0.15;0.4" dur="3s" repeatCount="indefinite"/>
+                  </rect>
+                </svg>
+
+                <!-- Floating stat cards -->
+                <div class="float-card" style="top:8%;right:-10%;box-shadow:0 4px 20px rgba(0,204,255,0.12);">
+                  <div style="color:var(--green);margin-bottom:2px;">✓ Build passed</div>
+                  <div style="color:var(--muted);">Tests: 24/24</div>
+                </div>
+                <div class="float-card" style="bottom:28%;left:-12%;box-shadow:0 4px 20px rgba(0,204,255,0.12);">
+                  <div style="color:var(--accent);margin-bottom:2px;">🎓 Certificado</div>
+                  <div style="color:var(--muted);">Mes 3 · Aprobado</div>
+                </div>
+                <div class="float-card" style="bottom:5%;right:5%;font-size:0.7rem;box-shadow:0 4px 20px rgba(0,204,255,0.12);">
+                  <div style="color:var(--amber);">⚡ Deploy live</div>
+                  <div style="color:var(--muted);">prod · 99.9% uptime</div>
+                </div>
               </div>
             </div>
+
           </div>
         </div>
       </section>
@@ -111,16 +282,44 @@
       <!-- EMPRESAS -->
       <section class="section" style="padding:3.5rem 0;">
         <div class="container">
-          <p class="trust-label">Alumnos capacitados en y trabajando en empresas como</p>
-          <div class="trust-logos">
-            <span class="trust-logo">BBVA</span>
-            <span class="trust-logo">Telcel</span>
-            <span class="trust-logo">Telmex</span>
-            <span class="trust-logo">Mercado Libre</span>
-            <span class="trust-logo">Softtek</span>
-            <span class="trust-logo">Globant</span>
-            <span class="trust-logo">Wizeline</span>
-            <span class="trust-logo">GBM</span>
+          <p class="trust-label">Alumnos trabajando y capacitados en empresas como</p>
+          <div class="trust-logos-grid">
+            <!-- BBVA -->
+            <div class="logo-item">
+              <svg viewBox="0 0 120 40" xmlns="http://www.w3.org/2000/svg"><text x="10" y="28" font-family="Arial Black,sans-serif" font-weight="900" font-size="22" fill="currentColor">BBVA</text></svg>
+            </div>
+            <!-- Telcel -->
+            <div class="logo-item">
+              <svg viewBox="0 0 120 40" xmlns="http://www.w3.org/2000/svg"><text x="5" y="28" font-family="Arial,sans-serif" font-weight="700" font-size="20" fill="currentColor">Telcel</text></svg>
+            </div>
+            <!-- Telmex -->
+            <div class="logo-item">
+              <svg viewBox="0 0 130 40" xmlns="http://www.w3.org/2000/svg"><text x="5" y="28" font-family="Arial,sans-serif" font-weight="700" font-size="20" fill="currentColor">Telmex</text></svg>
+            </div>
+            <!-- Mercado Libre -->
+            <div class="logo-item" style="min-width:150px;">
+              <svg viewBox="0 0 200 40" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="20" cy="20" r="18" fill="#FFE600" opacity="0.9"/>
+                <text x="18" y="26" font-family="Arial,sans-serif" font-weight="900" font-size="16" fill="#333" text-anchor="middle">ML</text>
+                <text x="50" y="26" font-family="Arial,sans-serif" font-weight="700" font-size="16" fill="currentColor">Mercado Libre</text>
+              </svg>
+            </div>
+            <!-- Softtek -->
+            <div class="logo-item">
+              <svg viewBox="0 0 140 40" xmlns="http://www.w3.org/2000/svg"><text x="5" y="28" font-family="Arial,sans-serif" font-weight="700" font-size="20" fill="currentColor">Softtek</text></svg>
+            </div>
+            <!-- Globant -->
+            <div class="logo-item">
+              <svg viewBox="0 0 130 40" xmlns="http://www.w3.org/2000/svg"><text x="5" y="28" font-family="Arial,sans-serif" font-weight="700" font-size="20" fill="currentColor">Globant</text></svg>
+            </div>
+            <!-- Wizeline -->
+            <div class="logo-item">
+              <svg viewBox="0 0 140 40" xmlns="http://www.w3.org/2000/svg"><text x="5" y="28" font-family="Arial,sans-serif" font-weight="700" font-size="20" fill="currentColor">Wizeline</text></svg>
+            </div>
+            <!-- GBM -->
+            <div class="logo-item">
+              <svg viewBox="0 0 80 40" xmlns="http://www.w3.org/2000/svg"><text x="5" y="28" font-family="Arial Black,sans-serif" font-weight="900" font-size="22" fill="currentColor">GBM</text></svg>
+            </div>
           </div>
         </div>
       </section>
@@ -133,17 +332,38 @@
           <p style="margin-bottom:2rem;">El mercado está saturado de desarrolladores que copian código sin criterio técnico. Las empresas buscan perfiles que entiendan arquitectura, tomen decisiones y resuelvan problemas reales.</p>
           <div class="cards cards-3">
             <article class="card">
-              <div style="font-size:1.8rem;margin-bottom:0.6rem;">🔗</div>
+              <svg class="problem-card-icon" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect width="48" height="48" rx="10" fill="rgba(0,204,255,0.06)"/>
+                <path d="M16 24 C16 18 20 14 24 14 C28 14 32 18 32 24" stroke="#00ccff" stroke-width="2" stroke-linecap="round"/>
+                <circle cx="24" cy="28" r="4" stroke="#00ccff" stroke-width="2"/>
+                <path d="M20 36 L28 36" stroke="#00ccff" stroke-width="2" stroke-linecap="round"/>
+                <path d="M14 30 L10 34 M34 30 L38 34" stroke="#ff4d6a" stroke-width="1.5" stroke-linecap="round"/>
+              </svg>
               <h3>Dependencia tecnológica</h3>
               <p>Copian soluciones sin entender el porqué. Cuando cambia el framework, se quedan sin base.</p>
             </article>
             <article class="card">
-              <div style="font-size:1.8rem;margin-bottom:0.6rem;">🧩</div>
+              <svg class="problem-card-icon" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect width="48" height="48" rx="10" fill="rgba(0,204,255,0.06)"/>
+                <rect x="10" y="10" width="12" height="12" rx="3" stroke="#00ccff" stroke-width="2"/>
+                <rect x="26" y="10" width="12" height="12" rx="3" stroke="#7a90b8" stroke-width="2" stroke-dasharray="3 2"/>
+                <rect x="10" y="26" width="12" height="12" rx="3" stroke="#7a90b8" stroke-width="2" stroke-dasharray="3 2"/>
+                <rect x="26" y="26" width="12" height="12" rx="3" stroke="#00ccff" stroke-width="2"/>
+                <line x1="22" y1="16" x2="26" y2="16" stroke="#ff4d6a" stroke-width="2" stroke-linecap="round"/>
+                <line x1="16" y1="22" x2="16" y2="26" stroke="#ff4d6a" stroke-width="2" stroke-linecap="round"/>
+                <line x1="32" y1="22" x2="32" y2="26" stroke="#ff4d6a" stroke-width="2" stroke-linecap="round"/>
+              </svg>
               <h3>Conocimiento fragmentado</h3>
               <p>Saben hacer frontend o backend por separado, pero no entienden cómo se conecta el sistema completo.</p>
             </article>
             <article class="card">
-              <div style="font-size:1.8rem;margin-bottom:0.6rem;">📉</div>
+              <svg class="problem-card-icon" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect width="48" height="48" rx="10" fill="rgba(0,204,255,0.06)"/>
+                <polyline points="10,36 18,24 26,28 34,16 38,20" stroke="#ff4d6a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <polyline points="10,36 18,24 26,28 34,16" stroke="#00ccff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="3 2" opacity="0.4"/>
+                <line x1="10" y1="38" x2="38" y2="38" stroke="#1a2840" stroke-width="1.5"/>
+                <line x1="10" y1="10" x2="10" y2="38" stroke="#1a2840" stroke-width="1.5"/>
+              </svg>
               <h3>Estancamiento profesional</h3>
               <p>Sin profundidad técnica es difícil ascender, cobrar más o lanzar productos propios.</p>
             </article>
@@ -157,32 +377,65 @@
           <div class="reveal">
             <p class="eyebrow">La solución</p>
             <h2>DEV SYSTEM: formación integral para entender y construir.</h2>
-            <p style="margin-bottom:1.5rem;">Un sistema de formación estructurado en 12 meses donde aprendes arquitectura, lógica, datos, despliegue y producto en un recorrido progresivo, práctico y exigente. Cada mes un curso. Cada curso un proyecto real.</p>
+            <p style="margin-bottom:1.5rem;">Un sistema de formación en 12 meses donde aprendes arquitectura, lógica, datos, despliegue y producto en un recorrido progresivo, práctico y exigente. Cada mes un curso. Cada curso un proyecto real.</p>
             <div class="checklist">
-              <div class="checklist-item"><div class="check-icon">✓</div><p>No contenido aislado: formación por sistema completo, capa por capa.</p></div>
-              <div class="checklist-item"><div class="check-icon">✓</div><p>No teoría vacía: cada mes termina con un proyecto aplicado y entregado.</p></div>
-              <div class="checklist-item"><div class="check-icon">✓</div><p>No memorización: construyes criterio técnico transferible a cualquier stack.</p></div>
-              <div class="checklist-item"><div class="check-icon">✓</div><p>Instructores activos en la industria, no teóricos de academia.</p></div>
-              <div class="checklist-item"><div class="check-icon">✓</div><p>Comunidad privada con acceso directo a instructores y compañeros.</p></div>
+              <div class="checklist-item">
+                <div class="check-icon">
+                  <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M1.5 5.5L3.5 7.5L8.5 2.5" stroke="#00ccff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+                <p>No contenido aislado: formación por sistema completo, capa por capa.</p>
+              </div>
+              <div class="checklist-item">
+                <div class="check-icon">
+                  <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M1.5 5.5L3.5 7.5L8.5 2.5" stroke="#00ccff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+                <p>No teoría vacía: cada mes termina con un proyecto aplicado y entregado.</p>
+              </div>
+              <div class="checklist-item">
+                <div class="check-icon">
+                  <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M1.5 5.5L3.5 7.5L8.5 2.5" stroke="#00ccff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+                <p>No memorización: construyes criterio técnico transferible a cualquier stack.</p>
+              </div>
+              <div class="checklist-item">
+                <div class="check-icon">
+                  <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M1.5 5.5L3.5 7.5L8.5 2.5" stroke="#00ccff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+                <p>Instructores activos en la industria, no teóricos de academia.</p>
+              </div>
+              <div class="checklist-item">
+                <div class="check-icon">
+                  <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M1.5 5.5L3.5 7.5L8.5 2.5" stroke="#00ccff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+                <p>Comunidad privada con acceso directo a instructores y compañeros.</p>
+              </div>
             </div>
           </div>
           <div class="reveal">
             <p class="eyebrow">Lo que obtienes</p>
             <div class="cards" style="margin-top:0.8rem;">
-              <article class="card" style="display:flex;gap:0.8rem;align-items:flex-start;">
-                <span style="font-size:1.4rem;">💻</span>
+              <article class="card" style="display:flex;gap:0.9rem;align-items:flex-start;">
+                <div class="icon-box">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="#00ccff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><polyline points="8 21 12 17 16 21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+                </div>
                 <div><h3>Proyectos reales cada mes</h3><p>Construyes algo funcional al final de cada curso, no ejercicios de práctica.</p></div>
               </article>
-              <article class="card" style="display:flex;gap:0.8rem;align-items:flex-start;">
-                <span style="font-size:1.4rem;">📁</span>
+              <article class="card" style="display:flex;gap:0.9rem;align-items:flex-start;">
+                <div class="icon-box">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="#00ccff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/><line x1="12" y1="11" x2="12" y2="17"/><line x1="9" y1="14" x2="15" y2="14"/></svg>
+                </div>
                 <div><h3>Portafolio técnico profesional</h3><p>12 proyectos documentados y desplegados para mostrar a empleadores o clientes.</p></div>
               </article>
-              <article class="card" style="display:flex;gap:0.8rem;align-items:flex-start;">
-                <span style="font-size:1.4rem;">🏅</span>
+              <article class="card" style="display:flex;gap:0.9rem;align-items:flex-start;">
+                <div class="icon-box">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="#00ccff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg>
+                </div>
                 <div><h3>Certificación mensual</h3><p>Aprobación técnica por instructor senior. Verificable en LinkedIn y CV.</p></div>
               </article>
-              <article class="card" style="display:flex;gap:0.8rem;align-items:flex-start;">
-                <span style="font-size:1.4rem;">🚀</span>
+              <article class="card" style="display:flex;gap:0.9rem;align-items:flex-start;">
+                <div class="icon-box">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="#00ccff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+                </div>
                 <div><h3>Guía de ingresos y producto</h3><p>Freelance, empleo tech o lanzar tu propio SaaS. Te damos el mapa.</p></div>
               </article>
             </div>
@@ -197,25 +450,37 @@
           <h2>Metodología basada en industria, no en aula.</h2>
           <p style="max-width:60ch;margin-bottom:2.5rem;">Trabajamos con la misma dinámica que equipos de software profesionales: sprints semanales, code reviews, entregables y retroalimentación directa.</p>
           <div class="cards cards-4">
-            <article class="card" style="text-align:center;padding:1.8rem 1.2rem;">
-              <div style="font-size:2rem;margin-bottom:0.8rem;">📚</div>
+            <article class="card method-step">
+              <div class="method-num">PASO 01</div>
+              <div class="icon-box" style="width:56px;height:56px;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#00ccff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:28px;height:28px;"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+              </div>
               <h3>Clases técnicas</h3>
-              <p>Teoría aplicada con ejemplos de código real. Sin relleno, sin diapositivas interminables.</p>
+              <p>Teoría aplicada con código real. Sin relleno, sin diapositivas interminables.</p>
             </article>
-            <article class="card" style="text-align:center;padding:1.8rem 1.2rem;">
-              <div style="font-size:2rem;margin-bottom:0.8rem;">🔬</div>
+            <article class="card method-step">
+              <div class="method-num">PASO 02</div>
+              <div class="icon-box" style="width:56px;height:56px;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#00ccff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:28px;height:28px;"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+              </div>
               <h3>Laboratorios</h3>
-              <p>Implementas lo aprendido con casos similares a los que enfrentan equipos reales.</p>
+              <p>Implementas lo aprendido con casos similares a los de equipos reales.</p>
             </article>
-            <article class="card" style="text-align:center;padding:1.8rem 1.2rem;">
-              <div style="font-size:2rem;margin-bottom:0.8rem;">🔁</div>
+            <article class="card method-step">
+              <div class="method-num">PASO 03</div>
+              <div class="icon-box" style="width:56px;height:56px;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#00ccff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:28px;height:28px;"><circle cx="18" cy="18" r="3"/><circle cx="6" cy="6" r="3"/><path d="M13 6h3a2 2 0 0 1 2 2v7"/><line x1="6" y1="9" x2="6" y2="21"/></svg>
+              </div>
               <h3>Code review</h3>
               <p>Tu código es revisado por un instructor. Aprendes a pensar como desarrollador senior.</p>
             </article>
-            <article class="card" style="text-align:center;padding:1.8rem 1.2rem;">
-              <div style="font-size:2rem;margin-bottom:0.8rem;">✅</div>
+            <article class="card method-step">
+              <div class="method-num">PASO 04</div>
+              <div class="icon-box" style="width:56px;height:56px;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#00ccff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:28px;height:28px;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+              </div>
               <h3>Entrega y certificación</h3>
-              <p>Presentas tu proyecto, recibes retroalimentación y obtienes tu certificado mensual.</p>
+              <p>Presentas tu proyecto, recibes retroalimentación y obtienes tu certificado.</p>
             </article>
           </div>
         </div>
@@ -232,19 +497,19 @@
               <p class="phase-meta">Etapa 1 · Meses 1-4</p>
               <h3>Plan Base — Fundamentos del Stack</h3>
               <p>HTML/CSS avanzado, JavaScript profesional, backend inicial con Node.js y bases de datos relacionales. Aprendes a construir y conectar cada capa.</p>
-              <span class="phase-price">💰 Desde $8,000 hasta $22,000 MXN / mes</span>
+              <span class="phase-price">Desde $8,000 hasta $22,000 MXN / mes</span>
             </article>
             <article class="phase">
               <p class="phase-meta">Etapa 2 · Meses 5-8</p>
               <h3>Plan Profesional — Arquitectura y Producción</h3>
               <p>Arquitectura de APIs RESTful, frontend avanzado con React, despliegue en cloud (AWS/GCP), testing automatizado y calidad de código.</p>
-              <span class="phase-price">💰 Desde $10,000 hasta $30,000 MXN / mes</span>
+              <span class="phase-price">Desde $10,000 hasta $30,000 MXN / mes</span>
             </article>
             <article class="phase">
               <p class="phase-meta">Etapa 3 · Meses 9-12</p>
               <h3>Plan Expert — Producto, Escala e Inteligencia</h3>
               <p>Integración de IA, automatización, escalabilidad de sistemas, diseño de producto y construcción de un SaaS completo como proyecto final.</p>
-              <span class="phase-price">💰 Desde $15,000 hasta $50,000 MXN / mes</span>
+              <span class="phase-price">Desde $15,000 hasta $50,000 MXN / mes</span>
             </article>
           </div>
         </div>
@@ -256,32 +521,58 @@
           <div>
             <p class="eyebrow">Certificaciones</p>
             <h2>Cada mes aprobado, un certificado real.</h2>
-            <p style="margin-bottom:1.5rem;">Para obtener la certificación mensual debes presentar y aprobar tu proyecto ante un instructor activo de la industria. No es automática: se gana con trabajo. Por eso vale.</p>
+            <p style="margin-bottom:1.5rem;">Para obtener la certificación mensual debes presentar y aprobar tu proyecto ante un instructor activo. No es automática: se gana con trabajo. Por eso vale.</p>
             <div class="checklist">
-              <div class="checklist-item"><div class="check-icon">🏅</div><p><strong style="color:var(--text);">Certificado digital verificable</strong> — Con código QR y URL pública para tu LinkedIn y CV.</p></div>
-              <div class="checklist-item"><div class="check-icon">🔍</div><p><strong style="color:var(--text);">Avalado por instructores activos</strong> — Profesionales que trabajan hoy en empresas tecnológicas reales.</p></div>
-              <div class="checklist-item"><div class="check-icon">📈</div><p><strong style="color:var(--text);">Progresión acumulativa</strong> — Cada certificado demuestra un nivel técnico superior al anterior.</p></div>
-              <div class="checklist-item"><div class="check-icon">🎓</div><p><strong style="color:var(--text);">Certificado final de graduación</strong> — Al completar los 12 meses con 85%+ de avance.</p></div>
+              <div class="checklist-item">
+                <div class="check-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="#00ccff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:10px;height:10px;"><path d="M20 6L9 17l-5-5"/></svg>
+                </div>
+                <p><strong style="color:var(--text);">Certificado digital verificable</strong> — Con código QR y URL pública para LinkedIn y CV.</p>
+              </div>
+              <div class="checklist-item">
+                <div class="check-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="#00ccff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:10px;height:10px;"><path d="M20 6L9 17l-5-5"/></svg>
+                </div>
+                <p><strong style="color:var(--text);">Avalado por instructores activos</strong> — Profesionales que trabajan hoy en empresas tecnológicas reales.</p>
+              </div>
+              <div class="checklist-item">
+                <div class="check-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="#00ccff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:10px;height:10px;"><path d="M20 6L9 17l-5-5"/></svg>
+                </div>
+                <p><strong style="color:var(--text);">Progresión acumulativa</strong> — Cada certificado demuestra un nivel técnico superior al anterior.</p>
+              </div>
+              <div class="checklist-item">
+                <div class="check-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="#00ccff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:10px;height:10px;"><path d="M20 6L9 17l-5-5"/></svg>
+                </div>
+                <p><strong style="color:var(--text);">Certificado final de graduación</strong> — Al completar los 12 meses con 85%+ de avance.</p>
+              </div>
             </div>
           </div>
           <div>
             <div class="card" style="text-align:center;padding:2.5rem 2rem;">
-              <div style="font-size:3rem;margin-bottom:1rem;">🏅</div>
+              <!-- Badge SVG illustration -->
+              <svg class="cert-visual" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="40" cy="36" r="28" fill="rgba(0,204,255,0.07)" stroke="rgba(0,204,255,0.3)" stroke-width="1.5"/>
+                <circle cx="40" cy="36" r="20" fill="rgba(0,204,255,0.06)" stroke="rgba(0,204,255,0.2)" stroke-width="1"/>
+                <path d="M40 20 L43 30 L54 30 L45 37 L48 47 L40 41 L32 47 L35 37 L26 30 L37 30 Z" fill="#00ccff" opacity="0.85"/>
+                <line x1="33" y1="64" x2="40" y2="56" stroke="rgba(255,179,0,0.7)" stroke-width="2"/>
+                <line x1="47" y1="64" x2="40" y2="56" stroke="rgba(255,179,0,0.7)" stroke-width="2"/>
+                <rect x="26" y="63" width="28" height="10" rx="3" fill="rgba(255,179,0,0.15)" stroke="rgba(255,179,0,0.4)" stroke-width="1"/>
+              </svg>
               <div class="cert-badge" style="margin:0 auto 1.2rem;justify-content:center;">
-                <span>★</span> CERTIFICACIÓN MENSUAL +$3,000 MXN
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="#ffb300"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                CERTIFICACIÓN MENSUAL +$3,000 MXN
               </div>
               <h3 style="font-size:1.05rem;margin-bottom:0.8rem;">Examen de Certificación</h3>
               <p style="font-size:0.87rem;margin-bottom:1.2rem;">Costo adicional de <strong style="color:var(--amber);">$3,000 MXN por mes certificado</strong>. Incluye revisión de proyecto por instructor senior, retroalimentación escrita y emisión del certificado digital verificable.</p>
-              <div style="border-top:1px solid var(--line);padding-top:1rem;">
-                <p style="font-size:0.8rem;">La certificación es opcional pero altamente recomendada para validar tu perfil ante empleadores.</p>
-              </div>
+              <div style="border-top:1px solid var(--line);padding-top:1rem;"><p style="font-size:0.8rem;">Opcional, pero altamente recomendada para validar tu perfil ante empleadores.</p></div>
             </div>
-            <div class="card" style="margin-top:1rem;padding:1.2rem;">
-              <div style="display:flex;align-items:center;gap:0.6rem;margin-bottom:0.5rem;">
-                <span style="font-size:1.2rem;">💼</span>
-                <h3 style="font-size:0.95rem;">Capacitación empresarial</h3>
+            <div class="card" style="margin-top:1rem;padding:1.2rem;display:flex;gap:0.8rem;align-items:flex-start;">
+              <div class="icon-box" style="flex-shrink:0;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#00ccff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><line x1="12" y1="12" x2="12" y2="16"/><line x1="10" y1="14" x2="14" y2="14"/></svg>
               </div>
-              <p style="font-size:0.85rem;">Programas de capacitación para equipos que quieren ascender a sus desarrolladores internos. <strong style="color:var(--accent);">Contáctanos para cotizaciones corporativas.</strong></p>
+              <div><h3 style="font-size:0.95rem;margin-bottom:0.3rem;">Capacitación empresarial</h3><p style="font-size:0.85rem;">Programas para equipos que quieren ascender a sus desarrolladores internos. <strong style="color:var(--accent);">Contáctanos para cotizaciones corporativas.</strong></p></div>
             </div>
           </div>
         </div>
@@ -300,10 +591,7 @@
               <p style="font-size:0.85rem;">Fundamentos completos del stack de desarrollo.</p>
               <div><div class="price-from">Desde</div><div class="price-main">$8,000</div><div class="price-to">hasta $22,000 MXN / mes</div></div>
               <ul class="price-features">
-                <li>4 cursos mensuales</li>
-                <li>Proyectos aplicados</li>
-                <li>Acceso a comunidad</li>
-                <li>Certificación opcional +$3,000</li>
+                <li>4 cursos mensuales</li><li>Proyectos aplicados</li><li>Acceso a comunidad</li><li>Certificación opcional +$3,000</li>
               </ul>
               <a href="checkout.html" class="btn btn-ghost btn-block" style="margin-top:auto;">Empezar aquí</a>
             </div>
@@ -313,10 +601,7 @@
               <p style="font-size:0.85rem;">Arquitectura, cloud y calidad de código de producción.</p>
               <div><div class="price-from">Desde</div><div class="price-main">$10,000</div><div class="price-to">hasta $30,000 MXN / mes</div></div>
               <ul class="price-features">
-                <li>4 cursos mensuales</li>
-                <li>Code reviews semanales</li>
-                <li>Deploy en cloud incluido</li>
-                <li>Certificación opcional +$3,000</li>
+                <li>4 cursos mensuales</li><li>Code reviews semanales</li><li>Deploy en cloud incluido</li><li>Certificación opcional +$3,000</li>
               </ul>
               <a href="checkout.html" class="btn btn-block">Continuar formación</a>
             </div>
@@ -326,15 +611,12 @@
               <p style="font-size:0.85rem;">IA, automatización, escalabilidad y SaaS final.</p>
               <div><div class="price-from">Desde</div><div class="price-main">$15,000</div><div class="price-to">hasta $50,000 MXN / mes</div></div>
               <ul class="price-features">
-                <li>4 cursos mensuales</li>
-                <li>Mentoría personalizada</li>
-                <li>Proyecto SaaS completo</li>
-                <li>Certificado de graduación</li>
+                <li>4 cursos mensuales</li><li>Mentoría personalizada</li><li>Proyecto SaaS completo</li><li>Certificado de graduación</li>
               </ul>
               <a href="checkout.html" class="btn btn-ghost btn-block">Nivel experto</a>
             </div>
           </div>
-          <p style="text-align:center;margin-top:1.5rem;font-size:0.85rem;">💳 Pago mensual vía Mercado Libre · Sin contratos · Cancela cuando quieras</p>
+          <p style="text-align:center;margin-top:1.5rem;font-size:0.85rem;color:var(--muted);">Pago mensual vía Mercado Libre · Sin contratos · Cancela cuando quieras</p>
         </div>
       </section>
 
@@ -343,19 +625,19 @@
         <div class="container split reveal">
           <article>
             <p class="eyebrow">Para quién es</p>
-            <h2>✅ Sí es para ti si...</h2>
+            <h2>Sí es para ti si...</h2>
             <ul class="value-list" style="margin-top:1.2rem;">
               <li>Quieres entender cómo funciona el software en profundidad.</li>
-              <li>Buscas ascender en tu empleo actual como desarrollador o analista.</li>
+              <li>Buscas ascender en tu empleo como desarrollador o analista.</li>
               <li>Tienes una idea y quieres construirla tú mismo.</li>
-              <li>Buscas una ruta clara hacia empleos tech de $30k–$100k+ MXN.</li>
+              <li>Buscas empleos tech de $30k–$100k+ MXN.</li>
               <li>Puedes comprometer 8–12 horas semanales de práctica.</li>
               <li>Prefieres aprender haciendo, no memorizando definiciones.</li>
             </ul>
           </article>
           <article>
             <p class="eyebrow">Para quién no es</p>
-            <h2>❌ No es para ti si...</h2>
+            <h2>No es para ti si...</h2>
             <ul class="value-list" style="margin-top:1.2rem;">
               <li>Solo buscas un certificado sin aprender de verdad.</li>
               <li>Esperas resultados inmediatos sin proceso técnico.</li>
@@ -389,12 +671,12 @@
           <div class="cards cards-3" style="margin-top:0;">
             <article class="card testimonial">
               <div class="review-source"><div class="stars">★★★★★</div><div class="review-platform">Google Reviews</div></div>
-              <blockquote>"Antes hacía interfaces sin entender qué pasaba detrás. Ahora puedo construir y lanzar proyectos completos. El mes 5 de arquitectura API me cambió la perspectiva."</blockquote>
+              <blockquote>"Antes hacía interfaces sin entender qué pasaba detrás. Ahora puedo construir y lanzar proyectos completos. El mes 5 me cambió la perspectiva."</blockquote>
               <div class="testimonial-author"><div class="author-avatar">MR</div><div class="author-info"><strong>Mariana R.</strong><span>Diseñadora → Frontend Dev · BBVA</span></div></div>
             </article>
             <article class="card testimonial">
               <div class="review-source"><div class="stars">★★★★★</div><div class="review-platform">Trustpilot</div></div>
-              <blockquote>"En 6 meses me dieron un ascenso con aumento de $15,000. La certificación de DEV SYSTEM fue lo que inclinó la balanza en mi evaluación de desempeño."</blockquote>
+              <blockquote>"En 6 meses me dieron un ascenso con aumento de $15,000. La certificación fue lo que inclinó la balanza en mi evaluación de desempeño."</blockquote>
               <div class="testimonial-author"><div class="author-avatar">CT</div><div class="author-info"><strong>Carlos T.</strong><span>Analista → Dev Senior · Softtek</span></div></div>
             </article>
             <article class="card testimonial">
@@ -404,7 +686,7 @@
             </article>
             <article class="card testimonial">
               <div class="review-source"><div class="stars">★★★★★</div><div class="review-platform">Google Reviews</div></div>
-              <blockquote>"Mi empresa me envió a DEV SYSTEM como capacitación para ascender al área de arquitectura. La metodología de code review fue exactamente lo que necesitaba."</blockquote>
+              <blockquote>"Mi empresa me envió a DEV SYSTEM para ascender al área de arquitectura. La metodología de code review fue exactamente lo que necesitaba."</blockquote>
               <div class="testimonial-author"><div class="author-avatar">JL</div><div class="author-info"><strong>Jorge L.</strong><span>Dev Mid → Arquitecto · Telcel</span></div></div>
             </article>
             <article class="card testimonial">
@@ -414,7 +696,7 @@
             </article>
             <article class="card testimonial">
               <div class="review-source"><div class="stars">★★★★★</div><div class="review-platform">LinkedIn</div></div>
-              <blockquote>"Como Product Manager quería entender técnicamente a mi equipo. DEV SYSTEM me dio el lenguaje y la comprensión para ser un mejor líder de producto."</blockquote>
+              <blockquote>"Como Product Manager quería entender a mi equipo técnico. DEV SYSTEM me dio el lenguaje y la comprensión para ser un mejor líder de producto."</blockquote>
               <div class="testimonial-author"><div class="author-avatar">SM</div><div class="author-info"><strong>Sofía M.</strong><span>Product Manager · GBM</span></div></div>
             </article>
           </div>
@@ -427,10 +709,12 @@
           <div>
             <p class="eyebrow">Potencial de retorno</p>
             <h2>Lo que esta formación puede valer en el mercado.</h2>
-            <p style="margin-bottom:1.5rem;">Rangos reales del mercado laboral mexicano para perfiles tech. No son garantías, son posibilidades reales para quienes completan el programa.</p>
+            <p style="margin-bottom:1.5rem;">Rangos reales del mercado laboral mexicano para perfiles tech. Posibilidades reales para quienes completan el programa con disciplina.</p>
             <div class="cards" style="margin-top:0;gap:0.7rem;">
               <div class="card" style="display:flex;justify-content:space-between;align-items:center;padding:1rem 1.2rem;">
-                <div><div style="font-size:0.78rem;color:var(--muted);font-family:var(--font-mono);">Dev Junior → Mid · Etapa 1</div></div>
+                <div>
+                  <div style="font-size:0.78rem;color:var(--muted);font-family:var(--font-mono);">Dev Junior → Mid · Etapa 1</div>
+                </div>
                 <div style="font-family:var(--font-head);font-size:1.05rem;font-weight:800;color:var(--accent);white-space:nowrap;">$15k–$30k</div>
               </div>
               <div class="card" style="display:flex;justify-content:space-between;align-items:center;padding:1rem 1.2rem;">
@@ -445,9 +729,9 @@
             <p style="font-size:0.8rem;margin-top:1rem;">Rangos en MXN/mes. No representan ingresos garantizados.</p>
           </div>
           <div>
-            <p class="eyebrow">Convocatoria</p>
+            <p class="eyebrow">Inscríbete ahora</p>
             <h2>Cupos limitados. Acompañamiento real.</h2>
-            <p style="margin-bottom:1.5rem;">Abrimos una cohorte con capacidad reducida para garantizar code reviews reales y acompañamiento cercano por instructor.</p>
+            <p style="margin-bottom:1.5rem;">Abrimos una nueva generación con capacidad reducida para garantizar code reviews reales y acompañamiento cercano por instructor.</p>
             <div class="card" style="background:rgba(0,204,255,0.05);border-color:rgba(0,204,255,0.2);padding:1.5rem;margin-bottom:1rem;">
               <div style="font-family:var(--font-mono);font-size:0.72rem;color:var(--accent);margin-bottom:0.5rem;text-transform:uppercase;letter-spacing:0.1em;">Estado actual</div>
               <div style="display:flex;align-items:center;gap:0.6rem;">
@@ -471,7 +755,7 @@
             <a id="final-cta-primary" class="btn" href="checkout.html">Quiero unirme a DEV SYSTEM</a>
             <a id="final-cta-secondary" class="btn btn-ghost-light" href="login.html">Ya soy alumno</a>
           </div>
-          <p style="margin-top:1.5rem;font-size:0.82rem;color:var(--muted);">💳 Pago seguro vía Mercado Libre · ⭐ 4.9/5 en Google y Trustpilot</p>
+          <p style="margin-top:1.5rem;font-size:0.82rem;color:var(--muted);">Pago seguro vía Mercado Libre · 4.9/5 en Google y Trustpilot</p>
         </div>
       </section>
 
@@ -480,7 +764,7 @@
     <footer class="site-footer">
       <div class="container footer-wrap">
         <div>
-          <p style="font-weight:700;color:var(--text);margin-bottom:0.2rem;font-family:var(--font-head);">DEV SYSTEM</p>
+          <p style="font-weight:700;color:var(--text);margin-bottom:0.2rem;font-family:var(--font-head);">DEV SYSTEM ACADEMY</p>
           <p>Escuela de ingeniería de software · México</p>
         </div>
         <nav class="footer-links">
@@ -491,6 +775,48 @@
         </nav>
       </div>
     </footer>
+
+    <!-- MATRIX RAIN SCRIPT -->
+    <script>
+    (function() {
+      var canvas = document.getElementById('matrix-canvas');
+      var ctx = canvas.getContext('2d');
+      var chars = '01アイウエオカキクケコサシスセソタチツテトナニヌネノ{}[]()<>/\\|=+-*&^%$#@!;:,.?ABCDEFGHIJKLMNabcdefghijklmn';
+      var fontSize = 13;
+      var columns, drops;
+
+      function resize() {
+        canvas.width = canvas.offsetWidth;
+        canvas.height = canvas.offsetHeight;
+        columns = Math.floor(canvas.width / fontSize);
+        drops = new Array(columns).fill(1);
+      }
+
+      function draw() {
+        ctx.fillStyle = 'rgba(8, 14, 26, 0.05)';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.font = fontSize + 'px JetBrains Mono, monospace';
+        for (var i = 0; i < drops.length; i++) {
+          var char = chars[Math.floor(Math.random() * chars.length)];
+          var brightness = Math.random();
+          if (brightness > 0.95) {
+            ctx.fillStyle = '#ffffff';
+          } else if (brightness > 0.7) {
+            ctx.fillStyle = '#00ccff';
+          } else {
+            ctx.fillStyle = 'rgba(0, 204, 255, 0.35)';
+          }
+          ctx.fillText(char, i * fontSize, drops[i] * fontSize);
+          if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
+          drops[i]++;
+        }
+      }
+
+      resize();
+      window.addEventListener('resize', resize);
+      setInterval(draw, 50);
+    })();
+    </script>
 
   </body>
 </html>
