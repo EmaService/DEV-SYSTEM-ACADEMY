@@ -3,6 +3,12 @@ window.DEV_SYSTEM_CONFIG = {
   mercadoPagoPublicKey: "APP_USR-9e1e6b5b-efcd-4187-8808-efdbf1b52724",
   monthlyPrice: 7000,
 
+  planPricing: {
+    "Plan Base":        { label: "Desde $8,000 MXN / mes",        priceNum: 8000  },
+    "Plan Profesional": { label: "Desde $10,000 MXN / mes",       priceNum: 10000 },
+    "Plan Expert":      { label: "Desde $15,000 MXN / mes",       priceNum: 15000 },
+  },
+
   // Mercado Libre payment links — add your links here when ready.
   // You can set one link per plan, one per month, or both.
   // Per-month links take priority over per-plan links.

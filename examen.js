@@ -175,7 +175,7 @@
     resultMessage.style.color = "var(--green)";
     resultScore.textContent = "Puntaje obtenido: " + score + "/100";
     resultPrice.textContent =
-      "Has calificado a la mensualidad preferente de $7,000 MXN durante los 12 meses del programa.";
+      "Tarifa preferente: $7,000 MXN / mes durante los 12 meses del programa.";
   }
 
   submitBtn.addEventListener("click", async function () {

@@ -86,9 +86,19 @@
                 <span class="doc-check" data-doc-type="identificacion" style="color:var(--green);display:none">✓</span>
               </label>
               <label class="small" style="display:flex;justify-content:space-between;align-items:center;padding:0.5rem 0;border-bottom:1px solid var(--line)">
+                CURP
+                <input type="file" accept="image/*,.pdf" data-doc-type="curp" style="max-width:180px;font-size:0.8rem">
+                <span class="doc-check" data-doc-type="curp" style="color:var(--green);display:none">✓</span>
+              </label>
+              <label class="small" style="display:flex;justify-content:space-between;align-items:center;padding:0.5rem 0;border-bottom:1px solid var(--line)">
                 Comprobante de domicilio
                 <input type="file" accept="image/*,.pdf" data-doc-type="comprobante_domicilio" style="max-width:180px;font-size:0.8rem">
                 <span class="doc-check" data-doc-type="comprobante_domicilio" style="color:var(--green);display:none">✓</span>
+              </label>
+              <label class="small" style="display:flex;justify-content:space-between;align-items:center;padding:0.5rem 0;border-bottom:1px solid var(--line)">
+                Certificado o constancia del último grado de estudios
+                <input type="file" accept="image/*,.pdf" data-doc-type="comprobante_estudios" style="max-width:180px;font-size:0.8rem">
+                <span class="doc-check" data-doc-type="comprobante_estudios" style="color:var(--green);display:none">✓</span>
               </label>
               <label class="small" style="display:flex;justify-content:space-between;align-items:center;padding:0.5rem 0;border-bottom:1px solid var(--line)">
                 Fotografía tipo retrato
@@ -118,7 +128,7 @@
             </div>
             <div id="step-pay-content" style="display:none;margin-top:0.8rem">
               <p class="small" style="color:var(--green);font-weight:600">
-                ¡Felicidades! Calificaste a la mensualidad fija de $7,000 MXN × 12 meses.
+                Tarifa preferente: $7,000 MXN / mes durante los 12 meses del programa.
               </p>
               <div class="summary-row" style="margin-top:0.5rem">
                 <span>Mes a pagar</span>
@@ -155,6 +165,7 @@
             <span>Monto</span>
             <strong id="billing-price">-</strong>
           </div>
+          <p id="price-note" class="small" style="margin-top:0.3rem;color:var(--accent)"></p>
           <div class="summary-row">
             <span>Estado</span>
             <strong id="billing-status">-</strong>

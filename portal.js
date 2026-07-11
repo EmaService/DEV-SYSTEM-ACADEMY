@@ -1,4 +1,5 @@
 (async function () {
+  var cfg = window.DEV_SYSTEM_CONFIG || {};
   var user;
   var enrollment;
   var paidMonthsCloud = [];
@@ -84,17 +85,37 @@
   var examPassed = enrollment.exam_passed || false;
   var examScore = enrollment.exam_score || null;
 
+  var planPricing = (cfg.planPricing || {})[enrollment.plan || "Plan Base"] || { label: "-", priceNum: 0 };
+  var statusLabels = {
+    "aplicante":           "Solicitud recibida",
+    "documentos_enviados": "Documentos en revisión",
+    "aprobado":            "Aprobado — pendiente de pago",
+    "activo":              "Alumno activo",
+  };
+
+  function formatMxn(num) {
+    return "$" + String(num).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " MXN";
+  }
+
   function renderHeader() {
     welcomeName.textContent = "Hola, " + user.name;
     studentPlan.textContent = (enrollment.phaseName || "Etapa 1") + " · " + (enrollment.plan || "Plan Base");
     studentEmail.textContent = user.email;
     billingPlan.textContent = enrollment.plan || "Plan Base";
+
+    var priceNote = document.getElementById("price-note");
     if (examPassed) {
       billingPrice.textContent = "$7,000 MXN / mes";
+      priceNote.textContent = "Tarifa preferente — examen de admisión aprobado ✓";
+      priceNote.style.color = "var(--green)";
     } else {
-      billingPrice.textContent = enrollment.price || enrollment.price_label || "-";
+      billingPrice.textContent = planPricing.label;
+      priceNote.textContent = "Aprueba el examen de admisión para obtener la tarifa preferente de $7,000 MXN / mes.";
+      priceNote.style.color = "var(--accent)";
     }
-    billingStatus.textContent = enrollmentStatus === "activo" ? "Pagado" : "En proceso";
+
+    billingStatus.textContent = statusLabels[enrollmentStatus] || "En proceso";
+
     if (enrollmentStatus === "activo") {
       welcomeText.textContent =
         "Tu acceso está activo. Marca cada lección completada y mantén tu progreso al día.";
@@ -223,7 +244,7 @@
     admissionSteps.style.display = "block";
     admissionCompleted.style.display = "none";
 
-    var docTypes = ["identificacion", "comprobante_domicilio", "foto", "cv"];
+    var docTypes = ["identificacion", "curp", "comprobante_domicilio", "comprobante_estudios", "foto", "cv"];
     var docsMap = {};
     for (var d = 0; d < documents.length; d++) {
       docsMap[documents[d].doc_type] = documents[d];
@@ -312,7 +333,7 @@
       document.getElementById("docs-message").style.color = "var(--green)";
 
       var allDone = true;
-      var docTypes = ["identificacion", "comprobante_domicilio", "foto", "cv"];
+      var docTypes = ["identificacion", "curp", "comprobante_domicilio", "comprobante_estudios", "foto", "cv"];
       var docsMap = {};
       for (var d = 0; d < documents.length; d++) docsMap[documents[d].doc_type] = documents[d];
       for (var dt = 0; dt < docTypes.length; dt++) {
