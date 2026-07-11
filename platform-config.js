@@ -1,5 +1,5 @@
 window.DEV_SYSTEM_CONFIG = {
-  mode: "local", // "local" | "cloud"
+  mode: "cloud",
 
   // Mercado Libre payment links — add your links here when ready.
   // You can set one link per plan, one per month, or both.
@@ -23,7 +23,7 @@ window.DEV_SYSTEM_CONFIG = {
   },
 
   supabase: {
-    url: "",
-    anonKey: "",
+    url: "https://nirgwrsorefkvveospzq.supabase.co",
+    anonKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5pcmd3cnNvcmVma3Z2ZW9zcHpxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODM3MzQwOTcsImV4cCI6MjA5OTMxMDA5N30.Dm-JuEccYfokL2RjdEdocd0d5wN8gnjVCS1p2m4FZ18",
   },
 };
