@@ -127,13 +127,15 @@
               <strong id="step-pay-status" style="color:var(--muted)">Bloqueado</strong>
             </div>
             <div id="step-pay-content" style="display:none;margin-top:0.8rem">
-              <p class="small" style="color:var(--green);font-weight:600">
-                Tarifa preferente: $7,000 MXN / mes durante los 12 meses del programa.
-              </p>
+              <p id="step-pay-heading" class="small" style="font-weight:600"></p>
               <div class="summary-row" style="margin-top:0.5rem">
                 <span>Mes a pagar</span>
                 <select id="pay-month-select" class="month-select">
                 </select>
+              </div>
+              <div class="summary-row">
+                <span>Total a pagar</span>
+                <strong id="step-pay-amount">-</strong>
               </div>
               <button id="pay-btn" class="btn btn-block">Pagar mes</button>
               <div id="portal-wallet-container" style="margin-top:0.5rem"></div>

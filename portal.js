@@ -84,6 +84,7 @@
   var enrollmentStatus = enrollment.status || (enrollment.paid ? "activo" : "aplicante");
   var examPassed = enrollment.exam_passed || false;
   var examScore = enrollment.exam_score || null;
+  var examPresented = examPassed || Boolean(enrollment.exam_date);
 
   var planPricing = (cfg.planPricing || {})[enrollment.plan || "Plan Base"] || { label: "-", priceNum: 0 };
   var statusLabels = {
@@ -108,6 +109,10 @@
       billingPrice.textContent = "$7,000 MXN / mes";
       priceNote.textContent = "Tarifa preferente — examen de admisión aprobado ✓";
       priceNote.style.color = "var(--green)";
+    } else if (examPresented) {
+      billingPrice.textContent = "Tarifa regular por mes (ver tabla de pagos)";
+      priceNote.textContent = "Presentaste el examen pero no alcanzaste la tarifa preferente.";
+      priceNote.style.color = "var(--muted)";
     } else {
       billingPrice.textContent = planPricing.label;
       priceNote.textContent = "Aprueba el examen de admisión para obtener la tarifa preferente de $7,000 MXN / mes.";
@@ -272,30 +277,62 @@
       document.getElementById("step-exam-status").style.color = "";
     }
 
-    if (examPassed) {
-      document.getElementById("step-pay-status").textContent = "Disponible";
+    if (examPresented) {
+      document.getElementById("step-pay-status").textContent = examPassed ? "Disponible" : "Disponible (tarifa regular)";
       document.getElementById("step-pay-status").style.color = "var(--green)";
       document.getElementById("step-pay-content").style.display = "block";
       renderPayMonthOptions();
+      updatePayAmount();
+    }
+  }
+
+  function updatePayAmount() {
+    var select = document.getElementById("pay-month-select");
+    var amountEl = document.getElementById("step-pay-amount");
+    var mId = Number(select.value);
+    if (examPassed) {
+      amountEl.textContent = formatMxn(cfg.preferredPrice || 7000);
+    } else {
+      amountEl.textContent = formatMxn((cfg.monthlyPricing || {})[String(mId)] || 7000);
     }
   }
 
   function renderPayMonthOptions() {
     var select = document.getElementById("pay-month-select");
+    var heading = document.getElementById("step-pay-heading");
     var paidMonths = window.DevSystemState.getPaidMonthIds(user.email);
     var paidMap = {};
     for (var p = 0; p < paidMonths.length; p++) paidMap[paidMonths[p]] = true;
     select.innerHTML = "";
-    for (var m = 1; m <= 12; m++) {
-      var opt = document.createElement("option");
-      opt.value = String(m);
-      opt.textContent = "Mes " + m;
-      if (paidMap[m]) {
-        opt.textContent += " — Pagado ✓";
-        opt.disabled = true;
+    if (examPassed) {
+      heading.textContent = "¡Felicidades! Calificaste a la mensualidad fija de $7,000 MXN × 12 meses.";
+      heading.style.color = "var(--green)";
+      for (var m = 1; m <= 12; m++) {
+        var opt = document.createElement("option");
+        opt.value = String(m);
+        opt.textContent = "Mes " + m + " — " + formatMxn(cfg.preferredPrice || 7000);
+        if (paidMap[m]) {
+          opt.textContent += " — Pagado ✓";
+          opt.disabled = true;
+        }
+        select.appendChild(opt);
       }
-      select.appendChild(opt);
+    } else {
+      heading.textContent = "Puedes pagar tus mensualidades con la tarifa regular del programa.";
+      heading.style.color = "var(--muted)";
+      var pricing = cfg.monthlyPricing || {};
+      for (var m = 1; m <= 12; m++) {
+        var opt = document.createElement("option");
+        opt.value = String(m);
+        opt.textContent = "Mes " + m + " — " + formatMxn(pricing[String(m)] || 7000);
+        if (paidMap[m]) {
+          opt.textContent += " — Pagado ✓";
+          opt.disabled = true;
+        }
+        select.appendChild(opt);
+      }
     }
+    select.addEventListener("change", updatePayAmount);
   }
 
   logoutButton.addEventListener("click", async function () {

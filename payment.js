@@ -1,23 +1,15 @@
+function formatMxn(num) {
+  return "$" + String(num).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " MXN";
+}
+
 window.DevSystemPago = {
   iniciarPago: async function (monthId, email, fullName, phone, containerId) {
     var cfg = window.DEV_SYSTEM_CONFIG || {};
     var container = document.getElementById(containerId);
     if (!container) throw new Error("Contenedor " + containerId + " no encontrado");
 
-    var price = cfg.monthlyPrice || 7000;
-
-    var pending = {
-      fullName: fullName,
-      email: email,
-      phone: phone,
-      plan: "Plan Base",
-      price: price,
-      monthId: Number(monthId),
-      createdAt: new Date().toISOString(),
-    };
-    localStorage.setItem("devsystem_pending_checkout", JSON.stringify(pending));
-
-    container.innerHTML = "<p class='small' style='margin-top:0.5rem'>Preparando pago...</p>";
+    container.innerHTML =
+      "<p class='small' style='margin-top:0.5rem'>Preparando pago...</p>";
 
     var res = await fetch("/.netlify/functions/create-preference", {
       method: "POST",
@@ -32,7 +24,22 @@ window.DevSystemPago = {
     var data = await res.json();
     if (!res.ok) throw new Error(data.error || "Error al crear preferencia");
 
-    container.innerHTML = "";
+    var pending = {
+      fullName: fullName,
+      email: email,
+      phone: phone,
+      plan: "Plan Base",
+      price: data.price,
+      monthId: Number(monthId),
+      createdAt: new Date().toISOString(),
+    };
+    localStorage.setItem("devsystem_pending_checkout", JSON.stringify(pending));
+
+    container.innerHTML =
+      "<p class='small' style='margin-top:0.5rem'>Total a pagar: " +
+      formatMxn(data.price) +
+      "</p>";
+
     var mp = new MercadoPago(cfg.mercadoPagoPublicKey, { locale: "es-MX" });
     await mp.bricks().create("wallet", containerId, {
       initialization: { preferenceId: data.preferenceId },

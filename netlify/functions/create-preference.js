@@ -4,6 +4,17 @@ const corsHeaders = {
   "Access-Control-Allow-Methods": "POST, OPTIONS",
 };
 
+const PRECIO_PREFERENTE = 7000;
+const PRECIOS_POR_MES = {
+  "1": 7900,  "2": 9100,  "3": 10500, "4": 11900,
+  "5": 13100, "6": 14500, "7": 15900, "8": 17100,
+  "9": 18500, "10": 19900, "11": 21100, "12": 21900,
+};
+
+const SUPABASE_URL = "https://nirgwrsorefkvveospzq.supabase.co";
+const ANON_KEY =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5pcmd3cnNvcmVma3Z2ZW9zcHpxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODM3MzQwOTcsImV4cCI6MjA5OTMxMDA5N30.Dm-JuEccYfokL2RjdEdocd0d5wN8gnjVCS1p2m4FZ18";
+
 exports.handler = async (event) => {
   if (event.httpMethod === "OPTIONS") {
     return { statusCode: 204, headers: corsHeaders, body: "" };
@@ -22,7 +33,39 @@ exports.handler = async (event) => {
     };
   }
 
-  const price = 7000;
+  if (!PRECIOS_POR_MES[monthId]) {
+    return {
+      statusCode: 400,
+      headers: corsHeaders,
+      body: JSON.stringify({ error: "Mes inválido" }),
+    };
+  }
+
+  let examPassed = false;
+  try {
+    const sbRes = await fetch(
+      SUPABASE_URL +
+        "/rest/v1/enrollments?email=eq." +
+        encodeURIComponent(email) +
+        "&select=exam_passed",
+      {
+        headers: {
+          apikey: ANON_KEY,
+          Authorization: "Bearer " + ANON_KEY,
+        },
+      }
+    );
+    if (sbRes.ok) {
+      const sbData = await sbRes.json();
+      if (sbData && sbData.length > 0 && sbData[0].exam_passed === true) {
+        examPassed = true;
+      }
+    }
+  } catch (_) {
+    /* fallback: usar tabla escalonada */
+  }
+
+  const price = examPassed ? PRECIO_PREFERENTE : PRECIOS_POR_MES[monthId];
 
   const preference = {
     items: [
@@ -75,6 +118,10 @@ exports.handler = async (event) => {
   return {
     statusCode: 200,
     headers: corsHeaders,
-    body: JSON.stringify({ preferenceId: data.id, initPoint: data.init_point }),
+    body: JSON.stringify({
+      preferenceId: data.id,
+      initPoint: data.init_point,
+      price: price,
+    }),
   };
 };

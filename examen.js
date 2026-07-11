@@ -164,6 +164,8 @@
       if (answers[i] === questions[i].ans) correct++;
     }
     var raw = Math.round((correct / questions.length) * 100);
+    /* Para activar calificación real: cambiar la condición de 70 al umbral deseado
+       y quitar el ajuste `70 + (raw % 15)` para que devuelva raw directamente. */
     var final = raw >= 70 ? raw : 70 + (raw % 15);
     return final;
   }

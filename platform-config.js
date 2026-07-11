@@ -2,6 +2,12 @@ window.DEV_SYSTEM_CONFIG = {
   mode: "cloud",
   mercadoPagoPublicKey: "APP_USR-9e1e6b5b-efcd-4187-8808-efdbf1b52724",
   monthlyPrice: 7000,
+  preferredPrice: 7000,
+  monthlyPricing: {
+    "1": 7900,  "2": 9100,  "3": 10500, "4": 11900,
+    "5": 13100, "6": 14500, "7": 15900, "8": 17100,
+    "9": 18500, "10": 19900, "11": 21100, "12": 21900,
+  },
 
   planPricing: {
     "Plan Base":        { label: "Desde $8,000 MXN / mes",        priceNum: 8000  },
