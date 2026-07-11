@@ -43,10 +43,10 @@
       result = await window.DevSystemCloud.signIn(email, password);
       if (result.ok) {
         var enrollment = await window.DevSystemCloud.getEnrollment(email);
-        if (!enrollment || enrollment.paid !== true) {
+        if (!enrollment) {
           result = {
             ok: false,
-            message: "Tu acceso no esta activo. Completa tu inscripcion.",
+            message: "No tienes una solicitud de admisión registrada. Completa tu inscripción.",
           };
           await window.DevSystemCloud.signOut();
         }
@@ -59,7 +59,7 @@
       message.textContent = result.message;
       if (
         result.message.indexOf("inscripcion") >= 0 ||
-        result.message.indexOf("pagos activos") >= 0
+        result.message.indexOf("solicitud") >= 0
       ) {
         setTimeout(function () {
           window.location.href = "checkout.html";
@@ -90,10 +90,10 @@
 
     if (window.DevSystemCloud && window.DevSystemCloud.isEnabled()) {
       var enrollment = await window.DevSystemCloud.getEnrollment(email);
-      if (!enrollment || enrollment.paid !== true) {
+      if (!enrollment) {
         result = {
           ok: false,
-          message: "No hay pagos activos para este correo.",
+          message: "No hay una solicitud de admisión para este correo.",
         };
       } else {
         result = await window.DevSystemCloud.signUp(name, email, password);
@@ -110,6 +110,7 @@
       message.textContent = result.message;
       if (
         result.message.indexOf("inscripcion") >= 0 ||
+        result.message.indexOf("solicitud") >= 0 ||
         result.message.indexOf("pagos activos") >= 0
       ) {
         setTimeout(function () {

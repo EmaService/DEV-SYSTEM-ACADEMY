@@ -68,13 +68,82 @@
       plan: data.plan || "Plan Base",
       price_label: data.price || "",
       latest_month_id: Number(data.monthId) || null,
-      paid: true,
+      paid: data.paid === undefined ? true : Boolean(data.paid),
       source: data.source || "stripe",
+      status: data.status || null,
       updated_at: new Date().toISOString(),
     };
     var response = await c.from("enrollments").upsert(payload, { onConflict: "email" });
     if (response.error) return { ok: false, message: response.error.message };
     return { ok: true };
+  }
+
+  async function updateEnrollmentStatus(email, status) {
+    var c = getClient();
+    if (!c) return { ok: false, message: "Cloud no configurado." };
+    var response = await c
+      .from("enrollments")
+      .update({ status: status, updated_at: new Date().toISOString() })
+      .eq("email", String(email || "").toLowerCase());
+    if (response.error) return { ok: false, message: response.error.message };
+    return { ok: true };
+  }
+
+  async function saveExamResult(email, score) {
+    var c = getClient();
+    if (!c) return { ok: false, message: "Cloud no configurado." };
+    var response = await c
+      .from("enrollments")
+      .update({
+        exam_passed: true,
+        exam_score: Number(score),
+        exam_date: new Date().toISOString(),
+        status: "aprobado",
+        updated_at: new Date().toISOString(),
+      })
+      .eq("email", String(email || "").toLowerCase());
+    if (response.error) return { ok: false, message: response.error.message };
+    return { ok: true };
+  }
+
+  async function saveDocument(email, docType, filePath) {
+    var c = getClient();
+    if (!c) return { ok: false, message: "Cloud no configurado." };
+    var response = await c
+      .from("student_documents")
+      .upsert(
+        {
+          email: String(email || "").toLowerCase(),
+          doc_type: docType,
+          file_path: filePath,
+          uploaded_at: new Date().toISOString(),
+        },
+        { onConflict: "email,doc_type" }
+      );
+    if (response.error) return { ok: false, message: response.error.message };
+    return { ok: true };
+  }
+
+  async function getDocuments(email) {
+    var c = getClient();
+    if (!c) return [];
+    var response = await c
+      .from("student_documents")
+      .select("doc_type, file_path, uploaded_at")
+      .eq("email", String(email || "").toLowerCase());
+    if (response.error || !response.data) return [];
+    return response.data;
+  }
+
+  async function uploadDocumentFile(email, docType, file) {
+    var c = getClient();
+    if (!c) return { ok: false, message: "Cloud no configurado." };
+    var filePath = String(email || "").toLowerCase() + "/" + docType;
+    var response = await c.storage
+      .from("documentos-alumnos")
+      .upload(filePath, file, { upsert: true });
+    if (response.error) return { ok: false, message: response.error.message };
+    return { ok: true, path: filePath };
   }
 
   async function getEnrollment(email) {
@@ -175,5 +244,10 @@
     getPaidMonthIds: getPaidMonthIds,
     setLessonProgress: setLessonProgress,
     getProgressMap: getProgressMap,
+    updateEnrollmentStatus: updateEnrollmentStatus,
+    saveExamResult: saveExamResult,
+    saveDocument: saveDocument,
+    getDocuments: getDocuments,
+    uploadDocumentFile: uploadDocumentFile,
   };
 })();

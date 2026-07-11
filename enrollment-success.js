@@ -47,6 +47,8 @@
       price: data.price,
       monthId: data.monthId,
       source: "stripe_success_return",
+      status: "activo",
+      paid: true,
     });
   }
 

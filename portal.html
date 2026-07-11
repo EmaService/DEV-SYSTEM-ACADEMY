@@ -16,9 +16,11 @@
     />
     <link rel="stylesheet" href="styles.css" />
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://sdk.mercadopago.com/js/v2"></script>
     <script defer src="platform-config.js"></script>
     <script defer src="cloud-state.js"></script>
     <script defer src="app-state.js"></script>
+    <script defer src="payment.js"></script>
     <script defer src="portal.js"></script>
   </head>
   <body>
@@ -69,7 +71,72 @@
           <p id="certificate-status" class="notice"></p>
         </section>
 
-        <section class="card reveal">
+        <section id="admission-card" class="card reveal" style="display:none">
+          <h2>Tu proceso de admisión</h2>
+
+          <div id="admission-steps">
+            <div id="step-docs" class="summary-row">
+              <span>PASO 1 — Documentos</span>
+              <strong id="step-docs-status">Pendiente</strong>
+            </div>
+            <div id="step-docs-upload" style="margin-top:0.8rem;display:grid;gap:0.6rem">
+              <label class="small" style="display:flex;justify-content:space-between;align-items:center;padding:0.5rem 0;border-bottom:1px solid var(--line)">
+                Identificación oficial (INE o pasaporte)
+                <input type="file" accept="image/*,.pdf" data-doc-type="identificacion" style="max-width:180px;font-size:0.8rem">
+                <span class="doc-check" data-doc-type="identificacion" style="color:var(--green);display:none">✓</span>
+              </label>
+              <label class="small" style="display:flex;justify-content:space-between;align-items:center;padding:0.5rem 0;border-bottom:1px solid var(--line)">
+                Comprobante de domicilio
+                <input type="file" accept="image/*,.pdf" data-doc-type="comprobante_domicilio" style="max-width:180px;font-size:0.8rem">
+                <span class="doc-check" data-doc-type="comprobante_domicilio" style="color:var(--green);display:none">✓</span>
+              </label>
+              <label class="small" style="display:flex;justify-content:space-between;align-items:center;padding:0.5rem 0;border-bottom:1px solid var(--line)">
+                Fotografía tipo retrato
+                <input type="file" accept="image/*" data-doc-type="foto" style="max-width:180px;font-size:0.8rem">
+                <span class="doc-check" data-doc-type="foto" style="color:var(--green);display:none">✓</span>
+              </label>
+              <label class="small" style="display:flex;justify-content:space-between;align-items:center;padding:0.5rem 0;border-bottom:1px solid var(--line)">
+                CV o semblanza breve (PDF)
+                <input type="file" accept=".pdf" data-doc-type="cv" style="max-width:180px;font-size:0.8rem">
+                <span class="doc-check" data-doc-type="cv" style="color:var(--green);display:none">✓</span>
+              </label>
+              <p id="docs-message" class="small" style="margin-top:0.3rem;color:var(--muted)"></p>
+            </div>
+
+            <div class="summary-row" style="margin-top:1rem">
+              <span>PASO 2 — Examen técnico de admisión</span>
+              <strong id="step-exam-status">Pendiente</strong>
+            </div>
+            <p class="small" style="margin-top:0.4rem;color:var(--muted)">
+              Recomendamos subir tus documentos primero.
+            </p>
+            <a id="exam-btn" href="examen.html" class="btn btn-block">Presentar examen</a>
+
+            <div class="summary-row" style="margin-top:1rem">
+              <span>PASO 3 — Pago de mensualidad</span>
+              <strong id="step-pay-status" style="color:var(--muted)">Bloqueado</strong>
+            </div>
+            <div id="step-pay-content" style="display:none;margin-top:0.8rem">
+              <p class="small" style="color:var(--green);font-weight:600">
+                ¡Felicidades! Calificaste a la mensualidad fija de $7,000 MXN × 12 meses.
+              </p>
+              <div class="summary-row" style="margin-top:0.5rem">
+                <span>Mes a pagar</span>
+                <select id="pay-month-select" class="month-select">
+                </select>
+              </div>
+              <button id="pay-btn" class="btn btn-block">Pagar mes</button>
+              <div id="portal-wallet-container" style="margin-top:0.5rem"></div>
+              <p id="pay-message" class="small" style="margin-top:0.3rem;color:var(--muted)"></p>
+            </div>
+          </div>
+
+          <div id="admission-completed" style="display:none">
+            <p class="small" style="color:var(--green)">Admisión completada ✓</p>
+          </div>
+        </section>
+
+        <section id="curriculum-section" class="card reveal" style="display:none">
           <h2>Tu ruta completa de formación</h2>
           <div id="curriculum-root" class="portal-curriculum"></div>
         </section>
@@ -90,7 +157,7 @@
           </div>
           <div class="summary-row">
             <span>Estado</span>
-            <strong>Pagado</strong>
+            <strong id="billing-status">-</strong>
           </div>
         </section>
       </div>

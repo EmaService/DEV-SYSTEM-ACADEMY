@@ -2,6 +2,7 @@
   var user;
   var enrollment;
   var paidMonthsCloud = [];
+  var documents = [];
   var cloudMode = window.DevSystemCloud && window.DevSystemCloud.isEnabled();
 
   if (cloudMode) {
@@ -15,11 +16,12 @@
       email: cloudUser.email,
     };
     enrollment = await window.DevSystemCloud.getEnrollment(user.email);
-    if (!enrollment || enrollment.paid !== true) {
+    if (!enrollment) {
       window.location.href = "checkout.html";
       return;
     }
     paidMonthsCloud = await window.DevSystemCloud.getPaidMonthIds(user.email);
+    documents = await window.DevSystemCloud.getDocuments(user.email);
   } else {
     user = window.DevSystemState.getCurrentUser();
     if (!user) {
@@ -27,7 +29,7 @@
       return;
     }
     enrollment = window.DevSystemState.getEnrollment(user.email);
-    if (!enrollment || enrollment.paid !== true) {
+    if (!enrollment) {
       window.location.href = "checkout.html";
       return;
     }
@@ -68,18 +70,38 @@
   var progressFill = document.getElementById("progress-fill");
   var certificateStatus = document.getElementById("certificate-status");
   var curriculumRoot = document.getElementById("curriculum-root");
+  var curriculumSection = document.getElementById("curriculum-section");
+  var admissionCard = document.getElementById("admission-card");
+  var admissionSteps = document.getElementById("admission-steps");
+  var admissionCompleted = document.getElementById("admission-completed");
   var studentEmail = document.getElementById("student-email");
   var billingPlan = document.getElementById("billing-plan");
   var billingPrice = document.getElementById("billing-price");
+  var billingStatus = document.getElementById("billing-status");
+  var payMessage = document.getElementById("pay-message");
+
+  var enrollmentStatus = enrollment.status || (enrollment.paid ? "activo" : "aplicante");
+  var examPassed = enrollment.exam_passed || false;
+  var examScore = enrollment.exam_score || null;
 
   function renderHeader() {
     welcomeName.textContent = "Hola, " + user.name;
-    welcomeText.textContent =
-      "Tu acceso está activo. Marca cada lección completada y mantén tu progreso al día.";
     studentPlan.textContent = (enrollment.phaseName || "Etapa 1") + " · " + (enrollment.plan || "Plan Base");
     studentEmail.textContent = user.email;
     billingPlan.textContent = enrollment.plan || "Plan Base";
-    billingPrice.textContent = enrollment.price || enrollment.price_label || "-";
+    if (examPassed) {
+      billingPrice.textContent = "$7,000 MXN / mes";
+    } else {
+      billingPrice.textContent = enrollment.price || enrollment.price_label || "-";
+    }
+    billingStatus.textContent = enrollmentStatus === "activo" ? "Pagado" : "En proceso";
+    if (enrollmentStatus === "activo") {
+      welcomeText.textContent =
+        "Tu acceso está activo. Marca cada lección completada y mantén tu progreso al día.";
+    } else {
+      welcomeText.textContent =
+        "Completa tu proceso de admisión para acceder al programa.";
+    }
   }
 
   function renderProgress() {
@@ -189,6 +211,72 @@
     bindCheckboxes();
   }
 
+  function renderAdmissionSteps() {
+    admissionCard.style.display = "block";
+
+    if (enrollmentStatus === "activo") {
+      admissionSteps.style.display = "none";
+      admissionCompleted.style.display = "block";
+      return;
+    }
+
+    admissionSteps.style.display = "block";
+    admissionCompleted.style.display = "none";
+
+    var docTypes = ["identificacion", "comprobante_domicilio", "foto", "cv"];
+    var docsMap = {};
+    for (var d = 0; d < documents.length; d++) {
+      docsMap[documents[d].doc_type] = documents[d];
+    }
+
+    var allDocsDone = true;
+    for (var dt = 0; dt < docTypes.length; dt++) {
+      var checkSpan = document.querySelector('.doc-check[data-doc-type="' + docTypes[dt] + '"]');
+      var done = Boolean(docsMap[docTypes[dt]]);
+      if (checkSpan) {
+        checkSpan.style.display = done ? "inline" : "none";
+      }
+      if (!done) allDocsDone = false;
+    }
+
+    document.getElementById("step-docs-status").textContent = allDocsDone ? "Completado ✓" : "Pendiente";
+    document.getElementById("step-docs-status").style.color = allDocsDone ? "var(--green)" : "";
+
+    if (examPassed) {
+      document.getElementById("step-exam-status").textContent = "Aprobado — Puntaje: " + examScore + "/100 ✓";
+      document.getElementById("step-exam-status").style.color = "var(--green)";
+      document.getElementById("exam-btn").style.display = "none";
+    } else {
+      document.getElementById("step-exam-status").textContent = "Pendiente";
+      document.getElementById("step-exam-status").style.color = "";
+    }
+
+    if (examPassed) {
+      document.getElementById("step-pay-status").textContent = "Disponible";
+      document.getElementById("step-pay-status").style.color = "var(--green)";
+      document.getElementById("step-pay-content").style.display = "block";
+      renderPayMonthOptions();
+    }
+  }
+
+  function renderPayMonthOptions() {
+    var select = document.getElementById("pay-month-select");
+    var paidMonths = window.DevSystemState.getPaidMonthIds(user.email);
+    var paidMap = {};
+    for (var p = 0; p < paidMonths.length; p++) paidMap[paidMonths[p]] = true;
+    select.innerHTML = "";
+    for (var m = 1; m <= 12; m++) {
+      var opt = document.createElement("option");
+      opt.value = String(m);
+      opt.textContent = "Mes " + m;
+      if (paidMap[m]) {
+        opt.textContent += " — Pagado ✓";
+        opt.disabled = true;
+      }
+      select.appendChild(opt);
+    }
+  }
+
   logoutButton.addEventListener("click", async function () {
     if (cloudMode) {
       await window.DevSystemCloud.signOut();
@@ -198,7 +286,68 @@
     window.location.href = "login.html";
   });
 
+  var docInputs = document.querySelectorAll("#step-docs-upload input[type='file']");
+  for (var di = 0; di < docInputs.length; di++) {
+    docInputs[di].addEventListener("change", async function (event) {
+      if (!cloudMode) {
+        document.getElementById("docs-message").textContent = "Sube documentos desde la nube.";
+        return;
+      }
+      var file = event.target.files[0];
+      if (!file) return;
+      var docType = event.target.getAttribute("data-doc-type");
+      var result = await window.DevSystemCloud.uploadDocumentFile(user.email, docType, file);
+      if (!result.ok) {
+        document.getElementById("docs-message").textContent = "Error: " + result.message;
+        return;
+      }
+      var saveResult = await window.DevSystemCloud.saveDocument(user.email, docType, result.path);
+      if (!saveResult.ok) {
+        document.getElementById("docs-message").textContent = "Error: " + saveResult.message;
+        return;
+      }
+      documents = await window.DevSystemCloud.getDocuments(user.email);
+      renderAdmissionSteps();
+      document.getElementById("docs-message").textContent = "Documento subido correctamente.";
+      document.getElementById("docs-message").style.color = "var(--green)";
+
+      var allDone = true;
+      var docTypes = ["identificacion", "comprobante_domicilio", "foto", "cv"];
+      var docsMap = {};
+      for (var d = 0; d < documents.length; d++) docsMap[documents[d].doc_type] = documents[d];
+      for (var dt = 0; dt < docTypes.length; dt++) {
+        if (!docsMap[docTypes[dt]]) { allDone = false; break; }
+      }
+      if (allDone) {
+        await window.DevSystemCloud.updateEnrollmentStatus(user.email, "documentos_enviados");
+        enrollment.status = "documentos_enviados";
+        enrollmentStatus = "documentos_enviados";
+      }
+    });
+  }
+
+  document.getElementById("pay-btn").addEventListener("click", async function () {
+    if (!window.DevSystemPago) {
+      payMessage.textContent = "Error: módulo de pago no disponible.";
+      return;
+    }
+    var monthId = document.getElementById("pay-month-select").value;
+    payMessage.textContent = "Iniciando pago...";
+    try {
+      await window.DevSystemPago.iniciarPago(monthId, user.email, user.name, "", "portal-wallet-container");
+      payMessage.textContent = "Elige tu método de pago:";
+      document.getElementById("pay-btn").style.display = "none";
+    } catch (err) {
+      payMessage.textContent = "Error: " + err.message + ". Intenta de nuevo.";
+    }
+  });
+
   renderHeader();
   renderProgress();
-  renderCurriculum();
+  renderAdmissionSteps();
+
+  if (enrollmentStatus === "activo") {
+    curriculumSection.style.display = "block";
+    renderCurriculum();
+  }
 })();
