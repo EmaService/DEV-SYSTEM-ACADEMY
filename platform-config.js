@@ -1,5 +1,7 @@
 window.DEV_SYSTEM_CONFIG = {
   mode: "cloud",
+  mercadoPagoPublicKey: "APP_USR-9e1e6b5b-efcd-4187-8808-efdbf1b52724",
+  monthlyPrice: 7000,
 
   // Mercado Libre payment links — add your links here when ready.
   // You can set one link per plan, one per month, or both.

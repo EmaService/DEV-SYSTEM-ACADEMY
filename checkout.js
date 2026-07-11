@@ -87,57 +87,66 @@
       return;
     }
 
+    var price = cfg.monthlyPrice || 7000;
+
     var pending = {
       fullName: fullName,
       email: email,
       phone: phone,
       plan: currentSelection.plan,
-      price: currentSelection.price,
+      price: price,
       monthId: monthId,
       createdAt: new Date().toISOString(),
     };
 
     localStorage.setItem("devsystem_pending_checkout", JSON.stringify(pending));
 
-    var selectedLink = monthlyLinks[String(monthId)];
-    if (selectedLink) {
-      checkoutMessage.textContent = "Redirigiendo a Mercado Libre para pago seguro...";
-      checkoutButton.disabled = true;
-      checkoutButton.textContent = "Abriendo Mercado Libre...";
-      window.location.href = selectedLink;
-      return;
-    }
-
-    var result = window.DevSystemState.registerMonthlyPayment(pending);
-    if (!result.ok) {
-      checkoutMessage.textContent = result.message;
-      return;
-    }
-
-    if (window.DevSystemCloud && window.DevSystemCloud.isEnabled()) {
-      await window.DevSystemCloud.recordMonthlyPayment({
-        email: email,
-        monthId: monthId,
-        plan: currentSelection.plan,
-        price: currentSelection.price,
-        source: "local_fallback_checkout",
-      });
+    if (cfg.mode === "cloud" && window.DevSystemCloud && window.DevSystemCloud.isEnabled()) {
       await window.DevSystemCloud.upsertEnrollment({
         fullName: fullName,
         email: email,
         phone: phone,
         plan: currentSelection.plan,
-        price: currentSelection.price,
-        monthId: monthId,
-        source: "local_fallback_checkout",
+        price: price,
       });
     }
 
-    checkoutMessage.textContent =
-      "Pago mensual registrado. Continuamos con activacion de cuenta.";
-    setTimeout(function () {
-      window.location.href = "login.html?mode=register&email=" + encodeURIComponent(email);
-    }, 850);
+    checkoutButton.disabled = true;
+    checkoutButton.textContent = "Preparando pago...";
+    checkoutMessage.textContent = "";
+
+    try {
+      var res = await fetch("/.netlify/functions/create-preference", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          monthId: String(monthId),
+          email: email,
+          fullName: fullName,
+          phone: phone,
+        }),
+      });
+      var data = await res.json();
+
+      if (!res.ok) throw new Error(data.error || "Error al crear preferencia");
+
+      var mp = new MercadoPago(cfg.mercadoPagoPublicKey, { locale: "es-MX" });
+      var walletContainer = document.getElementById("wallet_container");
+      walletContainer.innerHTML = "";
+
+      mp.bricks().create("wallet", "wallet_container", {
+        initialization: { preferenceId: data.preferenceId },
+        customization: { texts: { valueProp: "smart_option" } },
+      });
+
+      checkoutButton.style.display = "none";
+      checkoutMessage.textContent = "Elige tu método de pago:";
+    } catch (err) {
+      checkoutButton.disabled = false;
+      checkoutButton.textContent = "Pagar con Mercado Pago";
+      checkoutMessage.textContent =
+        "Error: " + err.message + ". Intenta de nuevo.";
+    }
   });
 
   renderSelection();
