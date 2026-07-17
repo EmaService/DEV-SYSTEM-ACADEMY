@@ -86,6 +86,9 @@
   var examScore = enrollment.exam_score || null;
   var examPresented = examPassed || Boolean(enrollment.exam_date);
 
+  var leccionesData = window.DEV_SYSTEM_LECCIONES || {};
+  var glosarioData = window.DEV_SYSTEM_GLOSARIO || [];
+
   var planPricing = (cfg.planPricing || {})[enrollment.plan || "Plan Base"] || { label: "-", priceNum: 0 };
   var statusLabels = {
     "aplicante":           "Solicitud recibida",
@@ -147,94 +150,306 @@
     }
   }
 
-  function renderCurriculum() {
-    var phases = window.DevSystemState.getCurriculum();
-    var paidMonths = window.DevSystemState.getPaidMonthIds(user.email);
-    var progress = cloudMode ? {} : window.DevSystemState.getProgress(user.email);
-    curriculumRoot.innerHTML = "";
+  function renderCurriculum(cloudProgress) {
+    var materias = leccionesData.m1 && leccionesData.m1.materias;
+    if (!materias) {
+      curriculumRoot.innerHTML = "<p class='small' style='color:var(--muted)'>No hay lecciones disponibles.</p>";
+      return;
+    }
+    var progress = cloudProgress || (cloudMode ? {} : window.DevSystemState.getProgress(user.email));
+    var materiaKeys = Object.keys(materias);
 
-    for (var i = 0; i < phases.length; i += 1) {
-      var phase = phases[i];
-      var block = document.createElement("article");
-      block.className = "phase-block";
+    var html =
+      "<div class='materia-tabs' style='display:flex;gap:0.5rem;margin-bottom:1rem'>";
+    for (var ti = 0; ti < materiaKeys.length; ti += 1) {
+      var mk = materiaKeys[ti];
+      var m = materias[mk];
+      html +=
+        "<button class='tab-btn materia-tab' data-materia='" +
+        mk +
+        "'>" +
+        (m.icono || "◇") +
+        " " +
+        m.nombre +
+        "</button>";
+    }
+    html += "</div>";
 
-      var phaseHeader = document.createElement("div");
-      phaseHeader.className = "phase-block-head";
-      phaseHeader.innerHTML =
-        "<h3>" +
-        phase.name +
-        "</h3><p>" + phase.phaseName + " · " + phase.planName + " · " +
-        phase.duration +
-        "</p><p>" +
-        phase.outcome +
-        "</p>";
-      block.appendChild(phaseHeader);
-      if (paidMonths.indexOf(phase.monthId) === -1) {
-        block.classList.add("locked");
+    html += "<div class='materia-contents'>";
+    var doneMap = {};
+    var totalMap = {};
+
+    for (var ti = 0; ti < materiaKeys.length; ti += 1) {
+      var mk = materiaKeys[ti];
+      var m = materias[mk];
+      var lecciones = m.lecciones;
+      var publishedCount = 0;
+      var doneCount = 0;
+
+      html += "<div class='materia-content' data-materia='" + mk + "'>";
+
+      for (var i = 0; i < lecciones.length; i += 1) {
+        if (!lecciones[i].proximamente) publishedCount += 1;
       }
 
-      var lessonsList = document.createElement("div");
-      lessonsList.className = "lesson-list";
+      html +=
+        "<div class='summary-row' style='margin-bottom:0.5rem'><span>Progreso</span><strong><span id='mpt-" +
+        mk +
+        "'>0/" +
+        publishedCount +
+        "</span></strong></div>";
+      html +=
+        "<div class='progress-bar'><div class='progress-fill' id='mpf-" +
+        mk +
+        "' style='width:0%'></div></div>";
+      html += "<div class='lesson-list'>";
 
-      for (var j = 0; j < phase.lessons.length; j += 1) {
-        var lesson = phase.lessons[j];
-        var lessonRow = document.createElement("label");
-        lessonRow.className = "lesson-row";
+      var sequentialUnlocked = true;
+      for (var i = 0; i < lecciones.length; i += 1) {
+        var lesson = lecciones[i];
+        var num = i + 1;
+        var label = mk.toUpperCase() + num;
 
-        var checkbox = document.createElement("input");
-        checkbox.type = "checkbox";
-        checkbox.checked = Boolean(progress[lesson.id]);
-        checkbox.setAttribute("data-lesson-id", lesson.id);
-        if (paidMonths.indexOf(phase.monthId) === -1) checkbox.disabled = true;
+        if (!lesson.proximamente) {
+          var completed = Boolean(progress[lesson.id]);
+          if (completed) doneCount += 1;
 
-        var text = document.createElement("span");
-        text.textContent = lesson.title;
+          var currentUnlocked = sequentialUnlocked;
+          if (completed) {
+            /* allow next */
+          } else {
+            sequentialUnlocked = false;
+          }
 
-        lessonRow.appendChild(checkbox);
-        lessonRow.appendChild(text);
-        lessonsList.appendChild(lessonRow);
+          var icon = completed ? "✔" : currentUnlocked ? "▶" : "🔒";
+          var cls = completed
+            ? "lesson-done"
+            : currentUnlocked
+            ? "lesson-available"
+            : "lesson-locked";
+          var link;
+          if (currentUnlocked) {
+            link =
+              "<a href='leccion.html?id=" +
+              lesson.id +
+              "'>" +
+              lesson.titulo +
+              "</a>";
+          } else if (!completed) {
+            link = "<span>" + lesson.titulo + "</span>";
+          } else {
+            link = "<span>" + lesson.titulo + "</span>";
+          }
+
+          html +=
+            "<div class='lesson-row " +
+            cls +
+            "' data-lesson-id='" +
+            lesson.id +
+            "'>";
+          html += "<span>" + icon + "</span> ";
+          html += "<span class='lesson-id-label'>" + label + ".</span> ";
+          html += link;
+          html += "</div>";
+        } else {
+          html += "<div class='lesson-row lesson-soon'>";
+          html += "<span>🔒</span> ";
+          html += "<span class='lesson-id-label'>" + label + ".</span> ";
+          html +=
+            "<span>" +
+            lesson.titulo +
+            " <span style='color:var(--muted);font-size:0.8rem'>Próximamente</span></span>";
+          html += "</div>";
+        }
       }
 
-      block.appendChild(lessonsList);
-      curriculumRoot.appendChild(block);
+      html += "</div></div>";
+      doneMap[mk] = doneCount;
+      totalMap[mk] = publishedCount;
     }
 
-    function bindCheckboxes() {
-      var checkboxes = curriculumRoot.querySelectorAll("input[type='checkbox']");
-      for (var k = 0; k < checkboxes.length; k += 1) {
-        checkboxes[k].addEventListener("change", async function (event) {
-          var lessonId = event.target.getAttribute("data-lesson-id");
-          var completed = event.target.checked;
-          if (cloudMode) {
-            await window.DevSystemCloud.setLessonProgress(user.email, lessonId, completed);
-            window.DevSystemState.setLessonCompletion(user.email, lessonId, completed);
-          } else {
-            window.DevSystemState.setLessonCompletion(user.email, lessonId, completed);
-          }
-          renderProgress();
+    html += "</div>";
+
+    html +=
+      "<details style='margin-top:1rem'><summary style='cursor:pointer;color:var(--accent);font-weight:600'>📋 Temario completo del mes</summary><div class='temario-grid' style='display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:0.8rem'>";
+    for (var ti = 0; ti < materiaKeys.length; ti += 1) {
+      var mk = materiaKeys[ti];
+      var m = materias[mk];
+      html +=
+        "<div><h4 style='font-size:0.9rem;margin-bottom:0.5rem'>" +
+        (m.icono || "◇") +
+        " " +
+        m.nombre +
+        "</h4>";
+      var lecciones = m.lecciones;
+      for (var i = 0; i < lecciones.length; i += 1) {
+        var lesson = lecciones[i];
+        var num = i + 1;
+        var label = mk.toUpperCase() + num;
+        html +=
+          "<div style='font-size:0.82rem;padding:0.2rem 0;border-bottom:1px solid var(--line)'>" +
+          "<span style='color:var(--muted);margin-right:0.3rem'>" +
+          label +
+          "</span>" +
+          "<span style='color:var(--text)'>" +
+          lesson.titulo +
+          "</span></div>";
+      }
+      html += "</div>";
+    }
+    html += "</div></details>";
+
+    curriculumRoot.innerHTML = html;
+
+    var tabs = curriculumRoot.querySelectorAll(".materia-tab");
+    var contents = curriculumRoot.querySelectorAll(".materia-content");
+    function switchTab(key) {
+      for (var t = 0; t < contents.length; t += 1) {
+        contents[t].style.display =
+          contents[t].getAttribute("data-materia") === key ? "block" : "none";
+      }
+      for (var t = 0; t < tabs.length; t += 1) {
+        tabs[t].classList.toggle("active", tabs[t].getAttribute("data-materia") === key);
+      }
+    }
+    for (var t = 0; t < tabs.length; t += 1) {
+      (function (key) {
+        tabs[t].addEventListener("click", function () {
+          switchTab(key);
         });
+      })(tabs[t].getAttribute("data-materia"));
+    }
+    if (materiaKeys.length > 0) switchTab(materiaKeys[0]);
+
+    for (var ti = 0; ti < materiaKeys.length; ti += 1) {
+      var mk = materiaKeys[ti];
+      var fill = document.getElementById("mpf-" + mk);
+      var text = document.getElementById("mpt-" + mk);
+      if (fill) {
+        var done = doneMap[mk] || 0;
+        var total = totalMap[mk] || 1;
+        fill.style.width = Math.round((done / total) * 100) + "%";
+      }
+      if (text) {
+        text.textContent = (doneMap[mk] || 0) + "/" + (totalMap[mk] || 0);
+      }
+    }
+
+    if (cloudMode && !cloudProgress) {
+      window.DevSystemCloud.getProgressMap(user.email).then(function (map) {
+        renderCurriculum(map || {});
+      });
+    }
+  }
+
+  function renderGlosario() {
+    var glosarioCard = document.getElementById("glosario-card");
+    if (enrollmentStatus !== "activo") {
+      glosarioCard.style.display = "none";
+      return;
+    }
+    glosarioCard.style.display = "block";
+    var container = document.getElementById("glosario-list");
+    container.innerHTML = "";
+
+    function renderTerms(terms) {
+      terms.sort(function (a, b) {
+        if (a.reviewed === b.reviewed) return 0;
+        return a.reviewed ? 1 : -1;
+      });
+      for (var i = 0; i < terms.length; i += 1) {
+        var term = terms[i];
+        var card = document.createElement("div");
+        card.className = "glosario-item";
+
+        var nameEl = document.createElement("strong");
+        nameEl.className = "glosario-termino";
+        nameEl.textContent = term.termino || term.term || "";
+
+        var defEl = document.createElement("p");
+        defEl.className = "glosario-def";
+        defEl.textContent = term.definicion || term.definition || "";
+
+        var meta = document.createElement("span");
+        meta.className = "glosario-meta";
+        meta.textContent = term.mes
+          ? "Mes " + term.mes
+          : term.month_ref
+          ? "Mes " + term.month_ref
+          : term.known_term === false
+          ? "Próximamente"
+          : "";
+
+        var toggle = document.createElement("label");
+        toggle.className = "glosario-toggle";
+        toggle.style.cssText = "display:flex;align-items:center;gap:0.3rem;font-size:0.82rem";
+        var chk = document.createElement("input");
+        chk.type = "checkbox";
+        chk.checked = Boolean(term.reviewed);
+        chk.setAttribute("data-term", term.termino || term.term || "");
+        chk.addEventListener("change", async function (e) {
+          var t = e.target.getAttribute("data-term");
+          var r = e.target.checked;
+          if (cloudMode && window.DevSystemCloud.setGlossaryReviewed) {
+            await window.DevSystemCloud.setGlossaryReviewed(user.email, t, r);
+          }
+          renderGlosario();
+        });
+        toggle.appendChild(chk);
+        toggle.appendChild(document.createTextNode(" Repasado"));
+
+        var delBtn = document.createElement("button");
+        delBtn.className = "btn btn-ghost";
+        delBtn.style.cssText = "padding:0.2rem 0.5rem;font-size:0.8rem";
+        delBtn.textContent = "✕";
+        delBtn.setAttribute("data-term", term.termino || term.term || "");
+        delBtn.addEventListener("click", async function (e) {
+          var t = e.currentTarget.getAttribute("data-term");
+          if (cloudMode && window.DevSystemCloud.deleteGlossaryTerm) {
+            await window.DevSystemCloud.deleteGlossaryTerm(user.email, t);
+          }
+          renderGlosario();
+        });
+
+        card.style.cssText =
+          "padding:0.6rem;border-bottom:1px solid var(--line);display:grid;grid-template-columns:1fr auto auto;gap:0.3rem 0.6rem;align-items:center";
+        nameEl.style.gridColumn = "1";
+        defEl.style.cssText = "grid-column:1/-1;font-size:0.82rem;color:var(--muted)";
+        meta.style.cssText = "font-size:0.78rem;color:var(--accent)";
+        toggle.style.gridColumn = "2";
+
+        card.appendChild(nameEl);
+        card.appendChild(defEl);
+        card.appendChild(meta);
+        card.appendChild(toggle);
+        card.appendChild(delBtn);
+        container.appendChild(card);
       }
     }
 
     if (cloudMode) {
-      window.DevSystemCloud.getProgressMap(user.email).then(function (map) {
-        progress = map || {};
-        window.DevSystemState.clearProgress(user.email);
-        var checkboxes = curriculumRoot.querySelectorAll("input[type='checkbox']");
-        for (var x = 0; x < checkboxes.length; x += 1) {
-          var lessonId = checkboxes[x].getAttribute("data-lesson-id");
-          checkboxes[x].checked = Boolean(progress[lessonId]);
-          window.DevSystemState.setLessonCompletion(
-            user.email,
-            lessonId,
-            Boolean(progress[lessonId])
-          );
-        }
-        renderProgress();
+      window.DevSystemCloud.getGlossaryTerms(user.email).then(function (terms) {
+        renderTerms(terms || []);
       });
+    } else {
+      var stored = {};
+      try {
+        stored = JSON.parse(
+          localStorage.getItem("devsystem_glosario_reviewed_" + user.email) || "{}"
+        );
+      } catch (e) {
+        /* ignore */
+      }
+      var terms = (glosarioData || []).map(function (entry) {
+        return {
+          termino: entry.termino,
+          definicion: entry.definicion,
+          mes: entry.mes,
+          reviewed: Boolean(stored[entry.termino]),
+        };
+      });
+      renderTerms(terms);
     }
-
-    bindCheckboxes();
   }
 
   function renderAdmissionSteps() {
@@ -407,5 +622,6 @@
   if (enrollmentStatus === "activo") {
     curriculumSection.style.display = "block";
     renderCurriculum();
+    renderGlosario();
   }
 })();

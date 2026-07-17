@@ -130,6 +130,33 @@ p { color: var(--muted); }
 .reveal:nth-child(2){animation-delay:.1s} .reveal:nth-child(3){animation-delay:.18s}
 @keyframes rise { to { opacity:1; transform:translateY(0); } }
 
+/* Lesson states in curriculum */
+.lesson-done { color: var(--green); }
+.lesson-done a { color: var(--green); }
+.lesson-available a { color: var(--accent); font-weight: 600; }
+.lesson-locked { opacity: 0.5; }
+.lesson-soon { opacity: 0.5; }
+.lesson-soon a { pointer-events: none; }
+.lesson-id-label { color: var(--muted); font-size: 0.8rem; min-width: 2.5rem; }
+
+.materia-content { display: none; }
+.materia-content[style*="block"] { display: block; }
+
+/* Glosario */
+.glosario-item { padding: 0.6rem; border-bottom: 1px solid var(--line); }
+.glosario-item:last-child { border-bottom: 0; }
+.glosario-termino { color: var(--text); font-size: 0.9rem; }
+.glosario-def { font-size: 0.82rem; color: var(--muted); margin-top: 0.2rem; }
+.glosario-meta { font-size: 0.78rem; color: var(--accent); }
+.glosario-toggle input { accent-color: var(--accent); }
+
+/* Temario details summary */
+details summary { list-style: none; }
+details summary::-webkit-details-marker { display: none; }
+
+/* Lesson page prompt section */
+.prompt-section { border-left: 3px solid var(--accent); padding-left: 1rem; background: rgba(173,199,255,0.03); border-radius: 0 var(--radius) var(--radius) 0; }
+
 /* Responsive */
 @media (max-width:860px) {
   .nav { display: none; }

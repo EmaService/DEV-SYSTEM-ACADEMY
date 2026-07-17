@@ -135,6 +135,62 @@
     return response.data;
   }
 
+  async function saveGlossaryTerm(entry) {
+    var c = getClient();
+    if (!c) return { ok: false, message: "Cloud no configurado." };
+    var payload = {
+      email: String(entry.email || "").toLowerCase(),
+      term: entry.term || "",
+      definition: entry.definition || "",
+      month_ref: entry.month_ref || null,
+      known_term: Boolean(entry.known_term),
+      reviewed: Boolean(entry.reviewed),
+      created_at: new Date().toISOString(),
+    };
+    var response = await c.from("student_glossary").upsert(payload, {
+      onConflict: "email,term",
+    });
+    if (response.error) return { ok: false, message: response.error.message };
+    return { ok: true };
+  }
+
+  async function getGlossaryTerms(email) {
+    var c = getClient();
+    if (!c) return [];
+    var response = await c
+      .from("student_glossary")
+      .select("*")
+      .eq("email", String(email || "").toLowerCase())
+      .order("reviewed", { ascending: true })
+      .order("created_at", { ascending: false });
+    if (response.error || !response.data) return [];
+    return response.data;
+  }
+
+  async function setGlossaryReviewed(email, term, reviewed) {
+    var c = getClient();
+    if (!c) return { ok: false, message: "Cloud no configurado." };
+    var response = await c
+      .from("student_glossary")
+      .update({ reviewed: Boolean(reviewed), updated_at: new Date().toISOString() })
+      .eq("email", String(email || "").toLowerCase())
+      .eq("term", term);
+    if (response.error) return { ok: false, message: response.error.message };
+    return { ok: true };
+  }
+
+  async function deleteGlossaryTerm(email, term) {
+    var c = getClient();
+    if (!c) return { ok: false, message: "Cloud no configurado." };
+    var response = await c
+      .from("student_glossary")
+      .delete()
+      .eq("email", String(email || "").toLowerCase())
+      .eq("term", term);
+    if (response.error) return { ok: false, message: response.error.message };
+    return { ok: true };
+  }
+
   async function uploadDocumentFile(email, docType, file) {
     var c = getClient();
     if (!c) return { ok: false, message: "Cloud no configurado." };
@@ -249,5 +305,9 @@
     saveDocument: saveDocument,
     getDocuments: getDocuments,
     uploadDocumentFile: uploadDocumentFile,
+    saveGlossaryTerm: saveGlossaryTerm,
+    getGlossaryTerms: getGlossaryTerms,
+    setGlossaryReviewed: setGlossaryReviewed,
+    deleteGlossaryTerm: deleteGlossaryTerm,
   };
 })();

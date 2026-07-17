@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="favicon-180.png">
+    <title>DEV SYSTEM | Lección</title>
+    <meta name="description" content="Visor de lecciones de DEV SYSTEM." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script defer src="platform-config.js"></script>
+    <script defer src="cloud-state.js"></script>
+    <script defer src="app-state.js"></script>
+    <script defer src="lecciones-data.js"></script>
+    <script defer src="glosario-data.js"></script>
+    <script defer src="leccion.js"></script>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container nav-wrap">
+        <a href="index.html" class="brand"><img src="logo.png" alt="DEV SYSTEM Academy" class="brand-logo"></a>
+        <nav class="nav">
+          <a href="portal.html">Mi portal</a>
+          <a href="logout.html">Cerrar sesión</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="section">
+      <div class="container portal-layout">
+        <section class="card reveal" id="lectura-section">
+          <p class="eyebrow" id="leccion-materia"></p>
+          <h1 id="leccion-titulo" class="page-title"></h1>
+          <div id="leccion-secciones" style="margin-top:1.2rem;display:grid;gap:1rem"></div>
+          <button id="start-ejercicios-btn" class="btn btn-block" style="margin-top:1.5rem">Comenzar ejercicios</button>
+        </section>
+
+        <section class="card reveal" id="ejercicios-section" style="display:none">
+          <p class="eyebrow">Ejercicios</p>
+          <h2 id="ejercicios-titulo" class="page-title" style="font-size:1.2rem"></h2>
+          <div class="progress-bar" style="margin-top:1rem">
+            <div id="ej-progress-fill" class="progress-fill" style="width:0%"></div>
+          </div>
+          <p id="ej-counter" class="small" style="margin-top:0.5rem;text-align:right;color:var(--muted)"></p>
+          <div id="ej-container" style="margin-top:1rem"></div>
+          <div id="ej-feedback" class="notice" style="margin-top:0.8rem;min-height:2rem"></div>
+          <div style="margin-top:1rem;display:flex;gap:0.75rem">
+            <button id="ej-next-btn" class="btn" style="flex:1;display:none">Siguiente</button>
+            <button id="ej-retry-btn" class="btn btn-ghost" style="flex:1;display:none">Reintentar</button>
+          </div>
+        </section>
+
+        <section class="card reveal" id="completada-section" style="display:none">
+          <p class="eyebrow">Lección completada</p>
+          <h2 class="page-title" style="color:var(--green)">Lección completada ✔</h2>
+          <p id="completada-stats" class="lead"></p>
+          <div style="margin-top:1rem;display:flex;gap:0.75rem;flex-wrap:wrap">
+            <a id="next-lesson-btn" class="btn" style="flex:1">Siguiente lección</a>
+            <a href="portal.html" class="btn btn-ghost" style="flex:1">Volver al portal</a>
+          </div>
+        </section>
+
+        <div id="glosario-toast" style="display:none;position:fixed;bottom:1rem;right:1rem;max-width:400px;background:var(--bg-card);border:1px solid var(--accent);border-radius:var(--radius-lg);padding:1rem;z-index:999;box-shadow:var(--shadow)"></div>
+      </div>
+    </main>
+  </body>
+</html>
