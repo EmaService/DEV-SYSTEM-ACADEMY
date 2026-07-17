@@ -42,41 +42,36 @@
 
     <main class="section">
       <div class="container portal-layout">
-        <section class="card reveal">
-          <p class="eyebrow">Portal de alumno</p>
-          <h1 id="welcome-name" class="page-title">Panel del alumno</h1>
+        <section id="portal-hero" class="reveal" style="padding:2rem 0 1rem">
+          <h1>Hola, <span id="welcome-name">Alumno</span> 👋</h1>
           <p id="welcome-text" class="lead">
             Sigue tu plan por fases y marca lecciones completadas.
           </p>
-
-          <div class="summary-grid">
-            <div class="summary-item">
-              <span>Etapa actual</span>
-              <strong id="student-plan">-</strong>
-            </div>
-            <div class="summary-item">
-              <span>Meses pagados</span>
-              <strong id="months-summary">0/12</strong>
-            </div>
-            <div class="summary-item">
-              <span>Lecciones completadas</span>
-              <strong id="lessons-summary">0/0</strong>
-            </div>
-            <div class="summary-item">
-              <span>Progreso total</span>
-              <strong id="progress-percent">0%</strong>
-            </div>
+          <div class="stat-chips">
+            <div class="stat-chip"><span>🔥</span><strong id="stat-racha">0</strong><small>Racha</small></div>
+            <div class="stat-chip"><span>⭐</span><strong id="stat-xp">0</strong><small>XP</small></div>
+            <div class="stat-chip"><span>📚</span><strong id="stat-nivel">-</strong><small>Nivel</small></div>
           </div>
-
-          <div class="progress-bar">
-            <div id="progress-fill" class="progress-fill"></div>
-          </div>
-
-          <p id="certificate-status" class="notice"></p>
         </section>
 
-        <section id="admission-card" class="card reveal" style="display:none">
-          <h2>Tu proceso de admisión</h2>
+        <section id="day-card" class="card card-highlighted reveal">
+          <p class="eyebrow">Tu día de hoy</p>
+          <h2 id="day-lesson-title" style="font-size:1.1rem">Cargando...</h2>
+          <p id="day-lesson-desc" class="small" style="margin-top:0.3rem"></p>
+          <div class="progress-bar" style="margin-top:0.8rem">
+            <div id="progress-fill" class="progress-fill"></div>
+          </div>
+          <p id="certificate-status" class="notice" style="margin-top:0.5rem"></p>
+          <div style="display:none">
+            <strong id="student-plan"></strong>
+            <strong id="months-summary">0/12</strong>
+            <strong id="lessons-summary">0/0</strong>
+            <strong id="progress-percent">0%</strong>
+          </div>
+        </section>
+
+        <details id="admission-card" class="collapsible-section reveal" style="display:none" open>
+          <summary><span>Tu proceso de admisión</span><span class="collapse-icon">▾</span></summary>
 
           <div id="admission-steps">
             <div id="step-docs" class="summary-row">
@@ -150,20 +145,30 @@
           <div id="admission-completed" style="display:none">
             <p class="small" style="color:var(--green)">Admisión completada ✓</p>
           </div>
+        </details>
+
+        <section id="curriculum-section" class="reveal" style="display:none">
+          <h2>Tu ruta de formación</h2>
+          <div id="curriculum-root" class="roadmap"></div>
         </section>
 
-        <section id="curriculum-section" class="card reveal" style="display:none">
-          <h2>Tu ruta completa de formación</h2>
-          <div id="curriculum-root" class="portal-curriculum"></div>
+        <section id="glosario-card" class="glosario-widget reveal" style="display:none">
+          <button id="glosario-toggle-btn" class="glosario-widget-header">
+            <span>📖 Mi glosario</span>
+            <span id="glosario-count">0</span>
+          </button>
+          <div id="glosario-drawer" class="glosario-drawer">
+            <div class="glosario-drawer-header">
+              <h3 style="font-size:1rem">Mi glosario</h3>
+              <button id="glosario-close-btn" class="btn btn-ghost btn-sm">✕</button>
+            </div>
+            <div id="glosario-list"></div>
+          </div>
         </section>
 
-        <section id="glosario-card" class="card reveal" style="display:none">
-          <h2>Mi glosario 📖</h2>
-          <div id="glosario-list"></div>
-        </section>
-
-        <section class="card reveal">
-          <h2>Detalle de inscripción</h2>
+        <details class="collapsible-section reveal" open>
+          <summary><span>Detalle de inscripción</span><span class="collapse-icon">▾</span></summary>
+          <div style="padding:0 1.2rem 1.2rem">
           <div class="summary-row">
             <span>Correo de acceso</span>
             <strong id="student-email">-</strong>

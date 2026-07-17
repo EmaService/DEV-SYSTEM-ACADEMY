@@ -191,13 +191,54 @@
 
   renderReadingPhase()
 
-  var scrollListener = function () {
-    var rect = lecturaSection.getBoundingClientRect()
-    if (rect.bottom <= window.innerHeight + 100) {
+  var carouselSlides = document.getElementById("leccion-secciones")
+  var carouselDots = document.getElementById("carousel-dots")
+  var carouselNext = document.getElementById("carousel-next-btn")
+  var startBtn = document.getElementById("start-ejercicios-btn")
+  var slideIndex = 0
+  var totalSlides = carouselSlides ? carouselSlides.children.length : 0
+
+  if (carouselDots && totalSlides > 0) {
+    for (var si = 0; si < totalSlides; si++) {
+      var dot = document.createElement("span")
+      dot.className = "carousel-dot" + (si === 0 ? " active" : "")
+      dot.setAttribute("data-slide", si)
+      dot.addEventListener("click", (function (idx) { return function () { goToSlide(idx) } })(si))
+      carouselDots.appendChild(dot)
+    }
+  }
+
+  function goToSlide(idx) {
+    if (!carouselSlides) return
+    slideIndex = Math.max(0, Math.min(idx, totalSlides - 1))
+    carouselSlides.scrollTo({ left: carouselSlides.clientWidth * slideIndex, behavior: "smooth" })
+    var dots = carouselDots ? carouselDots.querySelectorAll(".carousel-dot") : []
+    for (var di = 0; di < dots.length; di++) dots[di].classList.toggle("active", di === slideIndex)
+    if (carouselNext) carouselNext.style.display = slideIndex < totalSlides - 1 ? "" : "none"
+    if (startBtn) startBtn.style.display = slideIndex >= totalSlides - 1 ? "" : "none"
+  }
+
+  if (carouselNext) {
+    carouselNext.addEventListener("click", function () { goToSlide(slideIndex + 1) })
+  }
+
+  if (carouselSlides) {
+    carouselSlides.addEventListener("scroll", function () {
+      var newIdx = Math.round(this.scrollLeft / this.clientWidth)
+      if (newIdx !== slideIndex) goToSlide(newIdx)
+    })
+  }
+
+  goToSlide(0)
+
+  var carouselScrollListener = function () {
+    if (carouselSlides && carouselSlides.scrollLeft + carouselSlides.clientWidth >= carouselSlides.scrollWidth - 10) {
       saveReadingProgress()
     }
   }
-  window.addEventListener("scroll", scrollListener)
+  if (carouselSlides) {
+    carouselSlides.addEventListener("scroll", carouselScrollListener)
+  }
 
   function showToast(message, duration) {
     toastEl.textContent = message
@@ -412,6 +453,8 @@
   function showFeedback(html, isCorrect) {
     ejFeedback.innerHTML = html
     ejFeedback.style.color = isCorrect ? "var(--green)" : "var(--red)"
+    ejFeedback.className = "ej-feedback slide-in-" + (isCorrect ? "correct" : "wrong")
+    ejFeedback.style.transform = "translateY(0)"
   }
 
   function renderMultiple(ej) {
@@ -905,6 +948,29 @@
     if (ejerciciosSection) ejerciciosSection.style.display = "none"
     if (completadaSection) completadaSection.style.display = "block"
     completadaStats.textContent = "Aciertos a la primera: " + firstTryCorrectCount + "/" + totalExercises
+
+    var xpGain = totalExercises * 10
+    var xpChip = document.getElementById("completada-xp-chip")
+    if (xpChip) xpChip.textContent = "⭐ +" + xpGain + " XP"
+
+    var headerXp = document.getElementById("leccion-xp-chip")
+    if (headerXp) {
+      var current = parseInt(headerXp.textContent.match(/\d+/) || 0, 10)
+      headerXp.textContent = "⭐ " + (current + xpGain) + " XP"
+      headerXp.classList.add("xp-chip-pop")
+      setTimeout(function () { headerXp.classList.remove("xp-chip-pop") }, 500)
+    }
+
+    var confettiContainer = document.getElementById("confetti-container")
+    if (confettiContainer) {
+      var colors = ["#66dd8b", "#adc7ff", "#ffb300", "#ffb4ab", "#167eff", "#7c5cff"]
+      for (var ci = 0; ci < 60; ci++) {
+        var piece = document.createElement("div")
+        piece.className = "confetti-piece"
+        piece.style.cssText = "left:" + Math.random() * 100 + "%;animation-delay:" + (Math.random() * 2) + "s;background:" + colors[Math.floor(Math.random() * colors.length)]
+        confettiContainer.appendChild(piece)
+      }
+    }
 
     if (cloudEnabled) {
       window.DevSystemCloud.setLessonProgress(email, lessonId, true).catch(function () {})

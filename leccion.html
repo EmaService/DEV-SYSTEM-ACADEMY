@@ -19,47 +19,52 @@
     <script defer src="leccion.js"></script>
   </head>
   <body>
-    <header class="site-header">
-      <div class="container nav-wrap">
-        <a href="index.html" class="brand"><img src="logo.png" alt="DEV SYSTEM Academy" class="brand-logo"></a>
-        <nav class="nav">
-          <a href="portal.html">Mi portal</a>
-          <a href="logout.html">Cerrar sesión</a>
-        </nav>
+    <header id="leccion-sticky-header" class="leccion-sticky">
+      <button id="leccion-back-btn" class="btn btn-ghost btn-sm" onclick="if (confirm('¿Salir de la lección? El progreso se guarda automáticamente.')) history.back()">✕</button>
+      <div class="progress-bar" style="flex:1;margin:0 1rem">
+        <div id="leccion-header-progress" class="progress-fill" style="width:0%"></div>
       </div>
+      <span id="leccion-xp-chip" class="xp-chip">⭐ 0 XP</span>
     </header>
 
     <main class="section">
       <div class="container portal-layout">
-        <section class="card reveal" id="lectura-section">
-          <p class="eyebrow" id="leccion-materia"></p>
-          <h1 id="leccion-titulo" class="page-title"></h1>
-          <div id="leccion-secciones" style="margin-top:1.2rem;display:grid;gap:1rem"></div>
-          <button id="start-ejercicios-btn" class="btn btn-block" style="margin-top:1.5rem">Comenzar ejercicios</button>
-        </section>
-
-        <section class="card reveal" id="ejercicios-section" style="display:none">
-          <p class="eyebrow">Ejercicios</p>
-          <h2 id="ejercicios-titulo" class="page-title" style="font-size:1.2rem"></h2>
-          <div class="progress-bar" style="margin-top:1rem">
-            <div id="ej-progress-fill" class="progress-fill" style="width:0%"></div>
-          </div>
-          <p id="ej-counter" class="small" style="margin-top:0.5rem;text-align:right;color:var(--muted)"></p>
-          <div id="ej-container" style="margin-top:1rem"></div>
-          <div id="ej-feedback" class="notice" style="margin-top:0.8rem;min-height:2rem"></div>
-          <div style="margin-top:1rem;display:flex;gap:0.75rem">
-            <button id="ej-next-btn" class="btn" style="flex:1;display:none">Siguiente</button>
-            <button id="ej-retry-btn" class="btn btn-ghost" style="flex:1;display:none">Reintentar</button>
+        <section id="lectura-section" class="lectura-carousel reveal">
+          <div class="carousel-track">
+            <p class="eyebrow" id="leccion-materia"></p>
+            <h1 id="leccion-titulo" class="page-title"></h1>
+            <div id="leccion-secciones" class="carousel-slides"></div>
+            <div id="carousel-dots" class="carousel-dots"></div>
+            <button id="carousel-next-btn" class="btn" style="position:fixed;bottom:1.5rem;right:1.5rem;z-index:50">Siguiente →</button>
+            <button id="start-ejercicios-btn" class="btn btn-block" style="display:none;margin-top:1.5rem">Comenzar ejercicios ▶</button>
           </div>
         </section>
 
-        <section class="card reveal" id="completada-section" style="display:none">
-          <p class="eyebrow">Lección completada</p>
-          <h2 class="page-title" style="color:var(--green)">Lección completada ✔</h2>
-          <p id="completada-stats" class="lead"></p>
-          <div style="margin-top:1rem;display:flex;gap:0.75rem;flex-wrap:wrap">
-            <a id="next-lesson-btn" class="btn" style="flex:1">Siguiente lección</a>
-            <a href="portal.html" class="btn btn-ghost" style="flex:1">Volver al portal</a>
+        <section id="ejercicios-section" class="ej-fullscreen" style="display:none">
+          <div class="ej-header">
+            <h2 id="ejercicios-titulo" style="font-size:1.1rem">Ejercicios</h2>
+            <div class="progress-bar" style="flex:1;margin:0 1rem">
+              <div id="ej-progress-fill" class="progress-fill" style="width:0%"></div>
+            </div>
+            <span id="ej-counter" class="small" style="color:var(--muted);white-space:nowrap"></span>
+          </div>
+          <div class="ej-stage">
+            <div id="ej-container"></div>
+            <div id="ej-feedback" class="ej-feedback"></div>
+          </div>
+        </section>
+
+        <section id="completada-section" class="celebration-screen" style="display:none">
+          <div class="confetti-container" id="confetti-container"></div>
+          <div class="celebration-content">
+            <span class="celebration-badge">🎉</span>
+            <h2 class="page-title" style="color:var(--green);font-size:clamp(1.5rem,4vw,2rem)">¡Lección completada!</h2>
+            <span id="completada-xp-chip" class="xp-chip xp-chip-lg" style="margin-top:1rem;display:inline-block">⭐ +10 XP</span>
+            <p id="completada-stats" class="lead" style="margin-top:1rem"></p>
+            <div style="margin-top:1.5rem;display:flex;gap:0.75rem;flex-wrap:wrap;justify-content:center">
+              <a id="next-lesson-btn" class="btn btn-brand" style="flex:1;max-width:300px">Siguiente lección</a>
+              <a href="portal.html" class="btn btn-ghost" style="flex:1;max-width:300px">Volver al portal</a>
+            </div>
           </div>
         </section>
 

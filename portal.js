@@ -102,31 +102,30 @@
   }
 
   function renderHeader() {
-    welcomeName.textContent = "Hola, " + user.name;
+    welcomeName.textContent = user.name;
+    var statNivel = document.getElementById("stat-nivel");
+    if (statNivel) statNivel.textContent = enrollment.plan || "Plan Base";
     studentPlan.textContent = (enrollment.phaseName || "Etapa 1") + " · " + (enrollment.plan || "Plan Base");
     studentEmail.textContent = user.email;
     billingPlan.textContent = enrollment.plan || "Plan Base";
 
     var priceNote = document.getElementById("price-note");
     if (examPassed) {
-      billingPrice.textContent = "$7,000 MXN / mes";
-      priceNote.textContent = "Tarifa preferente — examen de admisión aprobado ✓";
-      priceNote.style.color = "var(--green)";
+      if (billingPrice) billingPrice.textContent = "$7,000 MXN / mes";
+      if (priceNote) { priceNote.textContent = "Tarifa preferente — examen de admisión aprobado ✓"; priceNote.style.color = "var(--green)"; }
     } else if (examPresented) {
-      billingPrice.textContent = "Tarifa regular por mes (ver tabla de pagos)";
-      priceNote.textContent = "Presentaste el examen pero no alcanzaste la tarifa preferente.";
-      priceNote.style.color = "var(--muted)";
+      if (billingPrice) billingPrice.textContent = "Tarifa regular por mes (ver tabla de pagos)";
+      if (priceNote) { priceNote.textContent = "Presentaste el examen pero no alcanzaste la tarifa preferente."; priceNote.style.color = "var(--muted)"; }
     } else {
-      billingPrice.textContent = planPricing.label;
-      priceNote.textContent = "Aprueba el examen de admisión para obtener la tarifa preferente de $7,000 MXN / mes.";
-      priceNote.style.color = "var(--accent)";
+      if (billingPrice) billingPrice.textContent = planPricing.label;
+      if (priceNote) { priceNote.textContent = "Aprueba el examen de admisión para obtener la tarifa preferente de $7,000 MXN / mes."; priceNote.style.color = "var(--accent)"; }
     }
 
-    billingStatus.textContent = statusLabels[enrollmentStatus] || "En proceso";
+    if (billingStatus) billingStatus.textContent = statusLabels[enrollmentStatus] || "En proceso";
 
     if (enrollmentStatus === "activo") {
       welcomeText.textContent =
-        "Tu acceso está activo. Marca cada lección completada y mantén tu progreso al día.";
+        "Tu acceso está activo. Sigue tu plan y completa las lecciones del día.";
     } else {
       welcomeText.textContent =
         "Completa tu proceso de admisión para acceder al programa.";
@@ -136,10 +135,15 @@
   function renderProgress() {
     var paidMonths = window.DevSystemState.getPaidMonthIds(user.email);
     var summary = window.DevSystemState.getProgressSummary(user.email);
-    monthsSummary.textContent = paidMonths.length + "/12";
-    lessonsSummary.textContent = summary.done + "/" + summary.total;
-    progressPercent.textContent = summary.percent + "%";
-    progressFill.style.width = summary.percent + "%";
+    if (monthsSummary) monthsSummary.textContent = paidMonths.length + "/12";
+    if (lessonsSummary) lessonsSummary.textContent = summary.done + "/" + summary.total;
+    if (progressPercent) progressPercent.textContent = summary.percent + "%";
+    if (progressFill) progressFill.style.width = summary.percent + "%";
+
+    var rachaEl = document.getElementById("stat-racha");
+    var xpEl = document.getElementById("stat-xp");
+    if (rachaEl) rachaEl.textContent = "0";
+    if (xpEl) xpEl.textContent = (summary.done * 10) || "0";
 
     if (window.DevSystemState.isEligibleCertificate(user.email)) {
       certificateStatus.textContent =
@@ -147,6 +151,33 @@
     } else {
       certificateStatus.textContent =
         "Estado de certificación: en progreso. Necesitas 85% de avance.";
+    }
+  }
+
+  function renderDayCard() {
+    var dayTitle = document.getElementById("day-lesson-title");
+    var dayDesc = document.getElementById("day-lesson-desc");
+    if (!dayTitle) return;
+    var materiaKeys = leccionesData.m1 && Object.keys(leccionesData.m1.materias) || [];
+    var progress = cloudMode ? {} : window.DevSystemState.getProgress(user.email);
+    var nextLesson = null;
+    for (var mi = 0; mi < materiaKeys.length && !nextLesson; mi++) {
+      var mk = materiaKeys[mi];
+      var m = leccionesData.m1.materias[mk];
+      for (var li = 0; li < m.lecciones.length; li++) {
+        var l = m.lecciones[li];
+        if (!l.proximamente && !progress[l.id]) { nextLesson = l; break; }
+      }
+    }
+    if (nextLesson) {
+      dayTitle.textContent = "📖 " + nextLesson.titulo;
+      dayDesc.textContent = "Continúa tu progreso — esta es tu siguiente lección.";
+    } else if (materiaKeys.length > 0) {
+      dayTitle.textContent = "🎉 ¡Todo completado!";
+      dayDesc.textContent = "Has terminado todas las lecciones disponibles.";
+    } else {
+      dayTitle.textContent = "Aún no tienes lecciones pendientes";
+      dayDesc.textContent = "Completa tu proceso de admisión para comenzar.";
     }
   }
 
@@ -159,180 +190,29 @@
     var progress = cloudProgress || (cloudMode ? {} : window.DevSystemState.getProgress(user.email));
     var materiaKeys = Object.keys(materias);
 
-    var html =
-      "<div class='materia-tabs' style='display:flex;gap:0.5rem;margin-bottom:1rem'>";
-    for (var ti = 0; ti < materiaKeys.length; ti += 1) {
-      var mk = materiaKeys[ti];
-      var m = materias[mk];
-      html +=
-        "<button class='tab-btn materia-tab' data-materia='" +
-        mk +
-        "'>" +
-        (m.icono || "◇") +
-        " " +
-        m.nombre +
-        "</button>";
-    }
-    html += "</div>";
-
-    html += "<div class='materia-contents'>";
-    var doneMap = {};
-    var totalMap = {};
-
     for (var ti = 0; ti < materiaKeys.length; ti += 1) {
       var mk = materiaKeys[ti];
       var m = materias[mk];
       var lecciones = m.lecciones;
-      var publishedCount = 0;
-      var doneCount = 0;
-
-      html += "<div class='materia-content' data-materia='" + mk + "'>";
-
-      for (var i = 0; i < lecciones.length; i += 1) {
-        if (!lecciones[i].proximamente) publishedCount += 1;
-      }
-
-      html +=
-        "<div class='summary-row' style='margin-bottom:0.5rem'><span>Progreso</span><strong><span id='mpt-" +
-        mk +
-        "'>0/" +
-        publishedCount +
-        "</span></strong></div>";
-      html +=
-        "<div class='progress-bar'><div class='progress-fill' id='mpf-" +
-        mk +
-        "' style='width:0%'></div></div>";
-      html += "<div class='lesson-list'>";
-
+      var html = "<div class='roadmap-col'><h3>" + (m.icono || "◇") + " " + m.nombre + "</h3><div class='roadmap-nodes'>";
       var sequentialUnlocked = true;
+
       for (var i = 0; i < lecciones.length; i += 1) {
         var lesson = lecciones[i];
         var num = i + 1;
         var label = mk.toUpperCase() + num;
-
-        if (!lesson.proximamente) {
-          var completed = Boolean(progress[lesson.id]);
-          if (completed) doneCount += 1;
-
-          var currentUnlocked = sequentialUnlocked;
-          if (completed) {
-            /* allow next */
-          } else {
-            sequentialUnlocked = false;
-          }
-
-          var icon = completed ? "✔" : currentUnlocked ? "▶" : "🔒";
-          var cls = completed
-            ? "lesson-done"
-            : currentUnlocked
-            ? "lesson-available"
-            : "lesson-locked";
-          var link;
-          if (currentUnlocked) {
-            link =
-              "<a href='leccion.html?id=" +
-              lesson.id +
-              "'>" +
-              lesson.titulo +
-              "</a>";
-          } else if (!completed) {
-            link = "<span>" + lesson.titulo + "</span>";
-          } else {
-            link = "<span>" + lesson.titulo + "</span>";
-          }
-
-          html +=
-            "<div class='lesson-row " +
-            cls +
-            "' data-lesson-id='" +
-            lesson.id +
-            "'>";
-          html += "<span>" + icon + "</span> ";
-          html += "<span class='lesson-id-label'>" + label + ".</span> ";
-          html += link;
-          html += "</div>";
-        } else {
-          html += "<div class='lesson-row lesson-soon'>";
-          html += "<span>🔒</span> ";
-          html += "<span class='lesson-id-label'>" + label + ".</span> ";
-          html +=
-            "<span>" +
-            lesson.titulo +
-            " <span style='color:var(--muted);font-size:0.8rem'>Próximamente</span></span>";
-          html += "</div>";
-        }
+        var completed = Boolean(progress[lesson.id]);
+        var currentUnlocked = sequentialUnlocked && !lesson.proximamente;
+        if (completed) { } else { sequentialUnlocked = false; }
+        var cls = completed ? "node-done" : currentUnlocked ? "node-current" : lesson.proximamente ? "node-soon" : "node-locked";
+        var link = currentUnlocked ? "<a href='leccion.html?id=" + lesson.id + "'>" + lesson.titulo + "</a>" : "<span>" + lesson.titulo + "</span>";
+        html += "<div class='roadmap-node " + cls + "'><span class='node-dot'></span><span class='node-label'>" + label + ".</span><span class='node-title'>" + link + "</span></div>";
       }
 
       html += "</div></div>";
-      doneMap[mk] = doneCount;
-      totalMap[mk] = publishedCount;
-    }
-
-    html += "</div>";
-
-    html +=
-      "<details style='margin-top:1rem'><summary style='cursor:pointer;color:var(--accent);font-weight:600'>📋 Temario completo del mes</summary><div class='temario-grid' style='display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:0.8rem'>";
-    for (var ti = 0; ti < materiaKeys.length; ti += 1) {
-      var mk = materiaKeys[ti];
-      var m = materias[mk];
-      html +=
-        "<div><h4 style='font-size:0.9rem;margin-bottom:0.5rem'>" +
-        (m.icono || "◇") +
-        " " +
-        m.nombre +
-        "</h4>";
-      var lecciones = m.lecciones;
-      for (var i = 0; i < lecciones.length; i += 1) {
-        var lesson = lecciones[i];
-        var num = i + 1;
-        var label = mk.toUpperCase() + num;
-        html +=
-          "<div style='font-size:0.82rem;padding:0.2rem 0;border-bottom:1px solid var(--line)'>" +
-          "<span style='color:var(--muted);margin-right:0.3rem'>" +
-          label +
-          "</span>" +
-          "<span style='color:var(--text)'>" +
-          lesson.titulo +
-          "</span></div>";
-      }
-      html += "</div>";
-    }
-    html += "</div></details>";
-
-    curriculumRoot.innerHTML = html;
-
-    var tabs = curriculumRoot.querySelectorAll(".materia-tab");
-    var contents = curriculumRoot.querySelectorAll(".materia-content");
-    function switchTab(key) {
-      for (var t = 0; t < contents.length; t += 1) {
-        contents[t].style.display =
-          contents[t].getAttribute("data-materia") === key ? "block" : "none";
-      }
-      for (var t = 0; t < tabs.length; t += 1) {
-        tabs[t].classList.toggle("active", tabs[t].getAttribute("data-materia") === key);
-      }
-    }
-    for (var t = 0; t < tabs.length; t += 1) {
-      (function (key) {
-        tabs[t].addEventListener("click", function () {
-          switchTab(key);
-        });
-      })(tabs[t].getAttribute("data-materia"));
-    }
-    if (materiaKeys.length > 0) switchTab(materiaKeys[0]);
-
-    for (var ti = 0; ti < materiaKeys.length; ti += 1) {
-      var mk = materiaKeys[ti];
-      var fill = document.getElementById("mpf-" + mk);
-      var text = document.getElementById("mpt-" + mk);
-      if (fill) {
-        var done = doneMap[mk] || 0;
-        var total = totalMap[mk] || 1;
-        fill.style.width = Math.round((done / total) * 100) + "%";
-      }
-      if (text) {
-        text.textContent = (doneMap[mk] || 0) + "/" + (totalMap[mk] || 0);
-      }
+      if (!curriculumRoot.innerHTML) curriculumRoot.innerHTML = "<div class='roadmap-grid'></div>";
+      var grid = curriculumRoot.querySelector(".roadmap-grid");
+      if (grid) grid.innerHTML += html;
     }
 
     if (cloudMode && !cloudProgress) {
@@ -618,10 +498,34 @@
   renderHeader();
   renderProgress();
   renderAdmissionSteps();
+  renderDayCard();
 
   if (enrollmentStatus === "activo") {
     curriculumSection.style.display = "block";
     renderCurriculum();
     renderGlosario();
+  }
+
+  var glosarioToggle = document.getElementById("glosario-toggle-btn");
+  var glosarioDrawer = document.getElementById("glosario-drawer");
+  var glosarioClose = document.getElementById("glosario-close-btn");
+  if (glosarioToggle && glosarioDrawer) {
+    glosarioToggle.addEventListener("click", function () {
+      glosarioDrawer.classList.toggle("open");
+    });
+  }
+  if (glosarioClose && glosarioDrawer) {
+    glosarioClose.addEventListener("click", function () {
+      glosarioDrawer.classList.remove("open");
+    });
+  }
+
+  var collapsibles = document.querySelectorAll(".collapsible-section summary");
+  for (var ci = 0; ci < collapsibles.length; ci++) {
+    collapsibles[ci].addEventListener("click", function (e) {
+      var details = e.currentTarget.parentNode;
+      var icon = details.querySelector(".collapse-icon");
+      if (icon) icon.textContent = details.open ? "▾" : "▸";
+    });
   }
 })();
