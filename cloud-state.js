@@ -370,11 +370,13 @@
       if (docs[pd].doc_type === "foto") { photoDoc = docs[pd]; break; }
     }
     if (!photoDoc || !photoDoc.file_path) return null;
-    var response = await c.storage
-      .from("documentos-alumnos")
-      .createSignedUrl(photoDoc.file_path, 3600);
-    if (response.error || !response.data) return null;
-    return response.data.signedUrl;
+    try {
+      var response = await c.storage
+        .from("documentos-alumnos")
+        .createSignedUrl(photoDoc.file_path, 3600);
+      if (response.error || !response.data) return null;
+      return response.data.signedUrl;
+    } catch (_) { return null; }
   }
 
   window.DevSystemCloud = {

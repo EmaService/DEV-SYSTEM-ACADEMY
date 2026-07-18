@@ -209,9 +209,9 @@
     if (!dayTitle) return;
     var materiaKeys = leccionesData.m1 && Object.keys(leccionesData.m1.materias) || [];
     if (cloudMode && window.DevSystemCloud.getAllLessonStats) {
-      window.DevSystemCloud.getProgressMap(user.email).then(function (map) {
-        renderDayCardWithProgress(map || {});
-      });
+      window.DevSystemCloud.getProgressMap(user.email)
+        .then(function (map) { renderDayCardWithProgress(map || {}); })
+        .catch(function () { renderDayCardWithProgress({}); });
       return;
     }
     renderDayCardWithProgress(cloudMode ? {} : window.DevSystemState.getProgress(user.email));
@@ -281,9 +281,9 @@
     }
 
     if (cloudMode && !cloudProgress) {
-      window.DevSystemCloud.getProgressMap(user.email).then(function (map) {
-        renderCurriculum(map || {});
-      });
+      window.DevSystemCloud.getProgressMap(user.email)
+        .then(function (map) { renderCurriculum(map || {}); })
+        .catch(function () { renderCurriculum({}); });
     }
   }
 
@@ -772,9 +772,9 @@
     }
 
     if (cloudMode) {
-      window.DevSystemCloud.getProgressMap(user.email).then(function (map) {
-        buildCards(map || {});
-      });
+      window.DevSystemCloud.getProgressMap(user.email)
+        .then(function (map) { buildCards(map || {}); })
+        .catch(function () { buildCards({}); });
     } else {
       buildCards(window.DevSystemState.getProgress(user.email));
     }
@@ -1248,12 +1248,12 @@
     var matricula = enrollment.matricula || (document.getElementById("matricula-chip") ? document.getElementById("matricula-chip").textContent : "—");
     var initials = (user.name || "A").split(" ").map(function (s) { return s.charAt(0); }).join("").slice(0, 2).toUpperCase();
 
+    renderCredencialHtml(null);
+
     if (cloudMode && window.DevSystemCloud.getDocumentPhotoUrl) {
-      window.DevSystemCloud.getDocumentPhotoUrl(user.email).then(function (photoUrl) {
-        renderCredencialHtml(photoUrl);
-      });
-    } else {
-      renderCredencialHtml(null);
+      window.DevSystemCloud.getDocumentPhotoUrl(user.email)
+        .then(function (photoUrl) { if (photoUrl) renderCredencialHtml(photoUrl); })
+        .catch(function () { /* sin foto: se queda con iniciales */ });
     }
 
     function renderCredencialHtml(photoUrl) {
@@ -1314,9 +1314,9 @@
     }
 
     if (cloudMode) {
-      window.DevSystemCloud.getProgressMap(user.email).then(function (map) {
-        buildKardex(map || {});
-      });
+      window.DevSystemCloud.getProgressMap(user.email)
+        .then(function (map) { buildKardex(map || {}); })
+        .catch(function () { buildKardex({}); });
     } else {
       buildKardex(window.DevSystemState.getProgress(user.email));
     }
