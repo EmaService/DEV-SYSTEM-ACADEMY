@@ -229,10 +229,10 @@ details[open] .collapse-icon { transform: rotate(180deg); }
 
 /* Ensure reading carousel body avoids overflow */
 body.leccion-body { overflow-x: hidden; padding-bottom: 5rem; }
-.carousel-track { padding: 1.5rem 1.5rem 0; }
-.carousel-slides { display: flex; overflow-x: auto; overflow-y: hidden; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; gap: 0; scrollbar-width: none; padding: 0; }
+.carousel-track { padding: 1.5rem 1.5rem 0; overflow: hidden; }
+.carousel-slides { display: flex; overflow-x: auto; overflow-y: hidden; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; gap: 0; scrollbar-width: none; padding: 0; align-items: flex-start; }
 .carousel-slides::-webkit-scrollbar { display: none; }
-.carousel-slide { flex: 0 0 100%; min-width: 0; scroll-snap-align: start; background: var(--bg-card); border-radius: var(--radius-xl); padding: 2rem 1.5rem 2rem 2rem; min-height: 60vh; box-sizing: border-box; overflow-y: auto; overflow-wrap: break-word; word-wrap: break-word; }
+.carousel-slide { flex: 0 0 100%; min-width: 0; scroll-snap-align: start; background: var(--bg-card); border-radius: var(--radius-xl); padding: 2rem; box-sizing: border-box; overflow: visible; overflow-wrap: break-word; word-wrap: break-word; word-break: break-word; hyphens: auto; }
 .carousel-slide * { min-width: 0; max-width: 100%; box-sizing: border-box; }
 .carousel-slide h3 { font-size: clamp(1.1rem,3.5vw,1.4rem); margin-bottom: 0.75rem; }
 .carousel-slide p, .carousel-slide li { font-size: 1rem; line-height: 1.7; color: var(--text); margin-bottom: 0.75rem; }
@@ -324,7 +324,7 @@ button, a.btn, .stat-chip, .chip-word, .ej-option { will-change: transform; }
   .checkout-panel { position: static; }
   .summary-grid { grid-template-columns: repeat(2,1fr); }
   .roadmap-grid { grid-template-columns: 1fr; }
-  .carousel-slide { padding: 1.25rem; min-height: 50vh; }
+  .carousel-slide { padding: 1.25rem; }
   .leccion-sticky .xp-chip { font-size: 0; padding: 0.25rem 0.5rem; }
   .leccion-sticky .xp-chip::before { content: "⭐"; font-size: 0.85rem; }
   .leccion-sticky .xp-chip span { display: none; }
