@@ -663,13 +663,17 @@
       var isTarget = allSections[si2].id === tabId;
       allSections[si2].classList.toggle("active", isTarget);
       if (isTarget) {
-        allSections[si2].style.opacity = "0";
-        allSections[si2].style.transform = "translateY(8px)";
-        allSections[si2].style.transition = "opacity 0.25s ease, transform 0.25s ease";
-        requestAnimationFrame(function () {
-          allSections[si2].style.opacity = "1";
-          allSections[si2].style.transform = "translateY(0)";
-        });
+        (function (sec) {
+          sec.style.opacity = "0";
+          sec.style.transform = "translateY(8px)";
+          sec.style.transition = "opacity 0.25s ease, transform 0.25s ease";
+          requestAnimationFrame(function () {
+            requestAnimationFrame(function () {
+              sec.style.opacity = "1";
+              sec.style.transform = "translateY(0)";
+            });
+          });
+        })(allSections[si2]);
       }
     }
 
