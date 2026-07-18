@@ -375,21 +375,5 @@
       </div>
     </footer>
 
-    <script>
-      (function(){
-        var tabs = document.querySelectorAll(".portal-tabs button");
-        var contents = document.querySelectorAll(".tab-content");
-        tabs.forEach(function(btn){
-          btn.addEventListener("click", function(){
-            var tab = btn.getAttribute("data-tab");
-            tabs.forEach(function(b){ b.classList.remove("active"); });
-            btn.classList.add("active");
-            contents.forEach(function(c){ c.classList.remove("active"); });
-            var target = document.getElementById(tab);
-            if (target) target.classList.add("active");
-          });
-        });
-      })();
-    </script>
   </body>
 </html>

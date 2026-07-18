@@ -653,30 +653,25 @@
     if (window.location.hash !== hash) {
       history.pushState(null, "", hash || window.location.pathname);
     }
-    var sections = document.querySelectorAll(".tab-section");
-    for (var si = 0; si < sections.length; si++) {
-      var sec = sections[si];
-      if (sec.id === "tab-" + tabId) {
-        sec.style.display = "block";
-        sec.style.opacity = "0";
-        sec.style.transform = "translateY(10px)";
-        sec.style.transition = "opacity 0.25s ease, transform 0.25s ease";
+
+    var allBtns = document.querySelectorAll(".portal-tabs button");
+    var allSections = document.querySelectorAll(".tab-content");
+    for (var si = 0; si < allBtns.length; si++) {
+      allBtns[si].classList.toggle("active", allBtns[si].getAttribute("data-tab") === tabId);
+    }
+    for (var si2 = 0; si2 < allSections.length; si2++) {
+      var isTarget = allSections[si2].id === tabId;
+      allSections[si2].classList.toggle("active", isTarget);
+      if (isTarget) {
+        allSections[si2].style.opacity = "0";
+        allSections[si2].style.transform = "translateY(8px)";
+        allSections[si2].style.transition = "opacity 0.25s ease, transform 0.25s ease";
         requestAnimationFrame(function () {
-          sec.style.opacity = "1";
-          sec.style.transform = "translateY(0)";
+          allSections[si2].style.opacity = "1";
+          allSections[si2].style.transform = "translateY(0)";
         });
-      } else {
-        sec.style.display = "none";
-        sec.style.opacity = "0";
-        sec.style.transform = "translateY(10px)";
       }
     }
-    var allBtns = document.querySelectorAll(".tab-btn");
-    for (var bi = 0; bi < allBtns.length; bi++) {
-      allBtns[bi].classList.remove("tab-btn-active");
-    }
-    var activeBtn = document.getElementById("tab-btn-" + tabId);
-    if (activeBtn) activeBtn.classList.add("tab-btn-active");
 
     if (tabId === "plan") renderPlan();
     else if (tabId === "aula") renderAula();
@@ -687,14 +682,16 @@
 
   function initTabs() {
     var tabs = ["inicio", "plan", "aula", "examenes", "marcadores", "expediente"];
-    var initialTab = "inicio";
     var hash = window.location.hash.replace("#", "");
-    if (hash && tabs.indexOf(hash) !== -1) initialTab = hash;
+    var initialTab = hash && tabs.indexOf(hash) !== -1 ? hash : "inicio";
 
-    var tabNav = document.getElementById("tabs-nav");
-    if (!tabNav) return;
+    var tabNav = document.getElementById("portal-tabs");
+    if (!tabNav) {
+      console.error("[DEV SYSTEM] portal-tabs no encontrado — tabs muertos");
+      return;
+    }
 
-    var tabBtns = tabNav.querySelectorAll(".tab-btn");
+    var tabBtns = tabNav.querySelectorAll("button");
     for (var tbi = 0; tbi < tabBtns.length; tbi++) {
       (function (btn) {
         btn.addEventListener("click", function () {
@@ -706,9 +703,10 @@
     }
 
     for (var t = 0; t < tabs.length; t++) {
-      var tb = document.getElementById("tab-btn-" + tabs[t]);
+      var tb = tabNav.querySelector("button[data-tab='" + tabs[t] + "']");
       if (tb && enrollmentStatus !== "activo" && tabs[t] !== "inicio") {
-        tb.classList.add("tab-locked");
+        tb.style.opacity = "0.4";
+        tb.style.cursor = "not-allowed";
         tb.setAttribute("title", "Completa tu admisión para acceder");
       }
     }
@@ -716,16 +714,8 @@
     switchTab(initialTab);
 
     window.addEventListener("hashchange", function () {
-      var h = window.location.hash.replace("#", "");
-      if (h && tabs.indexOf(h) !== -1 && h !== currentTab) {
-        if (enrollmentStatus !== "activo" && h !== "inicio") {
-          window.location.hash = "";
-          return;
-        }
-        switchTab(h);
-      } else if (!h && currentTab !== "inicio") {
-        switchTab("inicio");
-      }
+      var newHash = window.location.hash.replace("#", "");
+      switchTab(newHash && tabs.indexOf(newHash) !== -1 ? newHash : "inicio");
     });
   }
 
