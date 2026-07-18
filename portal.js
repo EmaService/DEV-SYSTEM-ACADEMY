@@ -1243,74 +1243,87 @@
   }
 
   function renderExpedienteCredencial() {
-    var container = document.getElementById("expediente-credencial");
-    if (!container) return;
-    var matricula = enrollment.matricula || (document.getElementById("matricula-chip") ? document.getElementById("matricula-chip").textContent : "—");
-    var initials = (user.name || "A").split(" ").map(function (s) { return s.charAt(0); }).join("").slice(0, 2).toUpperCase();
+    var setText = function (id, val) { var el = document.getElementById(id); if (el) el.textContent = val || "—"; };
 
-    renderCredencialHtml(null);
+    var matricula = enrollment.matricula || (document.getElementById("matricula-chip") ? document.getElementById("matricula-chip").textContent : "—");
+
+    setText("credencial-nombre", user.name || enrollment.full_name);
+    setText("credencial-matricula", matricula);
+    setText("credencial-nivel", enrollment.plan || "Plan Base");
+
+    var vigenciaStr = "—";
+    if (cloudMode && window.DevSystemCloud.getPaidMonthIds) {
+      window.DevSystemCloud.getPaidMonthIds(user.email).then(function (paidMonths) {
+        if (paidMonths && paidMonths.length > 0) {
+          var maxPay = Math.max.apply(null, paidMonths);
+          var start = new Date();
+          start.setMonth(start.getMonth() - (12 - maxPay));
+          var end = new Date(start);
+          end.setMonth(end.getMonth() + 1);
+          vigenciaStr = end.toLocaleDateString("es-MX", { year: "numeric", month: "long", day: "numeric" });
+        }
+        setText("credencial-vigencia", vigenciaStr);
+      });
+    } else {
+      var d = new Date(); d.setFullYear(d.getFullYear() + 1);
+      vigenciaStr = d.toLocaleDateString("es-MX", { year: "numeric", month: "long", day: "numeric" });
+      setText("credencial-vigencia", vigenciaStr);
+    }
+
+    var initials = (user.name || "A").split(" ").map(function (s) { return s.charAt(0); }).join("").slice(0, 2).toUpperCase();
+    var avatar = document.getElementById("credencial-avatar");
+    if (avatar) avatar.innerHTML = initials;
+    if (avatar) avatar.style.fontSize = "1.2rem";
+    if (avatar) avatar.style.fontWeight = "700";
+    if (avatar) avatar.style.color = "var(--accent)";
 
     if (cloudMode && window.DevSystemCloud.getDocumentPhotoUrl) {
       window.DevSystemCloud.getDocumentPhotoUrl(user.email)
-        .then(function (photoUrl) { if (photoUrl) renderCredencialHtml(photoUrl); })
-        .catch(function () { /* sin foto: se queda con iniciales */ });
-    }
-
-    function renderCredencialHtml(photoUrl) {
-      var photoHtml = photoUrl
-        ? "<img src='" + photoUrl + "' alt='Foto' class='credencial-foto'>"
-        : "<div class='credencial-initials'>" + initials + "</div>";
-      var vigenciaDate = new Date();
-      vigenciaDate.setFullYear(vigenciaDate.getFullYear() + 1);
-      var vigenciaStr = vigenciaDate.toLocaleDateString("es-MX", { year: "numeric", month: "long", day: "numeric" });
-
-      container.innerHTML = "<div class='credencial-card'><div class='credencial-gradient-border'></div><div class='credencial-inner'><div class='credencial-top'><div class='credencial-photo'>" + photoHtml + "</div><div class='credencial-info'><h3>" + user.name + "</h3><p class='small'>" + matricula + "</p><p class='small'>" + (enrollment.plan || "Plan Base") + "</p><p class='small'>Vigencia: " + vigenciaStr + "</p></div></div><div class='credencial-badge'>ALUMNO ACTIVO ✓</div></div></div>";
+        .then(function (photoUrl) {
+          if (photoUrl && avatar) { avatar.innerHTML = "<img src='" + photoUrl + "' alt='Foto' style='width:100%;height:100%;object-fit:cover;border-radius:50%'>"; avatar.style.fontSize = ""; avatar.style.fontWeight = ""; avatar.style.color = ""; }
+        })
+        .catch(function () {});
     }
   }
 
   function renderExpedienteKardex() {
-    var container = document.getElementById("expediente-kardex");
-    if (!container) return;
+    var tbody = document.getElementById("kardex-body");
+    if (!tbody) return;
     var paidMonths = window.DevSystemState.getPaidMonthIds(user.email);
     var paidMap = {};
     for (var pi = 0; pi < paidMonths.length; pi++) paidMap[paidMonths[pi]] = true;
 
     function buildKardex(progress) {
-      var html = "<table class='kardex-table'><thead><tr><th>#</th><th>Módulo</th><th>Estado</th><th>Avance</th><th>Calificación</th></tr></thead><tbody>";
+      var html = "";
+      var MONTH_TITLES = {1:"Fundamentos del código",2:"Git y GitHub",3:"Frontend",4:"Backend y bases de datos",5:"LLMs y agentes",6:"Herramientas IA",7:"MCP e integraciones",8:"Testing y producto",9:"Cloud y deploy",10:"Datos y seguridad",11:"Automatización y colas",12:"SaaS final"};
       for (var m = 1; m <= 12; m++) {
-        var title = MONTH_TITLES[m] || "Mes " + m;
-        var estado, avance, calif;
+        var title = "M" + m + " · " + (MONTH_TITLES[m] || "Mes " + m);
+        var estado, calif;
         if (paidMap[m]) {
-          estado = "<span style='color:var(--green)'>Pagado ✓</span>";
           if (m === 1) {
-            var total = 0;
-            var done = 0;
+            var total = 0, done = 0;
             var materiaKeys = leccionesData.m1 && Object.keys(leccionesData.m1.materias) || [];
             for (var mi = 0; mi < materiaKeys.length; mi++) {
               var mk = materiaKeys[mi];
               var mat = leccionesData.m1.materias[mk];
               for (var li = 0; li < mat.lecciones.length; li++) {
                 var l = mat.lecciones[li];
-                if (!l.proximamente) {
-                  total++;
-                  if (progress[l.id]) done++;
-                }
+                if (!l.proximamente) { total++; if (progress[l.id]) done++; }
               }
             }
-            avance = total > 0 ? Math.round((done / total) * 100) + "%" : "—";
+            var pct = total > 0 ? Math.round((done / total) * 100) : 0;
+            estado = "<span style='color:var(--success)'>En curso · " + pct + "%</span>";
           } else {
-            avance = "—";
+            estado = "<span style='color:var(--success)'>Pagado ✓</span>";
           }
           calif = "—";
         } else {
           estado = "Pendiente";
-          avance = "—";
           calif = "—";
         }
-        html += "<tr><td>" + m + "</td><td>" + title + "</td><td>" + estado + "</td><td>" + avance + "</td><td>" + calif + "</td></tr>";
+        html += "<tr style='border-bottom:1px solid var(--line)'><td style='padding:0.5rem'>" + title + "</td><td style='padding:0.5rem'>" + estado + "</td><td style='padding:0.5rem;text-align:right'>" + calif + "</td></tr>";
       }
-      html += "</tbody></table>";
-      container.innerHTML = html;
+      tbody.innerHTML = html;
     }
 
     if (cloudMode) {
@@ -1323,28 +1336,34 @@
   }
 
   function renderExpedienteDatos() {
-    var container = document.getElementById("expediente-datos");
-    if (!container) return;
-    var tarifa = examPassed ? "$7,000 MXN/mes" : planPricing.label || "—";
-    var fechaIns = enrollment.created_at || enrollment.updated_at || null;
-    var fechaStr = fechaIns ? new Date(fechaIns).toLocaleDateString("es-MX", { year: "numeric", month: "long", day: "numeric" }) : "—";
-    var statusReadable = statusLabels[enrollmentStatus] || enrollmentStatus;
-    var telefono = enrollment.phone || "—";
-
-    container.innerHTML = "<div class='summary-row'><span>Correo</span><strong>" + user.email + "</strong></div><div class='summary-row'><span>Teléfono</span><strong>" + telefono + "</strong></div><div class='summary-row'><span>Plan</span><strong>" + (enrollment.plan || "Plan Base") + "</strong></div><div class='summary-row'><span>Tarifa</span><strong>" + tarifa + "</strong></div><div class='summary-row'><span>Fecha de inscripción</span><strong>" + fechaStr + "</strong></div><div class='summary-row'><span>Estatus</span><strong>" + statusReadable + "</strong></div>";
+    var el = function (id) { return document.getElementById(id); };
+    if (el("student-email")) el("student-email").textContent = user.email || "—";
+    if (el("student-phone")) el("student-phone").textContent = enrollment.phone || "—";
+    if (el("billing-plan")) el("billing-plan").textContent = enrollment.plan || "Plan Base";
+    if (el("billing-price")) el("billing-price").textContent = examPassed ? "$7,000 MXN / mes" : (planPricing.label || "—");
+    if (el("billing-status")) el("billing-status").textContent = statusLabels[enrollmentStatus] || enrollmentStatus;
+    var fechaRaw = enrollment.created_at || enrollment.updated_at;
+    if (fechaRaw && el("student-fecha")) {
+      el("student-fecha").textContent = new Date(fechaRaw).toLocaleDateString("es-MX", { year: "numeric", month: "long", day: "numeric" });
+    }
+    var priceNote = el("price-note");
+    if (priceNote) {
+      if (examPassed) { priceNote.textContent = "Tarifa preferente — examen de admisión aprobado ✓"; priceNote.style.color = "var(--green)"; }
+      else { priceNote.textContent = "Aprueba el examen para tarifa preferente de $7,000 MXN / mes."; priceNote.style.color = "var(--accent)"; }
+    }
   }
 
   function renderExpedienteDocs() {
-    var container = document.getElementById("expediente-docs");
+    var container = document.getElementById("documentos-list");
     if (!container) return;
     var docTypes = ["identificacion", "curp", "comprobante_domicilio", "comprobante_estudios", "foto", "cv"];
     var docLabels = {
       identificacion: "Identificación oficial",
       curp: "CURP",
       comprobante_domicilio: "Comprobante de domicilio",
-      comprobante_estudios: "Comprobante de estudios",
+      comprobante_estudios: "Certificado de estudios",
       foto: "Fotografía",
-      cv: "CV / Semblanza",
+      cv: "CV",
     };
     var docsMap = {};
     for (var d = 0; d < documents.length; d++) {
