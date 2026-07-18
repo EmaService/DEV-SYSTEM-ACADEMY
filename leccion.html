@@ -29,15 +29,15 @@
 
     <main class="section">
       <div class="container portal-layout">
-        <section id="lectura-section" class="lectura-carousel reveal">
+        <section id="lectura-section" class="lectura-carousel reveal" style="position:relative">
           <div class="carousel-track">
             <p class="eyebrow" id="leccion-materia"></p>
             <h1 id="leccion-titulo" class="page-title"></h1>
             <div id="leccion-secciones" class="carousel-slides"></div>
-            <div id="carousel-dots" class="carousel-dots"></div>
-            <button id="carousel-next-btn" class="btn" style="position:fixed;bottom:1.5rem;right:1.5rem;z-index:50">Siguiente →</button>
-            <button id="start-ejercicios-btn" class="btn btn-block" style="display:none;margin-top:1.5rem">Comenzar ejercicios ▶</button>
           </div>
+          <div id="carousel-dots" class="carousel-dots"></div>
+          <button id="carousel-next-btn" class="btn carousel-btn">Siguiente →</button>
+          <button id="start-ejercicios-btn" class="btn btn-brand carousel-btn" style="display:none">Comenzar ejercicios ▶</button>
         </section>
 
         <section id="ejercicios-section" class="ej-fullscreen" style="display:none">

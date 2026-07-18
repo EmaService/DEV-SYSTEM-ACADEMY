@@ -147,38 +147,53 @@
     var secciones = lesson.secciones || []
     for (var i = 0; i < secciones.length; i++) {
       var sec = secciones[i]
-      var card = document.createElement("div")
-      card.className = "card"
+      var slide = document.createElement("div")
+      slide.className = "carousel-slide"
+
       if (sec.tipo === "prompt") {
-        card.style.borderLeft = "4px solid var(--accent)"
-        card.style.paddingLeft = "calc(1.5rem - 4px)"
+        slide.classList.add("prompt-slide")
+        slide.style.background = "linear-gradient(135deg, var(--brand) 0%, var(--brand-2) 100%)"
+        slide.style.color = "#fff"
+
+        var badge = document.createElement("span")
+        badge.className = "prompt-badge"
+        badge.textContent = "TU SUPERPODER"
+        slide.appendChild(badge)
       }
+
       var secTitle = document.createElement("h3")
       secTitle.textContent = sec.titulo
-      secTitle.style.marginBottom = "0.6rem"
-      secTitle.style.fontSize = "1rem"
-      card.appendChild(secTitle)
+      secTitle.style.marginBottom = "0.75rem"
+      secTitle.style.fontSize = "clamp(1.1rem,3.5vw,1.4rem)"
+      if (sec.tipo === "prompt") secTitle.style.color = "#fff"
+      slide.appendChild(secTitle)
 
       var secBody = document.createElement("div")
       secBody.innerHTML = sec.html || ""
-      card.appendChild(secBody)
+      slide.appendChild(secBody)
 
       if (sec.tipo === "prompt") {
         var copyBtn = document.createElement("button")
-        copyBtn.className = "btn"
-        copyBtn.textContent = "Copiar prompt"
-        copyBtn.style.marginTop = "0.75rem"
-        copyBtn.addEventListener("click", function (html) {
+        copyBtn.textContent = "📋 Copiar prompt"
+        copyBtn.style.cssText = "background:#fff;color:var(--brand);font-weight:700;padding:0.75rem 1.5rem;border-radius:var(--radius);border:0;margin-top:1rem;cursor:pointer"
+        copyBtn.addEventListener("click", function (html, btn) {
           return function () {
-            navigator.clipboard.writeText(html).catch(function () {})
-            copyBtn.textContent = "¡Copiado!"
-            setTimeout(function () { copyBtn.textContent = "Copiar prompt" }, 2000)
+            var text = html.replace(/<[^>]*>/g, "").replace(/&quot;/g, '"').replace(/&amp;/g, "&").replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&#39;/g, "'")
+            navigator.clipboard.writeText(text).catch(function () {})
+            btn.textContent = "Copiado ✓"
+            btn.style.background = "rgba(255,255,255,0.2)"
+            btn.style.color = "#fff"
+            setTimeout(function () {
+              btn.textContent = "📋 Copiar prompt"
+              btn.style.background = "#fff"
+              btn.style.color = "var(--brand)"
+            }, 2000)
           }
-        }(sec.html))
-        card.appendChild(copyBtn)
+        }(sec.html, copyBtn))
+        slide.appendChild(copyBtn)
       }
 
-      leccionSecciones.appendChild(card)
+      leccionSecciones.appendChild(slide)
     }
   }
 
@@ -214,18 +229,27 @@
     carouselSlides.scrollTo({ left: carouselSlides.clientWidth * slideIndex, behavior: "smooth" })
     var dots = carouselDots ? carouselDots.querySelectorAll(".carousel-dot") : []
     for (var di = 0; di < dots.length; di++) dots[di].classList.toggle("active", di === slideIndex)
-    if (carouselNext) carouselNext.style.display = slideIndex < totalSlides - 1 ? "" : "none"
-    if (startBtn) startBtn.style.display = slideIndex >= totalSlides - 1 ? "" : "none"
+    var isLast = slideIndex >= totalSlides - 1
+    if (carouselNext) carouselNext.style.display = isLast ? "none" : ""
+    if (startBtn) {
+      startBtn.style.display = isLast ? "" : "none"
+      startBtn.className = "btn btn-brand"
+      startBtn.style.cssText = "position:fixed;bottom:1rem;left:50%;transform:translateX(-50%);z-index:50;width:85%;max-width:400px;text-align:center"
+    }
   }
 
   if (carouselNext) {
     carouselNext.addEventListener("click", function () { goToSlide(slideIndex + 1) })
   }
 
+  var carouselScrollTimer = null
   if (carouselSlides) {
     carouselSlides.addEventListener("scroll", function () {
-      var newIdx = Math.round(this.scrollLeft / this.clientWidth)
-      if (newIdx !== slideIndex) goToSlide(newIdx)
+      if (carouselScrollTimer) clearTimeout(carouselScrollTimer)
+      carouselScrollTimer = setTimeout(function () {
+        var newIdx = Math.round(carouselSlides.scrollLeft / carouselSlides.clientWidth)
+        if (newIdx !== slideIndex) goToSlide(newIdx)
+      }, 50)
     })
   }
 

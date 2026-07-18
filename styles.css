@@ -36,7 +36,7 @@
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
-body { font-family: var(--font-body); background: var(--bg); color: var(--text); line-height: 1.65; }
+body { font-family: var(--font-body); background: var(--bg); color: var(--text); line-height: 1.65; overflow-x: hidden; }
 a { color: inherit; text-decoration: none; }
 h1,h2,h3,h4 { font-family: var(--font-head); color: var(--text); line-height: 1.1; }
 h1 { font-size: clamp(1.8rem,4vw,3rem); letter-spacing: -0.03em; font-weight: 800; }
@@ -212,21 +212,39 @@ details[open] .collapse-icon { transform: rotate(180deg); }
 @keyframes xp-pop { 0% { transform: scale(1); } 50% { transform: scale(1.25); } 100% { transform: scale(1); } }
 
 /* Reading carousel */
-.lectura-carousel { padding: 0; }
-.carousel-track { padding: 1.5rem; }
-.carousel-slides { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; gap: 1.5rem; scrollbar-width: none; padding: 0.5rem 0; }
+.lectura-carousel { padding: 0 0 5rem; }
+.carousel-track { padding: 1.5rem 1.5rem 0; }
+.carousel-slides { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; gap: 0; scrollbar-width: none; padding: 0; }
 .carousel-slides::-webkit-scrollbar { display: none; }
-.carousel-slide { min-width: 100%; scroll-snap-align: start; background: var(--bg-card); border-radius: var(--radius-xl); padding: 1.5rem; }
-.carousel-slide-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.8rem; font-size: 0.78rem; color: var(--muted); }
-.carousel-dots { display: flex; justify-content: center; gap: 0.4rem; margin: 1rem 0; }
-.carousel-dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.15); cursor: pointer; transition: background 0.2s; }
-.carousel-dot.active { background: var(--brand); width: 24px; border-radius: 4px; }
-.carousel-next-btn { position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 50; }
-.prompt-slide { background: linear-gradient(135deg, var(--brand), var(--brand-2)); color: #fff; }
-.prompt-slide .carousel-slide-header { color: rgba(255,255,255,0.7); }
-.prompt-slide .prompt-badge { display: inline-block; background: rgba(0,0,0,0.25); padding: 0.2rem 0.6rem; border-radius: 4px; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.5rem; }
-.prompt-slide blockquote { background: rgba(0,0,0,0.2); border-radius: var(--radius); padding: 1rem; font-family: 'JetBrains Mono', monospace; font-size: 0.88rem; line-height: 1.6; }
-.prompt-slide .btn { background: #fff; color: var(--brand); }
+.carousel-slide { flex: 0 0 100%; scroll-snap-align: start; background: var(--bg-card); border-radius: var(--radius-xl); padding: 2rem; min-height: 60vh; box-sizing: border-box; overflow-y: auto; }
+.carousel-slide h3 { font-size: clamp(1.1rem,3.5vw,1.4rem); margin-bottom: 0.75rem; }
+.carousel-slide p, .carousel-slide li { font-size: 1rem; line-height: 1.7; color: var(--text); margin-bottom: 0.75rem; }
+.carousel-slide pre { background: rgba(0,0,0,0.25); border-radius: var(--radius); padding: 1rem; overflow-x: auto; margin-bottom: 0.75rem; }
+.carousel-slide code { font-family: 'JetBrains Mono', monospace; font-size: 0.88rem; }
+.carousel-slide ul, .carousel-slide ol { padding-left: 1.2rem; margin-bottom: 0.75rem; }
+.carousel-slide blockquote { border-left: 3px solid var(--brand); padding-left: 1rem; margin: 0.75rem 0; color: var(--muted); }
+.carousel-slide blockquote p { margin-bottom: 0.3rem; }
+.carousel-slide .prompt-badge { display: inline-block; background: rgba(0,0,0,0.25); padding: 0.35rem 0.75rem; border-radius: 999px; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 0.75rem; color: #fff; }
+.carousel-dots { display: flex; justify-content: center; gap: 0.5rem; padding: 1rem 0; }
+.carousel-dot { width: 10px; height: 10px; border-radius: 50%; background: rgba(255,255,255,0.2); cursor: pointer; transition: all 0.2s; }
+.carousel-dot.active { background: var(--brand); width: 28px; border-radius: 5px; }
+
+/* Prompt slide override */
+.prompt-slide { background: linear-gradient(135deg, var(--brand) 0%, var(--brand-2) 100%) !important; color: #fff; }
+.prompt-slide h3 { color: #fff; }
+.prompt-slide p, .prompt-slide li { color: rgba(255,255,255,0.9) !important; }
+.prompt-slide blockquote { border-left-color: rgba(255,255,255,0.5); }
+.prompt-slide blockquote p { color: rgba(255,255,255,0.9) !important; }
+.prompt-slide pre, .prompt-slide .prompt-block { background: rgba(0,0,0,0.35); border-radius: var(--radius-lg); padding: 1.25rem; font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; color: #fff; white-space: pre-wrap; line-height: 1.65; margin-bottom: 0.75rem; }
+
+/* Carousel buttons */
+#carousel-next-btn, #start-ejercicios-btn { position: fixed; bottom: 1rem; left: 50%; transform: translateX(-50%); z-index: 50; width: 85%; max-width: 400px; text-align: center; }
+@media (min-width: 768px) {
+  #carousel-next-btn, #start-ejercicios-btn { left: auto; right: 1.5rem; transform: none; width: auto; max-width: none; }
+}
+
+/* Override prompt button on prompt slides */
+.prompt-slide .btn-brand, .prompt-slide button { background: #fff; color: var(--brand); font-weight: 700; padding: 0.75rem 1.5rem; border-radius: var(--radius); border: 0; margin-top: 1rem; cursor: pointer; }
 
 /* Full-screen exercises */
 .ej-fullscreen { min-height: calc(100vh - 56px); display: flex; flex-direction: column; background: var(--bg-deep); padding: 1rem; }
@@ -268,12 +286,21 @@ details[open] .collapse-icon { transform: rotate(180deg); }
 
 /* Responsive */
 @media (max-width:860px) {
+  body { overflow-x: hidden; }
   .nav { display: none; }
   .checkout-grid { grid-template-columns: 1fr; }
   .checkout-panel { position: static; }
   .summary-grid { grid-template-columns: repeat(2,1fr); }
+  .roadmap-grid { grid-template-columns: 1fr; }
+  .carousel-slide { padding: 1.25rem; min-height: 50vh; }
+  .leccion-sticky .xp-chip { font-size: 0; padding: 0.25rem 0.5rem; }
+  .leccion-sticky .xp-chip::before { content: "⭐"; font-size: 0.85rem; }
+  .leccion-sticky .xp-chip span { display: none; }
+  .stat-chips { overflow-x: auto; flex-wrap: nowrap; padding-bottom: 0.5rem; }
+  .stat-chips::-webkit-scrollbar { display: none; }
 }
 @media (max-width:540px) {
   .container { width: min(var(--container), calc(100% - 1.6rem)); }
   .summary-grid { grid-template-columns: 1fr; }
+  .roadmap-grid { grid-template-columns: 1fr; }
 }
