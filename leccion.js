@@ -230,11 +230,10 @@
     var dots = carouselDots ? carouselDots.querySelectorAll(".carousel-dot") : []
     for (var di = 0; di < dots.length; di++) dots[di].classList.toggle("active", di === slideIndex)
     var isLast = slideIndex >= totalSlides - 1
-    if (carouselNext) carouselNext.style.display = isLast ? "none" : ""
+    if (carouselNext) carouselNext.style.display = isLast ? "none" : "inline-block"
     if (startBtn) {
-      startBtn.style.display = isLast ? "" : "none"
       startBtn.className = "btn btn-brand"
-      startBtn.style.cssText = "position:fixed;bottom:1rem;left:50%;transform:translateX(-50%);z-index:50;width:85%;max-width:400px;text-align:center"
+      startBtn.style.cssText = "position:fixed;bottom:1rem;left:50%;transform:translateX(-50%);z-index:50;width:85%;max-width:400px;text-align:center;display:" + (isLast ? "inline-block" : "none")
     }
   }
 
@@ -375,7 +374,6 @@
 
   function startExercises() {
     saveReadingProgress()
-    window.removeEventListener("scroll", scrollListener)
     lecturaSection.style.display = "none"
     ejerciciosSection.style.display = "block"
 
