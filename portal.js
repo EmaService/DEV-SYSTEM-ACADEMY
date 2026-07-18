@@ -237,6 +237,9 @@
     var progress = cloudProgress || (cloudMode ? {} : window.DevSystemState.getProgress(user.email));
     var materiaKeys = Object.keys(materias);
 
+    curriculumRoot.innerHTML = "<div class='roadmap-grid'></div>";
+    var grid = curriculumRoot.querySelector(".roadmap-grid");
+
     for (var ti = 0; ti < materiaKeys.length; ti += 1) {
       var mk = materiaKeys[ti];
       var m = materias[mk];
@@ -257,9 +260,7 @@
       }
 
       html += "</div></div>";
-      if (!curriculumRoot.innerHTML) curriculumRoot.innerHTML = "<div class='roadmap-grid'></div>";
-      var grid = curriculumRoot.querySelector(".roadmap-grid");
-      if (grid) grid.innerHTML += html;
+      if (grid) grid.insertAdjacentHTML("beforeend", html);
     }
 
     if (cloudMode && !cloudProgress) {
