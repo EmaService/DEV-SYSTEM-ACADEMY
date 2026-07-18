@@ -1289,13 +1289,10 @@
   function renderExpedienteKardex() {
     var tbody = document.getElementById("kardex-body");
     if (!tbody) return;
-    var paidMonths = window.DevSystemState.getPaidMonthIds(user.email);
-    var paidMap = {};
-    for (var pi = 0; pi < paidMonths.length; pi++) paidMap[paidMonths[pi]] = true;
+    var MONTH_TITLES = {1:"Fundamentos del código",2:"Git y GitHub",3:"Frontend",4:"Backend y bases de datos",5:"LLMs y agentes",6:"Herramientas IA",7:"MCP e integraciones",8:"Testing y producto",9:"Cloud y deploy",10:"Datos y seguridad",11:"Automatización y colas",12:"SaaS final"};
 
-    function buildKardex(progress) {
+    function buildKardex(paidMap, progress) {
       var html = "";
-      var MONTH_TITLES = {1:"Fundamentos del código",2:"Git y GitHub",3:"Frontend",4:"Backend y bases de datos",5:"LLMs y agentes",6:"Herramientas IA",7:"MCP e integraciones",8:"Testing y producto",9:"Cloud y deploy",10:"Datos y seguridad",11:"Automatización y colas",12:"SaaS final"};
       for (var m = 1; m <= 12; m++) {
         var title = "M" + m + " · " + (MONTH_TITLES[m] || "Mes " + m);
         var estado, calif;
@@ -1326,13 +1323,23 @@
       tbody.innerHTML = html;
     }
 
-    if (cloudMode) {
-      window.DevSystemCloud.getProgressMap(user.email)
-        .then(function (map) { buildKardex(map || {}); })
-        .catch(function () { buildKardex({}); });
-    } else {
-      buildKardex(window.DevSystemState.getProgress(user.email));
-    }
+    buildKardex({}, {});
+
+    var paidPromise = cloudMode
+      ? window.DevSystemCloud.getPaidMonthIds(user.email).catch(function () { return []; })
+      : Promise.resolve(window.DevSystemState.getPaidMonthIds(user.email));
+
+    paidPromise.then(function (pms) {
+      var pm = {};
+      for (var i = 0; i < pms.length; i++) pm[pms[i]] = true;
+      if (cloudMode) {
+        window.DevSystemCloud.getProgressMap(user.email)
+          .then(function (map) { buildKardex(pm, map || {}); })
+          .catch(function () { buildKardex(pm, {}); });
+      } else {
+        buildKardex(pm, window.DevSystemState.getProgress(user.email));
+      }
+    });
   }
 
   function renderExpedienteDatos() {
@@ -1342,7 +1349,7 @@
     if (el("billing-plan")) el("billing-plan").textContent = enrollment.plan || "Plan Base";
     if (el("billing-price")) el("billing-price").textContent = examPassed ? "$7,000 MXN / mes" : (planPricing.label || "—");
     if (el("billing-status")) el("billing-status").textContent = statusLabels[enrollmentStatus] || enrollmentStatus;
-    var fechaRaw = enrollment.created_at || enrollment.updated_at;
+    var fechaRaw = enrollment.created_at || enrollment.updated_at || null;
     if (fechaRaw && el("student-fecha")) {
       el("student-fecha").textContent = new Date(fechaRaw).toLocaleDateString("es-MX", { year: "numeric", month: "long", day: "numeric" });
     }
