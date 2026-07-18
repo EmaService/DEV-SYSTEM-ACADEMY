@@ -349,6 +349,34 @@
     return map;
   }
 
+  async function setMatricula(email, matricula) {
+    var c = getClient();
+    if (!c) return { ok: false, message: "Cloud no configurado." };
+    var response = await c
+      .from("enrollments")
+      .update({ matricula: matricula, updated_at: new Date().toISOString() })
+      .eq("email", String(email || "").toLowerCase());
+    if (response.error) return { ok: false, message: response.error.message };
+    return { ok: true };
+  }
+
+  async function getDocumentPhotoUrl(email) {
+    var c = getClient();
+    if (!c) return null;
+    var docs = await getDocuments(email);
+    if (!docs || docs.length === 0) return null;
+    var photoDoc = null;
+    for (var pd = 0; pd < docs.length; pd++) {
+      if (docs[pd].doc_type === "foto") { photoDoc = docs[pd]; break; }
+    }
+    if (!photoDoc || !photoDoc.file_path) return null;
+    var response = await c.storage
+      .from("documentos-alumnos")
+      .createSignedUrl(photoDoc.file_path, 3600);
+    if (response.error || !response.data) return null;
+    return response.data.signedUrl;
+  }
+
   window.DevSystemCloud = {
     isEnabled: isEnabled,
     signUp: signUp,
@@ -373,5 +401,7 @@
     saveLessonStats: saveLessonStats,
     getAllLessonStats: getAllLessonStats,
     getStreakDays: getStreakDays,
+    setMatricula: setMatricula,
+    getDocumentPhotoUrl: getDocumentPhotoUrl,
   };
 })();
