@@ -225,15 +225,20 @@ details[open] .collapse-icon { transform: rotate(180deg); }
 @keyframes shake { 0%,100% { transform: translateX(0); } 20% { transform: translateX(-6px); } 40% { transform: translateX(6px); } 60% { transform: translateX(-6px); } 80% { transform: translateX(6px); } }
 
 /* Reading carousel */
-.lectura-carousel { padding: 0 0 5rem; }
+.lectura-carousel { padding: 0 0 6rem; }
+
+/* Ensure reading carousel body avoids overflow */
+body.leccion-body { overflow-x: hidden; padding-bottom: 5rem; }
 .carousel-track { padding: 1.5rem 1.5rem 0; }
-.carousel-slides { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; gap: 0; scrollbar-width: none; padding: 0; }
+.carousel-slides { display: flex; overflow-x: auto; overflow-y: hidden; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; gap: 0; scrollbar-width: none; padding: 0; }
 .carousel-slides::-webkit-scrollbar { display: none; }
-.carousel-slide { flex: 0 0 100%; scroll-snap-align: start; background: var(--bg-card); border-radius: var(--radius-xl); padding: 2rem; min-height: 60vh; box-sizing: border-box; overflow-y: auto; }
+.carousel-slide { flex: 0 0 100%; min-width: 0; scroll-snap-align: start; background: var(--bg-card); border-radius: var(--radius-xl); padding: 2rem 1.5rem 2rem 2rem; min-height: 60vh; box-sizing: border-box; overflow-y: auto; overflow-wrap: break-word; word-wrap: break-word; }
+.carousel-slide * { min-width: 0; max-width: 100%; box-sizing: border-box; }
 .carousel-slide h3 { font-size: clamp(1.1rem,3.5vw,1.4rem); margin-bottom: 0.75rem; }
 .carousel-slide p, .carousel-slide li { font-size: 1rem; line-height: 1.7; color: var(--text); margin-bottom: 0.75rem; }
-.carousel-slide pre { background: rgba(0,0,0,0.25); border-radius: var(--radius); padding: 1rem; overflow-x: auto; margin-bottom: 0.75rem; }
-.carousel-slide code { font-family: 'JetBrains Mono', monospace; font-size: 0.88rem; }
+.carousel-slide pre { background: rgba(0,0,0,0.25); border-radius: var(--radius); padding: 1rem; overflow-x: auto; max-width: 100%; margin-bottom: 0.75rem; }
+.carousel-slide pre code { white-space: pre; overflow-wrap: normal; word-break: normal; }
+.carousel-slide code { font-family: 'JetBrains Mono', monospace; font-size: 0.88rem; overflow-wrap: anywhere; word-break: break-word; }
 .carousel-slide ul, .carousel-slide ol { padding-left: 1.2rem; margin-bottom: 0.75rem; }
 .carousel-slide blockquote { border-left: 3px solid var(--brand); padding-left: 1rem; margin: 0.75rem 0; color: var(--muted); }
 .carousel-slide blockquote p { margin-bottom: 0.3rem; }
