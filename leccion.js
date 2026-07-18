@@ -528,7 +528,7 @@
       if (i > 0) {
         var blankSpan = document.createElement("span")
         blankSpan.className = "blank-fill"
-        blankSpan.style.cssText = "display:inline-block;min-width:80px;border-bottom:2px dashed var(--accent);margin:0 4px;text-align:center;padding:0 4px;font-family:var(--mono);color:var(--text)"
+        blankSpan.style.cssText = "background:rgba(124,92,255,0.08);border:2px dashed var(--brand);padding:0.25rem 0.9rem;border-radius:var(--radius);min-width:80px;display:inline-block;height:1.6em;vertical-align:middle;text-align:center;font-weight:600;transition:all 0.2s;margin:0 4px"
         blankSpan.textContent = "____"
         blankSpan.setAttribute("data-index", i - 1)
         blankSpan.setAttribute("data-filled", "false")
@@ -541,7 +541,7 @@
     }
 
     var p = document.createElement("p")
-    p.style.marginBottom = "1rem"
+    p.style.cssText = "margin-bottom:1rem;font-size:1.05rem;line-height:2"
     p.appendChild(fragment)
     ejContainer.appendChild(p)
 
@@ -550,6 +550,17 @@
       fillState.push(null)
     }
     var fillIndex = 0
+
+    var undoDiv = document.createElement("div")
+    undoDiv.style.cssText = "margin-top:0.5rem;min-height:36px"
+    var undoBtn = document.createElement("button")
+    undoBtn.className = "btn btn-ghost"
+    undoBtn.textContent = "\u21a9 Deshacer \u00faltimo"
+    undoBtn.style.cssText = "font-size:0.85rem;padding:0.3rem 0.8rem"
+    undoBtn.addEventListener("click", function () { undoLast() })
+    undoDiv.appendChild(undoBtn)
+    ejContainer.appendChild(undoDiv)
+    undoDiv.style.display = "none"
 
     function checkCompletar() {
       var allFilled = fillState.every(function (v) { return v !== null })
@@ -566,19 +577,22 @@
       }
       if (correct) {
         for (var k2 = 0; k2 < blanks.length; k2++) {
-          blanks[k2].style.borderBottomColor = "var(--green)"
-          blanks[k2].style.color = "var(--green)"
+          blanks[k2].style.background = "var(--success)"
+          blanks[k2].style.borderColor = "var(--success)"
+          blanks[k2].style.color = "#fff"
         }
         showFeedback("✔ ¡Correcto!", true)
         advanceAfter(1200, true)
       } else {
         for (var k3 = 0; k3 < blanks.length; k3++) {
           if (normalizeText(fillState[k3]) !== normalizeText(ej.respuestas[k3])) {
-            blanks[k3].style.borderBottomColor = "var(--red)"
+            blanks[k3].style.background = "rgba(239,68,68,0.15)"
+            blanks[k3].style.borderColor = "var(--red)"
             blanks[k3].style.color = "var(--red)"
           } else {
-            blanks[k3].style.borderBottomColor = "var(--green)"
-            blanks[k3].style.color = "var(--green)"
+            blanks[k3].style.background = "var(--success)"
+            blanks[k3].style.borderColor = "var(--success)"
+            blanks[k3].style.color = "#fff"
           }
         }
         var correctResp = ej.respuestas.join(", ")
@@ -592,9 +606,11 @@
       fillState[fillIndex] = word
       blanks[fillIndex].textContent = word
       blanks[fillIndex].setAttribute("data-filled", "true")
-      blanks[fillIndex].style.borderBottomColor = "var(--accent)"
-      blanks[fillIndex].style.color = "var(--accent)"
+      blanks[fillIndex].style.background = "var(--brand)"
+      blanks[fillIndex].style.borderColor = "var(--brand)"
+      blanks[fillIndex].style.color = "#fff"
       fillIndex++
+      undoDiv.style.display = fillIndex > 0 ? "" : "none"
       checkCompletar()
     }
 
@@ -605,8 +621,10 @@
       fillState[fillIndex] = null
       blanks[fillIndex].textContent = "____"
       blanks[fillIndex].setAttribute("data-filled", "false")
-      blanks[fillIndex].style.borderBottomColor = "dashed var(--accent)"
+      blanks[fillIndex].style.background = "rgba(124,92,255,0.08)"
+      blanks[fillIndex].style.borderColor = "var(--brand)"
       blanks[fillIndex].style.color = "var(--text)"
+      undoDiv.style.display = fillIndex > 0 ? "" : "none"
     }
 
     var bankDiv = document.createElement("div")
@@ -618,25 +636,24 @@
       chip.className = "chip"
       chip.textContent = shuffledBank[c]
       chip.setAttribute("data-word", shuffledBank[c])
-      chip.style.cssText = "padding:0.4rem 0.8rem;border:1px solid var(--accent);border-radius:var(--radius-sm);background:var(--bg-card);cursor:pointer;font-family:var(--mono);font-size:0.9rem"
-      chip.addEventListener("click", function (word) {
+      chip.style.cssText = "background:var(--bg-card-hi);border:1px solid var(--line);padding:0.7rem 1.1rem;border-radius:var(--radius);font-weight:600;cursor:pointer;transition:all 0.2s;min-height:44px;font-size:0.95rem"
+      chip.addEventListener("mouseenter", function (el) { return function () { if (el.style.opacity !== "0.3") { el.style.borderColor = "var(--brand)"; el.style.transform = "translateY(-2px)"; el.style.boxShadow = "0 4px 12px rgba(124,92,255,0.2)" } } }(chip))
+      chip.addEventListener("mouseleave", function (el) { return function () { el.style.borderColor = ""; el.style.transform = ""; el.style.boxShadow = "" } }(chip))
+      chip.addEventListener("click", function (word, el) {
         return function () {
           if (answering) return
+          if (el.style.opacity === "0.3") return
+          el.style.opacity = "0.3"
+          el.style.pointerEvents = "none"
+          el.style.borderColor = ""
+          el.style.transform = ""
+          el.style.boxShadow = ""
           fillNextBlank(word)
         }
-      }(shuffledBank[c]))
+      }(shuffledBank[c], chip))
       bankDiv.appendChild(chip)
     }
     ejContainer.appendChild(bankDiv)
-
-    var undoDiv = document.createElement("div")
-    undoDiv.style.marginTop = "0.75rem"
-    var undoBtn = document.createElement("button")
-    undoBtn.className = "btn btn-ghost"
-    undoBtn.textContent = "Deshacer"
-    undoBtn.addEventListener("click", undoLast)
-    undoDiv.appendChild(undoBtn)
-    ejContainer.appendChild(undoDiv)
   }
 
   function renderVF(ej) {
@@ -692,13 +709,30 @@
     var selectedLeftEl = null
     var wrongPairings = 0
 
+    var instr = document.createElement("p")
+    instr.style.cssText = "font-weight:600;margin-bottom:0.75rem;text-align:center;color:var(--muted)"
+    instr.textContent = "Toca un elemento de cada columna para emparejarlos"
+    ejContainer.appendChild(instr)
+
     var grid = document.createElement("div")
-    grid.style.cssText = "display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:1rem"
+    grid.style.cssText = "display:grid;grid-template-columns:1fr 40px 1fr;gap:0.75rem;margin-top:1rem;align-items:start"
 
     var leftCol = document.createElement("div")
     leftCol.style.cssText = "display:flex;flex-direction:column;gap:0.5rem"
+    var midCol = document.createElement("div")
+    midCol.style.cssText = "display:flex;flex-direction:column;gap:0.5rem;padding-top:2.5rem;align-items:center"
     var rightCol = document.createElement("div")
     rightCol.style.cssText = "display:flex;flex-direction:column;gap:0.5rem"
+
+    var leftHeader = document.createElement("div")
+    leftHeader.style.cssText = "font-weight:700;font-size:0.85rem;text-transform:uppercase;letter-spacing:0.05em;color:var(--brand);text-align:center;padding-bottom:0.25rem"
+    leftHeader.textContent = "Concepto"
+    leftCol.appendChild(leftHeader)
+
+    var rightHeader = document.createElement("div")
+    rightHeader.style.cssText = "font-weight:700;font-size:0.85rem;text-transform:uppercase;letter-spacing:0.05em;color:var(--success);text-align:center;padding-bottom:0.25rem"
+    rightHeader.textContent = "Descripci\u00f3n"
+    rightCol.appendChild(rightHeader)
 
     var leftEls = []
     var rightEls = []
@@ -706,22 +740,29 @@
     for (var i = 0; i < shuffledLeft.length; i++) {
       var item = shuffledLeft[i]
       var el = document.createElement("button")
-      el.className = "card plan-card"
       el.textContent = item.text
-      el.style.cssText = "padding:0.6rem 1rem;text-align:center;cursor:pointer;font-size:0.9rem"
+      el.style.cssText = "background:rgba(124,92,255,0.15);border:2px solid var(--brand);color:var(--text);padding:0.9rem 1.2rem;border-radius:var(--radius-lg);font-size:0.95rem;min-height:44px;cursor:pointer;transition:all 0.2s"
+      el.style.setProperty("--i", i)
+      el.style.animationDelay = "calc(var(--i) * 60ms)"
       el.setAttribute("data-pair-idx", item.pairIdx)
       el.addEventListener("click", function (el, item) {
         return function () {
           if (pairedLeft[item.pairIdx]) return
           if (answering) return
-          if (selectedLeftEl) {
-            selectedLeftEl.style.borderColor = ""
-            selectedLeftEl.style.borderWidth = ""
+          if (selectedLeftEl && selectedLeftEl !== el) {
+            selectedLeftEl.style.background = "rgba(124,92,255,0.15)"
+            selectedLeftEl.style.color = "var(--text)"
+            selectedLeftEl.style.borderColor = "var(--brand)"
+            selectedLeftEl.style.transform = ""
+            selectedLeftEl.style.boxShadow = ""
           }
           selectedLeft = item
           selectedLeftEl = el
-          el.style.borderColor = "var(--accent)"
-          el.style.borderWidth = "2px"
+          el.style.background = "var(--brand)"
+          el.style.color = "#fff"
+          el.style.borderColor = "var(--brand)"
+          el.style.transform = "scale(1.03)"
+          el.style.boxShadow = "0 4px 12px rgba(124,92,255,0.3)"
         }
       }(el, item))
       leftCol.appendChild(el)
@@ -731,9 +772,10 @@
     for (var j = 0; j < shuffledRight.length; j++) {
       var item2 = shuffledRight[j]
       var el2 = document.createElement("button")
-      el2.className = "card plan-card"
       el2.textContent = item2.text
-      el2.style.cssText = "padding:0.6rem 1rem;text-align:center;cursor:pointer;font-size:0.9rem"
+      el2.style.cssText = "background:rgba(34,197,94,0.15);border:2px solid var(--success);color:var(--text);padding:0.9rem 1.2rem;border-radius:var(--radius-lg);font-size:0.95rem;min-height:44px;cursor:pointer;transition:all 0.2s"
+      el2.style.setProperty("--i", j)
+      el2.style.animationDelay = "calc(var(--i) * 60ms)"
       el2.setAttribute("data-pair-idx", item2.pairIdx)
       el2.addEventListener("click", function (el2, item2) {
         return function () {
@@ -743,16 +785,27 @@
           if (selectedLeft.pairIdx === item2.pairIdx) {
             pairedLeft[item2.pairIdx] = true
             pairedRight[item2.pairIdx] = true
-            selectedLeftEl.style.borderColor = "var(--green)"
-            selectedLeftEl.style.borderWidth = "2px"
-            selectedLeftEl.style.background = "var(--green-light)"
+            selectedLeftEl.style.background = "var(--success)"
+            selectedLeftEl.style.color = "#fff"
+            selectedLeftEl.style.borderColor = "var(--success)"
+            selectedLeftEl.style.opacity = "0.9"
             selectedLeftEl.style.cursor = "default"
-            el2.style.borderColor = "var(--green)"
-            el2.style.borderWidth = "2px"
-            el2.style.background = "var(--green-light)"
+            selectedLeftEl.style.transform = ""
+            selectedLeftEl.style.boxShadow = ""
+            el2.style.background = "var(--success)"
+            el2.style.color = "#fff"
+            el2.style.borderColor = "var(--success)"
+            el2.style.opacity = "0.9"
             el2.style.cursor = "default"
+            el2.style.transform = ""
+            el2.style.boxShadow = ""
             selectedLeft = null
             selectedLeftEl = null
+
+            var arrow = document.createElement("div")
+            arrow.textContent = "\u2194"
+            arrow.style.cssText = "font-size:1.2rem;color:var(--success);font-weight:700"
+            midCol.appendChild(arrow)
 
             var allPaired = true
             for (var k = 0; k < pairs.length; k++) {
@@ -764,23 +817,31 @@
                 showFeedback("✔ Has completado todos los pares.", true)
                 advanceAfter(1200, false)
               } else {
-                showFeedback("✔ ¡Todos los pares correctos!", true)
+                showFeedback("✔ \u00a1Todos los pares correctos!", true)
                 advanceAfter(1200, true)
               }
             }
           } else {
             wrongPairings++
+            showFeedback("\u2757 Esos no van juntos", false)
             el2.style.borderColor = "var(--red)"
-            el2.style.borderWidth = "2px"
             selectedLeftEl.style.borderColor = "var(--red)"
-            selectedLeftEl.style.borderWidth = "2px"
-            showFeedback("❌ Esa combinación no es correcta. Sigue intentando.", false)
+            selectedLeftEl.style.transform = ""
+            selectedLeftEl.style.boxShadow = ""
+            el2.style.animation = "none"
+            el2.offsetHeight
+            el2.style.animation = "shake 0.4s ease"
+            selectedLeftEl.style.animation = "none"
+            selectedLeftEl.offsetHeight
+            selectedLeftEl.style.animation = "shake 0.4s ease"
             setTimeout(function () {
               el2.style.borderColor = ""
-              el2.style.borderWidth = ""
+              el2.style.background = "rgba(34,197,94,0.15)"
+              el2.style.animation = ""
               if (selectedLeftEl) {
                 selectedLeftEl.style.borderColor = ""
-                selectedLeftEl.style.borderWidth = ""
+                selectedLeftEl.style.background = "rgba(124,92,255,0.15)"
+                selectedLeftEl.style.animation = ""
               }
               selectedLeft = null
               selectedLeftEl = null
@@ -794,6 +855,7 @@
     }
 
     grid.appendChild(leftCol)
+    grid.appendChild(midCol)
     grid.appendChild(rightCol)
     ejContainer.appendChild(grid)
   }
@@ -805,15 +867,14 @@
     var sequence = []
 
     var instr = document.createElement("p")
-    instr.style.fontWeight = "600"
-    instr.style.marginBottom = "0.75rem"
-    instr.textContent = ej.instruccion || "Acomoda en el orden correcto:"
+    instr.style.cssText = "font-weight:600;margin-bottom:0.75rem;color:var(--muted)"
+    instr.textContent = "Toca los pasos en el orden correcto"
     ejContainer.appendChild(instr)
 
     var seqDiv = document.createElement("div")
-    seqDiv.style.cssText = "display:flex;flex-wrap:wrap;gap:0.5rem;min-height:3rem;padding:0.75rem;border:2px dashed var(--muted);border-radius:var(--radius);margin-bottom:1rem;align-items:center"
+    seqDiv.style.cssText = "background:rgba(124,92,255,0.05);border:2px dashed var(--brand);padding:1rem;min-height:120px;border-radius:var(--radius-lg);margin-bottom:1rem;display:flex;flex-wrap:wrap;gap:0.5rem;align-items:center"
     var placeholder = document.createElement("span")
-    placeholder.textContent = "Haz clic en los chips para construir la secuencia..."
+    placeholder.textContent = "Toca los chips para armar la secuencia..."
     placeholder.style.color = "var(--muted)"
     placeholder.style.fontSize = "0.85rem"
     seqDiv.appendChild(placeholder)
@@ -827,18 +888,25 @@
       seqDiv.innerHTML = ""
       if (sequence.length === 0) {
         var ph = document.createElement("span")
-        ph.textContent = "Haz clic en los chips para construir la secuencia..."
+        ph.textContent = "Toca los chips para armar la secuencia..."
         ph.style.color = "var(--muted)"
         ph.style.fontSize = "0.85rem"
         seqDiv.appendChild(ph)
       } else {
         for (var s = 0; s < sequence.length; s++) {
           var tag = document.createElement("span")
-          tag.textContent = sequence[s]
-          tag.style.cssText = "padding:0.3rem 0.7rem;background:var(--accent-light, rgba(0,200,150,0.1));border:1px solid var(--accent);border-radius:var(--radius-sm);font-family:var(--mono);font-size:0.85rem"
+          tag.textContent = (s + 1) + ". " + sequence[s]
+          tag.style.cssText = "background:var(--brand);color:#fff;border:none;padding:0.5rem 1rem;border-radius:var(--radius);font-weight:600"
           seqDiv.appendChild(tag)
         }
       }
+      var undoSpan = document.createElement("span")
+      undoSpan.textContent = "\u21a9 Deshacer"
+      undoSpan.style.cssText = "color:var(--brand);cursor:pointer;font-size:0.85rem;font-weight:600;padding:0.5rem 0.75rem;border-radius:var(--radius);transition:background 0.2s"
+      undoSpan.addEventListener("mouseenter", function () { undoSpan.style.background = "rgba(124,92,255,0.1)" })
+      undoSpan.addEventListener("mouseleave", function () { undoSpan.style.background = "" })
+      undoSpan.addEventListener("click", undoOrdenar)
+      seqDiv.appendChild(undoSpan)
     }
 
     function checkOrdenar() {
@@ -853,14 +921,38 @@
         }
       }
       if (correct) {
-        seqDiv.style.borderColor = "var(--green)"
+        seqDiv.style.borderColor = "var(--success)"
+        seqDiv.style.background = "rgba(34,197,94,0.05)"
         showFeedback("✔ ¡Orden correcto!", true)
         advanceAfter(1200, true)
       } else {
         seqDiv.style.borderColor = "var(--red)"
+        seqDiv.style.background = "rgba(239,68,68,0.05)"
+        seqDiv.style.animation = "none"
+        seqDiv.offsetHeight
+        seqDiv.style.animation = "shake 0.4s ease"
         var correctStr = correctOrder.join(" → ")
         showFeedback("❌ Incorrecto. El orden correcto es: " + correctStr, false)
-        advanceAfter(2000, false)
+        var savedSeq = sequence.slice()
+        setTimeout(function () {
+          sequence.length = 0
+          for (var r = 0; r < savedSeq.length; r++) {
+            for (var r2 = 0; r2 < chipEls.length; r2++) {
+              if (chipEls[r2].getAttribute("data-word") === savedSeq[r] && chipEls[r2].style.display === "none") {
+                chipEls[r2].style.display = ""
+                chipEls[r2].style.opacity = ""
+                chipEls[r2].style.pointerEvents = ""
+                break
+              }
+            }
+          }
+          seqDiv.style.borderColor = "var(--brand)"
+          seqDiv.style.background = "rgba(124,92,255,0.05)"
+          seqDiv.style.animation = ""
+          rebuildSequence()
+          answering = false
+          ejFeedback.innerHTML = ""
+        }, 1200)
       }
     }
 
@@ -896,26 +988,19 @@
       chip.textContent = shuffled[w]
       chip.className = "chip"
       chip.setAttribute("data-word", shuffled[w])
-      chip.style.cssText = "padding:0.4rem 0.8rem;border:1px solid var(--accent);border-radius:var(--radius-sm);background:var(--bg-card);cursor:pointer;font-family:var(--mono);font-size:0.9rem"
-      chip.addEventListener("click", function (word) {
+      chip.style.cssText = "background:var(--bg-card-hi);border:1px solid var(--line);padding:0.7rem 1.1rem;border-radius:var(--radius);font-weight:600;cursor:pointer;transition:all 0.2s;min-height:44px;font-size:0.95rem"
+      chip.addEventListener("mouseenter", function (el) { return function () { if (el.style.display !== "none") { el.style.borderColor = "var(--brand)"; el.style.transform = "translateY(-2px)"; el.style.boxShadow = "0 4px 12px rgba(124,92,255,0.2)" } } }(chip))
+      chip.addEventListener("mouseleave", function (el) { return function () { el.style.borderColor = ""; el.style.transform = ""; el.style.boxShadow = "" } }(chip))
+      chip.addEventListener("click", function (word, el) {
         return function () {
           if (answering) return
           addToSequence(word)
         }
-      }(shuffled[w]))
+      }(shuffled[w], chip))
       chipsDiv.appendChild(chip)
       chipEls.push(chip)
     }
     ejContainer.appendChild(chipsDiv)
-
-    var undoDiv2 = document.createElement("div")
-    undoDiv2.style.marginTop = "0.75rem"
-    var undoBtn2 = document.createElement("button")
-    undoBtn2.className = "btn btn-ghost"
-    undoBtn2.textContent = "Deshacer"
-    undoBtn2.addEventListener("click", undoOrdenar)
-    undoDiv2.appendChild(undoBtn2)
-    ejContainer.appendChild(undoDiv2)
   }
 
   function renderQuehace(ej) {
@@ -971,16 +1056,40 @@
     if (completadaSection) completadaSection.style.display = "block"
     completadaStats.textContent = "Aciertos a la primera: " + firstTryCorrectCount + "/" + totalExercises
 
-    var xpGain = totalExercises * 10
+    var cfg2 = window.DEV_SYSTEM_CONFIG || {}
+    var xpPerLesson = cfg2.xpPerLesson || 50
+    var xpPerFirstTry = cfg2.xpPerFirstTry || 10
+    var xpGain = xpPerLesson + (firstTryCorrectCount * xpPerFirstTry)
     var xpChip = document.getElementById("completada-xp-chip")
     if (xpChip) xpChip.textContent = "⭐ +" + xpGain + " XP"
 
-    var headerXp = document.getElementById("leccion-xp-chip")
-    if (headerXp) {
-      var current = parseInt(headerXp.textContent.match(/\d+/) || 0, 10)
-      headerXp.textContent = "⭐ " + (current + xpGain) + " XP"
-      headerXp.classList.add("xp-chip-pop")
-      setTimeout(function () { headerXp.classList.remove("xp-chip-pop") }, 500)
+    if (cloudEnabled) {
+      window.DevSystemCloud.setLessonProgress(email, lessonId, true).catch(function () {})
+      window.DevSystemCloud.saveLessonStats(email, lessonId, firstTryCorrectCount, totalExercises).then(function () {
+        window.DevSystemCloud.getAllLessonStats(email).then(function (allStats) {
+          var total = 0
+          for (var st = 0; st < allStats.length; st++) {
+            total += xpPerLesson + (allStats[st].first_try_correct * xpPerFirstTry)
+          }
+          localStorage.setItem("devsystem_xp_" + email, total)
+          var headerXp = document.getElementById("leccion-xp-chip")
+          if (headerXp) {
+            headerXp.textContent = "⭐ " + total + " XP"
+            headerXp.classList.add("xp-chip-pop")
+            setTimeout(function () { headerXp.classList.remove("xp-chip-pop") }, 500)
+          }
+        })
+      })
+    } else {
+      var prevTotal = parseInt(localStorage.getItem("devsystem_xp_" + email) || "0", 10)
+      var newTotal = prevTotal + xpGain
+      localStorage.setItem("devsystem_xp_" + email, newTotal)
+      var headerXp = document.getElementById("leccion-xp-chip")
+      if (headerXp) {
+        headerXp.textContent = "⭐ " + newTotal + " XP"
+        headerXp.classList.add("xp-chip-pop")
+        setTimeout(function () { headerXp.classList.remove("xp-chip-pop") }, 500)
+      }
     }
 
     var confettiContainer = document.getElementById("confetti-container")
@@ -992,10 +1101,6 @@
         piece.style.cssText = "left:" + Math.random() * 100 + "%;animation-delay:" + (Math.random() * 2) + "s;background:" + colors[Math.floor(Math.random() * colors.length)]
         confettiContainer.appendChild(piece)
       }
-    }
-
-    if (cloudEnabled) {
-      window.DevSystemCloud.setLessonProgress(email, lessonId, true).catch(function () {})
     }
 
     var nextId = findNextLesson(lessonId)

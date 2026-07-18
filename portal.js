@@ -140,10 +140,44 @@
     if (progressPercent) progressPercent.textContent = summary.percent + "%";
     if (progressFill) progressFill.style.width = summary.percent + "%";
 
+    var cfg2 = window.DEV_SYSTEM_CONFIG || {};
+    var xpPerLesson = cfg2.xpPerLesson || 50;
+    var xpPerFirstTry = cfg2.xpPerFirstTry || 10;
+
     var rachaEl = document.getElementById("stat-racha");
     var xpEl = document.getElementById("stat-xp");
-    if (rachaEl) rachaEl.textContent = "0";
-    if (xpEl) xpEl.textContent = (summary.done * 10) || "0";
+
+    if (cloudMode && window.DevSystemCloud.getAllLessonStats) {
+      window.DevSystemCloud.getStreakDays(user.email).then(function (streak) {
+        if (rachaEl) {
+          rachaEl.textContent = streak;
+          var parent = rachaEl.closest(".stat-chip");
+          if (parent) {
+            if (streak >= 1) { parent.style.opacity = "1"; }
+            else { parent.style.opacity = "0.6"; }
+          }
+          rachaEl.animate([{transform:"scale(1)"},{transform:"scale(1.15)"},{transform:"scale(1)"}], {duration:350,easing:"ease-out"});
+        }
+      });
+      window.DevSystemCloud.getAllLessonStats(user.email).then(function (allStats) {
+        var totalXp = 0;
+        for (var st = 0; st < allStats.length; st++) {
+          totalXp += xpPerLesson + (allStats[st].first_try_correct * xpPerFirstTry);
+        }
+        localStorage.setItem("devsystem_xp_" + user.email, totalXp);
+        if (xpEl) {
+          xpEl.textContent = totalXp;
+          xpEl.animate([{transform:"scale(1)"},{transform:"scale(1.15)"},{transform:"scale(1)"}], {duration:350,easing:"ease-out"});
+        }
+      });
+    } else {
+      var localXp = parseInt(localStorage.getItem("devsystem_xp_" + user.email) || "0", 10);
+      if (xpEl) {
+        xpEl.textContent = localXp;
+        xpEl.animate([{transform:"scale(1)"},{transform:"scale(1.15)"},{transform:"scale(1)"}], {duration:350,easing:"ease-out"});
+      }
+      if (rachaEl) rachaEl.textContent = "0";
+    }
 
     if (window.DevSystemState.isEligibleCertificate(user.email)) {
       certificateStatus.textContent =
@@ -159,7 +193,20 @@
     var dayDesc = document.getElementById("day-lesson-desc");
     if (!dayTitle) return;
     var materiaKeys = leccionesData.m1 && Object.keys(leccionesData.m1.materias) || [];
-    var progress = cloudMode ? {} : window.DevSystemState.getProgress(user.email);
+    if (cloudMode && window.DevSystemCloud.getAllLessonStats) {
+      window.DevSystemCloud.getProgressMap(user.email).then(function (map) {
+        renderDayCardWithProgress(map || {});
+      });
+      return;
+    }
+    renderDayCardWithProgress(cloudMode ? {} : window.DevSystemState.getProgress(user.email));
+  }
+
+  function renderDayCardWithProgress(progress) {
+    var dayTitle = document.getElementById("day-lesson-title");
+    var dayDesc = document.getElementById("day-lesson-desc");
+    if (!dayTitle) return;
+    var materiaKeys = leccionesData.m1 && Object.keys(leccionesData.m1.materias) || [];
     var nextLesson = null;
     for (var mi = 0; mi < materiaKeys.length && !nextLesson; mi++) {
       var mk = materiaKeys[mi];

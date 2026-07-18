@@ -191,6 +191,67 @@
     return { ok: true };
   }
 
+  async function saveLessonStats(email, lessonId, firstTryCorrect, totalExercises) {
+    var c = getClient();
+    if (!c) return { ok: false, message: "Cloud no configurado." };
+    var response = await c.from("lesson_stats").upsert(
+      {
+        email: String(email || "").toLowerCase(),
+        lesson_id: lessonId,
+        first_try_correct: Number(firstTryCorrect),
+        total_exercises: Number(totalExercises),
+        completed_at: new Date().toISOString(),
+      },
+      { onConflict: "email,lesson_id" }
+    );
+    if (response.error) return { ok: false, message: response.error.message };
+    return { ok: true };
+  }
+
+  async function getAllLessonStats(email) {
+    var c = getClient();
+    if (!c) return [];
+    var response = await c
+      .from("lesson_stats")
+      .select("*")
+      .eq("email", String(email || "").toLowerCase());
+    if (response.error || !response.data) return [];
+    return response.data;
+  }
+
+  async function getStreakDays(email) {
+    var c = getClient();
+    if (!c) return 0;
+    var response = await c.rpc("get_streak_days", {
+      p_email: String(email || "").toLowerCase(),
+    });
+    if (!response.error && typeof response.data === "number") return response.data;
+    var fallback = await c
+      .from("lesson_stats")
+      .select("completed_at")
+      .eq("email", String(email || "").toLowerCase())
+      .order("completed_at", { ascending: false });
+    if (fallback.error || !fallback.data || fallback.data.length === 0) return 0;
+    var dates = [];
+    for (var d = 0; d < fallback.data.length; d++) {
+      var dt = new Date(fallback.data[d].completed_at);
+      var dateStr = dt.toISOString().slice(0, 10);
+      if (dates.indexOf(dateStr) === -1) dates.push(dateStr);
+    }
+    dates.sort().reverse();
+    var streak = 0;
+    var today = new Date();
+    var todayStr = today.toISOString().slice(0, 10);
+    var yesterdayStr = new Date(today.getTime() - 86400000).toISOString().slice(0, 10);
+    var expected = dates[0] === todayStr ? todayStr : dates[0] === yesterdayStr ? yesterdayStr : null;
+    if (!expected) return 0;
+    for (var s = 0; s < dates.length; s++) {
+      if (dates[s] === expected) { streak++; expected = new Date(new Date(expected).getTime() - 86400000).toISOString().slice(0, 10); }
+      else break;
+    }
+    return streak;
+  }
+
   async function uploadDocumentFile(email, docType, file) {
     var c = getClient();
     if (!c) return { ok: false, message: "Cloud no configurado." };
@@ -309,5 +370,8 @@
     getGlossaryTerms: getGlossaryTerms,
     setGlossaryReviewed: setGlossaryReviewed,
     deleteGlossaryTerm: deleteGlossaryTerm,
+    saveLessonStats: saveLessonStats,
+    getAllLessonStats: getAllLessonStats,
+    getStreakDays: getStreakDays,
   };
 })();

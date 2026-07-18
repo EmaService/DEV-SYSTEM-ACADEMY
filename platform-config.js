@@ -3,6 +3,8 @@ window.DEV_SYSTEM_CONFIG = {
   mercadoPagoPublicKey: "APP_USR-9e1e6b5b-efcd-4187-8808-efdbf1b52724",
   monthlyPrice: 7000,
   preferredPrice: 7000,
+  xpPerLesson: 50,
+  xpPerFirstTry: 10,
   monthlyPricing: {
     "1": 7900,  "2": 9100,  "3": 10500, "4": 11900,
     "5": 13100, "6": 14500, "7": 15900, "8": 17100,

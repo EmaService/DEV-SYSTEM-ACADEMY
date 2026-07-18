@@ -150,10 +150,18 @@ p { color: var(--muted); }
 .hero-section { padding: 2rem 0 1rem; }
 .hero-section h1 { font-family: var(--font-display); font-size: clamp(1.8rem,5vw,2.6rem); font-weight: 800; }
 .stat-chips { display: flex; gap: 0.75rem; margin-top: 1.2rem; flex-wrap: wrap; }
-.stat-chip { display: flex; align-items: center; gap: 0.4rem; background: rgba(255,255,255,0.04); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 0.5rem 1rem; font-size: 0.85rem; transition: border-color 0.2s; }
-.stat-chip:hover { border-color: var(--line-hi); }
-.stat-chip strong { font-family: var(--font-display); font-size: 1.1rem; }
-.stat-chip small { color: var(--muted); }
+.stat-chip { display: flex; align-items: center; gap: 0.7rem; padding: 1rem 1.3rem; border-radius: var(--radius-lg); font-size: 0.85rem; transition: all 0.2s; cursor: default; }
+.stat-chip:hover { transform: translateY(-2px); }
+.stat-chip .chip-emoji { font-size: 1.8rem; line-height: 1; }
+.stat-chip .chip-content { display: flex; flex-direction: column; }
+.stat-chip .chip-number { font-family: var(--font-display); font-size: clamp(1.4rem,4vw,2rem); font-weight: 800; }
+.stat-chip .chip-label { font-size: 0.72rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; }
+.stat-chip.chip-racha { background: linear-gradient(135deg, rgba(245,158,11,0.15) 0%, rgba(245,158,11,0.05) 100%); border: 1px solid rgba(245,158,11,0.4); }
+.stat-chip.chip-racha .chip-number { color: var(--warn); }
+.stat-chip.chip-xp { background: linear-gradient(135deg, rgba(234,179,8,0.15) 0%, rgba(234,179,8,0.05) 100%); border: 1px solid rgba(234,179,8,0.4); }
+.stat-chip.chip-xp .chip-number { color: var(--xp); }
+.stat-chip.chip-nivel { background: linear-gradient(135deg, rgba(124,92,255,0.15) 0%, rgba(124,92,255,0.05) 100%); border: 1px solid rgba(124,92,255,0.4); }
+.stat-chip.chip-nivel .chip-number { color: var(--brand-2); }
 .card-highlighted { background: var(--bg-card-hi); box-shadow: var(--shadow-glow); }
 
 /* Roadmap */
@@ -210,6 +218,7 @@ details[open] .collapse-icon { transform: rotate(180deg); }
 .xp-chip-lg { font-size: 1rem; padding: 0.4rem 1rem; }
 .xp-chip-pop { animation: xp-pop 0.4s ease; }
 @keyframes xp-pop { 0% { transform: scale(1); } 50% { transform: scale(1.25); } 100% { transform: scale(1); } }
+@keyframes shake { 0%,100% { transform: translateX(0); } 20% { transform: translateX(-6px); } 40% { transform: translateX(6px); } 60% { transform: translateX(-6px); } 80% { transform: translateX(6px); } }
 
 /* Reading carousel */
 .lectura-carousel { padding: 0 0 5rem; }
@@ -279,9 +288,23 @@ details[open] .collapse-icon { transform: rotate(180deg); }
 /* Confetti */
 .confetti-container { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
 .confetti-piece { position: absolute; top: -10px; width: 8px; height: 8px; border-radius: 2px; animation: confetti-fall 2.5s ease-out forwards; }
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-6px); }
+  40% { transform: translateX(6px); }
+  60% { transform: translateX(-4px); }
+  80% { transform: translateX(4px); }
+}
+
 @keyframes confetti-fall {
   0% { transform: translateY(0) rotate(0deg); opacity: 1; }
   100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+}
+
+button, a.btn, .stat-chip, .chip-word, .ej-option { will-change: transform; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition: none !important; animation: none !important; }
 }
 
 /* Responsive */
