@@ -5,6 +5,12 @@ window.DEV_SYSTEM_CONFIG = {
   preferredPrice: 7000,
   xpPerLesson: 50,
   xpPerFirstTry: 10,
+  monthTitles: {
+    1: "Cómo funciona el mundo digital", 2: "Git, GitHub y el trabajo real",
+    3: "Frontend", 4: "Backend y bases de datos", 5: "LLMs y agentes",
+    6: "Herramientas IA", 7: "MCP e integraciones", 8: "Testing y producto",
+    9: "Cloud y deploy", 10: "Datos y seguridad", 11: "Automatización", 12: "SaaS final",
+  },
   monthlyPricing: {
     "1": 7900,  "2": 9100,  "3": 10500, "4": 11900,
     "5": 13100, "6": 14500, "7": 15900, "8": 17100,

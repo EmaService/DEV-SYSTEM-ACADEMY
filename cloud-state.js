@@ -349,6 +349,46 @@
     return map;
   }
 
+  async function saveMonthExam(email, monthId, score, passed) {
+    var c = getClient();
+    if (!c) return { ok: false, message: "Cloud no configurado." };
+    var response = await c.from("month_exams").upsert(
+      {
+        email: String(email || "").toLowerCase(),
+        month_id: Number(monthId),
+        score: Number(score),
+        passed: Boolean(passed),
+        taken_at: new Date().toISOString(),
+      },
+      { onConflict: "email,month_id" }
+    );
+    if (response.error) return { ok: false, message: response.error.message };
+    return { ok: true };
+  }
+
+  async function getMonthExams(email) {
+    var c = getClient();
+    if (!c) return [];
+    var response = await c
+      .from("month_exams")
+      .select("*")
+      .eq("email", String(email || "").toLowerCase());
+    if (response.error || !response.data) return [];
+    return response.data;
+  }
+
+  async function getPaymentDates(email) {
+    var c = getClient();
+    if (!c) return [];
+    var response = await c
+      .from("monthly_payments")
+      .select("*")
+      .eq("email", String(email || "").toLowerCase())
+      .order("month_id", { ascending: true });
+    if (response.error || !response.data) return [];
+    return response.data;
+  }
+
   async function setMatricula(email, matricula) {
     var c = getClient();
     if (!c) return { ok: false, message: "Cloud no configurado." };
@@ -405,5 +445,8 @@
     getStreakDays: getStreakDays,
     setMatricula: setMatricula,
     getDocumentPhotoUrl: getDocumentPhotoUrl,
+    saveMonthExam: saveMonthExam,
+    getMonthExams: getMonthExams,
+    getPaymentDates: getPaymentDates,
   };
 })();

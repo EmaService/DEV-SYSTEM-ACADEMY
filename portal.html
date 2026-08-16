@@ -63,6 +63,7 @@
       <button data-tab="plan" aria-label="Plan de estudios">📚 Plan de estudios</button>
       <button data-tab="aula" aria-label="Aula">🧠 Aula</button>
       <button data-tab="examenes" aria-label="Exámenes">📝 Exámenes</button>
+      <button data-tab="pagos" aria-label="Pagos">💳 Pagos</button>
       <button data-tab="marcadores" aria-label="Marcadores">📖 Marcadores</button>
       <button data-tab="expediente" aria-label="Expediente">🎓 Expediente</button>
     </nav>
@@ -72,6 +73,7 @@
 
         <!-- ═══ INICIO ═══ -->
         <section id="inicio" class="tab-content active">
+          <div id="pago-banner" style="display:none;margin-bottom:1rem"></div>
           <div class="hero-section">
             <h1>Hola, <span id="welcome-name">Alumno</span> 👋</h1>
             <p id="welcome-text" class="lead">Sigue tu plan por fases y marca lecciones completadas.</p>
@@ -277,6 +279,34 @@
             <div class="card" style="text-align:center"><p class="small" style="color:var(--muted)">📅 Mes 11 · Próximamente</p></div>
             <div class="card" style="text-align:center"><p class="small" style="color:var(--muted)">📅 Mes 12 · Próximamente</p></div>
           </div>
+        </section>
+
+        <!-- ═══ PAGOS ═══ -->
+        <section id="pagos" class="tab-content">
+          <div class="card" id="pago-estado-card">
+            <p class="eyebrow">Estado de cuenta</p>
+            <div id="pago-estado-contenido"></div>
+          </div>
+
+          <div class="card" id="pago-pagar-card" style="margin-top:1rem">
+            <p class="eyebrow">Pagar mensualidad</p>
+            <div id="pago-pagar-contenido"></div>
+          </div>
+
+          <section style="margin-top:1rem">
+            <h2>Historial de pagos</h2>
+            <div style="overflow-x:auto">
+              <table style="width:100%;border-collapse:collapse;font-size:0.85rem">
+                <thead><tr style="border-bottom:1px solid var(--line);color:var(--muted)"><th style="text-align:left;padding:0.5rem">Mes</th><th style="text-align:left;padding:0.5rem">Concepto</th><th style="text-align:right;padding:0.5rem">Monto</th><th style="text-align:left;padding:0.5rem">Fecha de pago</th><th style="text-align:right;padding:0.5rem">Estatus</th></tr></thead>
+                <tbody id="pago-historial-body"></tbody>
+              </table>
+            </div>
+          </section>
+
+          <section style="margin-top:1rem">
+            <h2>Calendario de pagos</h2>
+            <div id="pago-calendario" style="display:grid;grid-template-columns:repeat(4,1fr);gap:0.5rem;margin-top:0.5rem"></div>
+          </section>
         </section>
 
         <!-- ═══ MARCADORES ═══ -->

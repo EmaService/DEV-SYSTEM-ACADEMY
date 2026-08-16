@@ -116,6 +116,135 @@
     return "$" + String(num).replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " MXN";
   }
 
+  function getMonthTitle(m) {
+    var cfgTitles = (window.DEV_SYSTEM_CONFIG || {}).monthTitles || {};
+    return cfgTitles[m] || MONTH_TITLES[m] || "Mes " + m;
+  }
+
+  function addMonthsSafe(baseDate, n) {
+    var d = new Date(baseDate.getTime());
+    var day = d.getDate();
+    d.setDate(1);
+    d.setMonth(d.getMonth() + n);
+    var lastDay = new Date(d.getFullYear(), d.getMonth() + 1, 0).getDate();
+    d.setDate(Math.min(day, lastDay));
+    return d;
+  }
+
+  function getLocalPaymentDates(email) {
+    var out = [];
+    try {
+      var raw = localStorage.getItem("devsystem_store_v3");
+      var store = raw ? JSON.parse(raw) : null;
+      var payments = (store && store.payments) || [];
+      for (var i = 0; i < payments.length; i++) {
+        var p = payments[i];
+        if (p && String(p.email || "").toLowerCase() === String(email || "").toLowerCase() && p.status === "paid") {
+          out.push({
+            month_id: Number(p.monthId),
+            created_at: p.createdAt || null,
+            price_label: p.amountLabel || "",
+          });
+        }
+      }
+      out.sort(function (a, b) { return a.month_id - b.month_id; });
+    } catch (e) { }
+    return out;
+  }
+
+  function getPaymentDatesForUser(email) {
+    if (cloudMode) {
+      return window.DevSystemCloud.getPaymentDates(email).catch(function () { return []; });
+    }
+    return Promise.resolve(getLocalPaymentDates(email));
+  }
+
+  function getActiveMonth(paidMonths, progress) {
+    var paid = paidMonths || [];
+    progress = progress || {};
+    if (paid.length === 0) return 1;
+    var active = paid[paid.length - 1];
+    for (var i = paid.length - 1; i >= 0; i--) {
+      var m = paid[i];
+      var data = leccionesData["m" + m];
+      if (!data || !data.materias) continue;
+      var keys = Object.keys(data.materias);
+      var hasPending = false;
+      for (var ki = 0; ki < keys.length && !hasPending; ki++) {
+        var mat = data.materias[keys[ki]];
+        for (var li = 0; li < mat.lecciones.length; li++) {
+          var l = mat.lecciones[li];
+          if (!l.proximamente && !progress[l.id]) { hasPending = true; break; }
+        }
+      }
+      if (hasPending) { active = m; break; }
+    }
+    return active;
+  }
+
+  function getMonthState(m, progress, selectedMonth) {
+    var data = leccionesData["m" + m];
+    var total = 0;
+    var done = 0;
+    if (data && data.materias) {
+      var keys = Object.keys(data.materias);
+      for (var ki = 0; ki < keys.length; ki++) {
+        var mat = data.materias[keys[ki]];
+        for (var li = 0; li < mat.lecciones.length; li++) {
+          var l = mat.lecciones[li];
+          if (!l.proximamente) { total++; if (progress[l.id]) done++; }
+        }
+      }
+    }
+    if (total > 0 && done >= total) {
+      return selectedMonth === m ? "Repaso" : "Completado ✓";
+    }
+    return "En curso";
+  }
+
+  function getMonthlyMonto(monthNum) {
+    var cfgNow = window.DEV_SYSTEM_CONFIG || {};
+    var pricing = cfgNow.monthlyPricing || {};
+    var base = pricing[String(monthNum)] || 7000;
+    return examPassed ? (cfgNow.preferredPrice || 7000) : base;
+  }
+
+  function getPagoEstado(payments) {
+    var monthsPaid = payments && payments.length ? payments.length : 0;
+    var proximoMes = monthsPaid + 1;
+    if (proximoMes > 12) proximoMes = 12;
+    var baseDate = new Date();
+    if (payments && payments.length > 0) {
+      var first = payments[0];
+      var firstRaw = first.created_at || first.payment_date || null;
+      if (firstRaw) baseDate = new Date(firstRaw);
+    } else if (enrollment && enrollment.created_at) {
+      baseDate = new Date(enrollment.created_at);
+    }
+    var diaCorte = baseDate.getDate();
+    var fechaVencimiento = addMonthsSafe(baseDate, monthsPaid);
+    var now = new Date();
+    var diasRestantes = Math.round((fechaVencimiento - now) / 86400000);
+    var estado = "al_corriente";
+    if (monthsPaid >= 12) {
+      estado = "al_corriente";
+    } else if (diasRestantes < 0) {
+      estado = "vencido";
+    } else if (diasRestantes <= 5) {
+      estado = "por_vencer";
+    }
+    return {
+      estado: estado,
+      mesesPagados: monthsPaid,
+      proximoMes: proximoMes,
+      baseDate: baseDate,
+      diaCorte: diaCorte,
+      fechaVencimiento: fechaVencimiento,
+      diasRestantes: diasRestantes,
+      monto: getMonthlyMonto(proximoMes),
+    };
+  }
+
   function renderHeader() {
     welcomeName.textContent = user.name;
     var statNivel = document.getElementById("stat-nivel");
@@ -205,27 +334,33 @@
 
   function renderDayCard() {
     var dayTitle = document.getElementById("day-lesson-title");
-    var dayDesc = document.getElementById("day-lesson-desc");
     if (!dayTitle) return;
-    var materiaKeys = leccionesData.m1 && Object.keys(leccionesData.m1.materias) || [];
-    if (cloudMode && window.DevSystemCloud.getAllLessonStats) {
-      window.DevSystemCloud.getProgressMap(user.email)
-        .then(function (map) { renderDayCardWithProgress(map || {}); })
-        .catch(function () { renderDayCardWithProgress({}); });
+    var build = function (progress, paidMonths) {
+      renderDayCardWithProgress(progress || {}, paidMonths || []);
+    };
+    if (cloudMode) {
+      var paidPromise = window.DevSystemCloud.getPaidMonthIds(user.email).catch(function () { return []; });
+      var progPromise = window.DevSystemCloud.getProgressMap(user.email).catch(function () { return {}; });
+      Promise.all([progPromise, paidPromise])
+        .then(function (res) { build(res[0], res[1]); })
+        .catch(function () { build({}, []); });
       return;
     }
-    renderDayCardWithProgress(cloudMode ? {} : window.DevSystemState.getProgress(user.email));
+    build(window.DevSystemState.getProgress(user.email), window.DevSystemState.getPaidMonthIds(user.email));
   }
 
-  function renderDayCardWithProgress(progress) {
+  function renderDayCardWithProgress(progress, paidMonths) {
     var dayTitle = document.getElementById("day-lesson-title");
     var dayDesc = document.getElementById("day-lesson-desc");
     if (!dayTitle) return;
-    var materiaKeys = leccionesData.m1 && Object.keys(leccionesData.m1.materias) || [];
+    progress = progress || {};
+    var activeMonth = getActiveMonth(paidMonths || [], progress);
+    var data = leccionesData["m" + activeMonth];
+    var materiaKeys = data && data.materias ? Object.keys(data.materias) : [];
     var nextLesson = null;
     for (var mi = 0; mi < materiaKeys.length && !nextLesson; mi++) {
       var mk = materiaKeys[mi];
-      var m = leccionesData.m1.materias[mk];
+      var m = data.materias[mk];
       for (var li = 0; li < m.lecciones.length; li++) {
         var l = m.lecciones[li];
         if (!l.proximamente && !progress[l.id]) { nextLesson = l; break; }
@@ -244,11 +379,16 @@
   }
 
   function renderCurriculum(cloudProgress, rootEl) {
+    renderCurriculumForMonth(1, cloudProgress, rootEl);
+  }
+
+  function renderCurriculumForMonth(monthNum, cloudProgress, rootEl) {
     var root = rootEl || curriculumRoot;
     if (!root) return;
-    var materias = leccionesData.m1 && leccionesData.m1.materias;
+    var data = leccionesData["m" + monthNum];
+    var materias = data && data.materias;
     if (!materias) {
-      root.innerHTML = "<p class='small' style='color:var(--muted)'>No hay lecciones disponibles.</p>";
+      root.innerHTML = "<p class='small' style='color:var(--muted)'>No hay lecciones publicadas para este mes.</p>";
       return;
     }
     var progress = cloudProgress || (cloudMode ? {} : window.DevSystemState.getProgress(user.email));
@@ -271,8 +411,9 @@
         var completed = Boolean(progress[lesson.id]);
         var currentUnlocked = sequentialUnlocked && !lesson.proximamente;
         if (completed) { } else { sequentialUnlocked = false; }
+        var clickable = completed || currentUnlocked;
         var cls = completed ? "node-done" : currentUnlocked ? "node-current" : lesson.proximamente ? "node-soon" : "node-locked";
-        var link = currentUnlocked ? "<a href='leccion.html?id=" + lesson.id + "'>" + lesson.titulo + "</a>" : "<span>" + lesson.titulo + "</span>";
+        var link = clickable ? "<a href='leccion.html?id=" + lesson.id + "'>" + lesson.titulo + "</a>" : "<span>" + lesson.titulo + "</span>";
         html += "<div class='roadmap-node " + cls + "'><span class='node-dot'></span><span class='node-label'>" + label + ".</span><span class='node-title'>" + link + "</span></div>";
       }
 
@@ -282,8 +423,8 @@
 
     if (cloudMode && !cloudProgress) {
       window.DevSystemCloud.getProgressMap(user.email)
-        .then(function (map) { renderCurriculum(map || {}); })
-        .catch(function () { renderCurriculum({}); });
+        .then(function (map) { renderCurriculumForMonth(monthNum, map || {}, root); })
+        .catch(function () { renderCurriculumForMonth(monthNum, {}, root); });
     }
   }
 
@@ -680,12 +821,13 @@
     if (tabId === "plan") renderPlan();
     else if (tabId === "aula") renderAula();
     else if (tabId === "examenes") renderExamenes();
+    else if (tabId === "pagos") renderPagos();
     else if (tabId === "marcadores") renderMarcadores();
     else if (tabId === "expediente") renderExpediente();
   }
 
   function initTabs() {
-    var tabs = ["inicio", "plan", "aula", "examenes", "marcadores", "expediente"];
+    var tabs = ["inicio", "plan", "aula", "examenes", "pagos", "marcadores", "expediente"];
     var hash = window.location.hash.replace("#", "");
     var initialTab = hash && tabs.indexOf(hash) !== -1 ? hash : "inicio";
 
@@ -729,6 +871,7 @@
 
   function renderInicio() {
     renderHeader();
+    renderPagoWarning();
     renderProgress();
     renderAdmissionSteps();
     renderDayCard();
@@ -739,143 +882,200 @@
     }
   }
 
-  function renderInicioLecciones() {
+  async function renderInicioLecciones() {
     var container = document.getElementById("inicio-lecciones");
     if (!container) return;
-    var materiaKeys = leccionesData.m1 && Object.keys(leccionesData.m1.materias) || [];
+    var paidMonths = cloudMode
+      ? (await window.DevSystemCloud.getPaidMonthIds(user.email).catch(function () { return []; }))
+      : window.DevSystemState.getPaidMonthIds(user.email);
+    var progress = cloudMode
+      ? (await window.DevSystemCloud.getProgressMap(user.email).catch(function () { return {}; }))
+      : window.DevSystemState.getProgress(user.email);
+    var activeMonth = getActiveMonth(paidMonths, progress);
+    var data = leccionesData["m" + activeMonth];
+    var materiaKeys = data && data.materias ? Object.keys(data.materias) : [];
     if (materiaKeys.length === 0) { container.innerHTML = ""; return; }
 
-    function buildCards(progress) {
-      var html = "";
-      var count = 0;
-      for (var mi = 0; mi < materiaKeys.length && count < 3; mi++) {
-        var mk = materiaKeys[mi];
-        var m = leccionesData.m1.materias[mk];
-        for (var li = 0; li < m.lecciones.length && count < 3; li++) {
-          var l = m.lecciones[li];
-          if (!l.proximamente && !progress[l.id]) {
-            html += "<div class='day-lesson-card'><span class='day-lesson-icon'>" + (m.icono || "◇") + "</span><div><strong>" + l.titulo + "</strong><br><span class='small'>" + m.nombre + "</span></div><a href='leccion.html?id=" + l.id + "' class='btn btn-sm'>Ir</a></div>";
-            count++;
-          }
+    var html = "";
+    var count = 0;
+    for (var mi = 0; mi < materiaKeys.length && count < 3; mi++) {
+      var mk = materiaKeys[mi];
+      var m = data.materias[mk];
+      for (var li = 0; li < m.lecciones.length && count < 3; li++) {
+        var l = m.lecciones[li];
+        if (!l.proximamente && !progress[l.id]) {
+          html += "<div class='day-lesson-card'><span class='day-lesson-icon'>" + (m.icono || "◇") + "</span><div><strong>" + l.titulo + "</strong><br><span class='small'>" + m.nombre + "</span></div><a href='leccion.html?id=" + l.id + "' class='btn btn-sm'>Ir</a></div>";
+          count++;
         }
       }
-      if (count === 0) {
-        html = "<p class='small' style='color:var(--muted)'>Todas las lecciones completadas. ¡Buen trabajo!</p>";
-      }
-      container.innerHTML = html;
     }
-
-    if (cloudMode) {
-      window.DevSystemCloud.getProgressMap(user.email)
-        .then(function (map) { buildCards(map || {}); })
-        .catch(function () { buildCards({}); });
-    } else {
-      buildCards(window.DevSystemState.getProgress(user.email));
+    if (count === 0) {
+      html = "<p class='small' style='color:var(--muted)'>Todas las lecciones completadas. ¡Buen trabajo!</p>";
     }
+    container.innerHTML = html;
   }
 
-  function renderPeriodoActual() {
+  async function renderPeriodoActual() {
     var container = document.getElementById("inicio-periodo");
     if (!container) return;
-    var paidMonths = window.DevSystemState.getPaidMonthIds(user.email);
+    var paidMonths = cloudMode
+      ? (await window.DevSystemCloud.getPaidMonthIds(user.email).catch(function () { return []; }))
+      : window.DevSystemState.getPaidMonthIds(user.email);
     if (paidMonths.length === 0) {
       container.style.display = "none";
       return;
     }
     container.style.display = "block";
     var latestMonth = paidMonths[paidMonths.length - 1];
-    var now = new Date();
-    var year = now.getFullYear();
-    var periodStart = new Date(year, latestMonth - 1, 1);
-    var periodEnd = new Date(year, latestMonth, 1);
+    var payments = await getPaymentDatesForUser(user.email);
+    var periodStart = null;
+    for (var pi = 0; pi < payments.length; pi++) {
+      if (Number(payments[pi].month_id) === Number(latestMonth)) {
+        var rawDate = payments[pi].created_at || payments[pi].payment_date || null;
+        if (rawDate) periodStart = new Date(rawDate);
+        break;
+      }
+    }
+    if (!periodStart) periodStart = new Date();
+    var periodEnd = addMonthsSafe(periodStart, 1);
     var totalDays = Math.round((periodEnd - periodStart) / 86400000);
-    var elapsed = Math.round((now - periodStart) / 86400000);
+    var elapsed = Math.round((new Date() - periodStart) / 86400000);
     if (elapsed < 0) elapsed = 0;
     if (elapsed > totalDays) elapsed = totalDays;
     var pct = totalDays > 0 ? Math.round((elapsed / totalDays) * 100) : 0;
-    var title = MONTH_TITLES[latestMonth] || "Mes " + latestMonth;
+    var title = getMonthTitle(latestMonth);
 
     container.innerHTML = "<div class='periodo-card'><p class='eyebrow'>Periodo actual — Mes " + latestMonth + "</p><h3>" + title + "</h3><div class='progress-bar' style='margin:0.6rem 0'><div class='progress-fill' style='width:" + pct + "%'></div></div><p class='small'>Día " + elapsed + " de " + totalDays + " (" + pct + "%)</p></div>";
   }
 
-  function renderAvanceMes() {
+  async function renderAvanceMes() {
     var container = document.getElementById("inicio-avance");
     if (!container) return;
-    var materiaKeys = leccionesData.m1 && Object.keys(leccionesData.m1.materias) || [];
+    var paidMonths = cloudMode
+      ? (await window.DevSystemCloud.getPaidMonthIds(user.email).catch(function () { return []; }))
+      : window.DevSystemState.getPaidMonthIds(user.email);
+    var progress = cloudMode
+      ? (await window.DevSystemCloud.getProgressMap(user.email).catch(function () { return {}; }))
+      : window.DevSystemState.getProgress(user.email);
+    var activeMonth = getActiveMonth(paidMonths, progress);
+    var data = leccionesData["m" + activeMonth];
+    var materiaKeys = data && data.materias ? Object.keys(data.materias) : [];
     if (materiaKeys.length === 0) { container.style.display = "none"; return; }
     container.style.display = "block";
 
-    function buildWidget(progress) {
-      var total = 0;
-      var done = 0;
-      for (var mi = 0; mi < materiaKeys.length; mi++) {
-        var mk = materiaKeys[mi];
-        var m = leccionesData.m1.materias[mk];
-        for (var li = 0; li < m.lecciones.length; li++) {
-          var l = m.lecciones[li];
-          if (!l.proximamente) {
-            total++;
-            if (progress[l.id]) done++;
-          }
+    var total = 0;
+    var done = 0;
+    for (var mi = 0; mi < materiaKeys.length; mi++) {
+      var mk = materiaKeys[mi];
+      var m = data.materias[mk];
+      for (var li = 0; li < m.lecciones.length; li++) {
+        var l = m.lecciones[li];
+        if (!l.proximamente) {
+          total++;
+          if (progress[l.id]) done++;
         }
       }
-      var pct = total > 0 ? Math.round((done / total) * 100) : 0;
-      var r = 36;
-      var circ = 2 * Math.PI * r;
-      var offset = circ - (pct / 100) * circ;
-
-      container.innerHTML = "<div class='avance-card'><p class='eyebrow'>Avance del mes</p><div class='avance-circle'><svg width='96' height='96' viewBox='0 0 96 96'><circle cx='48' cy='48' r='" + r + "' fill='none' stroke='var(--line)' stroke-width='6'/><circle cx='48' cy='48' r='" + r + "' fill='none' stroke='var(--accent)' stroke-width='6' stroke-dasharray='" + circ + "' stroke-dashoffset='" + offset + "' stroke-linecap='round' transform='rotate(-90,48,48)'/></svg><span class='avance-circle-text'>" + pct + "%</span></div><p class='small'>" + done + " de " + total + " lecciones</p></div>";
     }
+    var pct = total > 0 ? Math.round((done / total) * 100) : 0;
+    var r = 36;
+    var circ = 2 * Math.PI * r;
+    var offset = circ - (pct / 100) * circ;
 
-    if (cloudMode) {
-      window.DevSystemCloud.getProgressMap(user.email).then(function (map) {
-        buildWidget(map || {});
-      });
-    } else {
-      buildWidget(window.DevSystemState.getProgress(user.email));
-    }
+    container.innerHTML = "<div class='avance-card'><p class='eyebrow'>Avance del mes</p><div class='avance-circle'><svg width='96' height='96' viewBox='0 0 96 96'><circle cx='48' cy='48' r='" + r + "' fill='none' stroke='var(--line)' stroke-width='6'/><circle cx='48' cy='48' r='" + r + "' fill='none' stroke='var(--accent)' stroke-width='6' stroke-dasharray='" + circ + "' stroke-dashoffset='" + offset + "' stroke-linecap='round' transform='rotate(-90,48,48)'/></svg><span class='avance-circle-text'>" + pct + "%</span></div><p class='small'>" + done + " de " + total + " lecciones</p></div>";
   }
 
   /* ===================================================================
      NEW: Plan de estudios tab (renderPlan)
      =================================================================== */
 
-  function renderPlan() {
-    var chipsRow = document.getElementById("plan-month-chips");
-    var contentArea = document.getElementById("plan-content");
-    if (!chipsRow || !contentArea) return;
+  async function renderPlan() {
+    var chipsRow = document.getElementById("month-chips");
+    var roadmapRoot = document.getElementById("curriculum-root");
+    if (!chipsRow || !roadmapRoot) return;
 
-    var paidMonths = window.DevSystemState.getPaidMonthIds(user.email);
+    var paidMonths = cloudMode
+      ? (await window.DevSystemCloud.getPaidMonthIds(user.email).catch(function () { return []; }))
+      : window.DevSystemState.getPaidMonthIds(user.email);
+    var progress = cloudMode
+      ? (await window.DevSystemCloud.getProgressMap(user.email).catch(function () { return {}; }))
+      : window.DevSystemState.getProgress(user.email);
+    var payments = await getPaymentDatesForUser(user.email);
+
     var paidMap = {};
     for (var pi = 0; pi < paidMonths.length; pi++) paidMap[paidMonths[pi]] = true;
-    var activeMonth = paidMonths.length > 0 ? paidMonths[paidMonths.length - 1] : 1;
+    var activeMonth = getActiveMonth(paidMonths, progress);
+    var pagoInfo = getPagoEstado(payments);
 
     chipsRow.innerHTML = "";
     for (var m = 1; m <= 12; m++) {
-      var title = MONTH_TITLES[m] || "Mes " + m;
+      var title = getMonthTitle(m);
+      var isPaid = Boolean(paidMap[m]);
       var chip = document.createElement("button");
       chip.className = "month-chip";
-      if (m === activeMonth) chip.classList.add("month-chip-active");
-      chip.textContent = "M" + m + " " + title;
-      (function (mid) {
+      chip.setAttribute("data-paid", isPaid ? "1" : "0");
+      chip.style.cssText = "text-align:left;flex-shrink:0;display:flex;flex-direction:column;gap:0.15rem;padding:0.55rem 0.8rem;border-radius:0.75rem;border:1px solid var(--line);background:var(--bg-card);color:var(--text);font:inherit;cursor:pointer;min-width:150px;transition:all 0.2s";
+      if (m === activeMonth) {
+        chip.classList.add("month-chip-active");
+        chip.style.borderColor = "var(--accent)";
+        chip.style.background = "rgba(173,199,255,0.08)";
+      }
+      var stateTxt = "";
+      var stateColor = "var(--muted)";
+      if (isPaid) {
+        stateTxt = getMonthState(m, progress, activeMonth);
+        stateColor = "var(--green)";
+      } else {
+        var lockFecha = addMonthsSafe(pagoInfo.baseDate, m - 1);
+        stateTxt = "🔒 Disponible al pagar tu mensualidad del " + lockFecha.toLocaleDateString("es-MX", { month: "long", year: "numeric" });
+      }
+      chip.innerHTML = "<strong style='font-size:0.82rem'>M" + m + "</strong><span class='small' style='font-size:0.72rem;color:var(--muted)'>" + title + "</span><span class='small' style='font-size:0.7rem;color:" + stateColor + "'>" + stateTxt + "</span>";
+      (function (mid, paid) {
         chip.addEventListener("click", function () {
-          if (mid === activeMonth) return;
-          if (!paidMap[mid]) {
-            showToast("Bloqueado — Este mes no está disponible en tu plan actual.");
-            return;
+          if (paid) {
+            var allChips = chipsRow.querySelectorAll(".month-chip");
+            for (var ci = 0; ci < allChips.length; ci++) {
+              allChips[ci].classList.remove("month-chip-active");
+              allChips[ci].style.borderColor = "var(--line)";
+              allChips[ci].style.background = "var(--bg-card)";
+            }
+            chip.classList.add("month-chip-active");
+            chip.style.borderColor = "var(--accent)";
+            chip.style.background = "rgba(173,199,255,0.08)";
+            updateChipStates(chipsRow, mid, progress);
+            renderPlanRoadmap(mid, roadmapRoot, progress);
+          } else {
+            switchTab("pagos");
           }
-          activeMonth = mid;
-          renderPlanContent(activeMonth, contentArea);
-          var allChips = chipsRow.querySelectorAll(".month-chip");
-          for (var ci = 0; ci < allChips.length; ci++) {
-            allChips[ci].classList.remove("month-chip-active");
-          }
-          chip.classList.add("month-chip-active");
         });
-      })(m);
+      })(m, isPaid);
       chipsRow.appendChild(chip);
     }
-    renderPlanContent(activeMonth, contentArea);
+
+    renderPlanRoadmap(activeMonth, roadmapRoot, progress);
+  }
+
+  function updateChipStates(chipsRow, selectedMonth, progress) {
+    var chips = chipsRow.querySelectorAll(".month-chip");
+    for (var ci = 0; ci < chips.length; ci++) {
+      var c = chips[ci];
+      if (c.getAttribute("data-paid") !== "1") continue;
+      var strong = c.querySelector("strong");
+      if (!strong) continue;
+      var mid = Number(String(strong.textContent).replace("M", ""));
+      var spans = c.querySelectorAll("span");
+      if (spans.length >= 2) {
+        var st = getMonthState(mid, progress, selectedMonth);
+        spans[1].textContent = st;
+        spans[1].style.color = "var(--green)";
+      }
+    }
+  }
+
+  function renderPlanRoadmap(monthNum, roadmapRoot, progress) {
+    if (!roadmapRoot) return;
+    roadmapRoot.innerHTML = "<h3 style='margin-bottom:0.8rem'>" + getMonthTitle(monthNum) + "</h3><div id='plan-roadmap-root' class='roadmap'></div>";
+    var roadmapEl = document.getElementById("plan-roadmap-root");
+    if (roadmapEl) renderCurriculumForMonth(monthNum, progress || null, roadmapEl);
   }
 
   function renderPlanContent(monthNum, contentArea) {
@@ -919,40 +1119,38 @@
     renderAulaGuias();
   }
 
-  function renderAulaContinua() {
+  async function renderAulaContinua() {
     var container = document.getElementById("aula-continua");
     if (!container) return;
-    var materiaKeys = leccionesData.m1 && Object.keys(leccionesData.m1.materias) || [];
+    var paidMonths = cloudMode
+      ? (await window.DevSystemCloud.getPaidMonthIds(user.email).catch(function () { return []; }))
+      : window.DevSystemState.getPaidMonthIds(user.email);
+    var progress = cloudMode
+      ? (await window.DevSystemCloud.getProgressMap(user.email).catch(function () { return {}; }))
+      : window.DevSystemState.getProgress(user.email);
+    var activeMonth = getActiveMonth(paidMonths, progress);
+    var data = leccionesData["m" + activeMonth];
+    var materiaKeys = data && data.materias ? Object.keys(data.materias) : [];
 
-    function buildCard(progress) {
-      var firstUncompleted = null;
-      var materiaName = "";
-      var materiaIcon = "";
-      for (var mi = 0; mi < materiaKeys.length && !firstUncompleted; mi++) {
-        var mk = materiaKeys[mi];
-        var m = leccionesData.m1.materias[mk];
-        for (var li = 0; li < m.lecciones.length && !firstUncompleted; li++) {
-          var l = m.lecciones[li];
-          if (!l.proximamente && !progress[l.id]) {
-            firstUncompleted = l;
-            materiaName = m.nombre;
-            materiaIcon = m.icono || "◇";
-          }
+    var firstUncompleted = null;
+    var materiaName = "";
+    var materiaIcon = "";
+    for (var mi = 0; mi < materiaKeys.length && !firstUncompleted; mi++) {
+      var mk = materiaKeys[mi];
+      var m = data.materias[mk];
+      for (var li = 0; li < m.lecciones.length && !firstUncompleted; li++) {
+        var l = m.lecciones[li];
+        if (!l.proximamente && !progress[l.id]) {
+          firstUncompleted = l;
+          materiaName = m.nombre;
+          materiaIcon = m.icono || "◇";
         }
       }
-      if (firstUncompleted) {
-        container.innerHTML = "<div class='card card-highlighted'><p class='eyebrow'>Continúa donde te quedaste</p><h3>" + materiaIcon + " " + firstUncompleted.titulo + "</h3><p class='small'>" + materiaName + "</p><a href='leccion.html?id=" + firstUncompleted.id + "' class='btn btn-block' style='margin-top:0.8rem'>Ir a la lección</a></div>";
-      } else {
-        container.innerHTML = "<div class='card card-highlighted'><p class='eyebrow'>Continúa donde te quedaste</p><h3>🎉 ¡Todo completado!</h3><p class='small'>Has terminado todas las lecciones disponibles.</p></div>";
-      }
     }
-
-    if (cloudMode) {
-      window.DevSystemCloud.getProgressMap(user.email).then(function (map) {
-        buildCard(map || {});
-      });
+    if (firstUncompleted) {
+      container.innerHTML = "<div class='card card-highlighted'><p class='eyebrow'>Continúa donde te quedaste</p><h3>" + materiaIcon + " " + firstUncompleted.titulo + "</h3><p class='small'>" + materiaName + "</p><a href='leccion.html?id=" + firstUncompleted.id + "' class='btn btn-block' style='margin-top:0.8rem'>Ir a la lección</a></div>";
     } else {
-      buildCard(window.DevSystemState.getProgress(user.email));
+      container.innerHTML = "<div class='card card-highlighted'><p class='eyebrow'>Continúa donde te quedaste</p><h3>🎉 ¡Todo completado!</h3><p class='small'>Has terminado todas las lecciones disponibles.</p></div>";
     }
   }
 
@@ -1072,42 +1270,77 @@
      NEW: Exámenes tab (renderExamenes)
      =================================================================== */
 
-  function renderExamenes() {
-    var container = document.getElementById("exam-admision");
-    if (container) {
-      if (examPassed) {
-        var examDate = enrollment.exam_date ? new Date(enrollment.exam_date).toLocaleDateString("es-MX", { year: "numeric", month: "long", day: "numeric" }) : "—";
-        container.innerHTML = "<div class='summary-row'><span>Examen de admisión</span><span class='badge badge-green'>Aprobado ✓</span></div><p class='small' style='margin-top:0.3rem;color:var(--green)'>Puntaje: " + (examScore || "—") + "/100 · " + examDate + "</p>";
-      } else {
-        container.innerHTML = "<div class='summary-row'><span>Examen de admisión</span><span class='badge' style='background:var(--line);color:var(--muted)'>Pendiente</span></div><p class='small' style='margin-top:0.3rem;color:var(--muted)'>Presenta tu examen de admisión para acceder a la tarifa preferente.</p><a href='examen.html' class='btn btn-block' style='margin-top:0.6rem'>Presentar examen</a>";
-      }
+  async function renderExamenes() {
+    var section = document.getElementById("examenes");
+    if (!section) return;
+
+    var paidMonths = cloudMode
+      ? (await window.DevSystemCloud.getPaidMonthIds(user.email).catch(function () { return []; }))
+      : window.DevSystemState.getPaidMonthIds(user.email);
+    var progress = cloudMode
+      ? (await window.DevSystemCloud.getProgressMap(user.email).catch(function () { return {}; }))
+      : window.DevSystemState.getProgress(user.email);
+    var exams = cloudMode
+      ? (await window.DevSystemCloud.getMonthExams(user.email).catch(function () { return []; }))
+      : [];
+
+    var examsMap = {};
+    for (var ei = 0; ei < exams.length; ei++) {
+      var ex = exams[ei];
+      if (ex.passed) examsMap[Number(ex.month_id)] = ex;
     }
 
-    var mes1Container = document.getElementById("exam-mes1");
-    if (mes1Container) {
-      var paidMonths = window.DevSystemState.getPaidMonthIds(user.email);
-      var m1Paid = false;
-      for (var pi = 0; pi < paidMonths.length; pi++) {
-        if (paidMonths[pi] === 1) { m1Paid = true; break; }
-      }
-      if (m1Paid) {
-        var now = new Date();
-        var periodEnd = new Date(now.getFullYear(), 0, 31);
-        var endStr = periodEnd.toLocaleDateString("es-MX", { day: "numeric", month: "long", year: "numeric" });
-        mes1Container.innerHTML = "<div class='summary-row'><span>Examen del Mes 1</span><span class='badge' style='background:var(--line);color:var(--muted)'>🔒 Bloqueado</span></div><p class='small' style='margin-top:0.3rem;color:var(--muted)'>Se desbloquea al completar las lecciones del mes. Periodo vigente hasta " + endStr + ".</p>";
-      } else {
-        mes1Container.innerHTML = "<div class='summary-row'><span>Examen del Mes 1</span><span class='badge' style='background:var(--line);color:var(--muted)'>🔒 Bloqueado</span></div><p class='small' style='margin-top:0.3rem;color:var(--muted)'>Realiza el pago del Mes 1 para desbloquear.</p>";
-      }
-    }
+    var paidMap = {};
+    for (var pi = 0; pi < paidMonths.length; pi++) paidMap[paidMonths[pi]] = true;
 
-    var mesesContainer = document.getElementById("exam-meses");
-    if (mesesContainer) {
-      var html = "";
-      for (var m = 2; m <= 12; m++) {
-        html += "<div class='summary-row'><span>Examen del Mes " + m + " — " + (MONTH_TITLES[m] || "") + "</span><span class='small' style='color:var(--muted)'>Próximamente</span></div>";
-      }
-      mesesContainer.innerHTML = html;
+    var html = "";
+
+    html += "<div class='card'><p class='eyebrow'>Examen de admisión</p>";
+    if (examPassed) {
+      var examDate = enrollment.exam_date ? new Date(enrollment.exam_date).toLocaleDateString("es-MX", { year: "numeric", month: "long", day: "numeric" }) : "—";
+      html += "<div class='summary-row'><span>Estado</span><span class='badge' style='background:rgba(34,197,94,0.15);color:var(--green);padding:0.25rem 0.6rem;border-radius:999px;font-size:0.75rem;font-weight:700'>Aprobado ✓</span></div><div class='summary-row'><span>Puntaje</span><strong>" + (examScore || "—") + "/100 · " + examDate + "</strong></div>";
+    } else {
+      html += "<div class='summary-row'><span>Estado</span><span class='badge' style='background:var(--line);color:var(--muted);padding:0.25rem 0.6rem;border-radius:999px;font-size:0.75rem;font-weight:700'>Pendiente</span></div><p class='small' style='margin-top:0.4rem;color:var(--muted)'>Presenta tu examen de admisión para acceder a la tarifa preferente.</p><a href='examen.html' class='btn btn-block' style='margin-top:0.6rem'>Presentar examen</a>";
     }
+    html += "</div>";
+
+    html += "<div style='margin-top:1.2rem'><p class='eyebrow'>Exámenes mensuales</p><div style='display:grid;gap:0.6rem'>";
+    for (var m = 1; m <= 12; m++) {
+      var mTitle = "Mes " + m + " · " + getMonthTitle(m);
+      if (paidMap[m]) {
+        var exRec = examsMap[m];
+        html += "<div class='card' style='padding:1rem'><div class='summary-row'><span>" + mTitle + "</span>";
+        if (exRec) {
+          var exDate = exRec.taken_at ? new Date(exRec.taken_at).toLocaleDateString("es-MX", { day: "numeric", month: "short", year: "numeric" }) : "—";
+          html += "<span class='badge' style='background:rgba(34,197,94,0.15);color:var(--green);padding:0.25rem 0.6rem;border-radius:999px;font-size:0.75rem;font-weight:700'>Aprobado ✓ · " + (exRec.score || "—") + "/100</span></div><p class='small' style='margin-top:0.3rem;color:var(--green)'>Presentado el " + exDate + "</p>";
+        } else {
+          var total = 0;
+          var done = 0;
+          var data = leccionesData["m" + m];
+          if (data && data.materias) {
+            var keys = Object.keys(data.materias);
+            for (var ki = 0; ki < keys.length; ki++) {
+              var mat = data.materias[keys[ki]];
+              for (var li = 0; li < mat.lecciones.length; li++) {
+                var l = mat.lecciones[li];
+                if (!l.proximamente) { total++; if (progress[l.id]) done++; }
+              }
+            }
+          }
+          if (total > 0 && done >= total) {
+            html += "<span class='badge' style='background:rgba(173,199,255,0.12);color:var(--accent);padding:0.25rem 0.6rem;border-radius:999px;font-size:0.75rem;font-weight:700'>Disponible</span></div><p class='small' style='margin-top:0.3rem;color:var(--accent)'>Completaste todas las lecciones del mes. ¡Presenta tu examen!</p><a href='examen-mes.html?mes=" + m + "' class='btn btn-block' style='margin-top:0.6rem'>Presentar examen</a>";
+          } else {
+            html += "<span class='badge' style='background:var(--line);color:var(--muted);padding:0.25rem 0.6rem;border-radius:999px;font-size:0.75rem;font-weight:700'>🔒 Bloqueado</span></div><p class='small' style='margin-top:0.3rem;color:var(--muted)'>Completa todas las lecciones del mes (" + done + "/" + total + " lecciones) para desbloquear el examen.</p>";
+          }
+        }
+        html += "</div>";
+      } else {
+        html += "<div class='summary-row' style='padding:0.6rem 0'><span class='small'>" + mTitle + "</span><span class='small' style='color:var(--muted)'>Próximamente</span></div>";
+      }
+    }
+    html += "</div></div>";
+
+    section.innerHTML = html;
   }
 
   /* ===================================================================
@@ -1283,31 +1516,47 @@
   function renderExpedienteKardex() {
     var tbody = document.getElementById("kardex-body");
     if (!tbody) return;
-    var MONTH_TITLES = {1:"Fundamentos del código",2:"Git y GitHub",3:"Frontend",4:"Backend y bases de datos",5:"LLMs y agentes",6:"Herramientas IA",7:"MCP e integraciones",8:"Testing y producto",9:"Cloud y deploy",10:"Datos y seguridad",11:"Automatización y colas",12:"SaaS final"};
 
-    function buildKardex(paidMap, progress) {
+    function paidMonthsFromMap(map) {
+      var out = [];
+      for (var k in map) { if (map[k]) out.push(Number(k)); }
+      out.sort(function (a, b) { return a - b; });
+      return out;
+    }
+
+    function buildKardex(paidMap, progress, examsMap) {
+      var activeMonth = getActiveMonth(paidMonthsFromMap(paidMap), progress);
       var html = "";
       for (var m = 1; m <= 12; m++) {
-        var title = "M" + m + " · " + (MONTH_TITLES[m] || "Mes " + m);
+        var title = "M" + m + " · " + getMonthTitle(m);
         var estado, calif;
+        var exRec = examsMap[m];
         if (paidMap[m]) {
-          if (m === 1) {
+          if (exRec && exRec.passed) {
+            estado = "<span style='color:var(--green)'>Aprobado ✓</span>";
+            calif = exRec.score || "—";
+          } else {
             var total = 0, done = 0;
-            var materiaKeys = leccionesData.m1 && Object.keys(leccionesData.m1.materias) || [];
-            for (var mi = 0; mi < materiaKeys.length; mi++) {
-              var mk = materiaKeys[mi];
-              var mat = leccionesData.m1.materias[mk];
-              for (var li = 0; li < mat.lecciones.length; li++) {
-                var l = mat.lecciones[li];
-                if (!l.proximamente) { total++; if (progress[l.id]) done++; }
+            var data = leccionesData["m" + m];
+            if (data && data.materias) {
+              var materiaKeys = Object.keys(data.materias);
+              for (var mi = 0; mi < materiaKeys.length; mi++) {
+                var mk = materiaKeys[mi];
+                var mat = data.materias[mk];
+                for (var li = 0; li < mat.lecciones.length; li++) {
+                  var l = mat.lecciones[li];
+                  if (!l.proximamente) { total++; if (progress[l.id]) done++; }
+                }
               }
             }
             var pct = total > 0 ? Math.round((done / total) * 100) : 0;
-            estado = "<span style='color:var(--success)'>En curso · " + pct + "%</span>";
-          } else {
-            estado = "<span style='color:var(--success)'>Pagado ✓</span>";
+            if (m === activeMonth) {
+              estado = "<span style='color:var(--success)'>En curso · " + pct + "%</span>";
+            } else {
+              estado = "<span style='color:var(--success)'>Pagado ✓</span>";
+            }
+            calif = "—";
           }
-          calif = "—";
         } else {
           estado = "Pendiente";
           calif = "—";
@@ -1317,7 +1566,7 @@
       tbody.innerHTML = html;
     }
 
-    buildKardex({}, {});
+    buildKardex({}, {}, {});
 
     var paidPromise = cloudMode
       ? window.DevSystemCloud.getPaidMonthIds(user.email).catch(function () { return []; })
@@ -1326,13 +1575,23 @@
     paidPromise.then(function (pms) {
       var pm = {};
       for (var i = 0; i < pms.length; i++) pm[pms[i]] = true;
-      if (cloudMode) {
-        window.DevSystemCloud.getProgressMap(user.email)
-          .then(function (map) { buildKardex(pm, map || {}); })
-          .catch(function () { buildKardex(pm, {}); });
-      } else {
-        buildKardex(pm, window.DevSystemState.getProgress(user.email));
-      }
+      var examsPromise = cloudMode
+        ? window.DevSystemCloud.getMonthExams(user.email).catch(function () { return []; })
+        : Promise.resolve([]);
+      examsPromise.then(function (exams) {
+        var em = {};
+        for (var j = 0; j < exams.length; j++) {
+          var ex = exams[j];
+          if (ex.passed) em[Number(ex.month_id)] = ex;
+        }
+        if (cloudMode) {
+          window.DevSystemCloud.getProgressMap(user.email)
+            .then(function (map) { buildKardex(pm, map || {}, em); })
+            .catch(function () { buildKardex(pm, {}, em); });
+        } else {
+          buildKardex(pm, window.DevSystemState.getProgress(user.email), em);
+        }
+      });
     });
   }
 
@@ -1380,6 +1639,185 @@
     container.innerHTML = html;
   }
 
+  /* ===================================================================
+     NEW: Pagos tab (renderPagos) + pago warnings (renderPagoWarning)
+     =================================================================== */
+
+  async function renderPagos() {
+    var estadoContent = document.getElementById("pago-estado-contenido");
+    var pagarContent = document.getElementById("pago-pagar-contenido");
+    var historialBody = document.getElementById("pago-historial-body");
+    var calendarioEl = document.getElementById("pago-calendario");
+    if (!estadoContent && !pagarContent && !historialBody && !calendarioEl) return;
+
+    if (!document.getElementById("pagos-css")) {
+      var st = document.createElement("style");
+      st.id = "pagos-css";
+      st.textContent = "@media(max-width:600px){#pago-calendario{grid-template-columns:repeat(2,1fr)!important}}";
+      document.head.appendChild(st);
+    }
+
+    var payments = await getPaymentDatesForUser(user.email);
+    var info = getPagoEstado(payments);
+
+    var badges = {
+      al_corriente: { color: "var(--green)", label: "Al corriente" },
+      por_vencer:   { color: "var(--amber)", label: "Por vencer" },
+      vencido:      { color: "var(--danger)", label: "Vencido" },
+    };
+    var badge = badges[info.estado] || badges.al_corriente;
+
+    if (estadoContent) {
+      var fechaStr = info.fechaVencimiento.toLocaleDateString("es-MX", { day: "numeric", month: "long", year: "numeric" });
+      var msg = "";
+      if (info.estado === "vencido") {
+        msg = "Tu mensualidad del Mes " + info.proximoMes + " está vencida. Realiza tu pago para continuar con el programa.";
+      } else if (info.estado === "por_vencer") {
+        msg = "Tu mensualidad del Mes " + info.proximoMes + " vence en " + (info.diasRestantes === 1 ? "1 día" : info.diasRestantes + " días") + ".";
+      } else {
+        msg = "Estás al corriente. Tu siguiente mensualidad (Mes " + info.proximoMes + ") vence el " + fechaStr + ".";
+      }
+      estadoContent.innerHTML =
+        "<div style='display:flex;align-items:center;gap:0.6rem;flex-wrap:wrap'><span class='badge' style='background:" + badge.color + ";color:#001a41;padding:0.3rem 0.8rem;border-radius:999px;font-size:0.78rem;font-weight:800'>" + badge.label + "</span><span class='small' style='color:var(--muted)'>" + msg + "</span></div>" +
+        "<div class='summary-row' style='margin-top:0.8rem'><span>Monto mensual</span><strong>" + formatMxn(info.monto) + "</strong></div>" +
+        "<div class='summary-row'><span>Concepto</span><strong>Mensualidad Mes " + info.proximoMes + " · " + getMonthTitle(info.proximoMes) + "</strong></div>" +
+        "<div class='summary-row'><span>Fecha límite</span><strong>" + fechaStr + "</strong></div>" +
+        (info.diasRestantes < 0 ? "<div class='summary-row'><span>Días de retraso</span><strong style='color:var(--danger)'>" + Math.abs(info.diasRestantes) + " días</strong></div>" : "");
+    }
+
+    if (pagarContent) {
+      var payHtml = "";
+      if (info.mesesPagados >= 12) {
+        payHtml = "<p style='color:var(--green)'><strong>Programa completado ✓</strong></p><p class='small' style='color:var(--muted)'>Ya cubriste las 12 mensualidades del programa.</p>";
+      } else if (info.estado === "al_corriente") {
+        payHtml = "<p style='color:var(--green)'><strong>Estás al corriente ✓</strong></p><p class='small' style='color:var(--muted)'>Tu próximo pago (Mes " + info.proximoMes + ") vence el " + info.fechaVencimiento.toLocaleDateString("es-MX", { day: "numeric", month: "long", year: "numeric" }) + ".</p>";
+        payHtml += "<button class='btn btn-ghost' id='pago-adelantado-btn' style='margin-top:0.8rem'>Pagar por adelantado</button>";
+      } else {
+        payHtml = "<p class='small' style='color:var(--muted)'>Realiza el pago de tu siguiente mensualidad para mantener tu acceso activo.</p>";
+        payHtml += "<button class='btn btn-brand' id='pago-mensualidad-btn' style='margin-top:0.8rem'>Pagar " + formatMxn(info.monto) + "</button>";
+      }
+      payHtml += "<div id='portal-wallet-container-pagos' style='margin-top:0.8rem'></div>";
+      payHtml += "<p id='pago-message' class='small' style='margin-top:0.4rem;color:var(--muted)'></p>";
+      pagarContent.innerHTML = payHtml;
+
+      var payBtn = document.getElementById("pago-mensualidad-btn");
+      var advanceBtn = document.getElementById("pago-adelantado-btn");
+      var payMsg = document.getElementById("pago-message");
+      var wallet = document.getElementById("portal-wallet-container-pagos");
+      var phone = (enrollment && enrollment.phone) || "";
+      var startPayment = async function (monthId, monto) {
+        if (!window.DevSystemPago) {
+          if (payMsg) payMsg.textContent = "Error: módulo de pago no disponible.";
+          return;
+        }
+        try {
+          var pending = {
+            fullName: user.name,
+            email: user.email,
+            phone: phone,
+            plan: (enrollment && enrollment.plan) || "Plan Base",
+            price: monto,
+            monthId: Number(monthId),
+            createdAt: new Date().toISOString(),
+          };
+          localStorage.setItem("devsystem_pending_checkout", JSON.stringify(pending));
+          if (payMsg) payMsg.textContent = "Iniciando pago...";
+          await window.DevSystemPago.iniciarPago(monthId, user.email, user.name, phone, "portal-wallet-container-pagos");
+          if (payMsg) payMsg.textContent = "Elige tu método de pago:";
+        } catch (err) {
+          if (payMsg) payMsg.textContent = "Error: " + (err && err.message ? err.message : err) + ". Intenta de nuevo.";
+        }
+      };
+      if (payBtn) {
+        payBtn.addEventListener("click", function () { startPayment(info.proximoMes, info.monto); });
+      }
+      if (advanceBtn) {
+        advanceBtn.addEventListener("click", function () { startPayment(info.proximoMes, info.monto); });
+      }
+      if (!payBtn && !advanceBtn && wallet) wallet.style.display = "none";
+    }
+
+    if (historialBody) {
+      var hHtml = "";
+      for (var pm = 1; pm <= 12; pm++) {
+        var rowDate = null;
+        var statusCell;
+        if (pm <= info.mesesPagados) {
+          var payRec = null;
+          for (var pmi = 0; pmi < payments.length; pmi++) {
+            if (Number(payments[pmi].month_id) === pm) { payRec = payments[pmi]; break; }
+          }
+          rowDate = payRec && (payRec.created_at || payRec.payment_date) ? new Date(payRec.created_at || payRec.payment_date) : null;
+          statusCell = "<span style='color:var(--green)'>Pagado ✓</span>";
+        } else {
+          rowDate = addMonthsSafe(info.baseDate, pm - 1);
+          statusCell = "<span style='color:var(--muted)'>Pendiente</span>";
+        }
+        var dateStr = rowDate ? rowDate.toLocaleDateString("es-MX", { day: "numeric", month: "short", year: "numeric" }) : "—";
+        var montoRow = getMonthlyMonto(pm);
+        hHtml += "<tr style='border-bottom:1px solid var(--line)'><td style='padding:0.5rem'>Mes " + pm + "</td><td style='padding:0.5rem'>Mensualidad Mes " + pm + " · " + getMonthTitle(pm) + "</td><td style='padding:0.5rem;text-align:right'>" + formatMxn(montoRow) + "</td><td style='padding:0.5rem'>" + dateStr + "</td><td style='padding:0.5rem;text-align:right'>" + statusCell + "</td></tr>";
+      }
+      historialBody.innerHTML = hHtml;
+    }
+
+    if (calendarioEl) {
+      var cHtml = "";
+      for (var cm = 1; cm <= 12; cm++) {
+        var bg = "var(--line)";
+        var color = "var(--muted)";
+        if (cm <= info.mesesPagados) {
+          bg = "rgba(34,197,94,0.18)";
+          color = "var(--green)";
+        } else if (cm === info.proximoMes) {
+          bg = "rgba(124,92,255,0.22)";
+          color = "var(--brand-2)";
+        }
+        cHtml += "<div style='background:" + bg + ";color:" + color + ";border:1px solid var(--line);border-radius:0.75rem;padding:0.55rem;text-align:center;font-size:0.78rem;font-weight:700'>M" + cm + "</div>";
+      }
+      calendarioEl.innerHTML = cHtml;
+    }
+  }
+
+  async function renderPagoWarning() {
+    var payments = await getPaymentDatesForUser(user.email);
+    var info = getPagoEstado(payments);
+
+    var showWarning = info.estado === "por_vencer" || info.estado === "vencido";
+
+    var banner = document.getElementById("pago-banner");
+    if (banner) {
+      if (showWarning) {
+        var bannerColor = info.estado === "vencido" ? "var(--danger)" : "var(--amber)";
+        var bannerText = info.estado === "vencido" ? "⚠ Tu mensualidad está vencida. Realiza tu pago para continuar." : "⚠ Tu mensualidad está por vencer.";
+        banner.style.display = "block";
+        banner.innerHTML =
+          "<div style='display:flex;align-items:center;justify-content:space-between;gap:0.8rem;flex-wrap:wrap;background:" + bannerColor + ";color:" + (info.estado === "vencido" ? "#ffffff" : "#001a41") + ";padding:0.7rem 1rem;border-radius:0.75rem;font-size:0.85rem;font-weight:700'>" +
+          "<span>" + bannerText + "</span>" +
+          "<button class='btn' id='pago-banner-btn' style='background:#001a41;color:#fff;padding:0.4rem 1rem;font-size:0.78rem;border:0'>Ir a Pagos</button></div>";
+        var bannerBtn = document.getElementById("pago-banner-btn");
+        if (bannerBtn) {
+          bannerBtn.addEventListener("click", function () { switchTab("pagos"); });
+        }
+      } else {
+        banner.style.display = "none";
+        banner.innerHTML = "";
+      }
+    }
+
+    var headerRight = document.querySelector(".portal-header-right");
+    var existing = document.getElementById("pago-pendiente-chip");
+    if (existing) existing.remove();
+    if (showWarning && headerRight) {
+      var chip = document.createElement("button");
+      chip.id = "pago-pendiente-chip";
+      chip.type = "button";
+      chip.textContent = "⚠ Pago pendiente";
+      chip.style.cssText = "font-family:var(--font-display);font-size:0.72rem;font-weight:700;background:rgba(239,68,68,0.18);border:1px solid var(--danger);color:var(--danger);padding:0.25rem 0.7rem;border-radius:999px;cursor:pointer;white-space:nowrap";
+      chip.addEventListener("click", function () { switchTab("pagos"); });
+      headerRight.insertBefore(chip, headerRight.firstChild);
+    }
+  }
+
   function showToast(msg) {
     var existing = document.querySelector(".toast-notification");
     if (existing) existing.remove();
@@ -1400,6 +1838,7 @@
      =================================================================== */
 
   renderHeader();
+  renderPagoWarning();
   renderProgress();
   renderAdmissionSteps();
   renderDayCard();

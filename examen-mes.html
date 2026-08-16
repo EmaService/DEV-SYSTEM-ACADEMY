@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="favicon-180.png">
+    <title>DEV SYSTEM | Examen del Mes</title>
+    <meta name="description" content="Examen mensual de DEV SYSTEM." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Sora:wght@400;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script defer src="platform-config.js"></script>
+    <script defer src="cloud-state.js"></script>
+    <script defer src="app-state.js"></script>
+    <script defer src="examenes-data.js"></script>
+    <script defer src="examen-mes.js"></script>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container nav-wrap">
+        <a href="portal.html" class="brand"><img src="logo.png" alt="DEV SYSTEM Academy" class="brand-logo"></a>
+        <nav class="nav">
+          <a href="portal.html">Mi portal</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="section">
+      <div class="container auth-wrap">
+        <section class="card auth-card reveal">
+          <p class="eyebrow">Examen del Mes</p>
+          <h1 id="exam-title" class="page-title">Examen del Mes</h1>
+          <p id="exam-description" class="lead">
+            Responde las preguntas. Deberás obtener al menos 70 puntos para aprobar.
+          </p>
+
+          <div id="exam-content">
+            <div class="progress-bar" style="margin-top:1.2rem">
+              <div id="exam-progress-fill" class="progress-fill" style="width:0%"></div>
+            </div>
+            <p id="exam-counter" class="small" style="margin-top:0.5rem;text-align:right;color:var(--muted)">Pregunta 1</p>
+
+            <div id="question-container" style="margin-top:1.2rem">
+              <p id="question-text" style="font-size:1.05rem;font-weight:600;color:var(--text);margin-bottom:1rem"></p>
+              <div id="options-container" class="plan-grid"></div>
+            </div>
+
+            <div style="margin-top:1.2rem">
+              <button id="next-btn" class="btn btn-block">Siguiente</button>
+            </div>
+          </div>
+
+          <div id="exam-result" style="display:none;margin-top:1.2rem;text-align:center">
+            <p id="result-verdict" class="page-title" style="font-size:1.8rem;font-weight:800"></p>
+            <p id="result-score" style="font-family:var(--font-display);font-size:3.4rem;font-weight:800;color:var(--text);line-height:1.1;margin-top:0.5rem"></p>
+            <p id="result-info" class="small" style="margin-top:0.8rem;color:var(--muted)"></p>
+            <a id="result-cta" class="btn btn-block" href="portal.html#examenes" style="margin-top:1rem">Volver a mis exámenes</a>
+          </div>
+
+          <p id="exam-message" class="notice" aria-live="polite"></p>
+        </section>
+      </div>
+    </main>
+  </body>
+</html>
