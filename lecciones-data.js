@@ -5326,31 +5326,859 @@ window.DEV_SYSTEM_LECCIONES = {
               { tipo: "vf", afirmacion: "Si la IA detecta que tus cambios son de temas distintos, conviene que te avise para separarlos en commits diferentes.", correcta: true, explicacion: "commits atómicos (un tema por commit) hacen el historial útil." }
             ]
           },
-          { id: "m2-c6", titulo: "PRÁCTICA: crear tu cuenta de GitHub y tu perfil", proximamente: true },
-          { id: "m2-c7", titulo: "PRÁCTICA: subir tu proyecto a GitHub", proximamente: true },
-          { id: "m2-c8", titulo: "PRÁCTICA: publicar tu página con GitHub Pages", proximamente: true },
-          { id: "m2-c9", titulo: "El flujo diario: pedir → probar → commitear", proximamente: true },
-          { id: "m2-c10", titulo: "PRÁCTICA: trabajar en una rama nueva con IA", proximamente: true },
-          { id: "m2-c11", titulo: "Cuando la IA rompe algo: volver atrás con Git", proximamente: true },
-          { id: "m2-c12", titulo: "PRÁCTICA: tu primer Pull Request (a tu propio repo)", proximamente: true },
-          { id: "m2-c13", titulo: "Revisar el código que la IA generó, en el PR", proximamente: true },
-          { id: "m2-c14", titulo: "PRÁCTICA: escribir un README que venda tu proyecto", proximamente: true },
-          { id: "m2-c15", titulo: "El brief para la IA cuando hay repo de por medio", proximamente: true },
-          { id: "m2-c16", titulo: "PRÁCTICA: documentar tu proyecto con IA", proximamente: true },
-          { id: "m2-c17", titulo: "Issues como lista de tareas dirigida a la IA", proximamente: true },
-          { id: "m2-c18", titulo: "PRÁCTICA: proyecto nuevo — sitio de un negocio real", proximamente: true },
-          { id: "m2-c19", titulo: "PRÁCTICA: iterar el proyecto en ramas", proximamente: true },
-          { id: "m2-c20", titulo: "PRÁCTICA: resolver tu primer conflicto de merge", proximamente: true },
-          { id: "m2-c21", titulo: "Herramientas IA que trabajan con Git directamente", proximamente: true },
-          { id: "m2-c22", titulo: "Claude Code, Cursor y el flujo con repositorio", proximamente: true },
-          { id: "m2-c23", titulo: "PRÁCTICA: dejar que una IA trabaje sobre tu repo", proximamente: true },
-          { id: "m2-c24", titulo: "Revisar el trabajo de una IA ejecutora", proximamente: true },
-          { id: "m2-c25", titulo: "Seguridad: qué nunca le compartes a una IA", proximamente: true },
-          { id: "m2-c26", titulo: "PRÁCTICA: limpiar tu repo antes de mostrarlo", proximamente: true },
-          { id: "m2-c27", titulo: "Tu portafolio: 3 proyectos que demuestran nivel", proximamente: true },
-          { id: "m2-c28", titulo: "Cómo se ve un repo profesional vs uno de principiante", proximamente: true },
-          { id: "m2-c29", titulo: "Tu flujo de trabajo completo, de idea a publicación", proximamente: true },
-          { id: "m2-c30", titulo: "Repaso + arranque del proyecto final del mes", proximamente: true }
+          {
+            id: "m2-c6",
+            titulo: "PRÁCTICA: crear tu cuenta de GitHub y tu perfil",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>En la lección B2 entendiste por qué GitHub es tu <strong>carta de presentación</strong> — la vitrina donde tus repositorios van a vivir (y en unos días, tu página de Tortas El Güero). Hoy lo haces en serio: <strong>creas tu cuenta y dejas tu perfil listo</strong>.</p><p><strong>Paso 1 — Crea la cuenta.</strong> Entra a <code>github.com</code> y presiona <strong>Sign up</strong>. Te piden tres cosas:</p><ul><li><strong>Correo:</strong> uno real, el mismo que uses de aquí en adelante. Ahí llegan las verificaciones y las alertas de seguridad.</li><li><strong>Contraseña:</strong> fuerte, y guardada en tu gestor de contraseñas (recuerda B28: un secreto que se filtra se paga caro).</li><li><strong>Username:</strong> tu identidad profesional. Aparecerá en TODAS tus URLs: <code>https://github.com/tuusuario</code>. Sin espacios ni mayúsculas raras, fácil de leer y de decir: <code>rayflores</code>, <code>luis_dev</code>, <code>tortas-el-guero</code>. Puedes cambiarlo después, pero cada cambio rompe los enlaces viejos — elige con cabeza desde hoy.</li></ul><p><strong>Paso 2 — Verifica tu correo.</strong> GitHub te manda un enlace de confirmación. <strong>No sigas sin verificar:</strong> con el correo pendiente no podrás crear tu repositorio en C7.</p><p><strong>Paso 3 — Elige el plan Free.</strong> En la pantalla de planes, <strong>Continue for free</strong> es la respuesta correcta. Todo este programa cabe en la cuenta gratis.</p><p><strong>Paso 4 — Completa tu perfil.</strong> Botón de tu avatar → <strong>Settings</strong> → <strong>Profile</strong>: nombre completo, una foto (tu cara o tu logo, no un dibujito random) y una bio de una línea, por ejemplo \"Construyo sitios web con IA\". El avatar y la bio son lo primero que mira un cliente (B29) — y en esta semana tu perfil empieza a hablar por ti.</p><p><strong>Paso 5 — Haz coincidir tus correos.</strong> Revisa con qué correo configuraste Git en C2:</p><pre><code>git config --global user.email</code></pre><p>Ese correo DEBE ser el mismo de tu cuenta de GitHub. Si no coinciden, tus commits quedan <strong>sin dueño</strong> (\"Autor desconocido\") y el historial que construiste en C3-C4 deja de hablar por ti.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Tu cuenta de GitHub es <strong>el local donde va a vivir tu taller</strong>; tu perfil es la fachada que le pones. Puedes tener el mejor trabajo del mundo adentro, pero si la fachada está vacía o mal pintada, nadie entra a verlo. Hoy pones el letrero, la foto y el horario — mañana metes el producto (C7 y C8).</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>La sesión completa, de cero:</p><pre><code>1. github.com  →  [Sign up]\n\n2. Email:        rayfg96@gmail.com\n   Password:     ******** (guardada en tu gestor)\n   Username:     rayflores\n\n3. Revisa tu correo → confirma con [Verify email address]\n\n4. Plan → [Continue for free]     ← el correcto\n\n5. Avatar → Settings → Profile:\n   Name:  Raymundo Flores\n   Bio:   Construyo sitios web con IA\n\n6. Verificación final:\n   C:\\...\\&gt; git config --global user.email\n   rayfg96@gmail.com    ← debe ser el MISMO correo de GitHub\n\nTu dirección pública:\n   https://github.com/rayflores</code></pre><p>Ese enlace ya existe y ya es tuyo. En C7 lo vas a llenar con tu primer repositorio.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Acabo de crear mi cuenta de GitHub. Antes de subir mi primer proyecto, revisa mi perfil como lo vería un cliente: 1) ¿mi username se lee bien y es fácil de decir? 2) ¿mi bio comunica qué hago? 3) dame 3 opciones de bio de una línea para alguien que construye sitios web con IA. Mi username es [tu username].\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "multiple", pregunta: "¿Cuál de estas es una buena práctica al elegir tu username?", opciones: ["Tu nombre completo con espacios", "Algo corto, sin espacios y fácil de decir: rayflores o luis_dev", "Letras y números al azar para que nadie lo adivine", "Mayúsculas en cada palabra para que resalte"], correcta: 1 },
+              { tipo: "completar", frase: "El username aparece en todas tus ____: https://github.com/____. Elegirlo bien importa porque cambiarlo después ____ los enlaces viejos.", banco: ["URLs", "tuusuario", "rompe", "mejora"], respuestas: ["URLs", "tuusuario", "rompe"] },
+              { tipo: "vf", afirmacion: "Con el correo sin verificar ya puedes subir tu proyecto a GitHub.", correcta: false, explicacion: "la verificación es obligatoria: sin ella no puedes crear repositorios ni hacer push en C7." },
+              { tipo: "relacionar", pares: [["Sign up", "Crear tu cuenta nueva"], ["Verify email address", "Confirmar tu correo con el enlace que te llega"], ["Continue for free", "Elegir el plan correcto"], ["Settings → Profile", "Poner tu nombre, tu foto y tu bio"]] },
+              { tipo: "quehace", codigo: "git config --global user.email", pregunta: "Corres este comando y te devuelve rayfg96@gmail.com. ¿Para qué lo verificas en esta lección?", opciones: ["Para confirmar que el correo de tus commits coincida con el de tu cuenta de GitHub", "Para cambiar tu contraseña de GitHub", "Para saber qué versión de Git tienes", "Para comprobar tu conexión a internet"], correcta: 0 }
+            ]
+          },
+          {
+            id: "m2-c7",
+            titulo: "PRÁCTICA: subir tu proyecto a GitHub",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Tu página de Tortas El Güero ya es un repositorio local con commits (C3-C4). Hoy le das casa en internet: creas el repositorio en GitHub, conectas tu carpeta local (B4) y subes tus commits (B5). El resultado: tu proyecto deja de vivir solo en tu computadora.</p><p><strong>Paso 1 — Crea el repo VACÍO en GitHub.</strong> En tu perfil, el botón verde <strong>New</strong> (o <code>Create repository</code>). Nómbralo exactamente igual que tu carpeta: <code>mi-primera-pagina</code>.</p><ul><li><strong>Public</strong> — este proyecto es tu vitrina; público es lo que quieres.</li><li><strong>NO marques \"Add a README\".</strong> Si lo marcas, GitHub crea un commit inicial en el remoto que tu historial local no tiene, y al hacer push las dos historias chocan (lo viste en B3). Tu repo local ya tiene todo.</li><li>Tampoco marques <code>.gitignore</code> ni <code>license</code>: tú ya tienes tu <code>.gitignore</code> desde C3.</li></ul><p><strong>Paso 2 — Copia la URL del repo.</strong> GitHub te la da al terminar: <code>https://github.com/tuusuario/mi-primera-pagina.git</code>. Cópiala, no la escribas a mano — un typo en la URL es la causa #1 de \"repository not found\" (B4).</p><p><strong>Paso 3 — Conecta tu repo local con el remoto.</strong> En la terminal, dentro de tu carpeta:</p><pre><code>git remote add origin https://github.com/tuusuario/mi-primera-pagina.git\ngit remote -v</code></pre><p>Si aparece <code>origin</code> con tu URL dos veces, quedó conectado.</p><p><strong>Paso 4 — Asegura que tu rama se llame main.</strong> Es lo que GitHub espera:</p><pre><code>git branch -M main</code></pre><p><strong>Paso 5 — Sube todo por primera vez.</strong></p><pre><code>git push -u origin main</code></pre><p>La primera vez GitHub te pide identificarte. Ya NO es tu contraseña: es un <strong>Personal Access Token</strong> (B5, B28). Si no tienes uno, genera un token en Settings → Developer settings → Personal access tokens, y úsalo como contraseña.</p><p><strong>Paso 6 — Refresca tu página de GitHub.</strong> Verás <code>index.html</code>, tu <code>.gitignore</code> y —en la pestaña <strong>Commits</strong>— todo el historial de C4. Tu proyecto viajó completo.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Es el día de la <strong>mudanza al local</strong>. Tu página vivía en una bodega (tu computadora), con todo acomodado por commits (C4). Hoy la cargas completa —archivos e historial— y la dejas instalada en su dirección pública. Todavía nadie puede entrar, pero ya tiene dirección y llave. En C8 abres las puertas al público.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>La sesión completa de subida:</p><pre><code>1. GitHub → [New] → Repository name: mi-primera-pagina\n   ● Public   ○ Private\n   ☐ Add a README          ← NO marcar\n   ☐ .gitignore            ← NO marcar (ya tienes uno)\n   ☐ license               ← NO marcar\n   [Create repository]\n\n2. Copias la URL:  https://github.com/rayflores/mi-primera-pagina.git\n\n3. C:\\...\\mi-primera-pagina&gt; git remote add origin https://github.com/rayflores/mi-primera-pagina.git\n   C:\\...\\mi-primera-pagina&gt; git remote -v\n   origin  https://github.com/rayflores/mi-primera-pagina.git (fetch)\n   origin  https://github.com/rayflores/mi-primera-pagina.git (push)\n\n4. C:\\...\\mi-primera-pagina&gt; git branch -M main\n\n5. C:\\...\\mi-primera-pagina&gt; git push -u origin main\n   [pegas tu Personal Access Token cuando lo pida]\n   Enumerating objects: 5, done.\n   To https://github.com/rayflores/mi-primera-pagina.git\n    * [new branch]      main -&gt; main\n   branch 'main' set up to track 'origin/main'.\n\n6. Refrescas GitHub → tus archivos y tus commits están ahí.</code></pre><p>Ese <code>set up to track</code> es la magia de <code>-u</code>: de ahora en adelante, <code>git push</code> a secas sube tus cambios.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Acabo de subir mi proyecto a GitHub por primera vez. Te pego la salida de mi push: [pégalas aquí]. 1) Confírmame que quedó bien. 2) Si algo falló (repository not found, authentication failed, rejected), dime exactamente qué significa y qué comando correr. Mi repo se llama mi-primera-pagina.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "ordenar", instruccion: "Pasos para subir tu proyecto a GitHub:", elementos: ["crear el repo vacío en GitHub (sin README)", "copiar la URL del repo", "git remote add origin URL", "git branch -M main", "git push -u origin main"] },
+              { tipo: "multiple", pregunta: "¿Por qué NO debes marcar \"Add a README\" al crear el repo si tu carpeta local ya tiene commits?", opciones: ["GitHub no permite README en repos públicos", "Crea un commit inicial en el remoto que tu historial local no tiene, y chocará al hacer push", "El README vuelve el repo privado", "Es indiferente: no pasa nada"], correcta: 1 },
+              { tipo: "completar", frase: "git remote add origin ____ registra en tu repo local la dirección de su copia ____. Para verificar la conexión usas git remote ____.", banco: ["URL", "remota", "-v", "main"], respuestas: ["URL", "remota", "-v"] },
+              { tipo: "quehace", codigo: "git push -u origin main", pregunta: "Corres este comando por primera vez. ¿Qué logra la bandera -u?", opciones: ["Sube solo el commit más reciente", "Sube tus commits Y recuerda la conexión para que después baste con git push", "Borra el remoto y lo crea de nuevo", "Renombra tu rama a origin"], correcta: 1 },
+              { tipo: "vf", afirmacion: "Después del push exitoso, en github.com/tuusuario/mi-primera-pagina verás tus archivos y todo tu historial de commits de C4.", correcta: true, explicacion: "push sube los commits completos: archivos e historial viajan juntos." }
+            ]
+          },
+          {
+            id: "m2-c8",
+            titulo: "PRÁCTICA: publicar tu página con GitHub Pages",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Tu página ya vive en GitHub (C7). Hoy deja de ser código y se vuelve página pública: la habilitas con <strong>GitHub Pages</strong> (la teoría fue B20). En el Mes 1 la publicaste con Netlify Drop (C16); ahora haces lo mismo con la versión profesional: el sitio sale directo del repositorio y se actualiza solo con cada push.</p><p><strong>Paso 1 — Revisa la raíz.</strong> GitHub Pages sirve los archivos de tu repo, y el principal debe llamarse <code>index.html</code> y estar en la raíz (C3 te lo dejó así). Si lo tienes, vas bien.</p><p><strong>Paso 2 — Enciende Pages.</strong> En tu repo: <strong>Settings</strong> → <strong>Pages</strong> → <strong>Build and deployment</strong> → Source: <strong>Deploy from a branch</strong> → Branch: <code>main</code> → Folder: <code>/ (root)</code> → <strong>Save</strong>.</p><p><strong>Paso 3 — Espera el primer deploy.</strong> GitHub procesa tu página: el primero tarda alrededor de un minuto (B20). Verás el mensaje <code>Your site is published at</code> con tu URL.</p><p><strong>Paso 4 — Abre tu URL.</strong> El formato es <code>https://tuusuario.github.io/mi-primera-pagina/</code>. Ahí está Tortas El Güero, en línea, sin pagar hosting.</p><p><strong>Si algo sale mal:</strong></p><ul><li><strong>Página en blanco:</strong> revisa que el archivo se llame <code>index.html</code> y esté en la raíz, no en una subcarpeta.</li><li><strong>Error 404:</strong> la URL debe ser exacta: minúsculas, sin espacios, con el nombre del repo.</li><li><strong>No se actualiza un cambio:</strong> cada push regenera el sitio; espera un minuto y refresca.</li></ul><p>Y un detalle que le encantará a tu cliente imaginario: el botón de WhatsApp del Mes 1 ahora funciona en internet — cualquiera que abra tu página puede escribirte.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>En C7 tu página se mudó al local; hoy <strong>abres las puertas al público</strong>. Tu computadora deja de ser el único lugar donde se ve tu trabajo: cualquiera con el enlace —la familia, un cliente, una vacante— entra a verla sin pedirte permiso. GitHub Pages es el portero que abre y cierra todos los días, sin cobrar renta.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>El camino exacto en tu repo:</p><pre><code>github.com/tuusuario/mi-primera-pagina\n  → Settings\n  → Pages\n  → Build and deployment\n  → Source: Deploy from a branch\n  → Branch: main\n  → Folder: / (root)\n  → [Save]\n\nMensaje de éxito (≈1 minuto después):\n  \"Your site is published at\n   https://tuusuario.github.io/mi-primera-pagina/\"\n\nÁbrelo y verifica:\n  Tortas El Güero — página completa con menú,\n  productos y el botón de WhatsApp funcionando\n  desde internet.</code></pre><p>Desde ahora, tu ciclo de publicación es: editas → commiteas → <code>git push</code> (C7) → GitHub actualiza la página.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Acabo de habilitar GitHub Pages en mi repo [nombre]. Dame los pasos para verificar que quedó publicada y qué revisar en orden si sale en blanco, con 404 o sin los últimos cambios. Este es el mensaje que me dio GitHub: [pégalo aquí].\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "multiple", pregunta: "¿Qué requisito debe cumplir tu repo para que GitHub Pages funcione sin líos?", opciones: ["Tener un archivo llamado index.html en la raíz del repo", "Tener una base de datos conectada", "Tener más de 10 commits", "Estar en una rama llamada develop"], correcta: 0 },
+              { tipo: "completar", frase: "En Settings → Pages eliges \"Deploy from a ____\", la rama ____ y la carpeta ____.", banco: ["branch", "main", "/ (root)", "styles"], respuestas: ["branch", "main", "/ (root)"] },
+              { tipo: "ordenar", instruccion: "Pasos para publicar tu página:", elementos: ["confirmar que index.html esté en la raíz del repo", "ir a Settings → Pages", "elegir \"Deploy from a branch\", rama main y carpeta / (root)", "guardar y esperar el primer deploy (~1 min)", "abrir https://tuusuario.github.io/mi-primera-pagina/"] },
+              { tipo: "vf", afirmacion: "Cada vez que haces push de un cambio a main, GitHub Pages regenera tu sitio solo.", correcta: true, explicacion: "el deploy se dispara con cada push: editas, commiteas, haces push (C7) y el sitio se actualiza." },
+              { tipo: "quehace", codigo: "Your site is published at https://rayflores.github.io/mi-primera-pagina/", pregunta: "GitHub muestra este mensaje tras el primer deploy. ¿Qué significa?", opciones: ["Tu repo se sincronizó con Netlify", "Tu página quedó publicada y cualquiera puede abrirla en esa URL", "Tu sitio solo se ve en tu computadora", "Tienes que copiar la URL manualmente a tu navegador cada vez"], correcta: 1 }
+            ]
+          },
+          {
+            id: "m2-c9",
+            titulo: "El flujo diario: pedir → probar → commitear",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Ya tienes todas las piezas: pedir cambios a la IA (Mes 1), versionar (C1-C5) y publicar (C7-C8). Hoy se juntan en <strong>la rutina con la que vas a trabajar el resto del programa — y el resto de tu carrera</strong>. Tres pasos, en orden, siempre:</p><p><strong>1. Pedir.</strong> Le pides el cambio a la IA con un prompt claro: qué quieres, dónde, y cómo verificarlo. Mientras más preciso el pedido, menos vueltas.</p><p><strong>2. Probar.</strong> Abres la página en el navegador y compruebas con tus propios ojos que quedó como pediste. Aquí vives como director: la IA dice que quedó; tú lo confirmas. <strong>No firmas lo que no probaste.</strong></p><p><strong>3. Commitear.</strong> Si el resultado está bien, lo conviertes en punto seguro (C1):</p><pre><code>git status        ← qué archivos cambiaron\ngit diff          ← auditas línea por línea (C1)\ngit add .\ngit commit -m \"feat: ...\"   ← mensaje bueno (C5)</code></pre><p>¿Y si el resultado está mal? <strong>No commitees.</strong> Vuelves a pedir con más contexto, o si la IA lo arruinó feo, reviertes con <code>git restore</code> (C1) y vuelves a pedir. El commit es para lo bueno; el punto seguro protege lo que ya funciona.</p><p>El orden es sagrado: <strong>probar antes de commitear</strong>. Commitear algo que no probaste es firmar un cheque en blanco — y el historial (tu diario, C1) queda mintiendo.</p><p>Ejemplo real sobre Tortas El Güero: pides \"agrega una sección de testimonios\", pruebas en el navegador, y si quedó, commiteas <code>feat: agregar sección de testimonios</code>.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>El flujo es <strong>el chef que prueba antes de servir</strong>. El cocinero nunca manda un platillo del que no conoce el sabor: lo prueba, ajusta la sal, y solo entonces lo pasa al mesero. Tú eres ese chef; la IA es tu cocinero auxiliar. Ella prepara (pedir), tú pruebas (probar), y solo cuando el sabor está bien lo escribes en la receta oficial (commitear). Lo que no se probó, no entra a la receta.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Un ciclo completo, de principio a fin:</p><pre><code>1. PEDIR\n   \"Agrega una sección de testimonios a mi página de\n    Tortas El Güero, con 2 reseñas inventadas. Mantén\n    los colores amarillo y café.\"\n\n2. PROBAR\n   Abres index.html en el navegador:\n   ✔ la sección aparece donde la pediste\n   ✔ el botón de WhatsApp sigue funcionando\n   ✔ se ve bien en celular\n\n3. COMMITEAR\n   C:\\...\\mi-primera-pagina&gt; git status\n       modified:   index.html\n   C:\\...\\mi-primera-pagina&gt; git diff     ← auditas (C1)\n   C:\\...\\mi-primera-pagina&gt; git add .\n   C:\\...\\mi-primera-pagina&gt; git commit -m \"feat: agregar sección de testimonios\"\n   C:\\...\\mi-primera-pagina&gt; git log --oneline\n   b7f2a1 (HEAD -&gt; main) feat: agregar sección de testimonios\n   a3f9c1 Versión inicial de mi página personal</code></pre><p>Pedir → probar → commitear. Ese ciclo, repetido varias veces al día, es el corazón de este programa.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Voy a hacerte un pedido para mi página. Cuando me des el código, NO me des el mensaje de commit todavía: primero lo pruebo en el navegador. Si quedó bien, te pego el git diff y me escribes el mensaje con Conventional Commits. Si no quedó, te digo qué falló y me lo corriges.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "ordenar", instruccion: "El flujo diario con la IA:", elementos: ["pedir el cambio a la IA", "probar el resultado en el navegador", "auditar con git status y git diff", "git add y git commit con buen mensaje"] },
+              { tipo: "multiple", pregunta: "El cambio que hizo la IA rompió la página. ¿Qué haces?", opciones: ["Commiteas igual para no perder el trabajo", "No commiteas: vuelves a pedirle, o reviertes con git restore si lo arruinó feo", "Borrras todo el repositorio y empiezas de nuevo", "Le pides el mensaje de commit a la IA"], correcta: 1 },
+              { tipo: "completar", frase: "El orden es sagrado: ____ antes de commitear. Commitear algo que no probaste es ____ un cheque en blanco.", banco: ["probar", "firmar", "pedir", "dibujar"], respuestas: ["probar", "firmar"] },
+              { tipo: "vf", afirmacion: "git status y git diff son parte del paso de auditar antes de commitear.", correcta: true, explicacion: "status te dice qué archivos cambiaron y diff te deja auditar línea por línea lo que la IA hizo (C1)." },
+              { tipo: "quehace", codigo: "feat: agregar sección de testimonios", pregunta: "Después de probar el cambio en el navegador, usas este mensaje en git commit. ¿Qué demuestra?", opciones: ["Que hiciste push directo a GitHub", "Que seguiste la convención de C5 y el cambio quedó probado antes de commitear", "Que no probaste nada antes de commitear", "Que cambiaste de rama"], correcta: 1 }
+            ]
+          },
+          {
+            id: "m2-c10",
+            titulo: "PRÁCTICA: trabajar en una rama nueva con IA",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Viste la teoría de las ramas en A17-A18: aíslan tu trabajo para que lo estable nunca se rompa. Hoy lo llevas a la práctica con IA sobre tu proyecto real: <strong>le pides un cambio grande sin tocar main</strong>, la versión segura (C1). Si el experimento funciona, lo integras con merge (A19); si no, descartas la rama y main ni se entera.</p><p><strong>Paso 1 — Crea tu rama.</strong> El nombre describe la tarea, no a ti (A17): <code>agregar-menu</code>, <code>cambiar-colores</code>, nunca <code>cambios-finales-v2</code>.</p><pre><code>git switch -c agregar-menu-semanal</code></pre><p><strong>Paso 2 — Confirma que estás en la rama.</strong> El error de principiante de A18: commitear en main creyendo estar en la rama. Una sola lectura:</p><pre><code>git status     ← la primera línea dice: On branch agregar-menu-semanal</code></pre><p><strong>Paso 3 — Pide el cambio a la IA</strong> (el paso 1 de C9).</p><p><strong>Paso 4 — Prueba en el navegador</strong> (el paso 2 de C9).</p><p><strong>Paso 5 — Commitea EN LA RAMA.</strong> El mismo ciclo de siempre (C4):</p><pre><code>git add .\ngit commit -m \"feat: agregar menú semanal\"</code></pre><p>Ese commit cae en <code>agregar-menu-semanal</code>, no en <code>main</code>.</p><p><strong>Paso 6 — Verifica el aislamiento.</strong></p><pre><code>git switch main          ← la página vuelve a estar como antes\ngit switch agregar-menu-semanal   ← ahí está tu experimento</code></pre><p>Dos historiales separados (A18). Cuando decidas que el experimento está listo, lo llevas a main con merge (A19). Y si no te convence, borras la rama y sigues como si nada.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Es la <strong>cocina de pruebas del local de Tortas</strong>: la carta (main) nunca cambia de golpe. Los platillos nuevos se preparan aparte, se prueban, y solo si salen bien entran a la carta (merge). Si el platillo falla, se descarta y la carta sigue igual — los clientes (tu página en producción, C8) nunca se enteraron del intento.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>La sesión completa:</p><pre><code>C:\\...\\mi-primera-pagina&gt; git switch -c agregar-menu-semanal\nSwitched to a new branch 'agregar-menu-semanal'\n\nC:\\...\\mi-primera-pagina&gt; git status\nOn branch agregar-menu-semanal      ← confirmado\n\n→ Pides a la IA: \"Agrega una sección de menú semanal a\n  mi página de Tortas El Güero, con un platillo distinto\n  para cada día de la semana.\"\n\n→ Pruebas en el navegador: quedó bien ✔\n\nC:\\...\\mi-primera-pagina&gt; git add .\nC:\\...\\mi-primera-pagina&gt; git commit -m \"feat: agregar menú semanal\"\n[agregar-menu-semanal c8d3e2] feat: agregar menú semanal\n\nC:\\...\\mi-primera-pagina&gt; git switch main\nSwitched to branch 'main'\n\nC:\\...\\mi-primera-pagina&gt; git log --oneline\na3f9c1 Versión inicial de mi página personal   ← main no cambió\n\nC:\\...\\mi-primera-pagina&gt; git switch agregar-menu-semanal\nC:\\...\\mi-primera-pagina&gt; git log --oneline\nc8d3e2 feat: agregar menú semanal             ← aquí vive el experimento\n a3f9c1 Versión inicial de mi página personal</code></pre><p>El experimento quedó aislado. Ahora decides: merge a main (A19) o descartarlo. Con la rama, el miedo que te quitó Git en C1 nunca vuelve.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Voy a pedirte un cambio grande a mi página y lo voy a probar en una rama para no tocar main. Pásame el código del cambio. Cuando yo lo pruebe, te pego el git diff de mi rama y me escribes el mensaje de commit con Conventional Commits. Si decido descartarlo, solo te aviso.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "multiple", pregunta: "Antes de pedirle un cambio grande a la IA creas la rama con git switch -c agregar-menu. ¿Por qué conviene?", opciones: ["Porque sin rama la IA no puede trabajar", "Para que el experimento no toque main: si falla, descartas la rama y la versión estable sigue intacta", "Porque las ramas hacen el sitio más rápido", "Para hacer push sin necesitar token"], correcta: 1 },
+              { tipo: "ordenar", instruccion: "Flujo de trabajo en una rama nueva:", elementos: ["git switch -c nombre-de-la-rama", "confirmar con git status que estás en la rama", "pedir el cambio a la IA y probarlo en el navegador", "git add y git commit en tu rama", "git switch main para verificar que main no cambió"] },
+              { tipo: "vf", afirmacion: "Si haces commit estando en tu rama nueva, ese commit también aparece en main.", correcta: false, explicacion: "los commits de una rama viven solo en ella; main no se entera hasta el merge (A18-A19)." },
+              { tipo: "completar", frase: "El nombre de una rama describe la ____, no a ti: ____ sí, cambios-finales-v2 no. Antes de commitear confirmas en qué rama estás con ____.", banco: ["tarea", "agregar-menu", "git status", "git push"], respuestas: ["tarea", "agregar-menu", "git status"] },
+              { tipo: "relacionar", pares: [["git switch -c agregar-menu", "Crea la rama y te mueves a ella"], ["git status", "Confirmas en qué rama estás antes de commitear"], ["git switch main", "Volver a la versión estable"], ["git commit en tu rama", "Guardar el experimento sin tocar main"]] }
+            ]
+          },
+          {
+            id: "m2-c11",
+            titulo: "Cuando la IA rompe algo: volver atrás con Git",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>La IA va a romper algo en algún momento. No es mala suerte: es parte del trabajo. La diferencia entre un principiante y un constructor es qué pasa en los segundos siguientes.</p><p>Tu red de seguridad ya está puesta (C1): el punto seguro es tu último commit (C4). Lo que aprendes hoy es <strong>el botón de deshacer</strong> de Git — y cuál usar en cada situación. Tres escenarios, tres comandos:</p><p><strong>Escenario 1 — La IA rompió archivos y NO has commiteado.</strong> El caso más común (C9: pruebas antes de commitear):</p><pre><code>git restore .</code></pre><p>Vuelve todos los archivos a como estaban en el último commit. Los cambios malos desaparecen y, como nunca se commitearon, no dejan rastro. Para un solo archivo: <code>git restore index.html</code>.</p><p><strong>Escenario 2 — Commiteaste algo malo pero NO lo has subido.</strong> Solo tú y tu computadora saben del error; GitHub todavía no. Puedes regresar a un commit anterior:</p><pre><code>git reset --hard a3f9c1d</code></pre><p>Regresa al commit <code>a3f9c1d</code> y descarta los posteriores. Es seguro únicamente porque nada de eso está publicado.</p><p><strong>Escenario 3 — El error ya está en GitHub.</strong> Lo subiste con <code>git push</code> (C7), y borrarlo con reset reescribiría un historial que otros comparten. En vez de borrarlo, lo <em>deshaces</em>:</p><pre><code>git revert b7f2a1</code></pre><p>Crea un commit nuevo que revierte ese cambio, dejando el historial completo y contando la historia honesta: aquí se arregló.</p><p><strong>El bonus: git stash.</strong> Para guardar el trabajo a medias sin perderlo ni borrarlo:</p><pre><code>git stash\ngit stash list\ngit stash pop</code></pre><p>Regla mental: <strong>commit = fotografía, restore = borrar borrador, stash = cajón de guardado, revert = deshacer sin reescribir</strong>.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Es un <strong>videojuego con checkpoints</strong>. Cuando el jefe final te derrota (la IA rompió todo), no vuelves a empezar desde cero: reapareces en el último checkpoint (tu commit) y lo vuelves a intentar. Saber que existe el checkpoint es lo que te deja intentar la pelea difícil sin miedo. Git es tu checkpoint infinito: en vez de empezar de nuevo, rebobinas unos segundos y sigues.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>La sesión completa del escenario más común — la IA rompió el archivo y no has commiteado:</p><pre><code>C:\\...\\mi-primera-pagina&gt; git status\nOn branch main\nChanges not staged for commit:\n  (use \"git restore &lt;file&gt;...\" to discard changes)\n        modified:   index.html\n\n→ \"IA, cambia la paleta a tonos azules\"\n→ Abres la página: el contraste quedó fatal\n\nC:\\...\\mi-primera-pagina&gt; git restore .\n\nC:\\...\\mi-primera-pagina&gt; git status\nOn branch main\nnothing to commit, working tree clean\n\n→ Como si nada hubiera pasado. Pides la siguiente idea.</code></pre><p>Y si ya había subido el cambio por error:</p><pre><code>C:\\...\\mi-primera-pagina&gt; git revert b7f2a1\n[main 91c4e2] Revert \"feat: agregar paleta azul\"\n\nC:\\...\\mi-primera-pagina&gt; git push   ← el historial sigue limpio y completo</code></pre><p>Ese ciclo — rompió, revierte, sigue — es el que convierte a la IA en una herramienta segura en vez de un riesgo.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"La IA me hizo un cambio que no me gustó y no lo he commiteado. Confírmame cuál comando corresponde: git restore, git reset --hard o git revert. Si el cambio ya lo subí a GitHub, cuál debo usar y por qué no debo borrar el historial.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "multiple", pregunta: "La IA rompió tu index.html y todavía NO has commiteado el cambio. ¿Qué comando deshace el desastre?", opciones: ["git revert b7f2a1", "git restore .", "git push --force", "git stash pop"], correcta: 1 },
+              { tipo: "completar", frase: "Si el cambio malo ya lo subiste a GitHub, usas ____: crea un commit nuevo que lo deshace. Si es local y no está subido, puedes usar ____ para volver a un commit anterior descartando los posteriores.", banco: ["git revert", "git reset --hard", "git push", "git stash"], respuestas: ["git revert", "git reset --hard"] },
+              { tipo: "relacionar", pares: [["git restore .", "Descartar cambios NO commiteados y volver al último commit"], ["git stash", "Guardar el trabajo a medias aparte y recuperarlo después"], ["git revert", "Deshacer un cambio ya subido a GitHub creando un commit inverso"], ["git reset --hard", "Volver a un commit local descartando los posteriores (solo si no está subido)"]] },
+              { tipo: "vf", afirmacion: "Después de git restore ., los cambios que descartaste siguen recuperables desde el historial de Git.", correcta: false, explicacion: "si nunca se commitearon no existen en el historial: restore los borra de la rama de trabajo; el commit es la única fotografía que Git conserva." },
+              { tipo: "quehace", codigo: "git revert b7f2a1\n[main 91c4e2] Revert \"feat: agregar paleta azul\"", pregunta: "Corres este comando y Git responde [main 91c4e2] Revert \"feat: agregar paleta azul\". ¿Qué pasó?", opciones: ["Se borró el commit b7f2a1 del historial", "Se creó un commit nuevo que deshace los cambios de b7f2a1, dejando el historial completo", "Tu rama se renombró a main", "Se subieron tus cambios sin hacer push"], correcta: 1 }
+            ]
+          },
+          {
+            id: "m2-c12",
+            titulo: "PRÁCTICA: tu primer Pull Request (a tu propio repo)",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Tu página de Tortas El Güero ya vive en GitHub (C7-C8). Hoy haces el ensayo completo de un flujo profesional: <strong>cambias algo en una rama y lo llevas a main con un Pull Request</strong> (la teoría fue B13-B14). Es tu primer PR, y es a tu propio repo — el mejor lugar para practicar: no hay jefe que te apure.</p><p><strong>Paso 1 — Crea una rama para un cambio concreto.</strong> El nombre describe la tarea (C10):</p><pre><code>git switch -c agregar-seccion-contacto</code></pre><p><strong>Paso 2 — Pide el cambio a la IA</strong> (el paso 1 de C9): \"Agrega una sección de contacto a mi página de Tortas El Güero, con teléfono, dirección y horario.\"</p><p><strong>Paso 3 — Prueba en el navegador</strong> (el paso 2 de C9). Si no quedó bien, vuelve a pedir hasta que quede.</p><p><strong>Paso 4 — Commitea EN LA RAMA</strong> (C10), con buen mensaje (C5):</p><pre><code>git add .\ngit commit -m \"feat: agregar sección de contacto\"</code></pre><p><strong>Paso 5 — Sube la rama al remoto.</strong> Es lo que hace visible tu rama en GitHub:</p><pre><code>git push -u origin agregar-seccion-contacto</code></pre><p><strong>Paso 6 — Abre la PR.</strong> GitHub te muestra el botón <strong>Compare &amp; pull request</strong>. Verifica: base <code>main</code>, compare tu rama. Escribe un título claro y una descripción de qué hace y cómo probarlo (B14).</p><p><strong>Paso 7 — Mergea con squash.</strong> Es tu repo y tu main todavía no está protegido (eso llega en C22), así que el botón de merge está disponible. Presiona <strong>Merge pull request</strong> → <strong>Squash and merge</strong> (B16): tu rama se integra como un solo commit limpio.</p><p><strong>Paso 8 — Limpia.</strong> GitHub te ofrece borrar la rama remota: acepta. En la terminal vuelve a main, baja los cambios y borra la rama local:</p><pre><code>git switch main\ngit pull\ngit branch -d agregar-seccion-contacto</code></pre><p>Verifica el resultado en GitHub Pages (C8): la página publicada ya tiene tu sección de contacto.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Es el <strong>ensayo general antes del estreno</strong>. El escenario es el mismo (tu proyecto), el público todavía no llega (es tu propio repo) y el guion completo se prueba una vez: rama, PR, revisión, merge. Cuando un cliente o un equipo real entre en escena, el flujo ya no te va a sorprender: lo hiciste contigo mismo.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>La sesión completa de tu primer PR:</p><pre><code>C:\\...\\mi-primera-pagina&gt; git switch -c agregar-seccion-contacto\nSwitched to a new branch 'agregar-seccion-contacto'\n\n→ Pides a la IA y pruebas en el navegador ✔\n\nC:\\...\\mi-primera-pagina&gt; git add .\nC:\\...\\mi-primera-pagina&gt; git commit -m \"feat: agregar sección de contacto\"\n[agregar-seccion-contacto 8e2f4a] feat: agregar sección de contacto\n\nC:\\...\\mi-primera-pagina&gt; git push -u origin agregar-seccion-contacto\n * [new branch]  agregar-seccion-contacto -&gt; agregar-seccion-contacto\n\n→ GitHub: [Compare &amp; pull request]\n  Título: \"Agrega sección de contacto\"\n  Descripción: \"Muestra teléfono, dirección y horario.\n   Se prueba abriendo la página en el navegador.\"\n  [Create pull request] → [Merge pull request] → [Squash and merge]\n\n→ GitHub: [Delete branch]   ← borra la rama remota\n\nC:\\...\\mi-primera-pagina&gt; git switch main\nC:\\...\\mi-primera-pagina&gt; git pull\nC:\\...\\mi-primera-pagina&gt; git branch -d agregar-seccion-contacto\nDeleted branch agregar-seccion-contacto</code></pre><p>Refresca tu página en GitHub Pages: la sección de contacto quedó integrada por una PR que aprobaste tú.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Ya subí mi rama [agregar-seccion-contacto] y quiero abrir mi primer Pull Request a mi propio repo. Dame el paso a paso: qué revisar al elegir base y compare, cómo escribir un título y una descripción que sirvan, y la estrategia de merge que me conviene para que main quede con un solo commit limpio.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "ordenar", instruccion: "Acomoda el flujo de tu primer Pull Request:", elementos: ["crear la rama con git switch -c", "pedir el cambio a la IA y probarlo en el navegador", "commitear en la rama con buen mensaje", "subir la rama con git push -u origin agregar-seccion-contacto", "abrir Compare & pull request y crear la PR", "mergear con squash y limpiar la rama"] },
+              { tipo: "multiple", pregunta: "Tu rama agregar-seccion-contacto ya tiene commits. ¿Qué comando la sube a GitHub para poder abrir la PR?", opciones: ["git push -u origin main", "git push -u origin agregar-seccion-contacto", "git pull origin agregar-seccion-contacto", "git merge main"], correcta: 1 },
+              { tipo: "completar", frase: "Al crear la PR eliges la rama ____ (a donde llegan los cambios) y la ____ (de donde salen). Al mergear, usa ____ para que main quede con un solo commit limpio.", banco: ["base", "comparada", "squash", "reset"], respuestas: ["base", "comparada", "squash"] },
+              { tipo: "vf", afirmacion: "Después del merge con squash y de borrar la rama remota, tu rama local ya se integró y puedes borrarla con git branch -d.", correcta: true, explicacion: "sí: la rama local ya se fusionó con main; se borra con git branch -d después de volver a main y hacer pull." },
+              { tipo: "quehace", codigo: "git branch -d agregar-seccion-contacto", pregunta: "Después de mergear el PR corres este comando y Git responde Deleted branch agregar-seccion-contacto. ¿Qué hiciste?", opciones: ["Borraste tu rama local porque ya se integró a main con el merge", "Borraste la rama main", "Cancelaste el merge del PR", "Eliminaste tu proyecto de GitHub"], correcta: 0 }
+            ]
+          },
+          {
+            id: "m2-c13",
+            titulo: "Revisar el código que la IA generó, en el PR",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Abrir la PR (C12) no es el final: es el momento de <strong>revisar</strong>. El código que entrará a main lo generó la IA y, como viste en B15, a la IA no se le aprueba por cortesía — se le verifica. En la pestaña <strong>Files changed</strong> de la PR está el diff completo: todo lo que la IA agregó, quitó o modificó, línea por línea.</p><p>Tu lista de revisión para código de la IA, en este orden:</p><ol><li><strong>¿Cumple lo que pediste?</strong> Tu brief (C15) pedía una sección de horarios — ¿eso aparece?</li><li><strong>¿Cambió algo que no pediste?</strong> La IA suele \"ayudar\" de más: borrar un botón, renombrar clases, mover secciones. Todo lo que no pediste es señal de alerta.</li><li><strong>¿Hay secretos?</strong> Correos personales, teléfonos reales, llaves de API o un <code>.env</code> (C3) — nada de eso va a un repo público.</li><li><strong>¿Hay basura o ruido?</strong> Cambios de formato, archivos sueltos, <code>console.log</code> de prueba. Si no forma parte del cambio, se quita.</li><li><strong>¿Lo probaste?</strong> Ya lo verificaste en el navegador (C9) antes de commitear; la PR confirma lo mismo para el historial.</li></ol><p>Cómo dejas tu veredicto: en <strong>Files changed</strong> pasas el cursor sobre una línea, aparece un botón <code>+</code> y dejas un comentario en esa línea exacta. Con la IA como junior dev, el ciclo típico es: revisas el diff → encuentras algo → comentas → le pides el arreglo → haces push → la PR se actualiza sola (B14) → re-revisas → <strong>Approve</strong> → merge (B16).</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Es <strong>recibir la mercancía del proveedor contra la nota de pedido</strong>. Pediste cinco cajas de manteca y una docena de huevos; cuando llega el reparto (la IA), no firmas sin abrir: cuentas contra la nota qué llegó, qué falta y qué vino de más. Si todo cuadra, firmas (approve). Si algo no cuadra, lo devuelves con nota (request changes). Firmar sin revisar es el error que se paga después, con la página rota en producción.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Un diff real de una PR de la IA sobre Tortas El Güero — y la revisión que lo atrapa:</p><pre><code>PR #12 · Files changed · index.html\n\n@@ -20,7 +20,7 @@\n   &lt;a href=\"https://wa.me/5512345678\" class=\"btn-wa\"&gt;\n     Pídenos por WhatsApp\n   &lt;/a&gt;\n-  &lt;section class=\"testimonios\"&gt;\n+  &lt;!-- sección temporal mientras arreglo el menú --&gt;\n+  &lt;section class=\"testimonios\" style=\"display:none\"&gt;\n     &lt;h2&gt;Lo que dicen nuestros clientes&lt;/h2&gt;\n\nComentario tuyo en la línea 23:\n  \"No pedí ocultar los testimonios. Restaura el bloque\n   completo y quita el style display:none.\"\n\n→ Le pides el arreglo a la IA, haces push,\n  la PR se actualiza y apruebas.</code></pre><p>La revisión atrapó algo que la IA hizo por su cuenta. Eso — y no el merge ciego — es lo que mantiene tu página sana.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Actúa como revisor senior de la PR de mi página: te pego el diff. Dime: 1) si cumple lo que pedí, 2) si cambió algo que no estaba en mi pedido, 3) si hay secretos o datos reales que no deben ser públicos, 4) si hay basura o cambios de formato. Señala cada problema en la línea exacta y propón el arreglo. No apruebes por cortesía.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "multiple", pregunta: "En la pestaña Files changed de la PR ves que la IA también cambió los colores de toda la página — algo que no le pediste. ¿Qué haces?", opciones: ["Lo apruebas: la IA sabe lo que hace", "Dejas un comentario en esa línea pidiendo que lo revierta antes del merge", "Borras la PR y abres otra sin revisar", "Mergeas y lo corriges después en producción"], correcta: 1 },
+              { tipo: "completar", frase: "En Files changed pasas el cursor sobre una línea, presionas el ____ y dejas un ____. Si pides un arreglo, la IA lo hace, haces push y la PR ____ sola.", banco: ["+", "comentario", "se actualiza", "se cierra"], respuestas: ["+", "comentario", "se actualiza"] },
+              { tipo: "relacionar", pares: [["Cumple lo que pediste", "Apruebas y mergeas"], ["Cambió algo que no pediste", "Comentas la línea y pides que lo revierta"], ["Hay un token o dato real en el diff", "No mergear: retirar el secreto y rotarlo"], ["Cambios de formato sin sentido", "Pedir que los quite: no forman parte del cambio"]] },
+              { tipo: "vf", afirmacion: "Si la IA te dice que el cambio quedó bien, ya puedes aprobar la PR sin abrir el diff.", correcta: false, explicacion: "lo que dice la IA no reemplaza tu revisión: abres Files changed y verificas con tus ojos (B15 y C9)." },
+              { tipo: "quehace", codigo: "-  &lt;section class=\"testimonios\"&gt;\n+  &lt;section class=\"testimonios\" style=\"display:none\"&gt;", pregunta: "Este fragmento del diff de una PR de la IA oculta la sección de testimonios. Tu prompt no pedía tocarla. ¿Qué concluyes?", opciones: ["Que es un cambio pedido y debes aprobarlo", "Que la IA modificó algo fuera de lo pedido: comentas la línea y pides que lo restaure", "Que el diff siempre miente", "Que los testimonios se duplicaron"], correcta: 1 }
+            ]
+          },
+          {
+            id: "m2-c14",
+            titulo: "PRÁCTICA: escribir un README que venda tu proyecto",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Tu repo ya tiene historia: commits, ramas, una PR y una página publicada (C7-C12). Lo que le falta es <strong>la cara</strong>: un <code>README.md</code> que le diga a cualquiera — un cliente, una vacante, otro dev — qué es tu proyecto y por qué importa. La regla de B29: <strong>un repo se juzga en 10 segundos</strong>, y el README es lo primero que se lee.</p><p>Las secciones de un README que vende, para un proyecto como Tortas El Güero:</p><ol><li><strong>Título + línea de qué es.</strong> \"Tortas El Güero — sitio de una tortillería real del barrio, con menú, testimonios y pedido por WhatsApp.\"</li><li><strong>Enlace a la página viva.</strong> Tu página ya está publicada (C8): <code>https://tuusuario.github.io/mi-primera-pagina/</code>. Un enlace que se puede abrir vale más que cualquier descripción.</li><li><strong>Qué hace.</strong> Dos o tres frases del valor y para quién es.</li><li><strong>Tecnologías.</strong> HTML, CSS y JavaScript. Sin adornos.</li><li><strong>Cómo ejecutarlo en local.</strong> <code>git clone</code> y abrir <code>index.html</code>. Tres líneas bastan.</li><li><strong>Próximos pasos (opcional).</strong> Una o dos ideas reales: menú semanal, pedidos en línea.</li></ol><p>La regla de oro del README que vende: <strong>nada de mentiras</strong>. No escribas \"carrito de compras\" si no existe: se descubre al primer clic. El README vende con lo que ya está hecho y probado.</p><p>Cómo lo integras con tu flujo: lo creas en una rama (C10), lo mandas por PR (C12), lo revisas en Files changed (C13) y lo mergeas con squash. El repo queda con cara profesional y tu flujo intacto.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>El README es el <strong>escaparate del local</strong>. El negocio puede tener la mejor cocina del barrio, pero si el escaparate está vacío o dice \"proyecto de práctica\", la gente pasa de largo. El escaparate muestra el producto real — tu página viva, con su enlace — y el letrero con lo esencial. Nadie entra por la cocina; entran por lo que ven en la puerta.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>El README de Tortas El Güero, listo para tu repo:</p><pre><code># Tortas El Güero\n\nSitio de la tortillería del barrio: menú del día,\ntestimonios de clientes y pedido directo por WhatsApp.\n\nPágina publicada: https://tuusuario.github.io/mi-primera-pagina/\n\n## Qué hace\n\nMuestra el menú y los precios, presenta los testimonios\nde los clientes y abre WhatsApp para pedir sin salir\nde la página.\n\n## Tecnologías\n\n- HTML\n- CSS\n- JavaScript\n\n## Cómo ejecutarlo en local\n\ngit clone https://github.com/tuusuario/mi-primera-pagina.git\ncd mi-primera-pagina\ny abre index.html en tu navegador.\n\n## Próximos pasos\n\n- Menú semanal en la página\n- Pedidos en línea</code></pre><p>Flujo de integración: <code>git switch -c agregar-readme</code> → creas el archivo → <code>git add .</code> → <code>git commit -m \"docs: agregar README del proyecto\"</code> → push → PR → revisas (C13) → squash merge (C12).</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Te voy a contar qué hace mi proyecto: la página de la tortillería Tortas El Güero con menú, testimonios y botón de WhatsApp, publicada en GitHub Pages. Redáctame el README.md que venda el proyecto, con estas secciones: título, qué es, enlace a la página viva, tecnologías, cómo ejecutarlo en local y próximos pasos. NO inventes funcionalidades que no existen.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "ordenar", instruccion: "Acomoda las secciones de un README que vende:", elementos: ["título y línea de qué es", "enlace a la página viva", "qué hace el proyecto", "tecnologías usadas", "cómo ejecutarlo en local", "próximos pasos"] },
+              { tipo: "multiple", pregunta: "¿Cuál de estas líneas sí corresponde a un README que vende?", opciones: ["Tortas El Güero — sitio de una tortillería real con menú, testimonios y pedido por WhatsApp", "proyecto de práctica para la clase", "tarea de la semana 2, casi no funciona", "no sé qué es esto, lo hizo una IA"], correcta: 0 },
+              { tipo: "completar", frase: "En un README que vende, un ____ a la página publicada (C8) vale más que cualquier descripción. Y la regla de oro: nada de ____ — si el repo no tiene carrito, no lo prometas.", banco: ["enlace", "mentiras", "código", "screenshots"], respuestas: ["enlace", "mentiras"] },
+              { tipo: "vf", afirmacion: "El README se crea en una rama, se integra por Pull Request y se mergea con squash, igual que cualquier otro cambio del proyecto.", correcta: true, explicacion: "sí: el README es un cambio más del repo y sigue el flujo de C10-C13 sin excepciones." },
+              { tipo: "quehace", codigo: "git clone https://github.com/tuusuario/mi-primera-pagina.git", pregunta: "Esta línea va en la sección 'Cómo ejecutarlo en local'. ¿Qué le permite hacer a quien la corra?", opciones: ["Publicar la página con GitHub Pages", "Descargar una copia del proyecto a su computadora para abrir index.html en su navegador", "Borrar el repositorio de GitHub", "Crear una rama nueva"], correcta: 1 }
+            ]
+          },
+          {
+            id: "m2-c15",
+            titulo: "El brief para la IA cuando hay repo de por medio",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>En el Mes 1 le pedías cambios a la IA sobre archivos sueltos. Ahora tu proyecto vive en un repositorio, y eso cambia el prompt: la IA necesita saber <strong>qué repo, qué archivos y qué límites</strong>, y tú necesitas definir <strong>cómo se entrega el cambio</strong>. Ese prompt completo es el <strong>brief con repo de por medio</strong>.</p><p>Las cinco partes de un brief cuando hay repo:</p><ol><li><strong>Contexto.</strong> \"Mi repo es mi-primera-pagina: la página de Tortas El Güero. El archivo principal es index.html.\" Sin esto, la IA adivina.</li><li><strong>El cambio.</strong> Qué quieres, dónde y cómo se verifica (C9): \"Agrega una sección de horarios con una tabla de lunes a domingo. Verifico abriendo index.html en el navegador.\"</li><li><strong>Los límites.</strong> Qué NO tocar. Es lo que previene el \"ayudó de más\" que revisaste en C13: \"No borres el botón de WhatsApp ni cambies la paleta amarillo y café.\"</li><li><strong>La forma de entrega.</strong> Qué quieres recibir: \"Pásame el bloque HTML para pegar en index.html\", o \"propón el cambio y sugiéreme cuándo crear la rama y el PR\".</li><li><strong>El contrato de revisión.</strong> Cómo se cierra el ciclo (C9): \"No me des el mensaje de commit: primero lo pruebo; si quedó, te pido el mensaje con Conventional Commits (C5).\"</li></ol><p>La diferencia práctica: sin brief, la IA decide por ti el alcance — y el alcance inventado es el origen de casi todos los desastres de C11. Con brief, cada vuelta del ciclo pedir → probar → commitear (C9) es más corta y más predecible.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Es <strong>encargar un traje a la medida</strong>. Si le dices al sastre \"hazme un traje\", te llega cualquier cosa a su medida y con sus gustos. Si le das medidas, tela, ocasión y le dices \"no toques la solapa\", el resultado es tuyo. La IA es el sastre más talentoso que existe — y por eso mismo necesita medidas exactas: su talento sin instrucciones es un catálogo al azar.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>El mismo pedido, con y sin brief. Sin brief:</p><pre><code>\"Agrégale cosas a mi página\"</code></pre><p>Resultado: la IA agrega un carrito, cambia los colores, borra el botón de WhatsApp y devuelve 200 líneas que no pediste. Te toca deshacer con <code>git restore .</code> (C11).</p><p>Con brief:</p><pre><code>\"Mi repo es mi-primera-pagina: la página de Tortas\nEl Güero, archivo principal index.html.\n\nAgrega una sección de horarios con una tabla de\nlunes a domingo, abajo de los testimonios.\n\nLímites: no toques el botón de WhatsApp ni la\npaleta amarillo y café.\n\nEntrega: el bloque HTML para pegar en index.html.\nNo me des el mensaje de commit: primero lo pruebo.\"</code></pre><p>Un resultado predecible: solo la tabla, en el lugar pedido, sin daños colaterales. Pruebas, commiteas con un mensaje de C5 y, si lo quieres formal, lo integras por rama y PR (C12).</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Te voy a pedir cambios para mi repo. Antes de escribir código, confirma que entiendes: 1) qué repo y archivos voy a tocar, 2) qué cambio pido y cómo lo voy a verificar, 3) qué cosas NO debes tocar, 4) cómo me vas a entregar el cambio. Si algo de esto me falta en el pedido, pídemelo antes de empezar.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "multiple", pregunta: "¿Cuál es la diferencia clave al pedirle un cambio a la IA ahora que tienes repositorio?", opciones: ["El prompt debe incluir contexto del repo, archivos a tocar, límites y forma de entrega", "Ya no se le pide nada: la IA trabaja sola sobre el repo", "Los prompts ahora van en inglés obligatorio", "El brief solo sirve para proyectos grandes"], correcta: 0 },
+              { tipo: "completar", frase: "El brief con repo tiene cinco partes: ____ (qué repo y archivos), el ____ pedido, los ____ (qué NO tocar), la forma de ____ y el contrato de revisión.", banco: ["contexto", "cambio", "límites", "entrega"], respuestas: ["contexto", "cambio", "límites", "entrega"] },
+              { tipo: "relacionar", pares: [["Contexto", "Mi repo es mi-primera-pagina: la página de Tortas El Güero, archivo principal index.html"], ["Cambio", "Agrega una sección de horarios con tabla de lunes a domingo, abajo de los testimonios"], ["Límites", "No toques el botón de WhatsApp ni la paleta amarillo y café"], ["Entrega", "Pásame el bloque HTML para index.html; el mensaje de commit lo pedimos después de probar"]] },
+              { tipo: "vf", afirmacion: "Un prompt vago como 'agrégale cosas a mi página' es eficiente cuando ya hay repo: la IA conoce el contexto y decide el alcance.", correcta: false, explicacion: "sin brief la IA inventa el alcance: toca lo que no pediste y rompe lo que funcionaba (C11 y C13)." },
+              { tipo: "quehace", codigo: "Límites: no toques el botón de WhatsApp ni la paleta amarillo y café.\nEntrega: el bloque HTML para index.html. Primero lo pruebo.", pregunta: "Esta parte del brief…", opciones: ["Define qué no puede tocar la IA y cómo entregará el cambio, dejándote la verificación a ti", "Es opcional y solo le da ruido a la IA", "Es un comando de Git para la terminal", "Es el título de tu pull request"], correcta: 0 }
+            ]
+          },
+          {
+            id: "m2-c16",
+            titulo: "PRÁCTICA: documentar tu proyecto con IA",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Tu repo ya tiene cara: el README de C14. Lo que le falta es el manual de taller: documentar cómo funciona el proyecto para que tu yo de dentro de tres meses — o cualquier otro dev — lo entienda sin leer el código línea por línea.</p><p>Para tu nivel, la documentación que vale es un archivo nuevo, <code>docs/proyecto.md</code>, que responda tres preguntas:</p><ol><li><strong>Estructura.</strong> Qué archivos hay y para qué sirve cada uno.</li><li><strong>Conexiones.</strong> Qué pieza depende de qué; dónde está el botón de WhatsApp y por qué aparece en todas las secciones.</li><li><strong>Decisiones.</strong> Por qué está hecho así. Eso no aparece en el código, y es justo lo que más se pierde con el tiempo.</li></ol><p>La buena noticia: la documentación es texto, y el texto es el territorio natural de la IA. No la escribes tú: le pasas a la IA tu historia (<code>git log --oneline</code>) y tu lista de archivos, y ella redacta el manual. Tu trabajo es revisarlo con los mismos ojos de C13 — si no cumple lo que pediste, se corrige — e integrarlo por rama y PR (C12).</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>El README es el escaparate del local (C14): lo que ve el cliente. La documentación es el <strong>recetario interno de la cocina</strong>: el procedimiento de cada platillo, con cantidades y orden, para que cualquier cocinero nuevo — o tu yo del futuro — prepare lo mismo sin que el chef que lo armó esté presente. El cliente nunca ve el recetario, pero sin él el negocio depende de la memoria de una sola persona.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>El flujo completo, sobre tu proyecto de Tortas El Güero:</p><pre><code>C:\\...\\tortas-el-guero&gt; git log --oneline\na3f9c1d docs: agregar README (C14)\nb7f2a1 feat: agregar sección de contacto\n8e2f4a feat: agregar menú del día\n\nC:\\...\\tortas-el-guero&gt; dir /B\n.gitignore\nindex.html\nREADME.md\nscript.js\nstyle.css\n\nC:\\...\\tortas-el-guero&gt; git switch -c agregar-documentacion\nSwitched to a new branch 'agregar-documentacion'\n\n→ Le pegas la salida a la IA y pides el manual (prompt de abajo)\n→ Revisas que no invente archivos ni funciones (C13); si inventó, pides corrección\n\nC:\\...\\tortas-el-guero&gt; mkdir docs\nC:\\...\\tortas-el-guero&gt; git add .\nC:\\...\\tortas-el-guero&gt; git commit -m \"docs: agregar documentación del proyecto\"\n[agregar-documentacion 4c1e9d] docs: agregar documentación del proyecto\n\nC:\\...\\tortas-el-guero&gt; git push -u origin agregar-documentacion\n→ PR (C12) → revisión (C13) → squash merge</code></pre><p>Documentado. Tu proyecto ya se explica solo.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Te voy a pegar la historia de mi proyecto (git log --oneline) y su lista de archivos. Redáctame un manual en docs/proyecto.md que responda: 1) la estructura del proyecto, 2) cómo se conectan las piezas, 3) las decisiones de diseño que se notan en los commits. NO inventes archivos, funciones ni características que no aparezcan en lo que te pego. Si algo no está claro, dime qué información te falta.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "multiple", pregunta: "¿Qué responde la documentación de docs/proyecto.md que NO aparece en el código?", opciones: ["La sintaxis de HTML y CSS", "El porqué de las decisiones de diseño", "El código fuente de index.html", "Los precios de GitHub"], correcta: 1 },
+              { tipo: "completar", frase: "El ____ es el escaparate del local (C14); la ____ es el recetario interno de la cocina: estructura, conexiones y decisiones.", banco: ["README", "documentación", "commit", "rama"], respuestas: ["README", "documentación"] },
+              { tipo: "relacionar", pares: [["git log --oneline", "La historia del proyecto, para pasársela a la IA"], ["docs/proyecto.md", "El manual de estructura, conexiones y decisiones"], ["Revisar como en C13", "Atrapar lo que la IA inventa al documentar"], ["Squash merge", "Integrar la documentación como un solo commit limpio"]] },
+              { tipo: "vf", afirmacion: "La IA puede inventar archivos o funciones al documentar, por eso revisas su manual con el mismo criterio de C13 antes de mergear.", correcta: true, explicacion: "sí: sin el contexto exacto la IA alucina; la revisión atrapa lo que no cumple lo pedido." },
+              { tipo: "ordenar", instruccion: "Acomoda el flujo para documentar tu proyecto con IA:", elementos: ["revisar la historia con git log --oneline", "crear la rama agregar-documentacion", "pasar historia y archivos a la IA para el manual", "revisar que no invente archivos ni funciones (C13)", "commitea con docs: y sube la rama", "abrir PR, revisar y mergear con squash"] }
+            ]
+          },
+          {
+            id: "m2-c17",
+            titulo: "Issues como lista de tareas dirigida a la IA",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Un Issue de GitHub es una tarea escrita, con número propio y un hilo de conversación. Para tu flujo con IA es la pieza que faltaba: el puente entre \"quiero algo\" y \"le pido algo a la IA\".</p><p>Por qué los Issues son ideales para trabajar con IA:</p><ol><li><strong>Te obligan a escribir la tarea bien.</strong> No existe \"arregla eso\". Escribir un Issue es escribir un mini-brief (C15): qué, dónde, cómo se verifica y qué no tocar.</li><li><strong>Cada Issue es una unidad de trabajo.</strong> Una tarea, un número, una rama (C10), un PR (C12). El patrón profesional: crear Issue → crear rama → pegar el Issue a la IA → PR que dice \"Closes #12\" → merge. El Issue se cierra solo.</li><li><strong>Le dan contexto a la IA.</strong> Un Issue bien escrito ES el brief: se lo pegas a la IA tal cual y ella ya tiene qué pedir, límites y criterio de aceptación.</li></ol><p>La anatomía de un Issue que sirve:</p><ul><li><strong>Título:</strong> la tarea, no el tema. \"Agregar tabla de horarios\", no \"mejoras a la página\".</li><li><strong>Qué:</strong> qué se quiere y dónde.</li><li><strong>Por qué:</strong> para qué sirve; prioriza.</li><li><strong>Cómo se verifica:</strong> qué vas a ver en el navegador cuando esté listo.</li><li><strong>Límites:</strong> qué NO tocar.</li></ul><p>Y cierras el ciclo: en la descripción del PR escribes <code>Closes #12</code> y, al mergear, GitHub cierra el Issue automáticamente. Cada tarea queda con su número y su solución en el historial.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Un Issue es la <strong>comanda del restaurante</strong>. El comensal (tú) escribe con claridad el platillo, la cocina (la IA) lo prepara, y la comanda se cancela cuando sale el platillo. Una comanda por pedido, numerada, para poder seguirla. El restaurante que trabaja con comandas sabe qué se está cocinando; el que solo grita pedidos a la cocina vive en el caos.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Un Issue bien escrito, y el ciclo que cierra:</p><pre><code>Issue #12 · Agregar tabla de horarios\n------------------------------------\nQUÉ: tabla con horarios de lunes a domingo,\n     abajo de la sección de testimonios.\nPOR QUÉ: los clientes preguntan por teléfono.\nCÓMO SE VERIFICA: abro la página y veo la\n     tabla con los 7 días; de preferencia\n     \"Lunes a Viernes\" resumido.\nLÍMITES: no tocar el botón de WhatsApp ni la\n     paleta amarillo y café.\n\nTítulo bueno vs malo:\n  Malo:  \"mejoras en general\"\n  Bueno: \"Agregar tabla de horarios\"\n  Malo:  \"arreglar la página\"\n  Bueno: \"Corregir precios que muestran el costo\"\n\nEl ciclo completo:\n→ git switch -c agregar-horarios        (C10)\n→ pegas el Issue a la IA                (C15)\n→ pides → pruebas → commiteas           (C9)\n→ git push -u origin agregar-horarios\n→ PR: título \"Agregar tabla de horarios\"\n  descripción: \"Closes #12\"\n→ squash merge → GitHub cierra el Issue #12</code></pre>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Tengo esta idea: [describe la tarea]. Escríbeme un Issue de GitHub con título, qué, por qué, cómo se verifica y límites, igual que un brief (C15). Si la idea es ambigua, hazme las preguntas que necesites antes de redactarlo.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "multiple", pregunta: "¿Cuál es un buen título de Issue?", opciones: ["arreglar cosas", "Agregar tabla de horarios", "mejoras en general", "ya no sirve la página"], correcta: 1 },
+              { tipo: "completar", frase: "Cada Issue es una unidad de trabajo: un ____, una rama (C10), un PR. Si en la descripción del PR escribes \"Closes #12\", GitHub ____ el Issue al ____.", banco: ["número", "cierra", "mergear", "borrar"], respuestas: ["número", "cierra", "mergear"] },
+              { tipo: "relacionar", pares: [["Qué", "Qué se quiere y dónde"], ["Por qué", "Para qué sirve: prioriza"], ["Cómo se verifica", "Qué verás en el navegador cuando esté listo"], ["Límites", "Qué NO tocar"]] },
+              { tipo: "vf", afirmacion: "Escribir un Issue es escribir un mini-brief (C15): sin límites ni criterio de verificación, la IA decide el alcance por ti.", correcta: true, explicacion: "exacto: el Issue mal escrito produce el mismo alcance inventado que el prompt vago de C15." },
+              { tipo: "quehace", codigo: "PR descripción:\n\"Closes #12\"", pregunta: "Escribes esto en la descripción de tu PR y la mergeas. ¿Qué pasa?", opciones: ["Nada: es un comentario opcional", "GitHub cierra el Issue #12 automáticamente al mergear el PR", "Se borra el Issue y su historial de conversación", "La IA edita el Issue por ti"], correcta: 1 }
+            ]
+          },
+          {
+            id: "m2-c18",
+            titulo: "PRÁCTICA: proyecto nuevo — sitio de un negocio real",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Hasta hoy trabajaste sobre tu página del Mes 1 y sobre Tortas El Güero. Hoy arrancas un proyecto nuevo y distinto: <strong>el sitio de un negocio real</strong>. Real significa que existe de verdad: la taquería del primo, la estética de tu hermana, tu propio emprendimiento. Alguien que abra la página pueda encontrarlo.</p><p>Por qué un negocio real y no otro inventado:</p><ul><li><strong>Contenido real.</strong> Precios, horarios, fotos y datos verdaderos. La IA deja de inventar menús y escribe sobre hechos.</li><li><strong>Cliente real.</strong> Podrás mostrar el resultado a alguien a quien de verdad le importa. Ese es el portafolio que pesa (C27).</li><li><strong>Límites reales.</strong> Un negocio tiene reglas: precios que no cambian solos, datos que no se inventan. Ahí practicas el brief (C15) de verdad.</li></ul><p>El plan del proyecto:</p><ol><li>Elige el negocio y recopila la información (prompt de abajo).</li><li>Escribe el brief (C15): qué hace el sitio, qué secciones, límites.</li><li>Arma el repo: carpeta nueva, <code>git init</code>, <code>.gitignore</code> (C3), primer commit (C4).</li><li>Crea la estructura con la IA: <code>index.html</code>, <code>style.css</code>, <code>script.js</code>.</li><li>Construye por ramas (C10): cada sección es una rama, cada rama un PR (C12).</li><li>Publica con GitHub Pages (C8) y comparte el enlace con el dueño del negocio.</li></ol><p>Este proyecto es el que vas a iterar en C19 y donde vas a resolver tu primer conflicto en C20. Trátalo como negocio real desde el día uno.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Es tu <strong>primer cliente de verdad</strong>, aunque no te pague. Hasta ahora cocinabas en tu casa: solo tú probabas los platillos. Hoy abres un local nuevo con una carta real y un dueño que va a entrar por la puerta. El estándar cambia: ya no es \"que funcione\", es \"que alguien lo use\" — y que se vea a la altura del negocio que representa.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>El arranque del proyecto, paso a paso (con la estética \"Bella\" de ejemplo):</p><pre><code>Paso 1 — Elige el negocio.\nPaso 2 — Entrevista al negocio con la IA (prompt de abajo).\n\nPaso 3 — Arma el repo:\nmkdir sitio-estetica-bella\ncd sitio-estetica-bella\ngit init\n→ creas .gitignore (C3), con .env adentro\ngit add .\ngit commit -m \"chore: iniciar repo de Estética Bella\"\n\nPaso 4 — Pide la estructura con brief (C15):\n  \"index.html con header, servicios, precios,\n   testimonios y contacto; CSS en style.css\"\n\nPaso 5 — Prueba en el navegador (C9) y commitea (C5):\ngit add .\ngit commit -m \"feat: estructura inicial del sitio\"\n\nPaso 6 — Sube y publica (C7-C8):\ngit push -u origin main\n→ Settings → Pages → activar GitHub Pages\n\nPaso 7 — Sigue construyendo por ramas (C19): cada\n  sección nueva en su rama, cada rama con su PR (C12).</code></pre>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Voy a hacer el sitio web de un negocio real. Hazme de periodista: pregúntame una por una las cosas que necesito averiguar — nombre, servicios o productos con precios, horarios, dirección, contacto, historia corta, qué lo hace distinto y si tiene fotos. Después de mis respuestas, escríbeme el brief del sitio (C15): qué secciones, qué hace cada una y qué NO debe tocar la IA.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "multiple", pregunta: "¿Por qué este proyecto es \"de un negocio real\" y no otro ejercicio?", opciones: ["Porque usa Git y GitHub", "Porque el contenido, el cliente y las reglas son verdaderos, y el resultado se puede mostrar", "Porque el código es más difícil", "Porque se publica en GitHub Pages"], correcta: 1 },
+              { tipo: "ordenar", instruccion: "Acomoda el arranque del proyecto nuevo:", elementos: ["elegir el negocio y recopilar la información", "escribir el brief (C15)", "armar el repo con git init, .gitignore y primer commit (C3-C4)", "crear la estructura con la IA y probar en el navegador (C9)", "subir y publicar con GitHub Pages (C7-C8)", "seguir construyendo por ramas y PRs"] },
+              { tipo: "completar", frase: "El proyecto nuevo se trata como negocio real desde el día uno: contenido ____ (precios y horarios verdaderos), ____ real (el dueño) y límites reales para practicar el ____ (C15).", banco: ["real", "cliente", "brief", "conflicto"], respuestas: ["real", "cliente", "brief"] },
+              { tipo: "vf", afirmacion: "La página del negocio real se construye directo en main, sin ramas, porque es un proyecto pequeño.", correcta: false, explicacion: "no: se construye por ramas (C10-C12) desde el primer cambio; ese es el ritmo que practicarás en C19." },
+              { tipo: "quehace", codigo: "mkdir sitio-estetica-bella\ncd sitio-estetica-bella\ngit init", pregunta: "Estos tres comandos…", opciones: ["Crean una carpeta nueva, entran a ella y la convierten en un repositorio", "Publican el sitio en GitHub Pages", "Borran el proyecto anterior", "Crean una rama nueva"], correcta: 0 }
+            ]
+          },
+          {
+            id: "m2-c19",
+            titulo: "PRÁCTICA: iterar el proyecto en ramas",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>El proyecto de C18 ya está vivo: repo, main, primera versión publicada. Ahora le das el ritmo de trabajo real: <strong>cada mejora es una rama nueva</strong> y el ciclo completo se repite tantas veces como ideas tengas.</p><p>El ciclo de iteración, en automático:</p><ol><li><strong>Idea.</strong> \"Agregar galería de fotos\".</li><li><strong>Rama (C10).</strong> <code>git switch -c agregar-galeria</code>.</li><li><strong>Brief (C15).</strong> Le pides el cambio a la IA con contexto, límites y cómo lo vas a verificar.</li><li><strong>Probar (C9).</strong> Abres el navegador; si no quedó, vuelves a pedir.</li><li><strong>Commit (C5).</strong> Mensaje con Conventional Commits, en la rama.</li><li><strong>PR (C12).</strong> Subes la rama, abres PR, revisas (C13), squash merge.</li><li><strong>Actualizar local.</strong> <code>git switch main</code> → <code>git pull</code>.</li></ol><p>La regla del trabajo en ramas: <strong>una rama, un cambio</strong>. Si a mitad del camino la idea crece — \"y agrega también un mapa\" — no lo mezcles: termina la primera, mergea, y abre una rama nueva. Las ramas cortas son fáciles de revisar (C13), de mergear y, si se complican, de desechar (C11) sin que main se entere.</p><p>La disciplina de ahora — todo por rama, hasta el cambio chico — se vuelve instinto profesional después.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Cada rama es <strong>un platillo de prueba en su propia estación</strong>. El menú (main) nunca cambia mientras pruebas: cada cocinero (tú + la IA) prueba su variante en su estación, la presenta al comensal (tú mismo, en el navegador), y solo cuando la apruebas pasa al menú. Si la variante sale mal, se tira en la estación — y el menú ni se entera.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Tres iteraciones seguidas, cada una con su rama, su PR y su merge:</p><pre><code>Iteración 1 — galería de fotos:\ngit switch -c agregar-galeria\n→ brief (C15) + IA + pruebas en el navegador (C9)\ngit add . &amp;&amp; git commit -m \"feat: agregar galería de fotos\"\ngit push -u origin agregar-galeria\n→ PR → revisas (C13) → squash merge\ngit switch main &amp;&amp; git pull\n\nIteración 2 — mapa de ubicación:\ngit switch -c agregar-mapa\n→ brief + IA + pruebas\ngit add . &amp;&amp; git commit -m \"feat: agregar mapa de ubicación\"\ngit push -u origin agregar-mapa\n→ PR → squash merge\ngit switch main &amp;&amp; git pull\n\nIteración 3 — corregir precios:\ngit switch -c corregir-precios\n→ brief: \"los precios muestran el costo anterior\"\ngit add . &amp;&amp; git commit -m \"fix: corregir precios\"\ngit push -u origin corregir-precios\n→ PR → squash merge\ngit switch main &amp;&amp; git pull\n\nTu repo avanza así: una rama a la vez, main siempre\nestable, historial limpio.</code></pre>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Voy a iterar mi proyecto en ramas: una rama por cambio, y cada cambio cierra con PR. Para esta tarea — [describe la idea] — dame la lista exacta: la rama que debo crear, los archivos que voy a tocar y cómo pruebo el resultado antes del commit. Respétame la regla: una rama, un cambio.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "ordenar", instruccion: "Acomoda el ciclo de iteración en ramas:", elementos: ["la idea", "crear la rama nueva (C10)", "brief + IA + probar en el navegador (C15, C9)", "commit con buen mensaje (C5)", "PR + squash merge (C12)", "git switch main + git pull"] },
+              { tipo: "multiple", pregunta: "A media iteración se te ocurre \"agregar también un mapa\". ¿Qué haces?", opciones: ["Lo agregas en la misma rama para ahorrar pasos", "Terminas el cambio actual, mergeas, y abres una rama nueva para el mapa", "Lo anotas en un Issue (C17) y lo trabajas después, sin mezclarlo en la rama actual", "b y c son válidas"], correcta: 3 },
+              { tipo: "completar", frase: "La regla del trabajo en ramas: una ____, un ____. Las ramas cortas son fáciles de ____ (C13) y, si se complican, de ____ (C11) sin que main se entere.", banco: ["rama", "cambio", "revisar", "desechar"], respuestas: ["rama", "cambio", "revisar", "desechar"] },
+              { tipo: "vf", afirmacion: "Después del merge en GitHub, vuelves a main con git switch main y git pull para que tu local tenga lo nuevo.", correcta: true, explicacion: "sí: el merge pasó en GitHub; tu main local baja los cambios con git pull." },
+              { tipo: "relacionar", pares: [["Rama (C10)", "El espacio aislado para el cambio"], ["Brief (C15)", "El pedido con contexto, límites y verificación"], ["PR (C12)", "La puerta del cambio hacia main"], ["Ciclo C9", "Pedir → probar → commitear"]] }
+            ]
+          },
+          {
+            id: "m2-c20",
+            titulo: "PRÁCTICA: resolver tu primer conflicto de merge",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Llega el momento que asusta a todo el mundo y que es más simple de lo que parece. <strong>Un conflicto de merge ocurre cuando dos ramas modificaron las mismas líneas del mismo archivo</strong> y Git no sabe cuál versión ganar. Git no se rompió ni está enojado: te está pidiendo que decidas tú.</p><p>Cuándo pasa: en C19 iteraste en ramas. Si dos ramas tocan la misma zona — por ejemplo, dos que editan la sección de precios — la segunda en mergear choca con la primera. Git avisa con \"merge conflict\" (o \"both modified\" en <code>git status</code>).</p><p>Qué haces. Git deja marcadores en el archivo:</p><pre><code>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD\nversión de main\n=======\nversión de la rama\n&gt;&gt;&gt;&gt;&gt;&gt;&gt; nombre-rama</code></pre><p>Tu trabajo: borrar los marcadores, dejar la versión correcta (o una mezcla de ambas) y guardar. Después <code>git add</code> y <code>git commit</code>. Eso es todo: decides, marcas y commiteas.</p><p>Y la IA es tu copiloto de conflicto: le pegas el archivo con los marcadores, le dices qué quieres conservar, y te devuelve el archivo limpio. Tú decides si es correcto.</p><p>Cómo evitar conflictos: ramas cortas (C19), un cambio por rama, y mergear seguido para que tu rama no se aleje de main. El conflicto no es un error: es la señal de que dos ramas trabajaron en lo mismo — y resolverlo es decidir con información.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Dos pintores dejaron la misma pared del local con colores distintos: uno pintó la parte superior azul, el otro la inferior café. La pared no se puede quedar a medias ni pintarse encima sin decidir. <strong>El conflicto es que alguien decide el color final</strong>. Git es el que avisa que hay dos manos en la misma pared — no es el que elige el color.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>El primer conflicto real, paso a paso:</p><pre><code>Dos ramas editaron la sección de precios:\n- corregir-precios (ya mergeada en main)\n- agregar-promociones (intenta entrar)\n\ngit switch main\ngit merge agregar-promociones\nAuto-merging index.html\nCONFLICT (content): Merge conflict in index.html\nAutomatic merge failed; fix conflicts and then commit.\n\ngit status\n  both modified: index.html\n\n→ Abres index.html y encuentras:\n&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD\n&lt;h2&gt;Precios&lt;/h2&gt;\n&lt;p&gt;Mollete: $35&lt;/p&gt;\n=======\n&lt;h2&gt;Precios&lt;/h2&gt;\n&lt;p&gt;Mollete: $40 (promo con bebida)&lt;/p&gt;\n&gt;&gt;&gt;&gt;&gt;&gt;&gt; agregar-promociones\n\n→ Decides: \"sí al $40, sin la promesa de promo\".\n  Dejas el archivo así, sin marcadores:\n&lt;h2&gt;Precios&lt;/h2&gt;\n&lt;p&gt;Mollete: $40&lt;/p&gt;\n\ngit add index.html\ngit commit -m \"merge: integrar agregar-promociones\"\n\n→ Y si el conflicto aparece en una PR, GitHub\n  muestra \"This branch has conflicts\": traes\n  main a tu rama, resuelves igual y haces push.</code></pre><p>Resolviste tu primer conflicto: decidiste, marcaste y commiteaste.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Te voy a pegar un archivo con marcadores de conflicto de merge (&lt;&lt;&lt;&lt;&lt;&lt;&lt;, =======, &gt;&gt;&gt;&gt;&gt;&gt;&gt;). Esta es la situación: [resumen de las dos versiones]. Decide cuál conservar o propón una mezcla, y devuélveme el archivo completo SIN marcadores. Explica brevemente qué cambiaste.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "multiple", pregunta: "¿Qué significa que Git te muestre un conflicto de merge?", opciones: ["Que tu proyecto se corrompió y hay que rehacerlo", "Que dos ramas modificaron las mismas líneas y Git necesita que decidas qué versión conservar", "Que la IA cometió un error grave e irreparable", "Que hay que borrar una de las ramas"], correcta: 1 },
+              { tipo: "completar", frase: "Los marcadores de conflicto son ____, ____ y ____ (con el nombre de la rama). Tu trabajo es ____ los marcadores y dejar la versión correcta.", banco: ["<<<<<<< HEAD", "=======", ">>>>>>>", "borrar"], respuestas: ["<<<<<<< HEAD", "=======", ">>>>>>>", "borrar"] },
+              { tipo: "ordenar", instruccion: "Acomoda la resolución de un conflicto de merge:", elementos: ["git merge agregar-promociones → CONFLICT", "git status para ver los archivos con conflicto", "abrir index.html y borrar los marcadores", "dejar la versión correcta y guardar", "git add index.html", "git commit para cerrar el merge"] },
+              { tipo: "vf", afirmacion: "Si el conflicto aparece en una PR, GitHub muestra \"This branch has conflicts\" y la solución es traer main a tu rama, resolver y hacer push.", correcta: true, explicacion: "sí: se resuelve igual, con marcadores, y el push actualiza el PR." },
+              { tipo: "relacionar", pares: [["<<<<<<< HEAD", "Inicio: arriba está la versión de tu rama actual"], ["=======", "Separador entre las dos versiones"], [">>>>>>> agregar-promociones", "Fin: abajo está la versión de la otra rama"], ["git add + git commit", "Cerrar el conflicto con tu decisión"]] }
+            ]
+          },
+          {
+            id: "m2-c21",
+            titulo: "Herramientas IA que trabajan con Git directamente",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Hasta la lección C20, la cadena siempre fue: la IA propone, tú copias, tú pegas en la terminal, tú haces commit. Tú eras el mensajero entre dos sistemas que no se hablaban. Eso acaba hoy: existe toda una generación de herramientas IA que <strong>trabajan dentro de tu repositorio</strong> — leen tus archivos, corren comandos, hacen commits y abren PRs. No te dictan qué escribir: escriben, ejecutan y versionan.</p><p>Tres familias, para que no te pierdas:</p><ul><li><strong>Agentes de terminal</strong> (Claude Code, Codex CLI, Aider): se lanzan desde la terminal dentro de tu carpeta, leen el repo completo y ejecutan tareas reales — hasta corren tu proyecto para probarlo. Te piden permiso antes de acciones delicadas.</li><li><strong>Editores con IA integrada</strong> (Cursor, VS Code + Copilot): trabajan en el editor donde ves tu código, entienden todo el proyecto y proponen cambios con el diff a la vista.</li><li><strong>Agentes en la nube</strong> (revisión de PRs con IA, automatización): actúan sobre el remoto y hasta dejan comentarios en tus Pull Requests (C12).</li></ul><p>Lo que cambia no es la herramienta: es el <strong>nivel de delegación</strong>. Antes dirigías desde afuera; ahora la IA entra al taller. Por eso todo lo de esta materia se vuelve tu superpoder: el <code>.gitignore</code> (C3), las ramas (C19), el diff para auditar (C5), la revisión del PR (C13). <strong>Un repo ordenado es el mejor escenario para estas herramientas.</strong> Un repo sucio es donde se pierden y se rompen cosas.</p><p>Y lo que NUNCA cambia: la herramienta ejecuta, <strong>tú decides</strong>. Ella propone commits; tú decides qué mergear. En C24 revisas su trabajo; en C25, qué jamás le compartes.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Hasta hoy eras el <strong>intérprete entre dos personas que no se hablan</strong>: la IA te dictaba y tú le traducías a Git para que hiciera el commit. Estas herramientas nuevas son el <strong>intérprete bilingüe que se sienta a la mesa</strong>: escucha, lee el menú, ordena y trae la cuenta — y tú solo revisas si el platillo es lo que pediste. No se acabó tu trabajo: se acabó tu papel de teléfono. Ahora eres el dueño del restaurante, no el mensajero.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Sesión mínima con un agente de terminal (Claude Code):</p><pre><code>C:\\...\\tortas-el-guero&gt; claude\n\n&gt; Agrega una sección de testimonios con 3 clientes\n  y súbela por rama con PR\n\n◆ leyó tu repo (index.html, style.css, script.js)\n◆ creó la rama: agregar-testimonios\n◆ editó index.html (+18 líneas) y style.css (+9)\n◆ propone: git add + git commit\n  ¿Aprobado? [sí/no]  →  sí\n\n[agregar-testimonios 9c41d2] feat: agregar testimonios\n◆ git push -u origin agregar-testimonios\n◆ tu PR ya está en GitHub: [Ver pull request]</code></pre><p>Tu trabajo: abrir el PR, revisar el diff (C13), correr la página y decidir el merge (C12). La herramienta hizo lo mecánico; tú hiciste lo que vale.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Voy a instalar y probar una herramienta IA que trabaja con Git (Claude Code / Cursor). Antes de empezar: 1) dime si mi repo está listo para que trabaje (qué debe mostrar git status), 2) explícame qué permisos me va a pedir y cuáles conviene aceptar, 3) muéstrame cómo deshacer su trabajo si algo sale mal.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "multiple", pregunta: "¿Qué distingue a las herramientas IA de esta lección de las que usaste hasta ahora?", opciones: ["Responden más rápido los chats", "Leen tu repositorio, corren comandos y hacen commits por ti", "Solo escriben código, no tocan Git", "Reemplazan tu revisión y tus decisiones"], correcta: 1 },
+              { tipo: "relacionar", pares: [["Agente de terminal", "Claude Code / Aider: trabaja desde la carpeta del proyecto"], ["Editor con IA integrada", "Cursor / Copilot: cambios con diff visible en tu editor"], ["Agente en la nube", "Revisa tus PRs y deja comentarios en GitHub"], ["Tú", "Decides qué se mergea y qué no"]] },
+              { tipo: "completar", frase: "Antes dirigías a la IA desde ____; ahora la IA entra al ____ y trabaja sobre tus archivos.", banco: ["afuera", "taller", "chat", "nube"], respuestas: ["afuera", "taller"] },
+              { tipo: "vf", afirmacion: "Un repositorio con ramas cortas y commits claros (C19) es el mejor terreno para estas herramientas.", correcta: true, explicacion: "leen el historial y las ramas para entender el proyecto y no pisarse." },
+              { tipo: "quehace", codigo: "claude", pregunta: "Corres <code>claude</code> dentro de tu carpeta y la IA responde: \"creé la rama agregar-testimonios y propongo un commit\". ¿Qué significa que te pregunte antes de hacer el commit?", opciones: ["Que la herramienta está fallando", "Que te pide permiso porque hará un cambio en el historial; tú apruebas o rechazas", "Que el commit ya se hizo y solo te avisa", "Que necesitas instalar otra cosa"], correcta: 1 }
+            ]
+          },
+          {
+            id: "m2-c22",
+            titulo: "Claude Code, Cursor y el flujo con repositorio",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Dos herramientas se llevan hoy la atención, y con ellas entiendes el flujo completo: <strong>Claude Code</strong> (agente de terminal) y <strong>Cursor</strong> (editor con IA integrada).</p><p><strong>Claude Code</strong> vive en la terminal. Entras a tu carpeta, corres <code>claude</code>, y desde ahí: lee archivos, los modifica, corre tu proyecto para probarlo, hace commits y hasta crea ramas. Antes de cada acción delicada (un comando, un commit, un push) te pide aprobación: <code>[sí/no]</code>. Tú aprietas el gatillo.</p><p><strong>Cursor</strong> es un editor (primo de VS Code) con IA integrada. No es un chat aparte: el asistente ve el archivo abierto, entiende todo el repo y propone cambios que aceptas o descartas en el mismo editor, viendo el diff línea por línea. Su modo agente encadena tareas con tu visto bueno.</p><p>El flujo con repositorio — el mismo de C9, con la herramienta haciendo lo mecánico:</p><pre><code>1. Abres el proyecto en la herramienta\n2. La herramienta LEE el repo (archivos, historial, ramas)\n3. Le das la tarea (un buen brief: C15)\n4. La herramienta propone cambios → tú ves el diff\n5. Apruebas, hace commit y push\n6. Abres PR (C12) → revisión (C13) → merge</code></pre><p>Los tres reflejos de esta materia se vuelven automáticos: <strong>rama antes de tocar</strong> (C19), <strong>diff antes de creer</strong> (C5) y <strong>revisión antes de mergear</strong> (C13). La herramienta te da velocidad; esas tres reglas te dan control.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Hasta hoy le dictabas recetas a alguien que cocinaba en otra cocina. Ahora la IA es un <strong>sous-chef con pase de cocina</strong>: se para en tu cocina, abre tu alacena (tu repo), prepara el platillo siguiendo tu receta y lo deja en la barra con la nota (commit) para que lo pruebes. Cursor es la cocina compartida donde ambos trabajan lado a lado; Claude Code es el auxiliar que entra, trabaja y te entrega la cuenta. Tú no cocinas con las manos: <strong>pruebas, apruebas y decides qué se sirve.</strong></p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Sesión típica con una tarea concreta y segura:</p><pre><code>C:\\...\\tortas-el-guero&gt; claude\n\n&gt; Trabaja en una rama nueva llamada mejorar-menu.\n&gt; Cambia el color del botón de WhatsApp a verde\n&gt; y agrega un enlace de teléfono en el header.\n&gt; NO toques el .gitignore. Muestra el diff antes de commitear.\n\n◆ creando rama mejorar-menu\n◆ index.html: +8 líneas (enlace de teléfono)\n◆ style.css: +4 líneas (color del botón)\n◆ diff propuesto:\n  -  background: #ff6600;\n  +  background: #22c55e;\n◆ ¿hago commit? [sí/no]  sí\n[mejorar-menu 6e19a3] feat: botón verde y teléfono en header\n◆ ¿subo y abro PR? [sí/no]  sí</code></pre><p>Fíjate en el brief: tarea específica, rama propia, un \"no toques\" claro y la petición de ver el diff. Eso es C15 aplicado — la calidad del resultado depende más de tu brief que de la herramienta.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Abre mi proyecto. Antes de tocar nada, dime qué archivos piensas modificar y por qué. Trabaja en una rama nueva llamada [nombre] y después de cada cambio muéstrame el diff. NO hagas commit, push ni PR sin que yo te lo ordene.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "multiple", pregunta: "¿Dónde corre Claude Code?", opciones: ["Dentro de tu navegador", "En la terminal, dentro de la carpeta de tu proyecto", "Solo en GitHub", "En la nube sin tocar tu computadora"], correcta: 1 },
+              { tipo: "relacionar", pares: [["Claude Code", "Agente de terminal: lee tu repo y ejecuta tareas"], ["Cursor", "Editor con IA integrada y diff visible"], ["El diff", "Lo que revisas antes de aprobar cualquier cambio"], ["Tú", "Apruebas commits y decides qué se mergea"]] },
+              { tipo: "completar", frase: "El flujo con repositorio: abres el proyecto → la herramienta ____ el repo → le das la tarea → revisas el ____ → apruebas commit → PR y merge.", banco: ["lee", "diff", "borra", "historial"], respuestas: ["lee", "diff"] },
+              { tipo: "vf", afirmacion: "Aunque la IA haga el commit, tú sigues aprobando cada cambio y decidiendo qué entra al historial.", correcta: true, explicacion: "la herramienta propone; el control lo tienes tú con las aprobaciones y la revisión." },
+              { tipo: "ordenar", instruccion: "Acomoda el flujo con repositorio:", elementos: ["abrir el proyecto en la herramienta", "la herramienta lee el repo", "darle la tarea con un brief (C15)", "revisar el diff propuesto", "aprobar commit y push", "abrir PR, revisar y mergear"] }
+            ]
+          },
+          {
+            id: "m2-c23",
+            titulo: "PRÁCTICA: dejar que una IA trabaje sobre tu repo",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Hoy le sueltas las riendas: una IA ejecutora va a tocar tu repositorio de verdad. La práctica se hace sobre tu proyecto de Tortas El Güero, con una tarea chica — el objetivo no es la función, es el <strong>proceso</strong>.</p><p>La secuencia completa:</p><pre><code>PASO 1  git status                    → repo LIMPIO\nPASO 2  git switch -c ia-testimonios  → rama aparte (C19)\nPASO 3  Le das el brief a la IA (prompt de abajo)\nPASO 4  Ves sus cambios: git diff     → entiendes qué hizo\nPASO 5  git log --oneline             → confirmas su commit\nPASO 6  git push -u origin ia-testimonios\nPASO 7  PR (C12) → revisas (C13) → merge\nPASO 8  git switch main && git pull</code></pre><p>Tres reglas que no se negocian:</p><ul><li><strong>Repo limpio antes de empezar.</strong> Si hay cambios sin commit, la IA trabaja sobre un piso inestable y el historial se vuelve un tiradero. Si hay algo sin guardar, haz commit (C4).</li><li><strong>Rama propia.</strong> La IA trabaja aislada; si su experimento falla, borras la rama y listo (C11).</li><li><strong>Tú apruebas cada commit.</strong> Cuando la herramienta pida permiso, es tu momento de decir sí o no — no un trámite.</li></ul><p>Si en cualquier paso algo se siente raro — borró un archivo, cambió más de lo pedido — ese es el momento de parar y revisar (C24), no de seguir de largo.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Hoy contratas a un <strong>jardinero por un día</strong>. Le das la llave del portón (la rama), una orden de trabajo escrita con lo que sí y lo que no (el brief), lo dejas trabajar en su sector sin acceso a tu casa (los archivos que proteges), y antes de pagarle revisas el resultado (el diff y la página corriendo). Si no te gusta, no pagas — no merges. El commit es su recibo de trabajo.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>La sesión real, con una tarea chica y segura:</p><pre><code>C:\\...\\tortas-el-guero&gt; git status\nOn branch main\nnothing to commit, working tree clean   ← LISTO\n\nC:\\...\\tortas-el-guero&gt; git switch -c ia-testimonios\nSwitched to a new branch 'ia-testimonios'\n\nC:\\...\\tortas-el-guero&gt; claude\n\n&gt; Agrega una sección de testimonios con 3 clientes inventados.\n&gt; Usa un diseño sencillo que combine con la página.\n&gt; No toques los otros bloques de style.css.\n&gt; Muéstrame el diff antes de hacer cualquier commit.\n\n◆ editó index.html (+14 líneas) y style.css (+6)\n◆ ¿hago commit? [sí/no]  sí\n[ia-testimonios 3f8a1b] feat: agregar sección de testimonios\n\nC:\\...\\tortas-el-guero&gt; git diff main..ia-testimonios\n+  &lt;section id=\"testimonios\"&gt;\n+    &lt;h2&gt;Lo que dicen nuestros clientes&lt;/h2&gt;\n+    &lt;p&gt;\"La mejor torta del barrio\" — Laura G.&lt;/p&gt;\n\nC:\\...\\tortas-el-guero&gt; git push -u origin ia-testimonios\n→ PR → revisión → merge (C12-C13)</code></pre><p>Y si la sección no te gusta:</p><pre><code>git switch main\ngit branch -D ia-testimonios   ← la rama desaparece, main intacto</code></pre><p>Experimentaste con red de seguridad (C1). Ese es el punto.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Trabaja en la rama actual de mi repo. Tarea: [describe el cambio concreto]. Criterios: 1) no toques [los archivos o zonas que proteges], 2) respeta el estilo de los archivos existentes, 3) antes de cada commit muéstrame el diff y espera mi aprobación, 4) si necesitas tocar algo fuera de la tarea, dime primero por qué. Empieza por revisar git status y git log para entender el proyecto.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "ordenar", instruccion: "Acomoda la práctica de dejar que la IA trabaje en tu repo:", elementos: ["confirmar con git status que el repo está limpio", "crear una rama nueva (git switch -c)", "darle el brief a la IA", "revisar el diff de sus cambios", "aprobar su commit y subir la rama", "abrir PR, revisar y mergear"] },
+              { tipo: "completar", frase: "Regla de oro: la IA solo trabaja sobre un repo ____, y siempre en una ____ separada para no tocar main directo.", banco: ["limpio", "rama", "sucio", "copia"], respuestas: ["limpio", "rama"] },
+              { tipo: "vf", afirmacion: "Si la IA te pide aprobar su commit y no revisaste el diff, igual debes aprobar para no frenar el flujo.", correcta: false, explicacion: "el diff es tu única forma de saber qué cambió antes de que quede grabado; si no lo viste, pídeselo." },
+              { tipo: "multiple", pregunta: "La IA hizo cambios que no pediste, además de la tarea. ¿Qué haces?", opciones: ["Merges igual, total no dañó nada", "Paras, revisas qué tocó de más y le pides que lo revierta antes de seguir", "Borras la rama y empiezas de cero siempre", "Ignoras el diff y confías"], correcta: 1 },
+              { tipo: "relacionar", pares: [["git status limpio", "Que la IA trabaje sobre un piso estable"], ["Rama propia", "Aislar su experimento; si falla, se borra la rama"], ["git diff", "Ver exactamente qué cambió antes de aprobar"], ["Tú apruebas el commit", "El control sigue en tus manos, no en la herramienta"]] }
+            ]
+          },
+          {
+            id: "m2-c24",
+            titulo: "Revisar el trabajo de una IA ejecutora",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Ya dejaste que una IA trabaje sobre tu repo (C23). Ahora la parte que separa a un director real de alguien que solo aprieta botones: <strong>revisar su trabajo como un dev senior</strong>. No se lee todo línea por línea: se revisa con criterio, en cuatro movimientos.</p><ol><li><strong>Mira el mapa, no el detalle.</strong> <code>git diff --stat</code> te dice qué archivos cambió y cuánto. Si tocó un archivo que no estaba en el radar, ya es una alerta.</li><li><strong>Revisa las líneas importantes.</strong> <code>git diff</code> te muestra el cambio exacto. Pregunta por cada uno: ¿lo pedí? ¿tiene sentido? ¿rompe algo?</li><li><strong>Caza sorpresas.</strong> <code>git status</code> te muestra archivos nuevos (untracked) y borrados. Una IA ejecutora puede crear o eliminar archivos sin que se lo pidas — tu trabajo es atraparlo.</li><li><strong>Prueba de verdad.</strong> El diff no basta: abre tu página, corre el proyecto, haz clic. El código que se ve bien puede romper en vivo.</li></ol><p>Y una revisión extra que las ejecutoras agradecen: <strong>pídele que se auto-revise</strong> (el truco de C5 aplicado a todo el cambio). Pero su auto-reporte es opinión, no veredicto: la decisión de mergear es tuya (C13).</p><p>Si algo se ve sospechoso y no entiendes el porqué: pregúntale a la propia IA por cada línea rara, y usa el historial — <code>git log</code> — para ver qué cambió y cuándo.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>El trabajo de una IA ejecutora es el <strong>reporte de un empleado nuevo</strong>. No lees cada palabra de su trabajo completo: revisas su lista de entregables (diff --stat), lees las partes importantes (diff), te fijas si trajo algo que no se pidió o se le olvidó algo (status), y pruebas el resultado (correr la página). Un buen jefe no lee todo: <strong>revisa con criterio</strong>. Eso es lo que aprendes hoy.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>La revisión completa de lo que la IA hizo en C23:</p><pre><code>C:\\...\\tortas-el-guero&gt; git diff --stat main..ia-testimonios\n index.html | 14 ++++++++++++\n style.css  |  6 ++++++\n 2 files changed, 19 insertions(+)    ← solo 2 archivos, todo agregado\n\nC:\\...\\tortas-el-guero&gt; git status\nOn branch ia-testimonios\nnothing to commit, working tree clean  ← sin archivos raros\n\nC:\\...\\tortas-el-guero&gt; git diff main..ia-testimonios\n+  &lt;section id=\"testimonios\"&gt;\n+    &lt;h2&gt;Lo que dicen nuestros clientes&lt;/h2&gt;\n+    &lt;p&gt;\"La mejor torta del barrio\" — Laura G.&lt;/p&gt;\n\n→ Abres index.html en el navegador... se ve bien\n→ Pruebas la vista móvil... también\n→ APRUEBAS</code></pre><p>La alerta que debes cazar:</p><pre><code>git status\n D style.css             ← borrado SIN que lo pidieras  ⚠\n untracked: footer.html  ← archivo nuevo raro            ⚠</code></pre><p>Si ves eso, no merges: pídele a la IA que restablezca el archivo y justifique lo nuevo.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Antes de terminar, haz tu propia revisión: corre git status y git diff, y dime 1) qué archivos cambiaste y cuántas líneas de cada uno, 2) las 3 líneas más importantes de tu cambio y por qué, 3) si creaste, borraste o renombraste archivos que no te pedí, y 4) un resumen de un párrafo de lo que hiciste. NO hagas commit ni push todavía.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "quehace", codigo: "git diff --stat main..rama", pregunta: "<code>git diff --stat main..rama</code> — ¿qué te muestra en un vistazo?", opciones: ["Las líneas exactas de cada cambio", "Qué archivos cambió y cuántas líneas de cada uno", "El historial de commits de la rama", "Los archivos sin rastrear"], correcta: 1 },
+              { tipo: "multiple", pregunta: "¿Cuál es la forma completa de revisar el trabajo de una IA ejecutora?", opciones: ["Leer el código línea por línea entero", "Revisar el diff, cazar sorpresas con git status y probar la página corriendo", "Confiar en su auto-reporte", "Revisar solo el mensaje del commit"], correcta: 1 },
+              { tipo: "vf", afirmacion: "Si la IA ejecutora borró o creó archivos que no le pediste, eso lo atrapa la revisión con git status.", correcta: true, explicacion: "git status muestra los archivos nuevos y los borrados que el diff por sí solo puede no resaltar." },
+              { tipo: "relacionar", pares: [["git diff --stat", "El mapa: qué archivos y cuántas líneas"], ["git diff", "El detalle: líneas exactas del cambio"], ["git status", "Sorpresas: archivos nuevos o borrados"], ["Correr la página", "La prueba de verdad, más allá del código"]] },
+              { tipo: "completar", frase: "La revisión no es leer todo: es mirar el ____, leer las partes ____ y probar el resultado en vivo.", banco: ["mapa (diff --stat)", "importantes", "contraseña", "historial"], respuestas: ["mapa (diff --stat)", "importantes"] }
+            ]
+          },
+          {
+            id: "m2-c25",
+            titulo: "Seguridad: qué nunca le compartes a una IA",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Esta es la lección más cara de toda la materia — literal. Leerla te cuesta cinco minutos; no leerla puede costarte dinero, clientes o el proyecto. Hay cosas que <strong>NUNCA le pegas a una IA</strong>, en ningún chat, agente ni herramienta:</p><ul><li><strong>API keys y tokens.</strong> Una llave de API es dinero y acceso. Si se filtra, alguien puede gastar tu saldo o entrar a tus servicios. Regla: una llave que se filtra es una llave quemada — la única cura es <strong>revocarla y rotarla</strong> (generar una nueva).</li><li><strong>Contraseñas y archivos de secretos.</strong> Tu <code>.env</code> (C3) y tu gestor de contraseñas (A28) existen para que los secretos no anden viajando. Ni un solo valor de ahí al chat.</li><li><strong>Datos personales de clientes o usuarios.</strong> Correos, teléfonos, listas de clientes, datos de pago. No son tuyos para compartir, y en varios países es delito. Jamás le pidas a una IA que procese una lista real de clientes.</li><li><strong>Información de proyectos ajenos.</strong> Si trabajas para un negocio, lo que ves ahí se queda ahí — a menos que te lo autorice explícitamente.</li></ul><p>Dónde se filtran las cosas en la vida real:</p><ul><li>Pegar salidas de terminal sin revisarlas — una línea <code>TOKEN=...</code> se cuela en el mensaje.</li><li>Pedirle a la IA que arregle el login y pegarle las credenciales completas.</li><li>Commitear un <code>.env</code> (C3): el secreto queda en el historial de Git para siempre, aunque borres el archivo.</li><li>Capturas de pantalla de dashboards con datos reales de usuarios.</li><li>Subir un repo con secretos a GitHub y que quede público.</li></ul><p>Reglas de oro que no se negocian:</p><ol><li>Los secretos viven en <code>.env</code> o en tu gestor (A28) — nunca en un mensaje.</li><li>Si una herramienta necesita una llave, configúrala como variable de entorno: lee el <code>.env</code> del sistema, no te lo pegues.</li><li>Usa datos de prueba: <code>test@ejemplo.com</code>, <code>Cliente Demo 1</code>, nunca los reales.</li><li>Antes de pegar cualquier salida de terminal, escanéala con ojos de cazador de secretos.</li><li>Si un secreto se filtró: <strong>revócalo hoy</strong>, no mañana. Rotar es barato; el daño de una llave viva es caro.</li></ol><p>Las herramientas de C21 y C22 van a pedirte acceso a tu repo. Eso está bien — es su trabajo. Lo que no está bien es que tu repo contenga secretos listos para encontrarse. <strong>Un repo con llaves es una bomba; tu .gitignore (C3) y tu revisión (C24) son la seguridad.</strong></p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>El chat con una IA es una <strong>conversación en un restaurante concurrido</strong>: se escucha, se graba y puede repetirse. Nunca sacas ahí tu cartera (llaves API), el directorio de tus clientes (sus datos) ni las llaves del edificio de tu cliente (proyectos ajenos). Y si la cartera se te cae en el restaurante, no basta con recogerla: cambias de cerradura (revocas la llave). En seguridad no hay arrepentimiento: solo prevención y rotación.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Lo que nunca debes hacer — y la alternativa:</p><pre><code>❌ Pegar esto a una IA:\nAPI_KEY=sk-live-9f3e8c2b4a\nPASSWORD=MiContraseña123\n\n✅ Lo correcto: configurar el entorno\n# .env (NUNCA se commitea, C3):\nAPI_KEY=sk-live-9f3e8c2b4a\n\n# La herramienta lee el .env del sistema:\nclaude → \"usa la variable API_KEY de mi entorno\"\n\n✅ Datos de prueba en tu repo:\ncorreo: test@ejemplo.com   (nunca un cliente real)\ncliente: Cliente Demo 1    (nunca la lista de la taquería)</code></pre><p>Y la emergencia real:</p><pre><code>⚠ Te diste cuenta de que pegaste una llave en el chat:\n1. Cierra el chat y no sigas enviando mensajes.\n2. Ve al panel del servicio (OpenAI, Stripe, GitHub…).\n3. REVOCA la llave de inmediato.\n4. Genera una nueva y guárdala en tu gestor (A28).\n\n⚠ El .env se coló a un commit:\n1. REVOCA las llaves (borrar el archivo NO basta:\n   el secreto ya vive en el historial de Git).\n2. git rm .env  y  agrega .env a .gitignore (C3).\n3. Si el repo es público, revoca TAMBIÉN los tokens\n   que alguna vez estuvieron ahí.</code></pre><p>Dos segundos de revocar una llave; cero drama. Ignorarla puede ser el fin de un mes de trabajo.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Antes de pedirme credenciales, llaves o datos para hacer tu trabajo, dime si hay una alternativa que no requiera que te los pegue, como variables de entorno o un archivo .env local que lees del sistema. Y si en cualquier momento detectas que un secreto pudo filtrarse, dime exactamente cómo revocarlo.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "multiple", pregunta: "Tu API key se filtró en un chat de IA. ¿Qué haces?", opciones: ["Borro el mensaje y sigo usando la misma llave", "Revoco la llave de inmediato y genero una nueva", "Cambio la contraseña del chat", "Reinicio la computadora"], correcta: 1 },
+              { tipo: "completar", frase: "Las API keys y contraseñas viven en tu ____ o en tu gestor de contraseñas (A28); nunca en el ____ de una IA.", banco: [".env", "chat", "README", "historial"], respuestas: [".env", "chat"] },
+              { tipo: "vf", afirmacion: "Borrar un archivo .env de un repo no es suficiente: si se subió, el secreto ya está en el historial y hay que revocar la llave.", correcta: true, explicacion: "Git guarda el historial completo; lo que se subió queda ahí aunque borres el archivo." },
+              { tipo: "relacionar", pares: [["API key filtrada", "Alguien puede gastar tu saldo o acceder a tus servicios"], ["Datos de clientes reales", "Privacidad ajena y riesgo legal — no son tuyos para compartir"], ["Salida de terminal sin revisar", "Un TOKEN se te cuela en el mensaje sin que lo notes"], ["Revocar una llave", "La única cura para un secreto quemado"]] },
+              { tipo: "quehace", codigo: "cat .env", pregunta: "La IA ejecutora te pide: \"corre <code>cat .env</code> y pégame la salida para configurar la integración\". ¿Qué haces?", opciones: ["Corres el comando y le pegas todo el contenido", "Le dices que use las variables de entorno del sistema, sin mostrarle el contenido del .env", "Le pegas solo los nombres de las variables", "Borras el .env para que no se lo pida otra vez"], correcta: 1 }
+            ]
+          },
+          {
+            id: "m2-c26",
+            titulo: "PRÁCTICA: limpiar tu repo antes de mostrarlo",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Vas a dejar tu repositorio presentable. ¿Para quién? Para cualquiera que lo abra: un cliente, un reclutador, o una IA que entra a trabajar a tu repo (C21). La regla es simple: <strong>desde el primer segundo debe verse orden</strong>. Cinco pasos y terminas con un repo que puedes mostrar sin vergüenza.</p><p><strong>Paso 1 — Mira todo.</strong> Corres <code>git status</code>. Ese comando te muestra el estado completo: archivos modificados, nuevos (untracked) y borrados. Todo lo que Git ve, tú también.</p><p><strong>Paso 2 — Revisa tu escudo.</strong> Tu <code>.gitignore</code> (C3) debe cubrir la basura que aparece en cualquier proyecto: <code>node_modules/</code>, <code>.env</code>, <code>.DS_Store</code>, <code>Thumbs.db</code>, <code>.vscode/</code>. Si algo se te cuela una y otra vez, es porque falta su patrón en el archivo.</p><p><strong>Paso 3 — Decide por cada archivo suelto.</strong> Cada archivo untracked es una decisión: lo quieres y se queda, o no lo quieres y se borra o se ignora. Un repo limpio no tiene archivos que no decidiste. Esa es la diferencia entre una carpeta de trabajo y un repo.</p><p><strong>Paso 4 — Caza secretos (C25).</strong> Busca <code>.env</code>, llaves y contraseñas en tu carpeta. Y revisa tu historial: <code>git log --oneline</code>. Si un secreto ya se commit-eó, borrar el archivo NO basta — el historial lo conserva y la única cura es revocar la llave.</p><p><strong>Paso 5 — Deja todo en orden.</strong> <code>git add .</code> y un commit con mensaje claro (C5). La meta: <code>git status</code> responda <code>nothing to commit, working tree clean</code> y <code>git log --oneline</code> cuente una historia con sentido.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Limpiar tu repo antes de mostrarlo es <strong>recibir invitados a tu casa</strong>. Recoges lo que no quieres que se vea (la basura), guardas lo que vale en su lugar, confirmas que no haya papeles privados tirados en la mesa (los secretos) y dejas la casa en un estado donde cualquiera puede entrar sin tropezarse. Nadie recibe invitados con los cajones abiertos — y nadie muestra un repo con <code>node_modules</code> adentro.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>La limpieza completa en una sesión:</p><pre><code>C:\\...\\tortas-el-guero&gt; git status\nOn branch main\nUntracked files:\n  .DS_Store          ← basura del sistema\n  node_modules/      ← basura de dependencias\n  datos-prueba.xlsx  ← ¿esto qué hace aquí?\n  index.html\n\nPaso 2 — agregas los patrones a .gitignore:\n.DS_Store\nnode_modules/\n\nPaso 3 — borras lo que no debe estar:\nrm datos-prueba.xlsx\n\nPaso 4 — revisas que no haya secretos commiteados:\ngit log --oneline\n(1 commit) Versión inicial de mi página personal  ← limpio\n\nPaso 5 — dejas todo en orden:\ngit add .\ngit commit -m \"chore: limpiar repo y actualizar .gitignore\"\ngit status\nOn branch main\nnothing to commit, working tree clean   ← LA META</code></pre><p>Del caos a la meta en cinco pasos. La próxima vez que alguien abra tu repo, lo primero que ve es <code>working tree clean</code> y una historia ordenada.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Revisa mi repositorio con ojo de profesional: dime 1) qué archivos no deberían estar versionados y por qué, 2) si detectas algún secreto o dato sensible en los archivos o en el historial, 3) qué patrones le faltan a mi .gitignore, y 4) si mi historial de commits cuenta una historia clara o conviene reorganizarlo. NO hagas cambios, solo diagnostica.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "multiple", pregunta: "Tu repo está listo para mostrarse. ¿Qué te debe responder git status al final de la limpieza?", opciones: ["Untracked files listados", "nothing to commit, working tree clean", "Changes to be committed", "Your branch is up to date"], correcta: 1 },
+              { tipo: "completar", frase: "Si un archivo basura aparece una y otra vez en git status, la solución es agregar su patrón al ____ (C3); si un secreto ya se commit-eó, la única cura es ____ (C25).", banco: [".gitignore", "revocar la llave", "borrarlo con rm", "reiniciar Git"], respuestas: [".gitignore", "revocar la llave"] },
+              { tipo: "vf", afirmacion: "En un repo limpio, cada archivo untracked es una decisión: o lo quieres versionado, o se borra o se ignora.", correcta: true, explicacion: "la limpieza es decidir por cada archivo, no dejar que la basura se acumule por inercia." },
+              { tipo: "relacionar", pares: [["git status", "Ver todo: modificados, nuevos y borrados"], [".gitignore", "El escudo que frena la basura (C3)"], ["git log --oneline", "Revisar el historial buscando secretos"], ["working tree clean", "La meta: un repo que se puede mostrar"]] },
+              { tipo: "quehace", codigo: "git status\nOn branch main\nnothing to commit, working tree clean", pregunta: "Corres <code>git status</code> y te responde esto. ¿Qué significa?", opciones: ["Que hay archivos por agregar", "Que tu repo está limpio: no hay cambios pendientes", "Que se borraron archivos sin querer", "Que tu commit falló"], correcta: 1 }
+            ]
+          },
+          {
+            id: "m2-c27",
+            titulo: "Tu portafolio: 3 proyectos que demuestran nivel",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Tu portafolio es la prueba de que lo sabes hacer — no tu palabra, no tu currículum: <strong>la evidencia</strong>. Y la evidencia funciona mejor con calidad que con cantidad. Tres proyectos bien hechos te posicionan mejor que diez a medio terminar, porque quien te revisa (un cliente, un reclutador) va a abrir en profundidad los dos o tres que le llamen la atención.</p><p>Los tres proyectos que demuestran nivel — y qué prueba cada uno:</p><ul><li><strong>1. Tu página del Mes 1 versionada y publicada.</strong> La que convertiste en repo (C3), commiteaste (C4) y publicaste con GitHub Pages (C8). Prueba que <strong>terminas lo que empiezas</strong> — el punto más raro del mundo.</li><li><strong>2. Un proyecto con lógica real.</strong> Un catálogo, una calculadora, un contador, un organizador de gastos: algo con JavaScript de verdad, no solo una maqueta. Prueba que <strong>diriges IA para resolver problemas</strong>, no solo para llenar pantallas.</li><li><strong>3. Un proyecto ambicioso o real.</strong> Una landing para un negocio conocido, una herramienta que te resuelve algo del día a día, una mini-app útil para alguien más. Prueba <strong>nivel</strong>: que puedes construir algo que otros usarían.</li></ul><p>Los tres comparten el mismo estándar de presentación: README que venda (C14), sitio vivo (C8), historial con mensajes claros (C5) y repo limpio (C26). Y al menos en uno, una rama de feature con PR (C19 y C12) — esa es la prueba de que trabajas como se trabaja en serio.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Tu portafolio es la <strong>vitrina de una pastelería</strong>. Nadie decide por 50 pasteles apilados sin etiquetas; se decide por dos o tres bien presentados, con su nombre, su precio y con ganas de probarlos. Los 50 pasteles de tu carrera están en tu historial de Git; la vitrina solo necesita los tres que hagan decir: <em>de este vendedor quiero comprar</em>.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Así se ve un portafolio de tres proyectos en tu perfil de GitHub (B29):</p><pre><code>tu-usuario\n│\n├─ mi-primera-pagina      → página personal, publicada (C8)\n│    README con captura y link vivo\n│    6 commits con mensajes claros\n├─ presupuesto-app        → calculadora de gastos con JS\n│    README, demo publicada, .gitignore (C3)\n│    9 commits + rama de feature mergeada por PR\n└─ taqueria-don-luis      → landing real para un negocio\n     README que vende (C14), link vivo\n     12 commits, 2 PRs, cero secretos (C25)</code></pre><p>Fíjate en el patrón: cada repo dice qué es, tiene un link para probarlo y un historial que muestra cómo se construyó. Quien abra cualquiera de los tres entiende qué hiciste, cómo lo hiciste y que quedó publicado.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Con base en lo que sé hacer (página personal con HTML/CSS/JS, Git con ramas y PRs, publicación con GitHub Pages), propón mis 3 proyectos de portafolio: uno que demuestre constancia, uno que demuestre lógica y uno que demuestre nivel. Para cada uno dame: descripción de una línea, qué prueba, qué secciones debe tener su README y los entregables para considerarlo terminado.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "multiple", pregunta: "¿Cuál es el criterio para tus 3 proyectos de portafolio?", opciones: ["Cuantos más, mejor", "Uno que termines, uno con lógica real y uno que demuestre nivel", "Tres copias de la misma página", "Los más difíciles posibles, aunque queden a medias"], correcta: 1 },
+              { tipo: "relacionar", pares: [["Página del Mes 1 publicada", "Prueba que terminas lo que empiezas"], ["Proyecto con lógica real (JS)", "Prueba que resuelves problemas dirigiendo IA"], ["Landing real o herramienta útil", "Prueba nivel: algo que otros usarían"], ["Rama de feature con PR en un repo", "Prueba que trabajas como en un equipo profesional"]] },
+              { tipo: "completar", frase: "Tus tres proyectos comparten el estándar de presentación: README que ____ (C14), sitio ____ (C8) e historial con ____ claros (C5).", banco: ["venda", "publicado", "mensajes", "público"], respuestas: ["venda", "publicado", "mensajes"] },
+              { tipo: "vf", afirmacion: "Un portafolio de 10 proyectos a medio terminar convence más que 3 terminados y publicados.", correcta: false, explicacion: "quien revisa abre en profundidad lo que le llama la atención; un repo a medias prueba lo contrario de lo que buscas." },
+              { tipo: "quehace", codigo: "tu-usuario\n├─ mi-primera-pagina   README + link vivo + 6 commits\n├─ presupuesto-app      README + demo + rama con PR\n└─ taqueria-don-luis    README + link vivo + 12 commits", pregunta: "Revisas un perfil de GitHub con esta estructura. ¿Qué piensa un cliente que lo ve?", opciones: ["Que el dueño no sabe organizar", "Que hay tres proyectos terminados, explicados y publicados", "Que solo hizo páginas de ejemplo", "Que copió todo de IA sin entender nada"], correcta: 1 }
+            ]
+          },
+          {
+            id: "m2-c28",
+            titulo: "Cómo se ve un repo profesional vs uno de principiante",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Saber reconocer un repo profesional es parte de tu oficio: es el estándar al que te vas a medir. La buena noticia: <strong>se ve a la distancia</strong>. Cuatro diferencias saltan a la vista:</p><ul><li><strong>README.</strong> Profesional: nombre, descripción de qué hace y para quién, captura, tecnologías, cómo correrlo y el link del sitio vivo (B9, C14). Principiante: vacío, o un genérico «mi proyecto» que no dice nada.</li><li><strong>Mensajes de commit (C5).</strong> Profesional: <code>feat:</code>, <code>fix:</code>, <code>docs:</code> — cada commit cuenta qué cambió y por qué. Principiante: <code>update</code>, <code>cambios</code>, <code>ya quedó</code>, un commit gigante con todo junto.</li><li><strong>Historial y ramas (C19, C12).</strong> Profesional: ramas de feature, PRs con revisión, main estable. Principiante: todo directo a main, sin PRs, con commits a medias.</li><li><strong>Orden del repo (C26, C3).</strong> Profesional: <code>.gitignore</code> desde el día uno, sin archivos basura, estructura clara. Principiante: <code>node_modules/</code> subido, un <code>.env</code> a la vista, archivos de prueba regados.</li></ul><p>Ninguna de estas cosas es talento: son <strong>decisiones</strong>. Y las tomas igual de fácil hoy que un dev con diez años. Un repo profesional no se ve así por accidente: se ve así porque alguien decidió que su trabajo merecía presentarse bien.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Es la diferencia entre <strong>dos locales en la misma calle</strong>. Uno tiene letrero con el nombre, la vitrina ordenada, el menú con precios y se nota qué vende; el otro no tiene letrero, hay cajas amontonadas en la puerta y no sabes si entras. Venden cosas parecidas; la diferencia es la presentación. Tu repo es tu local: cualquiera puede verlo, así que cualquiera decide con la vista.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>La diferencia en un vistazo — dos historiales:</p><pre><code>PROFESIONAL (git log --oneline)\nfeat: agregar sección de testimonios\nfix: corregir enlace roto de WhatsApp\nstyle: subir contraste del botón en móvil\ndocs: escribir README con captura\nfeat: versión inicial de la página\n\nPRINCIPIANTE\nupdate\ncambios\nfinal\nupdate2\nyo que creo que ya\nasdf</code></pre><p>Y el archivo que separa ambos mundos:</p><pre><code># .gitignore (C3) — presente en el repo profesional:\nnode_modules/\n.env\n.DS_Store\n\n→ en el de principiante: subido a GitHub, con tokens dentro  ⚠ (C25)</code></pre><p>El profesional no es más listo: <strong>tiene mejores hábitos</strong>. Esos hábitos son exactamente lo que has estado practicando todo el mes.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Evalúa mi repositorio como lo haría un dev senior en una entrevista. Califica del 1 al 10: README, mensajes de commit, uso de ramas y PRs, .gitignore, y orden general. Para cada punto dime exactamente qué cambiarías y cómo, ordenado de mayor a menor impacto.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "relacionar", pares: [["README con captura y link vivo", "Repo profesional"], ["git commit -m \"cambios\"", "Repo principiante"], [".gitignore desde el día uno", "Repo profesional"], ["node_modules subido al repo", "Repo principiante"]] },
+              { tipo: "completar", frase: "En un repo profesional cada commit cuenta qué ____ y por qué, usando prefijos como ____ (C5); en uno de principiante ves mensajes como ____.", banco: ["cambió", "feat:", "update", "rama"], respuestas: ["cambió", "feat:", "update"] },
+              { tipo: "vf", afirmacion: "Un repo profesional se ve así por accidente, por la experiencia del autor.", correcta: false, explicacion: "es el resultado de decisiones conscientes: README, mensajes, ramas y orden — decisiones que tú ya sabes tomar." },
+              { tipo: "multiple", pregunta: "Abres un repo y ves un .env subido con tokens. ¿Qué es?", opciones: ["Un detalle sin importancia", "Una bandera roja grave: hay secretos expuestos (C25)", "Algo que cualquier repo tiene", "Prueba de que el autor sabe de seguridad"], correcta: 1 },
+              { tipo: "quehace", codigo: "git log --oneline\nfeat: agregar sección de testimonios\nfix: corregir enlace roto de WhatsApp\ndocs: escribir README\nfeat: versión inicial", pregunta: "Este historial pertenece a un repo…", opciones: ["…de principiante: no se entiende", "…profesional: cada commit es un tema con mensaje claro (C5)", "…roto: faltan commits de merge", "…que copió el historial de otro"], correcta: 1 }
+            ]
+          },
+          {
+            id: "m2-c29",
+            titulo: "Tu flujo de trabajo completo, de idea a publicación",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Hoy juntas todo lo del mes en un solo flujo. Este es <strong>tu oficio de ahora en adelante</strong>: no es una lista de comandos sueltos, es una sola cadena que va de una idea a un sitio publicado. Cada vez que la recorras, repites un ciclo probado:</p><pre><code>IDEA → BRIEF (C15) → RAMA (C19) → LA IA TRABAJA (C23)\n     → REVISAS (C24) → COMMIT (C4, C5) → PUSH (B5)\n     → PR (C12) → MERGE (C13) → PUBLICACIÓN (C8)</code></pre><p>Los momentos donde se decide el resultado son tres, y ninguno es de tecnología:</p><ul><li><strong>El brief (C15).</strong> Qué quieres, para quién, qué NO se toca. Un buen brief evita rehacer el trabajo.</li><li><strong>La revisión (C24).</strong> El mapa del diff, las líneas importantes, las sorpresas del status, y la prueba en vivo. Antes de mergear, tú eres el filtro.</li><li><strong>La publicación (C8, B20).</strong> El flujo no termina en el push: termina cuando el sitio está en vivo y lo abres para confirmarlo.</li></ul><p>Ese es el flujo completo de tu trabajo con IA: <strong>decides, delegas, revisas y publicas</strong>. Para tareas de cinco minutos o proyectos de un mes, la cadena es la misma — solo cambia el tamaño.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Es <strong>el recorrido de un platillo en un restaurante bien organizado</strong>: el cliente pide con una receta clara (brief), cada estación trabaja en su rincón sin pisar a la otra (ramas), el auxiliar prepara (la IA), el chef prueba antes de servir (tu revisión), el capitán aprueba que salga a la mesa (merge), y el comensal recibe el platillo servido (la publicación). Un restaurante así sirve igual un café que un banquete — el sistema no cambia, solo el tamaño del pedido.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>El ciclo completo, de idea a sitio vivo, en una sesión:</p><pre><code>IDEA: agregar horarios y teléfono a Tortas El Güero\n\nC:\\...\\tortas-el-guero&gt; git switch -c horarios-contacto   ← rama (C19)\nC:\\...\\tortas-el-guero&gt; claude\n&gt; Brief (C15): agrega una sección de horarios y teléfono\n&gt; en la página, sin tocar el resto. Muestra el diff.\n◆ editó index.html (+10 líneas)\n◆ ¿commit? [sí/no]  sí   →   feat: agregar horarios y contacto\n\nC:\\...\\tortas-el-guero&gt; git diff main..horarios-contacto  ← revisas (C24)\nC:\\...\\tortas-el-guero&gt; abres la página en el navegador → se ve bien\n\nC:\\...\\tortas-el-guero&gt; git push -u origin horarios-contacto\n→ abres el PR (C12), lo revisas (C13), merge\n→ main actualizado → GitHub Pages publica (C8, B20)\n→ abres la URL del sitio: los horarios están en vivo  ✓</code></pre><p>De idea a URL viva sin saltarte un paso. Ese recorrido es tu trabajo — y ya lo sabes hacer completo.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Actúa como mi lead developer. Tengo esta tarea: [describe la idea]. Recórrela por mi flujo completo — brief, rama, trabajo de IA, revisión, commit, PR y publicación — y dime: 1) el brief que le darías a la IA, 2) en qué puntos debo revisar yo antes de dar el visto bueno, y 3) qué me puede salir mal en cada etapa y cómo detectarlo.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "ordenar", instruccion: "Acomoda tu flujo de trabajo de idea a publicación:", elementos: ["escribir un brief claro (C15)", "crear una rama de feature (C19)", "dejar que la IA trabaje (C23)", "revisar el diff y probar en vivo (C24)", "hacer commit y push", "abrir PR, revisar y mergear", "publicar el sitio (C8)"] },
+              { tipo: "completar", frase: "El flujo no termina en el push: termina cuando el sitio está ____ y lo ____ para confirmarlo.", banco: ["en vivo", "abres", "roto", "commiteado"], respuestas: ["en vivo", "abres"] },
+              { tipo: "multiple", pregunta: "¿En qué momento de tu flujo entra tu revisión?", opciones: ["Solo al final, cuando todo está publicado", "En el brief y en el diff, antes de mergear", "Nunca: la IA se revisa sola", "Solo si algo se ve feo"], correcta: 1 },
+              { tipo: "vf", afirmacion: "Un brief flojo (C15) se nota después: si el resultado no es lo que querías, muchas veces el error fue del brief, no de la IA.", correcta: true, explicacion: "la calidad del resultado depende más de la claridad de la petición que de la herramienta." },
+              { tipo: "quehace", codigo: "git push -u origin horarios-contacto", pregunta: "Después del push, la IA te dice «tu sitio ya está actualizado». ¿Qué revisas?", opciones: ["Confías: el push publica solo", "Abres la URL del sitio publicado para confirmar que el cambio está en vivo", "Nada: el push solo sube código, revisas git log", "Borras la rama"], correcta: 1 }
+            ]
+          },
+          {
+            id: "m2-c30",
+            titulo: "Repaso + arranque del proyecto final del mes",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Lección 30: no hay concepto nuevo. Hay dos cosas: <strong>demostrar que te quedó todo el mes</strong> y <strong>arrancar el proyecto que lo cierra</strong>. El Mes 2, materia C, en una sola página:</p><p><strong>El mapa de lo que ya sabes:</strong></p><ul><li><strong>Versionar sin miedo (C1)</strong> — instalaste Git (C2), convertiste tu página en repo (C3) y tomaste tu primer commit (C4).</li><li><strong>Hablar claro con el historial (C5)</strong> — mensajes de commit que cuentan qué cambió y por qué.</li><li><strong>Trabajar con ramas (C19)</strong> y entregar por PRs (C12) con revisión antes de mergear (C13).</li><li><strong>Delegar de verdad (C21–C24)</strong> — herramientas IA que entran a tu repo, y tu revisión como filtro (C24).</li><li><strong>Proteger lo que importa (C25)</strong> — secretos que nunca viajan, llaves que se revocan.</li><li><strong>Presentar tu trabajo (C26–C29)</strong> — repo limpio, portafolio de 3 proyectos, estándar profesional y el flujo completo.</li></ul><p><strong>Y ahora, el proyecto final del mes.</strong> Este es el entregable que demuestra todo:</p><pre><code>PROYECTO FINAL — MES 2 (Materia C)\n\nUn repositorio PÚBLICO en GitHub con:\n✓ README profesional (B9, C14): qué hace, captura,\n  cómo correrlo, tecnologías y link del sitio vivo.\n✓ Al menos 10 commits con mensajes claros (C5),\n  que cuenten cómo se construyó.\n✓ Una rama de feature (C19) mergeada vía PULL REQUEST (C12),\n  revisada antes del merge (C13).\n✓ .gitignore desde el día uno (C3) y cero secretos (C25).\n✓ El sitio publicado con GitHub Pages (C8, B20).\n\nENTREGAS: la URL del repo y la URL del sitio vivo.</code></pre><p>Puede ser tu página del Mes 1 mejorada o un proyecto nuevo. La regla de oro: <strong>cualquiera de tus compañeros debería poder abrir el repo, leer el README y visitar el sitio funcionando</strong> sin preguntarte nada.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Es el <strong>examen de conducir de tu mes</strong>. No te preguntan qué sabes de mecánica: te piden que manejes un recorrido completo — salir, avanzar, respetar señales, estacionar — y te evalúan viéndote manejar. Tu proyecto final es eso: todo lo que aprendiste, en una sola ruta completa, de idea a sitio vivo.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>El arranque del proyecto en 4 movimientos — hoy mismo:</p><pre><code>1. ELIGE el proyecto (tu página del Mes 1 mejorada, o algo nuevo).\n   Decide con criterio de portafolio (C27): ¿qué prueba?\n\n2. REPO PÚBLICO:\n   git init (C3) · .gitignore al día · git add . ·\n   git commit -m \"feat: versión inicial del proyecto final\"\n   → sube a GitHub como repo público (B5)\n\n3. PRIMERA RAMA CON PR:\n   git switch -c mejora-destacada\n   → pide a la IA el cambio (C23), revisa (C24),\n   → push + PR (C12) → revisa de nuevo → merge (C13)\n\n4. PÚBLICA:\n   GitHub Pages (C8, B20) → abre la URL → confirma\n   que el sitio está en vivo y el README dice cómo verlo.</code></pre><p>Del 1 al 4 recorres cada lección del mes en orden. Si te atoras, el mapa de arriba es tu índice: vuelve a la lección exacta.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Hazme un examen de autoevaluación del Mes 2, materia C (lecciones C1 a C29): 10 preguntas mezclando conceptos de versionado, ramas, PRs, mensajes de commit, revisión de IA, seguridad y portafolio. Hazme UNA pregunta a la vez, dime la respuesta correcta después de que yo responda, y al final dame una calificación con los temas que debo repasar citando la lección exacta.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "multiple", pregunta: "¿Cuál es el entregable final del proyecto del mes (C30)?", opciones: ["Un repositorio privado sin publicar", "Un repo público con README profesional, 10+ commits, un PR mergeado y el sitio publicado con GitHub Pages", "Tres proyectos terminados a la vez", "Un examen escrito de 50 preguntas"], correcta: 1 },
+              { tipo: "completar", frase: "El proyecto final exige al menos ____ commits con mensajes ____ (C5), una rama de feature mergeada vía ____ (C12) y el sitio publicado con ____ (C8).", banco: ["10", "claros", "Pull Request", "GitHub Pages", "5", "secretos"], respuestas: ["10", "claros", "Pull Request", "GitHub Pages"] },
+              { tipo: "relacionar", pares: [["C1–C4", "Versionar: instalar, primer repo, primer commit"], ["C5", "Mensajes de commit que cuentan historia"], ["C12–C13", "PR: entregar y revisar antes de mergear"], ["C24", "Revisar el trabajo de una IA ejecutora"], ["C25", "Qué nunca le compartes a una IA"], ["C26–C29", "Repo limpio, portafolio, estándar y flujo completo"]] },
+              { tipo: "vf", afirmacion: "Si tu repo final tiene 1 commit gigante con todo junto, cumple con la parte de «10 commits con mensajes claros» siempre que el mensaje sea descriptivo.", correcta: false, explicacion: "la exigencia es de historial, no de descripción: 10+ commits que cuenten la construcción del proyecto (C5)." },
+              { tipo: "ordenar", instruccion: "Acomoda el arranque del proyecto final:", elementos: ["elegir el proyecto con criterio de portafolio (C27)", "crear el repo público con .gitignore y primer commit", "crear una rama de feature y dejar que la IA trabaje", "revisar el diff y mergear por PR", "publicar con GitHub Pages y confirmar el sitio vivo"] },
+              { tipo: "quehace", codigo: "git log --oneline\nfeat: versión inicial del proyecto final\nfix: corregir enlace roto\nfeat: agregar sección de testimonios\nchore: limpiar .gitignore", pregunta: "Revisas tu historial antes de entregar el proyecto final. ¿Qué concluyes?", opciones: ["Faltan commits: deberías tener más de 4", "Está listo si sumas los demás commits y cada mensaje cuenta un tema (C5)", "El historial está mal porque mezcla feat y fix", "Debes borrar el historial y empezar de nuevo"], correcta: 1 },
+              { tipo: "multiple", pregunta: "¿Qué revisa tu compañero cuando abre tu repo final?", opciones: ["Solo el código, nada más", "El README para entender qué es, el historial para ver cómo se construyó y el link para probarlo", "El número de estrellas", "Los mensajes de commit en inglés"], correcta: 1 },
+              { tipo: "vf", afirmacion: "El flujo completo del proyecto final — idea, brief, rama, revisión, PR y publicación — es el mismo flujo de C29, solo que a escala de proyecto.", correcta: true, explicacion: "la cadena es la misma para una tarea chica y para un proyecto de un mes (C29); el proyecto final lo recorre entero." }
+            ]
+          }
         ]
       }
     }
