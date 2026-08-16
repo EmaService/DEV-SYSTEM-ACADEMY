@@ -121,14 +121,20 @@
     return cfgTitles[m] || MONTH_TITLES[m] || "Mes " + m;
   }
 
-  function addMonthsSafe(baseDate, n) {
-    var d = new Date(baseDate.getTime());
-    var day = d.getDate();
-    d.setDate(1);
-    d.setMonth(d.getMonth() + n);
-    var lastDay = new Date(d.getFullYear(), d.getMonth() + 1, 0).getDate();
-    d.setDate(Math.min(day, lastDay));
+  function fechaBase(iso) {
+    var d = new Date(iso);
+    return new Date(d.getFullYear(), d.getMonth(), d.getDate(), 12, 0, 0);
+  }
+
+  function sumarMeses(fecha, n) {
+    var d = new Date(fecha.getFullYear(), fecha.getMonth() + n, 1, 12, 0, 0);
+    var ultimoDia = new Date(d.getFullYear(), d.getMonth() + 1, 0).getDate();
+    d.setDate(Math.min(fecha.getDate(), ultimoDia));
     return d;
+  }
+
+  function addMonthsSafe(baseDate, n) {
+    return sumarMeses(baseDate, n);
   }
 
   function getLocalPaymentDates(email) {
@@ -215,14 +221,21 @@
     if (proximoMes > 12) proximoMes = 12;
     var baseDate = new Date();
     if (payments && payments.length > 0) {
-      var first = payments[0];
-      var firstRaw = first.created_at || first.payment_date || null;
-      if (firstRaw) baseDate = new Date(firstRaw);
-    } else if (enrollment && enrollment.created_at) {
-      baseDate = new Date(enrollment.created_at);
+      var primerPago = null;
+      for (var pp = 0; pp < payments.length; pp++) {
+        var pv = payments[pp];
+        if (Number(pv.month_id) === 1) { primerPago = pv; break; }
+      }
+      if (!primerPago) primerPago = payments[0];
+      var firstRaw = primerPago.updated_at || primerPago.created_at || primerPago.payment_date || null;
+      if (firstRaw) baseDate = fechaBase(firstRaw);
+    } else if (enrollment && (enrollment.created_at || enrollment.updated_at)) {
+      baseDate = fechaBase(enrollment.created_at || enrollment.updated_at);
+    } else {
+      baseDate = fechaBase(new Date());
     }
     var diaCorte = baseDate.getDate();
-    var fechaVencimiento = addMonthsSafe(baseDate, monthsPaid);
+    var fechaVencimiento = sumarMeses(baseDate, monthsPaid);
     var now = new Date();
     var diasRestantes = Math.round((fechaVencimiento - now) / 86400000);
     var estado = "al_corriente";
@@ -237,6 +250,7 @@
       estado: estado,
       mesesPagados: monthsPaid,
       proximoMes: proximoMes,
+      mesActual: monthsPaid > 0 ? monthsPaid : 1,
       baseDate: baseDate,
       diaCorte: diaCorte,
       fechaVencimiento: fechaVencimiento,
@@ -1703,11 +1717,11 @@
       var fechaStr = info.fechaVencimiento.toLocaleDateString("es-MX", { day: "numeric", month: "long", year: "numeric" });
       var msg = "";
       if (info.estado === "vencido") {
-        msg = "Tu mensualidad del Mes " + info.proximoMes + " está vencida. Realiza tu pago para continuar con el programa.";
+        msg = "Tu mensualidad venció el " + fechaStr + ". Paga para desbloquear el Mes " + info.proximoMes + ". Tu contenido de meses anteriores sigue disponible.";
       } else if (info.estado === "por_vencer") {
-        msg = "Tu mensualidad del Mes " + info.proximoMes + " vence en " + (info.diasRestantes === 1 ? "1 día" : info.diasRestantes + " días") + ".";
+        msg = "Tu mensualidad vence en " + (info.diasRestantes === 1 ? "1 día" : info.diasRestantes + " días") + ". Paga para desbloquear el Mes " + info.proximoMes + ".";
       } else {
-        msg = "Estás al corriente. Tu siguiente mensualidad (Mes " + info.proximoMes + ") vence el " + fechaStr + ".";
+        msg = "Tu acceso al Mes " + info.mesActual + " está vigente hasta el " + fechaStr + ". Paga el " + fechaStr + " para desbloquear el Mes " + info.proximoMes + ".";
       }
       estadoContent.innerHTML =
         "<div style='display:flex;align-items:center;gap:0.6rem;flex-wrap:wrap'><span class='badge' style='background:" + badge.color + ";color:#001a41;padding:0.3rem 0.8rem;border-radius:999px;font-size:0.78rem;font-weight:800'>" + badge.label + "</span><span class='small' style='color:var(--muted)'>" + msg + "</span></div>" +
@@ -1722,7 +1736,7 @@
       if (info.mesesPagados >= 12) {
         payHtml = "<p style='color:var(--green)'><strong>Programa completado ✓</strong></p><p class='small' style='color:var(--muted)'>Ya cubriste las 12 mensualidades del programa.</p>";
       } else if (info.estado === "al_corriente") {
-        payHtml = "<p style='color:var(--green)'><strong>Estás al corriente ✓</strong></p><p class='small' style='color:var(--muted)'>Tu próximo pago (Mes " + info.proximoMes + ") vence el " + info.fechaVencimiento.toLocaleDateString("es-MX", { day: "numeric", month: "long", year: "numeric" }) + ".</p>";
+        payHtml = "<p style='color:var(--green)'><strong>Estás al corriente ✓</strong></p><p class='small' style='color:var(--muted)'>Tu próximo pago (Mes " + info.proximoMes + ") es el " + info.fechaVencimiento.toLocaleDateString("es-MX", { day: "numeric", month: "long", year: "numeric" }) + ".</p>";
         payHtml += "<button class='btn btn-ghost' id='pago-adelantado-btn' style='margin-top:0.8rem'>Pagar por adelantado</button>";
       } else {
         payHtml = "<p class='small' style='color:var(--muted)'>Realiza el pago de tu siguiente mensualidad para mantener tu acceso activo.</p>";
@@ -1782,7 +1796,7 @@
           rowDate = payRec && (payRec.created_at || payRec.payment_date) ? new Date(payRec.created_at || payRec.payment_date) : null;
           statusCell = "<span style='color:var(--green)'>Pagado ✓</span>";
         } else {
-          rowDate = addMonthsSafe(info.baseDate, pm - 1);
+          rowDate = sumarMeses(info.baseDate, pm - 1);
           statusCell = "<span style='color:var(--muted)'>Pendiente</span>";
         }
         var dateStr = rowDate ? rowDate.toLocaleDateString("es-MX", { day: "numeric", month: "short", year: "numeric" }) : "—";
@@ -1797,14 +1811,19 @@
       for (var cm = 1; cm <= 12; cm++) {
         var bg = "var(--line)";
         var color = "var(--muted)";
+        var chipDate = sumarMeses(info.baseDate, cm - 1);
+        var chipDateStr = (chipDate.getDate()) + " " + chipDate.toLocaleDateString("es-MX", { month: "short" });
+        var chipLabel = "✓";
         if (cm <= info.mesesPagados) {
           bg = "rgba(34,197,94,0.18)";
           color = "var(--green)";
+          chipLabel = "✓";
         } else if (cm === info.proximoMes) {
           bg = "rgba(124,92,255,0.22)";
           color = "var(--brand-2)";
+          chipLabel = "▸";
         }
-        cHtml += "<div style='background:" + bg + ";color:" + color + ";border:1px solid var(--line);border-radius:0.75rem;padding:0.55rem;text-align:center;font-size:0.78rem;font-weight:700'>M" + cm + "</div>";
+        cHtml += "<div style='background:" + bg + ";color:" + color + ";border:1px solid var(--line);border-radius:0.75rem;padding:0.55rem;text-align:center;font-size:0.78rem;font-weight:700'>M" + cm + " " + chipLabel + "<div style='font-size:0.68rem;font-weight:500;opacity:0.8'>" + chipDateStr + "</div></div>";
       }
       calendarioEl.innerHTML = cHtml;
     }
@@ -1820,7 +1839,7 @@
     if (banner) {
       if (showWarning) {
         var bannerColor = info.estado === "vencido" ? "var(--danger)" : "var(--amber)";
-        var bannerText = info.estado === "vencido" ? "⚠ Tu mensualidad está vencida. Realiza tu pago para continuar." : "⚠ Tu mensualidad está por vencer.";
+        var bannerText = info.estado === "vencido" ? "⚠ Tu mensualidad venció. Paga para desbloquear el Mes " + info.proximoMes + "." : "⚠ Tu mensualidad vence en " + info.diasRestantes + " día(s). Paga para desbloquear el Mes " + info.proximoMes + ".";
         banner.style.display = "block";
         banner.innerHTML =
           "<div style='display:flex;align-items:center;justify-content:space-between;gap:0.8rem;flex-wrap:wrap;background:" + bannerColor + ";color:" + (info.estado === "vencido" ? "#ffffff" : "#001a41") + ";padding:0.7rem 1rem;border-radius:0.75rem;font-size:0.85rem;font-weight:700'>" +
