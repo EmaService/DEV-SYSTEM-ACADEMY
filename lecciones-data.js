@@ -3268,31 +3268,859 @@ window.DEV_SYSTEM_LECCIONES = {
               { tipo: "quehace", codigo: "sellar la caja y mandarla", pregunta: "En la analogía del paquete, ¿qué representa \"sellar la caja y mandarla\"?", opciones: ["git add", "git init", "git commit", "git status"], correcta: 2 }
             ]
           },
-          { id: "m2-a6", titulo: "git status: tu brújula, el comando que más vas a usar", proximamente: true },
-          { id: "m2-a7", titulo: "git add: elegir qué entra en la foto", proximamente: true },
-          { id: "m2-a8", titulo: "git commit: tomar la foto", proximamente: true },
-          { id: "m2-a9", titulo: "Mensajes de commit: escribirle a tu yo del futuro", proximamente: true },
-          { id: "m2-a10", titulo: "git log: leer la historia de tu proyecto", proximamente: true },
-          { id: "m2-a11", titulo: ".gitignore: lo que Git NUNCA debe rastrear", proximamente: true },
-          { id: "m2-a12", titulo: "git diff: ver exactamente qué cambió, línea por línea", proximamente: true },
-          { id: "m2-a13", titulo: "Deshacer I: git restore (antes del commit)", proximamente: true },
-          { id: "m2-a14", titulo: "Deshacer II: git revert (después del commit, sin borrar historia)", proximamente: true },
-          { id: "m2-a15", titulo: "Deshacer III: git reset y por qué da miedo", proximamente: true },
-          { id: "m2-a16", titulo: "Ramas: qué son y por qué lo cambian todo", proximamente: true },
-          { id: "m2-a17", titulo: "git branch y git switch: crear y moverte entre ramas", proximamente: true },
-          { id: "m2-a18", titulo: "Trabajar en una rama sin romper lo que ya funciona", proximamente: true },
-          { id: "m2-a19", titulo: "git merge: unir tu trabajo con el principal", proximamente: true },
-          { id: "m2-a20", titulo: "Conflictos de merge: qué son, por qué pasan, cómo se resuelven", proximamente: true },
-          { id: "m2-a21", titulo: "HEAD, main, origin: el vocabulario que confunde a todos", proximamente: true },
-          { id: "m2-a22", titulo: "git stash: guardar temporalmente sin commitear", proximamente: true },
-          { id: "m2-a23", titulo: "Tags y versiones: marcar los momentos importantes", proximamente: true },
-          { id: "m2-a24", titulo: "El árbol de commits: leer el historial gráfico", proximamente: true },
-          { id: "m2-a25", titulo: "Git + IA: pedirle a la IA que interprete tu historial", proximamente: true },
-          { id: "m2-a26", titulo: "Los 5 errores de principiante y cómo salir de cada uno", proximamente: true },
-          { id: "m2-a27", titulo: "Git dentro de VS Code: la interfaz visual sin terminal", proximamente: true },
-          { id: "m2-a28", titulo: "Commits atómicos: la disciplina que te salva", proximamente: true },
-          { id: "m2-a29", titulo: "Cuándo NO usar Git (y qué usar en su lugar)", proximamente: true },
-          { id: "m2-a30", titulo: "Repaso integrador de Git (mega-quiz jugable)", proximamente: true }
+          {
+            id: "m2-a6",
+            titulo: "git status: tu brújula, el comando que más vas a usar",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>De los miles de comandos de Git, hay uno que correrás más que cualquier otro: <code>git status</code>. Y no por gusto: te dice, en un instante, <strong>en qué punto del flujo está cada archivo</strong> de tu proyecto.</p><p>Recuerda las 3 zonas (lo viste en A5): lo que editas vive en el <strong>working</strong>, lo que preparas con <code>git add</code> vive en el <strong>staging</strong>, y lo que confirmas con <code>git commit</code> vive en el <strong>historial</strong>. <code>git status</code> es el espejo que te muestra, en vivo, qué hay en cada zona:</p><ul><li><strong>Changes to be committed:</strong> cambios que ya preparaste, esperando su foto</li><li><strong>Changes not staged for commit:</strong> archivos modificados que aún no preparas</li><li><strong>Untracked files:</strong> archivos nuevos que Git todavía no conoce</li></ul><p>Y algo más importante que el comando en sí: <strong><code>git status</code> es de solo lectura</strong>. No modifica nada, no borra nada, no toma ninguna foto. Es completamente inofensivo — la brújula perfecta para cuando no sabes ni dónde estás.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p><code>git status</code> es la <strong>brújula de tu proyecto</strong>. Cuando te pierdes en la montaña, el primer paso nunca es \"seguir caminando\": es pararte, mirar la brújula y saber dónde estás. En Git pasa igual: cuando una IA te pida un comando y no entiendas el estado de tu repo, corre <code>git status</code> antes que cualquier otra cosa. El mapa te dice el camino; la brújula te dice dónde estás.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Estado típico de un proyecto en plena faena:</p><pre><code>C:\\...\\mi-tienda&gt; git status\nOn branch main\nChanges to be committed:\n        new file:   logo.png            ← preparado, esperando commit\nChanges not staged for commit:\n        modified:   index.html          ← editado, sin preparar\nUntracked files:\n        contacto.html                   ← nuevo, Git no lo conoce</code></pre><p>En tres líneas sabes la historia completa: el logo ya está listo para la foto, la página principal tiene cambios pendientes de preparar, y la página de contacto ni siquiera está registrada. Todo sin abrir un solo archivo.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Corrí <code>git status</code> y salió esto: [pega la salida]. Explícame en español claro qué significa cada línea y qué debo hacer a continuación, paso a paso.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "multiple", pregunta: "¿Qué hace <code>git status</code>?", opciones: ["Muestra el estado actual del repositorio: qué hay en cada zona", "Sube tus cambios a internet", "Borra los archivos que ya no uses", "Toma una fotografía del proyecto"], correcta: 0 },
+              { tipo: "completar", frase: "git status es de solo ____: te dice qué pasa, pero nunca ____ tus archivos.", banco: ["lectura", "modifica", "escribe", "sube"], respuestas: ["lectura", "modifica"] },
+              { tipo: "vf", afirmacion: "<code>git status</code> puede borrar tus cambios sin avisar.", correcta: false, explicacion: "es de solo lectura; no modifica nada de tu proyecto." },
+              { tipo: "relacionar", pares: [["Changes to be committed", "Cambios ya preparados en staging"], ["Changes not staged for commit", "Archivos editados que aún no preparas"], ["Untracked files", "Archivos nuevos que Git aún no conoce"]] },
+              { tipo: "quehace", codigo: "nothing to commit, working tree clean", pregunta: "Corres <code>git status</code> y Git responde <code>nothing to commit, working tree clean</code>. ¿Qué significa?", opciones: ["Tu proyecto está vacío y se va a borrar", "No hay cambios pendientes: todo está guardado y al día", "Hay un error y debes reinstalar Git", "Perdiste todos tus archivos"], correcta: 1 }
+            ]
+          },
+          {
+            id: "m2-a7",
+            titulo: "git add: elegir qué entra en la foto",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Ya sabes qué es el staging (lo viste en A5): la antesala donde armas la PRÓXIMA fotografía. <code>git add</code> es el comando que mete archivos a esa antesala — y la clave es que <strong>tú eliges cuáles</strong>.</p><p>Sus formas más comunes:</p><ul><li><code>git add index.html</code> — prepara solo ese archivo</li><li><code>git add imagenes/</code> — prepara todo lo que cambió dentro de esa carpeta</li><li><code>git add .</code> — prepara TODOS los cambios del directorio actual (y sus subcarpetas)</li></ul><p>¿Por qué existe elegir? Porque un commit debe contar UNA historia. Si trabajaste en un bug y en colores a la vez, quieres dos fotos: primero el bug, luego los colores. Sin <code>git add</code> selectivo, todo se mezclaría en una sola foto confusa que nadie podrá leer después.</p><p>Importante: <code>git add</code> NO guarda nada de forma permanente. Solo pone cambios en la antesala. La foto real se toma con <code>git commit</code> (siguiente lección).</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p><code>git add</code> es <strong>armar la maleta para el viaje</strong>. Tienes toda tu ropa regada (working), pero no todo merece ir al viaje de mañana: ¿esa sudadera de invierno en pleno agosto? Se queda. Vas metiendo a la maleta (staging) exactamente lo que quieres llevar, con calma y revisando. <code>git commit</code> es cerrar la maleta y subir al avión. Si te das cuenta de que olvidaste algo, todavía puedes abrirla… pero solo antes de despegar.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<pre><code>C:\\...\\mi-tienda&gt; git status\nChanges not staged for commit:\n        modified:   index.html\n        modified:   styles.css\n\nC:\\...\\mi-tienda&gt; git add index.html\n\nC:\\...\\mi-tienda&gt; git status\nChanges to be committed:\n        modified:   index.html      ← ya en la maleta\nChanges not staged for commit:\n        modified:   styles.css      ← sigue fuera, esperando</code></pre><p>Dos archivos editados, una sola maleta con uno de ellos. El próximo <code>git commit</code> va a incluir SOLO <code>index.html</code>. Eso es control fino.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Trabajé en varias cosas a la vez y quiero prepararlas en <code>git add</code> separados para hacer un commit por tema. Enséñame la secuencia exacta y dime cómo reviso con <code>git status</code> que cada preparación quedó bien.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "ordenar", instruccion: "Acomoda el flujo de preparación de un cambio:", elementos: ["editar index.html", "git add index.html", "git status para verificar"] },
+              { tipo: "multiple", pregunta: "¿Qué hace <code>git add .</code>?", opciones: ["Prepara todos los cambios del directorio actual", "Prepara solo el archivo llamado \".\"", "Sube todo el proyecto a GitHub", "Borra los cambios no preparados"], correcta: 0 },
+              { tipo: "completar", frase: "El área de ____ se llena con git add; lo que no preparas se queda en ____.", banco: ["staging", "working", "historial", "papelera"], respuestas: ["staging", "working"] },
+              { tipo: "vf", afirmacion: "<code>git add</code> guarda tus cambios de forma permanente en el historial.", correcta: false, explicacion: "solo los mete a staging; lo permanente llega con git commit." },
+              { tipo: "quehace", codigo: "git add imagenes/", pregunta: "<code>git add imagenes/</code> — ¿qué prepara?", opciones: ["Todos los cambios dentro de la carpeta imagenes", "Una imagen llamada \"/\"", "Todo el proyecto", "Nada, es un comando inválido"], correcta: 0 }
+            ]
+          },
+          {
+            id: "m2-a8",
+            titulo: "git commit: tomar la foto",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Llegó el momento de la foto. <code>git commit</code> toma todo lo que está en el staging (lo viste en A5) y lo guarda <strong>para siempre</strong> en el historial.</p><p>Su forma básica incluye SIEMPRE un mensaje:</p><pre><code>git commit -m \"Corregir precios de la página principal\"</code></pre><p>El <code>-m</code> significa \"message\": el mensaje que le dejas a tu yo del futuro (a fondo en A9). Si lo corres sin <code>-m</code>, Git abre el editor de texto para que lo escribas ahí — el famoso <code>vim</code> del que nadie sabe salir (lo configuraste en A2).</p><p>Lo que pasa al hacer commit:</p><ul><li>Git guarda la foto con un <strong>hash</strong>: un código único de 40 caracteres. Verás los primeros 7, como <code>a3f9c1</code>.</li><li>El staging se vacía (la caja ya se envió).</li><li>El historial crece una foto.</li></ul><p>Un detalle que te va a salvar: <strong>si no hiciste <code>git add</code>, no hay nada que fotografiar.</strong> El commit solo toma lo que está en la antesala — los cambios del working se quedan esperando su turno.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p><code>git commit</code> es <strong>pulsar el obturador de la cámara</strong>. Los pasos anteriores eran preparación: encuadrar (elegir con <code>git add</code>), mirar el visor (<code>git status</code>)… y entonces, clic. La foto queda tomada, numerada con su código único (el hash) y archivada en el álbum. No puedes des-tomarla; puedes tomar más, pero esa foto ya es parte de la historia.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<pre><code>C:\\...\\mi-tienda&gt; git add index.html\nC:\\...\\mi-tienda&gt; git commit -m \"Corregir precios de la página principal\"\n[main a3f9c1] Corregir precios de la página principal\n 1 file changed, 3 insertions(+), 1 deletion(-)\n\nC:\\...\\mi-tienda&gt; git status\nOn branch main\nnothing to commit, working tree clean</code></pre><p>Lee la segunda línea: <code>[main a3f9c1]</code> = \"en la rama main, foto número a3f9c1\". La tercera línea te da el resumen: 3 líneas añadidas y 1 eliminada, en 1 archivo. Y <code>git status</code> confirma la paz: no queda nada pendiente, el árbol está limpio.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Acabo de preparar mis cambios con <code>git add</code>. Dime si ya estoy listo para hacer <code>git commit</code> y ayúdame a redactar el mensaje: lo que hice fue [describe]. Quiero un mensaje corto, claro y en imperativo.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "completar", frase: "Para tomar la foto usas ____ y el mensaje va con la bandera ____.", banco: ["git commit", "-m", "git add", "-a"], respuestas: ["git commit", "-m"] },
+              { tipo: "multiple", pregunta: "Corres <code>git commit</code> sin haber hecho <code>git add</code>. ¿Qué pasa?", opciones: ["Se guardan todos tus cambios del working", "No hay nada preparado en staging: Git no toma ninguna foto", "Git toma la foto con los archivos que estén abiertos", "Git borra los cambios no preparados"], correcta: 1 },
+              { tipo: "vf", afirmacion: "Un commit queda registrado de forma permanente en el historial.", correcta: true, explicacion: "por eso son la base del control de versiones." },
+              { tipo: "quehace", codigo: "git commit -m \"Agregar botón de WhatsApp\"", pregunta: "<code>git commit -m \"Agregar botón de WhatsApp\"</code> — ¿qué hace?", opciones: ["Agrega un botón de WhatsApp al código", "Guarda en el historial una foto con ese mensaje", "Envía un mensaje por WhatsApp", "Descarga un botón de internet"], correcta: 1 },
+              { tipo: "relacionar", pares: [["git init", "Instalar la cámara"], ["git add", "Encuadrar la foto"], ["git status", "Mirar el visor"], ["git commit", "Pulsar el obturador"]] }
+            ]
+          },
+          {
+            id: "m2-a9",
+            titulo: "Mensajes de commit: escribirle a tu yo del futuro",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>El hash identifica cada foto, pero la gente — y las IAs — no leen hashes: leen <strong>mensajes</strong>. El mensaje de commit es lo que tu yo del futuro (y tu equipo en las pull requests, a fondo en B13) va a leer cuando intente entender qué pasó en cada punto de la historia.</p><p>Dos reglas de oro:</p><ol><li><strong>Imperativo, presente:</strong> \"Corregir precios\", no \"Corregí precios\" ni \"Precios corregidos\". Piensa: \"esta foto hace tal cosa\".</li><li><strong>Qué y por qué, no cómo:</strong> el código ya muestra el cómo. El mensaje explica la intención: <code>Corregir precio duplicado en el checkout</code> vale más que <code>cambiar linea 42</code>.</li></ol><p>Ejemplos reales:</p><pre><code>malo:   \"cambios\"\nmalo:   \"asdf\"\nmalo:   \"fix\"\nbueno:  \"Corregir error al iniciar sesión\"\nmejor:  \"Corregir error al iniciar sesión: validar correo vacío\"</code></pre><p>¿Por qué \"mejor\" gana? Porque en 6 meses le dice a tu yo del futuro exactamente qué se corrigió, y a la IA que interpreta el historial le da el contexto para encontrar el commit correcto.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>El mensaje de commit es <strong>la nota que le dejas a tu yo del futuro</strong>. Como cuando guardas una caja en el clóset y escribes encima \"jerseys de invierno\" en vez de \"cosas\". Dentro de dos años no quieres abrir veinte cajas con la leyenda \"cosas\": quieres saber exactamente qué hay en cada una sin abrirla. Un historial con buenos mensajes es un archivero que se lee sin abrir cajones.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Dos historiales del MISMO proyecto:</p><pre><code>Historial inútil:\nb7a201 cambios\nc4f19f asdf\na3f9c1 cambios\n\nHistorial profesional:\nb7a201 Corregir bug de sesión caducada\nc4f19f Añadir página de contacto\na3f9c1 Corregir precios de la página principal</code></pre><p>Con el segundo puedes encontrar la foto que rompió algo en segundos. Con el primero, a adivinar. La única diferencia es la disciplina de escribir dos líneas de texto.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Voy a hacer un commit. Esto fue lo que cambié: [describe los cambios]. Redáctame el mensaje perfecto en imperativo, en una línea, y explícame por qué es mejor que esta versión mía: [pega tu borrador].\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "multiple", pregunta: "¿Cuál es el mejor mensaje de commit?", opciones: ["cambios", "arreglos xd", "Corregir precio duplicado en el checkout", "ñññ"], correcta: 2 },
+              { tipo: "completar", frase: "Los mensajes de commit van en ____: \"Añadir X\", no \"Añadí X\" ni \"X añadido\".", banco: ["imperativo", "pasado", "futuro", "inglés"], respuestas: ["imperativo"] },
+              { tipo: "vf", afirmacion: "El mensaje de commit debe explicar el CÓMO (qué código se escribió), no el qué ni el por qué.", correcta: false, explicacion: "el código ya muestra el cómo; el mensaje explica la intención: qué y por qué." },
+              { tipo: "relacionar", pares: [["\"cambios\"", "No dice nada útil"], ["\"asdf\"", "Texto sin sentido"], ["\"Corregir precio duplicado en el checkout\"", "Claro, específico y accionable"], ["\"fix\"", "Muy vago para encontrar algo después"]] },
+              { tipo: "ordenar", instruccion: "Pasos para escribir un buen mensaje de commit:", elementos: ["pensar qué cambió y por qué", "escribirlo en imperativo", "mantenerlo corto y específico"] }
+            ]
+          },
+          {
+            id: "m2-a10",
+            titulo: "git log: leer la historia de tu proyecto",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Guardaste fotos. Ahora aprende a <strong>leer el álbum</strong>. <code>git log</code> muestra la historia de tu proyecto, del commit más nuevo al más viejo:</p><pre><code>git log\n\ncommit a3f9c1d2b48f5a71e3c09d87a2b4c5d6e7f8a9b0\nAuthor: Raymundo Flores &lt;rayfg96@gmail.com&gt;\nDate:   Sun Aug 16 12:30:00 2026 -0600\n\n    Corregir precios de la página principal</code></pre><p>Cada bloque es una foto con su ficha:</p><ul><li><strong>El hash</strong> (<code>a3f9c1d2…</code>): el número único de la foto</li><li><strong>Autor y fecha:</strong> quién la tomó y cuándo (por eso configuraste tu nombre en A2)</li><li><strong>El mensaje:</strong> la nota de la foto (la calidad que trabajamos en A9)</li></ul><p>En la vida real casi siempre lo usarás en versión compacta:</p><pre><code>git log --oneline\na3f9c1 (HEAD -&gt; main) Corregir precios de la página principal\n7d2b84 Cambiar colores a paleta nueva\n1e8a05 Versión inicial de la tienda</code></pre><p>Una foto por línea. Ese <code>(HEAD -&gt; main)</code> te dice dónde estás parado. Y ojo: <code>git log</code> también es de solo lectura, cero riesgo. Es la historia que compartirás con tu equipo en GitHub (a fondo en B13).</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p><code>git log</code> es <strong>abrir el álbum de fotos familiar</strong>. Las fotos están ordenadas, la más reciente hasta arriba, y cada una tiene su fecha, quién la tomó y una leyenda al pie (el mensaje). Revisar el álbum no cambia nada: solo te cuenta la historia. Y una buena historia — con buenas leyendas — es la diferencia entre un álbum que entiendes y una caja de fotos sueltas.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>El flujo completo: tomas la foto y luego lees la historia que acabas de crear:</p><pre><code>C:\\...\\mi-tienda&gt; git commit -m \"Añadir página de contacto\"\n[main 7d2b84] Añadir página de contacto\n 1 file changed, 12 insertions(+)\n\nC:\\...\\mi-tienda&gt; git log --oneline\n7d2b84 (HEAD -&gt; main) Añadir página de contacto\na3f9c1 Corregir precios de la página principal\n1e8a05 Versión inicial de la tienda</code></pre><p>La foto nueva aparece hasta arriba. La historia tiene tres capítulos, y el más reciente es el que acabas de escribir. Así se lee un proyecto: con <code>git log</code>.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Esta es la salida de mi <code>git log --oneline</code>: [pégala]. Explícame qué historia cuenta mi proyecto, cuál es el commit más reciente, y si los mensajes tienen buena calidad o debería mejorarlos.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "multiple", pregunta: "¿Qué muestra <code>git log</code>?", opciones: ["Los errores del proyecto", "La historia de commits, del más nuevo al más viejo", "Los archivos de la carpeta actual", "Los mensajes que te escribió la IA"], correcta: 1 },
+              { tipo: "completar", frase: "Cada commit tiene un ____ único (el hash), un autor y un ____ que explica qué cambió.", banco: ["identificador", "mensaje", "precio", "vínculo"], respuestas: ["identificador", "mensaje"] },
+              { tipo: "quehace", codigo: "git log --oneline", pregunta: "<code>git log --oneline</code> — ¿qué te muestra?", opciones: ["Cada commit en una sola línea compacta", "Los archivos modificados en detalle", "La carpeta .git al completo", "Un error de Git"], correcta: 0 },
+              { tipo: "vf", afirmacion: "<code>git log</code> es de solo lectura: no modifica ni borra nada.", correcta: true, explicacion: "solo muestra el historial." },
+              { tipo: "relacionar", pares: [["a3f9c1", "Hash único del commit"], ["(HEAD -> main)", "El commit actual y la rama donde estás"], ["Raymundo Flores", "Autor de la foto"], ["\"Corregir precios\"", "El mensaje del commit"]] }
+            ]
+          },
+          {
+            id: "m2-a11",
+            titulo: ".gitignore: lo que Git NUNCA debe rastrear",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Cada vez que creas un archivo nuevo, Git lo marca como <strong>untracked</strong> (¿lo recuerdas de A6?) — y <code>git status</code> te lo recuerda cada vez que lo corres. Pero no todo lo que hay en tu carpeta merece entrar al historial. Hay archivos que <strong>NUNCA</strong> deben ser rastreados:</p><ul><li><strong>Secretos:</strong> <code>.env</code>, <code>.env.local</code> — guardan contraseñas, API keys y tokens. Si se commitean, quedan en el historial <strong>para siempre</strong>, y cualquiera con acceso al repo puede leerlos.</li><li><strong>Pesadillas de peso:</strong> <code>node_modules/</code> — miles de archivos de librerías que se regeneran con <code>npm install</code> (lo viste en A13 del Mes 1). Versionarlos hace tu repo gigante y lentísimo.</li><li><strong>Salidas generadas:</strong> <code>dist/</code>, <code>build/</code> — lo que produce una compilación. Se puede volver a generar; no tiene historia que contar.</li><li><strong>Basura del sistema:</strong> <code>.DS_Store</code> (Mac), archivos temporales, logs.</li></ul><p>La solución es un archivo llamado <strong><code>.gitignore</code></strong>: texto plano, en la raíz de tu proyecto, donde le dices a Git qué no debe rastrear. Un patrón por línea; <code>#</code> para comentarios:</p><pre><code># Secretos\n.env\n.env.local\n\n# Dependencias (se regeneran con npm install)\nnode_modules/\n\n# Salidas de compilación\ndist/\n\n# Basura del sistema\n.DS_Store</code></pre><p>Detalle que ahorra dramas: <strong><code>.gitignore</code> solo aplica a archivos que Git todavía no rastrea</strong>. Si ya commiteaste <code>.env</code> por error, escribir su nombre aquí no lo va a ocultar: hay que sacarlo del rastreo con <code>git rm --cached</code>. La buena noticia: cuando la IA te diga \"olvidé ignorar un archivo\", ya sabrás por qué sigue apareciendo.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p><code>.gitignore</code> es como <strong>las reglas de la casa antes de la visita</strong>. El invitado (Git) es curioso y lo mira todo; el <code>.gitignore</code> es la puerta con candado que le avisa: \"esta recámara no se toca\". Los archivos ignorados no dejan de existir — siguen en tu computadora — solo que Git ya no los ve, no los lista y nunca los fotografía.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Sin <code>.gitignore</code>, tu <code>git status</code> es un caos:</p><pre><code>C:\\...\\mi-tienda&gt; git status\nUntracked files:\n        .env\n        node_modules/\n        dist/\n        .DS_Store\n        index.html</code></pre><p>Después de crear el <code>.gitignore</code> con las reglas de arriba:</p><pre><code>C:\\...\\mi-tienda&gt; git status\nUntracked files:\n        index.html</code></pre><p>Solo queda lo que de verdad quieres versionar. <code>git status</code> (A6) volvió a ser tu brújula en vez de un muro de ruido.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Estoy iniciando un proyecto en [lenguaje o framework]. Crea un archivo <code>.gitignore</code> completo para él, agrupado por secciones (secretos, dependencias, build, sistema), y explícame cada línea en una línea de español. Dime qué riesgos de seguridad evito con cada grupo.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "multiple", pregunta: "¿Cuál de estos archivos NUNCA debe entrar al historial de Git?", opciones: ["index.html", ".env con contraseñas y claves", "styles.css", "logo.png"], correcta: 1 },
+              { tipo: "completar", frase: "El archivo que le dice a Git qué no rastrear se llama ____ y vive en la ____ del proyecto.", banco: [".gitignore", "raíz", "carpeta .git", "escritorio"], respuestas: [".gitignore", "raíz"] },
+              { tipo: "vf", afirmacion: "Si ya commiteaste un archivo, escribir su nombre en el .gitignore lo oculta del historial.", correcta: false, explicacion: "el .gitignore solo aplica a archivos que Git aún no rastrea; lo ya commiteado necesita git rm --cached." },
+              { tipo: "relacionar", pares: [[".env", "Contraseñas y claves"], ["node_modules/", "Dependencias que se regeneran"], ["dist/", "Salida de compilación"], [".DS_Store", "Basura del sistema"]] },
+              { tipo: "multiple", pregunta: "¿Por qué no se versiona node_modules/?", opciones: ["Porque es ilegal compartir librerías", "Porque son miles de archivos que se regeneran con npm install; versionarlos hincha el repo", "Porque Git no puede trabajar con librerías", "Porque ocupa muy poco y no importa"], correcta: 1 }
+            ]
+          },
+          {
+            id: "m2-a12",
+            titulo: "git diff: ver exactamente qué cambió, línea por línea",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p><code>git status</code> (A6) te dice QUÉ archivos cambiaron. <code>git diff</code> te dice <strong>exactamente qué cambió dentro de ellos</strong>, línea por línea. Es la lupa del proyecto.</p><pre><code>git diff</code></pre><p>Muestra las diferencias de los archivos modificados del working. Su salida se lee así:</p><pre><code>diff --git a/index.html b/index.html\n--- a/index.html\n+++ b/index.html\n@@ -10,6 +10,7 @@\n &lt;h1&gt;Bienvenido a mi tienda&lt;/h1&gt;\n-&lt;h2&gt;Precio: $100&lt;/h2&gt;\n+&lt;h2&gt;Precio: $99&lt;/h2&gt;\n+&lt;p&gt;Envío gratis hoy&lt;/p&gt;</code></pre><ul><li><code>--- a/index.html</code> y <code>+++ b/index.html</code>: la versión vieja (a) frente a la nueva (b)</li><li><code>-</code>: la línea que se eliminó o cambió</li><li><code>+</code>: la línea nueva o la que la reemplaza</li><li><code>@@ -10,6 +10,7 @@</code>: las coordenadas — dónde empieza el cambio y cuántas líneas abarca en cada versión</li></ul><p>Dos variantes que vas a usar siempre:</p><pre><code>git diff              # cambios del working (sin preparar)\ngit diff --staged     # cambios que ya están en staging</code></pre>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p><code>git diff</code> es como <strong>el marcador rojo del profesor sobre tu ensayo</strong>: no te dice \"trajiste cambios\", te señala tachando lo que sobra y subrayando lo que agregaste, palabra por palabra. <code>git status</code> es el profesor anunciando \"hay trabajo nuevo que revisar\"; <code>git diff</code> es él marcándote cada línea exacta.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<pre><code>C:\\...\\mi-tienda&gt; git status\nChanges not staged for commit:\n        modified:   index.html\n\nC:\\...\\mi-tienda&gt; git diff\n--- a/index.html\n+++ b/index.html\n@@ -8,4 +8,5 @@\n &lt;p&gt;Bienvenido a mi tienda&lt;/p&gt;\n+&lt;a href=\"contacto.html\"&gt;Contáctanos&lt;/a&gt;</code></pre><p>Un solo cambio: se agregó un enlace. Antes de commitear, revisas el detalle exacto — y si te gusta lo que ves, preparas y fotografías. Si ya habías hecho <code>git add</code>, usa <code>git diff --staged</code> para ver las diferencias de lo que está en la maleta.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Voy a correr <code>git diff</code> en mi proyecto. Te pego la salida: [pégalo aquí]. Explícame en español qué cambió, línea por línea, y si ves algo riesgoso (un secreto, un archivo que no debería ir) dímelo ANTES de que haga commit.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "quehace", codigo: "-&lt;h2&gt;Precio: $100&lt;/h2&gt;\n+&lt;h2&gt;Precio: $99&lt;/h2&gt;", pregunta: "En la salida de git diff, ¿qué significan estas dos líneas?", opciones: ["Que hay dos precios y Git no sabe cuál elegir", "La línea con - es la versión vieja; la línea con + es la nueva", "Que el archivo se duplicó", "Que hubo un conflicto de merge"], correcta: 1 },
+              { tipo: "multiple", pregunta: "¿Qué comando muestra las diferencias de los cambios que ya están en staging?", opciones: ["git diff --staged", "git diff --clean", "git status --diff", "git log --diff"], correcta: 0 },
+              { tipo: "completar", frase: "En git diff, la línea con el signo ____ muestra lo que se eliminó, y la que tiene ____ muestra lo nuevo.", banco: ["-", "+", "=", "*"], respuestas: ["-", "+"] },
+              { tipo: "vf", afirmacion: "git diff modifica los archivos para arreglar las diferencias que encuentra.", correcta: false, explicacion: "es de solo lectura: muestra diferencias, no cambia nada." },
+              { tipo: "ordenar", instruccion: "Acomoda el flujo para revisar un cambio antes de commitearlo:", elementos: ["editar el archivo", "git status para ver qué cambió", "git diff para ver el detalle línea por línea", "git add y git commit si estás conforme"] }
+            ]
+          },
+          {
+            id: "m2-a13",
+            titulo: "Deshacer I: git restore (antes del commit)",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Hasta ahora todo era guardar. Bienvenido a las tres lecciones de <strong>deshacer</strong>, y a la regla que las ordena: la herramienta correcta depende de <strong>si tu cambio ya llegó al commit</strong> o no.</p><p><code>git restore</code> es el deshacer de <strong>antes</strong> del commit: trabaja con los cambios que aún viven en el working o en el staging. Dos formas:</p><pre><code>git restore index.html\n# descarta los cambios del working → vuelve a la versión del último commit\n\ngit restore --staged index.html\n# saca el archivo del staging → deja de estar preparado (conserva sus cambios)</code></pre><ul><li><strong>Quieres borrar cambios que no has guardado:</strong> <code>git restore index.html</code> — el archivo regresa a como estaba en el último commit.</li><li><strong>Preparaste por accidente con <code>git add</code>:</strong> <code>git restore --staged index.html</code> — sale de la maleta, pero sus cambios se conservan en el working.</li></ul><p><strong>La advertencia real:</strong> <code>git restore</code> sin <code>--staged</code> <strong>borra los cambios de forma permanente</strong>. No hay papelera ni deshacer-del-deshacer. Úsalo solo cuando estés seguro de que esos cambios ya no los quieres — pregúntale a la IA antes si tienes dudas.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>El staging es una maleta (lo viste en A7) y el working tu recámara. <code>git restore --staged</code> es <strong>sacar de la maleta lo que metiste por accidente</strong>: la prenda vuelve a tu recámara intacta, lista para decidir después. <code>git restore</code> sin bandera es más fuerte: es <strong>tirar la prenda a la basura</strong>, no a la lavandería. Piensa antes de tirar.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<pre><code>C:\\...\\mi-tienda&gt; git add index.html      ← metiste el archivo a staging\n\nC:\\...\\mi-tienda&gt; git status\nChanges to be committed:\n        modified:   index.html\n\nC:\\...\\mi-tienda&gt; git restore --staged index.html\n\nC:\\...\\mi-tienda&gt; git status\nChanges not staged for commit:\n        modified:   index.html      ← salió de staging, sigue modificado\n\nC:\\...\\mi-tienda&gt; git restore index.html    ← ahora sí: borra los cambios del working\n\nC:\\...\\mi-tienda&gt; git status\nnothing to commit, working tree clean        ← todo como al principio</code></pre><p>Dos pasos, dos decisiones: primero sacaste el archivo de la maleta conservando sus cambios, y después decidiste descartarlos del todo. La foto del último commit quedó intacta.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Modifiqué un archivo y quiero deshacerlo. Corrí <code>git status</code> y esto salió: [pégalo]. Dime exactamente qué comando usar (¿restore a secas o con --staged?), qué pasará con mis cambios, y si hay algo de lo que debería hacer respaldo antes.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "multiple", pregunta: "¿Cuándo se usa git restore?", opciones: ["Para deshacer cambios que aún no llegaron al commit", "Para deshacer cambios ya commiteados", "Para subir el proyecto a GitHub", "Para borrar un commit del historial"], correcta: 0 },
+              { tipo: "completar", frase: "git restore ____ saca un archivo del staging sin borrar sus cambios; git restore a secas ____ los cambios del working.", banco: ["--staged", "borra", "duplica", "prepara"], respuestas: ["--staged", "borra"] },
+              { tipo: "quehace", codigo: "git restore --staged index.html", pregunta: "<code>git restore --staged index.html</code> — ¿qué hace exactamente?", opciones: ["Borra los cambios del archivo para siempre", "Saca el archivo del staging pero conserva sus cambios en el working", "Guarda el archivo en el historial", "Restaura el archivo desde GitHub"], correcta: 1 },
+              { tipo: "vf", afirmacion: "git restore sin --staged puede borrar cambios sin recuperación.", correcta: true, explicacion: "descarta los cambios del working de forma permanente; úsalo solo con certeza." },
+              { tipo: "relacionar", pares: [["git restore index.html", "Borrar cambios no guardados del working"], ["git restore --staged index.html", "Solo sacar del staging, conservando cambios"], ["git commit", "Guardar la foto en el historial"]] }
+            ]
+          },
+          {
+            id: "m2-a14",
+            titulo: "Deshacer II: git revert (después del commit, sin borrar historia)",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Cuando tu cambio <strong>ya llegó al commit</strong>, <code>git restore</code> (A13) ya no aplica. Ahí entra el deshacer de la historia: <code>git revert</code>.</p><p>Lo clave: <code>git revert</code> <strong>NO borra el commit malo — crea un commit NUEVO que deshace sus cambios</strong>. El historial queda completo y legible:</p><pre><code>git revert a3f9c1   ← el hash del commit que quieres deshacer\n\n[main b48d77] Revert \"Corregir precios de la página principal\"\n 1 file changed, 1 insertion(+), 1 deletion(-)</code></pre><p>Fíjate: el commit <code>a3f9c1</code> sigue en el historial, y encima aparece <code>b48d77</code>, que hace lo contrario. Dos ventajas gigantes:</p><ul><li><strong>El pasado queda intacto:</strong> cualquiera puede leer qué pasó y qué se deshizo</li><li><strong>Es seguro en equipo:</strong> no reescribe nada compartido, así que no rompe el historial de nadie (a diferencia de <code>git reset</code>, que verás en A15)</li></ul><p>¿Cómo sabes el hash del commit a deshacer? Con <code>git log --oneline</code> (A10). Esta es la herramienta por default para deshacer algo ya publicado — y será tu aliada cuando subas el repo a GitHub (Materia B).</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p><code>git revert</code> es como <strong>publicar una fe de erratas en el periódico</strong>. El artículo equivocado ya salió impreso; no lo arrancas de los periódicos ya distribuidos (eso sería reescribir la historia). Publicas un artículo NUEVO que dice \"corrige lo anterior\". Ambos quedan en el archivo: los lectores ven la corrección y el archivo histórico sigue completo.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>El flujo completo: encuentras el commit que rompió algo, lo reviertes y verificas:</p><pre><code>C:\\...\\mi-tienda&gt; git log --oneline\na3f9c1 Corregir precios de la página principal   ← este rompió algo\n7d2b84 Añadir página de contacto\n\nC:\\...\\mi-tienda&gt; git revert a3f9c1\n[main b48d77] Revert \"Corregir precios de la página principal\"\n 1 file changed, 1 insertion(+), 1 deletion(-)\n\nC:\\...\\mi-tienda&gt; git log --oneline\nb48d77 Revert \"Corregir precios de la página principal\"\n a3f9c1 Corregir precios de la página principal\n7d2b84 Añadir página de contacto</code></pre><p>La historia ahora cuenta el relato completo: alguien hizo algo, y después alguien lo deshizo. Nada se borró, nada se reescribió.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Me di cuenta de que mi último commit rompió algo. Corrí <code>git log --oneline</code> y esto salió: [pégalo]. Ayúdame a identificar cuál commit deshacer y dame el comando exacto de <code>git revert</code>. Confírmame que no se va a borrar nada del historial.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "multiple", pregunta: "¿Qué hace git revert?", opciones: ["Borra el commit malo del historial", "Crea un commit NUEVO que deshace los cambios del commit objetivo", "Reescribe el historial para eliminar la evidencia", "Restaura archivos del working sin tocar la historia"], correcta: 1 },
+              { tipo: "completar", frase: "git revert se usa cuando el cambio ya llegó al ____ y, en vez de borrarlo, crea un commit ____ que lo deshace.", banco: ["historial", "nuevo", "working", "vacío"], respuestas: ["historial", "nuevo"] },
+              { tipo: "vf", afirmacion: "git revert es seguro para trabajar en equipo porque no reescribe el historial compartido.", correcta: true, explicacion: "crea un commit nuevo encima; el pasado queda intacto." },
+              { tipo: "quehace", codigo: "git revert 7d2b84", pregunta: "<code>git revert 7d2b84</code> — ¿qué hace?", opciones: ["Borra la carpeta del proyecto", "Crea un commit que deshace los cambios del commit 7d2b84, sin tocar los demás", "Viaja al estado del commit 7d2b84", "Copia el commit 7d2b84 en otro proyecto"], correcta: 1 },
+              { tipo: "relacionar", pares: [["git restore", "Deshacer antes del commit"], ["git revert", "Deshacer después del commit, sin borrar historia"], ["git log --oneline", "Encontrar el hash del commit a revertir"]] }
+            ]
+          },
+          {
+            id: "m2-a15",
+            titulo: "Deshacer III: git reset y por qué da miedo",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Llegamos a la herramienta que más respeto merece. <code>git reset</code> mueve el puntero del historial hacia atrás y, según la bandera que uses, <strong>puede borrar commits y cambios para siempre</strong>.</p><p>Partimos de este historial:</p><pre><code>c48d77 Agregar botón de WhatsApp   ← commit actual (HEAD)\na3f9c1 Corregir precios\n1e8a05 Versión inicial</code></pre><p><code>git reset</code> te deja \"quitar\" el commit actual. Tres modos, de menos a más destructivo:</p><pre><code>git reset --soft 1e8a05\n# mueve el puntero atrás, PERO deja los cambios en el staging\n\ngit reset 1e8a05    # equivalente a --mixed (el default)\n# mueve el puntero atrás y deja los cambios en el working\n\ngit reset --hard 1e8a05\n# mueve el puntero atrás y BORRA los cambios para siempre</code></pre><p><strong>EL AVISO QUE TE DEBE QUEDAR GRABADO:</strong></p><ul><li><code>git reset --hard</code> borra los cambios del working <strong>en el instante, sin papelera ni recuperación</strong>.</li><li>Los commits que \"saliste\" quedan huérfanos: sin nadie que apunte a ellos, Git los limpia con el tiempo. Recuperarlos después es una misión de rescate con herramientas avanzadas (reflog), no algo para hacer a la ligera.</li><li>Si esos commits ya estaban <strong>compartidos</strong> (en GitHub o con tu equipo), el reset reescribe la historia de TODOS. Es el error que rompe el trabajo ajeno.</li></ul><p>Regla práctica de oro: <strong>si el commit ya fue compartido, usa <code>git revert</code> (A14).</strong> <code>git reset</code> queda para cuando el commit es tuyo, reciente y no ha salido de tu computadora — y aun así, piensa dos veces antes del <code>--hard</code>.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>El historial de Git es una <strong>película</strong>. <code>git revert</code> agrega una escena nueva que deshace lo que pasó: la película sigue contando todo. <code>git reset --hard</code> es <strong>cortar y quemar el metraje</strong>: las escenas que quitaste dejan de existir en la cinta, y quienes ya vieron el estreno (tu equipo) se quedan con una versión distinta a la tuya. Por eso da miedo: puedes quemar escenas que otros ya vieron.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Decides que el último commit fue un error y quieres volver a antes de él. Con <code>--hard</code>, todo lo que vivía en ese commit desaparece:</p><pre><code>C:\\...\\mi-tienda&gt; git log --oneline\nc48d77 Agregar botón de WhatsApp\n a3f9c1 Corregir precios\n1e8a05 Versión inicial\n\nC:\\...\\mi-tienda&gt; git reset --hard a3f9c1\nHEAD is now at a3f9c1 Corregir precios\n\nC:\\...\\mi-tienda&gt; git log --oneline\na3f9c1 Corregir precios\n1e8a05 Versión inicial</code></pre><p>El commit <code>c48d77</code> y todos sus cambios <strong>se fueron</strong>. El mensaje <code>HEAD is now at a3f9c1</code> confirma que el puntero se movió. Antes de correr esto, responde en voz alta: ¿ese commit ya lo subí o lo compartí? Si la respuesta es sí, cierra este comando y usa revert.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Quiero deshacer un commit local que aún no he compartido. Te pego mi <code>git log --oneline</code>: [pégalo]. Quiero eliminar [este commit] sin perder [estos otros cambios]. Recomiéndame entre --soft, --mixed y --hard, dime exactamente qué perderé en cada opción, y adviérteme ANTES de darme el comando final si hay cualquier riesgo.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "multiple", pregunta: "¿Qué hace git reset --hard?", opciones: ["Mueve el puntero hacia atrás y borra los cambios para siempre", "Crea un commit nuevo que deshace el anterior", "Pausa el trabajo y lo guarda aparte", "Borra solo el mensaje del último commit"], correcta: 0 },
+              { tipo: "ordenar", instruccion: "Acomoda los modos de git reset de menor a mayor destrucción:", elementos: ["--soft", "--mixed (default)", "--hard"] },
+              { tipo: "vf", afirmacion: "Es seguro usar git reset --hard en commits que ya subiste y compartiste con tu equipo.", correcta: false, explicacion: "reescribe la historia compartida y puede romper el trabajo de todos; para eso existe git revert." },
+              { tipo: "completar", frase: "git reset --soft deja los cambios en el ____, --mixed los deja en el ____, y --hard los ____.", banco: ["staging", "working", "borra", "sube"], respuestas: ["staging", "working", "borra"] },
+              { tipo: "quehace", codigo: "git reset --hard a3f9c1", pregunta: "<code>git reset --hard a3f9c1</code> — ¿qué hace exactamente?", opciones: ["Salta al commit a3f9c1 conservando todos los cambios", "Mueve el puntero a a3f9c1 y borra los commits y cambios posteriores sin recuperación", "Crea un commit que revierte a a3f9c1", "Borra la rama completa"], correcta: 1 }
+            ]
+          },
+          {
+            id: "m2-a16",
+            titulo: "Ramas: qué son y por qué lo cambian todo",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Desde la lección A1 conoces a las ramas como la solución a un problema: <strong>probar una idea sin arriesgar lo que ya funciona</strong>. Hoy las conoces de verdad.</p><p>Una <strong>rama</strong> (branch, en inglés) es una <strong>línea de desarrollo separada</strong>: una copia paralela de tu proyecto donde puedes trabajar sin tocar la rama principal. La rama principal se llama <code>main</code> (lo viste en A4), y es la versión que todo el mundo considera \"la buena\".</p><p>La idea en dos líneas:</p><ul><li>Todo lo que hagas en <code>main</code> queda en <code>main</code>.</li><li>Todo lo que hagas en tu rama nueva queda <strong>solo en ella</strong>, hasta que tú decidas unirlos (A19).</li></ul><p>¿Por qué esto lo cambia todo?</p><ul><li><strong>Probar sin miedo:</strong> le pides a la IA un cambio grande, lo haces en una rama, lo pruebas... y si el resultado no te gusta, descartas la rama y <code>main</code> sigue exactamente como estaba.</li><li><strong>Varios frentes a la vez:</strong> cada tarea (un botón, un bug, un rediseño) puede tener su propia rama, sin mezclarse.</li><li><strong>Colaboración limpia:</strong> varias personas — o varias IAs — trabajan en paralelo sin pisarse los pies.</li></ul><p>Visualmente, el historial deja de ser una línea recta y se vuelve un <strong>árbol</strong>: un tronco (<code>main</code>) del que crecen ramas que pueden volver a unirse. Ese famoso \"árbol de commits\" que verás en A24 es exactamente esto.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Git es un <strong>árbol</strong>, literal. <code>main</code> es el tronco: sostiene todo y no se corta. Una rama crece desde el tronco: puedes podarla, hacerla crecer en otra dirección o dejarla morir, y el tronco no se entera. Cuando la rama cumple su misión, se injerta de vuelta al tronco (merge, A19). Si la idea no sirvió, se corta la rama y el tronco sigue ahí, con la vida que ya tenía.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Así se ve el historial con ramas en acción:</p><pre><code>main:    c1 --- c2 --- c3\n\nrama:    c1 --- c2 --- t1 --- t2\n\nTu rama arrancó desde c2: tiene a c1 y c2, y además sus propios commits t1 y t2.</code></pre><p>Los commits <code>t1</code> y <code>t2</code> solo existen en la rama. <code>main</code> tiene su propia historia y no se entera de lo que pasa allá arriba. Para saber en qué rama estás parado, Git te lo dice cada vez que pides estado:</p><pre><code>C:\\...\\mi-tienda&gt; git status\nOn branch main</code></pre><p><code>On branch main</code> es Git diciéndote: \"estás parado en el tronco\". En A17 aprendes a crear ramas y moverte entre ellas.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Tengo una idea grande que quiero probar sin tocar mi proyecto estable. Estoy en la rama main. Explícame qué es una rama en mis propias palabras y cómo me conviene trabajar: ¿en qué rama pido los cambios, cómo los pruebo, y qué pasa si no me gusta el resultado?\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "multiple", pregunta: "¿Qué es una rama en Git?", opciones: ["Una copia del proyecto guardada en una USB", "Una línea de desarrollo separada donde trabajas sin tocar main", "Un tipo especial de commit", "Un archivo del repositorio"], correcta: 1 },
+              { tipo: "vf", afirmacion: "El trabajo que haces en una rama nueva afecta automáticamente a main.", correcta: false, explicacion: "los cambios de una rama no llegan a main hasta que haces merge (A19)." },
+              { tipo: "relacionar", pares: [["Quiero probar una idea riesgosa", "La trabajo en una rama; main queda intacto"], ["La IA hará un cambio grande", "Lo pido en una rama; si falla, la descarto"], ["Somos varias personas en el equipo", "Cada quien en su rama, sin pisarse"], ["La rama principal por default", "main"]] },
+              { tipo: "completar", frase: "Una rama es una ____ de desarrollo separada: lo que haces ahí no toca la rama ____.", banco: ["línea", "main", "carpeta", "final"], respuestas: ["línea", "main"] },
+              { tipo: "ordenar", instruccion: "Secuencia para probar una idea nueva sin riesgo:", elementos: ["crear una rama nueva", "moverte a ella", "trabajar y commitear ahí", "unirla a main con merge o descartarla"] }
+            ]
+          },
+          {
+            id: "m2-a17",
+            titulo: "git branch y git switch: crear y moverte entre ramas",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Dos comandos manejan toda la vida de las ramas: <code>git branch</code> y <code>git switch</code>.</p><p><strong>git branch</strong> hace dos cosas según cómo lo uses:</p><ul><li><code>git branch</code> — lista todas las ramas. El <strong>asterisco (*)</strong> marca en cuál estás parado.</li><li><code>git branch nombre</code> — crea una rama nueva con ese nombre.</li></ul><p><strong>git switch</strong> te mueve entre ramas:</p><ul><li><code>git switch nombre</code> — cambia a la rama que ya existe.</li><li><code>git switch -c nombre</code> — crea la rama Y te mueves a ella en un solo paso (el <code>-c</code> es de <em>create</em>).</li></ul><p>Dato que te ahorra confusión: en tutoriales viejos verás <code>git checkout</code> para moverte. Es el comando antiguo; <code>git switch</code> es su reemplazo moderno. Ambos funcionan, pero hoy se escribe <code>git switch</code>.</p><p>Reglas de nombres que evitan dolores de cabeza:</p><ul><li>Minúsculas y palabras separadas con guion: <code>boton-whatsapp</code>, <code>corregir-precios</code>.</li><li>Que el nombre describa la tarea, no a ti: <code>arreglo-login</code> sí, <code>cambios-finales-v2</code> no.</li></ul><p>En A18 trabajas dentro de una rama; aquí aprendes a crearla y moverte. Una cosa a la vez.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p><code>git branch</code> es <strong>ver la lista de expedientes</strong> del archivero: te muestra cuáles existen y en cuál estás (el asterisco). <code>git switch</code> es <strong>caminar a otro escritorio</strong>: tu silla (HEAD) se mueve, y lo que está sobre el escritorio cambia. Solo puedes sentarte en un escritorio a la vez — y los commits que hagas quedan sobre el escritorio donde estés sentado.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Sesión completa: crear una rama y moverte a ella.</p><pre><code>C:\\...\\mi-tienda&gt; git branch\n* main\n\nC:\\...\\mi-tienda&gt; git branch boton-whatsapp\n\nC:\\...\\mi-tienda&gt; git branch\n  boton-whatsapp\n* main\n\nC:\\...\\mi-tienda&gt; git switch boton-whatsapp\nSwitched to branch 'boton-whatsapp'\n\nC:\\...\\mi-tienda&gt; git branch\n* boton-whatsapp\n  main</code></pre><p>Y el atajo para crear y moverte en uno solo:</p><pre><code>C:\\...\\mi-tienda&gt; git switch -c corregir-precios\nSwitched to a new branch 'corregir-precios'</code></pre><p>Fíjate en el asterisco: después de <code>git switch</code>, tu silla se movió. Cualquier commit que hagas de aquí en adelante (A18) quedará en <code>boton-whatsapp</code> o <code>corregir-precios</code>, no en <code>main</code>.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Voy a trabajar en [describe la tarea] sin tocar mi rama main. Dame los comandos exactos para crear una rama con un buen nombre y moverme a ella, y dime cómo confirmo con git status que ya no estoy en main antes de empezar.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "multiple", pregunta: "¿Qué comando lista todas las ramas y marca en cuál estás con un asterisco?", opciones: ["git list", "git branch", "git switch", "git log"], correcta: 1 },
+              { tipo: "completar", frase: "Para CREAR una rama usas git ____ nombre; para MOVERTE a una rama que ya existe usas git ____ nombre.", banco: ["branch", "switch", "merge", "add"], respuestas: ["branch", "switch"] },
+              { tipo: "vf", afirmacion: "git switch -c rama-nueva crea la rama y te mueves a ella en un solo paso.", correcta: true, explicacion: "la bandera -c es de create: crea y cambia de una vez." },
+              { tipo: "quehace", codigo: "git switch -c arreglo-login", pregunta: "<code>git switch -c arreglo-login</code> — ¿qué hace?", opciones: ["Se mueve a la rama arreglo-login sin crearla", "Crea la rama arreglo-login y se mueve a ella", "Borra la rama arreglo-login", "Muestra el historial de la rama arreglo-login"], correcta: 1 },
+              { tipo: "ordenar", instruccion: "Crear una rama con dos comandos y verificar el movimiento:", elementos: ["git branch arreglo-login", "git switch arreglo-login", "git branch para ver el asterisco"] }
+            ]
+          },
+          {
+            id: "m2-a18",
+            titulo: "Trabajar en una rama sin romper lo que ya funciona",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Ya sabes crear una rama y moverte a ella (A17). Ahora la parte valiosa: <strong>todo lo que hagas dentro de la rama queda ahí</strong>, y <code>main</code> sigue intacto, como si tu rama ni existiera.</p><p>El flujo dentro de una rama es exactamente el de siempre (A5): editas, <code>git add</code>, <code>git commit</code>. La única diferencia es <strong>dónde cae</strong> ese commit: en tu rama, no en <code>main</code>.</p><p>Dos beneficios directos para ti:</p><ul><li><strong>La versión estable nunca se rompe.</strong> Si tu experimento explota, descartas la rama y <code>main</code> no se enteró de nada. Es el botón de deshacer gigante de la lección A1, pero a nivel de proyecto completo.</li><li><strong>La IA puede experimentar sin red.</strong> Le pides el cambio en una rama; si el resultado es malo, la rama se va y ya.</li></ul><p>El error de principiante que debes evitar desde hoy: <strong>commitear sin confirmar en qué rama estás</strong>. Si creíste estar en tu rama pero olvidaste el <code>git switch</code>, el commit cae en <code>main</code> y tu versión estable deja de serlo. El hábito que lo evita es uno solo: antes de commitear, <code>git status</code> (A6) y leer la primera línea.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Tu rama es un <strong>taller de trabajo al lado de la tienda</strong>. En el taller pruebas, desarmas y ensamblas sin miedo; la tienda (main) sigue atendiendo a los clientes con lo que ya sabía que funcionaba. Cuando el producto del taller está listo y probado, lo llevas a la tienda (merge, A19). Si no funcionó, el taller se limpia y la tienda ni se entera.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Mira cómo el mismo trabajo no toca a <code>main</code>:</p><pre><code>C:\\...\\mi-tienda&gt; git switch -c boton-whatsapp\nSwitched to a new branch 'boton-whatsapp'\n\nC:\\...\\mi-tienda&gt; git status\nOn branch boton-whatsapp        ← confirmas dónde vas a trabajar\n\nC:\\...\\mi-tienda&gt; git add whatsapp.js\nC:\\...\\mi-tienda&gt; git commit -m \"Agregar botón de WhatsApp\"\n[boton-whatsapp 9c4f21] Agregar botón de WhatsApp\n\nC:\\...\\mi-tienda&gt; git switch main\nSwitched to branch 'main'\n\nC:\\...\\mi-tienda&gt; git log --oneline\na3f9c1 Corregir precios        ← main NO tiene el botón\n\nC:\\...\\mi-tienda&gt; git switch boton-whatsapp\nC:\\...\\mi-tienda&gt; git log --oneline\n9c4f21 Agregar botón de WhatsApp   ← aquí sí\n a3f9c1 Corregir precios</code></pre><p>Cada rama con su propia historia. Para llevar el botón a <code>main</code>, el siguiente paso es el merge (A19).</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Voy a pedirte cambios en [mi proyecto] pero no quiero tocar mi rama main. Guíame: creo una rama, hago los cambios y commiteo ahí. Antes de cada commit dime cómo verifico con git status que sigo en mi rama y no en main.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "multiple", pregunta: "Terminas un commit estando en la rama boton-whatsapp. Luego corres <code>git switch main</code>. ¿Dónde está tu commit?", opciones: ["En main", "Solo en boton-whatsapp", "En ambas ramas", "Se perdió"], correcta: 1 },
+              { tipo: "vf", afirmacion: "Mientras trabajas en una rama, main sigue igual: tus commits no lo tocan.", correcta: true, explicacion: "los commits de una rama viven solo en ella hasta que haces merge (A19)." },
+              { tipo: "completar", frase: "Antes de commitear, corre ____ para confirmar en qué ____ estás parado.", banco: ["git status", "rama", "git commit", "archivo"], respuestas: ["git status", "rama"] },
+              { tipo: "relacionar", pares: [["git switch main", "Volver a la versión estable"], ["git switch boton-whatsapp", "Seguir con tu experimento"], ["git status", "Confirmar en qué rama estás antes de commitear"]] },
+              { tipo: "quehace", codigo: "git switch main", pregunta: "Después de commitear en boton-whatsapp, corres <code>git switch main</code>. ¿Qué ves en tus archivos?", opciones: ["El botón de WhatsApp ya incluido", "Los archivos como estaban antes del experimento, sin el botón", "Un error: no se puede cambiar de rama", "El botón a medio agregar"], correcta: 1 }
+            ]
+          },
+          {
+            id: "m2-a19",
+            titulo: "git merge: unir tu trabajo con el principal",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Tu rama terminó su trabajo y lo probaste (A18). Es hora de llevarlo a <code>main</code>: eso es <strong>merge</strong> — unir tu trabajo con el principal.</p><p>El comando y el orden que importa:</p><pre><code>git switch main          ← 1. párate en la rama que va a RECIBIR\n\ngit merge boton-whatsapp ← 2. dile qué rama trae el trabajo</code></pre><p>Fíjate: primero te mueves a <code>main</code>, y el merge trae los commits de la rama hacia donde estás parado. Merge siempre dice \"trae esto hacia aquí\".</p><p>Cuando termina:</p><ul><li><code>main</code> ahora incluye los commits de tu rama.</li><li>La rama sigue existiendo, pero ya cumplió su misión. Se borra con <code>git branch -d nombre</code> (la <code>-d</code> solo borra si ya está mergeada; si no, Git te detiene — y eso te salva de perder trabajo).</li></ul><p>Dos escenarios en el momento del merge:</p><ul><li><strong>Fast-forward:</strong> <code>main</code> no se movió desde que creaste la rama. Git solo adelanta el puntero: rápido y limpio.</li><li><strong>Merge con commits en ambos lados:</strong> <code>main</code> también avanzó. Git crea un <strong>merge commit</strong> que une las dos historias.</li></ul><p>Y el caso que vas a conocer antes de que pase (porque pasará): si las dos ramas cambiaron las mismas líneas, Git no decide solo — eso es un <strong>conflicto</strong>, y lo resuelves en A20.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Merge es <strong>cuando el taller entrega el producto a la tienda</strong>. El taller (rama) fabricó y probó el botón de WhatsApp; la tienda (main) lo recibe y lo pone en el mostrador. Una vez entregado y verificado, el taller se desmonta (<code>git branch -d</code>). Si la tienda también se renovó en paralelo, hay que coordinar las dos versiones — y cuando se pelean por el mismo espacio, nace un conflicto (A20).</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>El flujo completo de integrar tu rama:</p><pre><code>C:\\...\\mi-tienda&gt; git switch main\nSwitched to branch 'main'\n\nC:\\...\\mi-tienda&gt; git merge boton-whatsapp\nUpdating a3f9c1..9c4f21\nFast-forward\n whatsapp.js | 12 ++++++++++++\n 1 file changed, 12 insertions(+)\n create mode 100644 whatsapp.js\n\nC:\\...\\mi-tienda&gt; git log --oneline\n9c4f21 Agregar botón de WhatsApp   ← main ya lo tiene\n a3f9c1 Corregir precios\n\nC:\\...\\mi-tienda&gt; git branch -d boton-whatsapp\nDeleted branch boton-whatsapp (was 9c4f21).</code></pre><p>Tres pasos: moverte a <code>main</code>, merge, y borrar la rama que ya entregó. El historial de <code>main</code> quedó con el botón dentro.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Terminé mi trabajo en la rama [nombre] y lo probé. Estoy parado en esa rama. Guíame para integrarlo a main con merge: confírmame que debo moverme a main primero y explícame qué significa la salida del merge antes de que continúe. Si puede haber conflicto, adviérteme antes.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "multiple", pregunta: "¿Qué comando une el trabajo de una rama con main?", opciones: ["git merge", "git switch", "git branch", "git commit"], correcta: 0 },
+              { tipo: "ordenar", instruccion: "Pasos para integrar tu rama boton-whatsapp a main:", elementos: ["git switch main", "git merge boton-whatsapp", "git branch -d boton-whatsapp"] },
+              { tipo: "completar", frase: "Antes de hacer merge, tienes que estar parado en la rama que va a ____ el trabajo (la rama ____), no en la que lo aporta.", banco: ["recibir", "destino", "enviar", "origen"], respuestas: ["recibir", "destino"] },
+              { tipo: "vf", afirmacion: "Al hacer merge, la rama que aportó el trabajo se borra automáticamente.", correcta: false, explicacion: "el merge no borra nada; la rama sigue existiendo hasta que la borras con git branch -d." },
+              { tipo: "relacionar", pares: [["git switch main", "Pararte en la rama que recibirá el trabajo"], ["git merge boton-whatsapp", "Integrar los commits de la rama a main"], ["git branch -d boton-whatsapp", "Borrar la rama que ya cumplió su misión"]] }
+            ]
+          },
+          {
+            id: "m2-a20",
+            titulo: "Conflictos de merge: qué son, por qué pasan, cómo se resuelven",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Atención: aquí es donde muchos principiantes entran en pánico — y por eso vamos a desarmarlo bien. Un <strong>conflicto de merge</strong> no es un error tuyo ni de Git: es una <strong>pregunta</strong>. Git encontró que dos ramas cambiaron las mismas líneas del mismo archivo de formas distintas, y no sabe cuál conservar. Te pregunta a ti.</p><p>Ocurre al hacer <code>git merge</code> (A19) y también al hacer <code>git pull</code> (Materia B). En ambos casos el mecanismo es el mismo.</p><p>Así se ve la señal de alerta:</p><pre><code>git merge arreglo-precios\nAuto-merging precios.js\nCONFLICT (content): Merge conflict in precios.js\nAutomatic merge failed; fix conflicts and then commit the result.</code></pre><p>Y así se ve un archivo en conflicto:</p><pre><code>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD\nconst precio = 100;\n=======\nconst precio = 99;\n&gt;&gt;&gt;&gt;&gt;&gt;&gt; arreglo-precios</code></pre><ul><li><code>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</code> — empieza TU versión (la rama donde estabas parado)</li><li><code>=======</code> — el separador entre las dos versiones</li><li><code>&gt;&gt;&gt;&gt;&gt;&gt;&gt; arreglo-precios</code> — termina la versión de la rama que estás integrando</li></ul><p>Para resolver: abres el archivo, <strong>decides qué queda</strong> (la tuya, la otra, o una mezcla), <strong>borras los tres marcadores</strong>, guardas, y cierras el merge con <code>git add</code> + <code>git commit</code>.</p><p>Aviso real, los tres errores que sí dañan:</p><ul><li><strong>Elegir a lo bruto:</strong> conservar una versión sin entender la otra. Si no sabes cuál es la correcta, pregúntale a la IA o a quien hizo la otra rama.</li><li><strong>Borrar el archivo para \"resolverlo\":</strong> eso no resuelve nada: destruye las dos versiones.</li><li><strong>Ignorar que el merge quedó a medias:</strong> mientras haya conflicto, Git no te deja avanzar hasta resolverlo. Y si te arrepientes, la salida de emergencia es <code>git merge --abort</code>, que cancela todo y regresa al estado anterior.</li></ul>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Un conflicto es como <strong>dos cocineros que condimentaron el mismo platillo de forma distinta</strong>. Uno puso 100 gramos de sal, el otro 99. La cocina no puede servir dos versiones del mismo platillo: alguien decide. Ese alguien eres tú. Los marcadores son los dos platillos sobre la mesa, y tu trabajo es elegir cuál va al menú — no servir ambos, y no tirar la olla.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Resolución paso a paso. El archivo en conflicto:</p><pre><code>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD\nconst precio = 100;\n=======\nconst precio = 99;\n&gt;&gt;&gt;&gt;&gt;&gt;&gt; arreglo-precios</code></pre><p>Decides que el precio correcto es 99. Dejas solo la línea que quieres y borras los tres marcadores:</p><pre><code>const precio = 99;</code></pre><p>Y cierras el merge:</p><pre><code>C:\\...\\mi-tienda&gt; git add precios.js\nC:\\...\\mi-tienda&gt; git commit -m \"Resolver conflicto: el precio correcto es 99\"\n[main 8d2fa5] Resolver conflicto: el precio correcto es 99</code></pre><p>Listo: la rama quedó integrada con la decisión que tomaste. Y si en cualquier punto el conflicto se complica demasiado, la salida limpia es <code>git merge --abort</code>: el merge se cancela y todo regresa a cómo estaba antes de intentarlo.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Estoy haciendo un merge y me salió un conflicto en [archivo]. Te pego el contenido con los marcadores. Explícame qué propone cada lado, recomiéndame cuál conservar y por qué, y dame el archivo ya resuelto. Después guíame con git add y git commit para cerrar el merge.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "multiple", pregunta: "¿Por qué ocurre un conflicto de merge?", opciones: ["Porque el internet está lento", "Porque dos ramas cambiaron las mismas líneas del mismo archivo de forma distinta y Git no sabe cuál conservar", "Porque hay archivos muy grandes", "Porque olvidaste commitear antes del merge"], correcta: 1 },
+              { tipo: "relacionar", pares: [["<<<<<<< HEAD", "Tu versión (la rama donde estás parado)"], ["=======", "El separador entre las dos versiones"], [">>>>>>> arreglo-precios", "La versión de la rama que estás integrando"]] },
+              { tipo: "completar", frase: "Para resolver un conflicto: decides qué versión ____, borras los ____ y cierras con git add + git ____.", banco: ["queda", "marcadores", "commit", "branch"], respuestas: ["queda", "marcadores", "commit"] },
+              { tipo: "vf", afirmacion: "git merge --abort cancela el merge y devuelve todo al estado anterior.", correcta: true, explicacion: "es la salida de emergencia cuando el conflicto se sale de control." },
+              { tipo: "quehace", codigo: "<<<<<<< HEAD\nconst precio = 100;\n=======\nconst precio = 99;\n>>>>>>> arreglo-precios", pregunta: "Encuentras esto en precios.js tras un merge. ¿Qué significa?", opciones: ["Un error de sintaxis que se borra solo", "Un conflicto: HEAD propone 100 y arreglo-precios propone 99; tú decides cuál queda y quitas las marcas", "Que el archivo se duplicó", "Que Git ya eligió la respuesta correcta"], correcta: 1 }
+            ]
+          },
+          {
+            id: "m2-a21",
+            titulo: "HEAD, main, origin: el vocabulario que confunde a todos",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>En tus tutoriales y en la salida de Git verás tres palabras en mayúsculas una y otra vez: <strong>HEAD</strong>, <strong>main</strong> y <strong>origin</strong>. Confunden porque parecen la misma cosa, y no lo son. Hoy las separas de una vez.</p><p><strong>1. HEAD</strong> — la etiqueta que Git mueve solo. Marca el commit donde estás parado. No es una rama ni un archivo: es \"tú, aquí, ahora\". Cada vez que haces commit (A8), HEAD avanza. Cada vez que cambias de rama (A17), HEAD apunta a la posición de esa rama. En <code>git log --oneline</code> lo ves como <code>(HEAD -&gt; main)</code>: \"estás parado en main, en este commit\". Y en los conflictos de merge (A20), el bloque <code>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</code> es TU versión, la de donde estabas parado.</p><p><strong>2. main</strong> — el nombre de la rama principal (lo conoces desde A4). main no es especial por su nombre; es especial porque todo el mundo lo trata como \"la versión buena\". Técnicamente es una etiqueta que apunta a un commit y avanza cuando commiteas o mergeas ahí (A8, A19).</p><p><strong>3. origin</strong> — el que más confunde, porque no existe en tu computadora. origin es el nombre que Git le da por default al <strong>repositorio remoto</strong>: la copia de tu proyecto que vive en la nube. Se configura en Materia B, cuando conectes tu carpeta con GitHub. Cuando veas <code>origin/main</code>, significa \"la copia de main que vive en el remoto\".</p><p>Regla de oro: las tres son <strong>punteros</strong>, no contenido. Apuntan a commits. HEAD apunta a dónde estás, main a dónde crece tu línea principal y origin a la copia remota.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>HEAD es <strong>tú, parado en la línea del tiempo del proyecto</strong>. main es el tronco del árbol (A16): una línea que crece con cada commit. origin es un espejo del árbol que está en la oficina central — te enterarás de cómo sincronizarlo en Materia B. Los tres son señalamientos: te dicen dónde estás, dónde crece lo principal y dónde vive la copia remota.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<pre><code>C:\\...\\mi-tienda&gt; git log --oneline\n9c4f21 (HEAD -&gt; main) Agregar botón de WhatsApp\na3f9c1 Corregir precios\n1e8a05 Versión inicial</code></pre><p><code>(HEAD -&gt; main)</code>: HEAD está parado en el commit 9c4f21, que pertenece a main. Crea una rama y muévete (A17), y verás cómo HEAD se mueve contigo:</p><pre><code>C:\\...\\mi-tienda&gt; git switch -c boton-whatsapp\nSwitched to a new branch 'boton-whatsapp'\n\nC:\\...\\mi-tienda&gt; git log --oneline\n9c4f21 (HEAD -&gt; boton-whatsapp) Agregar botón de WhatsApp</code></pre><p>HEAD ya no apunta a main: apunta a <code>boton-whatsapp</code>. El commit es el mismo; lo que cambió es dónde estás parado. Por eso HEAD se llama \"el commit actual\": es tu posición, siempre.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Te pego la salida de mi <code>git log</code> y <code>git status</code>: [pégalas aquí]. Explícame en mis propias palabras qué significa cada una: qué es HEAD en esta salida, en qué rama estoy parado, y si mi historial se ve normal para un proyecto de mi tamaño.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "multiple", pregunta: "¿Qué es HEAD?", opciones: ["El nombre de la rama principal del proyecto", "La etiqueta que marca el commit donde estás parado", "La copia del proyecto en la nube", "El primer commit del historial"], correcta: 1 },
+              { tipo: "completar", frase: "HEAD es la etiqueta que marca el ____ donde estás parado; main es la rama ____; origin es el nombre por default del repositorio ____.", banco: ["commit", "principal", "remoto", "final"], respuestas: ["commit", "principal", "remoto"] },
+              { tipo: "vf", afirmacion: "origin es el nombre que Git le da por default a tu repositorio remoto, la copia que vive en la nube.", correcta: true, explicacion: "origin no existe en tu computadora; lo conectas en Materia B." },
+              { tipo: "relacionar", pares: [["HEAD", "El commit donde estás parado ahora"], ["main", "La rama principal del proyecto"], ["origin", "La copia remota en la nube"], ["(HEAD -> main)", "Estás parado en main, en este commit"]] },
+              { tipo: "quehace", codigo: "git commit -m \"Corregir precios\"", pregunta: "Haces un commit nuevo. ¿Qué pasa con HEAD?", opciones: ["HEAD se queda donde estaba", "HEAD avanza y ahora apunta al commit nuevo", "HEAD apunta al remoto", "HEAD se borra"], correcta: 1 }
+            ]
+          },
+          {
+            id: "m2-a22",
+            titulo: "git stash: guardar temporalmente sin commitear",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Estás a medias: cambiaste archivos, falta terminar, y necesitas hacer otra cosa — moverte de rama (A17), probar algo, arreglar un bug urgente. Commitear trabajo a medias ensucia el historial (la disciplina que verás en A28). Y borrar tu avance, pierdes el trabajo. Ahí nace el cajón: <strong>git stash</strong>.</p><p><code>git stash</code> guarda tus cambios del working directory y del staging (recuerda los 3 estados de A5), y deja tu carpeta limpia, como si no hubieras tocado nada. Tu avance no se pierde: queda guardado aparte, fuera del historial.</p><p>El vocabulario que necesitas:</p><ul><li><code>git stash</code> — guardar los cambios sin commitear y limpiar el working directory.</li><li><code>git stash list</code> — ver los cajones que tienes guardados.</li><li><code>git stash pop</code> — recuperar el último cajón y aplicar tus cambios de vuelta (y sacarlo de la lista).</li><li><code>git stash push -m \"mensaje\"</code> — guardar con una nota para saber qué había dentro.</li></ul><p>Tres puntos que evitan sustos:</p><ul><li><strong>El historial no se toca:</strong> stash guarda cambios sin commitear; tu <code>git log</code> queda intacto.</li><li><strong>Pop puede generar conflictos:</strong> si los archivos cambiaron mientras tu trabajo estaba guardado, se resuelven como cualquier conflicto de merge (A20).</li><li><strong>Es una pila:</strong> puedes guardar varias veces; <code>pop</code> siempre saca el último que metiste.</li></ul>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Git stash es <strong>el estacionamiento del proyecto</strong>. Vas conduciendo con trabajo a medias en el asiento del copiloto y de pronto necesitas el auto para otra cosa. No lo botes: lo estacionas. Tu trabajo sigue ahí, intacto, en el cajón del estacionamiento. Cuando terminas lo otro, regresas, lo sacas del estacionamiento (<code>pop</code>) y sigues conduciendo exactamente donde te quedaste.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<pre><code>C:\\...\\mi-tienda&gt; git status\nOn branch main\nChanges not staged for commit:\n        modified:   index.html\n\nC:\\...\\mi-tienda&gt; git stash\nSaved working directory and index state WIP on main: 9c4f21 Agregar botón de WhatsApp\n\nC:\\...\\mi-tienda&gt; git status\nOn branch main\nnothing to commit, working tree clean</code></pre><p>Tu avance está guardado y tu carpeta quedó limpia. Haces lo que necesitabas. Después recuperas el trabajo:</p><pre><code>C:\\...\\mi-tienda&gt; git stash list\nstash@{0}: WIP on main: 9c4f21 Agregar botón de WhatsApp\n\nC:\\...\\mi-tienda&gt; git stash pop\nOn branch main\nChanges not staged for commit:\n        modified:   index.html</code></pre><p>Tus cambios regresaron tal cual: ni se perdieron, ni entraron al historial.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Tengo cambios a medias en [archivos] que aún no quiero commitear, pero necesito cambiar a otra rama para [tarea]. Guíame con git stash: el comando exacto para guardar mis cambios, cómo verifico que el working directory quedó limpio, y cómo los recupero después sin perder nada.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "multiple", pregunta: "¿Para qué sirve <code>git stash</code>?", opciones: ["Para borrar commits del historial", "Para guardar cambios sin terminar sin hacer commit y dejar la carpeta limpia", "Para subir tu código a GitHub", "Para crear una rama nueva"], correcta: 1 },
+              { tipo: "completar", frase: "git stash guarda tus cambios ____ y deja el working directory ____; git stash pop los ____.", banco: ["sin commitear", "limpio", "devuelve", "borra"], respuestas: ["sin commitear", "limpio", "devuelve"] },
+              { tipo: "vf", afirmacion: "git stash crea un commit en el historial de tu proyecto.", correcta: false, explicacion: "el stash vive aparte; el historial de commits no se toca." },
+              { tipo: "ordenar", instruccion: "Secuencia: guardar tu avance, hacer otra cosa y recuperarlo.", elementos: ["git status para ver tus cambios", "git stash para guardarlos", "hacer la otra tarea", "git stash pop para recuperarlos"] },
+              { tipo: "quehace", codigo: "git stash pop", pregunta: "<code>git stash pop</code> — ¿qué hace?", opciones: ["Guarda tus cambios y limpia la carpeta", "Recupera el último stash y aplica tus cambios de vuelta", "Borra el stash sin recuperar nada", "Crea una rama nueva"], correcta: 1 }
+            ]
+          },
+          {
+            id: "m2-a23",
+            titulo: "Tags y versiones: marcar los momentos importantes",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Tus commits son fotos (A8). Tus ramas son líneas que crecen (A16). Las <strong>tags</strong> son <strong>marcadores fijos sobre fotos importantes</strong>: \"esta foto es la versión 1.0\". A diferencia de una rama, una tag no se mueve jamás: apunta para siempre al commit que marcó.</p><p>Para qué sirven:</p><ul><li><strong>Versionar lanzamientos:</strong> v1.0.0, v2.1.3... Cuando entregas algo — a un cliente, al mundo, a tu yo del futuro — marcas esa foto.</li><li><strong>Encontrar momentos clave:</strong> \"¿cómo era exactamente el código que funcionaba en producción?\" La respuesta siempre será una tag.</li><li><strong>Generar changelogs y releases:</strong> la base para comunicar qué cambió entre versiones (Materia B).</li></ul><p>Comandos mínimos:</p><pre><code>git tag                ← lista las tags que existen\ngit tag v1.0.0         ← marca el commit actual con esa tag\ngit tag -a v1.0.0 -m \"Primera versión\"   ← tag con anotación (mensaje)</code></pre><p>Y el <strong>versionado semántico</strong>, el estándar que verás en todo el software profesional. Se escribe <code>vMAYOR.MENOR.PARCHE</code> (ejemplo: v1.2.3):</p><ul><li><strong>MAYOR:</strong> cambio que rompe lo que ya existía (v1.0.0 → v2.0.0).</li><li><strong>MENOR:</strong> nueva funcionalidad que no rompe nada (v1.1.0).</li><li><strong>PARCHE:</strong> corrección de bugs (v1.1.1).</li></ul><p>La tag se clava en el commit actual: antes de crearla, confirma con <code>git log --oneline</code> dónde estás parado, para que quede en el commit correcto.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Las tags son <strong>las placas que se cuelgan en las fotos del álbum</strong>. Las ramas son hojas sueltas que siguen creciendo; la tag es el marco dorado sobre la foto del día importante: esa foto no va a cambiar, esté quien esté. Dentro de un año, si alguien pregunta \"¿cómo era exactamente la versión que entregamos?\", la respuesta es una tag: un punto fijo en la historia.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<pre><code>C:\\...\\mi-tienda&gt; git log --oneline\n9c4f21 (HEAD -&gt; main) Agregar botón de WhatsApp\na3f9c1 Corregir precios\n1e8a05 Versión inicial\n\nC:\\...\\mi-tienda&gt; git tag -a v1.0.0 -m \"Primera versión publicada\"\n\nC:\\...\\mi-tienda&gt; git tag\nv1.0.0\n\nC:\\...\\mi-tienda&gt; git log --oneline\n9c4f21 (HEAD -&gt; main, tag: v1.0.0) Agregar botón de WhatsApp\na3f9c1 Corregir precios\n1e8a05 Versión inicial</code></pre><p>La tag quedó clavada en el commit 9c4f21 — verás la marca <code>(tag: v1.0.0)</code> junto al commit. Hagas lo que hagas después, esa foto quedó etiquetada como versión 1.0.0 para siempre.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Voy a publicar mi proyecto por primera vez. Explícame cómo marco esta versión con una tag: el comando exacto para crear la tag v1.0.0 con un mensaje, cómo verifico que quedó en el commit correcto, y cómo sé si mi versión debe ser v1.0.0 o algo distinto según el versionado semántico.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "multiple", pregunta: "¿Qué es una tag en Git?", opciones: ["Una rama que crece con cada commit", "Un marcador fijo sobre un commit importante, como v1.0.0", "Un archivo de configuración del proyecto", "Un respaldo automático en la nube"], correcta: 1 },
+              { tipo: "completar", frase: "En vMAYOR.MENOR.PARCHE: MAYOR son cambios que ____, MENOR son nuevas ____ y PARCHE son ____ de bugs.", banco: ["rompen", "funcionalidades", "correcciones", "ramas"], respuestas: ["rompen", "funcionalidades", "correcciones"] },
+              { tipo: "vf", afirmacion: "A diferencia de una rama, una tag no se mueve: apunta siempre al commit que marcó.", correcta: true, explicacion: "por eso sirve para versionar: la v1.0.0 de hoy es idéntica dentro de un año." },
+              { tipo: "relacionar", pares: [["git tag", "Lista las tags del proyecto"], ["git tag v1.0.0", "Marca el commit actual con v1.0.0"], ["git tag -a v1.0.0 -m \"...\"", "Crea la tag con un mensaje anotado"], ["v2.0.0", "Versión mayor: cambios que rompen lo existente"]] },
+              { tipo: "quehace", codigo: "git tag -a v2.0.0 -m \"Rediseño completo\"", pregunta: "<code>git tag -a v2.0.0 -m \"Rediseño completo\"</code> — ¿qué hace?", opciones: ["Mueve la tag v1.0.0 al commit actual", "Crea la tag v2.0.0 con un mensaje, sobre el commit actual", "Crea una rama llamada v2.0.0", "Borra la tag v1.0.0"], correcta: 1 }
+            ]
+          },
+          {
+            id: "m2-a24",
+            titulo: "El árbol de commits: leer el historial gráfico",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Desde A10 sabes leer <code>git log</code>. Hoy aprendes a leer el <strong>árbol</strong>: la versión gráfica del historial que muestra cómo las ramas nacieron, crecieron y se volvieron a juntar. Es el mapa de tu proyecto.</p><p>El comando clásico:</p><pre><code>git log --oneline --graph --all --decorate</code></pre><ul><li><code>--oneline</code> — un commit por línea.</li><li><code>--graph</code> — dibuja el árbol con líneas y asteriscos.</li><li><code>--all</code> — muestra todas las ramas, no solo la actual.</li><li><code>--decorate</code> — marca con sus nombres HEAD, ramas y tags (A21, A23).</li></ul><p>Cómo se lee:</p><ul><li>Cada <code>*</code> es un commit.</li><li>Las líneas conectan la historia: muestran de qué rama viene cada commit.</li><li>Donde dos líneas <strong>se juntan</strong> en un commit, hubo un merge (A19).</li><li>Donde una línea <strong>se separa</strong>, nació una rama (A16, A17).</li><li>Los nombres entre paréntesis (<code>HEAD -&gt; main</code>, <code>boton-whatsapp</code>, <code>tag: v1.0.0</code>) son las etiquetas.</li></ul>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Es <strong>el mapa del metro</strong>. Cada línea es una rama; cada estación es un commit; donde dos líneas comparten una estación, hubo un merge. Algunas estaciones tienen nombre propio (una tag, una rama). El mapa te dice dónde estás parado y de dónde viene cada línea. Nadie se aprende el mapa de memoria: se consulta cuando se necesita.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<pre><code>C:\\...\\mi-tienda&gt; git log --oneline --graph --all --decorate\n*   8d2fa5 (HEAD -&gt; main) Merge branch 'boton-whatsapp'\n|\\\n| * 9c4f21 (boton-whatsapp) Agregar botón de WhatsApp\n|/\n* a3f9c1 Corregir precios\n* 1e8a05 Versión inicial de la tienda</code></pre><p>Punto por punto:</p><ul><li>El commit <code>8d2fa5</code> es un <strong>merge commit</strong>: tiene dos líneas bajando, juntó main con boton-whatsapp (A19).</li><li>La rama boton-whatsapp nació en <code>a3f9c1</code>, aportó el commit <code>9c4f21</code> y se reintegró a main.</li><li>Estás parado en main: <code>HEAD -&gt; main</code> (A21).</li></ul><p>En un proyecto con varias ramas el árbol se ve más tupido, pero la lógica es idéntica: líneas que nacen, crecen y se juntan.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Te pego la salida de <code>git log --oneline --graph --all --decorate</code> de mi proyecto: [pégalas aquí]. Explícame qué historia cuenta: qué ramas existen, en qué commit nació cada una, dónde hubo merges, en qué rama estoy parado y si hay algo raro en el historial que debería arreglar.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "multiple", pregunta: "¿Qué comando muestra el historial en forma de árbol gráfico?", opciones: ["git status", "git log --oneline --graph --all --decorate", "git branch --tree", "git stash list"], correcta: 1 },
+              { tipo: "completar", frase: "En el árbol de commits, cada ____ es un commit; donde dos líneas se juntan hubo un ____; donde se separan, nació una ____.", banco: ["asterisco", "merge", "rama", "tag"], respuestas: ["asterisco", "merge", "rama"] },
+              { tipo: "relacionar", pares: [["--graph", "Dibuja el árbol con líneas y asteriscos"], ["--all", "Muestra todas las ramas, no solo la actual"], ["--decorate", "Marca HEAD, ramas y tags con sus nombres"], ["--oneline", "Un commit por línea"]] },
+              { tipo: "vf", afirmacion: "En el árbol, un punto donde dos líneas se juntan normalmente es un merge.", correcta: true, explicacion: "ahí convergen dos ramas en un solo commit." },
+              { tipo: "quehace", codigo: "*   8d2fa5 (HEAD -> main) Merge branch 'boton-whatsapp'\n|\\\n| * 9c4f21 (boton-whatsapp) Agregar botón de WhatsApp\n|/\n* a3f9c1 Corregir precios", pregunta: "Lees esto en tu historial. ¿Qué pasó en el commit 8d2fa5?", opciones: ["Se borró la rama boton-whatsapp", "Es un merge: main recibió el trabajo de boton-whatsapp", "Es el primer commit del proyecto", "Hay un conflicto sin resolver"], correcta: 1 }
+            ]
+          },
+          {
+            id: "m2-a25",
+            titulo: "Git + IA: pedirle a la IA que interprete tu historial",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Tu historial de Git es información que una IA lee <strong>muy</strong> bien. Y la clave que hace esto seguro: los comandos de lectura de Git (<code>git log</code>, <code>git status</code>, <code>git diff</code>, <code>git branch</code>) son de <strong>solo lectura</strong> — no cambian nada. Pegar su salida a una IA no toca tu repo. Es el truco de productividad más barato de todo el mes.</p><p>Qué puedes pedirle que haga con tu historial:</p><ul><li><strong>Interpretar tu historia:</strong> \"cuéntame qué pasó en este proyecto\".</li><li><strong>Encontrar cuándo cambió algo:</strong> \"¿en qué commit se tocó el precio?\"</li><li><strong>Detectar qué rompió algo:</strong> \"mi página dejó de funcionar, ¿qué se commitearon antes del fallo?\"</li><li><strong>Escribir mensajes de commit</strong> (A9) y changelogs (Materia B) a partir del historial.</li><li><strong>Auditar tu historial:</strong> \"¿los mensajes son claros? ¿hay commits que deberían dividirse?\" (A28).</li></ul><p>La disciplina al pedírselo — la misma de todo el curso:</p><ol><li><strong>Pega la salida real,</strong> no la describas: captura con <code>git log --oneline --graph --all --decorate</code> (A24).</li><li><strong>Da contexto:</strong> qué proyecto es, qué estabas haciendo, qué buscas.</li><li><strong>Pide una tarea concreta,</strong> no \"¿qué opinas?\".</li><li><strong>La IA interpreta; tú decides.</strong> Nada de leer el historial completo de memoria: para eso están el árbol (A24) y la IA.</li></ol>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Es como <strong>llevarle el álbum de fotos a un buen historiador</strong>. Tú tienes cientos de fotos sin orden; él las lee, te cuenta la historia, te dice cuándo se mudó la familia y qué foto fue la del error. No borra ni mueve ninguna foto: solo interpreta. Tú decides qué hacer con la información. La única regla: llévale el álbum real, no un resumen que tú inventes.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Primero capturas el historial real, tal como lo viste en A24:</p><pre><code>C:\\...\\mi-tienda&gt; git log --oneline --graph --all --decorate\n*   8d2fa5 (HEAD -&gt; main) Merge branch 'boton-whatsapp'\n|\\\n| * 9c4f21 (boton-whatsapp) Agregar botón de WhatsApp\n|/\n* a3f9c1 Corregir precios\n* 1e8a05 Versión inicial</code></pre><p>Ese output se copia y se pega literal en el prompt. Es de solo lectura: puedes pegarlo mil veces y tu repo no cambia. El prompt completo lo tienes en la siguiente sección: cópialo, pega tu salida y ejecuta.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Te pego la salida de <code>git log --oneline --graph --all --decorate</code> de mi proyecto de una tienda en línea. [PEGA AQUÍ TU SALIDA]</p><ol><li>Cuéntame la historia completa que cuenta este historial, como si fueras mi historiador.</li><li>¿Qué ramas existen y cuál es su estado? ¿Alguna quedó sin fusionar a main?</li><li>¿En qué commit se agregó el botón de WhatsApp?</li><li>Revisa la calidad de los mensajes: ¿cuáles cambiarías y con qué redacción?</li></ol><p>No modifiques nada de mi código: solo interpreta y responde.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "multiple", pregunta: "¿Por qué es seguro pegarle a una IA la salida de <code>git log</code> o <code>git status</code>?", opciones: ["Porque Git lo permite", "Porque son comandos de solo lectura: no modifican ni borran nada", "Porque la IA no puede leerla", "Porque el historial no tiene información útil"], correcta: 1 },
+              { tipo: "completar", frase: "Para que la IA interprete bien tu historial: pégale la ____ real, dale ____ del proyecto y pide una ____ concreta.", banco: ["salida", "contexto", "tarea", "contraseña"], respuestas: ["salida", "contexto", "tarea"] },
+              { tipo: "vf", afirmacion: "Pegar la salida de git log a una IA puede modificar tu historial de commits.", correcta: false, explicacion: "git log solo lee; ninguna IA ejecuta cambios por pegarle texto." },
+              { tipo: "relacionar", pares: [["\"¿En qué commit se tocó el precio?\"", "Buscar el commit exacto de un cambio"], ["\"¿Qué se commitearon antes de que la página se rompiera?\"", "Investigar qué causó un fallo"], ["\"Mejora mis mensajes de commit\"", "Auditar la calidad del historial (A9)"], ["\"Cuéntame la historia del proyecto\"", "Interpretar el árbol de commits (A24)"]] },
+              { tipo: "quehace", codigo: "git log --oneline --graph --all --decorate", pregunta: "<code>git log --oneline --graph --all --decorate</code> — ¿para qué lo corres antes de pedirle a una IA que interprete tu historial?", opciones: ["Para borrar commits que no sirven", "Para capturar el historial completo en un formato que la IA puede interpretar", "Para crear una rama nueva", "Para subir el historial a GitHub"], correcta: 1 }
+            ]
+          },
+          {
+            id: "m2-a26",
+            titulo: "Los 5 errores de principiante y cómo salir de cada uno",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Ya llevas 25 lecciones de Git: instalaste (A2), versionaste (A4-A8), deshiciste (A13-A15), ramificaste (A16-A20) y aprendiste el vocabulario que confunde (A21). Hoy apagamos incendios: los <strong>5 errores que comete todo principiante</strong> — y cómo salir de cada uno sin pánico.</p><p><strong>Error 1: commits gigantes sin tema.</strong> Un commit que junta 30 archivos con mensaje \"cambios\". Nadie puede entender qué pasó ahí y no se puede revertir un solo cambio (A14). <em>Salida:</em> usa el staging (A5) y la disciplina de los commits atómicos (A28): una foto por cambio lógico.</p><p><strong>Error 2: commitear lo que no debes.</strong> <code>node_modules</code>, un <code>.env</code> con contraseñas, archivos generados. Se cuelan porque <code>git add .</code> mete todo (A7). <em>Salida:</em> un <code>.gitignore</code> sólido (A11) antes del primer commit; si ya se colaron, <code>git rm --cached</code> los saca del seguimiento sin borrarlos de tu disco.</p><p><strong>Error 3: mensajes que no dicen nada.</strong> \"wip\", \"aaa\", \"arreglos\". El historial (A10) es para tu yo del futuro. <em>Salida:</em> la receta de A9: verbo + qué + por qué. <code>fix: calcular IVA en el total</code>.</p><p><strong>Error 4: miedo a deshacer.</strong> Rompiste algo y te quedas paralizado. <em>Salida:</em> el mapa de deshacer: <code>git restore</code> (A13) antes de commitear, <code>git revert</code> (A14) después sin borrar historia, y <code>git reset</code> (A15) solo cuando sabes qué haces.</p><p><strong>Error 5: vivir todo en main.</strong> Cada prueba, cada idea, directo a la rama principal. <em>Salida:</em> las ramas (A16): crea una por feature con <code>git branch</code> y <code>git switch</code> (A17), experimenta sin riesgo y mergea (A19) solo lo que funciona.</p><p>Regla de oro: un error NO se arregla reescribiendo el historial. Se arregla identificando qué zona de Git tocó (A5) y usando la herramienta correcta.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Los 5 errores son como <strong>los accidentes clásicos de quien recién aprende a manejar</strong>: no frenar, no usar el espejo, acelerar en la curva. No pasa nada por cometerlos: todos los cometimos. Lo que separa al conductor del principiante es saber, sin pánico, qué palanca tocar para salir del apuro — y para cada error de la lista existe una palanca exacta.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>El caso más caro es el Error 2: se te cuelan secretos. Todo empieza en <code>git status</code> (A6):</p><pre><code>C:\\...\\mi-proyecto&gt; git status\nOn branch main\nUntracked files:\n  (use \"git add &lt;file&gt;...\" to include in what will be committed)\n        .env           ← ¡contraseñas!\n        node_modules/  ← miles de archivos generados</code></pre><p>La salida profesional: arma tu <code>.gitignore</code> (A11) ANTES del primer commit:</p><pre><code>C:\\...\\mi-proyecto&gt; echo node_modules/ &gt;&gt; .gitignore\nC:\\...\\mi-proyecto&gt; echo .env &gt;&gt; .gitignore\nC:\\...\\mi-proyecto&gt; git status\nnothing to commit, working tree clean</code></pre><p>Y si ya los commitearon, sácalos del seguimiento sin borrarlos de tu disco:</p><pre><code>C:\\...\\mi-proyecto&gt; git rm --cached .env -r\nrm '.env'</code></pre><p>Deja de usar <code>git add .</code> a ciegas (A7): revisa <code>git status</code> antes de cada foto y decide qué entra al staging (A5).</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Te pego la salida de <code>git log --oneline --graph --all --decorate</code> y <code>git status</code> de mi proyecto. [PEGA AQUÍ TUS SALIDAS]</p><p>Revisa mi historial buscando los 5 errores de principiante: commits gigantes, archivos que no deberían estar rastreados, mensajes sin sentido, miedo a deshacer o todo en main. Dime cuáles tengo y el plan exacto para corregirlos SIN reescribir el historial. Si encuentras secretos, explícame cómo rotarlos.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "multiple", pregunta: "¿Cuál es el problema con un commit gigante de 30 archivos llamado 'cambios'?", opciones: ["Git no permite commits tan grandes", "Nadie puede entender qué pasó ahí y no se puede aislar un solo cambio para revertirlo", "El historial se borra automáticamente", "Es imposible hacer un commit con 30 archivos"], correcta: 1 },
+              { tipo: "completar", frase: "Para el Error 2, el .gitignore (A11) se arma ____ del primer commit; si ya se colaron archivos, git rm ____ los saca del seguimiento sin borrarlos del disco.", banco: ["antes", "--cached", "después", "--add"], respuestas: ["antes", "--cached"] },
+              { tipo: "vf", afirmacion: "git rm --cached borra el archivo de tu computadora.", correcta: false, explicacion: "lo saca del seguimiento de Git, pero el archivo sigue en tu disco." },
+              { tipo: "relacionar", pares: [["Commits gigantes", "Staging (A5) + commits atómicos (A28)"], ["Se colaron node_modules", ".gitignore (A11) + git rm --cached"], ["Mensajes tipo 'wip'", "Verbo + qué + por qué (A9)"], ["Rompiste algo y tienes miedo", "git restore (A13), revert (A14) o reset (A15)"]] },
+              { tipo: "quehace", codigo: "git add .", pregunta: "<code>git add .</code> (A7) en un proyecto recién creado sin .gitignore. ¿Por qué es peligroso?", opciones: ["No es peligroso: es el comando más seguro de Git", "Mete TODO al staging, incluidos archivos que no deberían versionarse (A11)", "Borra los archivos que no quieres commitear", "Solo agrega los archivos que ya estaban rastreados"], correcta: 1 }
+            ]
+          },
+          {
+            id: "m2-a27",
+            titulo: "Git dentro de VS Code: la interfaz visual sin terminal",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Hasta aquí todo Git fue por terminal. Hay una segunda puerta que vas a usar muchísimo: <strong>el panel Source Control (Control de código fuente) de VS Code</strong>. Para las operaciones de todos los días no necesitas memorizar comandos: aquí son clics.</p><p>Dónde está: el ícono con <strong>tres ramitas entrelazadas</strong> en la barra de actividad (la columna de la izquierda) o el atajo <code>Ctrl+Shift+G</code>. Abre un proyecto y el panel está activo desde el primer <code>git init</code> (A4).</p><p>Qué te muestra, traducido al Git que ya conoces:</p><ul><li><strong>Changes (Cambios):</strong> los archivos del working directory sin preparar (A5). Cada uno con su inicial: <code>M</code> modificado, <code>U</code> sin seguimiento (untracked), <code>D</code> borrado. Es tu <code>git status</code> (A6) en vivo.</li><li><strong>Staged Changes:</strong> tu staging area (A5). Pulsas el <strong>+</strong> junto a un archivo y aterriza aquí: tu <code>git add</code> (A7) con clic.</li><li><strong>El cuadro de mensaje:</strong> escribes el mensaje del commit (A9) arriba y pulsas el <strong>✓</strong>: tu <code>git commit</code> (A8).</li><li><strong>El diff integrado:</strong> clic en cualquier archivo y VS Code abre la comparación lado a lado: lo que quitaste y lo que pusiste (A12).</li><li><strong>Descartar:</strong> el ícono de deshacer en un archivo lo restaura a la última versión commitada: tu <code>git restore</code> (A13).</li></ul><p>Y un bonus visual: en la esquina inferior izquierda ves el <strong>nombre de la rama actual</strong>. Con clic abres el menú de ramas (A17) y desde ahí creas, cambias y eliminas ramas sin escribir un comando.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>La terminal es <strong>manejar con caja estándar</strong>: preciso, potente, imponente. El panel Source Control es <strong>la caja automática</strong>: haces exactamente lo mismo —acelerar, frenar, reversa— moviendo una palanca. Saber la estándar te vuelve mejor conductor; usar la automática a diario no te hace menos conductor. Al contrario: te deja energía para lo que importa, tu código.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Flujo completo del día a día, sin terminal. Ya editaste <code>index.html</code> y <code>styles.css</code>:</p><pre><code>1. Ctrl+Shift+G (o el ícono de ramitas).\n   → verás \"Changes (2)\":  index.html (M)  styles.css (M)\n\n2. Pulsa el + de cada archivo.\n   → ahora están en \"Staged Changes\": hiciste git add.\n\n3. Escribe el mensaje: \"Agregar banner de bienvenida\"\n\n4. Pulsa el ✓ (commit).\n   → foto tomada. Revisa el historial en el gráfico del panel.</code></pre><p>Quieres inspeccionar antes de commitear (A12): clic en <code>index.html</code> dentro de Changes → se abre el diff lado a lado. El panel no modifica nada mientras no pulses <code>+</code>, <code>✓</code> o el deshacer.</p><p>Tip: pasa el mouse sobre cada botón y VS Code te muestra el comando de terminal equivalente. Así aprendes el mismo Git dos veces: visual y de texto.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Estoy usando el panel Source Control de VS Code y quiero [describe tu tarea: commitear solo un archivo, ver el diff, crear una rama, descartar un cambio]. Explícame paso a paso qué clic hacer en la interfaz y dime qué comando de terminal equivale a cada clic, para aprender las dos formas.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "multiple", pregunta: "¿Con qué atajo abres el panel Source Control en VS Code?", opciones: ["Ctrl+Z", "Ctrl+Shift+G", "Ctrl+S", "Alt+F4"], correcta: 1 },
+              { tipo: "relacionar", pares: [["Botón +", "git add: mover un archivo al staging (A5)"], ["Botón ✓", "git commit: tomar la foto (A8)"], ["Clic en un archivo de Changes", "Ver el diff de ese archivo (A12)"], ["Ícono de deshacer", "git restore: descartar cambios (A13)"]] },
+              { tipo: "vf", afirmacion: "Desde el panel Source Control de VS Code no se puede hacer commit; eso es exclusivo de la terminal.", correcta: false, explicacion: "el cuadro de mensaje + el ✓ son tu git commit en la interfaz." },
+              { tipo: "completar", frase: "En el panel Source Control, la sección ____ es tu staging area; los archivos de Changes están en el ____ directory, sin preparar (A5).", banco: ["Staged Changes", "working", "historial", "remoto"], respuestas: ["Staged Changes", "working"] },
+              { tipo: "quehace", codigo: "index.html (M) aparece en Changes\ny pulsas el botón + → pasa a \"Staged Changes\"\nluego escribes el mensaje y pulsas ✓", pregunta: "Acabas de ejecutar, en orden, las operaciones de terminal equivalentes a:", opciones: ["git init y luego git log", "git add index.html y luego git commit", "git stash y luego git pop", "git branch y luego git switch"], correcta: 1 }
+            ]
+          },
+          {
+            id: "m2-a28",
+            titulo: "Commits atómicos: la disciplina que te salva",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>La regla es corta y lo cambia todo: <strong>un commit = un cambio lógico</strong>. Esto se llama <strong>commit atómico</strong>, y es la disciplina que convierte tu historial (A10) en un índice útil en vez de un borrador.</p><p>Cambio lógico no es cantidad de archivos. Tocaste 10 archivos porque \"el precio se calcula en 10 lugares\": es UN cambio, merece UN commit. Tocaste 1 archivo con dos ideas distintas: merece DOS commits. El staging (A5) existe exactamente para esto: elegir qué va en cada foto.</p><p>La prueba de fuego: <strong>el mensaje del commit (A9) tiene que caber en una línea</strong>. Si tu mensaje necesita un \"y también\", son dos commits. <code>fix: corregir cálculo del IVA</code> es un commit. <code>fix: IVA y colores y footer</code> es un desastre.</p><p>Por qué te salva:</p><ul><li><strong>Revertir limpio (A14):</strong> si el IVA rompe algo, reviertes solo ese commit. En un commit gigante, reviertes todo o nada.</li><li><strong>Encontrar culpables (A12):</strong> el historial es un índice: cada foto dice exactamente qué cambió.</li><li><strong>Merges tranquilos (A19-A20):</strong> cambios chicos y separados chocan menos y se entienden mejor.</li></ul><p>El superpoder técnico: <code>git add -p</code>. En vez de agregar archivos completos (A7), te muestra los cambios <strong>por bloques (hunks)</strong> y tú decides cuáles entran al staging. Un mismo archivo puede repartirse entre dos commits.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Un commit atómico es <strong>una foto con un solo sujeto</strong>. El álbum de tu proyecto tiene una foto para el IVA, otra para los colores, otra para el footer. Cuando algo sale mal, encuentras la foto exacta al instante y la descartas sin tocar el resto. El historial de commits gigantes es la foto de una fiesta llena de gente: para saber quién rompió el florero estudias la foto con lupa — y descartarla significa perder la fiesta entera.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Editaste <code>styles.css</code> y metiste dos cambios lógicos: el color de la paleta Y el tamaño de la fuente. Con <code>git add -p</code> los separas:</p><pre><code>C:\\...\\mi-tienda&gt; git add -p styles.css\n\n@@ -12,3 +12,3 @@ body { background: #fff; }\n-  --color-primario: #2b6cb0;\n+  --color-primario: #e53e3e;   ← cambio 1 (color)\nStage this hunk? [y,n,q,a,d,j,J,g,/,e,?] y\n\n@@ -40,3 +40,3 @@ body { font-size: 16px; }\n-  font-size: 16px;\n+  font-size: 18px;            ← cambio 2 (fuente)\nStage this hunk? [y,n,q,a,d,j,J,g,/,e,?] n</code></pre><p>Aceptaste el hunk del color y rechazaste el de la fuente. Ahora dos fotos limpias:</p><pre><code>C:\\...\\mi-tienda&gt; git commit -m \"style: cambiar paleta a rojo\"\n\nC:\\...\\mi-tienda&gt; git add -p styles.css     ← otra vez, ahora el hunk de la fuente\nC:\\...\\mi-tienda&gt; git commit -m \"style: aumentar tamaño de fuente\"</code></pre><p>Dos mensajes, dos cambios lógicos, dos commits. Si mañana el rojo no funciona, reviertes el primero (A14) y el tamaño de la fuente queda intacto.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Trabajé en varios cambios a la vez y no sé cuántos commits atómicos debería hacer. Te los describo: [lista de cambios]. Divídelos en commits atómicos y dame el mensaje exacto de cada uno (A9) y el orden en que los haría. Si alguno necesita git add -p, explícamelo paso a paso con el archivo y los hunks.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "vf", afirmacion: "Un commit atómico puede tocar varios archivos, siempre que todos sean parte del mismo cambio lógico.", correcta: true, explicacion: "el tamaño se mide en lógica, no en cantidad de archivos." },
+              { tipo: "multiple", pregunta: "Cambiaste el cálculo del IVA Y agregaste un footer. ¿Qué hace la disciplina atómica?", opciones: ["Un commit único con un mensaje largo", "Dos commits atómicos: uno para el IVA y otro para el footer", "Un commit solo para el footer; el IVA se queda sin commit", "Dos commits: uno por cada archivo tocado"], correcta: 1 },
+              { tipo: "completar", frase: "Para separar en dos commits los cambios de UN mismo archivo usas git add ____, que presenta los cambios por bloques llamados ____.", banco: ["-p", "hunks", "cached", "rama"], respuestas: ["-p", "hunks"] },
+              { tipo: "relacionar", pares: [["Revertir limpio", "Deshaces solo el commit del cambio que rompió (A14)"], ["git add -p", "Elegir por bloques qué entra al staging (A5)"], ["Mensaje de una línea", "Señal de que es un commit atómico (A9)"], ["\"cambios\" como mensaje", "Antiatómico: no dice qué cambió"]] },
+              { tipo: "quehace", codigo: "git add -p index.html", pregunta: "<code>git add -p</code> — ¿qué te muestra este comando?", opciones: ["El mensaje de tus últimos commits", "Los cambios de index.html por bloques para que elijas cuáles van al staging", "Los archivos que Git está ignorando", "Los errores de sintaxis de tu código"], correcta: 1 }
+            ]
+          },
+          {
+            id: "m2-a29",
+            titulo: "Cuándo NO usar Git (y qué usar en su lugar)",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Git es una herramienta fantástica, no una religión. Saber cuándo NO usarla te ahorra dolores y demuestra oficio: el profesional elige la herramienta, no le echa martillo a todo.</p><p><strong>1. Archivos binarios grandes.</strong> Videos, audios, diseños, modelos 3D. Git no muestra un diff útil de un binario: su comparación (A12) trabaja con texto. Un video de 2 GB infla el repositorio y cada clon pesa una fortuna. <em>En su lugar:</em> Git LFS para archivos grandes puntuales, o la nube (Drive, Dropbox) con la URL en el README.</p><p><strong>2. Secretos y contraseñas.</strong> Nunca. Si un <code>.env</code> con claves llegó a un commit (A26, Error 2), esas claves ya no son solo tuyas: quedaron en el historial. <em>En su lugar:</em> variables de entorno locales, gestores de secretos y tu <code>.gitignore</code> (A11). Si un secreto se filtró, la única salida real es rotarlo: generar claves nuevas.</p><p><strong>3. Archivos que se generan solos.</strong> <code>node_modules</code>, <code>dist</code>, builds. No tienen historia propia: se regeneran con <code>npm install</code> o <code>npm run build</code>. Versionarlos es puro ruido. <em>En su lugar:</em> <code>.gitignore</code> y que el código fuente sea la única fuente de verdad.</p><p><strong>4. Documentos que Git no puede fusionar.</strong> Un Word, un Photoshop o un Figma no son texto: Git no sabe mezclarlos (A20 es para código). <em>En su lugar:</em> herramientas de colaboración en línea pensadas para eso (Google Docs, Figma).</p><p><strong>5. Git como ÚNICO respaldo.</strong> Git registra tu historia, pero si tu disco muere y solo existe tu repo local, la historia muere contigo. <em>En su lugar:</em> un remoto (GitHub, Materia B) que reciba tus <code>git push</code> con regularidad. Un repo sin copia remota no es un respaldo: es una bitácora que se puede incendiar.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Git es <strong>el archivero de tu oficina</strong>: perfecto para papeles de texto con versión e historial. Pero no le metes el refrigerador (binarios gigantes), ni la caja fuerte con la combinación (secretos), ni fotocopias en serie del mismo folleto (archivos generados). Saber qué NO va al archivero es parte del oficio. Y el archivero no es un bunker: si la oficina se quema y no hiciste copia, se pierde todo.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>El caso del día a día con IA: pides código, aparece <code>node_modules</code> (miles de archivos generados) y el instinto dice \"a commitear todo\". No:</p><pre><code>C:\\...\\mi-proyecto&gt; git status\nUntracked files:\n  node_modules/      ← lo genera npm install: NO se versiona\n  src/               ← tu código fuente: ESTO sí\n  .env               ← secretos: NUNCA</code></pre><p>Antes del primer commit, tu <code>.gitignore</code> (A11):</p><pre><code>C:\\...\\mi-proyecto&gt; echo node_modules/ &gt;&gt; .gitignore\nC:\\...\\mi-proyecto&gt; echo .env &gt;&gt; .gitignore\nC:\\...\\mi-proyecto&gt; git status\n  src/  .gitignore</code></pre><p>Regla mental: versiona la <strong>receta</strong>, no el <strong>platillo</strong>. <code>package.json</code> es la receta (de dónde salen las dependencias); <code>node_modules</code> es el platillo servido: cualquiera lo rehace con <code>npm install</code>.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Te describo los archivos de mi proyecto: [lista]. Dime cuáles DEBEN versionarse con Git, cuáles deben ir a .gitignore y por qué, y si hay binarios o secretos que mejor no toquen Git. Si detectas un secreto ya filtrado en un commit, explícame cómo rotarlo y sacarlo del seguimiento sin reescribir el historial.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "vf", afirmacion: "node_modules debe versionarse porque contiene las dependencias del proyecto.", correcta: false, explicacion: "se regenera con npm install; lo que se versiona es package.json, la receta." },
+              { tipo: "multiple", pregunta: "Subiste por accidente un .env con contraseñas en un commit. ¿Qué haces primero?", opciones: ["Cambiar el mensaje del commit", "Rotar las contraseñas y sacar el archivo del seguimiento", "Borrar la carpeta .git y empezar de nuevo", "Pedirle a la IA que borre el commit"], correcta: 1 },
+              { tipo: "relacionar", pares: [["Video de 2 GB", "Fuera de Git: Git LFS o la nube"], ["Config con claves de API", "Nunca: gestor de secretos + .gitignore"], ["node_modules", "Se regenera: solo .gitignore (A11)"], ["Documento Word en equipo", "Herramientas como Google Docs"]] },
+              { tipo: "completar", frase: "Versiona la ____, no el ____: sube package.json y deja que node_modules se ____ con npm install.", banco: ["receta", "platillo", "regenere", "borre"], respuestas: ["receta", "platillo", "regenere"] },
+              { tipo: "quehace", codigo: "git rm --cached .env", pregunta: "Ya agregaste .env al .gitignore y corres este comando. ¿Qué logra?", opciones: ["Borra el archivo .env de tu computadora", "Saca .env del seguimiento de Git sin borrarlo de tu disco", "Borra TODO el historial del proyecto", "Sube .env a GitHub"], correcta: 1 }
+            ]
+          },
+          {
+            id: "m2-a30",
+            titulo: "Repaso integrador de Git (mega-quiz jugable)",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Llegaste al final de Materia A. Este repaso no mide memoria: mide que puedas <strong>decidir qué comando usar ante una situación real</strong>. Los 8 ejercicios mezclan todo el mes: flujo de trabajo (A5-A8), inspección (A6, A10, A12, A24), deshacer (A13-A15), ramas y merges (A16-A20), vocabulario (A21), herramientas y disciplina (A22, A26-A29).</p><p>Cómo jugarlo:</p><ol><li>Resuélvelo entero, de corrido, sin ayuda.</li><li>Cuenta tus aciertos: cada fallo viene con su lección a repasar.</li><li>Si aciertas 7 o más, estás listo para Materia B. Si menos, reabre las lecciones señaladas y vuelve a intentarlo.</li></ol><p>El mega-quiz completo está en los ejercicios, aquí abajo.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Es <strong>el examen práctico de manejo antes de salir a carretera</strong>. No te piden recitar el reglamento: te suben al auto, te plantean situaciones —una patrulla atrás, hielo en la curva— y evalúan tu decisión. Igual aquí: cada pregunta es una situación y cada comando, una decisión. Y como en el manejo, fallar no es rendirse: es saber exactamente qué señal repasar antes del próximo giro.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>En los ejercicios están las 8 preguntas. Referencias por si fallas:</p><ul><li>Flujo working → staging → historial: A5, A7, A8.</li><li>Inspeccionar: git status (A6), git log (A10), git diff (A12), árbol (A24).</li><li>Deshacer: git restore (A13), git revert (A14), git reset (A15).</li><li>Ramas, merge y conflictos: A16-A20.</li><li>Vocabulario HEAD/main/origin: A21.</li><li>Guardar a medias: git stash (A22).</li><li>Disciplina y buenas prácticas: A26-A29.</li></ul><p>Contéstalo sin consultar el material: ese es el punto. Al terminar, la sección \"Díselo a la IA\" te deja el examen de autoevaluación con una IA.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Actúa como mi instructor de Git. Acabo de terminar un mes de estudio y quiero una autoevaluación estricta.</p><ol><li>Hazme preguntas de opción múltiple, una a la vez, cubriendo: los 3 estados, git status/add/commit, git log y el árbol, deshacer con restore/revert/reset, ramas, merge y conflictos, HEAD/main/origin, stash, tags y buenas prácticas.</li><li>Cuando responda, califícame y explica la respuesta correcta en una línea.</li><li>Tras 10 preguntas, dame mi puntaje y crea un plan de repaso: qué lecciones reabrir y con qué ejercicios. Sé directo y preciso, sin palmaditas.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "multiple", pregunta: "Editaste index.html y quieres que entre en la próxima foto. ¿Cuál es la secuencia correcta (A5-A8)?", opciones: ["git init y luego git commit", "git add index.html y luego git commit", "git commit y luego git add index.html", "git status y luego git log"], correcta: 1 },
+              { tipo: "completar", frase: "El flujo de un cambio: editas en el ____ Directory, lo preparas con git ____ y guardas la foto con git ____ (A5-A8).", banco: ["working", "add", "commit", "clone"], respuestas: ["working", "add", "commit"] },
+              { tipo: "relacionar", pares: [["git status", "¿Qué está pasando en mi repo ahora? (A6)"], ["git log", "¿Qué ha pasado? El historial (A10)"], ["git diff", "¿Qué cambió exactamente? (A12)"], ["git log --oneline --graph", "El árbol de commits (A24)"]] },
+              { tipo: "vf", afirmacion: "Trabajar directamente en main es la práctica recomendada para probar ideas nuevas.", correcta: false, explicacion: "las ideas se prueban en ramas (A16-A17); main recibe lo que ya funciona (A19)." },
+              { tipo: "ordenar", instruccion: "Flujo completo para crear un proyecto versionado y tomar la primera foto:", elementos: ["mkdir mi-tienda", "cd mi-tienda", "git init", "crear archivos", "git add .", "git commit -m \"Versión inicial\""] },
+              { tipo: "quehace", codigo: "git revert 9c4f21", pregunta: "<code>git revert</code> (A14) — ¿qué hace este comando?", opciones: ["Borra el commit 9c4f21 del historial", "Crea un commit nuevo que deshace los cambios de 9c4f21, sin borrar historia", "Vuelve el working directory al estado de 9c4f21", "Muestra los cambios del commit 9c4f21"], correcta: 1 },
+              { tipo: "multiple", pregunta: "Durante un merge con conflicto (A20), el archivo muestra bloques con <<<<<<< HEAD. ¿Qué contienen?", opciones: ["Las dos versiones en conflicto, separadas por marcadores", "Solo tu versión", "Solo la versión de la otra rama", "Una lista de comandos para resolver el conflicto"], correcta: 0 },
+              { tipo: "vf", afirmacion: "git stash guarda tus cambios sin commitear y deja el working directory limpio (A22).", correcta: true, explicacion: "tu avance queda aparte, fuera del historial, y lo recuperas con git stash pop." }
+            ]
+          }
         ]
       },
       "b": {
