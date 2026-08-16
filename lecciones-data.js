@@ -2404,26 +2404,689 @@ window.DEV_SYSTEM_LECCIONES = {
               { tipo: "quehace", codigo: "\"genera un README.md profesional con checklist de estado\"", pregunta: "Le pides a la IA \"genera un README.md profesional con checklist de estado\". ¿Qué ganas?", opciones: ["Un archivo bonito para presumir", "Documentación viva de tu proyecto que te salva la memoria en meses", "Un archivo de configuración obligatorio", "Que la página cargue más rápido"], correcta: 1 }
             ]
           },
-          { id: "m1-c11", titulo: "PRÁCTICA: agregar una sección con imagen", proximamente: true },
-          { id: "m1-c12", titulo: "Cuando la IA se equivoca: el arte de pedir correcciones", proximamente: true },
-          { id: "m1-c13", titulo: "Iterar: la conversación como herramienta de construcción", proximamente: true },
-          { id: "m1-c14", titulo: "PRÁCTICA: hacer tu página responsive (que se vea bien en celular)", proximamente: true },
-          { id: "m1-c15", titulo: "Publicar I: qué es hosting y qué opciones existen", proximamente: true },
-          { id: "m1-c16", titulo: "PRÁCTICA: Netlify Drop — tu página EN VIVO en internet", proximamente: true },
-          { id: "m1-c17", titulo: "Tu URL en el mundo: qué pasa por detrás cuando alguien la abre", proximamente: true },
-          { id: "m1-c18", titulo: "PRÁCTICA: página para un negocio I — escribir el brief", proximamente: true },
-          { id: "m1-c19", titulo: "PRÁCTICA: página para un negocio II — dirigir la construcción", proximamente: true },
-          { id: "m1-c20", titulo: "PRÁCTICA: página para un negocio III — publicar y presumir", proximamente: true },
-          { id: "m1-c21", titulo: "El mapa de herramientas: Copilot, Cursor, Claude Code, v0, Bolt", proximamente: true },
-          { id: "m1-c22", titulo: "¿Qué es un editor de código? VS Code sin miedo", proximamente: true },
-          { id: "m1-c23", titulo: "PRÁCTICA: abrir tu proyecto en VS Code", proximamente: true },
-          { id: "m1-c24", titulo: "La IA dentro del editor: autocompletado y chat integrado", proximamente: true },
-          { id: "m1-c25", titulo: "Versiones de tu trabajo: copias, respaldos y el problema que Git resolverá (Mes 2)", proximamente: true },
-          { id: "m1-c26", titulo: "PRÁCTICA: rehacer tu página personal, versión mejorada", proximamente: true },
-          { id: "m1-c27", titulo: "Pedirle a la IA que explique código ajeno (tu superpoder de lectura)", proximamente: true },
-          { id: "m1-c28", titulo: "Los límites: qué NO puede hacer la IA (todavía) y dónde entras tú", proximamente: true },
-          { id: "m1-c29", titulo: "Tu flujo personal de trabajo con IA para todo el programa", proximamente: true },
-          { id: "m1-c30", titulo: "Repaso + arranque del proyecto final del mes", proximamente: true }
+          {
+            id: "m1-c11",
+            titulo: "PRÁCTICA: agregar una sección con imagen",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Hoy tu página de <strong>Tortas El Güero</strong> gana músculo: vas a agregar una sección con imagen. Las imágenes hacen que una landing page deje de verse como \"tarea\" y se vea como negocio — y son de las cosas más fáciles de dirigir con IA si entiendes una idea: para el navegador, una imagen no es \"un dibujito\", es <strong>un archivo que vive en una carpeta</strong>.</p><p>La etiqueta que inserta imágenes es <code>&lt;img&gt;</code>, y necesita dos atributos que son su vida y su palabra: <code>src</code> (la ruta: dónde está tu imagen) y <code>alt</code> (un texto que la describe para cuando no carga o para lectores de pantalla). Si <code>src</code> apunta a un archivo que no existe, el navegador no adivina — muestra un cuadro vacío.</p><p>Reglas de la imagen (recuerda C10): el archivo debe vivir <strong>dentro de tu carpeta de proyecto</strong> — si le pides a la IA una imagen \"del internet\", dependerás de un enlace ajeno que puede morir. Nombres sin espacios, sin acentos, en minúsculas: <code>torta-del-dia.jpg</code>, no <code>Torta Del Día.JPG</code>. Y la ruta que usas en <code>src</code> se escribe relativa al archivo <code>index.html</code>.</p><p>Hoy la imagen la eliges tú: descarga una foto libre de uso (por ejemplo de Unsplash) o usa una propia. Guárdala en <code>mi-primera-pagina</code> con un nombre limpio, y deja que la IA haga el resto. Al terminar, tu página va a sentirse, por fin, de verdad.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Una imagen en tu página es como el <strong>cuadro enmarcado de tu tienda</strong>: si la foto está en el cuarto de atrás (la carpeta correcta), se cuelga y se ve. Si la pierdes o la mueves, el marco se queda vacío. El navegador no va a buscar la foto por ti — tú le dices exactamente en qué cuarto está, y si la pista está mal, el marco queda vacío.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Pasos, secos:</p><ol><li><strong>Consigue una imagen</strong>: descarga una foto libre de uso o usa una propia.</li><li><strong>Guárdala</strong> dentro de <code>mi-primera-pagina</code> como <code>torta-del-dia.jpg</code> (reglas de C10: sin espacios, sin acentos, minúsculas).</li><li><strong>Vuelve al chat</strong> donde creaste la página (el contexto sigue vivo, C4) y pide:</li></ol><pre><code>Objetivo: Agrega a la página una sección \"Nuestras tortas\" con la\nimagen del archivo torta-del-dia.jpg (está en la misma carpeta\nque index.html). Quiero la imagen redonda con borde amarillo, el\ntexto a su lado en computadora y debajo de ella en celular.\nFormato: Dame el index.html completo actualizado.</code></pre><ol start=\"4\"><li><strong>Pega, guarda y refresca</strong> (F5).</li><li><strong>Prueba a fondo</strong>: renombra temporalmente la imagen y refresca — verás el cuadro vacío. Ese es el poder de <code>src</code>: la página no recuerda tu imagen, la busca donde dice el atributo.</li></ol>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<p>Antes de que la IA escriba el código, que te confirme el trato de las carpetas:</p><blockquote><p>\"Voy a agregar una imagen a mi página. Tengo el archivo en la misma carpeta que index.html. Antes de escribir código, dime: qué nombre y qué ruta debo usar para que la imagen cargue al abrir la página desde mi computadora.\"</p></blockquote><p>Esa pregunta te ahorra el clásico \"no se ve tu imagen\", que casi siempre sale de no cuidar la carpeta.</p>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "completar", frase: "La etiqueta que inserta imágenes es <code>&lt;img&gt;</code> y necesita dos atributos: ____ (dónde está el archivo) y ____ (el texto que describe la imagen si no carga).", banco: ["src", "alt", "href", "title"], respuestas: ["src", "alt"] },
+              { tipo: "vf", afirmacion: "Si el archivo de la imagen no está en la ruta que dice src, el navegador muestra un cuadro vacío.", correcta: true, explicacion: "el navegador no adivina dónde está la imagen: si la ruta no existe, la imagen no se muestra." },
+              { tipo: "multiple", pregunta: "¿Cuál es el mejor nombre de archivo para la imagen de tu página?", opciones: ["Torta Del Día.jpg", "torta-del-dia.jpg", "torta del dia.jpg", "TortaDelDía.JPG"], correcta: 1 },
+              { tipo: "relacionar", pares: [["src", "Dónde está el archivo de la imagen"], ["alt", "Texto alternativo si la imagen no carga"], ["img", "La etiqueta que inserta la imagen"]] },
+              { tipo: "quehace", codigo: "<img src=\"torta-del-dia.jpg\" alt=\"Torta cubana recién hecha\">", pregunta: "Abres la página desde una carpeta donde NO está torta-del-dia.jpg. ¿Qué verás?", opciones: ["La imagen más grande", "Un cuadro roto o vacío, porque el navegador no encuentra el archivo en esa ruta", "La imagen se descarga automáticamente", "La página no abre"], correcta: 1 }
+            ]
+          },
+          {
+            id: "m1-c12",
+            titulo: "Cuando la IA se equivoca: el arte de pedir correcciones",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Vamos a ser honestos: aunque tu prompt sea perfecto (C6), <strong>la IA se va a equivocar</strong>. Código que truena, estilos que no van, lógica que se le escapa. Eso no significa que dirijas mal — significa que estás en el mundo real. La habilidad profesional no es evitar los errores: es <strong>corregirlos rápido</strong>.</p><p>El error más caro no lo comete la IA, lo cometes tú: reportar \"no funciona\". Esa frase no le dice nada. El reporte profesional tiene 4 piezas (la versión diagnóstica del prompt de C3): <strong>1) qué pediste que hiciera, 2) qué hace en realidad, 3) qué esperabas que hiciera, 4) el código o el mensaje de error exacto.</strong></p><p>Segundo: corrige <strong>en la misma conversación</strong>. La IA todavía tiene el contexto (C4); describirle el proyecto otra vez desde cero es botar contexto a la basura. Solo abres conversación nueva si la anterior se saturó o si el error viene de un giro total de tema.</p><p>Tercero: no confundas corregir con regañar. Regañar gasta tokens y no arregla nada. Un buen reporte vale más que mil reclamos: con él, la IA no \"intenta de nuevo\" — diagnostica y te da el cambio mínimo. Y si quieres cerrar el círculo, pídele que te explique por qué fallaba: esa explicación es tu aprendizaje gratis (C8).</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Reportar un error a la IA es como <strong>regresar el coche al mecánico</strong>: llegar y decir \"no funciona\" es abrir el cofre sin palabras; decir \"frena raro, hace un ruidito y huele a quemado al enfriar\" es ahorrarle media hora de diagnóstico. Mismo taller, mismo mecánico — la diferencia está en el reporte. La IA es tu mecánica de primera; llégale con el síntoma bien contado.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>El antes y el después de un reporte:</p><pre><code>Mal:\nTú:  \"No funciona, arréglalo.\"\nIA:  \"¿Qué no funciona exactamente? ¿Qué esperabas que pasara?\"\n\nBien:\nTú:  \"El botón de WhatsApp no hace nada. Esperaba que se abriera\n     el chat con el 55-1234-5678. Aquí está mi index.html [pega].\"\nIA:  \"El enlace dice href=\"https://wa.me/\" sin número. Cambia la\n     línea 12 por href=\"https://wa.me/5215512345678\". Listo.\"</code></pre><p>Segundo mensaje: 30 segundos. Reporte claro, diagnóstico en un tiro. Así se corrige en serio.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<p>El formato del reporte que la IA agradece:</p><blockquote><p>\"Este es el código que me diste y esto pasa al ejecutarlo: [pega el mensaje de error o describe el síntoma exacto]. ¿Cuál es la causa más probable y cuál es el cambio MÍNIMO para corregirla?\"</p></blockquote><p>Con \"cambio mínimo\" evitas que la IA reescriba media página por un typo.</p>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "multiple", pregunta: "Reportas un error y escribes solo \"no funciona\". ¿Qué está pasando?", opciones: ["Estás reportando como un profesional", "El reporte es demasiado vago: la IA no tiene cómo saber qué falla", "Haces que la IA reinicie su memoria", "Esa frase hace que la IA lo sepa todo automáticamente"], correcta: 1 },
+              { tipo: "ordenar", instruccion: "Acomoda las 4 piezas del reporte de error profesional:", elementos: ["qué pediste que hiciera", "qué hace en realidad", "qué esperabas que hiciera", "pega el código o el mensaje de error exacto"] },
+              { tipo: "completar", frase: "Corrige en la misma ____ (C4): abrir una nueva y describir todo otra vez es botar contexto a la basura.", banco: ["conversación", "carpeta", "página", "computadora"], respuestas: ["conversación"] },
+              { tipo: "vf", afirmacion: "Regañar a la IA cuando se equivoca es una estrategia efectiva para corregirla.", correcta: false, explicacion: "regañar no arregla nada; un reporte con síntoma, código y comportamiento esperado sí." },
+              { tipo: "quehace", codigo: "\"El botón de WhatsApp no hace nada. Aquí está mi index.html [pega]. Esperaba que abriera el chat con el 55-1234-5678.\"", pregunta: "¿Qué estás haciendo bien en este reporte?", opciones: ["Describes el síntoma, das el código y el comportamiento esperado", "Estás regañando a la IA", "Estás pidiendo un rediseño", "Estás ahorrando contexto a propósito"], correcta: 0 }
+            ]
+          },
+          {
+            id: "m1-c13",
+            titulo: "Iterar: la conversación como herramienta de construcción",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>En C9 descubriste el loop pedir → pegar → refrescar. Hoy le subimos el nivel: <strong>la conversación misma es tu herramienta de construcción</strong>. No escribes código a mano ni pegas bloques mágicos — construyes con la sucesión de mensajes, y cada turno es una iteración de tu obra.</p><p>El amateur cree que el trabajo es lograr que la IA acierte a la primera. El constructor sabe que <strong>la primera versión es solo el borrador</strong>. Lo valioso es la racha: versión 1 rápida → feedback concreto → probar → versión 2. La IA volvió casi gratis el iterar: antes, cada intento costaba tiempo y dinero; hoy, cada vuelta cuesta 30 segundos de tu atención.</p><p>Tres movimientos del iterador profesional: <strong>1) Suelta la versión 1 rápido</strong> — no pulas el prompt buscando la perfección; <strong>2) Da feedback concreto y atómico</strong> — un cambio a la vez y medible (\"el título se ve chico\" vale más que \"hazlo más bonito\"); <strong>3) Prueba de verdad</strong> — refresca, haz clic, arrastra la ventana. Quien no prueba, no itera: \"me suena bien\" no es una prueba.</p><p>Y no solo iteras el código: itera también <strong>tus instrucciones</strong>. Si la IA te entrega algo distinto de lo que imaginabas, no es fracaso — es feedback para tu prompt. Ajusta, describe más y vuelve a lanzar. Cada iteración malentendida te enseña cómo pedir mejor, y eso es exactamente lo que estás aquí para aprender.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Construir con IA es <strong>esculpir en barro, no en mármol</strong>. El marmolista tiene una sola pieza y no puede equivocarse; el que trabaja barro da forma, quita, agrega y vuelve a dar forma — y cada mano que mueve es un mensaje de tu conversación. Tu conversación son las manos: el barro nunca se acaba, y la obra se decide en la suma de pequeños movimientos, no en un golpe de genio.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Una iteración bien dirigida:</p><pre><code>Tú:  \"Tengo mi página lista. Dime 3 cosas que mejorarías antes\n     de que yo pida cambios.\"\nIA:  \"1) El título compite con la imagen. 2) Los precios no\n     contrastan con el fondo. 3) El botón se pega al borde en\n     celular.\"\nTú:  \"Corrige las 3, una a la vez. Después de cada cambio dime\n     qué probar en el navegador.\"\nIA:  \"Cambio 1 de 3 listo: título más chico y con respiro. Prueba:\n     refresca y mira si la imagen ya respira. Sigo con el 2.\"</code></pre><p>Fíjate: tú no escribiste nada de código. Dirigiste — pediste un diagnóstico, marcaste el ritmo (una a la vez) y exigiste pruebas. Eso es construcción, y es tuya.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<p>El acuerdo de trabajo por iteraciones:</p><blockquote><p>\"Vamos a trabajar por iteraciones. Dame la versión 1 completa ahora. Después de cada iteración, dime en una línea qué mejorarías y yo decido si aplicarlo. No reescribas el archivo completo si el cambio son pocas líneas: muéstrame solo las líneas que cambian.\"</p></blockquote><p>Esa última instrucción también es dirección: te ahorra leer 200 líneas idénticas por un typo.</p>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "ordenar", instruccion: "El ciclo del iterador profesional:", elementos: ["sacar la versión 1 rápido", "dar feedback concreto (un cambio a la vez)", "pegar, guardar y refrescar", "probar de verdad y pedir la siguiente mejora"] },
+              { tipo: "multiple", pregunta: "¿Cuál es el corazón de construir software con IA?", opciones: ["Escribir el prompt perfecto a la primera", "La conversación: iterar versión tras versión", "Memorizar HTML", "Copiar código de internet"], correcta: 1 },
+              { tipo: "completar", frase: "La IA volvió casi gratis el ____: ya no necesitas acertar a la primera, necesitas ____ rápido y aprender del resultado.", banco: ["iterar", "probar", "diseñar", "pagar"], respuestas: ["iterar", "probar"] },
+              { tipo: "vf", afirmacion: "Un buen constructor pule su prompt hasta lograr la versión perfecta antes de generar nada.", correcta: false, explicacion: "primero sueltas una versión rápida y la mejoras iterando; la perfección no llega planificando sin fin." },
+              { tipo: "relacionar", pares: [["El título se ve chico", "Iteración visual"], ["El botón no abre WhatsApp", "Iteración funcional"], ["Los precios no contrastan", "Iteración de legibilidad"]] }
+            ]
+          },
+          {
+            id: "m1-c14",
+            titulo: "PRÁCTICA: hacer tu página responsive (que se vea bien en celular)",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p><strong>Responsive</strong> significa que tu página se adapta al tamaño de la pantalla: se ve bien en una computadora de 24 pulgadas y en un celular de 15 centímetros. No es diseño bonito — es <strong>cuestión de supervivencia</strong>: la mayoría de la gente visita landing pages de negocios desde el teléfono, y el que ve tu página rota, se va.</p><p>Las dos piezas técnicas que hacen el trabajo (pídele a la IA que te las muestre, C8): <strong>el meta viewport</strong> — una línea en el <code>&lt;head&gt;</code> que le dice al celular \"usa mi ancho real, no finjas ser una pantalla gigante\" — y las <strong>media queries</strong>: reglas CSS que se activan según el ancho de la pantalla, como \"si mide menos de 600px, apila estos elementos\".</p><p>Lo importante no es memorizarlas, es <strong>probarlas</strong>. Tu navegador tiene un simulador de celular gratis: presiona <strong>F12</strong>, activa el icono de dispositivo (un rectángulo con pantalla) y arrastra el ancho. Ahí ves en vivo dónde se rompe tu página: texto cortado, botón chiquito, imagen desbordada.</p><p>Los pasos: <strong>1)</strong> abre tu página y ponla en modo dispositivo; <strong>2)</strong> anota qué se ve mal en ancho de celular; <strong>3)</strong> pídele a la IA que lo arregle con media queries (prompt abajo); <strong>4)</strong> pega, guarda y refresca en modo dispositivo; <strong>5)</strong> arrastra el ancho de chico a grande y confirma que nada se rompe. En C16, cuando publiques, repetirás la prueba en tu celular de verdad.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Una página responsive es como un <strong>mesero que reacomoda la mesa según quién llega</strong>: en mesa grande sirve con todo extendido; en barra chica apila la misma comida para que quepa sin caerse. El menú no cambia — cambia el acomodo. Tu página es el mesero: mismo contenido, acomodo distinto según la pantalla.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>El prompt para volverla responsive:</p><pre><code>Objetivo: Haz mi página responsive. En celular (menos de 600px):\n- La imagen y el texto se apilan uno debajo del otro\n- Los productos se leen sin hacer zoom\n- El botón de WhatsApp ocupa todo el ancho y se toca fácil\nRestricciones: No cambies colores ni textos. Usa media queries.\nFormato: Dame el index.html completo actualizado.</code></pre><p>Y el ritual de prueba, siempre el mismo: pega, guarda, abre F12, activa el icono de celular y refresca. Arrastra el ancho de 360px (celular chico) a 1400px (computadora) y mira cómo todo se reacomoda solo. Cuando nada se corte ni se desborde, está responsive.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Explícame qué hace responsive a una página: qué es el meta viewport, qué es una media query y cómo verifico en mi navegador que se ve bien en celular. Después dime si mi página cumple con eso y qué le falta.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "relacionar", pares: [["meta viewport", "Le dice al celular que use su ancho real"], ["media query", "Reglas CSS que cambian según el tamaño de pantalla"], ["device toolbar (F12)", "Simula una pantalla de celular en tu navegador"]] },
+              { tipo: "vf", afirmacion: "Una página responsive se ve bien en computadora y en celular.", correcta: true, explicacion: "ese es exactamente su objetivo: adaptarse al tamaño de la pantalla." },
+              { tipo: "multiple", pregunta: "¿Cómo compruebas que tu página se ve bien en celular antes de publicarla?", opciones: ["Compras un teléfono por cada pantalla", "Abres F12, activas el icono de dispositivo y arrastras el ancho", "Le preguntas a la IA si se ve bien", "Cambias el color de fondo"], correcta: 1 },
+              { tipo: "completar", frase: "Las reglas CSS que se activan según el ancho de pantalla se llaman ____ ____, y el ancho donde cambian se llama breakpoint.", banco: ["media", "queries", "pixeles", "estilos"], respuestas: ["media", "queries"] },
+              { tipo: "quehace", codigo: "@media (max-width: 600px) { .productos { flex-direction: column; } }", pregunta: "Tus clientes ven tu página en celulares chicos. ¿Qué logra esta regla?", opciones: ["Oculta la página en celulares", "Apila los productos en columna cuando la pantalla mide menos de 600px", "Agranda los precios", "Desactiva el botón de WhatsApp"], correcta: 1 }
+            ]
+          },
+          {
+            id: "m1-c15",
+            titulo: "Publicar I: qué es hosting y qué opciones existen",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Tu página existe en tu computadora — y solo ahí. Cuando la abres, la dirección del navegador dice algo como <code>file:///.../index.html</code>: un archivo local que ves tú y nadie más. Para que el mundo la vea, necesita un <strong>hosting</strong>: un servidor, una computadora profesional que está <strong>encendida 24/7</strong>, conectada a internet, que entrega tu página a cualquiera que pida su dirección.</p><p>El hosting es el alquiler del espacio. Opciones de hoy, sin rodeos: <strong>Netlify</strong> (gratis para lo que construimos; publicas arrastrando una carpeta — es tu herramienta, la usas en C16), <strong>GitHub Pages</strong> (gratis, pero conectado a Git, que es materia de Mes 2) y <strong>hosting de pago</strong> (cPanel y similares: más potencia, pero la necesitas hasta que tengas bases de datos y servidores propios, Mes 6+). Para una landing page de HTML puro, Netlify gratis sobra y alcanza.</p><p>Tu página subida recibe una URL automática tipo <code>tus-tortas.netlify.app</code>. Eso ya es publicarte. Un <strong>dominio propio</strong> (<code>tortaselguero.com</code>) es la versión \"con letrero bonito\": se compra (~$10-15 al año, verifica precios actuales — C5) y se conecta después. Hoy no lo necesitas; lo que sí necesitas es dejar de ser invisible.</p><p>La diferencia mental que te separa del \"solo tengo mi archivo\": tu página local es un boceto; tu página publicada es el negocio abierto. En C16 harás el paso — Netlify Drop, arrastras la carpeta <code>mi-primera-pagina</code> y listo. Hoy entiendes qué estás haciendo y por qué.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Tu computadora es tu <strong>sala</strong>: muestras tu producto ahí y solo lo ve quien entra a tu casa. Hosting es <strong>rentar local en la calle principal</strong>: tu producto se exhibe todo el día, todos los días, aunque tú duermas. Netlify (gratis) es el local de barrio que alcanza para lo que vendes hoy; el hosting de pago es el de plaza comercial, para cuando vendas en grande.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>El mapa mental de \"publicar\":</p><pre><code>Antes (solo tú):\n  index.html → tu computadora → file:///... → SOLO TÚ\n\nDespués (publicada, C16):\n  mi-primera-pagina/ → arrastras la carpeta a Netlify Drop\n  → https://tus-tortas.netlify.app → CUALQUIERA CON EL LINK\n\nOpciones de hosting (resumen):\n  Netlify Drop ..... gratis · arrastrar y soltar · HTML/CSS/JS puro\n  GitHub Pages ..... gratis · con cuenta de GitHub · enlaza en Mes 2\n  Hosting de pago .. costo mensual · más potencia · para Mes 6+</code></pre><p>Ese mapa responde la pregunta de siempre: \"¿mi página ya está en internet?\" Estará el día que la subas a un hosting. Ese día es C16.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Quiero publicar una página estática hecha solo con HTML y CSS. Compárame las opciones gratuitas (Netlify y GitHub Pages): qué necesito para cada una, qué URL obtengo y qué límites tienen. Verifica los precios actuales en sus páginas oficiales antes de responder.\"</p></blockquote><p>La última frase es tu protocolo anti-alucinación de C5 aplicado a una decisión real.</p>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "relacionar", pares: [["Netlify Drop", "Gratis, arrastras tu carpeta, URL .netlify.app"], ["GitHub Pages", "Gratis con cuenta de GitHub, URL .github.io"], ["Hosting de pago", "Más potencia, cuesta dinero, para proyectos grandes"]] },
+              { tipo: "vf", afirmacion: "Mientras tu página esté solo en tu computadora, nadie más puede verla desde internet.", correcta: true, explicacion: "tu computadora no es un servidor público; el hosting es lo que la conecta con el mundo." },
+              { tipo: "multiple", pregunta: "¿Qué es un servidor (hosting)?", opciones: ["Un antivirus que protege tu página", "Una computadora encendida 24/7 que entrega tu página a quien pide su URL", "Un disco duro externo", "Un programa de diseño"], correcta: 1 },
+              { tipo: "completar", frase: "Tu página necesita un ____ que la entregue a cualquier ____ que pida su ____.", banco: ["servidor", "navegador", "URL", "color"], respuestas: ["servidor", "navegador", "URL"] },
+              { tipo: "quehace", codigo: "\"Oye primo, ya subí mi página\" (le mandaste el archivo index.html por WhatsApp)", pregunta: "Tu primo abre el archivo y NO ve tu página, solo el código. ¿Por qué?", opciones: ["Porque HTML no se puede compartir", "Porque el archivo es solo tu boceto local: sin hosting no hay página pública", "Porque WhatsApp borra los archivos .html", "Porque a tu primo le falta internet"], correcta: 1 }
+            ]
+          },
+          {
+            id: "m1-c16",
+            titulo: "PRÁCTICA: Netlify Drop — tu página EN VIVO en internet",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Hoy ocurre lo que en C15 quedó pendiente: tu página deja de ser un boceto en tu computadora y se vuelve <strong>pública</strong>. La herramienta es <strong>Netlify Drop</strong>: un servicio gratuito que sube tu carpeta a un servidor (una computadora profesional encendida 24/7) y te regresa una <strong>URL</strong> que cualquiera en el mundo puede abrir.</p><p>Lo genial de Netlify Drop es que no hay terminales ni cuentas complicadas: <strong>arrastras y sueltas tu carpeta en el navegador</strong> y Netlify hace el resto. En segundos te da una dirección tipo <code>nombre-aleatorio.netlify.app</code>. Y puedes cambiar ese nombre por uno a tu gusto (por ejemplo <code>tortas-el-guero.netlify.app</code>) sin que cueste nada.</p><p>Tres datos que importan: <strong>1)</strong> cada vez que arrastras la carpeta de nuevo, publicas una versión nueva (así sigues iterando, C13); <strong>2)</strong> lo que Netlify guarda es una <strong>copia</strong> de tus archivos — si después cambias tu <code>index.html</code> local, la página publicada no cambia hasta que arrastres otra vez; <strong>3)</strong> el plan gratuito alcanza de sobra para esto: no hay tarjeta de crédito ni letras chiquitas.</p><p>El objetivo de hoy no es subirla y ya. Es <strong>probarla en vivo</strong>: ábrela en tu celular (el simulador de C14 te preparó; hoy es de verdad), pásale el link a alguien y mírala lejos de tu pantalla. Ahí empieza el paso de invisible a <strong>en internet</strong>.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Tener la página solo en tu computadora era tener el anuncio guardado en el cajón. Netlify Drop es <strong>ponerlo en la cartelera del barrio</strong>: llegas con tu papel, lo entregas y el editor lo fija en un lugar visible que todo mundo puede leer desde la calle. Y como toda cartelera, si quieres corregir algo, llevas una versión nueva y se cambia. La cartelera no se actualiza sola — pero cambiar el papel toma segundos.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Pasos, en orden:</p><ol><li><strong>Abre Netlify Drop</strong>: ve a <code>app.netlify.com/drop</code> en tu navegador.</li><li><strong>Arrastra tu carpeta</strong> <code>mi-primera-pagina</code> y suéltala en el recuadro punteado. Lleva el proyecto completo: el <code>index.html</code> y la imagen (C10 y C11 te enseñaron a tenerlos juntos).</li><li><strong>Espera el deploy</strong>: Netlify sube, procesa y te entrega una URL tipo <code>nombre-aleatorio.netlify.app</code>.</li><li><strong>Renombra tu sitio</strong> (opcional y recomendado): ve a <em>Site settings</em> y cambia el nombre a algo limpio, sin espacios ni acentos (C10): <code>tortas-el-guero</code>.</li><li><strong>Ábrela en tu celular</strong>: mándate el link por WhatsApp, ábrelo y pásate por tu propia página con el dedo.</li><li><strong>Compártela</strong>: mándasela a alguien y observa su reacción. Eso es una URL pública: el mundo entra, aunque tú no estés encendido.</li></ol><pre><code>Antes:  solo tú, con file:/// en tu navegador\nAhora:  https://tortas-el-guero.netlify.app — CUALQUIERA\n\nSi algo se ve mal en el celular: corrige con la IA (C12),\nguarda, vuelve a arrastrar la carpeta y listo. El deploy\ntoma segundos.</code></pre>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<p>Antes de publicar, que la IA haga la revisión final:</p><blockquote><p>\"Esta página va a publicarse tal cual en Netlify. Revísala como si un cliente la visitara desde su celular: ¿se ve bien?, ¿el botón de WhatsApp funciona?, ¿hay algo roto o mal escrito? Si hay algo que corregir, dime qué y cómo.\"</p></blockquote><p>Con ese feedback ajustas, vuelves a arrastrar la carpeta y publicas la versión buena. Nadie conoce la versión 1 fallida: solo queda viva la que el mundo ve.</p>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "ordenar", instruccion: "El orden de publicación en Netlify Drop:", elementos: ["abrir app.netlify.com/drop", "arrastrar la carpeta mi-primera-pagina", "esperar el deploy y copiar la URL", "probar la URL en tu celular"] },
+              { tipo: "multiple", pregunta: "Acabas de arrastrar tu carpeta a Netlify Drop. ¿Qué pasó exactamente?", opciones: ["Se borró tu carpeta local", "Netlify subió una copia de tus archivos a un servidor y te dio una URL pública", "Tu computadora se convirtió en servidor", "Se activó una cuenta de pago automática"], correcta: 1 },
+              { tipo: "completar", frase: "Después del deploy obtienes una URL pública tipo <code>tortas-el-guero</code>.netlify.____; la parte del nombre se puede ____ sin costo.", banco: ["app", "cambiar", "borrar", "pagar"], respuestas: ["app", "cambiar"] },
+              { tipo: "vf", afirmacion: "Si modificas tu index.html en tu computadora, la página publicada en Netlify se actualiza sola.", correcta: false, explicacion: "Netlify guardó una copia: para publicar el cambio hay que arrastrar la carpeta otra vez." },
+              { tipo: "quehace", codigo: "arrastras la carpeta mi-primera-pagina completa (index.html + la imagen) a Netlify Drop", pregunta: "¿Por qué arrastras la carpeta completa y no solo el index.html?", opciones: ["Porque Netlify cobra por archivo", "Porque la página usa la imagen (C11): sin ella el navegador muestra un cuadro vacío", "Para que la URL sea más corta", "Para que la página cargue más rápido"], correcta: 1 }
+            ]
+          },
+          {
+            id: "m1-c17",
+            titulo: "Tu URL en el mundo: qué pasa por detrás cuando alguien la abre",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Tu página ya está en internet (C16). Hoy descubres <strong>qué pasa en los segundos entre que alguien escribe tu URL y que tu página aparece en su pantalla</strong>. Hay tres actores: tu <strong>URL</strong>, el <strong>DNS</strong> y el <strong>servidor</strong>.</p><p><strong>La URL</strong> es una dirección pensada para humanos: <code>tortas-el-guero.netlify.app</code>. Pero las computadoras no trabajan con nombres: trabajan con <strong>IP</strong>, una dirección numérica tipo <code>75.2.60.5</code>. Alguien tiene que traducir tu nombre bonito a esa IP. Ese traductor es el <strong>DNS</strong> (Domain Name System): una red mundial de directorios que sabe qué IP le corresponde a cada dominio.</p><p>El recorrido completo, resumido: <strong>1)</strong> alguien escribe tu URL; <strong>2)</strong> su navegador le pregunta al DNS dónde está <code>tortas-el-guero.netlify.app</code> y recibe la IP; <strong>3)</strong> con esa IP, el navegador hace una petición (un <strong>request</strong>) al <strong>servidor</strong> — la computadora encendida 24/7 que guarda una copia de tus archivos (C16); <strong>4)</strong> el servidor responde enviando tu <code>index.html</code>, tu CSS y tu imagen; <strong>5)</strong> el navegador dibuja la página (el <strong>render</strong>) en la pantalla. Todo eso ocurre en menos de un segundo.</p><p>Falta el candado: cuando la URL empieza con <code>https://</code>, los datos viajan <strong>cifrados</strong> — ese es el candado que ves junto a la dirección. Si alguien intercepta la conexión, no puede leer nada. Netlify te da HTTPS gratis y por default. Si algún día ves una URL <code>http://</code> (sin la s), desconfía, y en lo tuyo nunca publiques así.</p><p>Nada de esto hay que memorizar: hay que <strong>reconocerlo</strong>. El día que tu página no cargue, ya sabrás en cuál eslabón buscar: el nombre (DNS), el servidor (¿está publicada?) o tu propia conexión.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>La URL es el <strong>nombre de tu negocio</strong>; el DNS es la <strong>guía de la ciudad</strong>: buscas el nombre y te da la dirección exacta; y el servidor es la <strong>bodega en esa dirección, abierta 24 horas</strong>, donde guardas una copia de tu página. No caminas calle por calle preguntando dónde está la torta — la guía te lleva directo. Y el candado de HTTPS es la <strong>puerta con cerradura</strong>: el repartidor que pasa no ve lo que llevas dentro, solo ve que hay movimiento.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>El recorrido, dibujado:</p><pre><code>Tú (en tu celular):\n  escribes https://tortas-el-guero.netlify.app\n        ↓\n1. El navegador consulta al DNS:\n   cuál es la IP de tortas-el-guero.netlify.app\n        ↓\n2. El DNS responde: 75.2.60.5 (ejemplo)\n        ↓\n3. El navegador le pide al servidor de esa IP:\n   mándame tu index.html y tus archivos\n        ↓\n4. El servidor (24/7, C16) envía los archivos\n        ↓\n5. El navegador dibuja tu página (render)\n   y muestra el candado de HTTPS</code></pre><p>Haz la prueba: abre la URL de C16, haz clic en el candado junto a la dirección y revisa que la conexión esté segura. Ese candado es tu página diciendo que sus datos viajan cerrados — gratis y por default en Netlify.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<p>Si quieres el recorrido a la medida de tu página:</p><blockquote><p>\"Explícame paso a paso qué ocurre cuando alguien abre mi URL [tu URL de C16]: qué consulta hace el navegador, qué responde el DNS, qué envía el servidor y dónde interviene HTTPS. Después dime: si la página no carga, ¿en cuál eslabón busco primero?\"</p></blockquote><p>Próxima vez que una página no cargue, ya no culparás al internet: buscarás el eslabón.</p>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "ordenar", instruccion: "El viaje de tu página desde que alguien escribe la URL hasta que la ve:", elementos: ["escribir la URL en el navegador", "el DNS responde cuál es la IP", "el navegador pide los archivos al servidor", "el servidor envía index.html, CSS e imagen", "el navegador dibuja (render) la página"] },
+              { tipo: "multiple", pregunta: "¿Qué es el DNS?", opciones: ["Un antivirus para dominios", "La red mundial de directorios que traduce nombres como tortas-el-guero.netlify.app a IPs numéricas", "Un programa para editar fotos", "El lugar físico donde vive tu servidor"], correcta: 1 },
+              { tipo: "completar", frase: "Las computadoras no trabajan con nombres bonitos sino con ____ numéricas; el ____ hace la traducción entre ambas.", banco: ["IPs", "DNS", "cookies", "antivirus"], respuestas: ["IPs", "DNS"] },
+              { tipo: "relacionar", pares: [["URL", "La dirección legible para humanos"], ["DNS", "Traduce el nombre a la IP"], ["Servidor", "Computadora 24/7 con una copia de tu página"], ["HTTPS", "Cifra los datos que viajan"]] },
+              { tipo: "vf", afirmacion: "Cuando una URL empieza con http:// (sin la s), los datos viajan cifrados y seguros.", correcta: false, explicacion: "HTTPS es el que cifra; http viaja en claro, y por eso hay que desconfiar de esas URLs." }
+            ]
+          },
+          {
+            id: "m1-c18",
+            titulo: "PRÁCTICA: página para un negocio I — escribir el brief",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Hasta hoy construías la página de <strong>Tortas El Güero</strong> que tú mismo inventaste. Esta semana la subimos de nivel: la construyes <strong>como un trabajo profesional</strong>, como si Tortas El Güero fuera un cliente real que te pagó. Y un trabajo profesional no empieza en el código: empieza en el <strong>brief</strong>.</p><p>Un <strong>brief</strong> es el documento donde queda escrito todo lo que la página necesita: de qué negocio hablamos, qué ofrece, quién la va a visitar, qué secciones tendrá, qué textos, qué colores, qué botones y qué se considera terminada. Es la versión en papel de las 4 piezas del prompt de C3, pero escrita antes de pedirle nada a la IA.</p><p>¿Por qué escribir primero? Por tres razones: <strong>1)</strong> obliga a pensar — los textos, precios y horarios no los inventa la IA, los sabe el negocio (si no, alucina, C5); <strong>2)</strong> es tu guía contra el desorden — con el brief a la mano, la IA no tiene que adivinar nada en cada prompt; <strong>3)</strong> es la firma del trato — si el cliente (o tú mismo en 2 meses) pregunta por qué una sección quedó así, la respuesta está escrita en negro.</p><p>Hoy tu trabajo es completar un brief para Tortas El Güero. No necesitas que el negocio exista de verdad: tú eres dueño y cliente a la vez. Pero respóndelo como cliente real, con datos, no con lo que sea.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Un brief es el <strong>croquis que le entregas al arquitecto</strong> antes de construir: el arquitecto no recibe \"haga una casa\", recibe cuartos, medidas, materiales y vistas. Tu IA es una excelente arquitecta; si tú no llevas el croquis, la casa sale con el baño donde el cliente quería la cocina. Y el croquis no se firma después de construir — se firma antes.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Las secciones del brief y cómo llenarlas para Tortas El Güero:</p><ol><li><strong>El negocio</strong>: qué es, a qué se dedica, en qué zona. → \"Tortería de barrio especializada en tortas cubanas, sobre Insurgentes.\"</li><li><strong>La oferta</strong>: qué vende y a qué precio. → Los tres productos de C7 con sus precios; actualízalos si quieres.</li><li><strong>El público</strong>: quién la visita. → \"Vecinos y oficinistas de la zona que piden por WhatsApp en la hora de la comida.\"</li><li><strong>Las secciones</strong>: qué contiene la página. → Encabezado con el nombre, descripción, menú con precios, ubicación y horarios, botón de WhatsApp.</li><li><strong>El estilo</strong>: colores y tono. → Amarillo y café (C7), letras grandes, aire familiar.</li><li><strong>El éxito</strong>: qué significa terminada. → Se ve bien en celular (C14), el botón abre WhatsApp, publicada en Netlify (C16).</li></ol><pre><code>FORMATO DEL BRIEF — complétalo con este esqueleto:\n\nNEGOCIO:   ____\nOFERTA:    ____\nPÚBLICO:   ____\nSECCIONES: 1) ____ 2) ____ 3) ____\nESTILO:    ____\nÉXITO:     ____\n\nEsas 6 líneas son tu piedra angular: en C19\nse convierten en el prompt de construcción.</code></pre><p>No se trata de escribir elegante: se trata de escribir <strong>completo</strong>. Un brief de 6 líneas con datos vale más que tres páginas de adjetivos.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<p>El brief se afina como todo lo demás — preguntándole a la IA:</p><blockquote><p>\"Voy a construir una landing page para el negocio Tortas El Güero. Este es mi brief: [pega el tuyo]. Antes de que escribas código: ¿qué preguntas le harías al dueño para que la página quede impecable? ¿Qué me falta decidir?\"</p></blockquote><p>Como en C3, la IA te entrevista. Sus preguntas son las decisiones que te faltaban — y van directo a tu brief.</p>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "ordenar", instruccion: "El orden de esta práctica (y de todo proyecto serio):", elementos: ["completar el brief con datos del negocio", "hacer que la IA critique el brief y te entreviste", "afinar el brief con las respuestas", "tener un brief listo para construir en C19"] },
+              { tipo: "multiple", pregunta: "¿Para qué sirve el brief ANTES de pedirle código a la IA?", opciones: ["Para impresionar al cliente con un documento bonito", "Para que la IA no tenga que adivinar: textos, precios y secciones ya están decididos", "Para que la IA escriba el código más rápido", "Para cumplir un trámite de Netlify"], correcta: 1 },
+              { tipo: "completar", frase: "El brief es la versión en papel de las 4 piezas del ____ (C3), escrita ____ de pedirle código a la IA.", banco: ["prompt", "antes", "diseño", "después"], respuestas: ["prompt", "antes"] },
+              { tipo: "vf", afirmacion: "Si el brief no trae los datos del negocio, la IA los va a inventar con total seguridad — y eso se llama alucinación (C5).", correcta: true, explicacion: "la IA completa los huecos con lo que suena correcto; los precios, textos y horarios reales los pone el negocio." },
+              { tipo: "relacionar", pares: [["OFERTA", "Qué vende el negocio y a qué precio"], ["PÚBLICO", "Quién visita la página"], ["SECCIONES", "Qué contiene la página"], ["ÉXITO", "Qué significa terminada"]] }
+            ]
+          },
+          {
+            id: "m1-c19",
+            titulo: "PRÁCTICA: página para un negocio II — dirigir la construcción",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Ya tienes el brief de C18. Hoy lo conviertes en <strong>construcción dirigida</strong>: el brief se transforma en un prompt (las 6 piezas de C6), la IA construye y tú diriges — sección por sección, revisando contra el brief, iterando (C13) y reportando errores como en C12.</p><p>El movimiento clave de esta lección: <strong>construir en secciones, no de golpe</strong>. Si pides que hagan toda la página perfecta de una vez, recibes una versión 1 grande y frágil. Si construyes por bloques (encabezado, menú, ubicación, botón), cada bloque se revisa, se prueba y se aprueba antes de seguir. Es la diferencia entre llenar un formulario campo por campo o en un solo envío a ciegas.</p><p>Y el filtro del director: <strong>todo lo que la IA entrega se compara con el brief</strong>. ¿Dijo amarillo y café (C7)? ¿Los precios coinciden? ¿Está la sección de horarios que prometiste? Si algo no cuadra, no es casi: es feedback para el siguiente mensaje (C13). La IA no se revisa sola — tú la revisas con el brief en la mano.</p><p>Al terminar, la página de hoy no es una página: es <strong>la página del brief</strong>, la que un cliente real firmaría. Esa diferencia es todo el oficio.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Construir con el brief es como <strong>un DJ en la consola</strong>: no toca cada instrumento, pero decide qué pista entra, cuándo, cuál se corta y cuál se repite. Tú no escribes cada línea de código — decides qué entra y qué se queda fuera, compás por compás, con la lista de canciones (tu brief) a la vista. El DJ no compone las notas: compone la experiencia.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Del brief al código, en pasos:</p><ol><li><strong>Convierte el brief en prompt</strong> (C6): pega el brief como contexto y exige formato de entrega.</li></ol><pre><code>Rol: Desarrollador senior de frontend.\nContexto: Página de un negocio real. Brief:\n[pegas tu brief de C18, completo]\nObjetivo: Construye la página en SECCIONES. Empecemos\npor el encabezado y el menú con los precios del brief.\nRestricciones: Los precios y textos SON los del brief,\nno los cambies. Colores del brief. Responsive (C14).\nFormato: Dame el index.html completo de esta sección.\nTests: Después, dime cómo la pruebo en mi celular.</code></pre><ol start=\"2\"><li><strong>Pega, guarda y refresca</strong> (C9), y <strong>compara con el brief</strong>.</li><li><strong>Pide la siguiente sección</strong> en la misma conversación (C4): \"Ahora agrega la sección de ubicación y horarios del brief.\"</li><li><strong>Si algo truena</strong>, reporta con las 4 piezas de C12: qué pediste, qué hace, qué esperabas y el código.</li><li><strong>Cierra con la pasada de director</strong>: pide que revise la página completa contra el brief antes del archivo final.</li></ol><p>Cada sección se aprueba antes de pedir la siguiente. La página terminada es la suma de bloques revisados — no un milagro de un solo mensaje.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<p>El filtro de calidad del director, al final de la construcción:</p><blockquote><p>\"Esta es mi página completa. Aquí está el brief original: [pega]. Revisa la página sección por sección contra el brief: ¿qué cumple?, ¿qué falta?, ¿qué se desvió? Dame una lista de pendientes antes de dar la página por terminada.\"</p></blockquote><p>Ese prompt convierte a la IA en tu socio de calidad. Los pendientes que liste son tu checklist para C20.</p>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "multiple", pregunta: "¿Por qué conviene construir en secciones y no pedir la página completa de un golpe?", opciones: ["Porque la IA se confunde con prompts largos", "Porque cada bloque se revisa y se aprueba contra el brief antes de seguir", "Porque Netlify lo exige", "Porque así el archivo pesa menos"], correcta: 1 },
+              { tipo: "completar", frase: "El director revisa cada entrega contra el ____: lo que no cuadra se reporta como ____ para el siguiente mensaje.", banco: ["brief", "feedback", "diseño", "prompt"], respuestas: ["brief", "feedback"] },
+              { tipo: "ordenar", instruccion: "El flujo de construcción dirigida:", elementos: ["convertir el brief en prompt (C6)", "construir la primera sección", "pegar, guardar y refrescar", "comparar con el brief y pedir la siguiente sección", "pasada final de revisión contra el brief"] },
+              { tipo: "quehace", codigo: "\"Los precios y textos SON los del brief, no los cambies.\"", pregunta: "Le escribes a la IA: \"Los precios y textos SON los del brief, no los cambies.\" ¿Qué proteges?", opciones: ["La velocidad de la IA", "Que no invente datos del negocio: los que tú fijaste en C18", "El peso de la página", "El nombre del archivo"], correcta: 1 },
+              { tipo: "vf", afirmacion: "Una vez que la IA entrega una sección, conviene pedir la siguiente en una conversación NUEVA para no llenar el contexto.", correcta: false, explicacion: "al contrario (C4): continúas en la misma conversación para conservar el contexto; solo abres una nueva si se saturó." }
+            ]
+          },
+          {
+            id: "m1-c20",
+            titulo: "PRÁCTICA: página para un negocio III — publicar y presumir",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>La página del brief está terminada (C19). Hoy la sacas a la calle: <strong>la publicas en vivo y la presumes</strong>. Y presumir aquí no es vanidad: es el último paso del ciclo que empezó en C7 — una página que nadie ve no existe para nadie.</p><p>Publicar es lo que ya dominas (C16): arrastras la carpeta a Netlify Drop y listo. Si arrastras la <strong>misma</strong> carpeta <code>mi-primera-pagina</code>, Netlify <strong>actualiza el mismo sitio</strong> con la misma URL: no se crea otro. El deploy nuevo reemplaza la copia vieja en segundos.</p><p>El trabajo fino de hoy es <strong>la prueba real</strong>: el simulador de C14 te dio la práctica; hoy es en serio. Abre la URL en tu celular, recorre la página con el dedo, que el botón de WhatsApp abra el chat y que nada se desborde ni se corte. Y después, el paso que casi todos brincan: <strong>pedir feedback a humanos</strong>. Mándeale la URL a 3 personas con una pregunta concreta (\"¿en qué parte se te hizo difícil leer o tocar algo?\"), no con un \"¿qué te pareció?\" que casi siempre responde \"está bien\".</p><p>Con el feedback regresas a la mesa (C19), corriges, vuelves a arrastrar y vuelves a presumir. Ese loop — publicar, probar, recibir, mejorar — es literalmente la vida de un sitio profesional. Hoy lo estrenas.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Publicar y presumir es el <strong>estreno de tu película</strong>: el rodaje terminó (C19) y la distribuidora la publicó (C16); hoy abre la sala, invitas a los primeros espectadores y les preguntas qué se vio raro. El primer espectador siempre nota el error que el director no vio — por eso quieres oírlos antes de las funciones masivas. La película no existe hasta que alguien la ve.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>El ritual completo:</p><ol><li><strong>Publica</strong>: arrastra la carpeta a Netlify Drop (C16). Si actualizas el mismo proyecto, la URL no cambia.</li><li><strong>Prueba en serio</strong>: abre la URL en tu celular. Verifica menú, precios del brief (C18) y que el botón de WhatsApp abra el chat (C7).</li><li><strong>Comparte con una pregunta concreta</strong>: mándale la URL a 3 personas y pregunta algo específico, no lo genérico. Ejemplo: \"¿En qué parte se te hizo difícil leer o tocar algo?\"</li><li><strong>Junta el feedback en el chat de tu IA</strong> (C4): pega lo que te dijeron y pide el arreglo (C12).</li><li><strong>Re-publica y presume</strong>: arrastra otra vez, confirma en tu celular y comparte la versión viva con presentación:</li></ol><pre><code>\"Ya está en línea el sitio de Tortas El Güero 👇\n[URL]\nSi andas por la zona y antojas una cubana, pide por ahí.\"\n\nPro-tip de director: guarda el link y la fecha. Dentro de\ndos meses vas a verlo y a medir qué lejos has llegado.</code></pre>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<p>Para cerrar con clase, deja que la IA te escriba el discurso:</p><blockquote><p>\"Terminé la página de Tortas El Güero y la publiqué. Escríbeme un mensaje corto para enviarla por WhatsApp a clientes y conocidos: quién soy, qué contiene la página, la URL y una invitación clara a probar el botón de pedido. Tono cercano, sin exagerar.\"</p></blockquote><p>Y cuando alguien pida una torta desde tu página, regresa aquí: eso que va a pasar — un negocio recibiendo pedidos desde una página que TÚ dirigiste — empezó con un simple index.html en C7.</p>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "ordenar", instruccion: "El ritual de publicación y presumir, en orden:", elementos: ["arrastrar la carpeta a Netlify Drop", "probar la URL en tu celular de verdad", "pedir feedback con una pregunta concreta", "corregir con la IA y re-publicar", "compartir la versión viva con presentación"] },
+              { tipo: "multiple", pregunta: "Arrrastras la MISMA carpeta mi-primera-pagina a Netlify Drop por segunda vez. ¿Qué ocurre?", opciones: ["Se crea un sitio nuevo con URL distinta", "Se actualiza el mismo sitio: misma URL, versión nueva", "Se duplican los archivos en el servidor", "Netlify cobra por la segunda publicación"], correcta: 1 },
+              { tipo: "completar", frase: "La prueba real de hoy se hace en tu ____ y verifica que el botón de ____ abra el chat con el número.", banco: ["celular", "WhatsApp", "navegador", "Netlify"], respuestas: ["celular", "WhatsApp"] },
+              { tipo: "vf", afirmacion: "Para pedir feedback de verdad, basta con mandar la URL y preguntar qué te pareció.", correcta: false, explicacion: "la pregunta genérica casi siempre responde \"está bien\"; una concreta (¿dónde se te hizo difícil algo?) sí trae información útil." },
+              { tipo: "relacionar", pares: [["Publicar", "Arrastrar la carpeta a Netlify Drop"], ["Probar", "Abrir la URL en tu celular de verdad"], ["Recibir", "Feedback con pregunta concreta"], ["Mejorar", "Corregir con la IA y re-publicar"]] }
+            ]
+          },
+          {
+            id: "m1-c21",
+            titulo: "El mapa de herramientas: Copilot, Cursor, Claude Code, v0, Bolt",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>En C2 conociste a los asistentes de chat (ChatGPT, Claude, Gemini): la puerta de entrada. Pero el mundo real de construir con IA no es solo chat — es un <strong>mapa de herramientas</strong>, y hoy lo dibujas para no perderte. Todas sirven lo mismo (dirigir a una IA), pero viven en lugares distintos y atacan problemas distintos.</p><p><strong>Primera familia: la IA dentro del editor de código.</strong> Son herramientas que trabajan donde tú trabajas — dentro de VS Code o la terminal: <strong>Copilot</strong> (de Microsoft) es la más famosa: sugiere código mientras escribes (autocompletado) y trae chat integrado; <strong>Cursor</strong> es un editor de código armado desde cero alrededor de la IA (una versión especializada de VS Code); <strong>Claude Code</strong> trabaja en la terminal: lee tus archivos, los edita y ejecuta comandos por ti. A esta familia le dedicas C22 a C24.</p><p><strong>Segunda familia: los generadores de interfaz.</strong> Son herramientas web que convierten un prompt en una página o aplicación completa, y tú descargas el resultado: <strong>v0</strong> (de Vercel) genera interfaces y landing pages listas; <strong>Bolt</strong> genera proyectos completos en el navegador, incluyendo backend. Son espectaculares para prototipar y para ver rápido \"cómo se ve la idea\" — pero generan código que después tienes que entender y mantener (C8).</p><p><strong>El mapa no es una competencia:</strong> es un camino. Empiezas con chat (C2-C20), hoy ubicas las herramientas, en C22-C24 las usas dentro del editor, y en el Mes 2 las ves trabajar con Git. No necesitas aprenderlas todas hoy: necesitas saber <strong>cuál existe, para qué sirve y cuándo conviene cada una</strong>.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Es el <strong>tablero de una estación de servicio</strong>: el chat es el taxi (le dices el destino y te lleva), la IA dentro del editor es tu coche con copiloto (manejas tú, el copiloto sugiere la ruta y te avisa de los baches), y v0/Bolt son el pedido a domicilio (describes lo que quieres y te llega armado). Los tres te llevan a donde necesitas — solo cambia cuánto controlas tú el volante.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>El mapa, en una tabla mental:</p><pre><code>FAMILIA: DENTRO DEL EDITOR  |  DÓNDE VIVE  |  EJEMPLOS\n------------------------------------------------\nAutocompletado y chat      |  VS Code     |  Copilot\nEditor diseñado para IA    |  Su propio   |  Cursor\nIA que trabaja en terminal |  Terminal    |  Claude Code\n\nFAMILIA: GENERADORES  |  QUÉ HACEN            |  EJEMPLOS\n----------------------------------------------------\nInterfaces desde prompt  |  Landing pages/UI    |  v0\nApps completas en línea  |  Front + backend     |  Bolt\n\nTu camino en el programa:\n  chat (C2-C20) → editor con IA (C22-C24) → Git (Mes 2)</code></pre><p>No hay herramienta mala en la lista: hay herramientas para momentos distintos. El constructor no jura lealtad a una — decide cuál usar según la tarea (C2: no te cases con uno).</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Quiero elegir por dónde empezar. Con mi nivel actual (ya construí una página HTML con chat), compara: Copilot, Cursor, Claude Code, v0 y Bolt. Para cada una dime: qué resuelve, cuánto cuesta, cuánta curva de aprendizaje tiene y en qué momento de mi aprendizaje conviene usarla. Termina con una recomendación.\"</p></blockquote><p>Esa respuesta es tu hoja de ruta personal — y en C24 ya la estás usando dentro del editor.</p>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "relacionar", pares: [["Copilot", "Autocompletado y chat dentro del editor"], ["v0", "Genera interfaces desde un prompt en el navegador"], ["Claude Code", "IA que lee, edita y ejecuta en la terminal"], ["Bolt", "Genera apps completas en el navegador"]] },
+              { tipo: "multiple", pregunta: "¿Cuál de estas herramientas vive DENTRO de un editor de código?", opciones: ["v0", "Copilot", "Bolt", "Gemini"], correcta: 1 },
+              { tipo: "completar", frase: "Las herramientas de IA se dividen en dos familias: las que viven ____, como Copilot o Claude Code, y las que ____ por ti, como v0 o Bolt.", banco: ["dentro del editor", "generan", "fuera", "cobran"], respuestas: ["dentro del editor", "generan"] },
+              { tipo: "vf", afirmacion: "Para construir con IA solo necesitas el asistente de chat de C2; los editores con IA son una moda prescindible.", correcta: false, explicacion: "el chat es la entrada (C2), pero los editores y generadores aceleran el flujo: cada familia resuelve un momento distinto." },
+              { tipo: "ordenar", instruccion: "El orden de tu ruta con las herramientas:", elementos: ["dominar el chat y los prompts (C3-C20)", "publicar tu primera página (C16)", "ubicar el mapa de herramientas (hoy)", "usarlas dentro del editor (C22-C24)", "versionar tu trabajo con Git (Mes 2)"] }
+            ]
+          },
+          {
+            id: "m1-c22",
+            titulo: "¿Qué es un editor de código? VS Code sin miedo",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Hasta hoy, tu proyecto de Tortas El Güero vivía como archivos en el Explorador de Windows y lo abrías con doble clic. Eso funciona — pero a partir de aquí trabajas como los profesionales: con un <strong>editor de código</strong>. Y el estándar de la industria, gratis y hecho por Microsoft, es <strong>VS Code</strong> (Visual Studio Code).</p><p>Un editor de código es <strong>un programa para escribir y administrar código</strong>. Parece un bloc de notas con superpoderes, y lo que te importa hoy son tres: <strong>1)</strong> el <strong>explorador de archivos</strong> — a la izquierda ves toda tu carpeta de proyecto de un vistazo (los archivos que ordenaste en C10), sin andar brincando entre ventanas; <strong>2)</strong> el <strong>resaltado de sintaxis</strong> — el código aparece coloreado: etiquetas de un color, atributos de otro, texto de otro; eso te ayuda a leer (C8) y a detectar errores de tipeo al ojo; <strong>3)</strong> las <strong>pestañas</strong> — puedes tener varios archivos abiertos y cambiar entre ellos sin perder tu lugar.</p><p>VS Code abre <strong>una carpeta completa</strong>, no archivos sueltos: se llama abrir un <strong>workspace</strong> (espacio de trabajo). Eso es clave: tu proyecto es la carpeta entera — HTML, imagen, README — y VS Code la muestra tal cual.</p><p>Y el dato que te quita el miedo: <strong>abrir un proyecto no modifica nada</strong>. VS Code solo muestra tus archivos; nada cambia en tu computadora hasta que tú guardas con <code>Ctrl+S</code>. Es un espejo, no un martillo.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Tu proyecto pasó de vivir en un cajón de zapatos (archivos sueltos en el escritorio) a vivir en una <strong>mesa de trabajo con herramientas colgadas en la pared</strong>: a la vista está el cajón completo (explorador de archivos), cada herramienta tiene su lugar (pestañas) y el material está marcado con colores (resaltado de sintaxis) para saber qué es qué al instante. Seguirás haciendo lo mismo de C9 — editar y refrescar — solo que ahora con el taller ordenado.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Lo que vas a ver la primera vez que abras VS Code:</p><pre><code>Panel izquierdo  →  Explorador: los archivos de tu proyecto\nBarra de arriba  →  Pestañas: los archivos que tienes abiertos\nCentro           →  El editor: donde se ve y se edita el código\nAbajo            →  Terminal integrada (se usa desde el Mes 2)\nBarra lateral    →  Extensiones: se instalan desde el marketplace\n                     (la IA de C24 vive aquí)</code></pre><p>Tu primer contacto es de <strong>reconocimiento</strong>, no de dominio: abre VS Code, abre tu carpeta (C23) y mira cómo el archivo <code>index.html</code> que leíste en C8 aparece coloreado. Eso que ves — explorador, pestañas, colores — es todo lo que necesitas entender hoy.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Soy nuevo en VS Code. Muéstrame, paso a paso y sin tecnicismos: cómo abrir mi carpeta de proyecto, qué significan el panel izquierdo, las pestañas y el resaltado de colores, y qué cosas NO puedo romper aunque le pique a todo. Termina con las 3 acciones que más usará un principiante.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "multiple", pregunta: "¿Qué es VS Code?", opciones: ["Un navegador web", "Un editor de código gratuito y el más popular, donde escribes y administras tus archivos de proyecto", "Un servicio de hosting", "Un antivirus"], correcta: 1 },
+              { tipo: "completar", frase: "VS Code abre una ____ completa de proyecto y en el panel izquierdo muestra el ____ de archivos.", banco: ["carpeta", "explorador", "ventana", "navegador"], respuestas: ["carpeta", "explorador"] },
+              { tipo: "vf", afirmacion: "Abrir tu proyecto en VS Code modifica automáticamente tus archivos.", correcta: false, explicacion: "abrir solo muestra: nada cambia en tus archivos hasta que guardas con Ctrl+S." },
+              { tipo: "relacionar", pares: [["Explorador de archivos", "Los archivos de tu proyecto en el panel izquierdo"], ["Pestañas", "Los archivos que tienes abiertos"], ["Resaltado de sintaxis", "Colorea el código para leerlo mejor"], ["Terminal integrada", "Consola para comandos (se usa desde el Mes 2)"]] },
+              { tipo: "quehace", codigo: "File → Open Folder → eliges la carpeta mi-primera-pagina", pregunta: "¿Qué estás haciendo con esta acción?", opciones: ["Publicando tu página en internet", "Abriendo tu proyecto completo en VS Code para trabajar con todos sus archivos", "Borrando tu carpeta", "Creando una página nueva desde cero"], correcta: 1 }
+            ]
+          },
+          {
+            id: "m1-c23",
+            titulo: "PRÁCTICA: abrir tu proyecto en VS Code",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Hoy no hay teoría que memorizar: hay <strong>movimiento</strong>. Tu proyecto de Tortas El Güero se muda a su casa definitiva: VS Code. Al terminar esta lección, la carpeta <code>mi-primera-pagina</code> estará abierta en el editor, verás todos sus archivos en el explorador y sabrás abrir tu página en el navegador desde ahí. Es el punto de partida de todo lo que viene: la IA dentro del editor (C24) y Git (Mes 2) trabajan sobre esta misma carpeta.</p><p>La lógica es simple: <strong>un proyecto = una carpeta = un workspace</strong>. En VS Code eliges <em>File → Open Folder</em> y apuntas a <code>mi-primera-pagina</code>. No creas archivos nuevos, no copias nada: abres lo que ya existe y sigues donde lo dejaste. Tus archivos no se mueven de lugar — solo cambia la ventana desde la que los miras y editas.</p><p>Un detalle de seguridad (tu regla de C8 no negocia): VS Code no publica ni sube nada. Todo sigue viviendo solo en tu computadora hasta que tú decidas publicar (C16) o subirlo (Mes 2).</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Es la <strong>mudanza de tu proyecto a su casa nueva</strong>: los muebles son los mismos (tus archivos), solo cambia la casa donde viven — ahora con cuartos etiquetados, buena luz y herramientas colgadas en la pared. El día de la mudanza no remodelas nada: instalas, abres la puerta y compruebas que todo llegó completo.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Pasos, en orden, para hacerlos sin prisa:</p><ol><li><strong>Instala VS Code</strong>: ve a <code>code.visualstudio.com</code>, descarga la versión de Windows y corre el instalador. Todo en siguiente-siguiente-terminar.</li><li><strong>Ábrelo</strong>: en la pantalla de inicio verás un botón grande <em>Open Folder</em>.</li><li><strong>Abre tu proyecto</strong>: <em>File → Open Folder</em> → navega hasta <code>mi-primera-pagina</code> → <em>Select Folder</em>.</li><li><strong>Revisa el explorador</strong> (panel izquierdo): ahí están tus archivos — <code>index.html</code>, <code>README.md</code>, <code>.gitignore</code> y tu imagen (C10 y C11). Todo llegó.</li><li><strong>Haz clic en <code>index.html</code></strong>: el código aparece coloreado. Es el mismo código que leíste en C8 y que iteraste hasta C20.</li><li><strong>Compruébalo en el navegador</strong>: clic derecho en <code>index.html</code> → <em>Reveal in File Explorer</em> → doble clic. La página abre como siempre (C7).</li><li><strong>Cierra el ciclo</strong>: vuelve al chat de tu IA, pide un cambio chico (C9), pega la versión nueva en VS Code, guarda con <code>Ctrl+S</code> y refresca el navegador con <code>F5</code>.</li></ol><pre><code>Mi-primera-pagina en VS Code debe verse así:\n\nExplorador            |  1  index.html   [pestaña abierta]\n▸ mi-primera-pagina   |  <h1>🌮 Tortas El Güero 🥪</h1>\n  ▸ index.html        |  <p>La torta que tu día necesita.</p>\n    README.md         |  ... colores por todos lados\n    .gitignore        |\n    torta-del-dia.jpg |</code></pre><p>Si algo no abre, no entres en pánico: cierra VS Code, verifica que la carpeta siga en tu escritorio y repite desde el paso 2.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Acabo de abrir mi proyecto en VS Code por primera vez. Muéstrame en una descripción cómo debería verse la pantalla con mi carpeta abierta, y dime qué cosas son normales la primera vez (mensajes, avisos de extensiones) y cuáles sí debo atender.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "ordenar", instruccion: "Los pasos de la práctica, en orden:", elementos: ["descargar e instalar VS Code", "abrir VS Code", "File → Open Folder y elegir mi-primera-pagina", "hacer clic en index.html en el explorador", "probar que la página sigue abriendo en el navegador"] },
+              { tipo: "multiple", pregunta: "Acabas de instalar VS Code y quieres trabajar en Tortas El Güero. ¿Qué haces primero?", opciones: ["Crear un archivo nuevo en blanco", "File → Open Folder y elegir tu carpeta mi-primera-pagina", "Cerrar el explorador de archivos", "Descargar otro editor"], correcta: 1 },
+              { tipo: "completar", frase: "En el panel izquierdo de VS Code ves el ____ con tus archivos: index.html, README.md y .gitignore (C10). Al hacer clic en index.html, el código aparece ____ por el resaltado de sintaxis.", banco: ["explorador", "coloreado", "borrado", "oculto"], respuestas: ["explorador", "coloreado"] },
+              { tipo: "vf", afirmacion: "Después de editar en VS Code, guardas con Ctrl+S y refrescas el navegador con F5 para ver el cambio.", correcta: true, explicacion: "es el mismo loop de C9: VS Code solo cambió el lugar donde editas el archivo." },
+              { tipo: "quehace", codigo: "cambias una palabra en index.html dentro de VS Code, guardas con Ctrl+S y refrescas el navegador con F5", pregunta: "¿Qué esperas que pase?", opciones: ["Que la página se rompa para siempre", "Que la página muestre tu cambio: el archivo es el mismo, solo cambió tu manera de editarlo", "Que se borre la carpeta del proyecto", "Que se cree una página nueva"], correcta: 1 }
+            ]
+          },
+          {
+            id: "m1-c24",
+            titulo: "La IA dentro del editor: autocompletado y chat integrado",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>En C21 conociste la familia: la IA vive dentro del editor. Hoy la enciendes, en dos sabores: <strong>autocompletado</strong> y <strong>chat integrado</strong>.</p><p><strong>El autocompletado</strong> es la IA que trabaja mientras escribes: cuando empiezas a teclear, sugiere la línea o el bloque que sigue, y la aceptas con la tecla <code>Tab</code>. Para ti, que estás aprendiendo a leer código (C8), es doble regalo: ahorra tecleo y te muestra cómo escribiría el código un profesional. La regla no cambia: <strong>una sugerencia que no entiendes no se acepta a ciegas</strong> — pides explicación antes de guardar.</p><p><strong>El chat integrado</strong> es la versión de C2 que se sienta a tu escritorio: un panel dentro de VS Code donde conversas con una IA que <strong>lee tus archivos abiertos</strong>. Puedes seleccionar un pedazo de tu <code>index.html</code> y pedir \"explícame esto\" o \"cambia el color del botón a verde\"; la IA responde con la explicación o con el cambio exacto, y en muchos casos lo <strong>aplica al archivo por ti</strong>. Eso elimina la mitad del loop de C13 — ya no copias y pegas del chat externo al archivo.</p><p>Dónde vive cada cosa: el autocompletado y el chat los traen <strong>extensiones</strong> que se instalan desde el marketplace de VS Code (Copilot es la más famosa; hay alternativas gratuitas). Antes de instalar cualquier extensión, la regla de siempre: <strong>revisa que sea oficial y lee qué hace</strong>. Y como en C8: cuando la IA edite tu archivo, <strong>revisa el cambio antes de guardar</strong> — el chat te muestra la diferencia entre el antes y el después.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>El autocompletado es como el <strong>teclado predictivo del celular, pero entrenado en código</strong>: te adivina la palabra y te la termina; aceptar el \"te voy a querer\" de la nada siempre fue tu decisión. El chat integrado es el <strong>colega que se sienta a tu lado y lee tu pantalla</strong>: no le cuentas qué hay en tu archivo — lo ve, te dice qué está mal y hasta lo corrige si se lo pides. Tú sigues siendo el que decide qué queda y qué no.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>El flujo, con el chat integrado:</p><pre><code>1. Abres tu index.html en VS Code (C23).\n2. Seleccionas el bloque que quieres cambiar.\n3. En el chat integrado escribes:\n   \"Este es el botón de WhatsApp. Hazlo más grande,\n    verde WhatsApp (#25D366) y con bordes redondeados.\n    No cambies nada más.\"\n4. Revisas la propuesta: el chat muestra QUÉ líneas cambió.\n5. Si va contigo, lo aplicas; si no, pides ajuste.\n6. Guardas (Ctrl+S), refrescas (F5) y pruebas (C9).\n\nEl autocompletado, mientras tanto:\n  escribes <h1> y la IA sugiere el resto del encabezado;\n  aceptas con Tab si lo entiendes.</code></pre><p>Prueba hoy algo chico: selecciona el título de tu página y pide en el chat que te lo explique. Ese ejercicio de C8, ahora sin salir del editor, es el ritual que harás miles de veces.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Dentro de VS Code, explícame cómo funcionan el autocompletado y el chat integrado con Copilot (o su alternativa gratuita): cómo se instala, cómo se aceptan las sugerencias con Tab, cómo le pido al chat que edite un archivo y cómo reviso qué cambió antes de guardar. Dame el flujo para el primer día.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "relacionar", pares: [["Autocompletado (Tab)", "Sugiere código mientras escribes"], ["Chat integrado", "Conversas con una IA que lee tus archivos abiertos"], ["Copilot", "La IA de Microsoft dentro del editor"], ["Extensión", "Complemento que se instala desde el marketplace"]] },
+              { tipo: "multiple", pregunta: "La IA del autocompletado sugiere una línea de código. ¿Qué haces?", opciones: ["La aceptas sin mirar y guardas", "La revisas, la entiendes (C8) y la aceptas con Tab si va contigo", "Boras el editor", "Le preguntas a otro editor"], correcta: 1 },
+              { tipo: "completar", frase: "El autocompletado trabaja con ____ mientras escribes; el chat integrado lee los archivos ____ y hasta puede editarlos por ti.", banco: ["sugerencias", "abiertos", "cerrados", "nombres"], respuestas: ["sugerencias", "abiertos"] },
+              { tipo: "vf", afirmacion: "Con el chat integrado puedes seleccionar un pedazo de código y pedir que te lo explique, sin salir del editor.", correcta: true, explicacion: "esa es su ventaja: la IA ve tu archivo y responde ahí mismo, sin copiar y pegar." },
+              { tipo: "ordenar", instruccion: "El flujo para pedir un cambio con el chat integrado:", elementos: ["seleccionar el código que quieres cambiar", "escribir el pedido en el chat", "revisar qué líneas propone cambiar", "aceptar o pedir ajustes", "guardar y probar en el navegador"] }
+            ]
+          },
+          {
+            id: "m1-c25",
+            titulo: "Versiones de tu trabajo: copias, respaldos y el problema que Git resolverá (Mes 2)",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Has iterado tu página desde C9: cada versión nueva <strong>sobrescribió</strong> la anterior, y el <code>index.html</code> que tienes hoy es el único. Piensa un segundo en el riesgo: si un cambio rompe todo (C12) y ni tú ni la IA logran deshacerlo, no hay versión buena a la que volver. Ese es <strong>el problema de las versiones</strong>, y hoy vas a entenderlo antes de que Git lo resuelva en el Mes 2.</p><p>Hay tres niveles de respuesta, de más frágil a más profesional:</p><ol><li><strong>Copias manuales</strong> — lo que todos hacen al principio: <code>index_final.html</code>, <code>index_final2.html</code>, <code>index_ultimo_definitivo.html</code>. Es el método de la desesperación: se multiplican, se confunden y nadie recuerda cuál es la buena.</li><li><strong>Respaldos (backups)</strong> — copias de tu carpeta guardadas <strong>en otro lugar</strong> (una USB, un disco externo, la nube) para sobrevivir a un desastre: se muere tu disco, se borra la carpeta. Los respaldos te protegen de <em>perder</em> tu trabajo; no te ayudan a <em>regresar a una versión</em>.</li><li><strong>Versionado (version control)</strong> — un sistema que registra <strong>cada cambio</strong> con su fecha y autor, y te permite volver a <strong>cualquier punto</strong> de la historia como si nada. Es la parte que te falta, y se llama <strong>Git</strong>.</li></ol><p>Hoy el regalo es doble: <strong>1)</strong> haces tu respaldo final del Mes 1 (copia la carpeta <code>mi-primera-pagina</code> a una USB o a la nube — es tu seguro contra desastre); <strong>2)</strong> entiendes por qué en el Mes 2, sobre la misma carpeta que vas a abrir en VS Code (C23), Git te dará una historia completa: cada versión un punto guardado, sin archivos duplicados, sin miedo a romper.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Hoy estás jugando <strong>un videojuego sin puntos de guardado</strong>: cada iteración es un riesgo total, y si mueres, vuelves al inicio. Las copias manuales son guardar en 15 ranuras distintas y olvidar cuál tiene el avance real; los respaldos son guardar la partida en otra consola por si la tuya se quema. <strong>Git es el sistema de puntos de guardado del videojuego</strong>: mueres, y en vez de empezar de cero, cargas el último punto — o el de hace tres horas. En el Mes 2 desbloqueas esa función, y ya nunca vuelves a jugar sin guardar.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>El problema, visto con tus archivos:</p><pre><code>El caos de las copias manuales:\n  index.html\n  index FINAL.html\n  index_final2.html\n  index_definitivo.html\n  index_definitivo_real.html   ← ¿cuál es la buena?\n\nEl orden de hoy (respaldo del Mes 1):\n  1. Cierra VS Code (C23) para copiar la carpeta completa.\n  2. Copia mi-primera-pagina a tu USB o a la nube.\n  3. Nombra la copia con fecha: mi-primera-pagina-backup-2026-08-16.\n  4. Eso es un respaldo: te protege de perder. No es versionado.\n\nLo que trae Git en el Mes 2 (avance):\n  cada cambio queda registrado y puedes volver a cualquier punto,\n  sin duplicar archivos. Se acabaron los index_final_definitivo.</code></pre><p>Una regla de oficio para llevarte: <strong>respaldo para no perder, versionado para no tener miedo</strong>. El respaldo de hoy cuesta 2 minutos; el caos que previene no tiene precio.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Tengo una página HTML en la carpeta mi-primera-pagina y he iterado mucho. Explícame en términos simples la diferencia entre: copiar archivos con nombres tipo index_final.html, hacer un respaldo en otra unidad, y usar Git. Después dime qué ventaja concreta tendría Git EN MI caso y qué debo tener listo antes de empezar el Mes 2.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "relacionar", pares: [["Copia manual", "index_final2.html: frágil y se multiplica"], ["Respaldo", "Copia guardada en otro lugar por si el disco muere"], ["Versionado (Git)", "Historia de cada cambio con vuelta a cualquier punto"], ["Commit", "Un punto guardado en la historia (Mes 2)"]] },
+              { tipo: "multiple", pregunta: "¿Cuál es el problema del método index_final.html → index_final2.html?", opciones: ["Es demasiado elegante para proyectos chicos", "Se multiplican, se confunden y nadie recuerda cuál es la versión buena", "No deja guardar archivos", "Requiere internet para funcionar"], correcta: 1 },
+              { tipo: "completar", frase: "Git registra cada ____ con quién, cuándo y qué cambió, y te deja ____ atrás si algo se rompe.", banco: ["cambio", "volver", "archivo", "pagar"], respuestas: ["cambio", "volver"] },
+              { tipo: "vf", afirmacion: "Un respaldo te permite volver a una versión anterior de tu proyecto, igual que Git.", correcta: false, explicacion: "el respaldo te protege de perder (si muere tu disco); volver a cualquier versión de la historia es lo que hace el versionado." },
+              { tipo: "ordenar", instruccion: "La evolución del caos a la solución:", elementos: ["tener un solo index.html y sobrescribirlo con cada iteración", "multiplicar copias: index_final.html, index_final2.html…", "perder la pista de cuál era la versión buena", "descubrir Git en el Mes 2 para registrar y volver a cualquier versión"] }
+            ]
+          },
+          {
+            id: "m1-c26",
+            titulo: "PRÁCTICA: rehacer tu página personal, versión mejorada",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>En C7 construiste tu primera página con la adrenalina de quien recién aprende: la sacaste adelante, la iteraste y la publicaste (C16). Era tu versión 1: la prueba de que podías. Hoy la rehaces — pero no como parche, <strong>con todo lo que aprendiste</strong>. Tu página personal es la que habla de ti: quién eres, a qué te dedicas, por qué estás aprendiendo a construir con IA y cómo te contactan. Es la carta de presentación que vas a mostrar cuando alguien pregunte \"¿qué sabes hacer?\"</p><p>La versión 1 ya cumplió su trabajo: demostrarte que podías. La versión de hoy se hace como se hace un trabajo real (C18 y C19): primero brief, después secciones, con imagen (C11), responsiva (C14), editada en VS Code con la IA al lado (C22 a C24), publicada en Netlify (C16) y respaldada (C25).</p><p>La regla del rehacer: <strong>no le pidas a la IA \"mejora mi página vieja\"</strong> — pídele que construya una página nueva para un brief nuevo, en una carpeta nueva. Tu página vieja fue el borrador; esta es la copia en limpio. Y mientras la rehaces, cada paso del mes se vuelve hábito: brief, construir en secciones, probar en celular, publicar, respaldar.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Tu página de C7 fue la <strong>maqueta grabada con el celular en el baño</strong>: suena, existe y le dio vida a la idea. Hoy ya tienes estudio, productor (la IA) y mezcla para todas las plataformas (la responsiva). Rehacer tu página personal es <strong>grabar el disco de verdad</strong>: misma canción, misma voz, pero con la producción que se merece. Nadie escucha la maqueta cuando existe el disco.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Pasos, en orden:</p><ol><li><strong>Escribe tu brief</strong> (C18) para TU página personal: quién eres, qué haces, a quién va dirigida, qué secciones tendrá (presentación, lo que estás aprendiendo, contacto) y qué significa \"terminada\" (se ve bien en celular, botón de WhatsApp, publicada en Netlify).</li><li><strong>Crea la carpeta</strong> <code>pagina-personal</code> (reglas de C10: sin espacios, sin acentos) y ábrela en VS Code (C23).</li><li><strong>Convierte el brief en prompt</strong> (C6) y pide la primera sección. Usa el chat integrado del editor (C24) para que la IA lea y edite tus archivos sin copiar y pegar.</li><li><strong>Agrega tu imagen</strong> (C11): una foto tuya o un avatar en la misma carpeta, con nombre limpio y su <code>alt</code>.</li><li><strong>Hazla responsiva</strong> (C14): simulador F12, arrastra el ancho hasta que todo se lea en celular.</li><li><strong>Publícala</strong> (C16) en Netlify Drop con la carpeta <code>pagina-personal</code> y renómbrala a algo limpio.</li><li><strong>Respáldala</strong> (C25) en tu USB o nube, con fecha en el nombre.</li><li><strong>Presume</strong> (C20): mándale la URL a 3 personas con pregunta concreta.</li></ol><pre><code>PROMPT DE LA VERSIÓN 2 (adáptalo a tu brief):\nRol: Desarrollador senior de frontend.\nContexto: Esta es mi página personal. Brief:\n[pegas tu brief completo]\nObjetivo: Construye la página en SECCIONES. Empecemos\npor la presentación: mi nombre grande, una frase de\nqué hago y el botón de contacto por WhatsApp.\nRestricciones: Textos del brief, no los cambies.\nResponsiva (C14). La foto está en la misma carpeta.\nFormato: Dame el index.html de la sección.\nTests: Dime cómo la pruebo en mi celular.</code></pre>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Esta es mi página personal. Revísala como si la viera alguien que no me conoce: ¿en 5 segundos queda claro quién soy y qué hago? ¿El contacto se ve y se toca fácil en celular? Dame 3 cosas para pulir antes de publicarla.\"</p></blockquote><p>Esa revisión de director (C19) es la última prueba antes de la versión 2 en vivo.</p>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "ordenar", instruccion: "El orden de la práctica de hoy:", elementos: ["escribir el brief de tu página personal", "crear la carpeta pagina-personal y abrirla en VS Code", "construir en secciones con la IA del editor", "publicar en Netlify Drop", "respaldar la carpeta con fecha"] },
+              { tipo: "multiple", pregunta: "¿Por qué rehacer tu página desde cero en vez de pedir \"mejora mi página vieja\"?", opciones: ["Porque la página vieja está dañada", "Porque la versión 2 se construye como trabajo real: brief, secciones, imagen, responsiva, publicación — no como parche", "Porque Netlify lo exige", "Porque la IA solo sabe hacer páginas nuevas"], correcta: 1 },
+              { tipo: "completar", frase: "La regla del rehacer: pídele a la IA que ____ una página nueva para un brief ____, no que parchee la vieja.", banco: ["construya", "nuevo", "borre", "viejo"], respuestas: ["construya", "nuevo"] },
+              { tipo: "vf", afirmacion: "La versión 1 de tu página fue el borrador; la versión 2 usa el mismo flujo de un trabajo real: brief, secciones, prueba y publicación.", correcta: true, explicacion: "exactamente: lo que distingue la v2 es el método, no la herramienta." },
+              { tipo: "quehace", codigo: "arrastras la carpeta pagina-personal (no mi-primera-pagina) a Netlify Drop", pregunta: "¿Qué esperas que pase?", opciones: ["Se actualice tu página de Tortas El Güero con la misma URL", "Se cree un sitio nuevo e independiente con su propia URL", "Netlify borre tu cuenta", "Tu página personal reemplace a la de Tortas"], correcta: 1 }
+            ]
+          },
+          {
+            id: "m1-c27",
+            titulo: "Pedirle a la IA que explique código ajeno (tu superpoder de lectura)",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Desde C8 tienes una regla no negociable: nunca publicas código que no entiendes. Hoy le agregas el complemento: <strong>entender código que no escribiste tú</strong>. Vas a vivir rodeado de código ajeno: el que genera la IA (C7 en adelante), el que bajan las plantillas de v0 o Bolt (C21), las librerías que instalas (A11) y el que un día leas de un compañero o de un tutorial. La IA te dio el código; ahora te da también <strong>la traducción</strong>.</p><p>Tu superpoder de lectura tiene 4 movimientos, en orden:</p><ol><li><strong>Contexto primero.</strong> Antes de pegar código suelto, dile a la IA qué es el archivo y qué esperas que haga: \"Este es mi index.html, quiero entender cómo funciona la sección de precios\". Sin contexto, la IA explica lo que a ella le parece; con contexto, explica lo que tú necesitas.</li><li><strong>El mapa antes de los detalles.</strong> Primero pide la estructura: una línea por cada bloque. Después eliges a cuál bajar. Leer un código nuevo es entrar a un edificio: primero el plano, después el cuarto.</li><li><strong>Baja a lo que necesitas.</strong> Con el mapa en mano, selecciona el bloque exacto (en el chat integrado de C24 lo marcas directo) y pide: \"explícame estas líneas\". Función por función, línea por línea, sin vergüenza.</li><li><strong>Cierra con acción.</strong> La lectura termina en poder cambiar: \"si quiero cambiar X, ¿qué línea toco?\"</li></ol><p>El error que no cometes: pegar 400 líneas y pedir \"explícamelo todo\". Eso devuelve un resumen genérico que no sirve. El profesional pide el mapa, elige el cuarto y entra.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Entender código ajeno es <strong>llegar a la escena del crimen como detective</strong>: hay pistas por todos lados (las variables), objetos con historia (las funciones) y un caso que resolver. La IA es el testigo que estuvo toda la noche: lo vio todo y puede narrártelo — pero si le preguntas mal, te cuenta la película entera en vez de la parte que importa. Tu técnica es la misma de la lección: primero el mapa de la escena, después la pista exacta y, al final, la acción. Con un testigo tan bueno, ningún código ajeno vuelve a ser un misterio.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Un código ajeno típico (funciones de JavaScript; las dominarás en el Mes 3):</p><pre><code>function calcularTotal(precios, descuento) {\n  const total = precios.reduce((a, b) =&gt; a + b, 0);\n  if (descuento) return total * (1 - descuento);\n  return total;\n}</code></pre><p>El protocolo en el chat integrado (C24):</p><pre><code>Tú:  \"Este archivo calcula el total de un carrito. Dame el\n     mapa: una línea por cada función.\"\nIA:  calcularTotal(precios, descuento): suma los precios y\n     aplica un descuento si le pasan uno.\n\nTú:  \"Explícame la línea con reduce.\"\nIA:  reduce recorre la lista sumando cada precio; empieza\n     en 0 (el segundo argumento).\n\nTú:  \"Si quiero un descuento fijo de 20%, ¿qué cambio?\"\nIA:  Llama a la función así: calcularTotal(precios, 0.2).</code></pre><p>Mapa → detalle → acción. Sin mover una línea a mano, terminaste sabiendo qué hace el código y cómo cambiarlo.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Te voy a pegar código que no escribí yo. Quiero entenderlo en 3 pasos: 1) mapa: una línea por bloque, ¿qué hace cada uno?; 2) explícame solo el bloque que te señale; 3) termina diciéndome qué línea tocaría para [el cambio que quiero]. Si algo está raro o roto, dímelo en el paso 1.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "ordenar", instruccion: "El protocolo de lectura de código ajeno:", elementos: ["dar contexto: qué es el archivo y qué esperas que haga", "pedir el mapa: una línea por bloque", "explicar el bloque exacto que necesitas", "preguntar qué línea tocar para el cambio que quieres"] },
+              { tipo: "multiple", pregunta: "Pegas 400 líneas y pides \"explícamelo todo\". ¿Qué pasa?", opciones: ["Recibes la explicación perfecta", "La IA te da un resumen genérico que casi nunca sirve para lo que necesitas", "La IA se niega a leer más de 100 líneas", "El código se borra"], correcta: 1 },
+              { tipo: "completar", frase: "La lectura de código ajeno tiene 3 fases: el ____ (estructura general), el ____ (el bloque exacto) y la ____ (qué línea cambiar).", banco: ["mapa", "detalle", "acción", "diseño"], respuestas: ["mapa", "detalle", "acción"] },
+              { tipo: "vf", afirmacion: "Cuando pides que la IA te explique código ajeno, lo correcto es pegar el archivo sin decirle qué es, para no condicionar su respuesta.", correcta: false, explicacion: "sin contexto la IA explica lo que a ella le parece; con contexto explica lo que tú necesitas." },
+              { tipo: "quehace", codigo: "\"Explícame la línea con reduce.\"", pregunta: "Después de pedir el mapa de un código, le pides: \"Explícame la línea con reduce.\" ¿En qué fase del protocolo estás?", opciones: ["Contexto primero", "Bajar al detalle del bloque que necesitas", "Cerrar con acción", "Verificar el dato en la fuente original"], correcta: 1 }
+            ]
+          },
+          {
+            id: "m1-c28",
+            titulo: "Los límites: qué NO puede hacer la IA (todavía) y dónde entras tú",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Ya dirigiste a la IA todo el mes y sabes lo que hace increíblemente bien (C1 a C29). Hoy, con la misma honestidad, la lista de lo que <strong>no</strong> hace — y por qué ahí entras tú. No es para desanimarte: es para que dirijas con los ojos abiertos.</p><ul><li><strong>No verifica el mundo real.</strong> La IA no llama a la tienda a confirmar el precio (C5). Cifras, precios, fechas y datos de negocio los verificas TÚ, en la fuente original, siempre.</li><li><strong>No tiene tu criterio.</strong> No sabe qué le gusta a tu cliente, cuánto puedes pagar ni qué se te hace bonito. La IA propone; decides tú.</li><li><strong>No guarda secretos.</strong> Advertencia real: <strong>nunca pegues contraseñas, tokens, API keys, números de tarjeta ni datos personales de clientes en el chat.</strong> Lo que escribes queda guardado y puede usarse para entrenar. Trata cada conversación como un espacio público: si no lo dirías en un café, no lo pegues.</li><li><strong>No firma nada.</strong> Si algo se rompe, se pierde o sale mal, el responsable eres tú. La IA no paga la multa ni llama al cliente a disculparse. No es un defecto: es por qué el humano siempre estará en el oficio.</li><li><strong>No declara sus dudas.</strong> Puede inventar con total seguridad (C5) y responde aunque no sepa. La pregunta \"¿qué tan seguro estás?\" es tu herramienta.</li><li><strong>Sí tiene límites técnicos.</strong> La ventana de contexto (C4), no ver tus archivos por default (C24 construyó ese puente) y no saber lo que pasó hoy. Todo eso lo manejas tú.</li></ul><p>Dónde entras tú, en una frase: <strong>la IA ejecuta y propone; tú decides, verificas, proteges y respondes.</strong> Ese reparto es el oficio completo.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>La IA es el <strong>GPS que conoce todas las rutas del planeta</strong>: te lleva a cualquier lugar a velocidad sobrehumana y sin quejarse. Pero el GPS no sabe si la gasolinera está abierta (no verifica el mundo real), no sabe que hoy no tienes prisa (no tiene tu criterio), y si le escribes mal el destino, <strong>te lleva con total confianza al lugar equivocado</strong>. Nadie culpa al GPS por la gasolinera cerrada: el conductor decide la ruta, verifica las salidas y aprieta el freno. El GPS no conduce — te lleva. La IA no construye — te construye, cuando tú diriges.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>El riesgo real, en dos escenarios que NO debes repetir:</p><pre><code>NO PEGUES ESTO EN EL CHAT:\n  API_KEY=sk-4f8a2b...   ← tu token de pago\n  Usuario: admin\n  Contraseña: tortas1234\n\nEN SU LUGAR, ASÍ SÍ:\n  \"Voy a configurar una clave secreta en mi app.\n   Explícame cómo hacerlo SIN que el token quede\n   en el código ni se suba a mi página.\"\n\nY para datos de negocio (C5):\n  Tú: \"¿Cuánto cobra Netlify en el plan gratis?\"\n  Tú: \"¿Qué tan seguro estás? ¿Dónde lo verifico?\"\n  → Verifica en la fuente oficial, no con fe.</code></pre><p>Dos reflejos que se entrenan hoy: <strong>secreto → no se pega</strong>, y <strong>dato crítico → se verifica</strong>. Con esos dos, la parte de seguridad está cubierta.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Antes de que me des la solución, dime: ¿hay algo en esta tarea sobre lo que NO deberías responder con certeza? ¿Qué datos debería verificar yo en una fuente oficial? ¿Y el plan que propones maneja secretos o información sensible? Adviérteme antes de actuar.\"</p></blockquote><p>Ese prompt convierte a la IA en tu guardia de seguridad — úsalo cada vez que el tema sea dinero, datos o accesos.</p>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "vf", afirmacion: "Pegar contraseñas y tokens en el chat de la IA es seguro porque la conversación es privada.", correcta: false, explicacion: "lo que escribes queda guardado y puede usarse para entrenar; trata el chat como un espacio público." },
+              { tipo: "multiple", pregunta: "La IA te da el precio de un plan y suena muy segura. ¿Qué haces?", opciones: ["Lo pones en tu página sin dudar", "Verificas en la fuente oficial antes de decidir con ese dato", "Le pides que te lo repita más fuerte", "Buscas otro asistente de IA"], correcta: 1 },
+              { tipo: "relacionar", pares: [["Verificar datos del mundo real", "Tú, en la fuente oficial"], ["Guardar secretos", "Tú: no se pegan en el chat"], ["Decidir qué se ve bien", "Tú, con tu criterio"], ["Ejecutar y proponer", "La IA"], ["Responder por el resultado", "Tú, siempre"]] },
+              { tipo: "completar", frase: "La IA ejecuta y ____; tú decides, ____, proteges y ____.", banco: ["propone", "verificas", "respondes", "olvidas"], respuestas: ["propone", "verificas", "respondes"] },
+              { tipo: "quehace", codigo: "\"Mi API key es sk-1234567890. Úsala para conectar mi app.\"", pregunta: "Un amigo te enseña que le pegó su API key a la IA. ¿Qué le dirías?", opciones: ["Que bien, así la IA lo ayuda más rápido", "Que es un riesgo real: la clave se queda en el chat y puede entrenar con ella; debe rotarla y no volver a pegarla", "Que la pegue dos veces para que no se pierda", "Que no hay problema porque la IA no guarda nada"], correcta: 1 }
+            ]
+          },
+          {
+            id: "m1-c29",
+            titulo: "Tu flujo personal de trabajo con IA para todo el programa",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Treinta lecciones te dieron herramientas sueltas: prompts (C3, C6), contexto (C4), iteración (C13), reportes de error (C12), revisión (C8), publicación (C16). Hoy las atas en una sola cuerda: <strong>tu flujo personal de trabajo</strong>. Un flujo es la rutina fija que haces SIEMPRE, en el mismo orden, hasta que se vuelve automática. Los profesionales no improvisan: siguen su flujo y lo ajustan con la experiencia.</p><p>El flujo DEV SYSTEM, en 6 pasos:</p><ol><li><strong>Prepara.</strong> Una conversación, una misión (C4). Brief claro y prompt completo (C3 y C6).</li><li><strong>Dirige.</strong> Construye en secciones (C19), un cambio a la vez (C9), pide el mapa antes del detalle (C27).</li><li><strong>Prueba.</strong> Refresca (C9), prueba en celular (C14), lee lo que generó (C8).</li><li><strong>Corrige.</strong> Si falla, reporta con las 4 piezas (C12) e itera (C13).</li><li><strong>Guarda.</strong> Respalda al terminar la sesión (C25). En el Mes 2, Git lo hace mejor.</li><li><strong>Publica.</strong> Saca al mundo lo que funciona (C16 y C20) y presume.</li></ol><p>Hoy lo haces tuyo: escríbelo a tu manera, agrégale tus atajos, y úsalo en cada práctica del resto del programa. La rutina que se repite es la que construye.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Es la <strong>lista de pre-vuelo del piloto</strong>: antes de cada despegue, los mismos puntos, en el mismo orden, cada vez — sin importar cuántos vuelos lleve. No lo hace porque no sepa: lo hace porque la rutina fija elimina el olvido justo cuando más cuesta pensar. Tu flujo es tu checklist de piloto: cuando un proyecto se ponga intenso (y se va a poner), no vas a decidir qué hacer: vas a seguir la lista. Por eso el flujo no te quita libertad — te da aviones que despegan siempre.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Tu checklist, para copiar a tu README (C10):</p><pre><code>FLUJO DEV SYSTEM — versión mía\n1. PREPARA\n   □ Una conversación, una misión (C4)\n   □ Brief o prompt completo: contexto, objetivo,\n     restricciones, formato (C3/C6)\n2. DIRIGE\n   □ Construye en secciones (C19)\n   □ Un cambio a la vez (C9)\n   □ Pide el mapa antes del detalle (C27)\n3. PRUEBA\n   □ Refresca y mira (C9)\n   □ Simulador de celular (C14)\n   □ ¿Entiendo lo que generó? (C8)\n4. CORRIGE\n   □ Reporte con las 4 piezas (C12)\n   □ Itera hasta que quede (C13)\n5. GUARDA\n   □ Respaldo con fecha (C25)\n6. PUBLICA\n   □ Netlify Drop (C16) y presume (C20)</code></pre><p>Escribe tu versión en papel hoy. En C30 lo usas para el proyecto final del mes.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Voy a trabajar contigo en un proyecto de varias sesiones. Este es mi flujo: [pega el tuyo]. Propón cómo ajustarlo para proyectos largos: ¿cuándo conviene cerrar sesión y usar el resumen puente (C4)? ¿Cómo le damos seguimiento a los pendientes entre sesiones?\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "ordenar", instruccion: "El flujo DEV SYSTEM, en orden:", elementos: ["prepara: brief y prompt completo", "dirige: secciones y un cambio a la vez", "prueba: refresca y celular", "corrige: reporte e iteración", "guarda: respaldo con fecha", "publica: Netlify y presume"] },
+              { tipo: "relacionar", pares: [["Prepara", "Prompt completo y una misión por conversación"], ["Dirige", "Construir en secciones"], ["Prueba", "Refrescar y probar en celular"], ["Corrige", "Reporte con las 4 piezas"], ["Guarda", "Respaldo con fecha"], ["Publica", "Netlify Drop y presumir"]] },
+              { tipo: "completar", frase: "El flujo no te quita libertad: cuando el proyecto se ponga ____, no decides qué hacer — sigues la ____.", banco: ["intenso", "lista", "fácil", "moda"], respuestas: ["intenso", "lista"] },
+              { tipo: "vf", afirmacion: "El flujo de trabajo es una plantilla rígida: hay que seguirlo igual aunque tengas una forma propia que funcione mejor.", correcta: false, explicacion: "hoy lo haces tuyo: lo escribes, le agregas tus atajos y lo ajustas con la experiencia." },
+              { tipo: "multiple", pregunta: "¿Por qué conviene una rutina fija aunque ya sepas hacer cada paso?", opciones: ["Porque la rutina elimina el olvido justo cuando más cuesta pensar", "Porque la IA lo exige", "Porque sin rutina Netlify no publica", "Porque el flujo vale más que el resultado"], correcta: 0 }
+            ]
+          },
+          {
+            id: "m1-c30",
+            titulo: "Repaso + arranque del proyecto final del mes",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Última lección de la Materia C y del mes. Hoy haces dos cosas: <strong>repasas el mes entero</strong> y <strong>arrancas el proyecto final</strong>: una página de negocio — real o ficticio — publicada en vivo.</p><p>El repaso, en tres bloques: <strong>1) Entender</strong> — qué es la IA y cómo funciona (C1 y C2), su contexto y memoria (C4), las alucinaciones (C5) y sus límites (C28); <strong>2) Dirigir</strong> — los prompts (C3 y C6), la iteración (C13), los reportes de error (C12), el brief (C18), la construcción en secciones (C19) y tu flujo de trabajo (C29); <strong>3) Construir</strong> — tus primeras páginas (C7 a C20), leer código (C8 y C27), las herramientas del editor (C21 a C24) y los respaldos (C25). Todo el mes fue una sola cosa: dirigir a la IA para construir.</p><p>El proyecto final, el que presume que terminaste el mes: <strong>una página de negocio publicada en vivo</strong>. Puede ser tu negocio, el de alguien que conoces o uno ficticio como Tortas El Güero. Debe cumplir lo que ya sabes: brief primero (C18), secciones construidas y revisadas (C19), imagen (C11), responsiva (C14), revisada con la IA (C27), publicada en Netlify (C16) y respaldada (C25). La prueba final no la califica nadie: la haces tú, abriendo la URL en tu celular.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Es el <strong>ensayo general antes de la función</strong>: ya montaste la obra por partes (C7 a C29) y hoy la ensayas completa, con vestuario, luces y público (tu celular y las 3 personas a quienes se la muestras). Un ensayo general no es un repaso tímido: es la obra completa buscando el error de última hora. Y el estreno del proyecto final arranca hoy, en este ensayo — con tu flujo de C29 como guion.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>El arranque del proyecto final, paso a paso (usa tu flujo de C29):</p><ol><li><strong>Elige el negocio</strong> y escribe su brief completo (C18): negocio, oferta, público, secciones, estilo, éxito.</li><li><strong>Pásale el brief a la IA</strong> para que te entreviste y afines lo que falte (C18).</li><li><strong>Crea la carpeta</strong> del proyecto (C10) y ábrela en VS Code (C23).</li><li><strong>Construye la primera sección</strong> con el chat integrado (C24), prueba y sigue (C19).</li><li><strong>Completa</strong> imagen, responsiva y revisión final con la IA (C11, C14, C27).</li><li><strong>Publica en Netlify Drop</strong> (C16), prueba en tu celular y respalda (C25).</li><li><strong>Presume</strong> con pregunta concreta (C20) y regresa a pulir lo que te digan.</li></ol><pre><code>CRITERIOS DEL PROYECTO FINAL:\n□ Brief completo antes de pedir código\n□ Construido en secciones, no de un golpe\n□ Imagen en la carpeta, con alt\n□ Se ve bien en celular (simulador F12)\n□ Botón de WhatsApp que abre el chat\n□ Publicado: URL tipo nombre.netlify.app\n□ Respaldado con fecha\n□ Mostrado a 3 personas con pregunta concreta\n\nTerminar el mes es completar esa lista.\nLa prueba final: abres la URL en tu celular\ny la recorres como cliente.</code></pre>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Autoevaluación del mes",
+                html: "<p>El repaso más importante no lo hace la IA: <strong>te lo haces tú</strong>. Responde con honestidad — todos estos puntos los viste este mes:</p><blockquote><p>\"¿Puedo explicar qué es un LLM y por qué gana el que dirige mejor? ¿Escribo prompts completos (C3/C6) y manejo la ventana de contexto (C4)? ¿Reporto errores sin decir solo 'no funciona' (C12)? ¿Leo lo que la IA genera antes de publicarlo (C8/C27)? ¿Conozco los límites y no pego secretos en el chat (C28)? ¿Sigo mi flujo de C29? ¿Publico y respaldo cada proyecto (C16/C25)? ¿Qué lección repetiría antes de arrancar el proyecto final?\"</p></blockquote><p>Cada \"no\" o \"a medias\" te dice exactamente qué lección volver a abrir antes de empezar. Y recuerda el final de C7: guarda tu primera página y compara. En el Mes 12 vas a reír con esta comparación.</p>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "multiple", pregunta: "Un código ajeno no te deja avanzar. ¿Cuál es el primer movimiento del protocolo de C27?", opciones: ["Pegarlo completo y pedir \"explícamelo todo\"", "Dar contexto: qué es el archivo y qué esperas que haga", "Reescribirlo tú a mano", "Pedirle a la IA que lo borre"], correcta: 1 },
+              { tipo: "completar", frase: "Las 4 piezas del buen prompt (C3) son: ____, ____, ____ y ____.", banco: ["contexto", "objetivo", "restricciones", "formato", "colores", "precio"], respuestas: ["contexto", "objetivo", "restricciones", "formato"] },
+              { tipo: "relacionar", pares: [["Netlify Drop (C16)", "Publicar la página en vivo"], ["Media query (C14)", "Que se vea bien en celular"], ["src y alt (C11)", "Imagen con ruta y descripción"], ["Brief (C18)", "Decisiones del negocio antes del código"], ["Respaldo con fecha (C25)", "Protegerse de perder el trabajo"]] },
+              { tipo: "vf", afirmacion: "Tu flujo personal (C29) se usa solo en proyectos grandes; en los chicos conviene improvisar.", correcta: false, explicacion: "el flujo es la rutina fija que se aplica siempre; en proyectos chicos se vuelve automático, no se salta." },
+              { tipo: "ordenar", instruccion: "El arranque del proyecto final, en orden:", elementos: ["escribir el brief del negocio (C18)", "hacer que la IA critique el brief y te entreviste", "crear la carpeta y abrirla en VS Code (C23)", "construir la primera sección y probar (C19)", "publicar en Netlify y probar en tu celular (C16)", "respaldar con fecha (C25)"] },
+              { tipo: "quehace", codigo: "\"¿Qué tan seguro estás de esas cifras? ¿Dónde las verifico?\"", pregunta: "Le preguntas eso a la IA antes de publicar un precio en tu página final. ¿Qué estás haciendo?", opciones: ["Perder el tiempo: la IA ya dio el dato", "Aplicar tu protocolo anti-alucinación: dato crítico se verifica en la fuente oficial", "Regañar a la IA", "Pedirle que baje el precio"], correcta: 1 },
+              { tipo: "multiple", pregunta: "¿Cuál de estos hace que tu página final esté TERMINADA de verdad?", opciones: ["Que el código sea largo", "Que esté publicada en vivo, probada en tu celular y presumida con pregunta concreta (C16 y C20)", "Que la hayas escrito a mano", "Que la IA la haya hecho en un solo mensaje"], correcta: 1 },
+              { tipo: "completar", frase: "El repaso del mes cabe en una frase: todo fue aprender a ____ a la IA para ____.", banco: ["dirigir", "construir", "admirar", "copiar"], respuestas: ["dirigir", "construir"] }
+            ]
+          }
         ]
       }
     }
