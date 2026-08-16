@@ -346,26 +346,689 @@ window.DEV_SYSTEM_LECCIONES = {
               { tipo: "quehace", codigo: "winget install --id OpenJS.NodeJS", pregunta: "<code>winget install --id OpenJS.NodeJS</code> — ¿qué logra?", opciones: ["Desinstala Node.js", "Instala Node.js desde el gestor de paquetes de Windows", "Actualiza Windows", "Reinicia la computadora"], correcta: 1 }
             ]
           },
-          { id: "m1-a11", titulo: "Dependencias y librerías: nadie construye desde cero", proximamente: true },
-          { id: "m1-a12", titulo: "Versiones: por qué 2.0 puede romper lo que 1.9 hacía bien", proximamente: true },
-          { id: "m1-a13", titulo: "npm: la tienda de piezas de JavaScript (y package.json)", proximamente: true },
-          { id: "m1-a14", titulo: "La memoria caché: por qué \"borrar caché\" arregla cosas", proximamente: true },
-          { id: "m1-a15", titulo: "Procesos: qué está corriendo en tu compu ahora mismo", proximamente: true },
-          { id: "m1-a16", titulo: "Internet I: ¿qué pasa cuando escribes google.com?", proximamente: true },
-          { id: "m1-a17", titulo: "Internet II: direcciones IP y DNS (el directorio telefónico de internet)", proximamente: true },
-          { id: "m1-a18", titulo: "Internet III: la URL por partes (dominio, ruta, parámetros)", proximamente: true },
-          { id: "m1-a19", titulo: "HTTP y HTTPS: el candadito y por qué importa", proximamente: true },
-          { id: "m1-a20", titulo: "Cliente y servidor: el restaurante de internet", proximamente: true },
-          { id: "m1-a21", titulo: "El navegador por dentro: qué hace con lo que recibe", proximamente: true },
-          { id: "m1-a22", titulo: "La nube: la computadora de alguien más", proximamente: true },
-          { id: "m1-a23", titulo: "Descargar, subir y el ancho de banda", proximamente: true },
-          { id: "m1-a24", titulo: "Redes: wifi, datos, módem y por qué \"se cae el sistema\"", proximamente: true },
-          { id: "m1-a25", titulo: "Puertos: las puertas numeradas de un servidor (80, 443, 3000)", proximamente: true },
-          { id: "m1-a26", titulo: "localhost: el servidor que vive en tu propia compu", proximamente: true },
-          { id: "m1-a27", titulo: "Servidores de verdad: qué estás rentando cuando rentas uno", proximamente: true },
-          { id: "m1-a28", titulo: "Seguridad básica I: contraseñas, gestores y 2FA", proximamente: true },
-          { id: "m1-a29", titulo: "Seguridad básica II: phishing, enlaces trampa y sentido común", proximamente: true },
-          { id: "m1-a30", titulo: "Repaso integrador de La Máquina (mega-quiz jugable)", proximamente: true }
+          {
+            id: "m1-a11",
+            titulo: "Dependencias y librerías: nadie construye desde cero",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Nadie construye software moderno desde cero. Los programadores — y las IAs — reutilizan <strong>piezas de código ya hechas</strong> llamadas <strong>librerías</strong> (en inglés, <em>library</em>). Una librería es código listo que resuelve una tarea concreta: formatear fechas, comprimir imágenes, aceptar pagos, dibujar una gráfica. No tienes que escribirla: la descargas y la usas.</p><p>Cada librería que tu proyecto usa se llama una <strong>dependencia</strong> — tu proyecto <em>depende</em> de ella para funcionar. Suena técnico, pero es simple: si tu página usa una librería de pagos y esa librería no está, tu botón de \"Pagar\" deja de funcionar.</p><p>Cuando diriges a una IA, ella toma decisiones de dependencias por ti, pero tú vas a verlas en sus reportes: \"instalé <code>express</code> para el servidor\" o \"agregué la librería de pagos <code>stripe</code>\". Que no te sorprenda: un proyecto sencillo puede tener cientos de dependencias, porque cada una resuelve un pedacito del rompecabezas.</p><p>Tu trabajo no es memorizarlas, es <strong>entender la conversación</strong>: ¿qué pieza se está agregando y para qué? Cuando la IA te diga \"agregué una dependencia\", ya sabes que está colocando una pieza de Lego que no tuvo que fabricar.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Construir software es como <strong>armar una casa con material ya fabricado</strong>: nadie funde su propio acero ni hace sus propios clavos. Compras ladrillos, cables y bombillas de proveedores especializados, y tu trabajo es el diseño y el ensamble. Las librerías son esos proveedores: te dan la pieza probada y lista, y tú decides dónde va.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Cuando una IA instala una librería, te lo reporta así:</p><pre><code>instalé express v4.18.2\n  → maneja las rutas del servidor (qué hacer en /, /productos, etc.)\n\ninstalé morgan\n  → registra cada petición que llega (log del servidor)</code></pre><p>Cada línea es una pieza que tu proyecto ahora usa. Sin escribir una línea de código, tu proyecto ya tiene un servidor y un registro de actividad — gracias a piezas prestadas.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Estoy construyendo [mi proyecto] con IA. ¿Qué librerías me recomiendas para [la función principal]? Explícame qué hace cada una en una línea, cuáles son las más confiables, y cuál agregarías primero.\"</p></blockquote><p>Ese prompt te entrena para leer sus reportes de dependencias como quien lee una lista de compras.</p>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "multiple", pregunta: "¿Qué es una librería?", opciones: ["Un programa que borra archivos", "Una pieza de código ya hecha que resuelve una tarea", "Un tipo de disco duro", "Una carpeta de imágenes"], correcta: 1 },
+              { tipo: "completar", frase: "Las ____ son las piezas de código listo que tu proyecto usa; tu proyecto ____ de ellas para funcionar.", banco: ["librerías", "depende", "imágenes", "recuerda"], respuestas: ["librerías", "depende"] },
+              { tipo: "relacionar", pares: [["express", "Rutas del servidor"], ["morgan", "Registro de peticiones (log)"], ["stripe", "Pagos con tarjeta"], ["chart.js", "Gráficas"]] },
+              { tipo: "vf", afirmacion: "Es normal que un proyecto moderno use cientos de librerías.", correcta: true, explicacion: "cada una resuelve un pedacito del rompecabezas." },
+              { tipo: "quehace", codigo: "instalé express", pregunta: "Una IA reporta: \"instalé <code>express</code>\". ¿Qué significa?", opciones: ["Desinstaló el servidor", "Agregó una librería para manejar las rutas del servidor", "Borró la base de datos", "Actualizó el navegador"], correcta: 1 }
+            ]
+          },
+          {
+            id: "m1-a12",
+            titulo: "Versiones: por qué 2.0 puede romper lo que 1.9 hacía bien",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Todo software tiene un número de versión, y ese número no es un capricho: es un código. El clásico formato es <strong>1.9.2</strong> — tres números separados por puntos, cada uno con un significado:</p><ul><li>El <strong>primero</strong> (major, \"la mayor\"): cambios grandes. <strong>Aquí es donde se puede romper algo.</strong> De 1.9 a 2.0 no es \"un poquito más nuevo\": es un cambio de fondo, y el código que funcionaba con 1.9 puede dejar de funcionar.</li><li>El <strong>segundo</strong> (minor, \"la menor\"): funciones nuevas, pero compatibles. De 1.8 a 1.9 se agregan cosas sin romper lo que ya había.</li><li>El <strong>tercero</strong> (patch, \"el parche\"): corrección de errores pequeña. De 1.9.1 a 1.9.2 se arregla un bug sin cambiar nada más.</li></ul><p>¿Por qué una actualización rompe cosas? Porque los creadores de la librería cambiaron reglas: renombraron funciones, cambiaron cómo se llaman, o quitaron funciones viejas. Tu código — o el de la IA — le hablaba a la librería \"en el idioma de la 1.9\"; la 2.0 habla distinto.</p><p>Cuando diriges a una IA verás esto en vivo: \"actualicé la librería y se rompió el login\". La solución profesional casi nunca es reescribir todo: es <strong>fijar la versión</strong> que sí funcionaba, o pedirle a la IA que adapte el código al idioma nuevo. Por eso los proyectos \"congelan\" versiones en el <code>package.json</code> (lo verás en A13).</p><p>Dato memorable: si el número de versión cambia en la primera posición, espera problemas. Si cambia en la última, solo es una corrección. Leer versiones te da radar.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Las versiones son como <strong>los modelos de un celular</strong>: el modelo 2019 (1.9) y el modelo 2026 (2.0) tienen accesorios incompatibles. El cargador del teléfono viejo ya no entra en el nuevo. No es que el nuevo esté mal — es que cambió el estándar. El patch (de 1.9.1 a 1.9.2) es como un parche de tela: el mismo pantalón, solo arreglado.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Error típico al actualizar una dependencia:</p><pre><code>npm install mi-libreria\n→ warning: mi-libreria@2.0.0 ya no incluye createApp()\n   usa createApplication() en su lugar\n\nTu app:  mi-libreria.createApp()  ✘ (ya no existe)\nArreglo: mi-libreria.createApplication()  ✔</code></pre><p>La librería cambió el nombre de una función entre la 1.9 y la 2.0. El código que la usaba se rompe hasta que se adapta. Leer el aviso es la mitad del trabajo.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Actualicé [librería] y mi app se rompió. ¿Qué cambió entre la versión que tenía y la nueva? Dime si conviene volver a la versión anterior (y cómo fijarla) o adaptar el código, y qué riesgos tiene cada opción.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "multiple", pregunta: "¿Qué cambio de versión es más probable que rompa tu código?", opciones: ["De 1.9.1 a 1.9.2", "De 1.9 a 2.0", "De 1.8 a 1.9", "Ninguna versión puede romper nada"], correcta: 1 },
+              { tipo: "completar", frase: "En la versión 2.3.1, el 2 es la versión ____ (puede romper), el 3 es la ____ (agrega funciones) y el 1 es el ____ (arregla bugs).", banco: ["mayor", "menor", "parche", "inicial"], respuestas: ["mayor", "menor", "parche"] },
+              { tipo: "vf", afirmacion: "El tercer número de una versión (el patch) solo corrige errores pequeños sin cambiar las reglas.", correcta: true, explicacion: "el parche arregla sin romper." },
+              { tipo: "ordenar", instruccion: "Pasos para resolver una dependencia rota por una actualización:", elementos: ["leer el aviso de la librería", "identificar qué versión funcionaba", "volver a esa versión o adaptar el código", "probar que todo siga funcionando"] },
+              { tipo: "relacionar", pares: [["Primer número", "Cambio mayor que puede romper"], ["Segundo número", "Funciones nuevas compatibles"], ["Tercer número", "Corrección de errores"]] }
+            ]
+          },
+          {
+            id: "m1-a13",
+            titulo: "npm: la tienda de piezas de JavaScript (y package.json)",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Ya sabes qué son las librerías (A11). Ahora, ¿de dónde salen? <strong>npm</strong> — <em>Node Package Manager</em>, \"el administrador de paquetes de Node\" — es la tienda de piezas de JavaScript más grande del mundo: millones de librerías listas para descargar. Se usa con un comando:</p><pre><code>npm install express</code></pre><p>Ese comando baja la librería <code>express</code>, la coloca en la carpeta <code>node_modules</code> de tu proyecto, y registra en una lista llamada <strong><code>package.json</code></strong> que tu proyecto ahora depende de ella. El <code>package.json</code> es el recibo de compras: la lista exacta de dependencias y sus versiones (lo de A12).</p><p>Tres lugares que verás en cada proyecto:</p><ul><li><strong><code>package.json</code></strong> — la lista de dependencias y la configuración del proyecto. Si se pierde, tu proyecto \"olvida\" qué piezas necesita.</li><li><strong><code>node_modules</code></strong> — donde viven las piezas descargadas. Puede pesar cientos de MB o gigas (¿te acuerdas de A2?). Nadie la toca a mano: se regenera con un <code>npm install</code>.</li><li><strong><code>npm install</code></strong> — el comando que, leyendo el <code>package.json</code>, descarga todo lo que falta. Es el \"trae todo lo de la lista\".</li></ul><p>Cuando la IA te diga \"corre <code>npm install</code>\", está diciendo \"reponte las piezas según la lista\". Cuando te diga \"corre <code>npm install express</code>\", está agregando una pieza nueva a la lista. Eso es todo. No hay misterio.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>npm es el <strong>mercado de abastos de JavaScript</strong>: miles de puestos con piezas probadas. El <code>package.json</code> es tu lista de compras escrita; <code>node_modules</code> es el bolsón lleno que cargas a casa; y <code>npm install</code> es el mandado: caminas el mercado con tu lista y llenas el bolsón.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Un <code>package.json</code> recién creado, con una dependencia:</p><pre><code>{\n  \"name\": \"mi-tienda\",\n  \"version\": \"1.0.0\",\n  \"dependencies\": {\n    \"express\": \"^4.18.2\"\n  }\n}</code></pre><p>Se lee: \"mi proyecto se llama mi-tienda, es versión 1.0.0, y depende de express en su versión 4.18.2\". Si esta computadora se pierde, otro <code>npm install</code> reconstruye todo desde esta lista.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Necesito [funcionalidad] en mi proyecto. ¿Qué paquete de npm me recomiendas? Verifica que sea popular, activamente mantenido y seguro antes de instalarlo, y explícame en una línea para qué sirve.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "multiple", pregunta: "¿Qué hace <code>npm install express</code>?", opciones: ["Instala el navegador Express", "Descarga la librería express y la registra en el package.json", "Borra todas las dependencias", "Crea una página web"], correcta: 1 },
+              { tipo: "relacionar", pares: [["package.json", "La lista de dependencias del proyecto"], ["node_modules", "La carpeta donde viven las piezas descargadas"], ["npm install", "El comando que baja todo lo de la lista"]] },
+              { tipo: "completar", frase: "Al correr <code>npm install</code>, el proyecto lee su ____ y descarga las piezas a la carpeta ____.", banco: ["package.json", "node_modules", "navegador", "escritorio"], respuestas: ["package.json", "node_modules"] },
+              { tipo: "vf", afirmacion: "La carpeta node_modules se regenera sola con un <code>npm install</code>; no hace falta copiarla a mano.", correcta: true, explicacion: "con el package.json basta para reconstruirla." },
+              { tipo: "quehace", codigo: "npm install", pregunta: "Ves <code>npm install</code> (sin nombre de paquete) en un tutorial. ¿Qué hace?", opciones: ["Instala todos los paquetes que faltan según el package.json", "Crea un proyecto nuevo", "Borra el proyecto", "Actualiza el navegador"], correcta: 0 }
+            ]
+          },
+          {
+            id: "m1-a14",
+            titulo: "La memoria caché: por qué \"borrar caché\" arregla cosas",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>La <strong>caché</strong> (se pronuncia \"cash\", del inglés <em>cache</em>) es una copia guardada para no repetir trabajo. Tu navegador guarda en caché las imágenes, los estilos y los archivos de las páginas que visitas, para que la siguiente vez carguen al instante. En vez de descargar todo de nuevo, saca la copia que ya tiene.</p><p>Aquí viene el problema del que habla todo el mundo: si el servidor cambió la página pero tu navegador guarda la copia vieja, <strong>te sigue mostrando lo viejo</strong>. Ya cambiaste el código, ya guardaste, pero la pantalla \"no se actualiza\". No es que tu código esté mal: es que tu navegador te está sirviendo el recuerdo, no la realidad.</p><p>Por eso \"borrar caché\" arregla cosas: le quitas al navegador la copia vieja y lo obligas a bajar la nueva. El atajo más usado es la <strong>recarga forzada</strong>: <code>Ctrl + F5</code> (o <code>Cmd + Shift + R</code> en Mac).</p><p>¿Cuándo te tocará esto a ti? Todo el tiempo. Le pides a la IA que cambie el color del botón, guardas, recargas… y el botón sigue rojo. Antes de entrar en pánico, prueba la recarga forzada o borrar la caché. Es el 90% de los \"no cambió nada\" de este oficio. El otro 10% es un error de ruta (¿te acuerdas de A4?).</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>La caché es tu <strong>despensa de emergencia</strong>: compras de más lo que usas seguido para no ir al súper cada vez. Pero si el súper cambió la receta del producto, tú sigues consumiendo la caja vieja hasta que limpias tu despensa. Borrar caché es tirar lo viejo para ir por lo nuevo.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Cuando recargas tu página y la versión nueva no aparece:</p><pre><code>1. Prueba la recarga normal (F5)        → sigue la vieja\n2. Prueba la recarga forzada (Ctrl+F5)  → ya cambió ✔\n3. Si sigue: borra la caché del navegador o abre en ventana de incógnito</code></pre><p>La ventana de incógnito es tu mejor amiga para diagnosticar: casi siempre arranca sin caché. Si en incógnito tu página nueva se ve, el problema era la caché, no tu código.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Cambié mi página pero al recargar sigo viendo la versión vieja. ¿Cómo sé si es problema de caché y cómo la borro en [mi navegador]? Dame el atajo exacto y los pasos para confirmar que ya se ve la nueva.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "multiple", pregunta: "¿Para qué sirve la caché del navegador?", opciones: ["Para guardar contraseñas de todos los sitios", "Para cargar páginas más rápido guardando copias de lo que ya viste", "Para borrar archivos viejos", "Para bloquear anuncios"], correcta: 1 },
+              { tipo: "vf", afirmacion: "Si cambiaste el código de tu página pero el navegador muestra la versión vieja, puede ser la caché y no un error de código.", correcta: true, explicacion: "la caché guarda copias viejas que a veces tardan en actualizarse." },
+              { tipo: "completar", frase: "Borrar caché es ____ la copia vieja y ____ la página desde el servidor.", banco: ["eliminar", "recargar", "esconder", "adivinar"], respuestas: ["eliminar", "recargar"] },
+              { tipo: "ordenar", instruccion: "Pasos para confirmar que el problema es la caché:", elementos: ["abrir la página en ventana de incógnito", "ver si la versión nueva aparece", "si aparece, borrar la caché del navegador normal"] },
+              { tipo: "quehace", codigo: "Ctrl + F5", pregunta: "<code>Ctrl + F5</code> en un navegador — ¿qué hace?", opciones: ["Cierra la pestaña", "Fuerza la recarga ignorando la caché", "Abre la consola", "Baja la página al final"], correcta: 1 }
+            ]
+          },
+          {
+            id: "m1-a15",
+            titulo: "Procesos: qué está corriendo en tu compu ahora mismo",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Un <strong>proceso</strong> es un programa que está corriendo ahorita mismo. Cada pestaña del navegador, cada app, cada servicio del sistema: todos son procesos. Tu computadora los administra a todos (¿el gerente del A8?) y les reparte RAM y CPU (¿te acuerdas de A1?).</p><p>En Windows lo ves en el <strong>Administrador de tareas</strong> (Ctrl + Shift + Esc); en Mac, en el <strong>Monitor de actividad</strong>. Ahí verás decenas de procesos con su uso de memoria y procesador. No los conozcas todos: reconoce el patrón. Un proceso que come el 90% de la CPU explica por qué tu compu va lenta.</p><p>El detalle que te va a salvar en este oficio: un proceso <strong>puede seguir corriendo sin ventana visible</strong>. Esos \"fantasmas\" son la causa clásica de uno de los errores más comunes al desarrollar: \"<strong>el puerto ya está en uso</strong>\" (los puertos son tema del A25). Corres tu proyecto, se apaga mal, y el proceso quedó vivo agarrando el puerto. La solución no es reiniciar la computadora: es encontrar el proceso y cerrarlo (o \"matarlo\").</p><p>Cuando dirijas a una IA, ella te dirá \"cierra el proceso del puerto 3000\" o \"reinicia el servidor\". Ahora sabes que te está hablando de estos fantasmas de los que nadie te había hablado.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Los procesos son <strong>el personal de la cocina a media noche de servicio</strong>: cada quien cocinando algo, usando la mesa (RAM) y el chef (CPU). Un proceso fantasma es el cocinero que terminó su turno pero no se fue: sigue ocupando la estación y el siguiente (tu app nueva) no encuentra lugar. No hay que apagar todo el restaurante — basta con decirle a ese cocinero que se vaya.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>El error que vas a ver mil veces:</p><pre><code>Error: listen EADDRINUSE: address already in use 127.0.0.1:3000</code></pre><p>Traducción: \"ya hay un proceso usando el puerto 3000, no puedo\". En la terminal puedes ver los procesos que corren:</p><pre><code>tasklist                 ← lista de procesos en Windows\ntasklist | findstr node  ← filtra solo los de Node</code></pre><p>Y cerrar uno: <code>taskkill /PID 1234 /F</code> (en Mac/Linux: <code>kill 1234</code>). Antes de matar algo, asegúrate de qué es — nunca mates un proceso sin saberlo (la regla del A5 sigue vigente).</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Al correr mi proyecto me dice que el puerto 3000 ya está en uso. Guíame paso a paso en [Windows/Mac] para ver qué proceso lo está usando, confirmar que es seguro cerrarlo, y cerrarlo sin dañar nada.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "multiple", pregunta: "¿Qué es un proceso?", opciones: ["Un archivo guardado", "Un programa que está corriendo en este momento", "Una carpeta del sistema", "Una contraseña de acceso"], correcta: 1 },
+              { tipo: "completar", frase: "Un proceso puede seguir ____ sin ventana visible; los ____ así son la causa clásica del error 'puerto en uso'.", banco: ["corriendo", "fantasmas", "borrados", "abiertos"], respuestas: ["corriendo", "fantasmas"] },
+              { tipo: "quehace", codigo: "EADDRINUSE: address already in use 127.0.0.1:3000", pregunta: "Ves este error: <code>EADDRINUSE: address already in use 127.0.0.1:3000</code>. ¿Qué está pasando?", opciones: ["Tu internet se cayó", "Ya hay un proceso usando el puerto 3000", "La computadora no tiene RAM", "El proyecto no existe"], correcta: 1 },
+              { tipo: "vf", afirmacion: "Cuando un programa \"se apaga\" mal, su proceso puede quedar vivo ocupando recursos.", correcta: true, explicacion: "por eso el puerto queda en uso y hay que cerrar el proceso." },
+              { tipo: "relacionar", pares: [["Administrador de tareas", "Ver procesos y su uso de RAM/CPU en Windows"], ["tasklist", "Listar procesos desde la terminal"], ["taskkill", "Cerrar un proceso desde la terminal"]] }
+            ]
+          },
+          {
+            id: "m1-a16",
+            titulo: "Internet I: ¿qué pasa cuando escribes google.com?",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Cuando escribes <code>google.com</code> y presionas Enter, en fracciones de segundo ocurre una cadena de eventos. Ahora la vas a entender completa; las piezas se detallan en A17 y A18, pero el viaje es este:</p><ol><li>Tu navegador pregunta al <strong>DNS</strong> (el directorio telefónico de internet, tema de A17): \"¿en qué dirección vive <code>google.com</code>?\"</li><li>El DNS responde con la <strong>IP</strong>: una dirección numérica, por ejemplo <code>142.250.190.78</code> (también A17).</li><li>Tu navegador manda un <strong>pedido</strong> (una petición) a esa dirección, usando el lenguaje <strong>HTTP</strong> (A19).</li><li>El <strong>servidor</strong> de Google — una computadora lejana prendida 24/7 — recibe el pedido y responde con la página (A20).</li><li>Tu navegador <strong>recibe el código</strong> (HTML, CSS, JavaScript) y lo convierte en la página que ves (A21).</li></ol><p>Todo eso, de ida y vuelta, en un abrir y cerrar de ojos. Cuando algo falla, el viaje se corta en algún punto: el DNS no respondió, la red se cayó, el servidor está caído, o tu navegador no pudo interpretar lo que recibió. Diagnosticar internet es descubrir en cuál de los cinco pasos se rompió el viaje.</p><p>¿Por qué te importa como director de IA? Porque publicarás páginas y apps (en la Materia C y en el Mes 9), y cuando un usuario diga \"no me carga\", tú vas a saber qué preguntas hacer: ¿es el dominio, el servidor, o su internet? Reconocer el mapa del viaje convierte el caos en diagnóstico.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Es como <strong>pedir un platillo en un restaurante por teléfono</strong>: miras el menú (escribes la URL), buscas el número del restaurante (DNS), marcas (petición HTTP), en la cocina contestan y preparan (servidor), y te llevan el platillo (respuesta). Si el platillo no llega, puede ser que no encontrabas el número, que la línea estaba ocupada, o que la cocina estaba cerrada.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Cada error en pantalla te dice en qué punto se cortó el viaje:</p><pre><code>Error: No se pudo encontrar el servidor     → el DNS o el dominio falló (pasos 1-2)\nError: El sitio tardó demasiado en responder → la red o el servidor (pasos 3-4)\nError 500: El servidor tuvo un problema     → el servidor falló (paso 4)</code></pre><p>Leer estos mensajes ya no es \"no sé qué pasó\": es saber en qué paso del viaje está el atasco.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Mi página no carga en [navegador]. Guíame para diagnosticar en qué paso del viaje falla: DNS, red, servidor o navegador. Dame los pasos en orden y qué vería en pantalla en cada caso.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "ordenar", instruccion: "Acomoda en orden lo que pasa cuando escribes google.com:", elementos: ["el navegador pregunta al DNS la IP", "el navegador manda una petición HTTP", "el servidor responde con la página", "el navegador convierte el código en imagen"] },
+              { tipo: "multiple", pregunta: "¿Qué hace el navegador justo después de que escribes la URL?", opciones: ["Muestra un anuncio", "Pregunta al DNS dónde vive ese dominio", "Apaga el servidor", "Guarda la página en el disco"], correcta: 1 },
+              { tipo: "completar", frase: "El servidor de Google es una ____ lejana prendida ____ que recibe pedidos y responde con la página.", banco: ["computadora", "24/7", "tableta", "de vez en cuando"], respuestas: ["computadora", "24/7"] },
+              { tipo: "vf", afirmacion: "Todo el viaje desde escribir la URL hasta ver la página tarda típicamente menos de un par de segundos.", correcta: true, explicacion: "el viaje completo es de ida y vuelta en fracciones de segundo." },
+              { tipo: "relacionar", pares: [["No se pudo encontrar el servidor", "El DNS o el dominio falló"], ["El sitio tardó demasiado en responder", "La red o el servidor"], ["Error 500: problema del servidor", "El servidor falló"]] }
+            ]
+          },
+          {
+            id: "m1-a17",
+            titulo: "Internet II: direcciones IP y DNS (el directorio telefónico de internet)",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Cada dispositivo conectado a internet tiene una <strong>dirección IP</strong>: una dirección numérica única, como <code>142.250.190.78</code>, que identifica dónde está. Es el equivalente del número de teléfono de tu computadora. Los servidores tienen IPs públicas; tu teléfono en casa tiene una IP privada que tu módem le asigna (los detalles en A24).</p><p>¿Y el problema? Nadie recuerda <code>142.250.190.78</code> cuando quiere buscar algo. Ahí nace el <strong>DNS</strong> — <em>Domain Name System</em>, \"el sistema de nombres de dominio\": el directorio telefónico de internet. Traduce los nombres que sí podemos recordar (<code>google.com</code>, <code>facebook.com</code>) a las IPs que la red necesita.</p><p>Cuando escribes una URL, tu computadora no sabe dónde está <code>google.com</code>: se lo pregunta al DNS, igual que marcas a información para pedir un número. El DNS no es una sola computadora: es un sistema de directorios en cascada por todo el mundo, enorme y rapidísimo.</p><p>¿Cuándo te tocará a ti? Cuando la IA te pida configurar el <strong>dominio</strong> de tu página (en el Mes 9 publicarás una): el proveedor de dominios te dará \"registros DNS\" para apuntar tu dominio al servidor. Ahora sabes qué es eso: le estás diciendo al directorio mundial \"cuando busquen <code>mitienda.com</code>, llévalos a esta IP\".</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>El DNS es la <strong>agenda de contactos de tu teléfono</strong>: no marcas el número de tu hermano, marcas \"Hermano\". Tú pides por nombre y el teléfono traduce al número real. El DNS es esa traducción, a escala planetaria: tu navegador dice \"google.com\" y el directorio contesta \"marca a 142.250.190.78\".</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Desde la terminal puedes consultar el directorio tú mismo:</p><pre><code>C:\\Users\\Ray&gt; nslookup google.com\nServidor:  dns.google\nNombre:    google.com\nAddress:   142.250.190.78</code></pre><p>Traducción: \"le pregunté al directorio y me dijo que google.com vive en 142.250.190.78\". Ese número es la <strong>IP</strong> — la dirección real donde vive el sitio.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Voy a apuntar mi dominio [mitienda.com] a mi servidor [dirección]. Explícame qué registro DNS necesito configurar, dónde, y cómo verifico desde mi terminal que ya quedó listo.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "relacionar", pares: [["Dirección IP", "La dirección numérica única de un dispositivo en internet"], ["DNS", "El directorio que traduce nombres a IPs"], ["Dominio", "El nombre fácil de recordar (google.com)"]] },
+              { tipo: "completar", frase: "El ____ traduce nombres como google.com a ____ numéricas que la red usa.", banco: ["DNS", "IP", "wifi", "caché"], respuestas: ["DNS", "IP"] },
+              { tipo: "multiple", pregunta: "¿Por qué existen los dominios si ya existen las IPs?", opciones: ["Porque las IPs son lentas", "Porque los números son difíciles de recordar para las personas", "Porque los dominios son más baratos", "No existe razón real"], correcta: 1 },
+              { tipo: "vf", afirmacion: "El DNS es una sola computadora enorme ubicada en un solo país.", correcta: false, explicacion: "es un sistema de directorios en cascada repartido por todo el mundo." },
+              { tipo: "quehace", codigo: "nslookup google.com", pregunta: "Corres <code>nslookup google.com</code> y la terminal devuelve <code>Address: 142.250.190.78</code>. ¿Qué pasó?", opciones: ["La terminal se conectó a Google", "El DNS respondió la IP donde vive google.com", "Se descargó la página de Google", "La terminal borró la caché"], correcta: 1 }
+            ]
+          },
+          {
+            id: "m1-a18",
+            titulo: "Internet III: la URL por partes (dominio, ruta, parámetros)",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Toda URL (el enlace que ves en la barra del navegador) está hecha de partes, y cada parte le dice algo distinto a la red. Tomemos un ejemplo:</p><pre><code>https://www.mitienda.mx/productos/celulares?id=5&amp;color=negro</code></pre><ul><li><strong><code>https</code></strong> — el protocolo: \"habla conmigo con candado\" (A19). El <code>http://</code> sin la <code>s</code> es el mismo idioma pero sin candado.</li><li><strong><code>www.mitienda.mx</code></strong> — el <strong>dominio</strong>: qué sitio es. El <code>www.</code> es un subdominio común (un \"departamento\" del sitio).</li><li><strong><code>/productos/celulares</code></strong> — la <strong>ruta</strong>: qué página o sección. Igual que las rutas de archivos (A4), pero en un servidor remoto.</li><li><strong><code>?id=5&amp;color=negro</code></strong> — los <strong>parámetros</strong> (o query): datos que se envían al servidor con la petición. Empiezan con <code>?</code>, se separan con <code>&amp;</code>, y vienen en pares <code>clave=valor</code>.</li></ul><p>Eso último es lo que más te va a sorprender: <strong>una misma página puede mostrar cosas distintas según los parámetros</strong>, aunque el dominio y la ruta no cambien. <code>?id=5</code> le dice al servidor \"muéstrame el producto 5\". Cambias <code>id=6</code> y ves el 6. Los parámetros son las preguntas que le haces a la página.</p><p>Cuando dirijas a una IA, verás parámetros en las <strong>URLs de las APIs</strong> (a fondo en el Mes 9) y en los enlaces de tu página. Saber leer la barra del navegador es como saber leer el tablero de un auto: todo el mundo puede conducir, pero tú entiendes qué dice.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>La URL es una <strong>dirección completa de oficina</strong>: el país y la ciudad (dominio), el edificio y el piso (ruta), y el número de oficina (parámetros). Dos personas pueden ir al mismo edificio y al mismo piso, pero al cuarto 5 en vez del 4 — y eso cambia con quién se encuentran.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>En la barra del navegador de una tienda:</p><pre><code>mitienda.mx/productos?id=5   → muestra el producto 5\nmitienda.mx/productos?id=6   → muestra el producto 6\nmitienda.mx/productos        → muestra la lista de todos</code></pre><p>El dominio y la ruta son los mismos; solo cambió el parámetro <code>id</code>. Por eso un enlace \"con datos\" viaja literalmente en la barra del navegador.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Descompón esta URL para mí: [pega una URL real]. Dime cuál es el dominio, la ruta y los parámetros, y qué pasaría si cambio cada parte. Úsalo como ejercicio para enseñarme a leer URLs.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "relacionar", pares: [["Dominio", "www.mitienda.mx"], ["Ruta", "/productos/celulares"], ["Parámetros", "?id=5&color=negro"], ["Protocolo", "https"]] },
+              { tipo: "completar", frase: "En <code>https://tienda.mx/productos?id=5</code>, el dominio es ____, la ruta es ____ y los parámetros empiezan con ____.", banco: ["tienda.mx", "/productos", "?", "https"], respuestas: ["tienda.mx", "/productos", "?"] },
+              { tipo: "multiple", pregunta: "¿Para qué sirven los parámetros de una URL?", opciones: ["Para hacerla más larga", "Para enviar datos al servidor con la petición", "Para ocultar el dominio", "Para acelerar la carga"], correcta: 1 },
+              { tipo: "ordenar", instruccion: "Partes de la URL en el orden en que aparecen:", elementos: ["protocolo", "dominio", "ruta", "parámetros"] },
+              { tipo: "vf", afirmacion: "Cambiar <code>?id=5</code> por <code>?id=6</code> en una tienda muestra un producto distinto con la misma página.", correcta: true, explicacion: "los parámetros cambian lo que el servidor devuelve." }
+            ]
+          },
+          {
+            id: "m1-a19",
+            titulo: "HTTP y HTTPS: el candadito y por qué importa",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Ya viste el viaje de la petición (A16) y que empieza con <code>https</code> (A18). Ahora, ¿qué es eso? <strong>HTTP</strong> (<em>HyperText Transfer Protocol</em>) es el idioma de comunicación entre tu navegador y los servidores: un conjunto de reglas para pedir y entregar contenido en la web. Cuando tu navegador pide una página, habla en HTTP; el servidor responde en HTTP.</p><p>El problema: HTTP puro transmite la información <strong>como está, sin proteger</strong> — como mandar una carta postal abierta. Si introduces tu contraseña o los datos de tu tarjeta en un sitio con <code>http://</code>, cualquier persona en el camino (el wifi de la cafetería, tu proveedor) podría leer lo que viaja.</p><p>Ahí entra <strong>HTTPS</strong>: es el mismo idioma, pero <strong>cifrado</strong>. La <code>S</code> es de <em>Secure</em> (seguro). La información se codifica de tal forma que solo tu navegador y el servidor pueden leerla — el famoso <strong>candadito</strong> que ves junto a la URL. El cifrado técnico se llama SSL/TLS (solo necesitas reconocer el nombre).</p><p>La regla de seguridad que no se negocia: <strong>nunca pongas contraseñas ni datos de pago en una página sin el candado</strong>. El navegador te avisa: verás \"No seguro\" en la barra cuando el sitio es HTTP. Cuando publiques tu propia página (Materia C, Mes 9), lo estándar es que quede con HTTPS — hoy hasta la herramienta más básica lo regala.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>HTTP es <strong>hablar en voz alta en un pasillo lleno de gente</strong>; HTTPS es hablar en un <strong>cuarto blindado con la puerta cerrada</strong>. El mensaje es el mismo — el problema es quién más lo escucha. El candadito de la barra del navegador es la etiqueta \"cuarto blindado\" en la puerta.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>En la barra del navegador:</p><pre><code>🔒 https://www.bancomex.mx        → cifrado, seguro\n⚠  http://www.bancomex-promo.mx   → sin cifrar, \"No seguro\"</code></pre><p>Esa segunda dirección es la típica de una trampa: parece banco, pero el candado no está. El candado no es un adorno — es la diferencia entre hablar por un cuarto blindado y por un pasillo público.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Mi sitio todavía usa HTTP y quiero pasar a HTTPS. Explícame qué opciones tengo, cuál es la más fácil para un principiante, y qué riesgos corro si lo dejo en HTTP.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "vf", afirmacion: "HTTPS cifra los datos que viajan entre tu navegador y el servidor.", correcta: true, explicacion: "la S de Secure es cifrado." },
+              { tipo: "multiple", pregunta: "¿Qué significa el candadito en la barra del navegador?", opciones: ["El sitio es oficial y confiable", "La conexión con el servidor está cifrada", "La página no tiene virus", "El sitio es gratis"], correcta: 1 },
+              { tipo: "completar", frase: "HTTP es el ____ de comunicación; HTTPS agrega ____ a lo que viaja.", banco: ["idioma", "cifrado", "velocidad", "música"], respuestas: ["idioma", "cifrado"] },
+              { tipo: "relacionar", pares: [["https:// + candadito", "Poner contraseñas y datos de pago"], ["http:// + \"No seguro\"", "No poner datos sensibles"]] },
+              { tipo: "quehace", codigo: "http:// sin candado", pregunta: "Un sitio te pide tu contraseña y en la barra del navegador dice \"No seguro\". ¿Qué haces?", opciones: ["La escribo, es el sitio correcto", "No la escribo: la conexión no está cifrada y podría ser una trampa", "La escribo pero rápido", "Cambio la contraseña en ese sitio"], correcta: 1 }
+            ]
+          },
+          {
+            id: "m1-a20",
+            titulo: "Cliente y servidor: el restaurante de internet",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Cuando ves una página, hay dos computadoras haciendo el trabajo: la tuya (la que pide) y la remota (la que responde). La que pide se llama <strong>cliente</strong>; la que responde se llama <strong>servidor</strong>. Ese par es el modelo de casi todo internet.</p><ul><li><strong>Cliente</strong> — tu navegador (Chrome, Edge, Safari). Pide páginas, envía formularios, muestra lo que recibe. Es \"el que tiene hambre\".</li><li><strong>Servidor</strong> — una computadora lejana, prendida 24/7, con la página guardada. Recibe pedidos de millones de clientes y les responde. Es \"la cocina\".</li></ul><p>Un servidor puede atender a muchísimos clientes a la vez — cuando tu app \"se cae por mucha gente\", es que la cocina no dio abasto (en el Mes 9 verás cómo se escala).</p><p>Esto te importa porque define dónde vive cada cosa en un proyecto. La parte que ves y tocas (botones, textos, imágenes) corre en el <strong>cliente</strong>; la parte que procesa datos, guarda información y decide, corre en el <strong>servidor</strong>. Cuando la IA te hable de <em>frontend</em> y <em>backend</em> (a fondo en B23), te estará hablando exactamente de esto: lo que el cliente muestra y lo que el servidor hace.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Internet es un <strong>restaurante</strong>: el cliente (tú, con el menú del navegador) pide; el mesero lleva el pedido (petición); la cocina — que nunca cierra — lo prepara y lo saca (servidor); el mesero lo lleva a tu mesa (respuesta). Un restaurante sirve a cientos de comensales a la vez, y nadie se confunde de mesa: cada pedido va etiquetado con su mesa.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Cuando la IA te describa tu propio proyecto:</p><pre><code>Cliente (tu navegador):  la página de bienvenida, los botones, los formularios\nServidor (la nube):      guarda los pedidos, revisa el inventario, manda el correo</code></pre><p>Tú ves el lado cliente; el servidor hace el trabajo que nadie ve. Si mañana dices \"quiero que los pedidos se guarden en una base de datos\", le estás pidiendo trabajo del lado servidor.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Muéstrame mi proyecto dividido en dos columnas: qué corre en el cliente (navegador) y qué corre en el servidor. Explícame en una línea qué pasa en cada lado cuando un usuario hace [acción principal].\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "relacionar", pares: [["Cliente", "El navegador que pide y muestra"], ["Servidor", "La computadora remota que responde 24/7"]] },
+              { tipo: "multiple", pregunta: "En el modelo cliente-servidor, ¿quién es el cliente al abrir una página web?", opciones: ["El servidor", "Tu navegador", "El proveedor de internet", "El DNS"], correcta: 1 },
+              { tipo: "completar", frase: "El ____ pide la página; el ____ la guarda y la responde. Un servidor atiende a muchos ____ a la vez.", banco: ["cliente", "servidor", "clientes", "dominios"], respuestas: ["cliente", "servidor", "clientes"] },
+              { tipo: "vf", afirmacion: "Un mismo servidor puede atender a millones de clientes al mismo tiempo.", correcta: true, explicacion: "por eso se cae cuando no da abasto." },
+              { tipo: "ordenar", instruccion: "Acomoda en orden lo que pasa al hacer clic en \"Comprar\":", elementos: ["el navegador envía la petición de compra", "el servidor guarda el pedido y responde", "el navegador muestra la confirmación"] }
+            ]
+          },
+          {
+            id: "m1-a21",
+            titulo: "El navegador por dentro: qué hace con lo que recibe",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>El navegador es un programa como cualquier otro (es un proceso, ¿te acuerdas del A15?) — pero con un trabajo especial: <strong>recibe el código de una página y lo convierte en la imagen que ves</strong>. No \"muestra\" la página: la construye, pieza por pieza, en milisegundos.</p><p>Cuando el servidor responde (A20), envía tres tipos de archivos, y el navegador los usa distinto:</p><ul><li><strong>HTML</strong> — el esqueleto: la estructura y los textos (es el tema de B7).</li><li><strong>CSS</strong> — el estilista: colores, tamaños, acomodo (el B8).</li><li><strong>JavaScript</strong> — el cerebro: comportamiento, botones que responden, datos que cambian (el B3).</li></ul><p>El orden es clave: primero lee el HTML y arma la estructura; luego aplica el CSS para estilizarla; y al final ejecuta el JavaScript, que puede modificar la estructura ya mostrada. Por eso \"mover una etiqueta de HTML rompe la página\" — el esqueleto cambió.</p><p>Tu superpoder para dirigir a la IA: las <strong>herramientas de desarrollador</strong> (tecla F12, o clic derecho → \"Inspeccionar\"). Ahí puedes ver el HTML, los estilos, la red (qué peticiones se hacen) y la consola (errores de JavaScript). La IA te va a pedir a menudo que le copies un error de la consola: ahora sabes de qué te habla.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>El navegador es como <strong>el director de una obra de teatro</strong>: recibe el guion (HTML), dirige la iluminación y el vestuario (CSS), y coordina a los actores que responden en vivo (JavaScript). El público (tú) solo ve la obra terminada; el director ve todo el andamiaje detrás del telón.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Con la página abierta, presionas F12 y ves pestañas:</p><pre><code>Elementos   ← el HTML de la página, editable en vivo\nConsola     ← los errores de JavaScript y mensajes\nRed         ← cada petición que hace la página y cuánto tardó</code></pre><p>Esa pestaña de <strong>Consola</strong> es la que te pedirá la IA: \"pégame el error que sale en rojo\". Copiar y pegar ese texto es un diagnóstico instantáneo para ella.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Abrí las herramientas de desarrollador (F12) de mi página. Explícame qué veo en cada pestaña (Elementos, Consola, Red) y qué información quieres que te copie cuando algo no funcione.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "relacionar", pares: [["HTML", "El esqueleto y los textos"], ["CSS", "Los estilos y colores"], ["JavaScript", "El comportamiento que responde"]] },
+              { tipo: "completar", frase: "El navegador recibe ____, ____ y ____ del servidor y los convierte en la página visual.", banco: ["HTML", "CSS", "JavaScript", "fotos impresas"], respuestas: ["HTML", "CSS", "JavaScript"] },
+              { tipo: "multiple", pregunta: "¿Qué hace el navegador con el JavaScript que recibe?", opciones: ["Lo guarda sin ejecutar", "Lo ejecuta, dando comportamiento a la página", "Lo borra al instante", "Lo convierte en imagen"], correcta: 1 },
+              { tipo: "vf", afirmacion: "Las herramientas de desarrollador (F12) solo sirven a programadores expertos.", correcta: false, explicacion: "copiar un error de la Consola es un diagnóstico útil para cualquier director de IA." },
+              { tipo: "ordenar", instruccion: "Acomoda en orden cómo construye el navegador una página:", elementos: ["leer el HTML y armar la estructura", "aplicar los estilos CSS", "ejecutar el JavaScript", "mostrar la página final"] }
+            ]
+          },
+          {
+            id: "m1-a22",
+            titulo: "La nube: la computadora de alguien más",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Cuando alguien dice \"la nube\", no hay magia en el cielo: hay <strong>computadoras de alguien más</strong>, en edificios gigantes (los centros de datos), que rentas por internet. <em>Cloud</em> es la jerga para \"servidores ajenos que uso sin tener que comprarlos\". El meme es exacto: \"no hay nube, solo es la computadora de otra persona\".</p><p>¿Por qué rentar en vez de comprar? Porque comprar un servidor cuesta dinero y desvelo: hardware, electricidad, espacio, mantenimiento, técnicos. Rentarlo te da el mismo poder por hora y sin responsabilidades — y si mañana necesitas 10 veces más, lo pides con un clic.</p><p>Los tres grandes proveedores: <strong>Amazon Web Services (AWS)</strong>, <strong>Microsoft Azure</strong> y <strong>Google Cloud</strong>. Todos tienen la misma idea: te prestan máquinas (las de A1: CPU, RAM, disco), sistemas operativos (A8, A9) y servicios (bases de datos, almacenamiento, correos) por minutos o por mes.</p><p>Para ti, en este programa: la nube es donde <strong>vivirá tu proyecto final</strong>. En el Mes 9 rentarás tu primer servidor y entenderás por qué \"subir a la nube\" significa copiar tu código a una de esas computadoras lejanas. Cuando la IA te diga \"deploya\" o \"publica en producción\", te estará hablando de esto: llevar tu app a una computadora ajena que estará prendida 24/7 para recibir clientes.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>La nube es como <strong>rentar un departamento amueblado</strong> en vez de construir tu casa: no te preocupas por los muros, el drenaje ni la electricidad — pagas la mensualidad y ya. Si necesitas más espacio, te mudas a uno más grande con un clic. Construir tu propio centro de datos sería como construirte la casa: posible, pero carísimo y lentísimo.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>El panel de un proveedor de nube (lo verás en el Mes 9):</p><pre><code>Crear servidor\n  Sistema operativo:  Ubuntu 24.04 LTS      ← elegiste el A9\n  Plan:               VPS · 2 vCPU · 4 GB RAM   ← las cifras del A1\n  Región:             us-east (Virginia) / México Central\n  Costo:              $8 USD/mes\n  [Crear]</code></pre><p>En minutos, tienes una computadora prendida en un edificio lejano, accesible desde tu terminal. Eso es \"la nube\" en su forma más pura.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Quiero publicar [mi proyecto] en la nube. ¿Qué proveedor me conviene para empezar, qué plan (considerando que soy principiante), y qué ventajas tiene cada uno de los grandes: AWS, Azure o Google Cloud?\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "vf", afirmacion: "La nube son computadoras físicas de alguien más que rentas por internet.", correcta: true, explicacion: "\"no hay nube, solo la computadora de otra persona\"." },
+              { tipo: "completar", frase: "En la nube ____ los servidores en vez de ____ el hardware.", banco: ["rentas", "comprar", "rompes", "olvidar"], respuestas: ["rentas", "comprar"] },
+              { tipo: "multiple", pregunta: "¿Cuáles son los tres grandes proveedores de nube?", opciones: ["Chrome, Edge y Safari", "AWS, Azure y Google Cloud", "Netflix, Disney y HBO", "npm, pip y apt"], correcta: 1 },
+              { tipo: "relacionar", pares: [["Comprar tu servidor", "Pagas hardware, luz y mantenimiento"], ["Rentar en la nube", "Pagas por hora o mes, sin responsabilidades"]] },
+              { tipo: "quehace", codigo: "VPS · 2 vCPU · 4 GB RAM", pregunta: "En el panel de nube ves: \"Plan: VPS · 2 vCPU · 4 GB RAM\". ¿Qué estás viendo?", opciones: ["El tamaño de la página web", "Los recursos de CPU y RAM de la máquina que vas a rentar", "El costo del internet", "La versión de Linux"], correcta: 1 }
+            ]
+          },
+          {
+            id: "m1-a23",
+            titulo: "Descargar, subir y el ancho de banda",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p><strong>Descargar</strong> es recibir datos de internet a tu dispositivo (una película, una página). <strong>Subir</strong> es enviarlos (un video a TikTok, un formulario, una copia de seguridad). Todo lo que haces en internet es una mezcla de las dos.</p><p>El <strong>ancho de banda</strong> es el tamaño de la tubería que te conecta a internet: cuánta información puede pasar por segundo. Se mide en megas (<code>Mbps</code> — megabits por segundo, ¿te acuerdas de A2?). \"100 megas de internet\" significa que tu tubería permite 100 megabits por segundo — que, ojo, son unos 12.5 megabytes por segundo reales. La gente se confunde todos los días pensando que baja 100 MB por segundo.</p><p>Un detalle del mundo real: en la mayoría de los planes de casa, <strong>subir es mucho más lento que bajar</strong>. Descargas a 300 megas, pero subes a 30. Por eso \"subir un video tarda el triple que descargarlo\". Y cuando muchos dispositivos usan la tubería a la vez (tele en streaming, videojuego, tu compu), se reparte y todo se siente lento.</p><p>¿Y en tu vida de director de IA? Cuando tu página carga lento, las causas típicas son tres: el archivo es pesado (imágenes — el tema de A2), el ancho de banda del usuario es chico, o el servidor es lento (recursos del A1). Saber separar las tres es diagnosticar de verdad, y le da dirección a la IA: comprime, o cambia de plan, o sube el servidor.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>El ancho de banda es el <strong>número de carriles de una autopista</strong>: 100 megas son 100 carriles de información a la vez. Subir y descargar son los dos sentidos de la vía — y en tu casa, la carretera de ida (subida) tiene muchos menos carriles que la de vuelta (bajada). Eso explica por qué \"mandar\" siempre tarda más que \"recibir\".</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Resultado de una prueba de velocidad:</p><pre><code>Descarga: 98.4 Mbps   ← la tubería de bajada\nSubida:   22.7 Mbps   ← la tubería de subida, más chica\nPing:     12 ms        ← la demora del viaje (A16)</code></pre><p>\"Tengo 100 megas\" → bajada ≈ 98. La subida, en cambio, ronda los 22: normal en planes de casa. Con esa lectura ya sabes qué esperar de cada dirección.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Mi página tarda en cargar. Ayúdame a diagnosticar cuál de las tres causas es: tamaño de archivos, ancho de banda del usuario, o recursos del servidor. Dame cómo medir cada una y qué arreglar en cada caso.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "vf", afirmacion: "Subir y descargar siempre van a la misma velocidad en tu plan de internet.", correcta: false, explicacion: "en la mayoría de los planes de casa, subir es más lento que bajar." },
+              { tipo: "multiple", pregunta: "¿Qué es el ancho de banda?", opciones: ["La fuerza de la señal wifi", "Cuánta información puede pasar por tu conexión por segundo", "El número de dispositivos conectados", "El tamaño de tu disco duro"], correcta: 1 },
+              { tipo: "completar", frase: "____ es recibir datos; ____ es enviarlos. El ____ es el tamaño de la tubería que los transporta.", banco: ["Descargar", "Subir", "ancho de banda", "procesador"], respuestas: ["Descargar", "Subir", "ancho de banda"] },
+              { tipo: "relacionar", pares: [["Descargar", "Ver una película en streaming"], ["Subir", "Publicar un video en TikTok"]] },
+              { tipo: "quehace", codigo: "Subida: 22.7 Mbps", pregunta: "La prueba de velocidad marca \"Subida: 22.7 Mbps\". ¿Qué te está diciendo?", opciones: ["Tu bajada es de 22.7", "Tu tubería de envío maneja 22.7 megabits por segundo", "Tu disco está lleno", "Tu señal wifi es débil"], correcta: 1 }
+            ]
+          },
+          {
+            id: "m1-a24",
+            titulo: "Redes: wifi, datos, módem y por qué \"se cae el sistema\"",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Cuando \"el internet se cae\", casi nunca se cayó <em>internet</em>: se cayó un pedacito de tu camino. Hay que distinguir las piezas de tu red local:</p><ul><li><strong>El wifi</strong> — la señal de radio que conecta tus dispositivos al módem dentro de tu casa. Es local: solo funciona a unos metros.</li><li><strong>El módem/router</strong> — la caja que reparte esa señal (router) y se conecta con tu proveedor (módem). El <strong>router</strong> reparte el wifi y administra las conexiones de tu casa; el <strong>módem</strong> es la puerta que sale a la calle.</li><li><strong>Tu proveedor (ISP)</strong> — la empresa que te trae internet a la casa (la infraestructura de la calle).</li><li><strong>El servidor remoto</strong> — la computadora del sitio al que quieres llegar (A20).</li></ul><p>\"Se cae el sistema\" puede significar: tu wifi se cayó (la señal), tu módem se reinició (la puerta), tu proveedor tiene problemas (la calle), o el sitio está caído (el restaurante cerró). Diagnosticar es descubrir cuál. El truco clásico: <strong>reiniciar el módem</strong> — apagar, esperar 30 segundos, prender. Arregla sorprendentemente seguido el problema, porque muchos routers se saturan con el tiempo.</p><p>Dato memorable: el wifi no es internet. Puedes tener \"todo el internet\" caído y tu wifi sigue \"funcionando\" — te conecta a una puerta que no sale a ningún lado.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Tu red es tu <strong>calle y tu casa</strong>: el wifi son los pasillos dentro de tu casa (señal local, se corta a pocos metros), el router es el guardia que organiza quién entra y sale, el módem es la puerta del edificio, y el ISP es la calle completa. Si el pasillo se bloquea, no es lo mismo que si cerraron la calle. Reiniciar el módem es tocar el timbre y que la puerta se \"despierte\".</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Orden de diagnóstico cuando \"no hay internet\":</p><pre><code>1. ¿Otros dispositivos también se quedaron sin wifi?   → ¿es señal o internet?\n2. ¿La luz del módem parpadea en rojo?                 → reinicia el módem\n3. Reinicia: apaga 30 s, prende, espera 2 min         → listo (9 de cada 10 veces)\n4. Si sigue: ¿tu proveedor reporta fallas en tu zona?  → problema del ISP\n5. Si solo un sitio falla: no es tu internet           → es el servidor de ese sitio</code></pre><p>Seguir este orden convierte \"se cayó todo\" en \"se cayó una pieza\" — y casi siempre la arreglas tú solo.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Mi internet se cae seguido. Guíame un diagnóstico paso a paso para saber si el problema es mi wifi, mi módem, mi proveedor o el sitio al que intento entrar. Dame qué revisar en cada paso.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "vf", afirmacion: "El wifi y el internet son exactamente lo mismo.", correcta: false, explicacion: "el wifi es la señal local de tu casa; el internet es la red mundial a la que esa señal te conecta." },
+              { tipo: "completar", frase: "El ____ reparte la señal en tu casa; el ____ conecta tu casa con el proveedor.", banco: ["router", "módem", "teclado", "cable HDMI"], respuestas: ["router", "módem"] },
+              { tipo: "ordenar", instruccion: "Pasos de diagnóstico cuando no hay internet:", elementos: ["revisar si otros dispositivos también fallan", "reiniciar el módem", "revisar si solo un sitio falla"] },
+              { tipo: "multiple", pregunta: "\"Se cae el sistema\" en un solo sitio web, pero tu internet funciona. ¿Cuál es la causa más probable?", opciones: ["Tu wifi se cayó", "El servidor de ese sitio tiene un problema", "Tu módem se reinició", "No pagaste el internet"], correcta: 1 },
+              { tipo: "relacionar", pares: [["Wifi", "Señal local de radio en tu casa"], ["Módem", "La puerta hacia tu proveedor"], ["Router", "Reparte la conexión entre tus dispositivos"], ["ISP", "La empresa que te da internet"]] }
+            ]
+          },
+          {
+            id: "m1-a25",
+            titulo: "Puertos: las puertas numeradas de un servidor (80, 443, 3000)",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Un servidor es como un edificio: tiene una dirección (la IP, del A17), pero también tiene <strong>puertas numeradas</strong> por donde entran las peticiones. Esas puertas son los <strong>puertos</strong> — números entre 0 y 65535 que le dicen al servidor qué tipo de servicio atender.</p><p>Los tres que vas a ver a diario:</p><ul><li><strong>80</strong> — HTTP (el idioma sin candado del A19).</li><li><strong>443</strong> — HTTPS (el idioma con candado). Por eso el 443 es \"la puerta principal cifrada\" de cualquier sitio.</li><li><strong>3000</strong> — el puerto favorito de desarrollo: cuando corres un proyecto localmente, casi siempre abre en <code>localhost:3000</code>.</li></ul><p>La regla: <strong>IP + puerto = dirección completa</strong>. <code>142.250.190.78:443</code> es \"el edificio 142.250.190.78, puerta 443\". Y un servidor tiene muchas puertas a la vez: la 443 para el sitio público, la 3000 para desarrollo, la 5432 para la base de datos (a fondo en el Mes 9).</p><p>Aquí viene el conflicto clásico que ya mencionamos en A15: <strong>dos programas no pueden usar el mismo puerto al mismo tiempo</strong>. Si abres dos proyectos y ambos quieren el 3000, el segundo falla con el famoso \"port 3000 is already in use\". No es un error del código: es que la puerta ya tiene quien la cuide. La solución: cerrar el proceso que la ocupa, o cambiar el puerto (pedirle a la IA que corra en el 3001).</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Los puertos son <strong>las puertas numeradas de un edificio</strong>: el mismo edificio tiene entrada principal (443, con vigilancia y candado), entrada de servicio (80, sin candado) y puertas internas para oficinas (3000, la de desarrollo). Dos personas no pueden entrar por la misma puerta al mismo tiempo sin chocar — igual que dos programas no comparten puerto.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Cuando corres un proyecto y la terminal te dice:</p><pre><code>Server running on http://localhost:3000</code></pre><p>Traducción: \"mi servidor está escuchando en la puerta 3000 de tu propia computadora\" (lo de localhost es el tema de A26). Y el error de conflicto:</p><pre><code>Error: listen EADDRINUSE: address already in use 127.0.0.1:3000\n→ ya hay un proceso en esa puerta (A15): ciérralo o cambia a 3001.</code></pre>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Corrí mi proyecto y abrió en localhost:3000, pero quiero entender por qué 3000 y no otro número. Explícame qué es un puerto, por qué el 80 y el 443 son especiales, y qué hago si el 3000 está ocupado.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "relacionar", pares: [["80", "HTTP (sin candado)"], ["443", "HTTPS (con candado)"], ["3000", "Desarrollo local de proyectos"]] },
+              { tipo: "completar", frase: "La dirección completa de un servicio es ____ + ____. El puerto 443 atiende ____ y el 3000 sirve para ____.", banco: ["IP", "puerto", "HTTPS", "desarrollo", "películas"], respuestas: ["IP", "puerto", "HTTPS", "desarrollo"] },
+              { tipo: "multiple", pregunta: "¿Qué pasa si dos programas usan el mismo puerto a la vez?", opciones: ["Funcionan los dos normalmente", "El segundo falla: el puerto ya está en uso", "El internet se cae", "La computadora se apaga"], correcta: 1 },
+              { tipo: "quehace", codigo: "Server running on http://localhost:3000", pregunta: "La terminal dice: \"Server running on http://localhost:3000\". ¿Qué significa?", opciones: ["Tu servidor está escuchando en el puerto 3000 de tu propia computadora", "Tu servidor ya está en internet", "El puerto 3000 está cerrado", "Tu proyecto tiene un error"], correcta: 0 },
+              { tipo: "vf", afirmacion: "Un mismo servidor puede atender varios puertos a la vez (443, 3000, etc.).", correcta: true, explicacion: "cada puerto es una puerta distinta del mismo edificio." }
+            ]
+          },
+          {
+            id: "m1-a26",
+            titulo: "localhost: el servidor que vive en tu propia compu",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Cuando la IA te dice \"abre <code>localhost:3000</code>\", te está diciendo: \"abre la puerta 3000 de <strong>tu propia computadora</strong>\". <strong>localhost</strong> es un nombre especial que siempre significa \"esta máquina, yo mismo\". No viaja a internet: el navegador se lo queda en casa.</p><p>Su dirección IP es <strong>127.0.0.1</strong> — la dirección reservada para \"mí mismo\" en toda computadora del mundo. En cualquier equipo, escribir <code>localhost</code> o <code>127.0.0.1</code> es lo mismo: hablar contigo.</p><p>¿Por qué existe? Porque antes de publicar algo, lo pruebas localmente: corres el servidor en tu compu (A25) y tu navegador lo visita por localhost. Es el ensayo general antes del estreno. La ventaja es enorme: puedes romper, arreglar y probar sin que nadie más lo vea.</p><p>La diferencia que tienes que grabar: <strong>localhost solo existe en tu máquina</strong>. Si le mandas a tu amigo en otra ciudad \"entra a localhost:3000\", va a entrar a SU propia computadora, no a la tuya. Para que otros te visiten, necesitas la nube (A22) o un túnel (lo verás en la Materia C al publicar). Este concepto te va a acompañar en todos tus proyectos: todo desarrollo empieza con un localhost.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>localhost es <strong>tu propia cocina de prueba</strong>: cocinas y pruebas el platillo en tu casa antes de abrir el restaurante. Nadie más puede comer de tu cocina de prueba porque está en tu casa. Cuando abres el restaurante (publicas), la cocina se mueve a un lugar público — pero hasta entonces, el platillo es solo tuyo.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<pre><code>1. La IA te pide correr el proyecto\n2. La terminal dice: \"Server running on http://localhost:3000\"\n3. Abres tu navegador y visitas http://localhost:3000\n4. Solo TÚ puedes ver esa página desde tu compu</code></pre><p>Si otro dispositivo en la misma casa quiere entrar, no usará localhost: usará tu IP local (la del A24). Pero para probar solo, localhost es todo lo que necesitas.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Corrí mi proyecto y la terminal me dice que abra localhost:3000. Explícame en términos simples por qué 'localhost' funciona solo en mi máquina y qué tendría que hacer para que mi amigo vea mi proyecto desde su casa.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "multiple", pregunta: "¿Qué es localhost?", opciones: ["Un servidor de internet público", "Tu propia computadora con una dirección especial", "Un navegador nuevo", "Un proveedor de nube"], correcta: 1 },
+              { tipo: "completar", frase: "localhost siempre significa ____; su dirección IP reservada es ____.", banco: ["mi propia computadora", "127.0.0.1", "google.com", "3000"], respuestas: ["mi propia computadora", "127.0.0.1"] },
+              { tipo: "vf", afirmacion: "Un amigo en otra ciudad puede abrir tu localhost desde su casa.", correcta: false, explicacion: "localhost siempre apunta a la propia máquina; el tuyo no es visible fuera de tu compu." },
+              { tipo: "ordenar", instruccion: "Pasos típicos para probar un proyecto localmente:", elementos: ["correr el proyecto", "leer en la terminal qué puerto usó", "abrir localhost:puerto en el navegador"] },
+              { tipo: "quehace", codigo: "Server running on http://localhost:3000", pregunta: "La terminal dice \"Server running on http://localhost:3000\". ¿A quién atiende ese servidor?", opciones: ["A todo internet", "Solo a tu propia computadora", "A tu proveedor de internet", "Al DNS"], correcta: 1 }
+            ]
+          },
+          {
+            id: "m1-a27",
+            titulo: "Servidores de verdad: qué estás rentando cuando rentas uno",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>En el Mes 9 vas a rentar tu primer servidor. Antes de pagar, entendamos qué estás comprando exactamente. Al rentar un servidor (la nube del A22), pagas por una computadora remota con:</p><ul><li><strong>CPU y RAM</strong> — el poder de cálculo (¿te acuerdas del A1?). Más núcleos y más RAM = atiende más clientes y procesa más rápido. Es lo que más sube el precio.</li><li><strong>Disco</strong> — dónde viven tu código y tus datos. Un SSD rápido cuesta más que uno normal.</li><li><strong>IP pública</strong> — la dirección por la que el mundo te encuentra (A17).</li><li><strong>Sistema operativo</strong> — casi siempre Ubuntu (el A9).</li><li><strong>Ancho de banda</strong> — cuántos datos puede transferir (A23). Ojo: suelen cobrarte el tráfico.</li><li><strong>Uptime</strong> — el porcentaje de tiempo que el servidor está prendido. Un 99.9% significa menos de 9 horas caídas al año. Eso es lo que pagas de verdad: disponibilidad.</li></ul><p>Hay dos sabores principales. <strong>Compartido</strong>: varios clientes en la misma máquina — barato, pero si un vecino satura, te afecta (como departamento compartido). <strong>VPS</strong> (<em>Virtual Private Server</em>): una porción garantizada de una máquina grande — más caro, pero tu CPU y RAM son tuyas. Para tu primer proyecto, un VPS pequeño es el punto dulce.</p><p>Dato que aclara todo: <strong>el servidor de tu app es una computadora que nunca duerme</strong>. Mientras tu laptop se apaga, ese servidor está atendiendo peticiones. Cuando rentas, rentas eso: una máquina despierta para siempre, esperando tu código.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Rentar un servidor es <strong>rentar un local comercial</strong>: el compartido es un local en un mercado con muchos vendedores (barato, pero el vecino puede inundarte); el VPS es un local con puerta propia (tu espacio es tuyo). Y la ubicación importa: si tus clientes son de México, un servidor en la Ciudad de México responde más rápido que uno en Europa — cada milisegundo cuenta.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Comparación típica que verás en los proveedores:</p><pre><code>Plan básico (VPS):     2 vCPU · 4 GB RAM · 80 GB SSD · 2 TB de tráfico → $8 USD/mes\nPlan intermedio (VPS): 4 vCPU · 8 GB RAM · 160 GB SSD · 4 TB de tráfico → $16 USD/mes\nAlojamiento compartido: sin CPU garantizada · \"ilimitado\" → $3 USD/mes</code></pre><p>El básico es más que suficiente para tu primer proyecto. Los proveedores hacen dinero cuando te venden upgrades que no necesitas.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Voy a rentar mi primer servidor para [mi proyecto]. ¿Qué plan me conviene considerando que soy principiante? Compara VPS contra compartido y dime qué especificaciones necesito de verdad para no pagar de más.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "relacionar", pares: [["CPU y RAM", "Atender clientes y procesar rápido"], ["Disco", "Guardar tu código y tus datos"], ["IP pública", "La dirección por la que el mundo te encuentra"], ["Ancho de banda", "Cuántos datos puede transferir"]] },
+              { tipo: "completar", frase: "El 99.9% de ____ significa que el servidor está prendido casi todo el año; es lo que pagas de verdad: ____.", banco: ["uptime", "disponibilidad", "velocidad", "memoria"], respuestas: ["uptime", "disponibilidad"] },
+              { tipo: "multiple", pregunta: "¿Cuál es la diferencia clave entre un VPS y un alojamiento compartido?", opciones: ["El VPS es gratis", "En el VPS tu CPU y RAM son tuyas; en el compartido las compartes", "El compartido es siempre más rápido", "No hay diferencia"], correcta: 1 },
+              { tipo: "vf", afirmacion: "El servidor de una app necesita estar prendido 24/7 para atender clientes en cualquier momento.", correcta: true, explicacion: "es una computadora que nunca duerme." },
+              { tipo: "ordenar", instruccion: "Pasos para tener tu app en un servidor de verdad:", elementos: ["rentar el servidor (plan, región, Ubuntu)", "subir tu código y ejecutarlo", "apuntar tu dominio al servidor", "verificar que carga desde internet"] }
+            ]
+          },
+          {
+            id: "m1-a28",
+            titulo: "Seguridad básica I: contraseñas, gestores y 2FA",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>La puerta de entrada de casi todos los hackeos no es la tecnología: son las <strong>contraseñas</strong>. El error número uno del mundo: reusar la misma contraseña en varios sitios. Si un sitio se filtra (pasa todo el tiempo) y usabas esa contraseña también en tu banco, el ladrón prueba \"¿y si también es la del banco?\" — y acierta. Una contraseña filtrada se vuelve la llave maestra de toda tu vida digital.</p><p>Las reglas que de verdad importan:</p><ol><li><strong>Contraseñas largas y únicas por sitio.</strong> Largas importan más que complejas: \"gato-azul-2009-caminata\" es más fuerte que \"G4t0!x\", porque es larga y no se adivina. Únicas: cada sitio, una distinta.</li><li><strong>Un gestor de contraseñas</strong> — un programa que genera y guarda todas por ti, protegido por una sola contraseña maestra. No tienes que memorizar 40 contraseñas: memorizas una. Los navegadores traen uno integrado; los dedicados (1Password, Bitwarden, el de Apple/Google) son más completos.</li><li><strong>2FA (doble factor)</strong> — además de la contraseña, un segundo paso: un código que cambia cada 30 segundos en una app de tu celular, o una notificación para aprobar. Aunque te roben la contraseña, no pueden entrar sin el código que solo está en tu teléfono.</li></ol><p>Regla que duele pero funciona: si te llega un aviso \"tu contraseña se filtró\", no es broma — cámbiala en ese sitio <strong>y en cualquier otro donde la hayas repetido</strong>. Un gestor hace esto tolerable.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Tu contraseña es la <strong>llave de tu casa</strong>: reusarla en todos lados es usar la misma llave para tu casa, tu bodega y tu caja fuerte — y dejar copias colgadas en la calle. El gestor de contraseñas es el <strong>llavero con bóveda</strong>: una llave maestra (tu contraseña maestra) abre el estuche donde están todas las demás, cada una distinta. Y el 2FA es el <strong>guardia adicional</strong> que pregunta \"¿tienes la contraseña? — bueno, ¿y el código de tu teléfono?\"</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>El flujo cuando activas 2FA en una cuenta:</p><pre><code>Contraseña: ********\n2FA: [ 482913 ]   ← el código de tu app de autenticador</code></pre><p>Aunque alguien robe tu contraseña, sin el código de 6 dígitos que cambia cada 30 segundos en tu celular, la cuenta no abre. Ese es el \"segundo factor\": algo que sabes (contraseña) + algo que tienes (tu teléfono).</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Quiero asegurar mis cuentas importantes. Guíame para: 1) configurar un gestor de contraseñas, 2) generar contraseñas fuertes y únicas, y 3) activar 2FA en [tus cuentas]. Explícame por qué cada paso importa y qué errores evitar.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "vf", afirmacion: "Reusar la misma contraseña en varios sitios es el riesgo de seguridad más común.", correcta: true, explicacion: "si un sitio se filtra, la contraseña sirve para entrar a los demás." },
+              { tipo: "multiple", pregunta: "¿Qué es el 2FA?", opciones: ["Un antivirus gratis", "Un segundo paso de verificación además de la contraseña", "Una contraseña más larga", "Un tipo de red wifi"], correcta: 1 },
+              { tipo: "completar", frase: "Un gestor de contraseñas ____ contraseñas largas y únicas, y las ____ detrás de una contraseña maestra.", banco: ["genera", "guarda", "borra", "vende"], respuestas: ["genera", "guarda"] },
+              { tipo: "relacionar", pares: [["Contraseña única por sitio", "Que una filtración no abra todas tus cuentas"], ["Gestor de contraseñas", "No tener que memorizar nada ni repetir"], ["2FA", "Que una contraseña robada no sea suficiente"]] },
+              { tipo: "quehace", codigo: "Aviso: se filtró tu contraseña del sitio X", pregunta: "Un aviso dice: \"Se filtró tu contraseña del sitio X. ¿La usaste en otro sitio?\" ¿Qué debes hacer?", opciones: ["Ignorarlo, seguro es spam", "Cambiar la contraseña de X y de cualquier sitio donde la hayas repetido", "Cambiar solo la contraseña del correo", "Borrar el navegador"], correcta: 1 }
+            ]
+          },
+          {
+            id: "m1-a29",
+            titulo: "Seguridad básica II: phishing, enlaces trampa y sentido común",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>La otra puerta de entrada de los criminales digitales no rompe tecnología: te <strong>engaña a ti</strong>. Eso se llama <strong>phishing</strong> (pesca): mandan mensajes que fingen ser tu banco, tu empresa o una tienda, para que les des tu contraseña o caigas en un enlace trampa.</p><p>Cómo se ve la trampa de verdad:</p><ul><li><strong>La urgencia falsa</strong> — \"¡tu cuenta será suspendida en 24 horas!\" El pánico apaga tu pensamiento crítico a propósito.</li><li><strong>La identidad falsa</strong> — logos, nombres y colores que imitan a la marca real. El logo se puede copiar; no es prueba de nada.</li><li><strong>El dominio falso</strong> — aquí está el truco que tienes que dominar: la dirección real. <code>bancomex-mx.com</code>, <code>bancomex.verify.co</code>, <code>bancomex.com.evilsite.net</code> — ninguno es <code>bancomex.com</code>. Antes de hacer clic o escribir datos, <strong>pasa el mouse sobre el enlace y mira la dirección</strong> (la barra de estado te la muestra sin hacer clic).</li><li><strong>El pedido imposible</strong> — ningún banco real te pide tu contraseña por mensaje, ni \"confirma tus datos\" por un link. Regla de oro: <strong>nunca entres a tu banco por un enlace que te mandaron; escríbelo tú en la barra.</strong></li></ul><p>¿Y el sentido común? Una oferta \"ganaste un iPhone\" de alguien que no conoces, un paquete que \"no pudimos entregar\" con enlace, un \"jefe\" que pide transferencias urgentes por mensaje: pausa, revisa el dominio, llama por el teléfono oficial, pregunta en persona. El phishing existe porque funciona; deja de funcionar cuando tú pausas.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>El phishing es un <strong>policía falso</strong>: se viste igual, trae placa, pero no es el de verdad. Cualquiera puede imprimir un logo o una placa; la prueba no es el uniforme, es la credencial verificable. En internet, tu credencial es el <strong>dominio escrito por ti</strong>, no el que te llega en un mensaje.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Un mensaje de \"tu banco\":</p><pre><code>⚠ \"BancoMex: detectamos actividad inusual.\n   Confirma tus datos AHORA o tu cuenta se suspenderá:\n   → banco-mex.com.mx/confirmar\"    ← el dominio es falso\n\n✔ El banco real jamás te pide datos por un mensaje.\n✔ Y su dominio sería: bancomex.mx (sin guiones raros)</code></pre><p>El enlace se ve parecido, pero no es. Ese guion o esa terminación extra son la firma de la trampa.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Prepárame una lista de señales de phishing para revisar antes de hacer clic en cualquier mensaje. Incluye: la urgencia, el remitente, el dominio del enlace y los pedidos imposibles. Después dame ejemplos reales de enlaces trampa y cómo examinarlos sin hacer clic.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "multiple", pregunta: "¿Qué es el phishing?", opciones: ["Un virus que borra el disco", "Mensajes que fingen ser una entidad real para robarte datos", "Un ataque que apaga internet", "Un tipo de contraseña"], correcta: 1 },
+              { tipo: "vf", afirmacion: "Si tu banco te pide tu contraseña por mensaje de texto, es legítimo.", correcta: false, explicacion: "ningún banco real pide contraseñas por mensaje; es phishing." },
+              { tipo: "completar", frase: "Antes de hacer clic en un enlace sospechoso, pasa el ____ sobre él y revisa el ____ real, no el texto que se ve.", banco: ["mouse", "dominio", "teclado", "color"], respuestas: ["mouse", "dominio"] },
+              { tipo: "relacionar", pares: [["\"¡Actúa en 24 horas o se suspende!\"", "Urgencia falsa para que no pienses"], ["Logo del banco copiado", "Identidad falsa"], ["\"Confirma tu contraseña\"", "Pedido imposible"], ["Dominio con guiones y terminación rara", "Enlace trampa"]] },
+              { tipo: "quehace", codigo: "Enlace \"de tu banco\" por WhatsApp", pregunta: "Te llega un enlace \"para entrar a tu banco\" por WhatsApp. ¿Cuál es la conducta correcta?", opciones: ["Hacer clic y entrar, se ve oficial", "Escribir el sitio del banco tú mismo en la barra y entrar desde ahí", "Hacer clic pero rápido", "Contestar el mensaje confirmando"], correcta: 1 }
+            ]
+          },
+          {
+            id: "m1-a30",
+            titulo: "Repaso integrador de La Máquina (mega-quiz jugable)",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Bienvenido a la meta de La Máquina. En 29 lecciones armaste el mapa completo de cómo funciona el mundo digital: cómo trabaja una computadora por dentro (A1, A2), cómo se organizan archivos y carpetas (A3, A4), cómo hablarle por terminal (A5, A6, A7), qué sistema la controla (A8, A9), qué es instalar (A10), cómo se construye software con piezas (A11, A12, A13), cómo se equivoca la memoria (A14), qué procesos viven en tu máquina (A15), cómo viajan las peticiones por internet (A16-A20), cómo el navegador lo convierte en imagen (A21), dónde viven las apps (A22-A27) y cómo protegerte (A28, A29).</p><p>Ese mapa no se memoriza para un examen: se usa como herramienta de dirección de IA. Cuando la IA te diga \"instala la dependencia\", \"revisa si el puerto está en uso\", \"sube el ancho de banda\" o \"apunta tu dominio\", tú ya no escuchas palabras raras: escuchas piezas de un rompecabezas que entiendes.</p><p>Esta lección es el examen jugable: ocho ejercicios que mezclan todo lo de la materia. Si fallas alguno, la respuesta te dice a qué lección volver — así el repaso se convierte en mapa, no en memorización. El objetivo no es sacar 10: es detectar tu punto más débil y cerrarlo.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Este repaso es el <strong>recorrido final de la obra</strong>: en las 29 lecciones instalaste tubería, electricidad y acabados; ahora enciendes todas las luces y recorres la casa de punta a punta para ver qué funciona. Cada ejercicio es un cuarto encendido. Los que no prenden son los que hay que arreglar antes de entregar la llave.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Estrategia para el mega-quiz: respóndelo completo, y por cada falla escribe en una hoja el número de la lección que se te indica al pie de la respuesta. Ese papel es tu plan de repaso personal — las lecciones que repites no son castigo, son tu plan de entrenamiento para la siguiente semana.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Quiero hacer un repaso del Mes 1 de La Máquina. Hazme un examen oral: hazme preguntas de a una, espera mi respuesta, y según cómo responda dime si estoy listo o qué lección repasar. Cubre: hardware, archivos y rutas, terminal, sistemas operativos, dependencias y npm, caché, procesos, internet y DNS, URLs, HTTP/HTTPS, cliente-servidor, navegador, nube, puertos, localhost, servidores y seguridad.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "multiple", pregunta: "Tu compu se traba con muchas pestañas abiertas. ¿Cuál es la causa más probable, y qué pieza del A1 está saturada?", opciones: ["El disco está lleno", "La RAM está saturada", "El CPU está apagado", "La pantalla es pequeña"], correcta: 1 },
+              { tipo: "completar", frase: "Al correr <code>npm install</code>, el proyecto lee su ____ y descarga las piezas a ____; y si el puerto está en uso, hay un ____ que lo ocupa.", banco: ["package.json", "node_modules", "proceso", "navegador"], respuestas: ["package.json", "node_modules", "proceso"] },
+              { tipo: "relacionar", pares: [["127.0.0.1", "localhost"], ["Puerta 443", "HTTPS"], ["puerto 3000", "Desarrollo local"], ["?id=5", "Parámetros de URL"]] },
+              { tipo: "vf", afirmacion: "Si cambiaste tu código pero el navegador muestra la versión vieja, puede ser la caché; borrarla o forzar la recarga suele arreglarlo.", correcta: true, explicacion: "la caché guarda copias viejas y la recarga forzada las ignora." },
+              { tipo: "ordenar", instruccion: "Acomoda en orden lo que pasa cuando escribes una URL:", elementos: ["el navegador consulta el DNS por la IP", "el navegador manda una petición HTTPS", "el servidor responde con la página", "el navegador ejecuta HTML, CSS y JavaScript"] },
+              { tipo: "quehace", codigo: "EADDRINUSE: address already in use 127.0.0.1:3000", pregunta: "La terminal dice: <code>EADDRINUSE: address already in use 127.0.0.1:3000</code>. ¿Qué está pasando y cómo lo resuelves?", opciones: ["Tu internet se cayó; reinicia el módem", "El puerto 3000 ya está ocupado; cierra el proceso que lo usa o cambia de puerto", "El DNS no encuentra tu dominio", "La caché está llena; borra el historial"], correcta: 1 },
+              { tipo: "multiple", pregunta: "Un mensaje \"de tu banco\" te pide confirmar tu contraseña con urgencia por un enlace. ¿Qué es y qué haces?", opciones: ["Es phishing; no hagas clic y entra al banco escribiendo el dominio tú mismo", "Es real; haz clic y confirma rápido", "Es una actualización del sistema; acéptala", "Es tu proveedor de internet; ignóralo y listo"], correcta: 0 },
+              { tipo: "completar", frase: "En la nube ____ servidores en vez de comprar hardware; tu app vive en una computadora ajena prendida ____, y la encuentras por su ____ pública.", banco: ["rentas", "24/7", "IP", "caché"], respuestas: ["rentas", "24/7", "IP"] }
+            ]
+          }
         ]
       },
       "b": {
