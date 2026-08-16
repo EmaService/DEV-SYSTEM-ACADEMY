@@ -60,7 +60,16 @@
             <p id="result-verdict" class="page-title" style="font-size:1.8rem;font-weight:800"></p>
             <p id="result-score" style="font-family:var(--font-display);font-size:3.4rem;font-weight:800;color:var(--text);line-height:1.1;margin-top:0.5rem"></p>
             <p id="result-info" class="small" style="margin-top:0.8rem;color:var(--muted)"></p>
+            <button id="result-review-btn" class="btn btn-brand btn-block" style="margin-top:0.8rem;display:none">Ver revisión</button>
             <a id="result-cta" class="btn btn-block" href="portal.html#examenes" style="margin-top:1rem">Volver a mis exámenes</a>
+          </div>
+
+          <div id="exam-review" style="display:none;margin-top:1.2rem">
+            <div id="review-header"></div>
+            <div id="review-filters" style="display:flex;gap:0.5rem;margin:1rem 0;flex-wrap:wrap"></div>
+            <div id="review-list" style="display:grid;gap:1rem"></div>
+            <div id="review-closing" style="margin-top:1.5rem"></div>
+            <a href="portal.html#examenes" class="btn btn-block" style="margin-top:1rem">Volver al portal</a>
           </div>
 
           <p id="exam-message" class="notice" aria-live="polite"></p>

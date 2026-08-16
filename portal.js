@@ -1357,8 +1357,8 @@
         var exRec = examsMap[m];
         html += "<div class='card' style='padding:1rem'><div class='summary-row'><span>" + mTitle + "</span>";
         if (exRec) {
-          var exDate = exRec.taken_at ? new Date(exRec.taken_at).toLocaleDateString("es-MX", { day: "numeric", month: "short", year: "numeric" }) : "—";
-          html += "<span class='badge' style='background:rgba(34,197,94,0.15);color:var(--green);padding:0.25rem 0.6rem;border-radius:999px;font-size:0.75rem;font-weight:700'>Aprobado ✓ · " + (exRec.score || "—") + "/100</span></div><p class='small' style='margin-top:0.3rem;color:var(--green)'>Presentado el " + exDate + "</p>";
+          var exDate = exRec.taken_at ? new Date(exRec.taken_at).toLocaleDateString("es-MX", { day: "numeric", month: "long", year: "numeric" }) : "—";
+          html += "<span class='badge' style='background:rgba(34,197,94,0.15);color:var(--green);padding:0.25rem 0.6rem;border-radius:999px;font-size:0.75rem;font-weight:700'>Aprobado ✓ · " + (exRec.score || "—") + "/100 · " + exDate + "</span></div><p class='small' style='margin-top:0.3rem;color:var(--green)'>Presentado el " + exDate + "</p><a href='examen-mes.html?mes=" + m + "&revisar=1' class='btn btn-brand btn-sm' style='margin-top:0.6rem'>Ver revisión</a>";
         } else {
           var total = 0;
           var done = 0;
