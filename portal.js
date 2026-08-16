@@ -277,21 +277,44 @@
   }
 
   function renderProgress() {
-    var paidMonths = window.DevSystemState.getPaidMonthIds(user.email);
-    var summary = window.DevSystemState.getProgressSummary(user.email);
-    if (monthsSummary) monthsSummary.textContent = paidMonths.length + "/12";
-    if (lessonsSummary) lessonsSummary.textContent = summary.done + "/" + summary.total;
-    if (progressPercent) progressPercent.textContent = summary.percent + "%";
-    if (progressFill) progressFill.style.width = summary.percent + "%";
-
     var cfg2 = window.DEV_SYSTEM_CONFIG || {};
     var xpPerLesson = cfg2.xpPerLesson || 50;
     var xpPerFirstTry = cfg2.xpPerFirstTry || 10;
-
     var rachaEl = document.getElementById("stat-racha");
     var xpEl = document.getElementById("stat-xp");
 
-    if (cloudMode && window.DevSystemCloud.getAllLessonStats) {
+    function setLessonStats(done, total, paidCount) {
+      if (monthsSummary) monthsSummary.textContent = paidCount + "/12";
+      if (lessonsSummary) lessonsSummary.textContent = done + "/" + total;
+      var pct = total > 0 ? Math.round((done / total) * 100) : 0;
+      if (progressPercent) progressPercent.textContent = pct + "%";
+      if (progressFill) progressFill.style.width = pct + "%";
+      if (progressPercent) {
+        progressPercent.animate([{transform:"scale(1)"},{transform:"scale(1.15)"},{transform:"scale(1)"}], {duration:350,easing:"ease-out"});
+      }
+    }
+
+    if (cloudMode && window.DevSystemCloud.getPaidMonthIds) {
+      var paidPromise = window.DevSystemCloud.getPaidMonthIds(user.email).catch(function () { return []; });
+      var progPromise = window.DevSystemCloud.getProgressMap(user.email).catch(function () { return {}; });
+      Promise.all([progPromise, paidPromise]).then(function (res) {
+        var progress = res[0] || {};
+        var paidMonths = res[1] || [];
+        var done = 0, total = 0;
+        for (var mp = 0; mp < paidMonths.length; mp++) {
+          var data = leccionesData["m" + paidMonths[mp]];
+          if (!data || !data.materias) continue;
+          var keys = Object.keys(data.materias);
+          for (var ki = 0; ki < keys.length; ki++) {
+            var lessons = data.materias[keys[ki]].lecciones || [];
+            for (var li = 0; li < lessons.length; li++) {
+              if (!lessons[li].proximamente) { total++; if (progress[lessons[li].id]) done++; }
+            }
+          }
+        }
+        setLessonStats(done, total, paidMonths.length);
+      }).catch(function () { setLessonStats(0, 0, 0); });
+
       window.DevSystemCloud.getStreakDays(user.email).then(function (streak) {
         if (rachaEl) {
           rachaEl.textContent = streak;
@@ -302,7 +325,7 @@
           }
           rachaEl.animate([{transform:"scale(1)"},{transform:"scale(1.15)"},{transform:"scale(1)"}], {duration:350,easing:"ease-out"});
         }
-      });
+      }).catch(function () {});
       window.DevSystemCloud.getAllLessonStats(user.email).then(function (allStats) {
         var totalXp = 0;
         for (var st = 0; st < allStats.length; st++) {
@@ -313,13 +336,16 @@
           xpEl.textContent = totalXp;
           xpEl.animate([{transform:"scale(1)"},{transform:"scale(1.15)"},{transform:"scale(1)"}], {duration:350,easing:"ease-out"});
         }
+      }).catch(function () {
+        var localXp = parseInt(localStorage.getItem("devsystem_xp_" + user.email) || "0", 10);
+        if (xpEl) xpEl.textContent = localXp;
       });
     } else {
+      var paidMonths = window.DevSystemState.getPaidMonthIds(user.email);
+      var summary = window.DevSystemState.getProgressSummary(user.email);
+      setLessonStats(summary.done, summary.total, paidMonths.length);
       var localXp = parseInt(localStorage.getItem("devsystem_xp_" + user.email) || "0", 10);
-      if (xpEl) {
-        xpEl.textContent = localXp;
-        xpEl.animate([{transform:"scale(1)"},{transform:"scale(1.15)"},{transform:"scale(1)"}], {duration:350,easing:"ease-out"});
-      }
+      if (xpEl) xpEl.textContent = localXp;
       if (rachaEl) rachaEl.textContent = "0";
     }
 
@@ -590,8 +616,14 @@
     if (examPresented) {
       if (stepPayStatus) { stepPayStatus.textContent = examPassed ? "Disponible" : "Disponible (tarifa regular)"; stepPayStatus.style.color = "var(--green)"; }
       if (stepPayContent) stepPayContent.style.display = "block";
-      renderPayMonthOptions();
-      updatePayAmount();
+      if (cloudMode && window.DevSystemCloud.getPaidMonthIds) {
+        window.DevSystemCloud.getPaidMonthIds(user.email)
+          .then(function (pms) { renderPayMonthOptions(pms || []); updatePayAmount(); })
+          .catch(function () { renderPayMonthOptions([]); updatePayAmount(); });
+      } else {
+        renderPayMonthOptions(window.DevSystemState.getPaidMonthIds(user.email));
+        updatePayAmount();
+      }
     }
   }
 
@@ -607,11 +639,11 @@
     }
   }
 
-  function renderPayMonthOptions() {
+  function renderPayMonthOptions(paidMonthsArg) {
     var select = document.getElementById("pay-month-select");
     var heading = document.getElementById("step-pay-heading");
     if (!select) return;
-    var paidMonths = window.DevSystemState.getPaidMonthIds(user.email);
+    var paidMonths = paidMonthsArg || [];
     var paidMap = {};
     for (var p = 0; p < paidMonths.length; p++) paidMap[paidMonths[p]] = true;
     select.innerHTML = "";
@@ -1078,10 +1110,10 @@
     if (roadmapEl) renderCurriculumForMonth(monthNum, progress || null, roadmapEl);
   }
 
-  function renderPlanContent(monthNum, contentArea) {
+  function renderPlanContent(monthNum, contentArea, paidMonthsArg) {
     if (!contentArea) return;
     var isPaid = false;
-    var paidMonths = window.DevSystemState.getPaidMonthIds(user.email);
+    var paidMonths = paidMonthsArg || [];
     for (var pi = 0; pi < paidMonths.length; pi++) {
       if (paidMonths[pi] === monthNum) { isPaid = true; break; }
     }
