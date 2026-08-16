@@ -1375,26 +1375,689 @@ window.DEV_SYSTEM_LECCIONES = {
               { tipo: "quehace", codigo: "const activo = true; if (activo === true) { pagar(); }", pregunta: "<code>const activo = true; if (activo === true) { pagar(); }</code> — ¿qué hace este código?", opciones: ["Nunca ejecuta <code>pagar()</code>", "Ejecuta <code>pagar()</code> porque <code>activo</code> es verdadero", "Genera un error", "Cambia <code>activo</code> a false"], correcta: 1 }
             ]
           },
-          { id: "m1-b11", titulo: "Condicionales: if/else, el código que toma decisiones", proximamente: true },
-          { id: "m1-b12", titulo: "Ciclos: repetir sin cansarse (for, while)", proximamente: true },
-          { id: "m1-b13", titulo: "Funciones I: recetas reutilizables", proximamente: true },
-          { id: "m1-b14", titulo: "Funciones II: ingredientes que entran (parámetros) y platillo que sale (return)", proximamente: true },
-          { id: "m1-b15", titulo: "Listas y arreglos: muchas cosas en una sola variable", proximamente: true },
-          { id: "m1-b16", titulo: "Objetos: fichas con datos (nombre, precio, teléfono…)", proximamente: true },
-          { id: "m1-b17", titulo: "JSON: el formato en el que viajan los datos por internet", proximamente: true },
-          { id: "m1-b18", titulo: "Comentarios: las notas que el código ignora pero los humanos leen", proximamente: true },
-          { id: "m1-b19", titulo: "Errores I: leer un mensaje de error sin entrar en pánico", proximamente: true },
-          { id: "m1-b20", titulo: "Errores II: sintaxis vs lógica vs runtime", proximamente: true },
-          { id: "m1-b21", titulo: "¿Qué es un bug? (y la polilla real de 1947)", proximamente: true },
-          { id: "m1-b22", titulo: "Librerías y frameworks: la diferencia entre piezas y esqueletos", proximamente: true },
-          { id: "m1-b23", titulo: "Frontend, Backend y Base de datos: las tres capas de toda app", proximamente: true },
-          { id: "m1-b24", titulo: "¿Qué es un algoritmo? (la receta paso a paso)", proximamente: true },
-          { id: "m1-b25", titulo: "¿Qué es una API? Primer vistazo al mesero de los datos", proximamente: true },
-          { id: "m1-b26", titulo: "Bases de datos: tablas, filas, columnas y el Excel con esteroides", proximamente: true },
-          { id: "m1-b27", titulo: "Open source: el código abierto y por qué medio mundo es gratis", proximamente: true },
-          { id: "m1-b28", titulo: "Leer código I: descifrar un archivo JavaScript simple (con IA de copiloto)", proximamente: true },
-          { id: "m1-b29", titulo: "Leer código II: descifrar un HTML + CSS real", proximamente: true },
-          { id: "m1-b30", titulo: "Repaso integrador del Idioma (mega-quiz jugable)", proximamente: true }
+          {
+            id: "m1-b11",
+            titulo: "Condicionales: if/else, el código que toma decisiones",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Un programa que no decide nada es un folleto estático. Las apps reales toman decisiones a cada segundo: ¿el usuario ya pagó? ¿hay stock? ¿es cliente nuevo? En código, esas decisiones se escriben con <strong>condicionales</strong> — la estructura <code>if/else</code>.</p><p><code>if</code> significa \"si\": si una condición es verdadera, ejecuta este bloque. <code>else</code> significa \"si no\": el camino para cuando la condición es falsa. Y <code>else if</code> encadena varias opciones: \"si pasa A haz esto; si no, si pasa B haz esto otro; si no...\".</p><p>La condición siempre se evalúa a un <strong>booleano</strong> (lo viste en B10): <code>true</code> o <code>false</code>. Para construirla usas comparaciones: <code>===</code> (igual exacto), <code>!==</code> (distinto), <code>&gt;</code>, <code>&lt;</code>, <code>&gt;=</code>, <code>&lt;=</code>. Y ojo con el clásico: <code>=</code> ASIGNA un valor, <code>==</code> compara con trucos raros, <code>===</code> compara exacto. Un <code>=</code> de más o de menos es uno de los bugs más comunes del mundo (B20).</p><p>Para ti, director de IA, esto es oro: <strong>cada regla de negocio que tienes en la cabeza es una serie de condicionales</strong>. \"Los clientes nuevos pagan la mitad el primer mes\", \"el envío es gratis arriba de $5,000\" — le describes la regla a la IA en palabras, y ella la traduce a <code>if/else</code>. Tu trabajo es leer la traducción y cazar el caso que se le olvidó cubrir.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>El <strong>vigilante de la entrada de un edificio</strong>. Alguien llega: \"¿trae gafete?\" (la condición). Si lo trae, pasa (<code>if</code>). Si no, firma el libro de visitas (<code>else</code>). Y si llega un directivo, ni siquiera firma (<code>else if</code>). Ese vigilante es un condicional con patas: revisa una condición y toma caminos distintos según el resultado. Cambia la regla del edificio y cambias los caminos — el vigilante solo obedece.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<pre><code>const pagoRecibido = true;\nconst monto = 7000;\n\nif (pagoRecibido === true) {\n  console.log(\"Acceso concedido. Bienvenido.\");\n} else {\n  console.log(\"Primero completa tu pago.\");\n}\n\nif (monto &gt;= 5000) {\n  console.log(\"Tienes envío gratis.\");\n} else if (monto &gt;= 1000) {\n  console.log(\"Tienes 10% de descuento.\");\n} else {\n  console.log(\"Sin beneficios.\");\n}</code></pre><p>Primero se evalúa la condición entre paréntesis. Si da <code>true</code>, entra al primer bloque; si da <code>false</code>, va al <code>else</code> (o revisa el siguiente <code>else if</code>). Con <code>monto = 7000</code> verás dos mensajes: \"Acceso concedido\" y \"Tienes envío gratis\". Cambia el <code>monto</code> a 800 y el descuento desaparece — la misma estructura decide distinto.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Esta es mi regla de negocio: [descríbela con todos los casos que se te ocurran, ej. 'si el cliente es nuevo paga la mitad del primer mes; si ya pagó 6 meses seguidos, 15% menos; si no, precio normal']. Tradúcela a if/else en JavaScript. Hazme una tabla de cada caso que cubriste y dime qué casos NO cubriste.\"</p></blockquote><p>Esa última línea convierte la IA en tu revisor de reglas: te obliga a llenar los huecos antes de que se conviertan en bugs.</p>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "multiple", pregunta: "¿Qué hace <code>else</code> en un condicional?", opciones: ["Ejecuta el código siempre, sin revisar nada", "Define el camino cuando la condición es falsa", "Repite el bloque N veces", "Borra la condición"], correcta: 1 },
+              { tipo: "completar", frase: "La condición de un <code>if</code> siempre se evalúa a un ____: <code>true</code> o ____.", banco: ["booleano", "false", "número", "texto"], respuestas: ["booleano", "false"] },
+              { tipo: "relacionar", pares: [["===", "Igualdad estricta (mismo valor y tipo)"], ["!==", "Distinto estricto"], [">", "Mayor que"], [">=", "Mayor o igual que"]] },
+              { tipo: "quehace", codigo: "if (monto >= 5000) { mostrar(\"Envío gratis\"); } else { mostrar(\"Cobra envío\"); }", pregunta: "Con <code>monto = 7000</code>, ¿qué muestra este código?", opciones: ["Cobra envío", "Envío gratis", "Ambos mensajes", "Un error"], correcta: 1 },
+              { tipo: "vf", afirmacion: "En JavaScript, <code>=</code> y <code>===</code> hacen exactamente lo mismo.", correcta: false, explicacion: "el <code>=</code> asigna un valor; el <code>===</code> compara si dos cosas son iguales." }
+            ]
+          },
+          {
+            id: "m1-b12",
+            titulo: "Ciclos: repetir sin cansarse (for, while)",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Los programas repiten tareas sin cansarse, y sin equivocarse: mandar un correo a 500 clientes, sumar 10,000 ventas, revisar cada producto. En código, la repetición se llama <strong>ciclo</strong> (loop), y hay dos formas principales.</p><p>El <strong><code>for</code></strong> repite un número de veces conocido, con un contador: <code>for (let i = 0; i &lt; 5; i++) { ... }</code>. Se lee así: \"inicia el contador <code>i</code> en 0; mientras <code>i</code> sea menor que 5, ejecuta el bloque; al terminar, aumenta <code>i</code> en 1\". Piensa en él como \"haz esto exactamente 5 veces\".</p><p>El <strong><code>while</code></strong> repite mientras una condición sea verdadera, sin contador fijo: <code>while (condicion) { ... }</code>. Se usa cuando no sabes de antemano cuántas vueltas harán falta: \"reintenta la conexión hasta que funcione\", \"sigue leyendo líneas hasta que se acabe el archivo\".</p><p>Peligro real: si la condición del <code>while</code> nunca se vuelve falsa, es un <strong>ciclo infinito</strong> — el programa se queda atrapado repitiendo y se cuelga. El botón de cerrar deja de responder. Todos los programadores lo han sufrido, y es la broma más vieja del oficio.</p><p>Cuando dirijas a la IA, la repetición es de tus mejores aliadas: en vez de escribir 500 veces lo mismo, le dices \"haz esto para cada cliente\" y la IA escribe un ciclo. Tú solo necesitas leerlo y verificar el inicio (el contador), la condición (cuándo para) y que algo la modifique.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>La <strong>tortillería</strong>: la máquina de tortillas sale con un ritmo fijo — \"haz 100 tortillas\" es un <code>for</code>, con su contador y su tope. Pero la máquina que tortea hasta que se acaba la masa es un <code>while</code>: sigue mientras haya masa, sin saber cuántas tortillas saldrán. Tú nunca le dices a la máquina \"otra, otra, otra\": la máquina ya sabe repetir. En código pasa igual: le describes cuánto repetir, no cada repetición.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<pre><code>const ventas = [7000, 7900, 9100, 5400];\nlet total = 0;\n\nfor (let i = 0; i &lt; ventas.length; i++) {\n  total = total + ventas[i];\n}\nconsole.log(\"Total: $\" + total); // Total: $29400\n\nlet intentos = 0;\nwhile (intentos &lt; 3) {\n  console.log(\"Reintentando conexión... intento \" + intentos);\n  intentos = intentos + 1; // esta línea evita el ciclo infinito\n}</code></pre><p>Fíjate en el patrón: el <code>for</code> recorre la lista de ventas y las va sumando; el <code>while</code> reintenta hasta completar 3 intentos. Y nota la última línea del <code>while</code>: si no aumentas <code>intentos</code>, la condición jamás se vuelve falsa y el programa se cuelga. Esa línea es la \"válvula de escape\".</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Necesito repetir esta tarea para cada [cliente/producto/fila]: [describe la tarea]. Escríbela con un ciclo. Dime cuál usaste (for o while), por qué, y enséñame cómo verificar que no terminará en un ciclo infinito.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "completar", frase: "El ciclo ____ repite un número fijo de veces; el ciclo ____ repite mientras una condición sea verdadera.", banco: ["for", "while", "if", "else"], respuestas: ["for", "while"] },
+              { tipo: "multiple", pregunta: "¿Qué pasa si la condición de un <code>while</code> nunca se vuelve falsa?", opciones: ["El programa sigue normal", "Ciclo infinito: el programa se cuelga", "La computadora se reinicia", "El ciclo se salta y no ejecuta nada"], correcta: 1 },
+              { tipo: "relacionar", pares: [["let i = 0", "El contador inicia en 0"], ["i < 5", "La condición que se revisa cada vuelta"], ["i++", "Aumenta el contador en 1"], ["ventas.length", "Cuántos elementos hay en la lista"]] },
+              { tipo: "quehace", codigo: "for (let i = 0; i < 3; i++) { console.log(i); }", pregunta: "<code>for (let i = 0; i &lt; 3; i++) { console.log(i); }</code> — ¿qué imprime?", opciones: ["1, 2, 3", "0, 1, 2", "0, 1, 2, 3", "3, 2, 1"], correcta: 1 },
+              { tipo: "ordenar", instruccion: "Acomoda lo que pasa en cada vuelta de un <code>for</code>:", elementos: ["inicia el contador en 0", "revisa la condición", "si es verdadera, ejecuta el bloque", "aumenta el contador y repite"] }
+            ]
+          },
+          {
+            id: "m1-b13",
+            titulo: "Funciones I: recetas reutilizables",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Una <strong>función</strong> es un bloque de código con nombre que puedes ejecutar las veces que quieras. En vez de copiar el mismo código 10 veces, lo guardas una sola vez y lo \"llamas\" cada vez que lo necesitas.</p><p>En JavaScript se define así: <code>function saludar() { console.log(\"Hola\"); }</code>. Eso solo la guarda. Para ejecutarla la <strong>llamas</strong>: <code>saludar();</code> — cada llamada corre el bloque de adentro. Los paréntesis vacíos significan \"no necesita ingredientes\" (eso llega en B14).</p><p>Los programadores tienen un principio sagrado: <strong>DRY</strong> (Don't Repeat Yourself, \"no te repitas\"). Si ves el mismo código copiado en tres lugares, es candidato a convertirse en función. El código repetido es una bomba de tiempo: cuando tengas que cambiar algo, olvidarás una de las copias y la app quedará a medias.</p><p>Dato que conecta con A11: las <strong>librerías</strong> son colecciones de funciones ya escritas por otros. Cuando usas <code>console.log(...)</code> o <code>sum(ventas)</code> de Python, estás llamando funciones que alguien más escribió. Reconocer \"esto es una función\" te deja leer cualquier código como una serie de recetas encadenadas.</p><p>Cuando dirijas a la IA, pedirle que \"guarde la lógica en funciones\" convierte tu proyecto en algo ordenado y mantenible. Y cuando leas lo que generó, cada <code>function algo() { }</code> te dice: aquí hay una receta con nombre, lista para usarse y reutilizarse.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>La <strong>tarjeta de receta de la abuela</strong>. Cuando quieres torta de chocolate no le repites los ingredientes y los pasos cada vez: la receta ya está escrita en su tarjeta, y cada que la quieres \"llamas\" la receta — sacas la tarjeta y la sigues. Si mañana quieres cambiar el sabor, cambias UNA tarjeta, no las mil tortas. La función es esa tarjeta: un solo cambio, y todas las llamadas se benefician.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<pre><code>function mostrarBienvenida() {\n  const hora = new Date().getHours();\n  if (hora &lt; 12) {\n    console.log(\"¡Buenos días, bienvenido!\");\n  } else {\n    console.log(\"¡Bienvenido!\");\n  }\n}\n\nmostrarBienvenida(); // llama la receta por primera vez\nmostrarBienvenida(); // y puedes llamarla mil veces</code></pre><p>Lee la historia: hay una receta llamada <code>mostrarBienvenida</code> que decide qué mensaje mostrar según la hora (un condicional, B11). Después se llama dos veces. Si mañana cambias el mensaje de bienvenida, solo tocas la función — no cada llamada. Eso es el poder de la reutilización.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Este código repite el mismo bloque [N] veces: [pega el código]. Refactorízalo: crea una función que lo contenga, reemplaza las copias por llamadas a la función, y nómbrala con un verbo claro en inglés. Explícame qué ganamos con el cambio.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "completar", frase: "Una función es un bloque de código con ____ que se puede ____ las veces que quieras.", banco: ["nombre", "ejecutar", "color", "copiar"], respuestas: ["nombre", "ejecutar"] },
+              { tipo: "vf", afirmacion: "Si ves el mismo código copiado varias veces, conviene convertirlo en función.", correcta: true, explicacion: "es el principio DRY (don't repeat yourself)." },
+              { tipo: "multiple", pregunta: "¿Qué significa \"llamar\" una función?", opciones: ["Copiarla a otro archivo", "Ejecutar su código", "Borrar la función", "Renombrarla"], correcta: 1 },
+              { tipo: "quehace", codigo: "function saludar() { console.log(\"Hola\"); } saludar();", pregunta: "<code>function saludar() { console.log(\"Hola\"); } saludar();</code> — ¿qué imprime?", opciones: ["Nada", "Hola", "Un error", "saludar"], correcta: 1 },
+              { tipo: "relacionar", pares: [["function saludar() {}", "Define la receta"], ["saludar();", "Ejecuta la receta"], ["console.log(\"Hola\")", "Una función ya hecha para mostrar"], ["// nota", "Un comentario que la computadora ignora"]] }
+            ]
+          },
+          {
+            id: "m1-b14",
+            titulo: "Funciones II: ingredientes que entran (parámetros) y platillo que sale (return)",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Las funciones se vuelven poderosas cuando aceptan <strong>ingredientes</strong> de entrada y entregan un <strong>resultado</strong> de salida. Los ingredientes se llaman <strong>parámetros</strong>; el resultado se entrega con <code>return</code>.</p><pre><code>function sumar(a, b) {\n  return a + b;\n}</code></pre><p><code>a</code> y <code>b</code> son los parámetros: la función espera dos valores. Cuando la llamas con <code>sumar(3, 4)</code>, esos valores se llaman <strong>argumentos</strong>, y el <code>return a + b</code> entrega el resultado — que puedes guardar: <code>const r = sumar(3, 4);</code> deja <code>r</code> con el valor 7.</p><p>Dos cosas clave. Primera: si una función no tiene <code>return</code>, cuando la ejecutas no devuelve nada (técnicamente devuelve <code>undefined</code>, de B10) — hace su trabajo, pero no te entrega un platillo para usar fuera. Segunda: una función sin parámetros es una receta sin ingredientes: siempre sale el mismo platillo. Con parámetros, la misma receta produce platillos distintos según lo que le pases.</p><p>Lee cualquier función así: lo que está entre los paréntesis de la DEFINICIÓN son los ingredientes que espera; el <code>return</code> es el platillo que sale por la ventanilla. Si ves <code>function calcularTotal(precio, cantidad) { return ... }</code>, ya sabes que espera un precio y una cantidad, y que regresa algo.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>La <strong>taquería</strong>: la receta es \"taquear(proteína, salsa)\". Le pasas los ingredientes (pastor, salsa verde) y te entrega el platillo terminado por la ventanilla. Si le pides un taco sin decirle la proteína, no hay taco — falta un ingrediente. Y el <code>return</code> es exactamente esa ventanilla: sin ella, la cocina hace el taco pero nunca te lo entrega.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<pre><code>function calcularTotal(precio, cantidad, impuesto) {\n  const subtotal = precio * cantidad;\n  const total = subtotal + subtotal * impuesto;\n  return total;\n}\n\nconst pedido1 = calcularTotal(7000, 12, 0.16);\nconst pedido2 = calcularTotal(1500, 3, 0.16);\nconsole.log(\"Pedido 1: $\" + pedido1); // Pedido 1: $97440\nconsole.log(\"Pedido 2: $\" + pedido2); // Pedido 2: $5220</code></pre><p>Una sola receta, tres ingredientes, y dos platillos distintos. Misma función, distintos argumentos, distintos resultados. Eso es reutilización con variantes: la función no sabe nada de tu negocio, solo recibe números y los procesa.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Crea una función que calcule [lo que necesitas, ej. 'el precio de un pedido con varios productos y su IVA']. Defínela con parámetros claros, devuelve el resultado con return, y dame 3 ejemplos de llamadas con resultados distintos para que yo verifique que hace lo correcto.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "completar", frase: "Los ____ son los ingredientes que entran a la función; el ____ es el platillo que sale.", banco: ["parámetros", "return", "nombre", "error"], respuestas: ["parámetros", "return"] },
+              { tipo: "multiple", pregunta: "¿Qué hace <code>return</code> en una función?", opciones: ["Detiene todo el programa", "Entrega el resultado para usarse fuera de la función", "Imprime el resultado en pantalla", "Agrega un parámetro nuevo"], correcta: 1 },
+              { tipo: "quehace", codigo: "function sumar(a, b) { return a + b; } const r = sumar(2, 5);", pregunta: "Si <code>function sumar(a, b) { return a + b; }</code>, ¿cuánto vale <code>const r = sumar(2, 5)</code>?", opciones: ["\"25\"", "7", "\"2 + 5\"", "Un error"], correcta: 1 },
+              { tipo: "vf", afirmacion: "Una función sin <code>return</code> devuelve el número 0.", correcta: false, explicacion: "devuelve <code>undefined</code>: no entrega ningún valor (B10)." },
+              { tipo: "relacionar", pares: [["Parámetro", "El ingrediente que la receta espera"], ["Argumento", "El valor concreto que le pasas al llamarla"], ["return", "El platillo que entrega por la ventanilla"], ["Función", "La receta"]] }
+            ]
+          },
+          {
+            id: "m1-b15",
+            titulo: "Listas y arreglos: muchas cosas en una sola variable",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Hasta ahora cada variable guardaba una sola cosa. Un <strong>array</strong> (arreglo) guarda una <strong>lista ordenada</strong> de cosas en una sola variable: <code>const productos = [\"tenis\", \"playera\", \"gorra\"];</code>. Los elementos van entre corchetes, separados por comas.</p><p>Para leer un elemento usas su <strong>posición</strong> (índice): <code>productos[0]</code> es \"tenis\". Y aquí está la trampa favorita del oficio: <strong>los índices empiezan en 0, no en 1</strong>. <code>productos[1]</code> es el segundo. Pedir <code>productos[3]</code> cuando solo hay 3 elementos es un error clásico — el famoso \"off by one\" (equivocarte por uno). Ese error es tan común que tiene nombre propio.</p><p>Dos ayudas constantes: <code>productos.length</code> te dice cuántos elementos hay, y <code>productos.push(\"chamarra\")</code> agrega uno al final. Con <code>length</code> y un ciclo (B12) recorres toda la lista sin saber de antemano su tamaño.</p><p>Los arrays son el corazón de los datos: un catálogo, una lista de clientes, los mensajes de un chat — todo es una lista. Cuando le pidas a la IA \"dame un listado\", casi siempre estará trabajando con un array por detrás. Y la combinación estrella llega en B16: listas de objetos.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Los <strong>casilleros numerados de un gimnasio</strong>. El casillero 0, el 1, el 2 — cada uno guarda una cosa, y los conoces por su número. El conjunto de casilleros es el array; el número es el índice; y \"casilleros.length\" es cuántos hay. Si agregas un casillero al final (push), la fila crece pero los números de los que ya estaban no cambian.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<pre><code>const carrito = [\"tenis\", \"playera\", \"gorra\", \"calcetines\"];\n\nconsole.log(carrito[0]);      // \"tenis\" — el primero\nconsole.log(carrito[2]);      // \"gorra\"\nconsole.log(carrito.length);  // 4 — cuántos hay\n\ncarrito.push(\"chamarra\");     // agrega al final\n\nfor (let i = 0; i &lt; carrito.length; i++) {\n  console.log(\"Artículo \" + i + \": \" + carrito[i]);\n}</code></pre><p>Fíjate en la combinación: un ciclo (B12) recorre el array usando <code>length</code> como tope y <code>i</code> como índice. Imprime \"Artículo 0: tenis\", \"Artículo 1: playera\", etc. Ese patrón — \"recorrer una lista y hacer algo con cada elemento\" — es probablemente el más repetido de toda la programación.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Necesito trabajar con una lista de [elementos]. Muéstrame cómo declararla como array, cómo agregar y quitar elementos, cómo obtener su tamaño, y cómo recorrerla con un ciclo para [hacer algo con cada uno]. Dame un ejemplo completo.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "multiple", pregunta: "¿En qué posición está el primer elemento de un array?", opciones: ["1", "0", "-1", "No tiene posición"], correcta: 1 },
+              { tipo: "quehace", codigo: "const lista = [\"a\", \"b\", \"c\"]; console.log(lista[1]);", pregunta: "<code>const lista = [\"a\", \"b\", \"c\"]; console.log(lista[1]);</code> — ¿qué imprime?", opciones: ["\"a\"", "\"b\"", "\"c\"", "1"], correcta: 1 },
+              { tipo: "completar", frase: "La propiedad ____ te dice cuántos elementos tiene un array, y el método ____ agrega uno al final.", banco: ["length", "push", "pop", "width"], respuestas: ["length", "push"] },
+              { tipo: "relacionar", pares: [["lista[0]", "El primer elemento"], ["lista.length", "Cuántos elementos hay"], ["lista.push(\"x\")", "Agregar \"x\" al final"], ["lista[2]", "El tercer elemento"]] },
+              { tipo: "vf", afirmacion: "Los índices de un array empiezan en 1, como las posiciones de una carrera.", correcta: false, explicacion: "empiezan en 0, y equivocarse por uno es el famoso \"off by one\"." }
+            ]
+          },
+          {
+            id: "m1-b16",
+            titulo: "Objetos: fichas con datos (nombre, precio, teléfono…)",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Las variables guardan un valor y los arrays guardan listas. Los <strong>objetos</strong> guardan <strong>datos agrupados</strong> de una misma cosa: un producto con su nombre, precio y disponibilidad; un cliente con su nombre, correo y teléfono. Un objeto es una ficha con campos.</p><pre><code>const producto = {\n  nombre: \"Tenis\",\n  precio: 1500,\n  disponible: true\n};</code></pre><p>Los campos (claves) y sus valores van separados por dos puntos: <code>clave: valor</code>. Para leer un valor usas el punto: <code>producto.nombre</code> te da \"Tenis\". (También funciona con corchetes: <code>producto[\"nombre\"]</code>, y a veces lo verás así.)</p><p>Y aquí está la combinación que mueve el mundo de los datos: <strong>un array de objetos</strong>. Un catálogo es una lista donde cada elemento es la ficha de un producto. Una tabla de clientes es una lista de fichas. Cada objeto es un renglón, cada clave es una columna (esto lo conectas directo con las bases de datos de B26).</p><p>Cuando la IA te muestre datos de tu negocio, los verás así: listas de objetos. Saber leer <code>producto.precio</code> o <code>cliente.correo</code> es saber leer la información misma de tu empresa.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>La <strong>agenda de tarjetas del taller mecánico</strong>: una caja con fichas, y en cada ficha los campos del cliente — nombre, teléfono, modelo, fecha de la última visita. El objeto es la ficha; los campos son las claves; los datos escritos son los valores. Y toda la caja de fichas es el array de objetos. Sacar la ficha de un cliente y leer \"nombre\" y \"teléfono\" es exactamente <code>cliente.nombre</code> y <code>cliente.telefono</code>.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<pre><code>const alumno = {\n  nombre: \"Ray Fernández\",\n  edad: 34,\n  pagoAlDia: true,\n  correo: \"ray@ejemplo.com\"\n};\n\nconsole.log(alumno.nombre);      // Ray Fernández\nconsole.log(alumno[\"correo\"]);   // ray@ejemplo.com\n\nconst catalogo = [\n  { nombre: \"Tenis\", precio: 1500 },\n  { nombre: \"Playera\", precio: 350 },\n  { nombre: \"Gorra\", precio: 200 }\n];\n\nfor (let i = 0; i &lt; catalogo.length; i++) {\n  console.log(catalogo[i].nombre + \" — $\" + catalogo[i].precio);\n}</code></pre><p>Lee la segunda parte con calma: hay una lista (array) de tres fichas (objetos). Un ciclo (B12) la recorre, y en cada vuelta accede a <code>.nombre</code> y <code>.precio</code>. Ese patrón — \"recorrer una lista de fichas y leerles campos\" — es el más común en apps de catálogos, clientes y pedidos.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Necesito modelar [mi entidad: cliente, producto, pedido…] como objeto en JavaScript. Lista los campos que me conviene tener, el tipo de cada uno (string, number, boolean), y un ejemplo real. Después muéstrame cómo se ve una lista de 3 de estos objetos.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "completar", frase: "En un objeto, la ____ es el nombre del campo y el ____ es el dato guardado.", banco: ["clave", "valor", "índice", "archivo"], respuestas: ["clave", "valor"] },
+              { tipo: "multiple", pregunta: "¿Cómo accedes al campo <code>nombre</code> de un objeto <code>persona</code>?", opciones: ["persona[nombre]", "persona.nombre", "persona -> nombre", "get persona.nombre"], correcta: 1 },
+              { tipo: "quehace", codigo: "const p = { nombre: \"Tenis\", precio: 1500 }; console.log(p.precio);", pregunta: "<code>const p = { nombre: \"Tenis\", precio: 1500 }; console.log(p.precio);</code> — ¿qué imprime?", opciones: ["Tenis", "1500", "Un error", "precio"], correcta: 1 },
+              { tipo: "relacionar", pares: [["{ }", "Objeto (ficha con campos)"], [".campo", "Acceder al valor del campo"], ["[ ]", "Lista (array)"], [":", "Separa la clave del valor"]] },
+              { tipo: "vf", afirmacion: "Un array de objetos sirve para modelar un catálogo de productos.", correcta: true, explicacion: "es la estructura de datos más usada del mundo real." }
+            ]
+          },
+          {
+            id: "m1-b17",
+            titulo: "JSON: el formato en el que viajan los datos por internet",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p><strong>JSON</strong> (JavaScript Object Notation, \"notación de objetos de JavaScript\") es un formato de texto para representar datos. Se parece muchísimo a un objeto de B16, pero con reglas más estrictas: las claves SIEMPRE van entre comillas dobles, no admite funciones ni comentarios, y todo es texto plano.</p><p>¿Por qué existe? Porque cuando una app le pide datos a un servidor, necesita un idioma que AMBOS entiendan — y que cualquier sistema del mundo pueda abrir, sin importar si está hecho con JavaScript, Python o Java. Ese idioma estándar es JSON. Respuestas de APIs (B25), archivos de configuración, exportaciones de datos: si algo viaja por internet como datos, casi seguro viaja en JSON.</p><p>En JavaScript tienes dos herramientas: <code>JSON.stringify(objeto)</code> convierte un objeto en texto JSON (para enviarlo), y <code>JSON.parse(texto)</code> convierte texto JSON en objeto real (para usarlo). Los verás en toda app que hable con un servidor.</p><p>Dato memorable: JSON lo popularizó <strong>Douglas Crockford</strong> a principios de los 2000. No inventó un lenguaje nuevo — tomó la forma de los objetos de JavaScript, la estandarizó, y el mundo entero la adoptó. Hoy casi todo el tráfico de datos de internet habla JSON.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>El <strong>contenedor estándar de un barco de carga</strong>. Puedes meter adentro cualquier mercancía, pero el contenedor siempre tiene las mismas medidas y reglas, así cualquier puerto del mundo lo puede recibir, abrir y entender. JSON es el contenedor de los datos: el contenido cambia (tus productos, tus clientes), pero el formato es siempre el mismo, y cualquier sistema sabe cómo abrirlo.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<pre><code>// Un objeto en JavaScript\nconst producto = { nombre: \"Tenis\", precio: 1500, disponible: true };\n\n// Convertido a texto JSON (lo que viaja por internet)\nconst textoJSON = JSON.stringify(producto);\n// '{\"nombre\":\"Tenis\",\"precio\":1500,\"disponible\":true}'\n\n// El texto JSON recibido se convierte de vuelta en objeto\nconst objetoDeNuevo = JSON.parse(textoJSON);\nconsole.log(objetoDeNuevo.nombre); // Tenis</code></pre><p>Compara los dos formatos de la pantalla: el objeto usa claves sin comillas, el JSON las lleva siempre con <code>\"</code>. Esa diferencia es sutil pero crucial: el JSON es texto estricto que cualquier sistema puede leer; el objeto es algo que vive dentro del JavaScript.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Tengo estos datos: [pega tu estructura]. Conviértelos a JSON válido, revisa que las claves estén entre comillas dobles y que no haya comentarios, y pásame también la línea de JSON.stringify para usarlos en JavaScript.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "vf", afirmacion: "En JSON, las claves deben ir entre comillas dobles.", correcta: true, explicacion: "es la regla que lo hace entendible para cualquier sistema." },
+              { tipo: "multiple", pregunta: "¿Para qué sirve JSON?", opciones: ["Estilizar páginas web", "Intercambiar datos entre sistemas en formato de texto estándar", "Conectar cables de red", "Editar imágenes"], correcta: 1 },
+              { tipo: "relacionar", pares: [["JSON.stringify()", "Convierte un objeto a texto JSON"], ["JSON.parse()", "Convierte texto JSON a objeto"], ["\"clave\"", "Siempre entre comillas dobles"], ["{ }", "La estructura de los datos"]] },
+              { tipo: "completar", frase: "Cuando una app le pide datos a un servidor, la respuesta típicamente viaja en formato ____.", banco: ["JSON", "PDF", "MP3", "ZIP"], respuestas: ["JSON"] },
+              { tipo: "quehace", codigo: "JSON.parse('{\"precio\": 1500}')", pregunta: "<code>JSON.parse('{\"precio\": 1500}')</code> — ¿qué devuelve?", opciones: ["Un error", "Un objeto con la clave \"precio\" igual a 1500", "El texto \"1500\"", "El número 1500 suelto"], correcta: 1 }
+            ]
+          },
+          {
+            id: "m1-b18",
+            titulo: "Comentarios: las notas que el código ignora pero los humanos leen",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Los <strong>comentarios</strong> son texto que vive dentro del código pero que la computadora ignora por completo: solo los leen los humanos. En JavaScript se escriben con <code>//</code> (una línea) o <code>/* ... */</code> (varias líneas); en Python, con <code>#</code>. Puedes poner lo que quieras: no afecta el programa en nada.</p><p>¿Para qué sirven si la computadora no los lee? Para el humano del futuro — y ese humano del futuro muy probablemente eres tú, dentro de tres meses, cuando vuelvas a un proyecto sin recordar nada. El código explica el QUÉ (qué hace cada línea); el comentario bueno explica el PORQUÉ: por qué se hizo así, qué regla de negocio lo obliga, qué se espera de esa parte.</p><p>Hay comentarios malos y buenos. Malo: <code>// suma a y b</code> sobre una línea <code>a + b</code> — repite lo obvio. Bueno: <code>// El impuesto se redondea a centavos porque el recibo debe cuadrar con el SAT</code> — cuenta algo que el código no dice y que tú necesitas saber.</p><p>En la era de la IA esto cambia de nivel: cuando la IA genera código, pedirle que lo comente bien es una de las instrucciones más valiosas del mundo. Y tú también los usas en la dirección inversa: \"esta parte NO la toques\" se escribe en un comentario, y hasta la IA respeta las marcas claras.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Las <strong>notas en la caja de recetas de tu abuela</strong>: \"esta masa, si hace frío, déjala reposar 10 minutos más\". La masa no lee la nota — pero tú sí, y sin ella la receta se arruina cada invierno. El comentario es para el humano del futuro, nunca para la máquina.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<pre><code>// Precio con IVA del 16% — NO tocar: lo usa el reporte mensual\nconst PRECIO_CON_IVA = 1.16;\n\nfunction calcularIVA(monto) {\n  // El impuesto se redondea a centavos para que el recibo cuadre\n  return Math.round(monto * PRECIO_CON_IVA * 100) / 100;\n}</code></pre><p>Fíjate en lo que cuentan los comentarios: el primero marca una zona protegida (\"no tocar\") y la razón; el segundo explica una decisión rara (redondear) que sin el comentario parecería un error. Eso es un comentario de verdad: cuenta lo que el código no puede decir.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Agrega comentarios a este código: [pega el código]. Deben explicar el PORQUÉ (intención, reglas de negocio, decisiones raras) y NO repetir lo que el código ya dice. Marca con // NO TOCAR las partes que no se deben cambiar.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "multiple", pregunta: "¿Quién lee los comentarios del código?", opciones: ["La computadora, para optimizar", "Los humanos", "Nadie, no sirven para nada", "Solo el navegador"], correcta: 1 },
+              { tipo: "completar", frase: "En JavaScript un comentario de una línea empieza con ____; en Python, con ____.", banco: ["//", "#", "/*", "--"], respuestas: ["//", "#"] },
+              { tipo: "quehace", codigo: "// No borrar: lo pide contabilidad\nconst topDescuento = 0.30;", pregunta: "En este código, ¿qué hace la línea <code>// No borrar: lo pide contabilidad</code>?", opciones: ["Da un error de sintaxis", "Nada: es una nota para humanos, la computadora la ignora", "Descuenta 0.30 al total", "Bloquea la línea siguiente"], correcta: 1 },
+              { tipo: "vf", afirmacion: "Los comentarios ralentizan el programa porque la computadora los procesa.", correcta: false, explicacion: "la computadora los ignora por completo; solo los leen los humanos." },
+              { tipo: "relacionar", pares: [["//", "Comentario de una línea en JavaScript"], ["#", "Comentario en Python"], ["/* ... */", "Comentario de varias líneas en JS"], ["Explica el porqué", "El mejor uso de un comentario"]] }
+            ]
+          },
+          {
+            id: "m1-b19",
+            titulo: "Errores I: leer un mensaje de error sin entrar en pánico",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Los <strong>mensajes de error</strong> son la computadora diciéndote qué no entendió o qué se rompió. Están en inglés, se ven feos y salen con un montón de ruido — pero casi siempre dicen exactamente dónde está el problema. Aprender a leerlos es de las habilidades que más tiempo te ahorran.</p><p>La anatomía típica: el <strong>nombre</strong> del error (<code>ReferenceError</code>, <code>TypeError</code>, <code>SyntaxError</code>...), una <strong>descripción</strong> (\"x is not defined\"), y el <strong>stack trace</strong> (la pila): una lista de <code>at ...</code> con archivos y líneas que muestra el camino completo — dónde empezó la cadena de llamadas y por dónde llegó al punto que falló.</p><p>Lo primero que debes buscar: la línea que dice <code>at algo (archivo.js:12:34)</code> — ese es el archivo y la línea exacta donde el programa se quejó. Lo segundo: la primera línea del mensaje, que casi siempre es la causa. El resto es ruido.</p><p>Dato tranquilizador: no necesitas entender TODO el mensaje. Tu superpoder de director es copiar el mensaje completo y pegárselo a la IA con el contexto (\"esto pasó cuando hice X\"). La IA lee errores a velocidad máquina; tú solo necesitas saber que ese texto vale oro y que nunca, nunca lo ignores.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>La <strong>luz del \"check engine\" del coche</strong>. La primera vez da miedo, pero es información: no es que el coche esté enojado, es que hay algo específico que revisar. El conductor que pega el código de error en Google (o se lo da a la IA) llega a su destino; el que cierra los ojos y sigue manejando se queda varado. El error no es el enemigo: es el mapa del problema.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<pre><code>ReferenceError: precio is not defined\n    at calcularTotal (checkout.js:12:9)\n    at procesarPedido (checkout.js:28:5)\n    at &lt;anonymous&gt; (app.js:3:1)</code></pre><p>Lee la primera línea: \"la variable <code>precio</code> no está definida\". Luego el stack: el problema está en <code>checkout.js</code>, línea 12; esa función (<code>calcularTotal</code>) fue llamada desde <code>procesarPedido</code> en la línea 28; y esa desde <code>app.js</code> línea 3. Con esos tres datos, abres el archivo en la línea 12 y buscas por qué <code>precio</code> no existe ahí — casi siempre porque se llamó mal o se escribió distinto.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Este es el error que me sale al correr mi programa: [pega el mensaje completo]. No entiendo nada de lo que dice. Explícame en español qué falló, en qué archivo y línea exacta, qué línea de mi código lo causa y cómo lo arreglo.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "multiple", pregunta: "¿Cuál es la información más útil de un mensaje de error?", opciones: ["Los colores de la terminal", "El archivo y la línea donde falló", "La hora en que falló", "El tamaño de la pantalla"], correcta: 1 },
+              { tipo: "completar", frase: "El ____ trace es la pila de llamadas: dónde empezó el problema y por dónde llegó.", banco: ["stack", "error", "log", "debug"], respuestas: ["stack"] },
+              { tipo: "quehace", codigo: "ReferenceError: precio is not defined at checkout.js:12", pregunta: "<code>ReferenceError: precio is not defined at checkout.js:12</code> — ¿qué te dice?", opciones: ["Que la línea 12 funciona perfecto", "Que en la línea 12 de checkout.js se usa la variable \"precio\", que no existe", "Que la computadora no tiene memoria", "Que el archivo se llama distinto"], correcta: 1 },
+              { tipo: "vf", afirmacion: "Los mensajes de error están para asustarte: si no entiendes el primero, el programa está roto para siempre.", correcta: false, explicacion: "son pistas técnicas; casi siempre señalan archivo y línea exacta." },
+              { tipo: "ordenar", instruccion: "Pasos al recibir un error:", elementos: ["lee la primera línea del mensaje", "anota el archivo y la línea que señala", "copia el mensaje completo", "pégalo a la IA con contexto", "aplica el arreglo y vuelve a probar"] }
+            ]
+          },
+          {
+            id: "m1-b20",
+            titulo: "Errores II: sintaxis vs lógica vs runtime",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Los errores no son todos iguales, y saber cuál tienes enfrente te dice qué tan grave es. Hay tres familias.</p><p><strong>Sintaxis</strong>: la \"gramática\" del código está mal — falta un paréntesis, una coma, una llave. El programa ni siquiera arranca; el motor te avisa de inmediato señalando la línea. Es el más fácil de arreglar: es como una carta con un error de puntuación, se ve al primer vistazo.</p><p><strong>Lógica</strong>: el código corre perfecto, sin un solo error, pero hace lo incorrecto — restaste cuando debías sumar, la condición quedó invertida. Nadie te avisa: solo lo notas cuando el resultado no es lo que esperabas. Es el más traicionero, porque el programa \"funciona\" y puede correr meses con el error adentro.</p><p><strong>Runtime</strong> (de ejecución): truena a mitad de camino, cuando ya está corriendo — leer una variable que no existe, conectarse a un servidor apagado, dividir entre cero. El programa arranca bien y se cae después, y el mensaje aparece en el peor momento.</p><p>Para el director de IA esto define tu papel: la IA arregla la sintaxis en segundos. Los errores de runtime también los diagnostica rápido. Pero los de <strong>lógica son territorio tuyo</strong>: son reglas de negocio mal traducidas, y solo tú sabes cómo debería comportarse el sistema. \"El descuento se aplica al revés\" es información que solo tú tienes.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>En una <strong>carta</strong>: el error de sintaxis es la ortografía y la puntuación — se nota de inmediato y nadie la lee mal dos veces. El error de lógica es haber escrito \"no vender\" cuando querías \"vender\" — la carta está perfectamente escrita, pero hace lo contrario de lo que pediste. Y el error runtime es el cartero que llega a una casa que ya no existe: todo iba bien hasta el último momento.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<pre><code>// 1) SINTAXIS — falta un paréntesis: el programa no arranca\n// const total = calcularTotal(7000, 12;\n\n// 2) LÓGICA — corre perfecto, pero resta en vez de sumar\nconst saldo = pagos - cobros;  // ✘ debería ser pagos + cobros\n\n// 3) RUNTIME — truena en ejecución si usuario no existe\nconsole.log(usuario.nombre);   // TypeError si usuario es null</code></pre><p>El primero se ve mal desde lejos y el motor lo señala al instante. El segundo no da ningún error: corre, y el saldo sale mal en silencio. El tercero pasa el arranque pero explota cuando el dato no está. Reconocer a cuál pertenece tu síntoma te dice por dónde empezar.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Mi programa corre pero hace algo incorrecto: [describe el comportamiento incorrecto y el esperado]. Revisa el código, dime si es un error de lógica, señala la línea donde la intención y el código no coinciden, y corrígelo.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "relacionar", pares: [["Sintaxis", "El programa ni arranca: falta una coma o paréntesis"], ["Lógica", "Corre perfecto pero hace lo incorrecto"], ["Runtime", "Truena a mitad de la ejecución"]] },
+              { tipo: "completar", frase: "El error más traicionero es el de ____: nadie te avisa, solo notas que el resultado está ____.", banco: ["lógica", "mal", "sintaxis", "rápido"], respuestas: ["lógica", "mal"] },
+              { tipo: "multiple", pregunta: "Falta un paréntesis de cierre en una línea. ¿Qué tipo de error es?", opciones: ["De lógica", "De sintaxis", "De runtime", "De red"], correcta: 1 },
+              { tipo: "quehace", codigo: "const saldo = pagos - cobros;", pregunta: "La regla del negocio es <code>saldo = pagos + cobros</code>, pero el código resta. ¿Qué pasa?", opciones: ["El programa no arranca", "Corre sin errores, pero el saldo sale mal", "Se cae en la primera ejecución", "Un mensaje de error lo explica"], correcta: 1 },
+              { tipo: "vf", afirmacion: "La IA puede detectar sola los errores de lógica de negocio porque conoce tu negocio.", correcta: false, explicacion: "la lógica de negocio es tuya; tú le describes cómo debería comportarse el sistema." }
+            ]
+          },
+          {
+            id: "m1-b21",
+            titulo: "¿Qué es un bug? (y la polilla real de 1947)",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Un <strong>bug</strong> es un defecto en el software: el programa hace algo que no debía, o no hace lo que debía. Puede venir de un error de lógica (B20), de un caso que nadie previó, de un dato raro, de una suposición equivocada. No es un error de \"que se cayó\": es el comportamiento incorrecto que nadie notó.</p><p>La historia que le dio nombre es legendaria: en <strong>1947</strong>, en la computadora <strong>Harvard Mark II</strong>, el equipo de <strong>Grace Hopper</strong> encontró una <strong>polilla real</strong> atrapada en un relevador. La pegaron con cinta al libro de bitácora y anotaron: \"First actual case of bug being found\" — \"primer caso real de bug encontrado\". La palabra \"bug\" (bicho) ya se usaba para fallas técnicas, pero esa polilla pegada en un cuaderno la convirtió en leyenda. Esa bitácora todavía existe en un museo.</p><p>¿Dónde viven los bugs? Casi siempre en los <strong>casos límite</strong>: \"¿qué pasa si el cliente compra 0 artículos?\", \"¿si escribe la contraseña con espacios?\", \"¿si paga exactamente con la tarjeta que acaba de vencer?\", \"¿si la lista está vacía?\". El código funciona perfecto con datos normales y explota (o se comporta mal) justo en el caso raro.</p><p>Para ti, director de IA, la cacería de bugs es una habilidad de imaginación y de conocimiento de tu negocio, no de código: describir los \"¿y si...?\" que la IA no ve sola. Cada caso límite que imagines es un bug que no va a existir.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Una <strong>receta perfecta que falla solo el día de lluvia</strong>. No fue el cocinero ni el horno: fue un caso que nadie imaginó — la masa reacciona a la humedad. El bug es eso: no un error del cocinero, sino el caso que nadie previó. Por eso los bugs más caros del mundo han venido de datos que \"nadie pensó que pasarían\".</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<pre><code>function darDescuento(cantidad) {\n  return cantidad &gt;= 5 ? 0.15 : 0;\n}\n\n// Caso límite: el usuario escribe \"5\" como texto (del formulario)\ndarDescuento(\"5\"); // \"5\" &gt;= 5 es true... pero el 15% se aplica raro</code></pre><p>El código funciona perfecto con números. El bug aparece cuando llega texto donde se esperaba número — un caso límite clásico de formularios. La solución sería verificar el tipo antes de comparar (recuerdas B10: <code>\"5\"</code> y <code>5</code> no son lo mismo). Ese es el patrón: funciona hasta que llega el dato raro.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Revisa este código buscando bugs, especialmente en casos límite: entradas vacías, valores extremos, texto en vez de número, cero, datos que no existen. Hazme una tabla: caso → qué hace el código hoy → qué debería hacer → cómo corregirlo.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "vf", afirmacion: "En 1947 encontraron una polilla real atrapada en una computadora y la pegaron a la bitácora.", correcta: true, explicacion: "pasó en la Harvard Mark II, con Grace Hopper." },
+              { tipo: "completar", frase: "Los bugs se esconden casi siempre en los casos ____: entradas vacías, valores extremos, datos raros.", banco: ["límite", "normales", "felices", "bonitos"], respuestas: ["límite"] },
+              { tipo: "multiple", pregunta: "¿Qué es un bug?", opciones: ["Un virus de internet", "Un defecto del software: hace algo que no debía", "Una actualización de seguridad", "Un tipo de librería"], correcta: 1 },
+              { tipo: "relacionar", pares: [["Bug", "Defecto del software"], ["1947", "El año de la polilla documentada"], ["Grace Hopper", "La programadora que la encontró"], ["Caso límite", "Donde se esconden los bugs"]] },
+              { tipo: "ordenar", instruccion: "Cómo se resuelve un bug:", elementos: ["imagina el caso raro", "reproduce el error", "confirma el comportamiento incorrecto", "descríbelo a la IA", "corrige y vuelve a probar"] }
+            ]
+          },
+          {
+            id: "m1-b22",
+            titulo: "Librerías y frameworks: la diferencia entre piezas y esqueletos",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Ya conoces las <strong>librerías</strong> desde A11: piezas de código listo que tú (o la IA) llaman cuando las necesitan — una para fechas, otra para pagos, otra para gráficas. La regla clave: con una librería, <strong>tu código tiene el control</strong>; tú decides cuándo usarla.</p><p>Los <strong>frameworks</strong> son otro nivel. No son una pieza que tú tomas: son el <strong>esqueleto</strong> de todo el proyecto. Dictan la estructura, las convenciones y el flujo — y la regla se invierte: <strong>el framework tiene el control y te llama a ti</strong>. Ejemplos que verás mucho: <strong>React</strong> (interfaces web), <strong>Vue</strong> (lo mismo, distinto estilo), <strong>Express</strong> (servidores en Node), <strong>Django</strong> (servidores en Python).</p><p>La regla de oro para distinguirlos se llama <strong>inversión de control</strong>: con una librería, tú llamas a las funciones. Con un framework, él decide cuándo ejecutar el código que le diste. \"Librería: tú la usas. Framework: él te usa.\"</p><p>¿Por qué te importa? Cuando dirijas a la IA, la conversación va a ser \"¿lo hacemos con React o con HTML normal?\" — y entender la diferencia te deja opinar con criterio. Además, cuando la IA diga \"el framework hace X por ti\", sabrás que no está siendo vaga: es que hay un esqueleto cargando el trabajo pesado.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>La librería es tu <strong>caja de herramientas</strong>: tomas el desatornillador cuando lo necesitas y decides exactamente qué hacer con él. El framework es la <strong>estructura de una casa en obra</strong>: las paredes, puertas y ventanas ya vienen decididas; tu trabajo es llenar cada espacio, no preguntarte dónde van las paredes. Con herramientas decides todo; con el esqueleto, te adaptas a lo que ya está armado — y por eso construyes más rápido.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<pre><code>// Con una LIBRERÍA: TU código llama a la pieza\nconst fecha = moment(fechaISO).format(\"DD/MM/YYYY\");\n\n// Con un FRAMEWORK: el framework llama a TU componente\nfunction TarjetaProducto(props) {\n  return &lt;div&gt;{props.nombre} — ${props.precio}&lt;/div&gt;;\n}\n// React decide cuándo y cómo pintar tu TarjetaProducto</code></pre><p>En el primer caso, tú usas <code>moment</code> como herramienta. En el segundo, escribes un componente y React lo ejecuta cuando corresponde. La diferencia es sutil en el código, pero cambia todo el flujo del proyecto: con el framework, tú escribes piezas que él encaja; con la librería, tú armas todo y solo tomas prestadas funciones.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Voy a construir [mi app] y estoy entre [opción A] y [opción B]. Explícame cuál es una librería y cuál un framework, qué tan difícil es cada una para alguien nuevo, y cuál me conviene para [mi objetivo]. No decidas tú solo: dame pros, contras y tu recomendación razonada.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "completar", frase: "Con una librería, tú ____ la pieza cuando la necesitas; con un framework, el framework ____ a ti.", banco: ["llamas", "te llama", "olvidas", "pagas"], respuestas: ["llamas", "te llama"] },
+              { tipo: "relacionar", pares: [["Librería", "Pieza de código que tú tomas cuando la necesitas"], ["Framework", "Esqueleto que dicta la estructura del proyecto"], ["React", "Un framework de interfaces"], ["moment", "Una librería de fechas"]] },
+              { tipo: "multiple", pregunta: "¿Cuál es la diferencia clave entre ambos?", opciones: ["La librería es siempre más cara", "Con la librería tu código controla; con el framework, él controla", "La librería solo sirve para diseño", "No hay ninguna diferencia"], correcta: 1 },
+              { tipo: "vf", afirmacion: "Un framework solo sirve para proyectos gigantes de empresas.", correcta: false, explicacion: "hay frameworks ligeros perfectos para proyectos pequeños y medianos." },
+              { tipo: "quehace", codigo: "function TarjetaProducto(props) { return <div>{props.nombre}</div>; }", pregunta: "En React, este código es...", opciones: ["Un error de sintaxis", "Un componente que el framework pintará cuando corresponda", "Una tabla de una base de datos", "Un comando de terminal"], correcta: 1 }
+            ]
+          },
+          {
+            id: "m1-b23",
+            titulo: "Frontend, Backend y Base de datos: las tres capas de toda app",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Toda app moderna — desde tu página hasta Netflix — tiene <strong>tres capas</strong>. Entender cuál es cuál te dice qué estás viendo y dónde está cada problema.</p><p>El <strong>frontend</strong> es lo que el usuario ve y toca: los botones, las tarjetas, los colores. Vive en el navegador y está hecho de HTML (B7), CSS (B8) y JavaScript (B3). Es la cara.</p><p>El <strong>backend</strong> es la lógica que no se ve: recibe lo que el usuario hizo, lo valida, lo procesa y decide. Vive en un servidor (A20, A22) y puede estar hecho con Node.js, Python, Java. Es el cerebro: el frontend le dice \"compró esto\" y él responde \"ok, cobra, guarda, confirma\".</p><p>La <strong>base de datos</strong> (a fondo en B26) es el almacén: donde viven los datos de verdad — clientes, pedidos, precios. El backend le pregunta y le ordena con SQL (B5). Es la memoria permanente.</p><p>El flujo clásico: el frontend pide → el backend valida y consulta la base de datos → la base responde → el backend arma la respuesta → el frontend la muestra. Como director de IA, cada \"está mal\" que detectes pertenece a una capa: un color malo es frontend; \"no guarda el pedido\" puede ser backend o base de datos. Y al pedirle un arreglo a la IA, decirle la capa la enfoca al instante.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>El <strong>restaurante completo</strong>: el frontend es el comedor con su menú — lo que el cliente ve y toca. El backend es la cocina — donde se procesa todo y no se ve. La base de datos es el refrigerador y la despensa — donde se guarda todo lo que hay. El mesero (la API, B25) conecta el comedor con la cocina. Si el cliente dice \"la sopa está fría\", nadie va a cambiar la mesa (frontend): hay que ir a la cocina o revisar el refri.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<pre><code>Cliente toca \"Comprar\" en el navegador     ← FRONTEND\n        ↓ petición HTTP (A19)\nServidor procesa la orden y cobra           ← BACKEND\n        ↓ consulta SQL (B5)\nBase de datos guarda el pedido              ← BASE DE DATOS\n        ↓ respuesta\nEl navegador muestra \"¡Pedido confirmado!\"  ← FRONTEND</code></pre><p>Fíjate en el viaje redondo: empieza en el frontend, baja al backend, toca la base de datos, y sube de vuelta hasta la pantalla. Cada capa hace UNA cosa. Cuando alguien te diga \"el sistema no funciona\", esa secuencia es tu mapa de búsqueda: ¿en qué capa se cortó el viaje?</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Mi app tiene un problema: [describe el síntoma]. Quiero saber en qué capa está el problema (frontend, backend o base de datos), qué archivo habría que tocar, y qué debo decirle a la IA para que lo arregle.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "relacionar", pares: [["Frontend", "Lo que el usuario ve y toca"], ["Backend", "La lógica que procesa en el servidor"], ["Base de datos", "El almacén de datos"], ["Navegador", "Donde corre el frontend"]] },
+              { tipo: "completar", frase: "El ____ es lo que se ve en el navegador; el ____ corre en un servidor y procesa las peticiones.", banco: ["frontend", "backend", "firewall", "motor"], respuestas: ["frontend", "backend"] },
+              { tipo: "multiple", pregunta: "Un botón no responde al hacer clic. ¿En qué capa buscarías primero?", opciones: ["Backend", "Frontend", "Base de datos", "El sistema operativo"], correcta: 1 },
+              { tipo: "ordenar", instruccion: "Flujo de un pedido:", elementos: ["el usuario toca \"Comprar\" en el navegador", "el backend recibe y valida", "el backend consulta la base de datos", "la base de datos guarda el pedido", "el navegador muestra \"Pedido confirmado\""] },
+              { tipo: "vf", afirmacion: "La base de datos vive dentro del navegador, junto al frontend.", correcta: false, explicacion: "es una capa aparte, normalmente en sus propios servidores." }
+            ]
+          },
+          {
+            id: "m1-b24",
+            titulo: "¿Qué es un algoritmo? (la receta paso a paso)",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Un <strong>algoritmo</strong> es una secuencia ordenada de pasos para resolver un problema. Eso es todo — y significa que ya conoces cientos: una receta de cocina, las indicaciones para llegar a un lugar, los pasos para sacar tu INE. Los seres humanos somos máquinas de algoritmos; solo que no les decíamos así.</p><p>En software, un algoritmo bien hecho tiene tres ingredientes: <strong>pasos</strong> en orden, <strong>decisiones</strong> (los condicionales de B11: \"si pasa X, haz Y\") y <strong>repeticiones</strong> (los ciclos de B12: \"haz esto para cada uno\"). Se puede describir sin escribir una sola línea de código — eso se llama <strong>pseudocódigo</strong>: instrucciones claras que cualquier humano entiende y que luego la IA convierte a código.</p><p>Dato memorable: los algoritmos son más viejos que las computadoras. <strong>Euclides</strong>, hace más de 2,300 años, describió su famoso algoritmo para calcular el máximo común divisor — sin que existiera una sola computadora en el planeta. La lógica vino primero; las máquinas llegaron después.</p><p>Para ti, director de IA, el algoritmo es TU parte del trabajo: describir el proceso en pasos claros, con sus decisiones y repeticiones, es exactamente el input que la IA necesita. \"Toma cada pedido, si supera $1000 aplícale 15%, suma todo, mándalo al correo\" — tú pones el algoritmo en palabras, la IA lo vuelve código.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>La <strong>ruta de tu casa al mercado</strong>: pasos en orden (salir, caminar dos cuadras, doblar a la izquierda), una decisión (si la avenida está cerrada, dar la vuelta), y una repetición (lo haces cada semana igual). Eso es un algoritmo que llevas años ejecutando sin saberlo. La única diferencia es que la computadora no puede improvisar: necesita que le escribas la ruta completa, con todos los \"si\" y todos los \"repite\".</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<pre><code>PSEUDOCÓDIGO: calcular el descuento de un carrito\n1. Toma la lista de productos del carrito\n2. Suma todos los precios → subtotal\n3. SI subtotal &gt;= $1000:\n     descuento = 15% del subtotal\n   SI NO:\n     descuento = 0\n4. total = subtotal - descuento\n5. Muestra el total y el descuento</code></pre><p>Ese texto no es código de ningún lenguaje: es el algoritmo, describible por cualquier persona. Nota las decisiones (el SI) y los pasos en orden. Cuando la IA lo convierta a JavaScript, cada línea tendrá un equivalente directo. Practicar esta forma de pensar es el entrenamiento base de director.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Necesito un algoritmo para [describe tu proceso de negocio]. Escríbelo primero en pseudocódigo paso a paso, con pasos, decisiones y repeticiones claras. Revísalo conmigo, y solo cuando te diga 'OK' conviértelo a [lenguaje]. No lo conviertas antes.\"</p></blockquote><p>Ese \"solo cuando te diga OK\" es importante: separa el diseño (tú) del código (la IA), y te permite revisar la lógica antes de que se vuelva incomprensible.</p>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "completar", frase: "Un algoritmo es una ____ ordenada de pasos para ____ un problema.", banco: ["secuencia", "resolver", "adivinar", "borrar"], respuestas: ["secuencia", "resolver"] },
+              { tipo: "vf", afirmacion: "Los algoritmos solo existen dentro de las computadoras.", correcta: false, explicacion: "Euclides describió uno hace más de 2,300 años, sin computadoras." },
+              { tipo: "multiple", pregunta: "¿Qué elementos suele tener un algoritmo?", opciones: ["Pasos, decisiones y repeticiones", "Colores y fuentes", "Solo números", "Archivos y carpetas"], correcta: 0 },
+              { tipo: "ordenar", instruccion: "Algoritmo para el descuento:", elementos: ["suma los precios del carrito", "revisa si el subtotal supera $1000", "aplica el 15% si aplica", "calcula el total"] },
+              { tipo: "quehace", codigo: "SI pago >= 5000 ENTONCES envío gratis SI NO cobrar envío", pregunta: "Este pseudocódigo...", opciones: ["Siempre cobra envío", "Cobra envío solo si el pago es menor a 5000", "Nunca cobra envío", "Suma 5000 al pago"], correcta: 1 }
+            ]
+          },
+          {
+            id: "m1-b25",
+            titulo: "¿Qué es una API? Primer vistazo al mesero de los datos",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Cuando tu app necesita información de otro sistema, no entra a su base de datos directamente: habla con su <strong>API</strong>. Una API (Application Programming Interface) es el intermediario oficial entre dos programas — la regla escrita de qué puedes pedir y qué te van a responder.</p><p>Lo verás en todas partes: tu página cobra con tarjeta a través de la API de pagos; la app del clima pide datos a la API meteorológica; el tipo de cambio que muestra tu app viene de una API bancaria. Ninguno de esos sistemas te deja tocar su base de datos: te dejan hablar con su API.</p><p>La API define <strong>endpoints</strong>: rutas exactas como <code>/productos</code> o <code>/clima/cdmx</code>. Y define los verbos: <strong>GET</strong> para pedir datos (\"dame los productos\"), <strong>POST</strong> para enviar/guardar (\"registra este pedido\"). Nota el parecido con los verbos de SQL de B5 — el mundo repite la misma idea: leer, escribir, modificar, borrar.</p><p>La respuesta de una API casi siempre viaja en <strong>JSON</strong> (B17), que ya sabes leer. Cuando la IA conecte tu página con servicios externos, el flujo será: tu frontend pide → la API responde con JSON → tu app lo muestra. Tú no escribes APIs de entrada: describes qué necesitas (\"quiero que la página muestre el clima de cada ciudad\") y la IA hace el puente.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>El <strong>cajero del banco</strong>. No puedes entrar a la bóveda (la base de datos del banco) a sacar tu dinero tú mismo. Le pides al cajero por la ventanilla: \"retira $500 de mi cuenta\" (una petición con reglas), y él hace el trámite y te entrega el resultado. Tú no sabes cómo lo hizo, solo sigues el protocolo: fila, identificación, y lo que se te permite pedir. La API es ese cajero — la barrera amable que te da lo que pides sin dejarte meter las manos.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<pre><code>// Pedirle datos del clima a una API (fetch, la herramienta de peticiones)\nconst respuesta = await fetch(\"https://api.clima.com/ciudades/cdmx\");\nconst datos = await respuesta.json();\n\nconsole.log(datos.temperatura);  // 22\nconsole.log(datos.condicion);    // \"despejado\"</code></pre><p>Dos líneas y media hacen el milagro: se pide la URL del endpoint (una petición GET), la respuesta llega en JSON y se convierte con <code>.json()</code>, y ya puedes leer los datos como objeto (B16). Sin saber los secretos de la meteorología, tu app ya muestra el clima. Eso es lo que las APIs hacen por el mundo.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Quiero que mi [app] obtenga [dato, ej. 'el clima', 'el tipo de cambio'] de una API pública. Investiga cuál es la mejor opción gratuita, muéstrame cómo se ve la respuesta en JSON, y dime qué le tengo que pedir a la IA para conectarla a mi página.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "completar", frase: "Una API es el ____ entre dos programas: define qué puedes ____ y qué te responde.", banco: ["intermediario", "pedir", "inventar", "cobrar"], respuestas: ["intermediario", "pedir"] },
+              { tipo: "relacionar", pares: [["GET", "Pedir datos"], ["POST", "Guardar o enviar datos nuevos"], ["Endpoint", "La ruta exacta (ej. /productos)"], ["JSON", "El formato típico de la respuesta"]] },
+              { tipo: "multiple", pregunta: "Tu página cobra con tarjeta sin manejar tarjetas directamente. ¿Con quién habla?", opciones: ["Con la base de datos local", "Con la API de pagos", "Con el sistema operativo", "Con el navegador"], correcta: 1 },
+              { tipo: "quehace", codigo: "fetch(\"https://api.clima.com/ciudades/cdmx\")", pregunta: "<code>fetch(\"https://api.clima.com/ciudades/cdmx\")</code> — ¿qué hace?", opciones: ["Guarda el clima en tu disco", "Pide datos del clima de CDMX a esa API", "Borra los datos del clima", "Instala una librería"], correcta: 1 },
+              { tipo: "vf", afirmacion: "Una API te da acceso directo a la base de datos de otro sistema, sin reglas.", correcta: false, explicacion: "la API ES la regla: solo puedes pedir lo que sus endpoints permiten." }
+            ]
+          },
+          {
+            id: "m1-b26",
+            titulo: "Bases de datos: tablas, filas, columnas y el Excel con esteroides",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Una <strong>base de datos</strong> (BD) es donde vive la información estructurada de un sistema: clientes, productos, pedidos, pagos. Es un Excel gigante con superpoderes, y se organiza igual: <strong>tablas</strong>, <strong>columnas</strong> y <strong>filas</strong>.</p><p>Una <strong>tabla</strong> es una hoja de un tema: la tabla <code>clientes</code>, la tabla <code>productos</code>. Las <strong>columnas</strong> son los campos — <code>nombre</code>, <code>correo</code>, <code>precio</code>. Las <strong>filas</strong> son cada registro — cada cliente, cada producto. La <strong>clave primaria</strong> (normalmente <code>id</code>) es el número de serie que identifica cada fila de forma única.</p><p>¿Por qué no usar un Excel de plano? Por tres razones: maneja millones de filas sin despeinarse; varios usuarios pueden escribir al mismo tiempo sin pisarse; y protege los datos — no cualquiera borra una fila sin permiso. Un Excel es tu libreta personal; una base de datos es un sistema con guardias.</p><p>Hablas con ella con <strong>SQL</strong> (B5): <code>SELECT</code> para leer, <code>INSERT</code> para guardar, <code>UPDATE</code> para modificar, <code>DELETE</code> para borrar. Cuando la IA te diga \"ya guarda el pedido en la base de datos\", todo esto está por detrás.</p><p>Para ti, la idea clave es esta: <strong>la página se puede rehacer en una tarde; los datos no</strong>. Las decisiones serias de tu negocio — respaldos, quién puede borrar qué, qué se guarda y qué no — son decisiones sobre la base de datos. Por eso te interesa saber leerla, aunque nunca escribas una consulta a mano.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Un <strong>almacén con pasillos, estantes y etiquetas</strong>: cada pasillo es una tabla (clientes, productos), cada estante una fila (un cliente concreto), cada etiqueta una columna (correo, teléfono). El Excel es tu libreta en el escritorio; la base de datos es el almacén con empleados que nunca se equivocan, trabajan 24/7, y solo dejan entrar a quien tiene permiso. Si se incendia la libreta, pierdes todo; por eso el almacén hace respaldos.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<pre><code>CREATE TABLE clientes (\n  id         INTEGER PRIMARY KEY,\n  nombre     TEXT,\n  correo     TEXT,\n  mes_pagado INTEGER\n);\n\nINSERT INTO clientes (id, nombre, correo, mes_pagado)\nVALUES (1, 'Ray Fernández', 'ray@ejemplo.com', 1);\n\nSELECT nombre FROM clientes WHERE mes_pagado = 1;</code></pre><p>Lee las tres frases: se crea la tabla con sus columnas y sus tipos; se inserta un cliente; se pregunta quién pagó el mes 1. Nota cómo el <code>id</code> marca a cada cliente de forma única — ese es el sistema de numeración del almacén. Y nota cómo la consulta final responde una pregunta de negocio: \"¿a quién le activo el acceso este mes?\".</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Necesito guardar [mis datos: clientes, pedidos…]. Muéstrame cómo modelarlos en una tabla: qué columnas, qué tipo de dato en cada una, y cuál sería la clave primaria. Después dame las consultas SQL para registrar, consultar y actualizar, y dime cuáles son de solo lectura (seguras) y cuáles modifican datos.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "completar", frase: "En una tabla de base de datos, las ____ son los campos (nombre, correo) y las ____ son cada registro.", banco: ["columnas", "filas", "puertas", "páginas"], respuestas: ["columnas", "filas"] },
+              { tipo: "relacionar", pares: [["Tabla", "La hoja de datos de un tema"], ["Columna", "Un campo (ej. correo)"], ["Fila", "Un registro completo (un cliente)"], ["Clave primaria", "Identifica cada fila de forma única"]] },
+              { tipo: "multiple", pregunta: "¿Por qué una base de datos es mejor que un Excel para una app real?", opciones: ["Es más bonita", "Maneja millones de filas, varios usuarios a la vez y protege los datos", "Ocupa menos internet", "No necesita servidor"], correcta: 1 },
+              { tipo: "quehace", codigo: "SELECT nombre FROM clientes WHERE mes_pagado = 1;", pregunta: "<code>SELECT nombre FROM clientes WHERE mes_pagado = 1;</code> — ¿qué trae?", opciones: ["Todos los datos de todos los clientes", "Los nombres de los clientes que pagaron el mes 1", "Borra a los que no pagaron", "Actualiza el mes pagado"], correcta: 1 },
+              { tipo: "vf", afirmacion: "La clave primaria (id) garantiza que cada fila se identifica de forma única.", correcta: true, explicacion: "por eso cada cliente tiene un id distinto." }
+            ]
+          },
+          {
+            id: "m1-b27",
+            titulo: "Open source: el código abierto y por qué medio mundo es gratis",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p><strong>Open source</strong> (\"código abierto\") es software cuyo código fuente es público: cualquiera lo puede ver, estudiar, usar y modificar. No es lo mismo que \"gratis\" — es que el plano completo está a la vista de todos. El software de pago es un club privado: pagas para entrar, pero el plano de la casa es secreto.</p><p>La filosofía detrás: muchas manos, mejor revisado. Cuando el código es público, miles de programadores lo leen, encuentran errores y proponen arreglos. Recuerdas de A9 que Linux corre los servidores del mundo y que una de sus ventajas es ser auditable — esa es la lógica del open source funcionando.</p><p>Los ejemplos que ya usaste son la mayoría del mundo digital: <strong>Linux</strong> (A9), <strong>Python</strong> (B4), <strong>Git</strong> (tu materia del Mes 2), <strong>React</strong>, <strong>Node.js</strong>, <strong>Firefox</strong>, <strong>WordPress</strong>. La infraestructura de internet es, en su enorme mayoría, open source.</p><p>Cada proyecto define qué puedes hacer con su código mediante una <strong>licencia</strong>: la <strong>MIT</strong> es permisiva (usa y modifica casi sin restricciones), la <strong>GPL</strong> es \"contagiosa\" — si modificas y distribuyes, tu versión también debe ser abierta. Leer la licencia antes de adoptar una pieza es sentido común profesional.</p><p>Dato memorable: <strong>Linus Torvalds</strong> publicó Linux gratis en 1991, a los 21 años, con un mensaje donde decía que era \"solo un pasatiempo, nada grande\". Hoy es el sistema operativo que sostiene internet, mantenido por miles de personas que no cobran un centavo. Y sí: esta escuela misma corre sobre herramientas open source.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Un <strong>parque público</strong> construido y mantenido por la comunidad: todos lo usan, cualquiera puede proponer una mejora, y los planos están en internet para quien quiera verlos. El software de pago es un club privado: puedes entrar como cliente, pero los planos de la casa son secretos y las mejoras las decide solo el dueño.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<pre><code>Un proyecto open source en GitHub (lo dominarás en el Mes 2):\n\nREADME.md       ← qué hace y cómo instalarlo\nLICENSE         ← MIT / Apache / GPL: qué puedes hacer con él\nsrc/            ← el código, abierto para todos\nissues/         ← los bugs y mejoras que cualquiera reporta</code></pre><p>Sin abrir un solo archivo, ese árbol de carpetas te cuenta la historia: hay documentación para humanos (README), las reglas de uso (LICENSE), el código abierto (src) y la plaza pública de reportes (issues). Cuando la IA te recomiende una librería, saber pedirle esta información te convierte en un consumidor informado.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Necesito elegir una librería open source para [mi necesidad]. Investiga las 2-3 más populares, muéstrame qué licencia tiene cada una (MIT, Apache, GPL), qué tan activa está su comunidad y si hay reportes de bugs graves. Dime cuál me recomiendas y por qué.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "vf", afirmacion: "Open source significa que el código del programa es público y cualquiera puede verlo.", correcta: true, explicacion: "es más que gratis: está abierto a todos." },
+              { tipo: "completar", frase: "La ____ define qué puedes hacer con el código; la licencia ____ obliga a que las versiones derivadas también sean abiertas.", banco: ["licencia", "GPL", "portada", "MIT"], respuestas: ["licencia", "GPL"] },
+              { tipo: "relacionar", pares: [["Linux", "El sistema operativo abierto de los servidores"], ["Python", "Lenguaje abierto (B4)"], ["GitHub", "Donde vive el código abierto"], ["MIT", "Licencia permisiva"]] },
+              { tipo: "multiple", pregunta: "¿Qué diferencia a open source de simplemente \"gratis\"?", opciones: ["El código es público y modificable", "No se puede usar en empresas", "Es más lento", "No tiene comunidad"], correcta: 0 },
+              { tipo: "ordenar", instruccion: "Cómo evaluar una librería open source:", elementos: ["revisa la licencia", "mira qué tan activa está la comunidad", "busca reportes de bugs graves", "decide si conviene para tu proyecto"] }
+            ]
+          },
+          {
+            id: "m1-b28",
+            titulo: "Leer código I: descifrar un archivo JavaScript simple (con IA de copiloto)",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Ya tienes el vocabulario: variables (B9), tipos (B10), condicionales (B11), ciclos (B12), funciones (B13-B14), listas (B15) y objetos (B16). Ahora la práctica de todo director de IA: <strong>leer un archivo JavaScript completo sin entrar en pánico</strong>.</p><p>La estrategia es la de un detective, no la de un memorizador. <strong>Primera leída</strong>: busca las funciones y lee sus nombres — los nombres cuentan la historia (\"si se llama <code>calcularTotal</code>, ya sé qué hace\"). <strong>Segunda</strong>: sigue los datos — de dónde salen las variables, qué se guarda y qué se muestra. <strong>Tercera</strong>: identifica los condicionales y los ciclos — dónde decide el programa y dónde repite. Esas tres pasadas te dan el mapa.</p><p>Y cuando algo no cuadre, entra tu superpoder: la <strong>IA de copiloto</strong> (lo entrenas en C27). No es hacer trampa: es exactamente lo que hacen los programadores profesionales en 2026. Le pegas el archivo y le pides \"explica esta función\", \"qué hace la línea 20\", \"¿por qué hay un while aquí?\". Leer con copiloto es leer el doble de rápido con el doble de entendimiento.</p><p>La clave mental: no necesitas entender TODA la sintaxis. Necesitas entender la <strong>historia</strong>: qué datos entran, qué se decide, qué sale. El resto son detalles que la IA te aclara cuando se lo preguntas.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Leer una <strong>receta de otro cocinero</strong>: primero lees los nombres de los platillos (las funciones), luego los ingredientes (las variables), luego las instrucciones (la lógica). Y cuando no entiendes un paso, le preguntas al cocinero que la escribió. Tu copiloto es ese cocinero: siempre está disponible, nunca se molesta por la pregunta obvia, y te lo explica las veces que haga falta.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<pre><code>const PRECIO_ENVIO = 120;\n\nfunction calcularSubtotal(productos) {\n  let suma = 0;\n  for (let i = 0; i &lt; productos.length; i++) {\n    suma = suma + productos[i].precio;\n  }\n  return suma;\n}\n\nfunction calcularTotal(productos, envioGratis) {\n  const subtotal = calcularSubtotal(productos);\n  if (envioGratis === true) {\n    return subtotal;\n  }\n  return subtotal + PRECIO_ENVIO;\n}</code></pre><p>Aplica las tres pasadas: hay dos funciones con nombres que lo dicen todo — una suma precios, otra decide sobre el envío. Hay un dato fijo (<code>PRECIO_ENVIO</code>), un ciclo (recorre la lista) y un condicional (si el envío es gratis, no lo suma). Sin saber cada detalle de sintaxis, ya puedes contarle a alguien qué hace este archivo. Eso es leer código.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Voy a pegarte el código de mi proyecto. Actúa como mi copiloto: primero dime en una tabla qué funciones existen y qué hace cada una en una línea; después señala las líneas que NO entiendo (te las pego debajo) y explícamelas como a un colega, no como a un manual.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "ordenar", instruccion: "Estrategia para leer código:", elementos: ["busca las funciones y sus nombres", "sigue los datos y las variables", "identifica condicionales y ciclos", "pregúntale a la IA lo que no cuadre"] },
+              { tipo: "completar", frase: "Los ____ de las funciones cuentan la historia: si una se llama <code>calcularTotal</code>, ya sabes qué hace.", banco: ["nombres", "colores", "llaves", "comas"], respuestas: ["nombres"] },
+              { tipo: "multiple", pregunta: "<code>calcularSubtotal(productos)</code> — leyendo solo el nombre, ¿qué esperas que haga?", opciones: ["Borrar los productos", "Sumar los precios de los productos", "Guardar en la base de datos", "Mandar un correo"], correcta: 1 },
+              { tipo: "quehace", codigo: "calcularTotal(productos, true)", pregunta: "En la función <code>calcularTotal</code> de la lección, si <code>envioGratis</code> es <code>true</code>, ¿qué devuelve?", opciones: ["El subtotal más el envío", "Solo el subtotal, sin envío", "Un error", "Solo el precio del envío"], correcta: 1 },
+              { tipo: "vf", afirmacion: "Pegar el código a la IA para que te lo explique es hacer trampa.", correcta: false, explicacion: "es el método profesional: la IA es tu copiloto de lectura." }
+            ]
+          },
+          {
+            id: "m1-b29",
+            titulo: "Leer código II: descifrar un HTML + CSS real",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Con JavaScript ya puedes leer la lógica de una app. Ahora falta la mitad visual: <strong>HTML + CSS</strong>, los otros dos de la trinidad de la web (B7, B8). Y se leen con una estrategia distinta, porque son otro tipo de archivo.</p><p><strong>Leer HTML es de afuera hacia adentro.</strong> El <code>&lt;html&gt;</code> envuelve todo; dentro, <code>&lt;head&gt;</code> (metadatos) y <code>&lt;body&gt;</code> (lo visible). Las etiquetas se <strong>anidan</strong> como muñecas rusas: un <code>&lt;div&gt;</code> adentro de otro. La regla de oro: todo lo que abres lo cierras. Y cada elemento puede llevar <strong>atributos</strong> — los dos que más verás son <code>class</code> y <code>id</code>: son las manijas que conectan el HTML con el CSS.</p><p><strong>Leer CSS es identificar selectores.</strong> Un selector dice A QUÉ le aplicas estilos: <code>h1</code> (la etiqueta), <code>.tarjeta</code> (todos los que tengan <code>class=\"tarjeta\"</code>), <code>#boton-pagar</code> (el único con ese <code>id</code>). Entre llaves, los estilos: <code>{ color: red; padding: 12px; }</code>. Eso se lee: \"a todos los elementos de la clase tarjeta, píntalos rojo y dales 12 píxeles de relleno\".</p><p>Cuando la IA te arme una página, el HTML será el armazón y el CSS el look. Cuando le pidas \"haz la tarjeta de precios más grande\", ella buscará la clase <code>.precio</code> y la estilizará. Tú solo necesitas saber que esa conexión existe: <code>class</code> en HTML ↔ <code>.clase</code> en CSS. Es el puente de dos archivos que se hablan entre sí.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>HTML es el <strong>plano del arquitecto</strong>: cada habitación es una etiqueta, y las habitaciones anidadas (la recámara adentro del pasillo, el pasillo adentro de la casa) son la estructura. CSS es la <strong>carta de acabados</strong>: \"las recámaras en beige, los pisos de madera, las puertas altas\". Dos documentos distintos, dos trabajos distintos — y el plano usa las etiquetas (las clases) para decirle a la carta de acabados qué habitación es cuál.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<pre><code>&lt;div class=\"tarjeta\"&gt;\n  &lt;h1 class=\"titulo\"&gt;Curso de Python&lt;/h1&gt;\n  &lt;p class=\"precio\"&gt;$7,000&lt;/p&gt;\n  &lt;button class=\"boton\" id=\"boton-comprar\"&gt;Comprar&lt;/button&gt;\n&lt;/div&gt;\n\n/* CSS */\n.tarjeta {\n  border: 1px solid #ccc;\n  border-radius: 12px;\n  padding: 24px;\n}\n.titulo { color: #7c3aed; }\n.boton {\n  background: #22c55e;\n  color: white;\n  border: none;\n}</code></pre><p>Lee la pareja: una tarjeta que contiene un título, un precio y un botón. El CSS le da borde redondeado a la tarjeta, morado al título y verde al botón. Fíjate cómo las clases del HTML (<code>.tarjeta</code>, <code>.titulo</code>, <code>.boton</code>) son exactamente los selectores del CSS. Sin esa conexión, los estilos no encuentran su elemento.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Voy a pegarte mi HTML y mi CSS. Hazme un mapa: qué etiquetas están anidadas dentro de qué, qué clases usa cada elemento, y qué regla CSS aplica a cada clase. Si hay un elemento sin clase ni id, dímelo — sería difícil de estilizar.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "relacionar", pares: [["HTML", "La estructura (el plano)"], ["CSS", "Los estilos (la carta de acabados)"], [".clase", "Manija para estilizar varios elementos"], ["#id", "Manija única para un elemento"]] },
+              { tipo: "completar", frase: "En HTML las etiquetas se ____ como muñecas rusas, y todo lo que abres debes ____.", banco: ["anidan", "cerrar", "pintar", "borrar"], respuestas: ["anidan", "cerrar"] },
+              { tipo: "multiple", pregunta: "¿A qué elementos afecta la regla <code>.tarjeta { color: red; }</code>?", opciones: ["A todos los <p> de la página", "A todos los que tengan class=\"tarjeta\"", "Al primer elemento de la página", "A ningún elemento"], correcta: 1 },
+              { tipo: "quehace", codigo: "<p class=\"precio\">$7,000</p>", pregunta: "Con <code>.precio { color: green; }</code>, ¿cómo se ve el precio?", opciones: ["Rojo", "Verde", "Sin estilo", "Se borra de la página"], correcta: 1 },
+              { tipo: "vf", afirmacion: "El CSS siempre se escribe dentro del HTML, en la misma línea, sin archivos aparte.", correcta: false, explicacion: "normalmente vive en un archivo .css aparte (B8)." }
+            ]
+          },
+          {
+            id: "m1-b30",
+            titulo: "Repaso integrador del Idioma (mega-quiz jugable)",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Cierra los ojos y mira todo lo que ya sabes leer. Hace 29 lecciones no sabías nada de esto; hoy reconoces las piezas del software como quien reconoce las herramientas de un taller. Ese es el verdadero logro del mes: no memorizaste código, <strong>aprendiste a reconocer</strong>.</p><p>Tu mapa mental de este mes:</p><ul><li><strong>Leer datos:</strong> variables (B9), tipos (B10), listas (B15), objetos (B16), JSON (B17)</li><li><strong>Leer lógica:</strong> condicionales (B11), ciclos (B12), funciones (B13-B14)</li><li><strong>Leer apps:</strong> las tres capas (B23), API (B25), bases de datos (B26)</li><li><strong>Leer mundos:</strong> lenguajes (B2-B6), HTML/CSS (B7-B8), librerías y frameworks (B22), open source (B27)</li><li><strong>Leer errores:</strong> mensajes (B19), tipos de error (B20), bugs (B21), comentarios (B18)</li></ul><p>Si hoy leyeras un archivo real de una app, podrías decir: aquí hay una variable, aquí decide, aquí repite, aquí guarda, y esto viaja como JSON. Hace un mes eso era griego. La Materia C ya viene: en ella construirás tu primera página dirigiendo a la IA — y cada concepto de este idioma te servirá para leer lo que ella produzca y corregirlo con criterio.</p><p>El quiz de esta lección es el ensayo general: no enseña nada nuevo, te dice dónde estás parado ANTES del escenario. Ve a por él.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>El <strong>ensayo general antes del concierto</strong>: no aprendes canciones nuevas — repasas el setlist, descubres qué partes te fallan y las pules ANTES de que haya público. Ese es el papel de esta lección: detectar los huecos del idioma antes de la Materia C, donde vas a construir de verdad.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<pre><code>MAPA DEL IDIOMA — MES 1\n\nLeer datos:   variables (B9) · tipos (B10) · listas (B15) · objetos (B16) · JSON (B17)\nLeer lógica:  if/else (B11) · ciclos (B12) · funciones (B13-B14)\nLeer apps:    frontend/backend/BD (B23) · API (B25) · BD (B26)\nLeer mundos:  lenguajes (B2-B6) · HTML/CSS (B7-B8) · librerías (B22) · open source (B27)\nLeer errores: mensajes (B19) · tipos (B20) · bugs (B21) · comentarios (B18)</code></pre><p>Ese es tu mapa de referencia. Si algo se te olvida, el mapa te lleva directo a la lección. Eso es lo que te llevas del mes: un idioma completo, un mapa de dónde está cada concepto, y la seguridad de que los puedes volver a consultar las veces que quieras. Nadie lee un idioma de memoria — lo lee porque lo reconoce.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Soy estudiante del Mes 1 de un programa donde aprendí a leer código, no a escribirlo. Hazme un examen de autoevaluación de 10 preguntas sobre: variables, tipos de datos, condicionales, ciclos, funciones, JSON, APIs, bases de datos y lectura de código. Corrígeme cada respuesta, explícame por qué fallé cuando falle, y al final dime en qué 2 temas debo repasar.\"</p></blockquote><p>Ese es tu prompt de autoevaluación: la IA te examina, te corrige con explicación, y te da un diagnóstico accionable. Los temas que te marque son exactamente las lecciones que debes releer antes de seguir.</p>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "multiple", pregunta: "¿Qué describe mejor a una computadora?", opciones: ["Inteligente y creativa", "Obediente y literal: hace lo que le dices, no lo que quisiste decir", "Rápida pero impredecible", "Lenta y tonta"], correcta: 1 },
+              { tipo: "completar", frase: "En la era de la IA, la IA ____ el código y tú lo ____, lo ____ y lo corriges.", banco: ["escribe", "lees", "verificas", "memorizas"], respuestas: ["escribe", "lees", "verificas"] },
+              { tipo: "relacionar", pares: [["Variable", "B9"], ["Condicionales (if/else)", "B11"], ["JSON", "B17"], ["API", "B25"]] },
+              { tipo: "vf", afirmacion: "Java y JavaScript son versiones del mismo lenguaje.", correcta: false, explicacion: "solo comparten el nombre por marketing (B6)." },
+              { tipo: "quehace", codigo: "for (let i = 0; i < 3; i++) { console.log(i); }", pregunta: "<code>for (let i = 0; i &lt; 3; i++) { console.log(i); }</code> — ¿qué imprime?", opciones: ["1, 2, 3", "0, 1, 2", "0, 1, 2, 3", "Nada, es un error"], correcta: 1 },
+              { tipo: "ordenar", instruccion: "Flujo para construir una app dirigiendo IA:", elementos: ["describe qué quieres en palabras", "pídele el código a la IA", "lee y verifica cada parte", "corrige iterando la conversación", "prueba que funcione"] },
+              { tipo: "multiple", pregunta: "La página muestra los precios mal: resta en vez de sumar, pero no da ningún error. ¿Qué tipo de error es?", opciones: ["De sintaxis", "De lógica", "De runtime", "De red"], correcta: 1 },
+              { tipo: "vf", afirmacion: "Un mensaje de error es una pista: casi siempre dice el archivo, la línea y qué no entendió.", correcta: true, explicacion: "y por eso se lo pegas completo a la IA (B19)." }
+            ]
+          }
         ]
       },
       "c": {
