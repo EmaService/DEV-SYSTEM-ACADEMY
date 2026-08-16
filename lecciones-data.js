@@ -4297,31 +4297,859 @@ window.DEV_SYSTEM_LECCIONES = {
               { tipo: "quehace", codigo: "rejected — non-fast-forward", pregunta: "Git responde <code>rejected — non-fast-forward</code>. ¿Qué pasó y qué haces?", opciones: ["Tu internet falló; reintenta", "El remoto tiene commits que tú no tienes; haz <code>git pull</code> primero", "Tu token expiró; genera otro", "El repo es privado; hazlo público"], correcta: 1 }
             ]
           },
-          { id: "m2-b6", titulo: "git pull y git fetch: traer los cambios de otros", proximamente: true },
-          { id: "m2-b7", titulo: "git clone: copiar un proyecto ajeno completo", proximamente: true },
-          { id: "m2-b8", titulo: "Público vs privado: qué exponer y qué proteger", proximamente: true },
-          { id: "m2-b9", titulo: "README.md: la portada de tu proyecto", proximamente: true },
-          { id: "m2-b10", titulo: "Markdown: el idioma con el que se documenta el software", proximamente: true },
-          { id: "m2-b11", titulo: "Issues: el sistema de tickets del mundo real", proximamente: true },
-          { id: "m2-b12", titulo: "Labels, milestones y proyectos: organizar el trabajo", proximamente: true },
-          { id: "m2-b13", titulo: "Pull Requests I: qué son y por qué existen", proximamente: true },
-          { id: "m2-b14", titulo: "Pull Requests II: crear el tuyo paso a paso", proximamente: true },
-          { id: "m2-b15", titulo: "Code review: revisar código (tuyo, ajeno y de la IA)", proximamente: true },
-          { id: "m2-b16", titulo: "Merge de un PR: squash, rebase o merge commit", proximamente: true },
-          { id: "m2-b17", titulo: "Forks: copiar el proyecto de alguien más", proximamente: true },
-          { id: "m2-b18", titulo: "Tu primera contribución a open source", proximamente: true },
-          { id: "m2-b19", titulo: "GitHub Actions: cuando el robot trabaja por ti", proximamente: true },
-          { id: "m2-b20", titulo: "GitHub Pages: publicar tu sitio gratis desde el repo", proximamente: true },
-          { id: "m2-b21", titulo: "Colaboradores y permisos: quién puede hacer qué", proximamente: true },
-          { id: "m2-b22", titulo: "Protección de ramas: candados que evitan desastres", proximamente: true },
-          { id: "m2-b23", titulo: "Releases y changelogs: comunicar qué cambió", proximamente: true },
-          { id: "m2-b24", titulo: "GitHub Copilot: la IA que vive dentro del editor", proximamente: true },
-          { id: "m2-b25", titulo: "Buscar código en GitHub: tu biblioteca infinita", proximamente: true },
-          { id: "m2-b26", titulo: "Estrellas, forks y watchers: las métricas sociales del código", proximamente: true },
-          { id: "m2-b27", titulo: "Licencias explicadas simple: MIT, Apache, GPL", proximamente: true },
-          { id: "m2-b28", titulo: "Seguridad: secretos, tokens y lo que NUNCA debes subir", proximamente: true },
-          { id: "m2-b29", titulo: "Tu portafolio en GitHub: cómo te ve un cliente", proximamente: true },
-          { id: "m2-b30", titulo: "Repaso integrador de GitHub (mega-quiz jugable)", proximamente: true }
+          {
+            id: "m2-b6",
+            titulo: "git pull y git fetch: traer los cambios de otros",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Ya sabes subir tu trabajo con <code>git push</code> (B5). Ahora toca el otro lado del trato: <strong>traer los cambios que hicieron otros</strong>. Para eso existen <code>git fetch</code> y <code>git pull</code>.</p><p><strong><code>git fetch</code> — mirar sin tocar.</strong> Descarga del remoto los commits que no tienes, pero NO los integra en tu working directory. Solo actualiza el \"conocimiento\" local de qué hay allá: la rama <code>origin/main</code>. Tus archivos quedan exactamente como estaban.</p><p><strong><code>git pull</code> — traer y colocar.</strong> Es dos comandos en uno: <code>git fetch</code> + <code>git merge</code>. Descarga los cambios del remoto y los integra directo en tu rama actual, actualizando tus archivos.</p><p><strong>¿Cuál usar?</strong></p><ul><li>Quieres revisar qué hay antes de decidir → <code>git fetch</code> y luego inspeccionas.</li><li>Quieres los cambios de tu equipo ya, en tu rama → <code>git pull</code>.</li></ul><p><strong>El detalle que todos confunden:</strong> si tu rama local no avanzó, <code>git pull</code> hace un <em>fast-forward</em>: se adelanta directo a los commits nuevos, sin merge commit. Si tú ya hiciste commits propios, Git crea un merge automático — y si ambos tocaron las mismas líneas, aparece un conflicto (se resuelve igual que en A20).</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p><code>git fetch</code> es <strong>asomarte a la ventana del taller del socio</strong> para ver qué piezas nuevas llegaron — sin entrar ni tocar nada tuyo. <code>git pull</code> es <strong>entrar, tomar las piezas y colocarlas en tu mesa</strong>: el trabajo ya está hecho. El sabio primero se asoma; el práctico jala y resuelve.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<pre><code>C:\\...\\mi-tienda&gt; git fetch origin\nC:\\...\\mi-tienda&gt; git status\nYour branch is behind 'origin/main' by 2 commits.\n  (use \"git pull\" to update your local branch)\n\nC:\\...\\mi-tienda&gt; git pull\nUpdating a1b2c3d..e4f5g6h\nFast-forward\n index.html | 2 ++\n 1 file changed, 2 insertions(+)</code></pre><p><code>fetch</code> avisó: \"estás 2 commits atrás\". <code>pull</code> los trajo y actualizó <code>index.html</code>. Ese <em>Fast-forward</em> es el caso ideal: sin conflictos y sin merge commit.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Estoy en mi rama main y quiero traer los cambios que subió un compañero. ¿Debo usar <code>git fetch</code> o <code>git pull</code>? Explícame la diferencia, en qué orden conviene cada uno, y qué pasa si yo también tengo commits locales sin subir.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "multiple", pregunta: "¿Qué hace <code>git fetch</code>?", opciones: ["Descarga los commits del remoto y los integra en tu working directory", "Descarga los commits del remoto pero NO toca tu working directory", "Sube tus commits locales al remoto", "Borra los cambios que hiciste sin commitear"], correcta: 1 },
+              { tipo: "relacionar", pares: [["git fetch", "Baja los cambios del remoto sin integrarlos a tu trabajo"], ["git pull", "Baja los cambios y los integra a tu rama actual"], ["git push", "Sube tus commits locales al remoto"]] },
+              { tipo: "vf", afirmacion: "git pull es equivalente a hacer git fetch y luego integrar los cambios en tu rama.", correcta: true, explicacion: "pull = fetch + merge de la rama remota trackeada (origin/main)." },
+              { tipo: "completar", frase: "git ____ es 'mirar sin tocar': baja la información del remoto sin integrarla. git ____ baja los cambios y los integra de una vez.", banco: ["fetch", "pull", "push", "clone"], respuestas: ["fetch", "pull"] },
+              { tipo: "quehace", codigo: "git pull", pregunta: "Estás en main, con tu working directory limpio y sin commits propios. El remoto tiene 2 commits nuevos. ¿Qué pasa al correr git pull?", opciones: ["Crea un merge commit y te pide resolver conflictos", "Adelanta tu rama (fast-forward) hasta los commits nuevos y actualiza tus archivos", "Descarga los commits pero no toca tus archivos", "Rechaza la operación porque no hiciste commit"], correcta: 1 }
+            ]
+          },
+          {
+            id: "m2-b7",
+            titulo: "git clone: copiar un proyecto ajeno completo",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p><code>git clone</code> descarga a tu computadora una copia <strong>completa</strong> de un repositorio: todos los archivos <strong>y todo su historial de commits</strong>. Se usa cuando el proyecto <strong>aún no existe en tu máquina</strong>.</p><p>La diferencia clave con B4: <code>git remote add</code> conecta tu repo local con una copia remota <em>de tu propio proyecto</em>. <code>git clone</code> baja un proyecto que no tienes — ajeno o tuyo — y de una vez te deja todo listo:</p><ul><li>Crea una carpeta nueva con el nombre del repo</li><li>Descarga el historial completo de commits</li><li>Conecta el remoto <code>origin</code> automáticamente, apuntando al repo original</li></ul><p>Un solo comando:</p><pre><code>git clone https://github.com/usuario/proyecto.git</code></pre><p><strong>Advertencia que ahorra corajes:</strong> clonar <strong>NO te da permiso de push</strong>. Puedes leer, estudiar y modificar tu copia, pero subir cambios a ese repo requiere ser colaborador (B21) o ir por la vía de fork + pull request (B17).</p><p>En tu día a día con IA: <code>git clone</code> es la forma estándar de entregarle un proyecto existente a una IA — le clonas el repo, ella lo estudia y trabaja sobre tu copia.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p><code>git clone</code> es <strong>fotocopiar el cuaderno completo de un compañero</strong>: cada página, cada anotación y todo su historial. Te quedas con tu copia para trabajar, rayar y experimentar — sin tocar el original. Y si alguien más trabaja sobre el original, tú vuelves a jalar los cambios con <code>git pull</code> (B6).</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<pre><code>C:\\...\\&gt; git clone https://github.com/rayflores/mi-tienda.git\nCloning into 'mi-tienda'...\nremote: Enumerating objects: 42, done.\nremote: Total 42 (delta 0), reused 0 (delta 0)\nReceiving objects: 100% (42/42), 13.5 KiB, done.\nResolving deltas: 100% (6/6), done.\n\nC:\\...\\&gt; cd mi-tienda\nC:\\...\\mi-tienda&gt; git log --oneline\na1b2c3d fix: botón de pago\nc4d5e6f feat: carrito de compras\n9f8e7d6 Versión inicial</code></pre><p>La carpeta <code>mi-tienda</code> nació con TODO: el proyecto y sus 3 commits de historia, listos para estudiar. El historial completo lo confirma <code>git log</code>.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Cloné este proyecto: [URL]. Quiero entenderlo antes de tocarlo: explícame su estructura de carpetas, qué hace cada archivo principal y dónde vive la lógica de [función]. No modifiques nada todavía.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "multiple", pregunta: "¿Qué copia <code>git clone</code> a tu computadora?", opciones: ["Solo la última versión de los archivos", "Todo el proyecto más su historial completo de commits", "Solo la carpeta .git sin los archivos", "Un archivo comprimido sin estructura"], correcta: 1 },
+              { tipo: "relacionar", pares: [["git clone", "Descarga un proyecto que no tienes, con todo su historial"], ["git remote add", "Conecta tu repo local con una copia remota de tu propio proyecto"], ["git push", "Sube tus commits al remoto"], ["git pull", "Baja cambios del remoto a tu repo"]] },
+              { tipo: "vf", afirmacion: "Al clonar un repositorio, el remoto origin queda conectado automáticamente.", correcta: true, explicacion: "clone configura origin por ti, apuntando al repo original." },
+              { tipo: "completar", frase: "Para clonar un repo se usa <code>git clone</code> seguido de la ____ del repositorio. El resultado incluye la carpeta, el historial completo y el remoto ____ ya conectado.", banco: ["URL", "origin", "main", "contraseña"], respuestas: ["URL", "origin"] },
+              { tipo: "quehace", codigo: "git clone https://github.com/otro/proyecto.git", pregunta: "Acabas de clonar un proyecto ajeno. ¿Puedes hacer push directo a él?", opciones: ["Sí, siempre puedes hacer push a cualquier repo clonado", "No: necesitas ser colaborador, o usar fork + pull request", "Sí, pero solo al día siguiente", "No, porque git clone no descarga el .git"], correcta: 1 }
+            ]
+          },
+          {
+            id: "m2-b8",
+            titulo: "Público vs privado: qué exponer y qué proteger",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Al crear un repositorio (B3) eliges su visibilidad. Es una decisión de dos caras: <strong>público</strong> (lo ve cualquiera en el mundo) o <strong>privado</strong> (solo tú y los colaboradores que invites, tema de B21). Y se puede cambiar después: <em>Settings → General → Danger Zone → Change repository visibility</em>.</p><p><strong>Público es literal: público.</strong> Cualquier persona en el planeta puede entrar, leer y descargar tu código. También los bots: hay programas que escanean repos públicos las 24 horas buscando secretos accidentales. Por eso esta es la regla de oro de la lección:</p><p><strong>NUNCA subas secretos — a ningún repo, público o privado.</strong> Tokens, contraseñas, llaves de API, archivos <code>.env</code>, datos personales de clientes. Detalle a fondo en B28.</p><p><strong>El riesgo real que casi nadie entiende:</strong> una vez que algo se sube a Git, queda en el <strong>historial</strong> para siempre. Borrar el archivo o borrar el repo NO borra lo que ya se copió. Si un token tocó un repo público, asume que está comprometido y revócalo hoy.</p><p><strong>¿Qué va público?</strong> Portafolio (B2, B29), proyectos open source, ejemplos de muestra, tu README de perfil.</p><p><strong>¿Qué va privado?</strong> Proyectos de clientes, trabajo en progreso, cualquier cosa con datos sensibles. Y recuerda: repos privados son ilimitados y gratis en GitHub.</p><p>Última puntada: <strong>privado no es \"a prueba de errores\"</strong>. Todo colaborador que invites lo ve. GitHub no es tu gestor de contraseñas: la seguridad de los secretos empieza por no subirlos jamás.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Público es <strong>poner tu taller con vitrina a la calle</strong>: cualquiera ve lo que haces, y eso construye reputación — pero también expone. Privado es <strong>trabajar en el patio de atrás con invitados que tú eliges</strong>. Y en ninguno de los dos lugares dejas las llaves de la caja fuerte a la vista: hay cosas que no van ni en el escaparate ni en el patio.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<pre><code>github.com/rayflores\n  mi-tienda/     🔒 Privado   ← solo tú + invitados\n  portfolio/     🌍 Público   ← todo el mundo\n\nCambiar visibilidad:\n  Settings → General → Danger Zone\n  → Change repository visibility</code></pre><p>Un mismo perfil convive con ambos: lo privado para clientes y avances, lo público para que el mundo vea de lo que eres capaz.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Quiero decidir si este proyecto va público o privado: [describe el proyecto]. Recomiéndame cuál conviene y por qué. Después dame la lista de lo que NUNCA debe estar en ningún repo —ni público ni privado— y el riesgo real de cada cosa.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "multiple", pregunta: "¿Quién puede ver un repositorio público en GitHub?", opciones: ["Solo las personas con cuenta de GitHub", "Cualquier persona en el mundo, con cuenta o sin cuenta", "Solo tus colaboradores", "Nadie hasta que lo compartas"], correcta: 1 },
+              { tipo: "vf", afirmacion: "Un repositorio privado es un lugar seguro para guardar tokens y contraseñas.", correcta: false, explicacion: "los secretos no van en Git: quedan en el historial y cualquier colaborador invitado los ve." },
+              { tipo: "relacionar", pares: [["Público", "Portafolio, open source y proyectos de muestra"], ["Privado", "Proyectos de clientes y trabajo en progreso"], ["Tokens y contraseñas", "No van en ningún repo, ni público ni privado"]] },
+              { tipo: "completar", frase: "Si subes un secreto a un repo y luego lo borras, el secreto sigue en el ____ de Git y pudo haber sido ____ por bots.", banco: ["historial", "copiado", "README", "ignorado"], respuestas: ["historial", "copiado"] },
+              { tipo: "quehace", codigo: "Settings → General → Danger Zone → Change repository visibility", pregunta: "Vas a cambiar un repo de privado a público para tu portafolio. ¿Qué debes revisar ANTES?", opciones: ["Que no haya secretos ni datos personales en ningún commit", "Que el repo tenga por lo menos 10 estrellas", "Que hayas borrado la carpeta .git local", "Que el historial esté en español"], correcta: 0 }
+            ]
+          },
+          {
+            id: "m2-b9",
+            titulo: "README.md: la portada de tu proyecto",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p><code>README.md</code> es el archivo que GitHub muestra por default cuando alguien abre tu repositorio. Es la <strong>portada de tu proyecto</strong>: lo primero que lee un visitante, un cliente o una IA. Su nombre viene de \"read me\" — léeme.</p><p><strong>Los datos técnicos:</strong></p><ul><li>Va en la <strong>raíz</strong> del repositorio (junto a tus carpetas y archivos).</li><li>Su extensión <code>.md</code> significa que está escrito en <strong>Markdown</strong> (lección B10): texto plano con formato.</li><li>GitHub lo detecta y lo renderiza automáticamente.</li></ul><p><strong>Qué debe tener un buen README:</strong></p><ol><li><strong>Título y descripción</strong> — qué es y para qué sirve</li><li><strong>Instalación</strong> — cómo ponerlo a correr</li><li><strong>Uso</strong> — cómo se utiliza</li><li><strong>Tecnologías</strong> — con qué está hecho</li><li><strong>Licencia</strong> — qué se puede hacer con el código (B27)</li></ol><p>Un repo sin README se lee como un cajón sin etiqueta: nadie sabe qué es ni cómo abrirlo. Con README, tu proyecto se presenta solo.</p><p><strong>El truco para ti y la IA:</strong> el README es lo primero que lee una IA cuando recibe un proyecto. Un buen README le da contexto sin adivinar: qué hace el proyecto, cómo correrlo, qué decisiones tomaste. Escríbelo bien y tendrás una IA más precisa desde el primer mensaje.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>El README es la <strong>portada y contraportada de tu libro</strong>: el título, de qué trata y cómo usarlo. Un libro sin portada no lo compra nadie en la librería; un repo sin README no lo clona nadie en GitHub. Y en la era de la IA, es también la <strong>presentación que le lees a tu nuevo socio antes de empezar a trabajar</strong>.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<pre><code># mi-tienda\n\nTienda en línea para el negocio familiar.\n\n## Instalación\n\n    git clone https://github.com/rayflores/mi-tienda.git\n    npm install\n\n## Uso\n\nAbre index.html en tu navegador y navega el catálogo.\n\n## Tecnologías\n\nHTML · CSS · JavaScript</code></pre><p>Así, cualquiera —humano o IA— entiende en 10 segundos qué es el proyecto y cómo correrlo.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Escribe el README.md para mi proyecto [describe el proyecto o pega su estructura]. Incluye: qué hace, cómo instalarlo, cómo usarlo y tecnologías. Formato Markdown, directo y sin relleno.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "multiple", pregunta: "¿Qué muestra GitHub en la portada de un repositorio por default?", opciones: ["La lista de estrellas y forks", "El contenido del README.md de la raíz", "El último commit", "Los archivos ordenados por tamaño"], correcta: 1 },
+              { tipo: "vf", afirmacion: "Un repositorio sin README se ve poco confiable y nadie sabe cómo usarlo.", correcta: true, explicacion: "el README es la portada: explica qué es el proyecto y cómo correrlo." },
+              { tipo: "relacionar", pares: [["Título y descripción", "¿Qué es este proyecto?"], ["Instalación", "¿Cómo lo pongo a correr?"], ["Uso", "¿Cómo lo utilizo?"], ["Licencia", "¿Qué puedo hacer con el código?"]] },
+              { tipo: "completar", frase: "El README va en la ____ del repositorio, y su extensión .md significa que está escrito en ____.", banco: ["raíz", "Markdown", "rama", "HTML"], respuestas: ["raíz", "Markdown"] },
+              { tipo: "ordenar", instruccion: "Acomoda de arriba a abajo las secciones de un README bien hecho:", elementos: ["Título y descripción", "Instalación", "Uso", "Tecnologías", "Licencia"] }
+            ]
+          },
+          {
+            id: "m2-b10",
+            titulo: "Markdown: el idioma con el que se documenta el software",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p><strong>Markdown</strong> es un lenguaje de marcado ligero: texto plano que usa símbolos para dar formato. Lo crearon para escribir con títulos, negritas y listas sin depender de editores complicados.</p><p>GitHub lo usa en TODOS lados: los README (B9), los issues (B11), las pull requests (B13), los comentarios y la documentación. Aprenderlo es aprender el idioma de la documentación del software.</p><p><strong>Las reglas que usas el 90% del tiempo:</strong></p><ul><li><code># Título</code> — encabezado (más <code>#</code>, más pequeño: <code>##</code>, <code>###</code>)</li><li><code>**texto**</code> — negrita · <code>*texto*</code> — cursiva</li><li><code>- item</code> — lista · <code>1. item</code> — lista numerada</li><li><code>[texto](https://url)</code> — enlace</li><li><code>![alt](https://url-imagen)</code> — imagen</li><li><code>`código`</code> — código inline · tres backticks <code>```</code> abren y cierran un bloque de código</li><li><code>&gt; texto</code> — cita</li><li><code>| a | b |</code> — tabla</li></ul><p><strong>La magia de Markdown:</strong> el archivo se lee perfecto como texto plano (puedes abrirlo en el bloc de notas) y al mismo tiempo se ve con formato bonito en GitHub. Un solo archivo, dos lecturas.</p><p>Para ti: cuando le pidas a la IA que documente tu proyecto, te va a entregar Markdown; cuando leas la documentación de cualquier software, será Markdown. Saberlo leer es entender todo el ecosistema.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Markdown es <strong>escribir con resaltador, pero con códigos que la máquina entiende</strong>. La <code>#</code> es tu marcador de título; los <code>**</code> tu resaltador de negrita. Escribes con las letras de siempre, pero marcas el formato mientras escribes — y cualquier computadora, navegador o GitHub lo interpreta igual.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<pre><code># Título grande        →  Título grande\n## Título mediano      →  Título mediano\n**importante**         →  importante (negrita)\n[visítanos](URL)       →  visítanos (enlace)\n`git pull`             →  git pull (código inline)\n&gt; Nota del autor       →  cita con barra</code></pre><p>A la izquierda el texto plano que tú escribes; a la derecha lo que se ve en GitHub. Misma información, doble lectura.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Enséñame las reglas de Markdown que más usa GitHub: encabezados, negrita, listas, enlaces, código inline y bloques de código. Dame un ejemplo de cada una. Después escribe un mini-README de práctica sobre [mi proyecto] con secciones en blanco para que yo las complete.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "multiple", pregunta: "¿Qué es Markdown?", opciones: ["Un lenguaje de programación para apps", "Un lenguaje de marcado ligero que da formato a texto plano", "Un editor de código de GitHub", "Un tipo de archivo de imagen"], correcta: 1 },
+              { tipo: "relacionar", pares: [["# Título", "Encabezado"], ["**texto**", "Negrita"], ["`git pull`", "Código inline"], ["[texto](URL)", "Enlace"]] },
+              { tipo: "completar", frase: "Un encabezado se marca con el símbolo ____ y el texto en negrita va entre dos ____.", banco: ["#", "**", "*", "|"], respuestas: ["#", "**"] },
+              { tipo: "vf", afirmacion: "Un archivo README.md se muestra renderizado (con formato) automáticamente en GitHub.", correcta: true, explicacion: "GitHub interpreta el Markdown y lo muestra con formato." },
+              { tipo: "quehace", codigo: "## Mi proyecto", pregunta: "En Markdown, ¿qué muestra esta línea en GitHub?", opciones: ["Un encabezado de nivel 2", "Texto en negrita", "Un bloque de código", "Una cita con barra"], correcta: 0 }
+            ]
+          },
+          {
+            id: "m2-b11",
+            titulo: "Issues: el sistema de tickets del mundo real",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>En cualquier proyecto real — y en tu día a día con IA — el trabajo no se queda en la cabeza: se <strong>anota, se prioriza y se rastrea</strong>. En GitHub eso se hace con <strong>Issues</strong>: el sistema de tickets del proyecto. Un issue es un pendiente registrado: un bug, una función nueva, una mejora, una pregunta. Cada uno vive dentro de un repositorio y tiene su propia identidad.</p><ul><li><strong>Número único:</strong> cada issue recibe un número que lo identifica para siempre — el issue <code>#12</code> es distinto del <code>#13</code>. Ese número es su nombre oficial.</li><li><strong>Título y cuerpo:</strong> el cuerpo se escribe en Markdown (lección B10): qué pasa, pasos para reproducirlo, capturas, lo que esperabas.</li><li><strong>Asignados y labels:</strong> quién lo resuelve y de qué tipo es (lección B12).</li><li><strong>Comentarios:</strong> la conversación alrededor del pendiente: dudas, avances, soluciones.</li></ul><p>El truco que hace a los issues la columna vertebral de GitHub: se <strong>referencian desde el código</strong>. Escribir <code>#12</code> en cualquier commit, PR o comentario crea un enlace a ese issue. Y si en un commit escribes <code>closes #12</code>, GitHub lo cierra automáticamente cuando ese cambio se mergea (lección B16).</p><p>Para tu forma de trabajar: el issue es el <strong>brief</strong>. Tú registras el pendiente en GitHub, la IA lo lee y lo resuelve, y el número del issue queda en el historial como evidencia de todo el ciclo. Los issues son también tu checklist de negocio: cada cambio que pide un cliente es un issue.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Un issue es el <strong>ticket de la cocina</strong>. El comensal no le grita al chef: escribe su pedido en el ticket, el ticket lleva número de orden, y por ese número el mesero y la cocina saben de qué se habla. Cuando el platillo sale, el ticket se marca como servido. Sin tickets, la cocina sería un caos de gritos; sin issues, un proyecto es un caos de \"me dijiste que…\".</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Un issue bien redactado:</p><pre><code>#12  El botón de pago no funciona en Safari\n     Abierto por rayflores hace 2 días · 4 comentarios\n\n     Los clientes reportan que al dar clic en \"Pagar\"\n     la página se queda en blanco, solo en Safari.\n\n     Pasos para reproducir:\n     1. Abrir el sitio en Safari\n     2. Ir a /checkout\n     3. Clic en \"Pagar\"\n\n     Labels: bug · urgencia\n     Assignees: @rayflores</code></pre><p>Y su cierre, cuando ya está resuelto:</p><pre><code>git commit -m \"fix: pago en Safari · closes #12\"</code></pre><p>Ese commit, al mergearse (B16), cierra el issue #12 solo: el ticket pasó de \"abierto\" a \"resuelto\" sin que nadie lo tocara a mano.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Necesito registrar este pendiente en GitHub: [describe el bug o la tarea]. Escríbeme el issue completo en formato Markdown: título claro, pasos para reproducir si es un bug, y qué esperaba que pasara. Termina sugiriendo los labels que le pondrías.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "multiple", pregunta: "¿Qué es un issue en GitHub?", opciones: ["Un mensaje privado entre colaboradores", "Un pendiente registrado en el repositorio: bug, tarea, idea o pregunta", "Una copia del repositorio", "Un comando de Git para borrar cambios"], correcta: 1 },
+              { tipo: "completar", frase: "Cada issue tiene un ____ único para referenciarlo. Escribir ____ #12 en un commit cierra el issue automáticamente al mergearse.", banco: ["número", "closes", "rama", "main"], respuestas: ["número", "closes"] },
+              { tipo: "vf", afirmacion: "Un issue sirve únicamente para reportar bugs.", correcta: false, explicacion: "sirve para bugs, funciones nuevas, tareas y preguntas: cualquier pendiente del proyecto." },
+              { tipo: "relacionar", pares: [["Issue", "El ticket del pendiente registrado"], ["#12", "El número que lo identifica"], ["closes #12", "Cierra el issue al mergearse el cambio"], ["Comentarios", "La conversación alrededor del pendiente"]] },
+              { tipo: "quehace", codigo: "fix: pago en Safari · closes #12", pregunta: "Ves este mensaje de commit: <code>fix: pago en Safari · closes #12</code>. ¿Qué pasa cuando el cambio se mergea?", opciones: ["Nada, es solo un texto decorativo", "El issue #12 se cierra automáticamente", "Se borra el issue #12 para siempre", "Se crea un issue nuevo con el número 12"], correcta: 1 }
+            ]
+          },
+          {
+            id: "m2-b12",
+            titulo: "Labels, milestones y proyectos: organizar el trabajo",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Un repositorio con muchos issues (B11) sin orden se convierte en ruido. Para organizarlos existen tres herramientas que se combinan: <strong>labels</strong>, <strong>milestones</strong> y <strong>projects</strong>.</p><ul><li><strong>Labels</strong> — etiquetas de color que clasifican un issue por tipo: <code>bug</code>, <code>feature</code>, <code>urgencia</code>, <code>documentación</code>. Se crean a medida y se filtran con un clic. Son las categorías del proyecto.</li><li><strong>Milestones</strong> — una meta con fecha que agrupa issues. Un milestone \"v1.0 · Lanzamiento\" junta los issues que deben resolverse para lanzar y muestra una barra de progreso (3/6 cerrados). Son las etapas del proyecto.</li><li><strong>Projects</strong> — tableros tipo kanban con columnas: \"Por hacer\", \"En curso\", \"Hecho\". Arrastras issues (y PRs, B13) entre columnas. Es el pizarrón de trabajo visible para todo el equipo.</li></ul><p>La jerarquía mental: los <strong>labels clasifican</strong>, los <strong>milestones agrupan hacia una meta</strong>, los <strong>projects muestran el flujo</strong>. Un mismo issue puede tener el label <code>bug</code>, pertenecer al milestone <code>v1.0</code> y vivir en la columna \"En curso\" — las tres herramientas no compiten, se suman.</p><p>Para ti con la IA: el milestone es tu sprint. Le dices \"los issues del milestone v1.0\" y la IA sabe exactamente cuál es el alcance. Tú decides el qué y el cuándo; las herramientas solo lo vuelven visible.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Es la <strong>obra de tu casa</strong>. Los labels son los cascos de colores de cada oficio: el plomero azul, el electricista amarillo — sabes de un vistazo quién trabaja de qué. El milestone es la <strong>etapa de cimientos</strong>: tiene fecha y agrupa todos los trabajos que deben terminar antes de levantar paredes. Y el project es el <strong>pizarrón del capataz</strong>: tres columnas donde se ve qué está por hacer, qué se está haciendo y qué ya quedó. La obra avanza porque el pizarrón, los cascos y las etapas existen.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<pre><code>Labels:\n  bug       🔴 error en el código\n  feature   🟢 función nueva\n  urgencia  ⭐ atender ya\n\nMilestone: v1.0 · Lanzamiento (fecha: 2026-09-30)\n  ● ● ● ○ ○ ○   →   3/6 issues cerrados\n\nProject: Lanzamiento v1.0\n  [ Por hacer ] [ En curso ] [ Hecho ]\n  #12 login      #14 pago     #10 README\n  #13 checkout</code></pre><p>Cada issue aparece en los tres lugares a la vez: clasificado (label), agrupado (milestone) y con su estado (project).</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Estos son mis pendientes: [lista de issues o tareas]. Organízame el proyecto: qué labels crear, qué issues van a cada uno, y si me conviene agruparlos en un milestone con fecha realista. Explícame el porqué de cada decisión.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "multiple", pregunta: "¿Qué es un milestone?", opciones: ["Una etiqueta de color para clasificar issues", "Un grupo de issues que apuntan a una misma meta, con fecha y barra de progreso", "Una copia del repositorio en otra rama", "Un mensaje de commit especial"], correcta: 1 },
+              { tipo: "relacionar", pares: [["Labels", "Etiquetas que clasifican por tipo"], ["Milestones", "Grupos de issues hacia una meta con fecha"], ["Projects", "Tableros de columnas para el flujo de trabajo"]] },
+              { tipo: "completar", frase: "La jerarquía: los ____ clasifican, los ____ agrupan hacia una meta y los ____ muestran el flujo de trabajo.", banco: ["labels", "milestones", "projects", "commits"], respuestas: ["labels", "milestones", "projects"] },
+              { tipo: "vf", afirmacion: "Un mismo issue puede tener un label, pertenecer a un milestone y estar en una columna del project a la vez.", correcta: true, explicacion: "las tres herramientas se combinan: clasifican, agrupan y muestran el flujo por separado." },
+              { tipo: "ordenar", instruccion: "Pasos para organizar el lanzamiento de tu proyecto:", elementos: ["registrar los pendientes como issues", "clasificarlos con labels", "agruparlos en un milestone con fecha", "moverlos por las columnas del project", "cerrar cada issue al terminar"] }
+            ]
+          },
+          {
+            id: "m2-b13",
+            titulo: "Pull Requests I: qué son y por qué existen",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Una <strong>Pull Request</strong> (PR) es la propuesta formal de integrar los cambios de una rama a otra — casi siempre, de tu rama de trabajo hacia <code>main</code>. Existe porque tocar la rama principal directamente es peligroso: un cambio mal hecho se rompe para todos. La PR pone un <strong>candado de revisión</strong> entre tus cambios y la rama principal.</p><p>Qué contiene una PR:</p><ul><li><strong>Rama base y rama comparada:</strong> la base es a donde llegan los cambios (<code>main</code>); la comparada es de donde salen (<code>feature-carrito</code>).</li><li><strong>El diff:</strong> la vista de diferencias entre las dos ramas: líneas que se agregan (<code>+</code>) y líneas que se quitan (<code>-</code>). Ahí se revisa todo.</li><li><strong>Commits:</strong> todos los commits de la rama comparada, listos para integrarse.</li><li><strong>Descripción y conversación:</strong> el porqué del cambio y los comentarios de quien revisa.</li><li><strong>Checks:</strong> las pruebas automáticas (B19) que confirman que el cambio no rompe nada.</li></ul><p>Por qué existen — y por qué te convienen aunque trabajes solo: porque <strong>tú también eres un colaborador</strong>. Abrir una PR de tu propio trabajo te obliga a explicarlo, a revisarlo y a dejarlo documentado. Con IA es tu mejor herramienta de control: la IA propone el cambio, tú lo revisas en la PR antes de que toque <code>main</code>.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>La PR es <strong>la orden de cambio que se presenta antes de tocar el original</strong>. En un taller de carrocería, el pintor no repinta el coche del cliente por su cuenta: llena una orden, el dueño la firma y recién entonces se trabaja. La PR es esa orden: describe qué se va a cambiar, quién la firma (aprueba) y el trabajo no toca el coche (main) hasta que se autoriza.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<pre><code>Pull request #37 · Abierta por rayflores\n  Añade carrito de compras con localStorage\n  de rayflores:feature-carrito  →  a  main\n\n  ✔ Checks pasaron (3)\n  💬 2 comentarios de revisión\n  📄 Files changed: 4   ＋1,240  －312\n\n  ¿Se ve bien? El carrito guarda lo que el\n  cliente agrega aunque recargue la página.</code></pre><p>Esa pantalla es el momento \"antes del merge\": los cambios están completos, alguien los leyó, y solo falta el botón que los integra a main (lección B16).</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Terminé [describe el cambio] en mi rama [rama]. Escríbeme el título y la descripción de mi pull request en formato Markdown: qué hace, cómo probarlo y qué partes necesitan más atención en la revisión.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "multiple", pregunta: "¿Qué es una pull request?", opciones: ["Un comando de Git para fusionar ramas sin revisar", "Una propuesta formal de integrar los cambios de una rama a otra", "Un tipo de issue para bugs urgentes", "Una copia del repositorio para otro usuario"], correcta: 1 },
+              { tipo: "relacionar", pares: [["Rama base", "Adónde llegan los cambios (normalmente main)"], ["Rama comparada", "De dónde salen los cambios"], ["Diff", "Las diferencias: líneas agregadas (+) y quitadas (-)"], ["Checks", "Las pruebas automáticas que validan el cambio"]] },
+              { tipo: "completar", frase: "En el diff, las líneas que se ____ aparecen con + y las que se ____ aparecen con -.", banco: ["agregan", "quitan", "duplican", "esconden"], respuestas: ["agregan", "quitan"] },
+              { tipo: "vf", afirmacion: "Abrir una pull request obliga a explicar el cambio y permite que alguien lo revise antes de integrarlo a main.", correcta: true, explicacion: "esa es su razón de ser: un candado de revisión antes de tocar la rama principal." },
+              { tipo: "quehace", codigo: "base: main ← compare: feature-carrito", pregunta: "En una PR ves <code>base: main</code> y <code>compare: feature-carrito</code>. ¿Qué significa?", opciones: ["Los cambios de main se van a integrar a feature-carrito", "Los cambios de feature-carrito se proponen para integrarse a main", "Las dos ramas se van a borrar", "El diff está vacío"], correcta: 1 }
+            ]
+          },
+          {
+            id: "m2-b14",
+            titulo: "Pull Requests II: crear el tuyo paso a paso",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Ya sabes qué es una PR (B13). Ahora el paso a paso completo para crear la tuya, desde la rama hasta el botón de merge. Funciona igual trabajes solo o en equipo.</p><ol><li><strong>Crea tu rama de trabajo</strong> (ramas de la Materia A): <code>git switch -c feature-carrito</code>. Ahí viven tus cambios sin tocar <code>main</code>.</li><li><strong>Haz tus commits</strong> en esa rama, con mensajes claros.</li><li><strong>Sube la rama al remoto</strong> (B5): <code>git push -u origin feature-carrito</code>.</li><li><strong>En GitHub</strong> aparece el botón <strong>\"Compare &amp; pull request\"</strong> — o entra a la pestaña Pull requests → New pull request.</li><li><strong>Elige ramas:</strong> base (<code>main</code>) y compare (tu rama).</li><li><strong>Escribe título y descripción</strong> en Markdown (B10): qué hace y cómo probarlo.</li><li><strong>Opcional:</strong> asigna revisores, labels y milestone (B12).</li><li><strong>Create pull request.</strong> Ya está abierta la revisión.</li><li><strong>Mientras se revisa:</strong> si piden cambios, editas en tu rama, commiteas y haces push — <strong>la PR se actualiza sola</strong>, nunca hay que recrearla.</li><li><strong>Cuando esté aprobada:</strong> botón Merge (lección B16).</li></ol><p>El punto que más confunde: <strong>la PR no es una rama nueva, es una vista sobre tu rama</strong>. Mientras sigas haciendo push a <code>feature-carrito</code>, tu PR refleja esos commits. Por eso corregir es tan fácil: nada se borra, todo se agrega.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Crear una PR es <strong>entregar un trámite en la ventanilla</strong>. Llenas la solicitud (título y descripción), la entregas con tus documentos (los commits), el que revisa la valida y la firma (el approve), y solo entonces se sella (el merge). Y si te piden un dato extra, no rehaces el trámite desde cero: agregas la hoja y la entregas en la misma carpeta — la solicitud ya estaba abierta.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Flujo completo, desde la rama hasta la PR:</p><pre><code>C:\\...\\mi-tienda&gt; git switch -c feature-carrito\nSwitched to a new branch 'feature-carrito'\n\n  ...editas, git add y git commit...\n\nC:\\...\\mi-tienda&gt; git push -u origin feature-carrito\nEnumerating objects: 6, done.\n * [new branch]  feature-carrito -&gt; feature-carrito\nbranch 'feature-carrito' set up to track 'origin/feature-carrito'.\n\n  → En GitHub aparece:  [Compare &amp; pull request]\n  → Título: \"Añade carrito de compras con localStorage\"\n  → Create pull request → revisores → Merge</code></pre><p>Todo lo que hagas desde ahí — responder comentarios, corregir, push de nuevo — se refleja en la misma PR.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Voy a crear mi primera pull request. Mi rama es [rama] y quiero integrarla a [main]. Dame el paso a paso: los comandos exactos para subir mi rama, dónde hago clic en GitHub, qué escribir en el título y la descripción, y qué revisar antes de mergear.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "ordenar", instruccion: "Pasos para crear y completar una pull request:", elementos: ["crear la rama de trabajo", "commiteear los cambios en esa rama", "subir la rama con git push -u origin <rama>", "abrir 'Compare & pull request' en GitHub", "escribir título y descripción", "mergear cuando esté aprobada"] },
+              { tipo: "multiple", pregunta: "Después de hacer commits en tu rama nueva, ¿qué comando la sube al remoto para poder crear la PR?", opciones: ["git push -u origin main", "git push -u origin feature-carrito", "git pull origin feature-carrito", "git merge main"], correcta: 1 },
+              { tipo: "completar", frase: "Después del push, GitHub muestra el botón ____. Al abrirlo eliges la rama ____ (a dónde llegan los cambios) y la rama que comparas.", banco: ["Compare & pull request", "base", "main", "issue"], respuestas: ["Compare & pull request", "base"] },
+              { tipo: "vf", afirmacion: "Si un revisor te pide cambios, tienes que cerrar la PR y abrir otra nueva.", correcta: false, explicacion: "no: corriges en tu rama, commiteas, haces push y la PR abierta se actualiza sola." },
+              { tipo: "quehace", codigo: "git push -u origin feature-carrito", pregunta: "Corres <code>git push -u origin feature-carrito</code> y en GitHub aparece el botón 'Compare & pull request'. ¿Qué haces?", opciones: ["Lo ignoras: ya quedó todo en GitHub", "Lo abres, eliges base y compare, escribes título y descripción, y creas la PR", "Reinicias el navegador porque es un error", "Boras la rama del remoto"], correcta: 1 }
+            ]
+          },
+          {
+            id: "m2-b15",
+            titulo: "Code review: revisar código (tuyo, ajeno y de la IA)",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>La PR (B14) junta los cambios; el <strong>code review</strong> es la revisión crítica de esos cambios antes del merge. No es cazar al autor en error: es <strong>leer el diff con ojo profesional</strong> y decidir si el cambio está listo para integrarse.</p><p>Qué se revisa en una PR:</p><ul><li><strong>¿Cumple lo que promete?</strong> El título dice \"arregla el pago\" — ¿realmente lo arregla?</li><li><strong>¿Hay bugs?</strong> ¿Hay casos en los que falle?</li><li><strong>¿Es claro y consistente?</strong> Nombres con sentido y mismo estilo que el resto del proyecto.</li><li><strong>¿Hay riesgos de seguridad?</strong> ¿Se filtran secretos (B28) o datos de clientes?</li></ul><p>Los tres escenarios de tu vida con IA:</p><ol><li><strong>Revisar tu propio código:</strong> vuelve a leerlo como si fuera de otro. Te sorprenderá lo que encuentras.</li><li><strong>Revisar código ajeno:</strong> comentas en las líneas exactas del diff. Puedes dejar un comentario (<em>comment</em>), aprobar (<em>approve</em>) o pedir cambios (<em>request changes</em>).</li><li><strong>Revisar código de la IA:</strong> el caso más común para ti. La IA es tu junior dev: <strong>no confías a ciegas, verificas</strong>. Que cumpla lo pedido, que no haya secretos, que no rompa lo que ya funcionaba.</li></ol><p>Regla de oro: <strong>el review se hace en la PR, no en la cabeza</strong>. Todo comentario queda escrito, visible y rastreable. Y el revisor más duro con tu propio código te ahorra los sustos más caros.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>El code review es el <strong>chef que prueba el platillo antes de que salga a la mesa</strong>. El cocinero (quien escribió el código, humano o IA) cree que está listo; el chef prueba, ajusta la sal y recién entonces lo deja pasar. En una cocina seria nadie sirve sin esa prueba; en un proyecto serio nadie mergea sin revisión. Y el mejor chef es el que prueba con la misma exigencia sus propios platillos.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<pre><code>PR #37 · Revisión en Files changed\n\n@@ -12,7 +12,8 @@ función guardarCarrito\n-  localStorage.setItem(\"carrito\", items);\n+  localStorage.setItem(\"carrito\", JSON.stringify(items));\n\nComentario de rayflores:\n  \"Si guardamos el objeto directo se guarda\n   '[object Object]'. Con JSON.stringify se\n   guarda el texto real. Aprobado ✔\"</code></pre><p>El comentario quedó en la línea exacta del diff. El autor (o la IA) hace el cambio, hace push, y la PR queda lista para merge.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Actúa como revisor senior de esta pull request: [pega el diff o el código]. Dime si cumple lo que promete, si hay bugs, riesgos de seguridad, código confuso o secretos filtrados. Señala cada problema en la línea donde está y sugiere el arreglo concreto. No apruebes por cortesía.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "multiple", pregunta: "¿Qué es un code review?", opciones: ["Aprobar la PR sin leer el diff para ir más rápido", "Leer el diff de una PR con ojo crítico antes de integrarlo", "Un programa que escribe el código por ti", "Borrar los comentarios de la PR"], correcta: 1 },
+              { tipo: "relacionar", pares: [["Comment", "Dejar una observación en una línea del diff"], ["Approve", "Aprobar los cambios para mergear"], ["Request changes", "Pedir correcciones antes de aprobar"], ["Files changed", "La pestaña donde se revisa el diff"]] },
+              { tipo: "completar", frase: "El caso más común para ti es revisar código ____: no se confía a ciegas, se ____ que cumpla lo pedido, que no haya secretos y que siga el estilo del proyecto.", banco: ["de la IA", "verifica", "de otro", "adivina"], respuestas: ["de la IA", "verifica"] },
+              { tipo: "vf", afirmacion: "El code review solo sirve para encontrar errores; los comentarios de claridad y estilo son innecesarios.", correcta: false, explicacion: "la claridad, la consistencia y la seguridad importan tanto como los bugs: dejan el proyecto legible para el siguiente humano o IA." },
+              { tipo: "quehace", codigo: "localStorage.setItem(\"carrito\", items);", pregunta: "En una PR, el código original hace <code>localStorage.setItem(\"carrito\", items)</code> y el revisor sugiere <code>JSON.stringify(items)</code>. ¿Por qué?", opciones: ["Porque guardar el objeto directo guarda '[object Object]' en lugar de los datos reales", "Porque JSON.stringify borra el carrito", "Porque setItem no funciona en Safari", "Porque JSON.stringify es un comando de Git"], correcta: 0 }
+            ]
+          },
+          {
+            id: "m2-b16",
+            titulo: "Merge de un PR: squash, rebase o merge commit",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Tu PR fue revisada y aprobada (B15). Falta el paso final: el <strong>merge</strong>. El botón verde de merge de GitHub ofrece tres estrategias, y la que elijas define cómo queda tu historial de commits.</p><ul><li><strong>Merge commit:</strong> conserva todos los commits de tu rama tal cual y agrega uno de unión al final. Cuenta la historia completa del trabajo, con cada intento y cada corrección.</li><li><strong>Squash and merge:</strong> aplasta todos los commits de la rama en uno solo y lo integra a main. Historial limpio: un cambio = un commit. Es la opción por default de GitHub.</li><li><strong>Rebase and merge:</strong> toma tus commits y los reacomoda en la punta de main, sin commit de unión. Historial lineal que conserva cada commit individual.</li></ul><p>Regla práctica para tu flujo con IA: <strong>usa squash</strong>. La IA suele producir muchos commits intermedios que a nadie le importan (\"wip\", \"fix\", \"otro intento\"). Dejar un solo commit limpio por cambio terminado se lee mejor y es más fácil de revertir. Usa el merge commit cuando quieras conservar la historia completa de una rama larga, y el rebase cuando el proyecto busque un historial perfectamente lineal.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Es la diferencia entre <strong>cómo se guarda la evidencia de un trabajo</strong>. El merge commit guarda el video completo: cada intento, cada corrección, cada paso. El squash guarda solo la foto del resultado final: un commit limpio por cambio terminado. El rebase guarda el video pero lo recorta para que quede en orden con lo que ya había. Para tu flujo con IA casi siempre querrás la foto: un squash por cada cambio terminado.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<pre><code>[ Merge pull request ▾ ]\n\n  Merge commit       12 commits + 1 de unión\n  Squash and merge     12 commits → 1 solo commit\n  Rebase and merge     12 commits, reordenados en main\n\nAntes (rama feature-carrito):\n  a1b2c3 fix: typo en el carrito\n  d4e5f6 feat: agrega localStorage\n  b7c8d9 wip: intento de pago\n\nDespués de \"Squash and merge\" en main:\n  e9f0a1 feat: carrito de compras con localStorage</code></pre><p>La rama intermedia desapareció y main quedó con un solo commit limpio por cambio terminado.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Tengo mi rama [rama] lista para mergear a [main]. Explícame la diferencia entre merge commit, squash y rebase aplicada a mi caso: cuántos commits tiene mi rama y cuál me conviene elegir para que el historial de main se vea limpio. Dame la opción exacta que debo elegir y el porqué.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "multiple", pregunta: "¿Qué hace la estrategia 'Squash and merge'?", opciones: ["Borra los commits de la rama para siempre", "Comprime todos los commits de la rama en uno solo dentro de main", "Crea un commit de unión conservando todos los commits", "Reordena los commits de todo el repositorio"], correcta: 1 },
+              { tipo: "relacionar", pares: [["Merge commit", "Conserva todos los commits y agrega uno de unión"], ["Squash and merge", "Aplasta los commits de la rama en uno solo"], ["Rebase and merge", "Reacomoda los commits sobre la punta de main, sin unión"]] },
+              { tipo: "completar", frase: "Para tu flujo con IA casi siempre conviene ____: deja un solo ____ limpio por cambio terminado.", banco: ["squash", "commit", "rebase", "merge"], respuestas: ["squash", "commit"] },
+              { tipo: "vf", afirmacion: "El merge commit borra los commits de la rama de trabajo al integrarlos.", correcta: false, explicacion: "los conserva todos y agrega un commit de unión al final del historial." },
+              { tipo: "quehace", codigo: "e9f0a1 feat: carrito de compras con localStorage", pregunta: "En main ves un solo commit con este mensaje después de mergear una rama que tenía 12 commits. ¿Qué estrategia se usó?", opciones: ["Merge commit", "Squash and merge", "Rebase and merge", "Un push directo a main"], correcta: 1 }
+            ]
+          },
+          {
+            id: "m2-b17",
+            titulo: "Forks: copiar el proyecto de alguien más",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Un <strong>fork</strong> es una copia completa de un repositorio de otra persona que se crea dentro de tu cuenta de GitHub. No es una descarga: es un repositorio nuevo que te pertenece, con todo el historial, y que guarda un vínculo con el original llamado <strong>upstream</strong>.</p><ul><li><strong>Fork es distinto de clone (B3-B5):</strong> el clone baja el repositorio a tu computadora; el fork lo copia a tu cuenta en GitHub. Después clonas tu fork como cualquier repositorio tuyo.</li><li><strong>Tu fork es tuyo:</strong> puedes cambiarlo, romperlo y mejorarlo; el original no se afecta ni se entera.</li><li><strong>Sync:</strong> cuando el proyecto original avanza, puedes traer esos cambios a tu fork para mantenerlo al día.</li><li><strong>Pull request:</strong> desde tu fork puedes proponer tus cambios al original (lección B18).</li></ul><p>Usos reales: contribuir a open source (B18), usar un proyecto como base para el tuyo, y aprender leyendo y modificando código real de otras personas. En la práctica es un botón: <strong>Fork</strong>, arriba a la derecha de cualquier repositorio, crea <code>tuusuario/proyecto</code> a partir de <code>otrousuario/proyecto</code>.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Un fork es <strong>sacar una fotocopia del libro de recetas de la familia</strong>. El original queda intacto en casa; tú llevas tu copia a tu casa y puedes rayar, tachar, arrancar hojas y pegar tus propias recetas. Si algún día mejoras una receta del libro original, se la llevas al dueño como propuesta (una pull request) para que la agregue al libro familiar. Y si el dueño agrega recetas nuevas, puedes ir a actualizar tu copia (sync).</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<pre><code>github.com/luisaarmenta/recetario-verde       el original\n        |   [Fork]\n        v\ngithub.com/tuusuario/recetario-verde         tu copia\n        |   puedes modificarla libremente\n        |   [Sync] trae cambios del original\n        |   [Pull request] propones tus cambios\n\nEn GitHub, el botón Fork (arriba a la derecha):\n  Owner: tuusuario\n  Repository name: recetario-verde\n  [Create fork]</code></pre><p>La dirección de tu copia ahora comienza con tu nombre de usuario: es un repositorio tuyo más.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Quiero usar el proyecto [URL] como base para [describe tu idea]. Explícame la diferencia entre fork, clone y copiar los archivos a mano, y dime cuál me conviene en este caso. Si hago fork, dame el paso a paso para crearlo y clonarlo en mi computadora.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "multiple", pregunta: "¿Qué es un fork en GitHub?", opciones: ["Una descarga del repositorio a tu computadora", "Una copia completa del repositorio dentro de tu cuenta, conectada al original", "Una rama nueva del repositorio original", "Un respaldo que GitHub hace automáticamente"], correcta: 1 },
+              { tipo: "completar", frase: "El fork copia el proyecto a ____ cuenta de GitHub. El vínculo con el original se llama ____.", banco: ["tu", "upstream", "la ajena", "origin"], respuestas: ["tu", "upstream"] },
+              { tipo: "vf", afirmacion: "Si haces fork de un repositorio y lo modificas, los cambios aparecen también en el repositorio original.", correcta: false, explicacion: "tu fork es independiente: el original no se afecta ni se entera de tus cambios." },
+              { tipo: "relacionar", pares: [["Fork", "Copia del repo en tu cuenta de GitHub"], ["Clone", "Copia del repo en tu computadora"], ["Sync", "Trae los cambios del original a tu fork"], ["Pull request desde el fork", "Propone tus cambios al original"]] },
+              { tipo: "ordenar", instruccion: "Pasos para trabajar sobre el fork de un proyecto:", elementos: ["hacer clic en Fork en GitHub", "clonar tu fork en tu computadora", "crear una rama de trabajo", "hacer tus cambios y commits", "subir tu rama con git push"] }
+            ]
+          },
+          {
+            id: "m2-b18",
+            titulo: "Tu primera contribución a open source",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Contribuir a open source suena a cosa de genios, pero es la forma más barata de demostrar que sabes construir. Y lo primero que hay que entender: <strong>contribuir no es solo escribir código</strong>. Los proyectos necesitan documentación, traducciones, correcciones de typos y reportes de bugs bien hechos (B11). La primera contribución más común del mundo es mejorar un README.</p><p>El flujo completo junta varias lecciones de esta materia:</p><ol><li><strong>Encuentra el pendiente:</strong> busca issues con el label <code>good first issue</code> (B12), tareas pensadas para principiantes. Antes de tomarla, comenta en el issue que la trabajas tú, para que no quede en choque con otro contribuidor.</li><li><strong>Lee las reglas:</strong> casi todo proyecto tiene un archivo <code>CONTRIBUTING.md</code> con cómo proponer cambios. Léelo antes de tocar nada.</li><li><strong>Fork (B17), clona, crea tu rama</strong> y haz el cambio.</li><li><strong>Abre la PR (B14)</strong> describiendo qué cambiaste y qué resuelve.</li><li><strong>Atiende el code review (B15):</strong> los mantenedores pedirán ajustes. No es rechazo: es parte del trámite.</li><li><strong>Merge (B16):</strong> tu nombre queda en el historial del proyecto.</li></ol><p>Dos reglas que te ahorran problemas: PR pequeñas y enfocadas — una PR, un cambio — y jamás tocar el proyecto solo para \"dejar huella\". Para un cliente, que tu perfil (B2) muestre contribuciones reales vale más que cualquier curso completado.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Un proyecto open source es una <strong>biblioteca pública construida entre todos</strong>. La mayoría solo la usa. Quien nota una página doblada, lo anota en un papelito y lo deja en el mostrador (un issue). Quien se anima más, corrige y devuelve el libro con la página arreglada (una PR). Nadie espera que escribas la biblioteca completa: solo que cuides lo que usas y ayudes con lo que sabes.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<pre><code>Issue #214  [good first issue]  [documentación]\n  \"El README no explica cómo instalar en Windows\"\n\n1) Comentas: \"Hola, lo trabajo yo\"        te asignan\n2) Fork  →  clone  →  git switch -c fix-readme-windows\n3) Editas el README y agregas los pasos de Windows\n4) git add · git commit · git push\n5) PR: \"docs: agrega instrucciones de instalación en Windows\"\n   closes #214\n6) Atiendes los comentarios del review\n7) [Merge]  →  tu commit queda en el historial</code></pre><p>Todo el camino se apoya en lo que ya sabes de B5, B14 y B17: lo único nuevo es que el repo es de otra persona y lo tomaste prestado.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Quiero hacer mi primera contribución a open source y estoy empezando. Me interesa [tema o tipo de proyecto]. Ayúdame a: 1) darme ideas de repositorios con issues marcados como 'good first issue', 2) redactar mi comentario para pedir la tarea, y 3) escribir el título y la descripción de mi PR cuando haga el cambio. Dime exactamente qué escribir en cada paso.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "multiple", pregunta: "¿Cuál es una forma válida de contribuir a open source sin escribir código?", opciones: ["Ninguna: solo el código cuenta", "Corregir documentación, traducir o reportar bugs con un buen issue", "Darle estrellas al proyecto", "Compartir el repositorio en redes sociales"], correcta: 1 },
+              { tipo: "ordenar", instruccion: "Flujo de tu primera contribución:", elementos: ["elegir un issue con label 'good first issue'", "comentar en el issue que lo tomas", "hacer fork y clonar el proyecto", "crear una rama y hacer el cambio", "abrir la pull request", "atender el code review hasta el merge"] },
+              { tipo: "completar", frase: "Antes de proponer cambios, casi todo proyecto tiene un archivo ____ con las reglas. Y conviene que tu PR sea ____: un solo cambio por PR.", banco: ["CONTRIBUTING.md", "pequeña", "README.md", "enorme"], respuestas: ["CONTRIBUTING.md", "pequeña"] },
+              { tipo: "vf", afirmacion: "Un issue con label 'good first issue' es una tarea pensada para quienes van empezando, con instrucciones claras.", correcta: true, explicacion: "es el puente oficial hacia la primera contribución de los proyectos." },
+              { tipo: "quehace", codigo: "\"Hola, lo trabajo yo\"", pregunta: "Comentas esto en el issue que quieres tomar. ¿Cuál es el objetivo principal?", opciones: ["Cumplir con el protocolo social del proyecto", "Que el mantenedor te asigne la tarea y nadie más la tome al mismo tiempo", "Avisar a la IA que debe trabajar", "Ninguno: es un comentario decorativo"], correcta: 1 }
+            ]
+          },
+          {
+            id: "m2-b19",
+            titulo: "GitHub Actions: cuando el robot trabaja por ti",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p><strong>GitHub Actions</strong> es el robot del repositorio: ejecuta tareas automáticas cada vez que algo pasa — un push, una PR abierta, una hora programada. Es la automatización (CI/CD) que antes exigía servidores y especialistas, y ahora vive dentro de GitHub, gratis.</p><p>Así funciona por dentro:</p><ul><li><strong>Workflow:</strong> la receta completa de automatización, escrita en un archivo YAML dentro de la carpeta <code>.github/workflows/</code>.</li><li><strong>Eventos:</strong> lo que dispara la receta: <code>push</code>, <code>pull_request</code>, <code>schedule</code> (por tiempo) y <code>workflow_dispatch</code> (a mano).</li><li><strong>Jobs y steps:</strong> el workflow tiene trabajos (jobs) que corren en runners — computadoras de GitHub — con su sistema operativo (<code>ubuntu-latest</code>, <code>windows-latest</code>), y cada trabajo tiene pasos (steps): instalar, probar, construir, desplegar.</li></ul><p>Lo que más te importa a ti: los <strong>checks</strong> de la pull request (B13, B15). Cuando la IA abre o actualiza una PR, Actions corre tu workflow y el estado se pone verde o rojo. Tú no confías a ciegas: el robot verifica por ti. Con el mismo mecanismo puedes desplegar tu sitio en Pages (B20) o cerrar issues automáticamente.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>GitHub Actions es el <strong>control de calidad de la fábrica</strong>. Tú fabricas la pieza, pero no la vendes directo: pasa por el robot que la prueba con las reglas que definiste una vez. Si la pieza cumple, sigue; si no, la regresa con el sello rojo. El robot trabaja las 24 horas, sin cansarse y sin favoritismos — y tú escribes sus reglas una sola vez en el YAML.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>El archivo <code>.github/workflows/pruebas.yml</code>:</p><pre><code>name: Pruebas del proyecto\n\non:\n  push:\n    branches: [main]\n  pull_request:\n\njobs:\n  probar:\n    runs-on: ubuntu-latest\n    steps:\n      - name: Bajar el código\n        uses: actions/checkout@v4\n      - name: Verificación simple\n        run: echo \"Las pruebas corren en cada PR\"</code></pre><p>Ese workflow aparece como un check dentro de cada pull request: verde si pasó, rojo si falló. Es el sello del robot.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Quiero automatizar mi repositorio con GitHub Actions. Cada vez que alguien abra o actualice una pull request quiero que corra una verificación que [describe: revisa formato, corre pruebas, etc.]. Escríbeme el archivo YAML completo en .github/workflows/, explicando cada parte (eventos, jobs, steps) y cómo se ve el resultado en la PR. Mi proyecto es estático (HTML, CSS y JS).\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "multiple", pregunta: "¿Qué es GitHub Actions?", opciones: ["Un chat de soporte técnico de GitHub", "La plataforma de automatización de GitHub: ejecuta tareas en tus repos cuando ocurre un evento", "Un editor de código dentro de GitHub", "Un antivirus para repositorios"], correcta: 1 },
+              { tipo: "completar", frase: "Un workflow se define en un archivo ____ que vive en la carpeta ____.", banco: ["YAML", ".github/workflows/", "JSON", "src/"], respuestas: ["YAML", ".github/workflows/"] },
+              { tipo: "vf", afirmacion: "Los checks verdes o rojos que ves en una pull request pueden venir de un workflow de GitHub Actions.", correcta: true, explicacion: "es su trabajo central: validar cada cambio automáticamente antes del merge." },
+              { tipo: "relacionar", pares: [["push o pull_request", "Eventos que disparan el workflow"], ["runs-on: ubuntu-latest", "La máquina del runner donde corre el job"], ["steps", "Los pasos individuales de un job"], ["schedule", "Disparo por tiempo, tipo cron"]] },
+              { tipo: "quehace", codigo: "on: [push, pull_request]", pregunta: "Ves esta línea en tu archivo YAML: <code>on: [push, pull_request]</code>. ¿Cuándo se ejecuta el workflow?", opciones: ["Cada vez que haces push a cualquier rama y cada vez que se abre o actualiza una PR", "Una vez por semana", "Solo cuando aprietas un botón manual", "Cada vez que borras una rama"], correcta: 0 }
+            ]
+          },
+          {
+            id: "m2-b20",
+            titulo: "GitHub Pages: publicar tu sitio gratis desde el repo",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p><strong>GitHub Pages</strong> convierte tu repositorio en un sitio web público y gratis. Ese sitio que publicaste en el Mes 1 (C16) puede vivir aquí sin pagar hosting: GitHub lo sirve directo desde tu repo.</p><p>Puntos clave:</p><ul><li><strong>Sirve archivos estáticos:</strong> HTML, CSS y JS. Tu landing, el sitio de tu negocio, tu portafolio — todo lo que funciona en el navegador sin servidor. No sirve para aplicaciones con base de datos.</li><li><strong>Habilitarlo:</strong> Settings → Pages → Source: <code>Deploy from a branch</code> → rama <code>main</code> → carpeta <code>/ (root)</code> → Save.</li><li><strong>La URL:</strong> <code>https://tuusuario.github.io/nombre-del-repo/</code>. Si el repo se llama exactamente <code>tuusuario.github.io</code>, la URL es <code>https://tuusuario.github.io</code>, sin nombre de proyecto.</li><li><strong>Se actualiza solo:</strong> cada push a la rama publicada regenera el sitio. Puedes automatizarlo con Actions (B19), pero el deploy desde rama basta para empezar.</li></ul><p>Errores comunes: si sale en blanco, revisa que el archivo principal se llame <code>index.html</code> y que esté en la carpeta correcta; si sale 404, revisa que la URL sea exacta — minúsculas y sin espacios. El primer deploy tarda alrededor de un minuto: refresca un par de veces.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>GitHub Pages es <strong>la vitrina gratis en la plaza</strong>. Construyes tu producto en tu taller (el repo), lo llevas a la vitrina pública (Settings → Pages) y la plaza le pone el letrero: <code>tuusuario.github.io/tu-repo</code>. Cualquiera lo ve sin pagarte renta, y cada vez que le haces mejoras y haces push, la vitrina se actualiza sola.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<pre><code>Settings → Pages\n  Build and deployment\n  Source: Deploy from a branch\n  Branch: main   Folder: / (root)   [Save]\n\nTu sitio público:\n  https://tuusuario.github.io/mi-primera-pagina/\n\nEn el repo:\n  mi-primera-pagina/\n    index.html      ← así se llama sí o sí\n    styles.css\n    assets/</code></pre><p>Con eso, tu landing del Mes 1 queda en línea. Cada push a main la actualiza (B5).</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Quiero publicar mi página [describe tu landing del Mes 1] con GitHub Pages. Ya tengo el repositorio [nombre] subido. Dame el paso a paso exacto: qué elegir en Settings → Pages, cómo debe llamarse mi archivo principal y cómo verifico que quedó publicada. Si sale en blanco o con 404, dime qué revisar primero.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "multiple", pregunta: "¿Qué tipos de proyectos sirve GitHub Pages?", opciones: ["Cualquiera, incluso con base de datos", "Sitios estáticos: HTML, CSS y JS, gratis desde tu repo", "Solo sitios de venta en línea", "Archivos comprimidos para descargar"], correcta: 1 },
+              { tipo: "completar", frase: "El archivo principal de tu sitio debe llamarse ____. La URL pública de tu repo [nombre] en tu cuenta será ____/[nombre]/.", banco: ["index.html", "https://tuusuario.github.io", "main.html", "https://github.com"], respuestas: ["index.html", "https://tuusuario.github.io"] },
+              { tipo: "ordenar", instruccion: "Pasos para publicar tu sitio con GitHub Pages:", elementos: ["subir tu proyecto con index.html a un repo", "ir a Settings → Pages", "elegir 'Deploy from a branch' y la rama main", "guardar y esperar el primer deploy", "abrir https://tuusuario.github.io/nombre-del-repo/"] },
+              { tipo: "vf", afirmacion: "Cada vez que haces push de cambios a la rama publicada, GitHub Pages actualiza el sitio automáticamente.", correcta: true, explicacion: "el deploy se regenera con cada push: editas, haces push (B5) y la vitrina se actualiza." },
+              { tipo: "quehace", codigo: "https://tuusuario.github.io/mi-primera-pagina/", pregunta: "Abres esta URL y carga tu landing del Mes 1. ¿Qué está pasando detrás?", opciones: ["GitHub Pages está sirviendo los archivos públicos de tu repositorio desde esa dirección", "Tu computadora tiene que estar encendida para que se vea", "GitHub convirtió tu HTML en una aplicación con servidor", "La URL es temporal y se apagará en una hora"], correcta: 0 }
+            ]
+          },
+          {
+            id: "m2-b21",
+            titulo: "Colaboradores y permisos: quién puede hacer qué",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Un repositorio tuyo puede estar solo, pero lo normal es tener compañía: otra persona de tu negocio, un freelancer, o una IA ejecutora trabajando sobre el mismo código. Para eso existen los <strong>colaboradores</strong> y los <strong>permisos</strong>: tú decides quién entra y qué tanto puede hacer.</p><p>En GitHub, cada persona recibe un rol. De menor a mayor poder:</p><ul><li><strong>Read</strong> — solo ver y clonar (B7). No cambia nada.</li><li><strong>Triage</strong> — lee y administra issues y pull requests (B11-B15), pero no puede tocar el código.</li><li><strong>Write</strong> — todo lo anterior + crear ramas, hacer push y abrir PRs. Es el rol típico de trabajo.</li><li><strong>Maintain</strong> — Write + administrar la configuración básica del repo.</li><li><strong>Admin</strong> — el control total: invitar colaboradores, cambiar la protección de ramas (B22), transferir el repositorio y hasta borrarlo.</li></ul><p>Dónde se configura: en el repositorio, <strong>Settings → Collaborators and teams → Add people</strong>. En un repo privado (B8) se agrega por nombre de usuario o correo; en uno público, cualquiera puede entrar a leer, pero solo quien tú invites puede escribir.</p><p><strong>El riesgo real:</strong> el permiso Write ya permite hacer push directo. Si lo tiene una IA ejecutora o un colaborador descuidado, puede subir cambios a main sin pasar por revisión — y si main no tiene protección (B22), se publica al instante. El Admin, además, puede transferir tu proyecto a otra cuenta o borrarlo sin que puedas reclamarlo. Regla: <strong>el mínimo permiso que haga el trabajo</strong>. Para una IA ejecutora, Read + flujo de PR (B13) casi siempre es lo correcto.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Tu repositorio es tu <strong>casa-taller</strong>. Los permisos son las llaves que entregas. Read es la llave de la vitrina: quien la tiene puede mirar, pero no entrar. Write es la llave del taller: quien la tiene puede mover tus herramientas y dejar sus piezas en tu mesa. Admin es la llave maestra con la escritura de la casa: puede dar copias a quien quiera — o vender la propiedad. No le entregas la llave maestra a quien apenas conoces, ¿verdad? Pues con el repo es igual.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<pre><code>Settings → Collaborators and teams → Add people\n\n  Invite a collaborator:  ana@miempresa.com\n  Role:  Write            (Read · Triage · Write · Maintain · Admin)\n  [Add ana@miempresa.com]\n\nDespués de agregar, el repo muestra:\n  ana@miempresa.com   Write   (puede hacer push)\n  ia-ejecutora@bot    Read    (solo clona y hace PRs)</code></pre><p>Fíjate: a la persona de tu equipo le diste Write, pero a la IA ejecutora solo Read + PR. La diferencia está en los candados de la rama (B22).</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Quiero darle acceso a [persona o IA ejecutora] a mi repositorio [nombre], que es [público o privado]. ¿Qué rol exacto le doy — Read, Triage, Write, Maintain o Admin — para que pueda [lo que debe hacer]? Dime dónde se configura exactamente, qué puede y qué NO puede hacer con ese rol, y qué riesgo hay si le doy Write mientras mi rama main no está protegida.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "multiple", pregunta: "¿Qué permiso necesita un colaborador para hacer push directo al repositorio?", opciones: ["Read", "Write o uno superior (Maintain/Admin)", "Solo Admin", "Triage"], correcta: 1 },
+              { tipo: "relacionar", pares: [["Read", "Solo ver y clonar (B7)"], ["Write", "Crear ramas y hacer push"], ["Triage", "Administrar issues y PRs sin tocar código"], ["Admin", "Todo, incluso borrar o transferir el repo"]] },
+              { tipo: "vf", afirmacion: "Un colaborador con rol Admin puede transferir o borrar el repositorio, así que debe ser alguien de confianza absoluta.", correcta: true, explicacion: "Admin es el control total: invita gente, cambia la protección de ramas (B22) y puede transferir o borrar el proyecto." },
+              { tipo: "completar", frase: "La regla de permisos es dar el ____ permiso que haga el trabajo. Para una IA ejecutora, ____ + flujo de pull request suele ser lo correcto.", banco: ["mínimo", "Read", "Admin", "máximo"], respuestas: ["mínimo", "Read"] },
+              { tipo: "quehace", codigo: "Role: Write", pregunta: "Le asignas rol Write a una IA ejecutora mientras tu rama main no tiene protección (B22). ¿Cuál es el riesgo principal?", opciones: ["Que no pueda ver el código", "Que haga push directo a main, sin revisión, y rompa lo publicado", "Que borre el repositorio", "Ninguno: Write solo lee"], correcta: 1 }
+            ]
+          },
+          {
+            id: "m2-b22",
+            titulo: "Protección de ramas: candados que evitan desastres",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>En B21 viste quién puede entrar y qué puede hacer. Ahora el candado: la <strong>protección de ramas</strong> (branch protection) son reglas que GitHub aplica sobre una rama — normalmente <code>main</code> — para que nadie, ni tú, haga tonterías sin control.</p><p>Se configura en <strong>Settings → Branches → Branch protection rules</strong>. Lo esencial:</p><ul><li><strong>Require a pull request before merging:</strong> nadie puede hacer push directo a la rama. Todo cambio entra por una PR (B13) y pasa por code review (B15). Es el candado que te salva de tu propia prisa.</li><li><strong>Require approvals:</strong> la PR necesita al menos una aprobación explícita antes del merge (B15).</li><li><strong>Require status checks to pass:</strong> los checks de GitHub Actions (B19) deben quedar en verde antes de mergear. El robot valida por ti.</li><li><strong>Require branches to be up to date:</strong> tu rama debe traer los últimos cambios de main antes de poder mergear.</li><li><strong>Allow force pushes / Allow deletions:</strong> dejarlos <strong>desactivados</strong>. Un force push puede reescribir el historial y borrar trabajo ajeno.</li></ul><p>Un dato que ahorra sustos: <strong>GitHub ya protege la rama principal por defecto contra force push y contra borrado</strong>. Lo que tú agregas con una regla es el requisito de PR, las aprobaciones y los checks.</p><p><strong>El riesgo real:</strong> sin la regla de PR, cualquier persona con Write (B21) — o tu IA ejecutora — puede hacer push directo a main. El error se publica al instante, y si no hay checks, nadie lo notó. La protección convierte \"lo subo y a ver\" en \"lo reviso y después subo\".</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>La protección de ramas es el <strong>candado doble de la caja fuerte</strong>. La caja es main: lo que se despliega, lo que ve el cliente. Para abrirla necesitas dos llaves que no tiene la misma persona: la PR (la propuesta) y la aprobación del review (la segunda firma). Los status checks son el escáner: aunque tengan las llaves, la caja solo abre si el escáner pasa. Y dejar force push desactivado es prohibir que alguien forje la cerradura en vez de usar las llaves.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<pre><code>Settings → Branches → Branch protection rules → Add rule\n\n  Branch name pattern:  main\n\n  ☑ Require a pull request before merging\n      ☑ Require approvals        (1 aprobación mínima)\n  ☑ Require status checks to pass\n      ☑ Require branches to be up to date\n  ☐ Allow force pushes     ← mantener DESACTIVADO\n  ☐ Allow deletions        ← mantener DESACTIVADO\n\n  [Create]\n\nIntento de push directo después de la regla:\n  ! [remote rejected] main -> main (protected branch hook declined)\n  error: failed to push some refs to ...</code></pre><p>El error del final es la señal de que el candado funciona: la única vía de entrada ahora es una PR aprobada.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Quiero proteger la rama main de mi repositorio [nombre]. Necesito que: 1) nadie pueda hacer push directo, 2) toda PR requiera al menos una aprobación, 3) los checks de GitHub Actions pasen antes del merge. Escríbeme el paso a paso exacto de Settings → Branches con cada casilla que debo marcar, y explícame qué pasa si alguien intenta hacer push directo después de configurarlo.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "multiple", pregunta: "¿Qué hace 'Require a pull request before merging'?", opciones: ["Impide cualquier cambio en el repositorio", "Bloquea el push directo a la rama protegida: los cambios entran solo por PR aprobada", "Borra automáticamente las ramas viejas", "Solo aplica a repositorios públicos"], correcta: 1 },
+              { tipo: "vf", afirmacion: "GitHub protege la rama principal por defecto contra force push y borrado, pero no exige PRs hasta que tú configures la regla.", correcta: true, explicacion: "la protección básica viene por defecto; el requisito de PR, aprobaciones y checks lo agregas tú." },
+              { tipo: "relacionar", pares: [["Require a pull request before merging", "No hay push directo: todo entra por PR"], ["Require approvals", "Se necesita al menos una aprobación del review (B15)"], ["Require status checks to pass", "Los checks de Actions (B19) deben pasar antes del merge"], ["Require branches up to date", "La rama debe incluir los últimos cambios de main"]] },
+              { tipo: "completar", frase: "Con la regla activa, intentar un push directo a main falla con el error 'protected ____ hook declined'. La única vía de entrada es una ____ aprobada (B13-B15).", banco: ["branch", "pull request", "rama", "password"], respuestas: ["branch", "pull request"] },
+              { tipo: "quehace", codigo: "Allow force pushes ✘ (desactivado)", pregunta: "En tu regla de protección, 'Allow force pushes' está desactivado. ¿Qué significa?", opciones: ["Nadie puede hacer push normal", "Nadie puede reescribir el historial de la rama con force push", "Los push solo los hace GitHub", "La regla no está activa"], correcta: 1 }
+            ]
+          },
+          {
+            id: "m2-b23",
+            titulo: "Releases y changelogs: comunicar qué cambió",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Ya tienes ramas, PRs y merges (B13-B16). Ahora toca <strong>comunicar qué cambió</strong>. Una <strong>release</strong> en GitHub es un snapshot publicado de tu código con un número de versión y notas de qué trae. Es el entregable que ve tu cliente o quien use tu proyecto.</p><p>Tres piezas que conviene no confundir:</p><ul><li><strong>Tag:</strong> una marca en el historial, normalmente con el número de versión (<code>v1.2.0</code>). Como un marcador de página en un punto exacto del código.</li><li><strong>Release:</strong> el tag + notas de qué cambió + descargas automáticas (<code>Source code (zip)</code> y <code>Source code (tar.gz)</code>). Se crea en <strong>Releases → Draft a new release</strong>, eligiendo el tag y escribiendo el título y las notas.</li><li><strong>Changelog:</strong> el archivo <code>CHANGELOG.md</code> del repositorio, que acumula por escrito qué cambió en cada versión. La release es la noticia; el changelog es el archivo histórico.</li></ul><p>Para escribir buenas notas, apóyate en el versionado semántico que viste en la Materia A: el número mayor cambia con cambios que rompen, el menor con funciones nuevas y el patch corrige bugs. Una convención útil separa los cambios en categorías: <strong>Added</strong> (nuevo), <strong>Changed</strong> (mejorado), <strong>Fixed</strong> (corregido), <strong>Security</strong> (seguridad).</p><p>Tu flujo con IA: cuando terminas un bloque de trabajo, publicas una release y el cliente tiene una dirección clara a dónde mirar — y un snapshot estable al que volver si algo falla.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>La release es <strong>el empaque que le entregas al cliente</strong>: caja con número de lote (v1.2.0) y etiqueta de qué trae adentro. El tag es la marca en la cinta de la caja; el changelog es el cuaderno donde llevas la lista de todos los lotes que has entregado. El cliente no necesita el cuaderno completo — le basta la etiqueta — pero tú lo necesitas para saber exactamente qué fue y cuándo.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<pre><code>Releases → Draft a new release\n\n  Choose a tag:    v1.2.0        (o [Create new tag])\n  Target:          main\n  Release title:   v1.2.0\n\n  Write release notes:\n  ### ✨ Added\n  - Checkout con tarjeta de crédito\n  ### 🔧 Changed\n  - Tiempo de carga del catálogo -40%\n  ### 🐛 Fixed\n  - Bug del carrito en Safari\n\n  ☑ Set as latest release\n  [Publish release]\n\nPublicada:\n  v1.2.0  ·  hace 2 minutos\n  Assets:  Source code (zip) · Source code (tar.gz)  ← automático</code></pre><p>GitHub genera las descargas solas. Y en el repo, el changelog acumula la misma historia:</p><pre><code>## [1.2.0] - 2026-08-16\n### Added\n- Checkout con tarjeta\n### Fixed\n- Bug del carrito en Safari</code></pre>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Quiero publicar la versión [x.y.z] de mi repositorio [nombre]. Estos fueron los cambios: [resumen]. Ayúdame a: 1) elegir el número de versión correcto según el versionado semántico, 2) escribir las notas de release en español con categorías Added/Changed/Fixed, 3) armar la entrada correspondiente en CHANGELOG.md. Explícame la diferencia entre tag, release y changelog.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "multiple", pregunta: "¿Qué es una release en GitHub?", opciones: ["Un respaldo automático que hace GitHub cada noche", "Un snapshot publicado del código con su versión, notas y descargas", "Una rama nueva de desarrollo", "Un issue con prioridad alta"], correcta: 1 },
+              { tipo: "relacionar", pares: [["Tag", "Marca un punto del historial con un nombre (v1.2.0)"], ["Release", "Tag + notas de cambios + descargas del snapshot"], ["CHANGELOG.md", "El archivo que acumula qué cambió en cada versión"], ["Source code (zip)", "Descarga que GitHub genera automáticamente por release"]] },
+              { tipo: "completar", frase: "Según el versionado semántico, la versión ____ cambia con cambios que rompen, la ____ con funciones nuevas y el ____ corrige bugs.", banco: ["mayor", "menor", "parche", "etiqueta"], respuestas: ["mayor", "menor", "parche"] },
+              { tipo: "vf", afirmacion: "Las notas de release son comunicación directa con quien usa o despliega tu proyecto: con una versión y una lista clara, sabe si puede actualizar sin miedo.", correcta: true, explicacion: "por eso se escriben pensando en quien las lee, no en el código interno." },
+              { tipo: "quehace", codigo: "v1.2.0  ·  Source code (zip)", pregunta: "Ves esta línea en la sección Releases de un repositorio. ¿Qué es?", opciones: ["Un tag sin notas, abandonado", "Una release publicada: versión 1.2.0 con descarga del código en ese punto", "Un branch de desarrollo", "Un issue resuelto"], correcta: 1 }
+            ]
+          },
+          {
+            id: "m2-b24",
+            titulo: "GitHub Copilot: la IA que vive dentro del editor",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Hasta ahora le has hablado a la IA por separado: le pegas el código, te devuelve cambios. <strong>GitHub Copilot</strong> es otra cosa: es la IA que vive <strong>dentro de tu editor de código</strong> (VS Code, entre otros), sugiriendo y respondiendo ahí donde trabajas, sin copiar y pegar.</p><p>Tres formas de usarlo:</p><ul><li><strong>Autocomplete:</strong> mientras escribes, Copilot sugiere la siguiente línea o bloque en texto gris. Presionas <code>Tab</code> para aceptar. Es como tener a un compañero que va terminando tus frases.</li><li><strong>Chat:</strong> un panel donde le preguntas por tu proyecto: \"explícame este archivo\", \"encuentra por qué falla el login\", \"refactoriza esta función\".</li><li><strong>Chat en línea (inline):</strong> seleccionas un fragmento de código y le pides cambios ahí mismo, sin salir del archivo.</li></ul><p>Para sugerir bien, Copilot necesita <strong>contexto</strong>: entre más archivos tengas abiertos, mejores serán sus respuestas. Y como vive dentro del editor, ya está leyendo tu repo — no tienes que explicarle qué tienes.</p><p><strong>El punto crítico:</strong> Copilot sugiere código <em>plausible</em>, no código <em>correcto</em>. Se entrena con muchísimo código público y repite patrones — buenos y malos. Puede sugerir funciones que no existen, código desactualizado, o fragmentos con vulnerabilidades de seguridad. Por eso sus sugerencias pasan por el mismo <strong>code review</strong> (B15) que el código de cualquier persona: tú decides qué entra y qué no.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Copilot es el <strong>aprendiz sentado a tu lado</strong> en el taller. Mientras escribes, te pasa la siguiente herramienta antes de que la pidas (autocomplete). Le preguntas cosas del proyecto y te responde sin moverse (chat). Pero es aprendiz: entusiasmado y rápido, y a veces se equivoca con total seguridad. Nadie en un taller serio deja que el aprendiz firme solo la pieza final — alguien revisa. Ese alguien eres tú.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<pre><code>// Escribes esto en tu archivo:\nfunction calcularTotal(items) {\n  const total = items.reduce(\n\n// Copilot sugiere en texto gris (Tab para aceptar):\n  (acc, item) => acc + item.precio * item.cantidad, 0);\n  return total;\n}\n\n// En el panel de chat:\n@Copilot  ¿Por qué se rompe el carrito al pagar?\n          El error parece estar en cart.js:34, donde\n          guardas el objeto sin JSON.stringify... revisa.</code></pre><p>El flujo correcto: dejas que Copilot escriba el borrador, lo lees con ojo de revisión (B15), y solo entonces haces tu commit.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Tengo la extensión GitHub Copilot instalada en VS Code y mi proyecto [repo] abierto. Explícame: 1) la diferencia entre el autocomplete, el chat y el chat en línea, con un ejemplo de cuándo usar cada uno; 2) cómo darle mejor contexto para que sus sugerencias sirvan; 3) tres errores típicos que comete al sugerir código, para que yo sepa qué revisar antes de aceptar. Mi proyecto usa [lenguajes o stack].\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "multiple", pregunta: "¿Dónde vive GitHub Copilot?", opciones: ["Es un sitio web separado de GitHub", "Dentro del editor de código, sugiriendo mientras escribes", "Solo en la terminal", "Es un reemplazo de Git"], correcta: 1 },
+              { tipo: "vf", afirmacion: "Las sugerencias de Copilot siempre son correctas y seguras: puedes aceptarlas sin revisarlas.", correcta: false, explicacion: "sugiere código plausible pero puede estar mal, desactualizado o con vulnerabilidades; pásalas por code review (B15)." },
+              { tipo: "relacionar", pares: [["Autocomplete", "Sugiere la siguiente línea en texto gris; Tab para aceptar"], ["Chat", "Le preguntas por tu proyecto en el editor"], ["Chat en línea (inline)", "Seleccionas código y le pides cambios ahí mismo"], ["Code review (B15)", "El paso donde verificas todo lo que sugiere"]] },
+              { tipo: "completar", frase: "Copilot necesita ____: entre más archivos del proyecto tengas abiertos, mejor sugiere. Y sus resultados pasan por el mismo ____ que el código de cualquier persona.", banco: ["contexto", "code review", "internet", "permiso"], respuestas: ["contexto", "code review"] },
+              { tipo: "quehace", codigo: "const total = items.reduce((acc, item) => acc + item.precio * item.cantidad, 0);", pregunta: "Copilot sugiere esta línea en texto gris. ¿Qué haces antes de presionar Tab?", opciones: ["Presionar Tab sin mirar: es Copilot, confío", "Leer la línea, confirmar que hace lo que pediste y verificar los nombres de variables", "Pedirle que cambie de lenguaje", "Cerrar el archivo y volver a abrirlo"], correcta: 1 }
+            ]
+          },
+          {
+            id: "m2-b25",
+            titulo: "Buscar código en GitHub: tu biblioteca infinita",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>B1 te dijo que GitHub es una biblioteca infinita. Ahora el cómo encontrarla: el <strong>buscador de GitHub</strong>. Desde la barra superior puedes buscar repositorios, código, issues, usuarios y temas. El buscador tiene <strong>filtros</strong> que hacen la magia:</p><ul><li><code>language:javascript</code> — solo repos en ese lenguaje</li><li><code>stars:&gt;1000</code> — repos con más de 1000 estrellas (B26)</li><li><code>user:rayflores</code> / <code>org:mi-empresa</code> — lo que tiene una cuenta u organización</li><li><code>path:</code> — busca dentro de archivos con esa ruta</li><li><code>created:&gt;2025-01-01</code> — repos creados después de una fecha</li></ul><p>Detalle práctico: el buscador de <strong>repositorios</strong> funciona sin cuenta; el de <strong>código</strong> te pide iniciar sesión. Dentro de un repositorio ya abierto, la tecla <code>T</code> abre un buscador de archivos instantáneo para saltar a donde quieras.</p><p>Usos que te tocan de cerca:</p><ul><li><strong>Encontrar librerías</strong> (Materia A): en vez de preguntarle a la IA a ciegas, buscas \"carrito language:javascript stars:&gt;1000\" y ves qué existe.</li><li><strong>Evaluar antes de adoptar:</strong> estrellas (B26), commits recientes, issues abiertos (B11) y licencia (B27) — tres minutos de lectura te ahorran semanas de arrepentimiento.</li><li><strong>Aprender de código real:</strong> busca una solución, clona (B7) o haz fork (B17), y lee cómo otros lo resolvieron. Es la mejor escuela que existe.</li></ul><p>Tip que vale oro: busca listas <code>awesome-...</code> (por ejemplo <code>awesome-javascript</code>): son curadurías humanas de las mejores librerías por tema.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>GitHub es la biblioteca pública más grande del mundo y el buscador es el <strong>bibliotecario experto</strong>. No le pides \"un libro de cocina\": le dices \"recetas mexicanas, vegetarianas, con menos de 30 minutos, publicadas este año\" y te trae exactamente eso. Los filtros son tu forma de hablarle al bibliotecario en su idioma — cuanto más preciso el pedido, mejor el resultado.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<pre><code>En la barra superior de GitHub:\n\n  carrito de compras language:javascript stars:&gt;1000\n\n→ Repos ordenados por relevancia. Entras al que más te convence.\n\nDentro del repo, presionas T:\n\n  [ Find file ]  →  escribes: cart.js\n  → salta directo al archivo que busca la lógica del carrito</code></pre><p>Mismo flujo para librerías: busca el tema, mira las estrellas y la última actividad, lee el README (B9) y decide. Todo en menos de cinco minutos.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Quiero aprender a resolver [problema concreto] leyendo código real en GitHub. Ayúdame a: 1) armar la búsqueda exacta con los filtros correctos (lenguaje, estrellas, fecha), 2) recomendarme 3 repositorios para estudiar el tema y por qué cada uno, 3) decirme qué archivos abrir primero en cada uno para entender cómo funciona. Quiero ejemplos de código real, no teoría.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "multiple", pregunta: "¿Qué puedes buscar en GitHub?", opciones: ["Solo repositorios de Microsoft", "Repositorios, código, issues, usuarios y temas, con filtros", "Videos y música", "Precios de hosting"], correcta: 1 },
+              { tipo: "relacionar", pares: [["language:javascript", "Solo repos en JavaScript"], ["stars:>1000", "Más de 1000 estrellas (B26)"], ["user:rayflores", "Todo lo que tiene ese usuario"], ["created:>2025-01-01", "Creados después de esa fecha"]] },
+              { tipo: "completar", frase: "Antes de adoptar una librería revisa sus ____ (B26), si tiene ____ recientes y qué ____ tiene (B27).", banco: ["estrellas", "commits", "licencia", "seguidores"], respuestas: ["estrellas", "commits", "licencia"] },
+              { tipo: "vf", afirmacion: "Dentro de un repositorio abierto, la tecla T abre un buscador de archivos para saltar directo a cualquier archivo del repo.", correcta: true, explicacion: "es el atajo para moverse rápido por código ajeno o propio." },
+              { tipo: "quehace", codigo: "carrito de compras language:javascript stars:>1000", pregunta: "Escribes esto en el buscador de GitHub. ¿Qué obtienes?", opciones: ["Páginas web que mencionan carrito de compras", "Repositorios de JavaScript con más de 1000 estrellas sobre carrito de compras", "Issues de un repo llamado 'carrito'", "Solo repositorios privados"], correcta: 1 }
+            ]
+          },
+          {
+            id: "m2-b26",
+            titulo: "Estrellas, forks y watchers: las métricas sociales del código",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>En B1 te presenté GitHub como la plaza pública del código. Cada proyecto que vive ahí tiene tres contadores que leen todos — estrellas, forks y watchers — y aunque parecen decoración, son la <strong>moneda social</strong> con la que se mide la confianza en este mundo.</p><ul><li><strong>Star (estrella) ⭐</strong> — un \"me gusta\" que además guarda el repo en tu lista personal. Quien la da no modifica nada: solo dice \"este proyecto me interesa\". Es el indicador de popularidad por excelencia.</li><li><strong>Fork 🍴</strong> — una copia completa del repositorio que se crea <strong>en tu cuenta</strong> de GitHub. No es una copia local: es un repo tuyo que nace del de otro, para modificarlo con libertad o usarlo como base. Cuando alguien \"usa tu código\", casi siempre es porque hizo fork.</li><li><strong>Watch 👁</strong> — una suscripción: quien la activa recibe notificaciones de la actividad del repo (releases, issues, discusiones). Su contador dice cuánta gente sigue este proyecto de cerca.</li></ul><p>La confusión clásica es fork vs clone (B7). <strong>Clone</strong> copia el repo a tu computadora para trabajar; <strong>fork</strong> crea una copia en tu cuenta de GitHub. Puedes clonar tu propio fork, y si mejoras el proyecto original, le ofreces los cambios con un pull request (B13).</p><p>Para ti, estos números son el radar que empezaste a usar en B25: muchas estrellas = el proyecto goza de confianza; forks altos = otros lo toman de base; watchers = gente siguiendo de cerca. Un repo con 10,000 estrellas y su último commit hace 4 años es popular pero posiblemente muerto — los tres contadores juntos cuentan la historia completa.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Las métricas son los <strong>post-its que la gente pega en la puerta de un restaurante</strong>. Las estrellas son los \"recomendado\" con nombre que otros se anotan para no olvidar el lugar. Los forks son las copias de tu receta que otros se llevan a su cocina — y si la mejoran, te mandan el resultado. Los watchers son los vecinos que preguntan cuándo abres para llegar primero. Y ojo: un restaurante puede tener miles de recomendaciones… y estar cerrado desde hace un año. Por eso los tres números se leen juntos.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>La ficha de un repositorio, tal como la ve cualquiera:</p><pre><code>rayflores / DEV-SYSTEM-ACADEMY\n⭐ 12  🍴 3  👁 45\n\nConstruye sitios web dirigiendo IA — materiales del curso.\n\nReleases: v2.4.0 · hace 3 días\nPull requests merged: 12 · Issues abiertos: 58</code></pre><p>Y el flujo de fork, el que vas a usar para aprender de código ajeno:</p><pre><code>1. Abres el repo que quieres estudiar\n2. Clic en [Fork]  →  se crea la copia en TU cuenta\n3. git clone https://github.com/tuusuario/repo.git\n4. Modificas, experimentas, rompes y aprendes\n5. Si mejoras algo, abres un pull request (B13) al original</code></pre><p>Ese flujo — fork, clone, mejorar, PR — es literalmente cómo funciona la colaboración en el mundo open source.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Quiero elegir entre estos repositorios para [tu objetivo]: [URLs]. Compáralos usando estrellas, forks, watchers, la fecha del último commit y las issues abiertas (B11). ¿Cuál está más vivo y es más confiable, y por qué? Dime qué significan en conjunto sus tres contadores.\"</p></blockquote><p>Ese prompt te entrena para leer métricas como lo haría un ingeniero senior.</p>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "multiple", pregunta: "¿Qué es una estrella en GitHub?", opciones: ["Guardar el código del repo en tu disco", "Marcar un repositorio como favorito o de interés (un 'me gusta')", "Copiar el repo a tu cuenta de GitHub", "Suscribirte a sus notificaciones"], correcta: 1 },
+              { tipo: "relacionar", pares: [["Star ⭐", "Un 'me gusta' que guarda el repo en tu lista"], ["Fork 🍴", "Copia del repo que se crea en tu cuenta"], ["Watch 👁", "Suscribirte para recibir notificaciones de su actividad"], ["Clone", "Copia local para trabajar (B7)"]] },
+              { tipo: "vf", afirmacion: "Hacer fork y hacer clone es exactamente lo mismo.", correcta: false, explicacion: "clone copia el repo a tu computadora; fork crea una copia en tu cuenta de GitHub, vinculada al original." },
+              { tipo: "completar", frase: "Después de hacer fork y mejorar el proyecto, ofreces tus cambios al original con un ____ (B13). Las estrellas miden ____ y los watchers siguen de cerca.", banco: ["pull request", "popularidad", "código", "descarga"], respuestas: ["pull request", "popularidad"] },
+              { tipo: "quehace", codigo: "⭐ 12,400 · 🍴 3,100 · 👁 890 · último commit: 2026-02-14", pregunta: "Ves estos números en la página de un repositorio. ¿Qué concluyes?", opciones: ["Es un repo impopular y abandonado", "Es popular (12 mil estrellas), muy usado de base (3 mil forks) y con seguidores de cerca (890 watchers); falta confirmar con la fecha del último commit si sigue vivo", "Las estrellas significan que el repo cobra", "No sirve porque tiene pocos watchers"], correcta: 1 }
+            ]
+          },
+          {
+            id: "m2-b27",
+            titulo: "Licencias explicadas simple: MIT, Apache, GPL",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Todo código tiene un dueño legal, y la <strong>licencia</strong> es el permiso escrito de ese dueño: qué puedes hacer con su código y bajo qué condiciones. Parece papeleo, pero es la diferencia entre usar código de forma legítima y estar violando derechos sin saberlo.</p><p>El dato que casi nadie conoce: <strong>si un repositorio NO tiene licencia, la ley presume \"todos los derechos reservados\"</strong> — nadie puede copiarlo, modificarlo ni usarlo, aunque esté público en GitHub. Público no es sinónimo de libre.</p><p>Las tres que dominan el mundo:</p><ul><li><strong>MIT</strong> — la más permisiva. Puedes usar, copiar, modificar y vender el código; solo debes incluir el aviso de copyright original. Es la licencia por default de los proyectos que quieren máxima adopción (React, jQuery).</li><li><strong>Apache 2.0</strong> — también permisiva, con dos extras: una concesión explícita de <strong>patentes</strong> (tranquiliza a las empresas) y la regla de que si modificas el código, lo anotes en un archivo <code>NOTICE</code>. Ideal cuando el código lo usarán empresas.</li><li><strong>GPL</strong> — la de \"copyleft\": puedes usarla y modificarla libremente, pero <strong>si distribuyes tu versión, debe publicarse bajo GPL también</strong>. Si la usas, tu obra se queda tan libre como la original (Linux y WordPress usan GPL).</li></ul><p>Cuál elegir: para tus proyectos personales y de negocio, <strong>MIT es casi siempre la respuesta</strong> — permite que cualquiera los use sin miedo legal. Apache 2.0 cuando hay empresas o patentes de por medio. GPL cuando quieres forzar que las mejoras se mantengan abiertas. Y antes de usar una librería (Materia A), revisa su licencia — recuerda el chequeo de B25.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>La licencia es el <strong>letrero de las reglas del estacionamiento</strong> del edificio. Sin letrero, nadie se atreve a estacionarse (por ley, todo reservado). Con MIT, el letrero dice: \"entra y quédate, solo di que es del edificio de fulanito\". Con Apache: \"entra y quédate; si remodelas, avisa qué cambiaste\". Con GPL: \"entra y quédate — y si construyes aquí tu oficina, tu oficina también queda abierta para todos\". Elegir la licencia es escribir ese letrero para que otros sepan si pueden entrar.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>En la página de un repo, la licencia aparece como un letrero automático, y en el proyecto hay un archivo <code>LICENSE</code>:</p><pre><code>rayflores / mi-tienda\nMIT license  ·  View license\n\n(archivos del repo)\nLICENSE          ← texto completo de la licencia\nREADME.md</code></pre><p>Agregar una licencia desde GitHub:</p><pre><code>1. Abres el repo → botón [Add file] → Create new file\n2. Nombre:  LICENSE\n3. Clic en [Choose a license template]\n4. Buscas MIT, la seleccionas, editas el año y tu nombre\n5. Commit\n\nDespués:  MIT license  aparece en la página del repo</code></pre><p>El texto completo importa — copiar \"MIT\" a mano sin el aviso oficial deja el repo sin la protección real.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Quiero publicar mi repositorio [nombre], que es [describe tu proyecto]. ¿Qué licencia me conviene: MIT, Apache 2.0 o GPL? Mi caso: [¿lo quieres libre para cualquiera? ¿lo usarán empresas? ¿quieres que las mejoras sigan abiertas?]. Explícame en una línea qué permite y qué obliga cada una, y recomiéndame una.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "relacionar", pares: [["MIT", "Permisiva: uso libre incluyendo el aviso de copyright"], ["Apache 2.0", "Permisiva + concesión de patentes y aviso de cambios"], ["GPL", "Si distribuyes tu versión, debe seguir siendo abierta"]] },
+              { tipo: "multiple", pregunta: "Un repositorio público en GitHub no tiene ningún archivo de licencia. ¿Qué significa legalmente?", opciones: ["Que cualquiera puede usarlo gratis", "Que por defecto nadie puede copiarlo ni modificarlo: todos los derechos reservados", "Que es código libre automáticamente", "Que GitHub le asigna MIT automáticamente"], correcta: 1 },
+              { tipo: "vf", afirmacion: "Si tomas código con licencia GPL y haces una versión modificada, puedes distribuirla como software cerrado sin publicar el código.", correcta: false, explicacion: "GPL obliga a que las versiones modificadas que distribuyas se publiquen bajo GPL: tu obra sigue siendo tan libre como la original." },
+              { tipo: "completar", frase: "La licencia ____ es la más permisiva y solo pide incluir el ____ de copyright. ____, en cambio, exige que las versiones modificadas distribuidas sigan siendo abiertas.", banco: ["MIT", "aviso", "GPL", "precio"], respuestas: ["MIT", "aviso", "GPL"] },
+              { tipo: "quehace", codigo: "MIT license", pregunta: "Ves el letrero <code>MIT license</code> en la página de un repositorio. ¿Qué te dice?", opciones: ["Que el código está protegido y no puedes usarlo", "Que el autor permite usar, copiar, modificar y vender su código incluyendo el aviso de copyright", "Que el repositorio está vacío", "Que la licencia caducó"], correcta: 1 }
+            ]
+          },
+          {
+            id: "m2-b28",
+            titulo: "Seguridad: secretos, tokens y lo que NUNCA debes subir",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Esta es la lección más importante de todo el mes, y no es exageración. <strong>Los secretos son credenciales que nadie más debe ver:</strong> contraseñas, llaves de API, tokens, cadenas de conexión a bases de datos, certificados. Normalmente viven en un archivo <code>.env</code> (lo viste en A11) — y ese archivo <strong>NUNCA debe subirse a GitHub</strong>.</p><p>El riesgo es real y silencioso: <strong>los bots escanean GitHub permanentemente</strong> buscando claves expuestas (GitHub lo llama secret scanning). A los minutos de subir un token, alguien puede estar usándolo para leer tus repositorios privados, escribir en tu nombre o —con una llave de API de un servicio de pago o de nube— generar cargos en tu tarjeta.</p><ul><li><strong>Tu contraseña normal de GitHub no sirve para autenticar comandos</strong> (lo viste en B5): se usa un <strong>Personal Access Token</strong>, una llave con permisos específicos y fecha de caducidad. Ese token es una llave de tu casa: subirlo es pegar la llave en la puerta del edificio.</li><li><strong>Borrar el archivo no alcanza:</strong> si un secreto se subió, quedó en el historial del repo. Aunque un commit siguiente lo borre, cualquiera puede ver la historia. La única respuesta correcta es <strong>revocar</strong> el token (regenerarlo) y girar cualquier contraseña filtrada.</li></ul><p>Reglas de oro de este programa:</p><ol><li><strong>Nunca</strong> pongas un token, contraseña o llave en un commit. El <code>.gitignore</code> (A11) protege el <code>.env</code>.</li><li>Antes de cada push, <strong>revisa <code>git status</code> y <code>git diff</code></strong> para ver exactamente qué va a viajar.</li><li>Si algo se filtró: <strong>revoca, rota y avisa</strong>. Sin excusas, ni \"pero es mi repo privado\" (B8).</li><li>Nunca compartas secretos con la IA en prompts ni en código.</li></ol><p>GitHub además te ayuda: si detecta un patrón de secreto en un commit, te envía una alerta para que actúes. Esa alerta no es un bug: es tu salvavidas.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Un token es la <strong>llave de la puerta principal</strong> de tu casa-taller. La contraseña normal es el uniforme: lo ves y sabes quién es. Pero el token es la llave física que abre: con ella, cualquiera entra, toma las cajas, firma en tu nombre y deja la puerta abierta. Subir un token a un repo es <strong>colgar la llave en el poste del parque con tu nombre y tu dirección</strong>. Y cuando la llave se pierde, no se regresa a su lugar: se cambia la cerradura entera. En términos de código: se revoca.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>El error y su costo, sin drama:</p><pre><code># archivo .env (tu computadora — NO debe viajar)\nDB_PASSWORD=SuperSecreto123\nSTRIPE_SECRET_KEY=sk_live_51HxK...\n\n# El día del desastre:\n#     git add .\n#     git commit -m \"config\"\n#     git push\n# …el .env viajó. Aunque el siguiente commit lo borre,\n# el secreto ya está en el historial público del repo.\n\n# Plan de respuesta correcto (en orden):\n1. Revocar YA el token / girar la contraseña (Stripe, AWS, GitHub…)\n2. Regenerar credenciales y guardarlas en el gestor de contraseñas\n3. Verificar que .env esté en el .gitignore (A11)\n4. Para limpiar el historial: git filter-repo / BFG, con ayuda de la IA\n5. Mover el secreto a una variable de entorno del servicio (Mes 9)</code></pre><p>El paso 1 es innegociable: <strong>revocar</strong>. Todo lo demás se hace con calma; lo que no se revoca, se sigue cobrando.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Antes de hacer push de mi proyecto, revisa que no haya secretos: 1) tokens, contraseñas o llaves de API hardcodeadas en mis archivos (busca patrones como sk_, api_key, password, .env); 2) qué archivos va a subir git según <code>git status</code>; 3) si mi <code>.gitignore</code> cubre todo lo necesario. Esto es para [nombre de tu repo].\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "vf", afirmacion: "Los bots escanean GitHub automáticamente buscando secretos expuestos como tokens y llaves de API.", correcta: true, explicacion: "es el secret scanning: a los minutos de subir una clave, alguien puede estar usándola." },
+              { tipo: "multiple", pregunta: "¿Qué es un Personal Access Token?", opciones: ["La contraseña normal de tu cuenta de GitHub", "Una llave de acceso con permisos específicos que usan las herramientas para autenticarse en tu nombre", "Un certificado para publicar páginas", "Un código de descuento para GitHub"], correcta: 1 },
+              { tipo: "completar", frase: "Los secretos viven en el archivo ____, que debe estar incluido en el ____ para que Git nunca lo suba.", banco: [".env", ".gitignore", "config.json", "README"], respuestas: [".env", ".gitignore"] },
+              { tipo: "quehace", codigo: "Subiste por error un token al hacer push", pregunta: "Acabas de hacer push y descubres que en el historial quedó un token. ¿Qué haces PRIMERO?", opciones: ["Hacer un commit que lo borre", "Revocar el token de inmediato y girar la clave", "Borrar el repositorio", "Nada, el repo es privado"], correcta: 1 },
+              { tipo: "relacionar", pares: [["Leak de token en un push", "Revocarlo YA: ya quedó en el historial"], ["Archivo .env sin ignorar", "Agregarlo a .gitignore (A11) antes del commit"], ["Llave de API escrita en el código", "Moverla a una variable de entorno (Mes 9)"], ["Vas a hacer push de cambios", "Revisar git status y git diff para ver qué viaja"]] }
+            ]
+          },
+          {
+            id: "m2-b29",
+            titulo: "Tu portafolio en GitHub: cómo te ve un cliente",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>En B2 armaste tu perfil como carta de presentación. Ahora el otro lado del mostrador: <strong>lo que un cliente ve cuando llega</strong>. Un cliente no lee código ni revisa tu CV — mira tu perfil de GitHub y tus repositorios durante unos segundos, y de esos segundos saca una conclusión.</p><p>Lo que un cliente evalúa, en orden:</p><ol><li><strong>Los repos fijados (pinned, B2):</strong> hasta 6 proyectos que eliges tú. Es tu vitrina; no se publican 30 repos sin README.</li><li><strong>El README (B9):</strong> en 10 segundos responde qué hace el proyecto, por qué vale la pena y qué problema resuelve. Con una captura de pantalla y un enlace a la demo en vivo (GitHub Pages, B20), el cliente ya no tiene que adivinar nada.</li><li><strong>La demo funcionando:</strong> un enlace a la página viva. Nada convence como tocar el resultado.</li><li><strong>El historial de commits:</strong> actividad constante = persona que trabaja en serio (volviste a B2). Un repo con un solo commit hace un año se lee como proyecto abandonado.</li><li><strong>El estado del repo:</strong> sin <code>node_modules</code>, sin <code>.env</code> ni secretos (A11, B28), sin archivos basura, con un nombre claro y una descripción de una línea.</li></ol><p>La gran diferencia entre \"repo de práctica\" y \"repo de portafolio\" es la intención: el primero demuestra que aprendes; el segundo demuestra que <strong>construyes resultados</strong>. Para un cliente, tres proyectos terminados y bien presentados valen más que treinta ejercicios sin pulir.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Tu perfil es la <strong>vitrina de tu taller</strong> y cada repo fijado es el <strong>producto estrella en exhibición</strong>. El README es la etiqueta que explica el producto sin que tengas que hablar; la captura de pantalla es la foto del resultado terminado; la demo en vivo es el \"pruébelo usted mismo\" del vendedor. Un cliente que llega a una vitrina con tres productos bien etiquetados y probables entra. Uno que ve 30 cajas amontonadas sin etiquetas, pasa de largo. La vitrina no dice qué sabes: dice qué entregas.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>El punto de vista del cliente, de frente:</p><pre><code>Raymundo Flores\nConstruyo sistemas web con IA\n📌 Pinned (4 repos):\n\n┌──────────────────────────────────────┐\n│ Tortas El Güero — Sitio de negocio  │\n│ Catálogo, pedidos por WhatsApp y     │\n│ Google Maps. Live demo:              │\n│ → demo.tortaselguero.com   ⭐ 3      │\n└──────────────────────────────────────┘\n\nLista de chequeo antes de mostrar algo:\n☑ README con captura y demo en vivo (B9)\n☑ Sin .env, tokens ni archivos basura (A11, B28)\n☑ Nombre claro + descripción de una línea\n☑ Licencia (B27) + commits recientes\n☑ Proyecto funcional de verdad, no maqueta</code></pre><p>Esa lista es tu rutina antes de mandarle tu perfil a cualquier cliente.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Voy a enviarle mi portafolio de GitHub a un posible cliente. Asume que eres ese cliente y evalúa mi perfil y mis repositorios fijados: 1) ¿qué primera impresión dan mis títulos, descripciones y READMEs? 2) ¿qué repo presenta mejor y cuál flojea? 3) escríbeme los textos (bio, descripciones de repo y README) para que un negocio local entienda en 10 segundos qué hago. Enlace a mi perfil: [URL].\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "multiple", pregunta: "¿Qué es lo primero que mira un cliente en tu perfil de GitHub?", opciones: ["El número de seguidores", "Tus repositorios fijados (pinned) y cómo están presentados", "Tu foto de perfil", "La antigüedad de tu cuenta"], correcta: 1 },
+              { tipo: "relacionar", pares: [["README que vende (B9)", "Qué hace el proyecto y por qué vale la pena"], ["Demo en vivo (B20)", "Que lo pueda probar sin instalar nada"], ["Historial de commits", "Señal de trabajo constante"], ["Repo limpio, sin .env", "Profesionalismo y seguridad (A11, B28)"]] },
+              { tipo: "vf", afirmacion: "Tres proyectos terminados y bien presentados valen más para un cliente que treinta repos sin README.", correcta: true, explicacion: "el cliente evalúa resultados, no la cantidad de ejercicios." },
+              { tipo: "completar", frase: "El ____ del repo es la puerta de entrada: con una captura de pantalla y un enlace a la ____, el cliente entiende qué construiste en 10 segundos sin leer código.", banco: ["README", "demo en vivo", "licencia", "rama"], respuestas: ["README", "demo en vivo"] },
+              { tipo: "quehace", codigo: "Tortas El Güero · Sitio de negocio con catálogo y pedidos por WhatsApp · Live demo → demo.tortaselguero.com", pregunta: "Un cliente ve esta descripción de un repo fijado. ¿Qué conclusión saca razonablemente?", opciones: ["Que el proyecto es complicado de usar", "Que construiste un sitio real y puede probarlo en vivo", "Que no sabes programar", "Que el repositorio está vacío"], correcta: 1 }
+            ]
+          },
+          {
+            id: "m2-b30",
+            titulo: "Repaso integrador de GitHub (mega-quiz jugable)",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Cerramos la Materia B con un repaso que no es una clase nueva: es el <strong>mapa de lo que ya construiste</strong>. Todo esto ya lo viste; aquí se acomoda para que la Materia C (puro ejercicio) tenga cimientos firmes.</p><p>El mapa completo de GitHub, en cuatro capas:</p><ul><li><strong>Fundamentos (B1-B5):</strong> Git es el programa local y GitHub el servicio web (B1). Tu perfil es tu carta de presentación (B2). El remoto es una copia completa que vive en la nube (B3-B4), y <code>git push</code> la actualiza (B5).</li><li><strong>Trabajo diario (B6-B10):</strong> traer cambios con <code>git pull</code> (B6), clonar proyectos con <code>git clone</code> (B7), público vs privado (B8) y el README como puerta de entrada (B9).</li><li><strong>Colaboración (B11-B16):</strong> issues como lista de tareas (B11), pull requests como propuestas formales (B13-B14), code review como tu candado de calidad (B15) y el merge que las cierra (B16).</li><li><strong>Nivel pro (B17-B29):</strong> forks y contribución a open source (B17-B18), GitHub Actions como tu robot validador (B19), publicar con Pages (B20), candados para main (B22), releases que comunican (B23), Copilot en tu editor (B24), búsqueda (B25), métricas sociales (B26), licencias (B27), secretos (B28) y el portafolio que le vende a un cliente (B29).</li></ul><p>El mega-quiz que sigue mezcla los 6 tipos de ejercicio que ya dominas — opción múltiple, completar, relacionar, verdadero/falso, ordenar y \"qué hace este código\" — para que el repaso también te divierta. Contesta sin adivinar: si no estás seguro, es la señal de a qué lección volver.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>La Materia B fue <strong>armar tu taller</strong>: instalaste la máquina (Git), abriste el local (GitHub), aprendiste a recibir mercancía y despacharla (push y pull), a trabajar con socios sin pisarse (ramas y PRs), a proteger el inventario (ramas protegidas y secretos) y a poner la vitrina (portafolio). El repaso es la <strong>inspección de seguridad antes de abrir las puertas</strong>: revisas que cada herramienta esté en su lugar, no para aprender algo nuevo, sino para confirmar que nada se quedó flojo. La Materia C es el primer día de atención al cliente — ahí sí se aprende en marcha.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Cómo jugar el mega-quiz para que sirva:</p><pre><code>1. Responde los 8 ejercicios SIN ver tus notas.\n2. Si dudas, NO adivines: márcalo para repasar.\n\nInterpreta tu resultado:\n  8/8  → listo para la Materia C, sigue así\n  6-7  → repasa los temas de las que fallaste\n  &lt; 6  → vuelve a las lecciones señaladas y repite\n\nCada pregunta apunta a su lección:\n  flujo add/commit/push  → B4-B5\n  comandos               → B5-B7\n  repo privado           → B8\n  pull requests          → B13-B16\n  protección de main     → B22\n  clone                  → B7\n  secretos               → B28\n  licencias              → B27</code></pre><p>La meta no es memorizar respuestas: es que cada ejercicio te recuerde <em>por qué</em> funciona así.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Autoevaluación",
+                html: "<p>Antes de saltar a las prácticas de la Materia C, pruébate con honestidad. Si puedes responder cada punto sin mirar tus notas, estás listo:</p><ul><li>Expliqué la diferencia entre Git y GitHub (B1) y armé un perfil que no da vergüenza (B2).</li><li>Conecté mi repo local con <code>git remote add origin</code> (B4) y subí mi trabajo con <code>git push</code> (B5).</li><li>Distingo <code>push</code>, <code>pull</code> y <code>clone</code> (B5-B7) y sé cuándo usar una rama (Materia A).</li><li>Abro y reviso un pull request con code review antes de mergear (B13-B15).</li><li>Protegí mi rama main para que todo entre por PR aprobada (B22).</li><li>Leo estrellas, forks y watchers antes de adoptar una librería (B25-B26).</li><li>Mi repositorio tiene licencia (B27) y NUNCA subo secretos ni tokens (B28).</li><li>Mi portafolio le vende a un cliente en 10 segundos (B29).</li></ul><p>Si algún punto se te atora, vuelve a esa lección antes de la práctica. La Materia C es puro ejercicio: llegar con la teoría clara es la mitad del camino.</p>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "multiple", pregunta: "Para que un cambio tuyo llegue a GitHub, el orden correcto es:", opciones: ["git push → git commit → git add", "git add → git commit → git push", "git commit → git push → git add", "git add → git push → git commit"], correcta: 1 },
+              { tipo: "relacionar", pares: [["git push", "Subir commits al remoto (B5)"], ["git pull", "Bajar commits del remoto (B6)"], ["git clone", "Copiar un repo remoto a tu computadora (B7)"], ["git branch", "Crear o manejar ramas (Materia A)"]] },
+              { tipo: "vf", afirmacion: "En un repositorio privado, el código solo lo ven el dueño y quienes él invite.", correcta: true, explicacion: "privado (B8) = acceso restringido; lo público es visible para todo el mundo." },
+              { tipo: "completar", frase: "Con la rama main protegida (B22), todo cambio entra por una ____ aprobada y los ____ de GitHub Actions (B19) deben pasar antes del merge.", banco: ["pull request", "checks", "rama", "token"], respuestas: ["pull request", "checks"] },
+              { tipo: "ordenar", instruccion: "Acomoda el flujo completo de una mejora en un repo protegido:", elementos: ["crear una rama nueva", "hacer los cambios y commitear", "abrir un pull request", "pasar los checks y recibir aprobación", "hacer merge a main"] },
+              { tipo: "quehace", codigo: "git clone https://github.com/rayflores/mi-tienda.git", pregunta: "Corres este comando. ¿Qué pasó?", opciones: ["Subiste tu proyecto a GitHub", "Copiaste el repositorio de rayflores a tu computadora para trabajar con él", "Creaste una rama nueva", "Borraste el repositorio local"], correcta: 1 },
+              { tipo: "multiple", pregunta: "Descubres que acabas de hacer push de un token. ¿Cuál es TU primera acción?", opciones: ["Borrar el commit con un commit nuevo", "Revocar el token de inmediato y girar la clave", "Cerrar sesión en GitHub", "Cambiar tu contraseña de correo"], correcta: 1 },
+              { tipo: "vf", afirmacion: "Un repositorio público sin archivo de licencia se puede usar libremente porque está público.", correcta: false, explicacion: "sin licencia, la ley presume todos los derechos reservados: nadie puede usarlo legalmente (B27)." }
+            ]
+          }
         ]
       },
       "c": {
