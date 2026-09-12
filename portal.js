@@ -888,10 +888,24 @@
       (function (btn) {
         btn.addEventListener("click", function () {
           var tid = btn.getAttribute("data-tab");
+          if (tid === "humanizador") {
+            window.location.href = "humanizador.html";
+            return;
+          }
           if (enrollmentStatus !== "activo" && tid !== "inicio") return;
           switchTab(tid);
         });
       })(tabBtns[tbi]);
+    }
+
+    /* Humanizador: uso privado del owner, oculto por defecto. */
+    var hzTab = tabNav.querySelector("button[data-tab='humanizador']");
+    if (hzTab) {
+      hzTab.style.display = "none";
+      var hzAllowed = ["rayfg96@gmail.com"];
+      if (user && hzAllowed.indexOf(String(user.email).toLowerCase()) !== -1) {
+        hzTab.style.display = "";
+      }
     }
 
     for (var t = 0; t < tabs.length; t++) {

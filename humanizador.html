@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="favicon-180.png">
+    <title>DEV SYSTEM | Humanizador</title>
+    <meta name="description" content="Herramienta privada de reescritura de texto académico." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Sora:wght@400;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script defer src="platform-config.js"></script>
+    <script defer src="cloud-state.js"></script>
+    <script defer src="humanizador-reglas.js"></script>
+    <script defer src="humanizador.js"></script>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container nav-wrap">
+        <a href="portal.html" class="brand"><img src="logo.png" alt="DEV SYSTEM Academy" class="brand-logo"></a>
+        <nav class="nav">
+          <a href="portal.html">Mi portal</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="section">
+      <div class="container">
+        <p class="eyebrow">Herramienta privada</p>
+        <h1 class="page-title">Humanizador de texto académico</h1>
+        <p class="lead">
+          Pega un texto generado por IA y obtén una versión que lea como escritura real de estudiante.
+        </p>
+
+        <div class="summary-row" style="margin-top:1.2rem;max-width:560px">
+          <span>Nivel</span>
+          <select id="nivel-select" class="month-select">
+            <option value="preparatoria">Preparatoria</option>
+            <option value="licenciatura" selected>Licenciatura</option>
+            <option value="licenciatura-avanzada">Licenciatura avanzada</option>
+          </select>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:1rem" id="humanizador-grid">
+          <div class="card" style="padding:0">
+            <p class="eyebrow" style="padding:1rem 1rem 0">Texto original</p>
+            <textarea id="input-texto" style="width:100%;min-height:320px;background:transparent;border:0;outline:0;color:var(--text);font:inherit;font-size:0.92rem;line-height:1.65;padding:1rem;resize:vertical"></textarea>
+          </div>
+          <div class="card" style="padding:0">
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:1rem 1rem 0">
+              <p class="eyebrow">Resultado</p>
+              <div style="display:flex;gap:0.5rem">
+                <button id="copiar-btn" class="btn btn-ghost btn-sm" style="display:none">Copiar</button>
+                <button id="guardar-btn" class="btn btn-brand btn-sm" style="display:none">Guardar como buen ejemplo</button>
+              </div>
+            </div>
+            <textarea id="output-texto" readonly style="width:100%;min-height:320px;background:transparent;border:0;outline:0;color:var(--text);font:inherit;font-size:0.92rem;line-height:1.65;padding:1rem;resize:vertical" placeholder="El resultado aparecerá aquí..."></textarea>
+          </div>
+        </div>
+
+        <div style="margin-top:1rem;display:flex;gap:0.75rem;align-items:center;flex-wrap:wrap">
+          <button id="humanizar-btn" class="btn btn-brand" style="min-width:180px">Humanizar</button>
+          <span id="estado-texto" class="small" style="color:var(--muted)"></span>
+        </div>
+
+        <div id="cambios-panel" style="display:none;margin-top:1rem">
+          <div class="card">
+            <p class="eyebrow">Limpieza automática (Capa 1)</p>
+            <div id="cambios-list" class="small" style="color:var(--muted);margin-top:0.4rem"></div>
+          </div>
+        </div>
+
+        <div id="semaforo-panel" style="display:none;margin-top:1rem">
+          <div class="card">
+            <p class="eyebrow">Métricas de naturalidad</p>
+            <div style="display:flex;align-items:center;gap:1rem;margin:0.8rem 0;flex-wrap:wrap">
+              <span style="font-family:var(--font-display);font-size:2.4rem;font-weight:800" id="score-global">—</span>
+              <span class="small" style="color:var(--muted)">score global</span>
+            </div>
+            <div id="metricas-list" style="display:grid;gap:0.5rem"></div>
+          </div>
+        </div>
+
+        <p id="humanizador-message" class="notice" aria-live="polite"></p>
+      </div>
+    </main>
+
+    <style>
+      @media (max-width: 800px) {
+        #humanizador-grid { grid-template-columns: 1fr !important; }
+      }
+      .metrica-row { display: flex; justify-content: space-between; align-items: center; gap: 0.6rem; padding: 0.5rem 0; border-bottom: 1px solid var(--line); font-size: 0.88rem; }
+      .metrica-row:last-child { border-bottom: 0; }
+      .metrica-semaforo { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
+      .semaforo-verde { background: var(--success); }
+      .semaforo-amarillo { background: var(--warn); }
+      .semaforo-rojo { background: var(--danger); }
+    </style>
+  </body>
+</html>
