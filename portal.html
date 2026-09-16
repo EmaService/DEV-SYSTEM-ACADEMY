@@ -9,37 +9,14 @@
     <meta name="description" content="Portal de DEV SYSTEM con roadmap, lecciones y progreso del alumno." />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Sora:wght@400;600;700;800&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="styles.css" />
-    <style>
-      .portal-header { position:sticky; top:0; z-index:100; background:rgba(4,19,41,0.8); backdrop-filter:blur(24px); border-bottom:1px solid var(--line); height:56px; display:flex; align-items:center; }
-      .portal-header-inner { display:flex; align-items:center; justify-content:space-between; width:100%; }
-      .portal-header-left { display:flex; align-items:center; gap:0.6rem; }
-      .portal-header-logo { height:28px; width:auto; filter:drop-shadow(0 0 8px rgba(173,199,255,0.35)); }
-      .portal-header-title { font-family:var(--font-head); font-weight:800; font-size:0.85rem; color:var(--accent); letter-spacing:-0.02em; }
-      .portal-header-right { display:flex; align-items:center; gap:0.75rem; }
-      .matricula-chip { font-family:var(--font-display); font-size:0.78rem; font-weight:700; background:rgba(124,92,255,0.15); border:1px solid rgba(124,92,255,0.4); color:var(--brand-2); padding:0.25rem 0.7rem; border-radius:999px; white-space:nowrap; }
-      .portal-tabs { position:sticky; top:56px; z-index:99; display:flex; gap:0; background:rgba(4,19,41,0.85); backdrop-filter:blur(20px); border-bottom:1px solid var(--line); overflow-x:auto; }
-      .portal-tabs button { flex-shrink:0; padding:0.7rem 1rem; background:transparent; border:none; color:var(--muted); font:inherit; font-size:0.82rem; font-weight:600; cursor:pointer; transition:all 0.2s; border-bottom:2px solid transparent; }
-      .portal-tabs button:hover { color:var(--accent); }
-      .portal-tabs button.active { color:var(--accent); border-bottom-color:var(--accent); }
-      .tab-content { display:none; }
-      .tab-content.active { display:block; }
-      .portal-main { padding-top:1.5rem; }
-      .portal-main .container.portal-layout { display:block; }
-      .portal-layout > .tab-content { margin-bottom:1.5rem; }
-      #wallet_container iframe { width:100% !important; min-height:240px; }
-      @media (max-width:600px) {
-        .portal-tabs button { font-size:0.75rem; padding:0.6rem 0.7rem; }
-        .portal-header-title { font-size:0.75rem; }
-      }
-    </style>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="https://sdk.mercadopago.com/js/v2"></script>
     <script defer src="platform-config.js"></script>
     <script defer src="cloud-state.js"></script>
     <script defer src="app-state.js"></script>
     <script defer src="payment.js"></script>
+    <script defer src="icons.js"></script>
     <script defer src="lecciones-data.js"></script>
     <script defer src="glosario-data.js"></script>
     <script defer src="portal.js"></script>
@@ -49,24 +26,26 @@
       <div class="container portal-header-inner">
         <div class="portal-header-left">
           <img src="logo.png" alt="DEV SYSTEM Academy" class="portal-header-logo">
-          <span class="portal-header-title">PORTAL ACADÉMICO</span>
+          <span class="portal-header-title">DEV SYSTEM ACADEMY<small>Portal del estudiante</small></span>
         </div>
         <div class="portal-header-right">
           <span class="matricula-chip" id="matricula-chip">—</span>
-          <button id="logout-btn" class="btn btn-ghost btn-sm" type="button">Cerrar sesión</button>
+          <span id="adeudo-chip" style="display:none" class="adeudo-chip"></span>
+          <span id="header-nombre" class="small" style="color:var(--text-2)"></span>
+          <button id="logout-btn" class="btn-text" type="button">Cerrar sesión</button>
         </div>
       </div>
     </header>
 
     <nav class="portal-tabs" id="portal-tabs">
-      <button class="active" data-tab="inicio" aria-label="Inicio">🏠 Inicio</button>
-      <button data-tab="plan" aria-label="Plan de estudios">📚 Plan de estudios</button>
-      <button data-tab="aula" aria-label="Aula">🧠 Aula</button>
-      <button data-tab="examenes" aria-label="Exámenes">📝 Exámenes</button>
-      <button data-tab="pagos" aria-label="Pagos">💳 Pagos</button>
-      <button data-tab="marcadores" aria-label="Marcadores">📖 Marcadores</button>
-      <button data-tab="expediente" aria-label="Expediente">🎓 Expediente</button>
-      <button data-tab="humanizador" id="tab-humanizador" aria-label="Humanizador" style="display:none">🧑‍🎓 Humanizador</button>
+      <button class="active" data-tab="inicio" aria-label="Inicio"><span data-icon="inicio"></span> Inicio</button>
+      <button data-tab="plan" aria-label="Plan de estudios"><span data-icon="plan"></span> Plan de estudios</button>
+      <button data-tab="aula" aria-label="Aula virtual"><span data-icon="aula"></span> Aula virtual</button>
+      <button data-tab="examenes" aria-label="Exámenes"><span data-icon="examenes"></span> Exámenes</button>
+      <button data-tab="pagos" aria-label="Pagos"><span data-icon="pagos"></span> Pagos</button>
+      <button data-tab="marcadores" aria-label="Glosario"><span data-icon="marcadores"></span> Glosario</button>
+      <button data-tab="expediente" aria-label="Expediente académico"><span data-icon="expediente"></span> Expediente académico</button>
+      <button data-tab="humanizador" id="tab-humanizador" aria-label="Humanizador" style="display:none"><span data-icon="aula"></span> Humanizador</button>
     </nav>
 
     <main class="section portal-main">
@@ -76,13 +55,15 @@
         <section id="inicio" class="tab-content active">
           <div id="pago-banner" style="display:none;margin-bottom:1rem"></div>
           <div class="hero-section">
-            <h1>Hola, <span id="welcome-name">Alumno</span> 👋</h1>
+            <h1>Hola, <span id="welcome-name">Alumno</span></h1>
             <p id="welcome-text" class="lead">Sigue tu plan por fases y marca lecciones completadas.</p>
-            <div class="stat-chips">
-              <div class="stat-chip chip-racha"><span class="chip-emoji">🔥</span><div class="chip-content"><span class="chip-number" id="stat-racha">0</span><span class="chip-label">Racha</span></div></div>
-              <div class="stat-chip chip-xp"><span class="chip-emoji">⭐</span><div class="chip-content"><span class="chip-number" id="stat-xp">0</span><span class="chip-label">XP</span></div></div>
-              <div class="stat-chip chip-nivel"><span class="chip-emoji">📚</span><div class="chip-content"><span class="chip-number" id="stat-nivel">-</span><span class="chip-label">Nivel</span></div></div>
-            </div>
+          </div>
+
+          <div class="metricas-block" id="metricas-block" style="margin-top:1.2rem">
+            <div class="metrica"><span class="label">Módulos cursados</span><div class="metrica-num" id="metrica-modulos">0</div><div class="metrica-ctx" id="metrica-modulos-ctx">0% del programa</div></div>
+            <div class="metrica"><span class="label">Puntos de avance</span><div class="metrica-num" id="metrica-xp">0</div><div class="metrica-ctx" id="metrica-xp-ctx">—</div></div>
+            <div class="metrica"><span class="label">Días consecutivos</span><div class="metrica-num" id="metrica-racha">0</div><div class="metrica-ctx">—</div></div>
+            <div class="metrica"><span class="label">Promedio general</span><div class="metrica-num" id="metrica-promedio">—</div><div class="metrica-ctx" id="metrica-promedio-ctx">—</div></div>
           </div>
 
           <div id="inicio-avance"></div>

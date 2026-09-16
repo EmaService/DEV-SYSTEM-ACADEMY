@@ -118,7 +118,20 @@
 
   function getMonthTitle(m) {
     var cfgTitles = (window.DEV_SYSTEM_CONFIG || {}).monthTitles || {};
-    return cfgTitles[m] || MONTH_TITLES[m] || "Mes " + m;
+    return cfgTitles[m] || MONTH_TITLES[m] || "Módulo " + m;
+  }
+
+  var ASIGNATURA_CODES = {
+    "1": { a: "FND-101", b: "FND-102", c: "FND-103" },
+    "2": { a: "VCS-201", b: "VCS-202", c: "VCS-203" },
+    "3": { a: "WEB-301", b: "WEB-302", c: "WEB-303" },
+  };
+
+  function asignaturaCodigo(monthNum, letter) {
+    var map = ASIGNATURA_CODES[String(monthNum)];
+    if (map && map[letter]) return map[letter];
+    var codes = { a: "101", b: "102", c: "103" };
+    return "MOD-" + String(monthNum).padStart(2, "0") + "-" + codes[letter];
   }
 
   function fechaBase(iso) {
@@ -261,8 +274,8 @@
 
   function renderHeader() {
     welcomeName.textContent = user.name;
-    var statNivel = document.getElementById("stat-nivel");
-    if (statNivel) statNivel.textContent = enrollment.plan || "Plan Base";
+    var hdrNombre = document.getElementById("header-nombre");
+    if (hdrNombre) hdrNombre.textContent = user.name;
     studentPlan.textContent = (enrollment.phaseName || "Etapa 1") + " · " + (enrollment.plan || "Plan Base");
     studentEmail.textContent = user.email;
     billingPlan.textContent = enrollment.plan || "Plan Base";
@@ -294,8 +307,13 @@
     var cfg2 = window.DEV_SYSTEM_CONFIG || {};
     var xpPerLesson = cfg2.xpPerLesson || 50;
     var xpPerFirstTry = cfg2.xpPerFirstTry || 10;
-    var rachaEl = document.getElementById("stat-racha");
-    var xpEl = document.getElementById("stat-xp");
+    var rachaEl = document.getElementById("metrica-racha");
+    var xpEl = document.getElementById("metrica-xp");
+    var xpCtx = document.getElementById("metrica-xp-ctx");
+    var modEl = document.getElementById("metrica-modulos");
+    var modCtx = document.getElementById("metrica-modulos-ctx");
+    var promEl = document.getElementById("metrica-promedio");
+    var promCtx = document.getElementById("metrica-promedio-ctx");
 
     function setLessonStats(done, total, paidCount) {
       if (monthsSummary) monthsSummary.textContent = paidCount + "/12";
@@ -303,9 +321,8 @@
       var pct = total > 0 ? Math.round((done / total) * 100) : 0;
       if (progressPercent) progressPercent.textContent = pct + "%";
       if (progressFill) progressFill.style.width = pct + "%";
-      if (progressPercent) {
-        progressPercent.animate([{transform:"scale(1)"},{transform:"scale(1.15)"},{transform:"scale(1)"}], {duration:350,easing:"ease-out"});
-      }
+      if (modEl) modEl.textContent = paidCount;
+      if (modCtx) modCtx.textContent = Math.round((paidCount / 12) * 100) + "% del programa";
     }
 
     if (cloudMode && window.DevSystemCloud.getPaidMonthIds) {
@@ -330,15 +347,7 @@
       }).catch(function () { setLessonStats(0, 0, 0); });
 
       window.DevSystemCloud.getStreakDays(user.email).then(function (streak) {
-        if (rachaEl) {
-          rachaEl.textContent = streak;
-          var parent = rachaEl.closest(".stat-chip");
-          if (parent) {
-            if (streak >= 1) { parent.style.opacity = "1"; }
-            else { parent.style.opacity = "0.6"; }
-          }
-          rachaEl.animate([{transform:"scale(1)"},{transform:"scale(1.15)"},{transform:"scale(1)"}], {duration:350,easing:"ease-out"});
-        }
+        if (rachaEl) rachaEl.textContent = streak;
       }).catch(function () {});
       window.DevSystemCloud.getAllLessonStats(user.email).then(function (allStats) {
         var totalXp = 0;
@@ -346,21 +355,39 @@
           totalXp += xpPerLesson + (allStats[st].first_try_correct * xpPerFirstTry);
         }
         localStorage.setItem("devsystem_xp_" + user.email, totalXp);
-        if (xpEl) {
-          xpEl.textContent = totalXp;
-          xpEl.animate([{transform:"scale(1)"},{transform:"scale(1.15)"},{transform:"scale(1)"}], {duration:350,easing:"ease-out"});
-        }
+        if (xpEl) xpEl.textContent = totalXp.toLocaleString();
+        if (xpCtx) xpCtx.textContent = "Puntos de avance";
       }).catch(function () {
         var localXp = parseInt(localStorage.getItem("devsystem_xp_" + user.email) || "0", 10);
-        if (xpEl) xpEl.textContent = localXp;
+        if (xpEl) xpEl.textContent = localXp.toLocaleString();
+        if (xpCtx) xpCtx.textContent = "Puntos de avance";
       });
+      window.DevSystemCloud.getMonthExams(user.email).then(function (exams) {
+        var scores = [];
+        if (exams && exams.length) {
+          for (var ei = 0; ei < exams.length; ei++) {
+            if (exams[ei].passed && exams[ei].score != null) scores.push(Number(exams[ei].score));
+          }
+        }
+        if (scores.length > 0) {
+          var sum = 0;
+          for (var si = 0; si < scores.length; si++) sum += scores[si];
+          var avg = Math.round(sum / scores.length);
+          if (promEl) promEl.textContent = avg;
+          if (promCtx) promCtx.textContent = scores.length + (scores.length === 1 ? " examen aprobado" : " exámenes aprobados");
+        } else {
+          if (promEl) promEl.textContent = "—";
+          if (promCtx) promCtx.textContent = "Sin exámenes";
+        }
+      }).catch(function () {});
     } else {
       var paidMonths = window.DevSystemState.getPaidMonthIds(user.email);
       var summary = window.DevSystemState.getProgressSummary(user.email);
       setLessonStats(summary.done, summary.total, paidMonths.length);
       var localXp = parseInt(localStorage.getItem("devsystem_xp_" + user.email) || "0", 10);
-      if (xpEl) xpEl.textContent = localXp;
+      if (xpEl) xpEl.textContent = localXp.toLocaleString();
       if (rachaEl) rachaEl.textContent = "0";
+      if (promEl) promEl.textContent = "—";
     }
 
     if (window.DevSystemState.isEligibleCertificate(user.email)) {
@@ -407,10 +434,10 @@
       }
     }
     if (nextLesson) {
-      dayTitle.textContent = "📖 " + nextLesson.titulo;
-      dayDesc.textContent = "Continúa tu progreso — esta es tu siguiente lección.";
+      dayTitle.textContent = nextLesson.titulo;
+      dayDesc.textContent = "Continúa tu progreso — esta es tu siguiente unidad.";
     } else if (materiaKeys.length > 0) {
-      dayTitle.textContent = "🎉 ¡Todo completado!";
+      dayTitle.textContent = "Módulo completado";
       dayDesc.textContent = "Has terminado todas las lecciones disponibles.";
     } else {
       dayTitle.textContent = "Aún no tienes lecciones pendientes";
@@ -441,7 +468,7 @@
       var mk = materiaKeys[ti];
       var m = materias[mk];
       var lecciones = m.lecciones;
-      var html = "<div class='roadmap-col'><h3>" + (m.icono || "◇") + " " + m.nombre + "</h3><div class='roadmap-nodes'>";
+      var html = "<div class='roadmap-col'><h3><span style='font-family:var(--font-mono);font-size:0.72rem;color:var(--muted)'>" + asignaturaCodigo(monthNum, mk) + "</span> " + m.nombre + "</h3><div class='roadmap-nodes'>";
       var sequentialUnlocked = true;
 
       for (var i = 0; i < lecciones.length; i += 1) {
@@ -1086,7 +1113,7 @@
         stateColor = "var(--green)";
       } else {
         var lockFecha = addMonthsSafe(pagoInfo.baseDate, m - 1);
-        stateTxt = "🔒 Disponible al pagar tu mensualidad del " + lockFecha.toLocaleDateString("es-MX", { month: "long", year: "numeric" });
+        stateTxt = "Disponible al pagar tu mensualidad del " + lockFecha.toLocaleDateString("es-MX", { month: "long", year: "numeric" });
       }
       chip.innerHTML = "<strong style='font-size:0.82rem'>M" + m + "</strong><span class='small' style='font-size:0.72rem;color:var(--muted)'>" + title + "</span><span class='small' style='font-size:0.7rem;color:" + stateColor + "'>" + stateTxt + "</span>";
       (function (mid, paid) {
@@ -1147,7 +1174,7 @@
     }
 
     if (!isPaid) {
-      contentArea.innerHTML = "<div style='padding:2rem;text-align:center;color:var(--muted)'><p>🔒 Mes " + monthNum + "</p><p class='small'>Este mes está bloqueado. Realiza el pago correspondiente para acceder.</p></div>";
+      contentArea.innerHTML = "<div style='padding:2rem;text-align:center;color:var(--muted)'><p>Módulo " + monthNum + "</p><p class='small'>Este módulo está bloqueado. Realiza el pago correspondiente para acceder.</p></div>";
       return;
     }
 
@@ -1853,7 +1880,7 @@
     if (banner) {
       if (showWarning) {
         var bannerColor = info.estado === "vencido" ? "var(--danger)" : "var(--amber)";
-        var bannerText = info.estado === "vencido" ? "⚠ Tu mensualidad venció. Paga para desbloquear el Mes " + info.proximoMes + "." : "⚠ Tu mensualidad vence en " + info.diasRestantes + " día(s). Paga para desbloquear el Mes " + info.proximoMes + ".";
+        var bannerText = info.estado === "vencido" ? "Tu mensualidad venció. Paga para desbloquear el Módulo " + info.proximoMes + "." : "Tu mensualidad vence en " + info.diasRestantes + " día(s). Paga para desbloquear el Módulo " + info.proximoMes + ".";
         banner.style.display = "block";
         banner.innerHTML =
           "<div style='display:flex;align-items:center;justify-content:space-between;gap:0.8rem;flex-wrap:wrap;background:" + bannerColor + ";color:" + (info.estado === "vencido" ? "#ffffff" : "#001a41") + ";padding:0.7rem 1rem;border-radius:0.75rem;font-size:0.85rem;font-weight:700'>" +
@@ -1876,7 +1903,7 @@
       var chip = document.createElement("button");
       chip.id = "pago-pendiente-chip";
       chip.type = "button";
-      chip.textContent = "⚠ Pago pendiente";
+      chip.textContent = "Pago pendiente";
       chip.style.cssText = "font-family:var(--font-display);font-size:0.72rem;font-weight:700;background:rgba(239,68,68,0.18);border:1px solid var(--danger);color:var(--danger);padding:0.25rem 0.7rem;border-radius:999px;cursor:pointer;white-space:nowrap";
       chip.addEventListener("click", function () { switchTab("pagos"); });
       headerRight.insertBefore(chip, headerRight.firstChild);
@@ -1919,4 +1946,32 @@
 
   initMatricula();
   initTabs();
+
+  /* Llenar iconos SVG de la navegación e interfaz. */
+  var iconSpans = document.querySelectorAll("[data-icon]");
+  for (var isi = 0; isi < iconSpans.length; isi++) {
+    var iname = iconSpans[isi].getAttribute("data-icon");
+    if (window.DevSystemIcons && iname) {
+      iconSpans[isi].innerHTML = window.DevSystemIcons.icon(iname, 18);
+    }
+  }
+
+  /* Chip de adeudo en el header. */
+  var adeudoChip = document.getElementById("adeudo-chip");
+  var renderAdeudo = function () {
+    if (!adeudoChip) return;
+    var estadosPendientes = ["por_vencer", "vencido"];
+    if (cloudMode && window.DevSystemCloud.getPaymentDates) {
+      window.DevSystemCloud.getPaymentDates(user.email).then(function (pays) {
+        var info = getPagoEstado(pays || []);
+        if (estadosPendientes.indexOf(info.estado) !== -1) {
+          adeudoChip.style.display = "inline-flex";
+          adeudoChip.innerHTML = (window.DevSystemIcons ? window.DevSystemIcons.icon("alert", 14) : "") + " Adeudo";
+        } else {
+          adeudoChip.style.display = "none";
+        }
+      }).catch(function () {});
+    }
+  };
+  renderAdeudo();
 })();

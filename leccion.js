@@ -111,6 +111,13 @@
   var lesson = findLessonById(lessonId)
   var materiaInfo = getMateriaInfo(lessonId)
 
+  var stickyMeta = document.getElementById("leccion-sticky-meta")
+  if (stickyMeta) {
+    var modNum = String(lessonId.split("-")[0]).replace("m", "")
+    var unidadNum = parseInt(lessonId.split("-")[1].substring(1), 10)
+    stickyMeta.textContent = "Módulo " + String(modNum).padStart(2, "0") + " · " + (materiaInfo ? materiaInfo.nombre : "") + " · Unidad " + String(unidadNum).padStart(2, "0") + " de 30"
+  }
+
   var lecturaSection = document.getElementById("lectura-section")
   var ejerciciosSection = document.getElementById("ejercicios-section")
   var completadaSection = document.getElementById("completada-section")
@@ -137,7 +144,7 @@
 
   function renderReadingPhase() {
     if (materiaInfo) {
-      leccionMateria.textContent = materiaInfo.icono + " " + materiaInfo.nombre
+      leccionMateria.textContent = materiaInfo.nombre || ""
     } else {
       leccionMateria.textContent = ""
     }
@@ -150,22 +157,17 @@
       var slide = document.createElement("div")
       slide.className = "carousel-slide"
 
+      var slideLabel = document.createElement("span")
+      slideLabel.className = "slide-label"
+      slideLabel.textContent = (i + 1) + " de " + secciones.length + " · " + sec.titulo
+      slide.appendChild(slideLabel)
+
       if (sec.tipo === "prompt") {
         slide.classList.add("prompt-slide")
-        slide.style.background = "linear-gradient(135deg, var(--brand) 0%, var(--brand-2) 100%)"
-        slide.style.color = "#fff"
-
-        var badge = document.createElement("span")
-        badge.className = "prompt-badge"
-        badge.textContent = "TU SUPERPODER"
-        slide.appendChild(badge)
       }
 
       var secTitle = document.createElement("h3")
       secTitle.textContent = sec.titulo
-      secTitle.style.marginBottom = "0.75rem"
-      secTitle.style.fontSize = "clamp(1.1rem,3.5vw,1.4rem)"
-      if (sec.tipo === "prompt") secTitle.style.color = "#fff"
       slide.appendChild(secTitle)
 
       var secBody = document.createElement("div")
@@ -174,20 +176,14 @@
 
       if (sec.tipo === "prompt") {
         var copyBtn = document.createElement("button")
-        copyBtn.textContent = "📋 Copiar prompt"
-        copyBtn.style.cssText = "background:#fff;color:var(--brand);font-weight:700;padding:0.75rem 1.5rem;border-radius:var(--radius);border:0;margin-top:1rem;cursor:pointer"
+        copyBtn.className = "btn btn-brand"
+        copyBtn.textContent = "Copiar prompt"
         copyBtn.addEventListener("click", function (html, btn) {
           return function () {
             var text = html.replace(/<[^>]*>/g, "").replace(/&quot;/g, '"').replace(/&amp;/g, "&").replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&#39;/g, "'")
             navigator.clipboard.writeText(text).catch(function () {})
             btn.textContent = "Copiado ✓"
-            btn.style.background = "rgba(255,255,255,0.2)"
-            btn.style.color = "#fff"
-            setTimeout(function () {
-              btn.textContent = "📋 Copiar prompt"
-              btn.style.background = "#fff"
-              btn.style.color = "var(--brand)"
-            }, 2000)
+            setTimeout(function () { btn.textContent = "Copiar prompt" }, 2000)
           }
         }(sec.html, copyBtn))
         slide.appendChild(copyBtn)
@@ -1056,12 +1052,17 @@
     if (completadaSection) completadaSection.style.display = "block"
     completadaStats.textContent = "Aciertos a la primera: " + firstTryCorrectCount + "/" + totalExercises
 
+    var celebBadge = document.getElementById("celebration-badge")
+    if (celebBadge && window.DevSystemIcons) {
+      celebBadge.innerHTML = window.DevSystemIcons.icon("award", 26)
+    }
+
     var cfg2 = window.DEV_SYSTEM_CONFIG || {}
     var xpPerLesson = cfg2.xpPerLesson || 50
     var xpPerFirstTry = cfg2.xpPerFirstTry || 10
     var xpGain = xpPerLesson + (firstTryCorrectCount * xpPerFirstTry)
     var xpChip = document.getElementById("completada-xp-chip")
-    if (xpChip) xpChip.textContent = "⭐ +" + xpGain + " XP"
+    if (xpChip) xpChip.textContent = "+" + xpGain + " puntos de avance"
 
     if (cloudEnabled) {
       window.DevSystemCloud.setLessonProgress(email, lessonId, true).catch(function () {})
@@ -1073,11 +1074,7 @@
           }
           localStorage.setItem("devsystem_xp_" + email, total)
           var headerXp = document.getElementById("leccion-xp-chip")
-          if (headerXp) {
-            headerXp.textContent = "⭐ " + total + " XP"
-            headerXp.classList.add("xp-chip-pop")
-            setTimeout(function () { headerXp.classList.remove("xp-chip-pop") }, 500)
-          }
+          if (headerXp) headerXp.textContent = total.toLocaleString() + " pts"
         })
       })
     } else {
@@ -1085,22 +1082,7 @@
       var newTotal = prevTotal + xpGain
       localStorage.setItem("devsystem_xp_" + email, newTotal)
       var headerXp = document.getElementById("leccion-xp-chip")
-      if (headerXp) {
-        headerXp.textContent = "⭐ " + newTotal + " XP"
-        headerXp.classList.add("xp-chip-pop")
-        setTimeout(function () { headerXp.classList.remove("xp-chip-pop") }, 500)
-      }
-    }
-
-    var confettiContainer = document.getElementById("confetti-container")
-    if (confettiContainer) {
-      var colors = ["#66dd8b", "#adc7ff", "#ffb300", "#ffb4ab", "#167eff", "#7c5cff"]
-      for (var ci = 0; ci < 60; ci++) {
-        var piece = document.createElement("div")
-        piece.className = "confetti-piece"
-        piece.style.cssText = "left:" + Math.random() * 100 + "%;animation-delay:" + (Math.random() * 2) + "s;background:" + colors[Math.floor(Math.random() * colors.length)]
-        confettiContainer.appendChild(piece)
-      }
+      if (headerXp) headerXp.textContent = newTotal.toLocaleString() + " pts"
     }
 
     var nextId = findNextLesson(lessonId)
