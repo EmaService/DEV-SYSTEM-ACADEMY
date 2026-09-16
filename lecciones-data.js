@@ -6182,5 +6182,1099 @@ window.DEV_SYSTEM_LECCIONES = {
         ]
       }
     }
+  },
+  "m3": {
+    titulo: "La web por dentro: interfaces que se ven bien y funcionan",
+    materias: {
+      "a": { nombre: "Maquetación: HTML y CSS", icono: "🎨", lecciones: [
+          {
+            id: "m3-a1",
+            titulo: "El navegador por dentro: cómo se pinta una página",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Cuando escribes una dirección y presionas Enter, el navegador hace una cadena de trabajo que pasa en milésimas de segundo. Primero le pregunta al <strong>servidor</strong> — la computadora donde vive tu página — cuáles son sus archivos. El servidor le responde con tres tipos de documentos:</p><ul><li><strong>HTML</strong> — la estructura: qué bloques hay y en qué orden.</li><li><strong>CSS</strong> — el estilo: colores, tamaños, espacios.</li><li><strong>JavaScript</strong> — el comportamiento: qué pasa cuando interactúas.</li></ul><p>Con esos archivos en mano, el navegador <strong>parsea</strong> (lee y organiza) el HTML y construye un árbol de bloques. Luego aplica el CSS para decidir cómo se ve cada bloque, calcula dónde va cada cosa (layout) y al final <strong>pinta</strong> los píxeles en tu pantalla. Ese último paso se llama <em>paint</em>: literalmente está dibujando la página frente a ti, capa por capa.</p><p>Dato que te va a servir: la parte visible de ese proceso es la <strong>pestaña</strong>. La parte que puedes inspeccionar es <strong>DevTools</strong> (tecla F12): ahí el navegador te enseña el árbol que construyó, los estilos que aplicó y los archivos que descargó. Cuando algo se ve mal, F12 es tu primera parada.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>El navegador es un <strong>equipo de escenografía</strong>. El HTML es el guion y la lista de actores (quién está en escena y en qué orden). El CSS es el vestuario, la iluminación y la pintura del fondo (cómo se ve todo). El JavaScript son los movimientos: los actores caminan, los telones suben. El <em>paint</em> es cuando se abre el telón y el público ve el cuadro completo. Tú, al dirigir a la IA, eres el director: no pintas, pero decides qué escena montar y cómo debe verse.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Abre cualquier página y presiona <strong>F12</strong> (DevTools). En la pestaña <em>Elements</em> verás el árbol de bloques que el navegador construyó a partir del HTML — la prueba de que la página no se pintó \"así nomás\": primero se organizó. Un ejemplo mínimo de lo que hay detrás de una tarjeta:</p><pre><code>&lt;div style=\"background:#eef; padding:16px;\"&gt;\n  &lt;h2&gt;Ofertas de hoy&lt;/h2&gt;\n  &lt;p&gt;Lleva 2 y paga 1.&lt;/p&gt;\n&lt;/div&gt;</code></pre><p>En pantalla verás un recuadro azul claro con un título y un texto adentro. En DevTools verás <em>tres cosas separadas</em>: el HTML (estructura), el estilo <code>background</code> y <code>padding</code> (CSS aplicado) y el bloque tal cual lo dibuja el navegador. Pestaña por pestaña, eso es \"cómo se pinta una página\".</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Mi página se ve en blanco y no sé por qué. Guíame con DevTools (F12): qué debo revisar en la pestaña Consola y en la pestaña Red, y explícame en lenguaje simple qué significa lo que veo antes de cambiarlo.\"</p></blockquote><p>Este prompt te entrena para diagnosticar, no para adivinar — exactamente lo que hace un buen director.</p>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "multiple", pregunta: "¿Qué hace el navegador primero con el HTML que recibe?", opciones: ["Lo pinta tal cual llega", "Lo parsea y construye un árbol de estructura", "Lo borra para empezar de cero", "Lo convierte en CSS"], correcta: 1 },
+              { tipo: "relacionar", pares: [["HTML", "La estructura de la página"], ["CSS", "El estilo visual"], ["JavaScript", "El comportamiento"], ["Servidor", "Entrega los archivos de la página"]] },
+              { tipo: "vf", afirmacion: "El navegador descarga HTML, CSS y JavaScript por separado y después los combina para pintar la página.", correcta: true, explicacion: "cada archivo cumple un papel distinto y el navegador los junta en el renderizado." },
+              { tipo: "completar", frase: "El HTML define la ____, el CSS define el ____ visual y el JavaScript define el ____.", banco: ["estructura", "estilo", "comportamiento", "velocidad"], respuestas: ["estructura", "estilo", "comportamiento"] },
+              { tipo: "ordenar", instruccion: "Ordena qué pasa desde que escribes la URL hasta ver la página:", elementos: ["Escribes la URL", "El servidor envía los archivos", "El navegador parsea el HTML", "Se aplican los estilos CSS", "Se pinta la página en pantalla"] }
+            ]
+          },
+          {
+            id: "m3-a2",
+            titulo: "Anatomía de un documento HTML: doctype, head y body",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Todo documento HTML moderno tiene tres partes fijas. Aprende a verlas y ninguna página se te va a resistir:</p><pre><code>&lt;!DOCTYPE html&gt;\n&lt;html lang=\"es\"&gt;\n  &lt;head&gt;\n    &lt;meta charset=\"UTF-8\"&gt;\n    &lt;title&gt;Mi primera página&lt;/title&gt;\n  &lt;/head&gt;\n  &lt;body&gt;\n    &lt;h1&gt;Hola, mundo&lt;/h1&gt;\n  &lt;/body&gt;\n&lt;/html&gt;</code></pre><ul><li><strong>&lt;!DOCTYPE html&gt;</strong> — la declaración. No es una etiqueta visible: es un letrero que le dice al navegador \"esto es HTML5, compórtate en modo estándar\". Sin él, el navegador puede activar el <em>quirks mode</em> y pintar tu página con reglas viejas de 1998.</li><li><strong>&lt;head&gt;</strong> — los metadatos: lo que el navegador necesita saber pero tú no ves. Ahí vive el <code>&lt;title&gt;</code> (lo que aparece en la pestaña), el <code>charset</code> (cómo se interpretan los acentos) y los enlaces a CSS.</li><li><strong>&lt;body&gt;</strong> — todo lo visible: lo que el usuario ve y con lo que interactúa.</li></ul><p>Regla de oro: <strong>lo que se ve va en body; lo que no se ve, en head.</strong> Y un detalle: el orden importa — el navegador lee de arriba a abajo, así que el <code>&lt;head&gt;</code> va antes del <code>&lt;body&gt;</code>.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Piensa en el documento como una <strong>persona</strong>: el <code>head</code> es la cabeza — ahí está la información que no ves a simple vista pero define cómo funciona todo (el idioma, el título, la configuración). El <code>body</code> es el cuerpo — todo lo que la gente ve y toca. Y el <code>&lt;!DOCTYPE html&gt;</code> es la credencial de identidad: antes de hablar con alguien quieres saber que es un humano, no un maniquí. El doctype hace exactamente eso: le dice al navegador \"soy un documento HTML5 de verdad\".</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Guarda el documento de arriba como <code>index.html</code>, ábrelo con doble clic, y observa:</p><pre><code>Pestaña del navegador:  Mi primera página\nPágina (blanca):        Hola, mundo</code></pre><p>El <code>&lt;title&gt;</code> aparece en la <strong>pestaña</strong>, no en la página. El <code>&lt;h1&gt;</code> aparece en la <strong>página</strong>. Ese contraste es la mejor demostración de head vs body: lo del head se ve en los bordes del navegador (pestaña, barra de dirección), lo del body se ve en el lienzo. Ábrelo en DevTools (F12 → Elements) y verás el árbol exacto que escribiste.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Voy a crear mi primera página web. Dame el esqueleto completo de un documento HTML5: doctype, head con charset y title, y body con un encabezado. Antes de escribir, explícame en una línea qué hace cada parte para que yo sepa qué estoy modificando.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "relacionar", pares: [["&lt;!DOCTYPE html&gt;", "Le dice al navegador que es HTML5"], ["head", "Metadatos que no se ven"], ["body", "Todo lo visible"], ["title", "Lo que aparece en la pestaña"]] },
+              { tipo: "multiple", pregunta: "¿Qué parte del documento se ve en la pantalla?", opciones: ["Todo lo del head", "Solo lo del body", "Todo el documento", "Nada hasta que lo confirmes"], correcta: 1 },
+              { tipo: "completar", frase: "El ____ guarda los metadatos que no se ven; el ____ guarda el contenido visible.", banco: ["head", "body", "footer", "html"], respuestas: ["head", "body"] },
+              { tipo: "vf", afirmacion: "El &lt;!DOCTYPE html&gt; se muestra como texto al inicio de la página.", correcta: false, explicacion: "es una declaración para el navegador, no se renderiza en pantalla." },
+              { tipo: "quehace", codigo: "&lt;!DOCTYPE html&gt;", pregunta: "En un documento ves &lt;!DOCTYPE html&gt; al inicio. ¿Qué significa?", opciones: ["Declara que el documento es HTML5", "Muestra el título en la pestaña", "Carga una hoja de estilos", "Crea un encabezado visible"], correcta: 0 }
+            ]
+          },
+          {
+            id: "m3-a3",
+            titulo: "Etiquetas semánticas: header, nav, main, section, footer",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Antes, para armar una página solo existía <code>&lt;div&gt;</code> — una caja genérica sin significado. Hoy HTML tiene <strong>etiquetas semánticas</strong>: cajas con nombre y propósito. Las cinco que no pueden faltar:</p><ul><li><strong>&lt;header&gt;</strong> — el encabezado del sitio o de una sección: logo, título.</li><li><strong>&lt;nav&gt;</strong> — la navegación: los enlaces del menú.</li><li><strong>&lt;main&gt;</strong> — el contenido principal y único de la página (solo debe haber uno).</li><li><strong>&lt;section&gt;</strong> — un bloque temático: cada parte con su propio título.</li><li><strong>&lt;footer&gt;</strong> — el pie de página: derechos, contactos, enlaces secundarios.</li></ul><p>¿Por qué importa? Por dos lectores muy importantes: <strong>Google</strong> usa la estructura para entender de qué va tu página (semántica = SEO), y los <strong>lectores de pantalla</strong> la usan para que una persona ciega salte directo al menú o al contenido (semántica = accesibilidad). Sin etiquetas semánticas, tu página es una caja gigante llena de cajas sin nombre.</p><p>Dato memorable: la semántica <strong>no cambia la apariencia</strong>. Un <code>&lt;header&gt;</code> se ve igual que un <code>&lt;div&gt;</code> hasta que le das estilos. Su valor no es visual: es informativo.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Las etiquetas semánticas son como <strong>cuartos con letrero</strong> en una casa. Un <code>&lt;div&gt;</code> es un cuarto sin nombre: sabes que hay un espacio, pero no para qué sirve. Un <code>&lt;header&gt;</code> es \"entrada con perchero y cuadro de la familia\"; un <code>&lt;nav&gt;</code> es \"pasillo que conecta todos los cuartos\"; un <code>&lt;main&gt;</code> es \"la sala donde pasa lo importante\"; un <code>&lt;footer&gt;</code> es \"la puerta trasera con el cuadro de avisos\". Tú no memorizas los planos: reconoces los letreros. Y Google es el invitado que lee los letreros para no perderse.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>El esqueleto de un blog sencillo se ve así (todavía sin estilos):</p><pre><code>&lt;header&gt;\n  &lt;p&gt;Mi blog&lt;/p&gt;\n&lt;/header&gt;\n&lt;nav&gt;\n  &lt;a href=\"#inicio\"&gt;Inicio&lt;/a&gt;\n  &lt;a href=\"#articulos\"&gt;Artículos&lt;/a&gt;\n&lt;/nav&gt;\n&lt;main&gt;\n  &lt;section&gt;\n    &lt;h2&gt;Artículos recientes&lt;/h2&gt;\n    &lt;p&gt;El primero de esta semana…&lt;/p&gt;\n  &lt;/section&gt;\n&lt;/main&gt;\n&lt;footer&gt;\n  &lt;p&gt;© 2026 Mi blog&lt;/p&gt;\n&lt;/footer&gt;</code></pre><p>En pantalla, sin CSS, verás bloques apilados: arriba \"Mi blog\", después dos enlaces azules subrayados, después un título con texto, y al final el año. Nada se ve \"diseñado\" — pero la estructura está declarada. Ábrelo en DevTools (F12 → Elements) y notarás que cada bloque tiene su nombre real: <code>header</code>, <code>nav</code>, <code>main</code>, <code>section</code>, <code>footer</code>. Ese nombre es lo que Google y los lectores de pantalla leen.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Estructura esta landing con etiquetas semánticas: header con el logo, nav con el menú, main con tres sections (cada una con su h2), y footer. No agregues estilos todavía: quiero ver solo el esqueleto, y dime en una línea qué va en cada bloque.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "relacionar", pares: [["header", "Encabezado del sitio: logo y título"], ["nav", "El menú de navegación"], ["main", "El contenido principal y único"], ["section", "Un bloque temático con su título"], ["footer", "El pie de página"]] },
+              { tipo: "multiple", pregunta: "¿Cuál de estas etiquetas NO tiene significado semántico?", opciones: ["header", "div", "nav", "footer"], correcta: 1 },
+              { tipo: "vf", afirmacion: "Las etiquetas semánticas se ven diferentes por defecto, sin necesidad de CSS.", correcta: false, explicacion: "se ven igual que un div; su valor es el significado, no la apariencia." },
+              { tipo: "completar", frase: "Las etiquetas ____ le dan ____ al contenido: Google y los lectores de pantalla las usan para entender la página.", banco: ["semánticas", "significado", "color", "tamaño"], respuestas: ["semánticas", "significado"] },
+              { tipo: "ordenar", instruccion: "Acomoda el documento en el orden correcto, de arriba a abajo:", elementos: ["doctype", "head", "header", "main", "footer"] }
+            ]
+          },
+          {
+            id: "m3-a4",
+            titulo: "Texto: encabezados, párrafos, listas y énfasis",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Todo el texto de tu página se escribe con unas cuantas etiquetas que vas a reconocer para siempre:</p><ul><li><strong>Encabezados</strong> — <code>&lt;h1&gt;</code> a <code>&lt;h6&gt;</code>. El número es el nivel de importancia: <code>h1</code> es el título principal, <code>h2</code> los títulos de sección, <code>h3</code> los subtítulos de cada sección. No son \"letras más grandes\": son <em>jerarquía</em>.</li><li><strong>Párrafos</strong> — <code>&lt;p&gt;</code>. El bloque de texto normal.</li><li><strong>Listas</strong> — <code>&lt;ul&gt;</code> (viñetas, el orden no importa), <code>&lt;ol&gt;</code> (numerada, el orden importa) y cada elemento va en <code>&lt;li&gt;</code>.</li><li><strong>Énfasis</strong> — <code>&lt;strong&gt;</code> para lo importante (se ve en negritas) y <code>&lt;em&gt;</code> para el énfasis de lectura (se ve en cursiva).</li></ul><p>Regla que separa a los profesionales: <strong>un solo <code>h1</code> por página</strong>. Es como el titular de un periódico: hay uno, y a partir de ahí desciende la jerarquía. El navegador pinta los encabezados con distintos tamaños por defecto, pero esa apariencia es lo de menos — lo que importa es el nivel.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Tu página es un <strong>periódico</strong>. El <code>h1</code> es el titular de portada (uno solo, que grita de qué va todo). Los <code>h2</code> son los títulos de sección: Deportes, Espectáculos. Los <code>h3</code> son los subtítulos dentro de cada nota. Los <code>p</code> son los párrafos de la nota. Las listas son los recuadros de \"pasos\" o \"beneficios\". Y el <code>strong</code> es la palabra que el editor marcó con rojo porque no quiere que la dejes pasar.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Este pedacito genera una mini-página de recetas:</p><pre><code>&lt;h1&gt;Recetas de la abuela&lt;/h1&gt;\n&lt;h2&gt;Tacos de papa&lt;/h2&gt;\n&lt;p&gt;Una receta &lt;strong&gt;clásica&lt;/strong&gt; y &lt;em&gt;muy fácil&lt;/em&gt;.&lt;/p&gt;\n&lt;h3&gt;Ingredientes&lt;/h3&gt;\n&lt;ul&gt;\n  &lt;li&gt;Papas&lt;/li&gt;\n  &lt;li&gt;Tortillas&lt;/li&gt;\n&lt;/ul&gt;\n&lt;h3&gt;Pasos&lt;/h3&gt;\n&lt;ol&gt;\n  &lt;li&gt;Hierve las papas.&lt;/li&gt;\n  &lt;li&gt;Rellena y fríe.&lt;/li&gt;\n&lt;/ol&gt;</code></pre><p>En pantalla verás: un título grande, debajo un título más chico, un párrafo donde \"clásica\" está en negritas y \"muy fácil\" en cursiva, después \"Ingredientes\" con una lista de viñetas y \"Pasos\" con una lista numerada. La jerarquía se lee de un vistazo — así de claro debe ser el texto de tu página.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Estoy escribiendo el contenido de [mi página]. Estructúramelo con jerarquía correcta: un solo h1, h2 para secciones, h3 solo donde haga falta, párrafos cortos, listas para pasos o beneficios, y strong o em únicamente donde de verdad importe. Revisa si mi jerarquía está mal en algún punto y corrígela.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "multiple", pregunta: "¿Cuántos h1 debería tener una página?", opciones: ["Tantos como secciones", "Uno", "Ninguno", "Siempre tres"], correcta: 1 },
+              { tipo: "relacionar", pares: [["h1", "El titular principal de la página"], ["h2", "Título de sección"], ["p", "Párrafo de texto"], ["ul", "Lista con viñetas"], ["ol", "Lista numerada"]] },
+              { tipo: "completar", frase: "____ marca importancia y se ve en negritas; ____ marca énfasis de lectura y se ve en cursiva.", banco: ["strong", "em", "h1", "p"], respuestas: ["strong", "em"] },
+              { tipo: "vf", afirmacion: "Una lista &lt;ol&gt; es correcta cuando el orden importa, como los pasos de un tutorial.", correcta: true, explicacion: "ol = ordered list: el orden es parte del contenido." },
+              { tipo: "quehace", codigo: "<ul>\n  <li>Papas</li>\n  <li>Tortillas</li>\n</ul>", pregunta: "¿Qué aparece en pantalla con este código?", opciones: ["Una lista con viñetas", "Una lista numerada", "Dos párrafos", "Una tabla de dos filas"], correcta: 0 }
+            ]
+          },
+          {
+            id: "m3-a5",
+            titulo: "Enlaces: navegación interna, externa y anclas",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>El enlace (en inglés, <em>link</em>) es lo que hace que la web sea una red. Se escribe con la etiqueta <code>&lt;a&gt;</code> y el atributo <code>href</code> (hypertext reference: \"a dónde lleva\"). Hay tres destinos posibles:</p><ul><li><strong>Externo</strong> — apunta a otro sitio: <code>&lt;a href=\"https://google.com\"&gt;</code>. Lleva la dirección completa.</li><li><strong>Interno</strong> — apunta a otro archivo de tu propio sitio: <code>&lt;a href=\"contacto.html\"&gt;</code>. Usa ruta relativa (¿te acuerdas de las rutas del Mes 1?).</li><li><strong>Ancla</strong> — se mueve dentro de la misma página: <code>&lt;a href=\"#precios\"&gt;</code>. Para que funcione, el destino debe tener un atributo <code>id</code> con ese mismo nombre: <code>&lt;section id=\"precios\"&gt;</code>.</li></ul><p>Atributos que verás siempre: <code>target=\"_blank\"</code> abre el enlace en una pestaña nueva (y por seguridad casi siempre va acompañado de <code>rel=\"noopener\"</code>), y <code>title</code> agrega un texto que aparece al pasar el mouse. Las anclas son la base del \"volver arriba\" y de las tablas de contenido: un clic y saltas a la sección.</p><p>Dato memorable: un enlace puede apuntar a cualquier cosa que tenga dirección: otra página, un archivo, una imagen, hasta un correo (<code>mailto:</code>). Si algo no tiene dirección, no se puede enlazar.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Un enlace es una <strong>instrucción para llegar</strong>. El externo es \"toma el avión a otra ciudad\" (dirección completa). El interno es \"camina al cuarto de al lado\" (ruta relativa). La ancla es \"en esta misma casa, la cocina está al fondo del pasillo\" (mismo edificio, otro punto). Y el <code>target=\"_blank\"</code> es \"regresa después de llegar\": abres la puerta, pero no abandonas la casa donde estabas.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Un menú con los tres tipos de enlaces:</p><pre><code>&lt;nav&gt;\n  &lt;a href=\"index.html\"&gt;Inicio&lt;/a&gt;\n  &lt;a href=\"#precios\"&gt;Precios&lt;/a&gt;\n  &lt;a href=\"https://instagram.com/mi-marca\"\n     target=\"_blank\" rel=\"noopener\"&gt;Instagram&lt;/a&gt;\n&lt;/nav&gt;\n\n&lt;section id=\"precios\"&gt;…&lt;/section&gt;</code></pre><p>En pantalla verás tres enlaces azules y subrayados (el estilo por defecto del navegador): \"Inicio\" y \"Precios\" se ven igual que \"Instagram\", pero se comportan distinto. Al hacer clic en \"Precios\" la página <strong>salta</strong> hasta la sección con <code>id=\"precios\"</code>; al hacer clic en \"Instagram\" se abre una pestaña nueva. El cursor cambia a una manita sobre cualquiera de los tres: ese es el lenguaje visual del navegador para decir \"esto es un enlace\".</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Necesito la navegación de mi página: un menú con enlaces internos a mis secciones, un enlace externo a [URL] que abra en pestaña nueva con rel='noopener', y un enlace ancla de 'volver arriba'. Explícame en una línea la diferencia entre cada tipo antes de escribirlos.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "relacionar", pares: [["href=\"https://…\"", "Enlace externo a otro sitio"], ["href=\"contacto.html\"", "Enlace interno a otro archivo del sitio"], ["href=\"#precios\"", "Ancla dentro de la misma página"], ["target=\"_blank\"", "Abre en una pestaña nueva"]] },
+              { tipo: "completar", frase: "Para que la ancla href=\"#precios\" funcione, debe existir un elemento con ____=\"precios\" en la página.", banco: ["id", "class", "name", "src"], respuestas: ["id"] },
+              { tipo: "vf", afirmacion: "Un enlace ancla como href=\"#contacto\" te lleva a otro sitio web.", correcta: false, explicacion: "las anclas se mueven dentro de la misma página, al elemento con ese id." },
+              { tipo: "multiple", pregunta: "¿Qué atributo abre el enlace en una pestaña nueva?", opciones: ["target=\"_blank\"", "href=\"_new\"", "rel=\"newtab\"", "title=\"blank\""], correcta: 0 },
+              { tipo: "quehace", codigo: "<a href=\"#inicio\">Volver arriba</a>", pregunta: "Al hacer clic en este enlace, ¿qué pasa?", opciones: ["La página salta al elemento con id=\"inicio\"", "Se abre otro sitio web", "Se descarga un archivo", "Se recarga la página"], correcta: 0 }
+            ]
+          },
+          {
+            id: "m3-a6",
+            titulo: "Imágenes: formatos, peso, alt y por qué importa",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Las imágenes son lo que más pesa en una página web — y casi siempre lo que más tarda en cargar. Tres decisiones las controlan: <strong>formato</strong>, <strong>peso</strong> y el texto <strong>alt</strong>.</p><p><strong>Formato</strong> — la receta de la imagen. Los que verás en la vida real:</p><ul><li><code>JPG</code> — fotos con millones de colores. Comprime bastante, ideal para fotografías reales.</li><li><code>PNG</code> — soporta <strong>transparencia</strong> y es nítido con logos y texto, pero pesa más.</li><li><code>WebP</code> — el moderno: comprime mejor que los dos y lo soporta todo navegador actual. Cuando la IA te diga \"lo convierto a WebP\", di que sí.</li><li><code>SVG</code> — no es una foto de puntos: es una receta de dibujo (vector). Se agranda hasta donde quieras sin perder calidad. Para logos e iconos.</li><li><code>GIF</code> — animaciones cortas y de pocos colores; hoy casi siempre conviene un video.</li></ul><p><strong>Peso</strong> — una página pesa lo que pesan sus imágenes. Cada kilo de más son milisegundos (o segundos) de espera: en el celular, en datos móviles, en un internet lento. Por eso el atributo <code>loading=\"lazy\"</code> es tu amigo: le dice al navegador \"no cargues esta imagen hasta que el usuario se acerque a verla\".</p><p><strong>Alt</strong> — el texto alternativo. Si la imagen no carga, se ve el alt. Si alguien usa lector de pantalla, escucha el alt. Y Google indexa el alt. Un alt vacío (<code>alt=\"\"</code>) significa \"esto es decorativo, ignóralo\"; un alt con texto describe lo que se ve.</p><p>¿Por qué te importa si la IA genera las imágenes? Porque vas a leer sus reportes — \"convertí las fotos a WebP\", \"agregué lazy loading\" — y a revisar que el alt describa de verdad. Las imágenes mal optimizadas son la causa número uno de páginas lentas, y una página lenta pierde clientes (y posicionamiento en Google).</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Cada imagen es un <strong>platillo que tu página sirve</strong>. El formato es la receta: hay recetas caras y lentas (PNG) y recetas rápidas y ligeras (WebP). El peso es el tiempo que tarda en llegar a la mesa — nadie pide un platillo que tarda 10 minutos en un local vacío. Y el alt es la etiqueta con el nombre del platillo: el mesero (lector de pantalla) se lo describe al comensal que no lo ve, y el crítico (Google) lo anota en su reseña.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>La etiqueta completa de una imagen optimizada se ve así:</p><pre><code>&lt;img src=\"fotos/cafe-olla.webp\"\n     alt=\"Café de olla servido en taza de barro\"\n     width=\"800\" height=\"600\"\n     loading=\"lazy\"&gt;</code></pre><p>En pantalla verás la foto del café. El <code>width</code> y el <code>height</code> reservan el espacio antes de que cargue (así la página no brinca), y el <code>loading=\"lazy\"</code> hace que no se descargue hasta que haga falta. El resultado de optimizar se lee en números:</p><pre><code>foto-original.png   2.4 MB\nfoto-webp.webp      180 KB</code></pre><p>Una imagen 13 veces más ligera, a simple vista idéntica. Ese es el trabajo invisible que hace que tu página se sienta rápida.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Voy a subir 12 fotos a mi página. Conviértemelas a WebP, dime cuánto pesaba cada una antes y después, y muéstrame el código img completo: alt que describa lo que se ve, width y height reales, y loading lazy. Si alguna es decorativa, usa alt vacío.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "multiple", pregunta: "¿Qué formato es el más ligero y moderno para fotos en una página web?", opciones: ["JPG", "GIF", "WebP", "SVG"], correcta: 2 },
+              { tipo: "completar", frase: "El atributo ____ lleva el texto que leen los lectores de pantalla; ____=\"lazy\" hace que la imagen cargue solo cuando se acerca a la vista.", banco: ["alt", "loading", "src", "weight"], respuestas: ["alt", "loading"] },
+              { tipo: "relacionar", pares: [["JPG", "Fotos con millones de colores"], ["PNG", "Transparencia para logos y texto"], ["WebP", "El formato moderno, ligero y universal"], ["SVG", "Dibujo vectorial que nunca pierde nitidez"]] },
+              { tipo: "vf", afirmacion: "Una página con imágenes pesadas tarda más en cargar y eso afecta tanto al usuario como al posicionamiento en Google.", correcta: true, explicacion: "el peso es la causa número uno de páginas lentas, y Google penaliza la lentitud." },
+              { tipo: "quehace", codigo: "&lt;img src=\"foto.jpg\" alt=\"\" loading=\"lazy\"&gt;", pregunta: "¿Qué significa este &lt;img&gt;?", opciones: ["La imagen es decorativa: el alt vacío la excluye de los lectores de pantalla y carga con lazy", "La imagen no tiene descripción y es un error grave", "El alt vacío hace que la imagen no cargue", "La imagen se descarga de inmediato al abrir la página"], correcta: 0 }
+            ]
+          },
+          {
+            id: "m3-a7",
+            titulo: "Tablas: cuándo sí y cuándo definitivamente no",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Una <strong>tabla</strong> sirve exactamente para una cosa: mostrar <strong>datos organizados en filas y columnas</strong> — precios, horarios, comparaciones, resultados. Y para nada más. La regla de oro: <strong>si lo que tienes son datos, tabla; si es diseño, NO tabla.</strong></p><p>Las piezas:</p><ul><li><code>&lt;table&gt;</code> — la tabla completa.</li><li><code>&lt;tr&gt;</code> — <em>table row</em>: una fila.</li><li><code>&lt;th&gt;</code> — <em>table header</em>: celda de encabezado (se ve en negritas y centrada).</li><li><code>&lt;td&gt;</code> — <em>table data</em>: celda con un dato.</li><li><code>&lt;thead&gt;</code> y <code>&lt;tbody&gt;</code> — separan el bloque de encabezados del bloque de datos.</li></ul><p>¿Cuándo <strong>sí</strong>? Comparaciones: tus tres planes de precios lado a lado, horarios de apertura, resultados de una encuesta, un catálogo con columnas. El ojo humano lee filas y columnas rapidísimo cuando hay datos que comparar.</p><p>¿Cuándo <strong>definitivamente no</strong>? Para maquetar: unir columnas para acomodar el logo a la izquierda y el menú a la derecha, dibujar tarjetas, armar el pie de página. Eso era lo normal en los años 90 y 2000, y hoy es una bandera roja: ese diseño se hace con CSS (flexbox y grid, en las lecciones A19–A22).</p><p>Dato memorable: si le pides a la IA \"usa una tabla para el layout\", está usando una técnica de hace 25 años. Reconócelo y redirige: \"mejor maqueta con CSS\".</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>La tabla es una <strong>hoja de cálculo</strong>: naciste sabiendo que Excel sirve para datos — filas, columnas, totales. Nadie diseña el letrero del restaurante en Excel. Tu página es el local: el layout (dónde va cada cosa) se diseña con reglas de diseño (CSS); las tablas solo se abren cuando hay datos que mostrar, igual que abres Excel para un presupuesto y no para dibujar.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>El uso correcto: una comparación de planes.</p><pre><code>&lt;table&gt;\n  &lt;thead&gt;\n    &lt;tr&gt;\n      &lt;th&gt;Plan&lt;/th&gt;\n      &lt;th&gt;Precio&lt;/th&gt;\n      &lt;th&gt;Soporte&lt;/th&gt;\n    &lt;/tr&gt;\n  &lt;/thead&gt;\n  &lt;tbody&gt;\n    &lt;tr&gt;\n      &lt;td&gt;Básico&lt;/td&gt;\n      &lt;td&gt;$199&lt;/td&gt;\n      &lt;td&gt;Correo&lt;/td&gt;\n    &lt;/tr&gt;\n    &lt;tr&gt;\n      &lt;td&gt;Pro&lt;/td&gt;\n      &lt;td&gt;$399&lt;/td&gt;\n      &lt;td&gt;Teléfono&lt;/td&gt;\n    &lt;/tr&gt;\n  &lt;/tbody&gt;\n&lt;/table&gt;</code></pre><p>En pantalla verás la primera fila con \"Plan, Precio, Soporte\" en negritas y centrado (los <code>th</code>), y debajo dos filas con los datos (los <code>td</code>). Sin estilos no se ven líneas divisorias, pero las columnas ya se alinean solas. Esa alineación vertical es la tabla haciendo su trabajo: comparar de un vistazo.</p><p>Y el uso incorrecto, el que debes reconocer para evitarlo:</p><pre><code>&lt;table&gt;\n  &lt;tr&gt;&lt;td&gt;Logo&lt;/td&gt;&lt;td&gt;Menú&lt;/td&gt;&lt;/tr&gt;\n&lt;/table&gt;</code></pre><p>Funciona visualmente… y es exactamente lo que hoy se hace con CSS. Tabla para datos, CSS para diseño.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Voy a mostrar mis planes de precios en la página. ¿Me conviene una tabla o tarjetas con CSS? Si es tabla, estructúrala con thead y tbody y th para encabezados. Si no, muéstrame la opción con CSS y explica por qué. Nunca uses tablas para el layout.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "vf", afirmacion: "Una tabla es la opción correcta para mostrar datos comparativos como precios de planes.", correcta: true, explicacion: "las tablas son para datos en filas y columnas, no para diseño." },
+              { tipo: "multiple", pregunta: "¿Para cuál de estos conviene usar una tabla?", opciones: ["Un menú de navegación horizontal", "Una comparación de planes con precio y funciones", "Una tarjeta de producto con foto", "El encabezado con el logo"], correcta: 1 },
+              { tipo: "relacionar", pares: [["table", "La tabla completa"], ["tr", "Una fila"], ["th", "Celda de encabezado, en negritas"], ["td", "Celda con un dato"], ["tbody", "El bloque de datos"]] },
+              { tipo: "completar", frase: "La celda ____ marca un encabezado; la celda ____ guarda un dato; cada fila va en un ____.", banco: ["th", "td", "tr", "table"], respuestas: ["th", "td", "tr"] },
+              { tipo: "quehace", codigo: "&lt;table&gt;\n  &lt;tr&gt;&lt;td&gt;Logo&lt;/td&gt;&lt;td&gt;Menú&lt;/td&gt;&lt;/tr&gt;\n&lt;/table&gt;", pregunta: "¿Qué está haciendo este código?", opciones: ["Muestra datos comparativos de forma correcta", "Maqueta el layout con tablas: funciona, pero es la técnica vieja que hoy se hace con CSS", "Es la forma estándar de armar un menú", "Está mal escrito y no se mostrará nada"], correcta: 1 }
+            ]
+          },
+          {
+            id: "m3-a8",
+            titulo: "Formularios I: inputs, labels y tipos de campo",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>El <strong>formulario</strong> es como tu página le pide datos al usuario: un nombre, un correo, una contraseña, una respuesta. Y es el puente hacia el servidor: lo que se llena aquí es lo que tu negocio recibe.</p><p>Las tres piezas básicas:</p><ul><li><code>&lt;form&gt;</code> — el contenedor de todo el formulario.</li><li><code>&lt;label&gt;</code> — el texto que dice qué se pide: \"Nombre\", \"Correo\", \"Contraseña\".</li><li><code>&lt;input&gt;</code> — el campo donde el usuario escribe.</li></ul><p>El <strong>tipo de campo</strong> (atributo <code>type</code>) le dice al navegador qué espera: <code>text</code> (texto libre), <code>email</code> (correo — el navegador ya revisa el formato), <code>password</code> (oculta lo escrito), <code>number</code> (solo números, con flechitas), <code>tel</code> (teléfono), <code>date</code> (calendario), <code>checkbox</code> (casilla de sí/no), <code>radio</code> (una de varias opciones), <code>file</code> (subir archivo). Para texto largo existe <code>&lt;textarea&gt;</code> y para opciones desplegables <code>&lt;select&gt;</code>.</p><p>Dos conexiones que no se negocian:</p><ul><li>El <code>label</code> se conecta al input con <code>for</code> y <code>id</code>: <code>&lt;label for=\"correo\"&gt;</code> apunta a <code>&lt;input id=\"correo\"&gt;</code>. Así, al hacer clic en el texto, el campo se enfoca.</li><li>El atributo <code>name</code> es el nombre del dato que se envía. Sin <code>name</code>, ese campo se queda mudo: el usuario escribe, pero el dato no viaja.</li></ul><p>En A9 vas a ver cómo el navegador valida estos campos solito — esta lección es la base, no la memorices: reconócela en cualquier página.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>El formulario es una <strong>solicitud de empleo impresa</strong>. Los <code>label</code> son las preguntas impresas (\"Nombre:\", \"Correo:\"); los <code>input</code> son las líneas donde escribes; y el <code>name</code> es la etiqueta que alguien pone en el archivo cuando guarda tu solicitud — si la línea no tiene etiqueta, la secretaria (el servidor) no sabe qué dato es ese. El <code>type</code> es el tipo de línea: unas se llenan con lápiz (texto), otras con un marcador que no se ve (password), y las de opciones tienen casillas para marcar.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>El esqueleto de un registro:</p><pre><code>&lt;form&gt;\n  &lt;label for=\"nombre\"&gt;Nombre&lt;/label&gt;\n  &lt;input type=\"text\" id=\"nombre\" name=\"nombre\"&gt;\n\n  &lt;label for=\"correo\"&gt;Correo&lt;/label&gt;\n  &lt;input type=\"email\" id=\"correo\" name=\"correo\"&gt;\n\n  &lt;label for=\"clave\"&gt;Contraseña&lt;/label&gt;\n  &lt;input type=\"password\" id=\"clave\" name=\"clave\"&gt;\n\n  &lt;button type=\"submit\"&gt;Registrarme&lt;/button&gt;\n&lt;/form&gt;</code></pre><p>En pantalla verás tres etiquetas, cada una sobre su campo. Al escribir en \"Contraseña\", los caracteres se ocultan (puntos). Al hacer clic en la palabra \"Nombre\", el campo de arriba se enfoca — esa es la conexión <code>for</code>/<code>id</code>. Y si escribes un correo mal formado, el navegador ya lo marca — eso es el <code>type=\"email\"</code> trabajando, aunque todavía no validemos nada (eso llega en A9).</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Voy a crear el formulario de registro de mi negocio: nombre, correo, contraseña y un campo de texto para notas. Estructúralo con form, labels conectados con for e id, inputs con su tipo correcto y name, textarea para las notas y un botón submit. Antes de escribir, dime en una línea para qué sirve cada tipo de campo que uses.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "relacionar", pares: [["type=\"text\"", "Texto libre corto"], ["type=\"email\"", "Correo: el navegador revisa el formato"], ["type=\"password\"", "Oculta los caracteres escritos"], ["type=\"number\"", "Solo números, con flechitas"], ["type=\"checkbox\"", "Casilla de sí/no"]] },
+              { tipo: "multiple", pregunta: "¿Qué pasa si un input no tiene atributo name?", opciones: ["Funciona normal, el name es opcional", "El dato de ese campo no se envía con el formulario", "El formulario no se muestra en pantalla", "El navegador muestra un error"], correcta: 1 },
+              { tipo: "completar", frase: "El label se conecta al input con el atributo ____ y el mismo valor en el ____ del input.", banco: ["for", "id", "name", "type"], respuestas: ["for", "id"] },
+              { tipo: "vf", afirmacion: "Un grupo de radio buttons sirve para elegir una sola opción de varias.", correcta: true, explicacion: "el radio es de selección única dentro de su grupo." },
+              { tipo: "quehace", codigo: "&lt;label for=\"correo\"&gt;Correo&lt;/label&gt;\n&lt;input type=\"password\" id=\"correo\" name=\"correo\"&gt;", pregunta: "¿Qué pasa al escribir en este campo?", opciones: ["Como el label dice 'Correo', el navegador valida correos", "Los caracteres se ocultan: el type=\"password\" manda aunque la etiqueta diga 'Correo'", "El campo se deshabilita solo", "Se muestra un calendario para elegir fecha"], correcta: 1 }
+            ]
+          },
+          {
+            id: "m3-a9",
+            titulo: "Formularios II: validación nativa del navegador",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>En A8 armaste los campos. Ahora el navegador va a hacer el trabajo de <strong>revisarlos antes de enviar</strong> — sin una línea de JavaScript. Eso se llama <strong>validación nativa</strong>, y es la primera barrera (para el usuario), no la última (para tu seguridad).</p><p>Los atributos que hacen magia:</p><ul><li><code>required</code> — el campo no puede ir vacío. Si das enviar sin llenarlo, el navegador lo marca y bloquea.</li><li><code>minlength</code> / <code>maxlength</code> — mínimo y máximo de caracteres.</li><li><code>min</code> / <code>max</code> — valor mínimo y máximo (para <code>type=\"number\"</code> y fechas).</li><li><code>pattern</code> — una regla de formato. Ejemplo: <code>pattern=\"[0-9]{10}\"</code> exige exactamente 10 dígitos.</li><li>Los tipos del navegador validan solos: <code>type=\"email\"</code> exige un correo con @, <code>type=\"url\"</code> exige algo como <code>https://…</code>.</li></ul><p>El flujo: el usuario da clic en Enviar → el navegador revisa TODOS los campos → si algo falla, muestra un globo de error al lado del campo culpable y no envía nada. Es el navegador el que decide el mensaje (\"Completa este campo\", \"Incluye un @\").</p><p>Advertencia que te separa del resto: la validación nativa es para el usuario, no para tu seguridad. Un atacante no usa tu formulario: le manda datos directo al servidor. Por eso el servidor también valida (lo verás en el Mes 9). La nativa es la puerta amable; la del servidor es la puerta blindada.</p><p>Dato memorable: si un formulario no envía y nadie entiende por qué, revisa si hay un <code>required</code> — el globo del navegador casi siempre es el culpable.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>La validación nativa es el <strong>portero del antro</strong>: antes de dejarte pasar, revisa tu credencial (required), que tenga la fecha al día (pattern), que tengas la edad mínima (min) y que el nombre coincida (type). Si algo falla, te lo dice en la puerta y no entras — sin necesidad de un empleado con lista de nombres (JavaScript). Pero el portero solo cuida la puerta: adentro, la caja fuerte (tu servidor) tiene su propia seguridad, porque alguien podría intentar entrar por la ventana.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>El formulario de A8, ahora con validación:</p><pre><code>&lt;form&gt;\n  &lt;label for=\"nombre\"&gt;Nombre&lt;/label&gt;\n  &lt;input type=\"text\" id=\"nombre\" name=\"nombre\"\n         required minlength=\"2\"&gt;\n\n  &lt;label for=\"edad\"&gt;Edad&lt;/label&gt;\n  &lt;input type=\"number\" id=\"edad\" name=\"edad\"\n         min=\"18\" max=\"100\" required&gt;\n\n  &lt;label for=\"web\"&gt;Tu sitio web&lt;/label&gt;\n  &lt;input type=\"url\" id=\"web\" name=\"web\"\n         placeholder=\"https://…\"&gt;\n\n  &lt;button type=\"submit\"&gt;Enviar&lt;/button&gt;\n&lt;/form&gt;</code></pre><p>En pantalla verás lo mismo que en A8, pero con comportamiento nuevo: si das clic en \"Enviar\" con el nombre vacío, el navegador muestra un globo \"Completa este campo\" y no envía. Si pones un nombre de una sola letra, lo rechaza por el <code>minlength</code>. Si pones 17 en la edad, lo rechaza por el <code>min=\"18\"</code>. Y el campo de web pide algo que empiece con <code>https://</code>. Prueba todos los casos: estás viendo al navegador validar en vivo, sin JavaScript.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Termina el formulario de registro que armamos en A8 con validación nativa del navegador: required en los campos obligatorios, minlength de 2 en el nombre, min y max en la edad, y type correcto para correo y URL. Nada de JavaScript: quiero que el navegador muestre sus propios globos de error. Explícame qué valida cada atributo.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "completar", frase: "El atributo ____ marca un campo obligatorio; ____=\"3\" exige un mínimo de 3 caracteres.", banco: ["required", "minlength", "maxlength", "placeholder"], respuestas: ["required", "minlength"] },
+              { tipo: "multiple", pregunta: "Escribes \"hola@\" en un input type=\"email\" y das clic en Enviar. ¿Qué pasa?", opciones: ["El navegador lo acepta, los correos no se validan", "El navegador muestra un error y bloquea el envío", "El servidor corrige el correo automáticamente", "Se limpia el formulario completo"], correcta: 1 },
+              { tipo: "vf", afirmacion: "La validación nativa del navegador es suficiente para proteger tu servidor de datos maliciosos.", correcta: false, explicacion: "protege la experiencia del usuario, no tu servidor: alguien puede enviar datos directo sin usar el formulario." },
+              { tipo: "relacionar", pares: [["required", "El campo no puede ir vacío"], ["minlength=\"3\"", "Mínimo 3 caracteres"], ["min=\"18\"", "Valor mínimo 18"], ["type=\"url\"", "Debe verse como https://…"], ["pattern=\"[0-9]{10}\"", "Debe cumplir un formato exacto"]] },
+              { tipo: "quehace", codigo: "&lt;input type=\"email\" id=\"correo\" name=\"correo\" required&gt;", pregunta: "¿Qué hace este campo?", opciones: ["Es opcional pero valida el formato del correo", "Es obligatorio y el navegador revisa que sea un correo válido", "Solo acepta números", "No se puede escribir en él"], correcta: 1 }
+            ]
+          },
+          {
+            id: "m3-a10",
+            titulo: "Atributos: id, class y data-*",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Los <strong>atributos globales</strong> son etiquetas que puede llevar cualquier elemento, y tres de ellos los vas a ver en cada archivo que toque una IA: <code>id</code>, <code>class</code> y <code>data-*</code>.</p><ul><li><strong>id</strong> — identificador <strong>único</strong>. Solo puede existir uno por página. Es como el nombre en tu INE: nadie más lo tiene. Ya lo usaste sin darte cuenta en las anclas (A5: <code>href=\"#precios\"</code> → <code>&lt;section id=\"precios\"&gt;</code>) y en los labels (A8: <code>for=\"correo\"</code> → <code>id=\"correo\"</code>). También es la puerta para que CSS y JavaScript apunten a UN elemento exacto.</li><li><strong>class</strong> — clasificador <strong>repetible</strong>. Muchos elementos pueden compartir la misma clase, y un elemento puede tener varias separadas por espacio. Es la herramienta del CSS para estilizar todos los de un grupo a la vez.</li><li><strong>data-*</strong> — almacén personal de datos: <code>data-precio=\"199\"</code>, <code>data-stock=\"12\"</code>. El asterisco es cualquier nombre que inventes. No se ve en pantalla ni afecta el estilo: es información guardada en el elemento para que JavaScript la lea cuando la necesite.</li></ul><p>La lógica que llevas para siempre: <strong>uno vs muchos vs escondido</strong>. id identifica a uno, class agrupa a muchos, data-* esconde datos para el código.</p><p>En la Materia B los vas a usar a diario: <code>querySelector</code> busca por <code>#id</code> y por <code>.class</code>, y <code>dataset</code> lee los <code>data-*</code>.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Son los <strong>tres datos de una persona en un evento</strong>. El <code>id</code> es tu número de folio: único, nadie más lo tiene, con él te encuentran en cualquier lista. La <code>class</code> es tu playera del equipo: la traen 50 personas y eso permite que el organizador te ubique a todos de golpe. Y los <code>data-*</code> son la etiqueta pegada en tu espalda con tu talla y tu alimento preferido: no se ve de frente, pero el staff (JavaScript) la lee cuando la necesita.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Dos tarjetas de un catálogo:</p><pre><code>&lt;div class=\"producto\" id=\"producto-7\"\n     data-precio=\"199\" data-stock=\"12\"&gt;\n  &lt;h2&gt;Café de olla&lt;/h2&gt;\n  &lt;p&gt;$199&lt;/p&gt;\n&lt;/div&gt;\n\n&lt;div class=\"producto\" id=\"producto-8\"\n     data-precio=\"149\" data-stock=\"0\"&gt;\n  &lt;h2&gt;Té de canela&lt;/h2&gt;\n  &lt;p&gt;$149&lt;/p&gt;\n&lt;/div&gt;</code></pre><p>En pantalla verás dos tarjetas que se ven idénticas (las dos comparten <code>class=\"producto\"</code>, que es lo que las estiliza igual). No verás ni el <code>id</code> ni los <code>data-*</code>: son invisibles. Pero en DevTools (F12 → Elements) están ahí, en el código. El <code>id</code> permite apuntar a \"producto-8\" sin tocar a \"producto-7\", y el <code>data-stock=\"0\"</code> le dirá a JavaScript \"este no tiene inventario\" cuando el usuario intente comprarlo. Información lista, invisible, esperando.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Dame el catálogo de mis productos como tarjetas. Todas con class='producto', un id único por tarjeta (producto-1, producto-2…), y data-precio con data-stock con los valores reales de cada uno. Dime qué veré en pantalla y qué quedará invisible pero accesible para JavaScript.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "multiple", pregunta: "¿Cuál de estos atributos debe ser único en toda la página?", opciones: ["class", "id", "data-*", "href"], correcta: 1 },
+              { tipo: "completar", frase: "____ agrupa varios elementos para estilizarlos igual; ____ identifica a un solo elemento de forma única.", banco: ["class", "id", "data", "src"], respuestas: ["class", "id"] },
+              { tipo: "relacionar", pares: [["id=\"producto-7\"", "Identifica ese elemento de forma única"], ["class=\"producto\"", "Agrupa todas las tarjetas con el mismo estilo"], ["data-precio=\"199\"", "Guarda un dato que JavaScript puede leer"], ["data-stock=\"0\"", "Información de inventario para el código"]] },
+              { tipo: "vf", afirmacion: "Los atributos data-* son invisibles en pantalla pero legibles desde JavaScript.", correcta: true, explicacion: "no afectan el visual; son datos para el código." },
+              { tipo: "quehace", codigo: "&lt;div class=\"producto\" data-precio=\"199\"&gt;", pregunta: "¿Qué verás en pantalla por este fragmento?", opciones: ["El estilo de la clase 'producto', y '199' como texto visible", "El estilo de la clase 'producto'; el data-precio queda invisible para el usuario pero disponible para JavaScript", "Nada, sin JavaScript no se muestra", "Un error, porque data-precio no es un atributo válido"], correcta: 1 }
+            ]
+          },
+          {
+            id: "m3-a11",
+            titulo: "CSS: las tres formas de aplicarlo y cuál usar siempre",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>El CSS es el que le da <strong>cara</strong> a tu HTML: colores, tamaños, espacios, tipografía. En esta materia vas a vivir de él, y lo primero es saber que se puede aplicar de <strong>tres formas</strong> — y que solo una debes usar siempre:</p><ul><li><strong>En línea (inline)</strong> — dentro del mismo elemento, con el atributo <code>style</code>: <code>&lt;p style=\"color: red;\"&gt;…&lt;/p&gt;</code>. Rápido para probar, fatal para mantener: el estilo queda atrapado en cada etiqueta.</li><li><strong>Interno</strong> — un bloque <code>&lt;style&gt;</code> dentro del <code>&lt;head&gt;</code> del documento. Sirve para archivos sueltos de una página.</li><li><strong>Externo</strong> — un archivo aparte, <code>styles.css</code>, conectado con un <code>&lt;link&gt;</code> en el <code>head</code>. Este es <strong>el que usas siempre</strong>.</li></ul><p>¿Por qué el externo? Tres razones concretas: <strong>separación</strong> (el HTML queda limpio, solo estructura, como viste en A3), <strong>reutilización</strong> (un solo archivo controla todas tus páginas) y <strong>mantenimiento</strong> (cambias un color una vez y se actualiza todo el sitio). Cuando pidas estilos a la IA, fíjate que siempre genere o edite <code>styles.css</code> — nunca estilos pegados adentro del HTML.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Son <strong>tres formas de dar instrucciones en un restaurante</strong>. El inline es decirle al mesero, plato por plato: \"este plato lleva más sal\". Funciona, pero si hay 200 platos y cambia la receta, lo repites 200 veces. El interno es un pizarrón en la cocina de una sucursal: vale solo para esa sucursal. El externo es el <strong>manual de la casa matriz</strong>: todas las sucursales lo leen, y cuando cambias una línea del manual, el plato cambia en todas partes a la vez. Por eso tu proyecto debe tener un solo manual: <code>styles.css</code>.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Las tres formas en un mismo documento:</p><pre><code>&lt;p style=\"color: red;\"&gt;En línea&lt;/p&gt;\n\n&lt;style&gt;\n  p { color: blue; }\n&lt;/style&gt;\n\n&lt;link rel=\"stylesheet\" href=\"styles.css\"&gt;</code></pre><p>En pantalla verás \"En línea\" en <strong>rojo</strong>, porque su estilo inline gana; si en <code>styles.css</code> escribes <code>p { color: blue; }</code>, el resto de tu texto quedará azul. Prueba el flujo real: crea un <code>styles.css</code>, escribe <code>p { color: tomato; }</code>, conéctalo con el <code>&lt;link&gt;</code> y recarga. Todo tu texto cambió de color desde un solo archivo. Eso es lo que le vas a pedir a la IA de aquí en adelante.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Voy a estilizar mi landing. Crea un archivo styles.css y conéctalo a mi index.html con un link en el head. No pongas ningún estilo inline ni dentro del HTML: todo vive en styles.css. Explícame en una línea qué hace exactamente la etiqueta link que me das.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "multiple", pregunta: "¿Cuál de las tres formas de CSS debes usar siempre en un proyecto real?", opciones: ["Inline, es la más rápida", "Externa, en un archivo styles.css", "Interna, en un bloque style", "Cualquiera, da igual"], correcta: 1 },
+              { tipo: "relacionar", pares: [["Inline (style)", "Estilo atrapado en cada etiqueta"], ["Interno (style en head)", "Vale solo para ese documento"], ["Externo (link)", "Un archivo para todo el sitio"], ["styles.css", "La hoja que conectas con link"]] },
+              { tipo: "completar", frase: "El CSS ____ vive en un archivo aparte y se conecta con la etiqueta ____ en el head.", banco: ["externo", "link", "inline", "style"], respuestas: ["externo", "link"] },
+              { tipo: "vf", afirmacion: "El CSS inline es una buena elección cuando 200 elementos deben verse idénticos.", correcta: false, explicacion: "tendrías que repetir el estilo en los 200 elementos; el externo lo controla desde una sola línea." },
+              { tipo: "quehace", codigo: "&lt;link rel=\"stylesheet\" href=\"styles.css\"&gt;", pregunta: "¿Qué hace esta línea del head?", opciones: ["Muestra un enlace a la página styles.css", "Conecta tu HTML con la hoja de estilos externa", "Crea un archivo llamado styles.css", "Le pone estilos solo a los enlaces"], correcta: 1 }
+            ]
+          },
+          {
+            id: "m3-a12",
+            titulo: "Selectores: el idioma para apuntar a un elemento",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Un <strong>selector</strong> es la parte del CSS que dice <em>a quién</em> se aplica la regla. Sin él, el navegador no sabe dónde pintar. Los cuatro que usarás a diario:</p><ul><li><strong>De elemento</strong> — el nombre de la etiqueta: <code>p</code>, <code>h2</code>, <code>a</code>. Le pega a <em>todos</em> los de ese tipo.</li><li><strong>De clase</strong> — <code>.tarjeta</code>. Apunta a todos los que lleven <code>class=\"tarjeta\"</code>. Las clases ya te son familiares desde A10.</li><li><strong>De id</strong> — <code>#menu</code>. Apunta a un solo elemento: el del <code>id=\"menu\"</code>.</li><li><strong>Descendiente</strong> — <code>nav a</code>. Se lee como dirección: \"un <code>a</code> que esté adentro de <code>nav</code>\".</li></ul><p>También existe el de <strong>grupo</strong>: <code>h1, h2, h3</code> aplica la misma regla a varios selectores a la vez. Regla de oro: <strong>apunta con lo mínimo necesario</strong> — empieza por elemento, sube a clase si lo necesitas, y deja el id para casos únicos.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>El selector es la <strong>dirección postal</strong> para entregar un paquete (el estilo). <code>p</code> es \"deja uno en todas las casas del mismo modelo\". <code>.tarjeta</code> es \"deja uno en todos los edificios con el letrero tarjeta en la entrada\". <code>#menu</code> es \"entrégaselo a la casa con el folio 5, la única que lo tiene\". Y <code>nav a</code> es \"busca los negocios que están dentro del centro comercial nav\". Sin dirección exacta, el repartidor no sabe dónde bajar el paquete — y tu estilo no sabe dónde pintar.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Una mini-hoja con los cuatro selectores:</p><pre><code>p { color: #333; }\n\n.tarjeta { background: #f5f5f5; }\n\n#banner { text-align: center; }\n\nnav a { text-decoration: none; }</code></pre><p>En pantalla verás: todos los párrafos en gris oscuro; todos los elementos con <code>class=\"tarjeta\"</code> con fondo gris claro; el único elemento con <code>id=\"banner\"</code> centrado; y los enlaces <em>que están dentro de</em> <code>nav</code> sin subrayado — los de afuera lo conservan. El truco para nunca confundirte: <strong>punto para clase, almohadilla (#) para id, nada para etiqueta</strong>. Punto = muchos, # = uno exacto.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Tengo esta estructura en mi landing: varias sections con h2, tarjetas con class='producto' y un botón con id='boton-compra'. Quiero los h2 verdes, las tarjetas con borde gris, y solo ese botón naranja. Escríbeme el CSS con los selectores exactos y dime qué símbolo usa cada uno (. # o ninguno) y por qué.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "multiple", pregunta: "¿Cuál de estos selectores apunta a un solo elemento único en la página?", opciones: ["p", ".tarjeta", "#menu", "nav a"], correcta: 2 },
+              { tipo: "relacionar", pares: [["p", "Todas las etiquetas de ese tipo"], [".tarjeta", "Todos los que tengan esa clase"], ["#menu", "El único con ese id"], ["nav a", "Los enlaces dentro de nav"]] },
+              { tipo: "completar", frase: "El selector de ____ se escribe con un punto (.tarjeta); el de ____ se escribe con almohadilla (#menu).", banco: ["clase", "id", "elemento", "grupo"], respuestas: ["clase", "id"] },
+              { tipo: "vf", afirmacion: "El selector p apunta solo al primer párrafo de la página.", correcta: false, explicacion: "apunta a todos los párrafos (p) del documento; si quieres uno solo, usa un id o una clase." },
+              { tipo: "quehace", codigo: "nav a { color: red; }", pregunta: "¿Qué elementos se pintan de rojo?", opciones: ["Todos los enlaces de la página", "Solo los enlaces que están dentro de nav", "Solo los enlaces de la primera página", "El bloque nav completo"], correcta: 1 }
+            ]
+          },
+          {
+            id: "m3-a13",
+            titulo: "La cascada y la especificidad: quién le gana a quién",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>¿Qué pasa si dos reglas quieren estilizar el mismo elemento y se contradicen? Ahí entran dos leyes: la <strong>cascada</strong> y la <strong>especificidad</strong>.</p><p>La <strong>cascada</strong> dice: a igualdad de condiciones, <strong>gana la que está más abajo</strong> en el archivo. El navegador lee tu CSS de arriba a abajo, y la última palabra es la que vale.</p><p>La <strong>especificidad</strong> dice: no todos los selectores valen lo mismo. Hay una escala de rango:</p><ul><li><code>#id</code> — el de mayor rango (apunta a un elemento único).</li><li><code>.clase</code> — rango medio (apunta a un grupo).</li><li><code>etiqueta</code> — rango base (apunta a todos).</li></ul><p>El orden de decisión es <strong>primero el rango, después el orden</strong>: gana el más específico; si empatan, gana el que está más abajo. Eso explica el 90% de los \"no me pega el estilo\": otro selector con más rango (o más abajo) le está ganando al tuyo.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Es una <strong>pelea por la última palabra en la oficina</strong>. La etiqueta es un becario: puede opinar, pero pesa poco. La clase es el líder de equipo: pesa más. El id es el director: su palabra se impone sobre todos. Cuando dos del mismo rango discuten, se impone el que habló <strong>al final de la reunión</strong> (la cascada: el que está más abajo en el archivo). Y cuando el director habla, el becario puede gritar lo que quiera: pierde. Por eso un <code>#id</code> que está arriba le gana a una <code>.clase</code> que está abajo.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Tu CSS dice una cosa y en pantalla ves otra:</p><pre><code>.tarjeta { background: blue; }\n#especial { background: red; }\n.tarjeta { background: green; }</code></pre><p>El elemento con <code>class=\"tarjeta\" id=\"especial\"</code> quedará <strong>rojo</strong>. ¿Por qué, si la última regla dice green? Porque la especificidad pesa más que el orden: el <code>#id</code> tiene más rango que cualquier clase, y gana aunque esté más arriba. Si lo quieres verde no agregues otra clase: cambia el color dentro del <code>#especial</code>, o quita ese id. Pruébalo en tu editor: mueve las reglas de lugar y verás que el rojo no se mueve. Cuando la IA te dé CSS que \"no pega\", revisa esto primero — casi siempre es especificidad, no un error de escritura.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Mi botón está saliendo azul aunque escribí .boton { background: red; }. Seguramente hay un selector con más especificidad o una regla más abajo en mi styles.css que le gana. Encuéntralo, explícame quién gana y por qué, y dime cómo arreglarlo sin usar !important.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "multiple", pregunta: "¿Qué selector tiene la mayor especificidad?", opciones: ["#header", ".titulo", "h2", "p"], correcta: 0 },
+              { tipo: "ordenar", instruccion: "Ordena de menor a mayor especificidad:", elementos: ["h2 (etiqueta)", ".titulo (clase)", "#header (id)"] },
+              { tipo: "completar", frase: "Si dos reglas tienen la misma especificidad, gana la que está ____ en el archivo: es la ley de la ____.", banco: ["más abajo", "cascada", "más arriba", "especificidad"], respuestas: ["más abajo", "cascada"] },
+              { tipo: "vf", afirmacion: "Una clase siempre le gana a un id, sin importar el orden en el archivo.", correcta: false, explicacion: "es al revés: el id tiene mayor especificidad que cualquier clase." },
+              { tipo: "quehace", codigo: "h2 { color: red; }\n.contenido h2 { color: blue; }", pregunta: "¿De qué color quedará un h2 que está dentro de .contenido?", opciones: ["Rojo", "Azul", "Morado", "No se le aplica ningún color"], correcta: 1 }
+            ]
+          },
+          {
+            id: "m3-a14",
+            titulo: "El modelo de caja: content, padding, border, margin",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Todo elemento de tu página es una <strong>caja</strong>, y entender el diseño web es entender sus cuatro capas, de adentro hacia afuera:</p><ul><li><strong>content</strong> — el contenido: texto, imagen, lo que sea. Es lo que mides con <code>width</code> y <code>height</code>.</li><li><strong>padding</strong> — el aire interno: espacio entre el contenido y el borde. Tiene el fondo del elemento y agranda la caja visible.</li><li><strong>border</strong> — el borde: la línea que delimita la caja. Grosor, estilo y color.</li><li><strong>margin</strong> — el aire externo: espacio <em>entre</em> esta caja y las demás. Es transparente y no pinta nada: solo separa.</li></ul><p>Y el detalle que lo cambia todo: <code>box-sizing: border-box</code> hace que el <code>width</code> que escribes <strong>ya incluya</strong> content + padding + border. El valor por defecto (<code>content-box</code>) solo mide el contenido y las otras capas <em>se suman</em>, rompiendo tus medidas. Por eso en proyectos reales casi siempre ves <code>* { box-sizing: border-box; }</code> al inicio.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Piensa en un <strong>cuadro enmarcado</strong> en la pared. El content es la foto. El padding es el paspartú: la cartulina que rodea la foto, con el color del marco. El border es el marco de madera. Y el margin es la distancia que dejas entre un cuadro y el otro: no se ve, solo evita que se toquen. Cuando pides \"una tarjeta con más aire por dentro\", pides <code>padding</code>; cuando pides \"que las tarjetas no se peguen\", pides <code>margin</code>. Saber cuál de los dos usar es la mitad del diseño web.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Una tarjeta con las cuatro capas definidas:</p><pre><code>* { box-sizing: border-box; }\n\n.tarjeta {\n  width: 300px;\n  padding: 20px;\n  border: 2px solid #999;\n  margin: 30px;\n}</code></pre><p>En pantalla verás una caja de <strong>300px en total</strong> (content + padding + border ya incluidos por el <code>border-box</code>), un marco gris de 2px, 20px de aire entre el texto y el marco por los cuatro lados, y 30px de espacio en blanco alrededor que la separa de las demás cajas. Abre DevTools (F12 → Elements → Computed) y selecciona la tarjeta: el navegador dibuja el <em>modelo de caja</em> en colores — azul para content, verde para padding, naranja para border y naranja claro para margin. Esa imagen vale más que mil definiciones.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Necesito 3 tarjetas en fila que no se peguen entre sí. Pon en todo el proyecto box-sizing: border-box, dales padding de 24px, borde de 1px gris claro y margin de 16px entre ellas. Explícame qué veré en pantalla y cómo se ven las 4 capas de la caja de cada tarjeta.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "relacionar", pares: [["content", "El contenido: foto o texto"], ["padding", "El aire interno, entre contenido y borde"], ["border", "La línea que delimita la caja"], ["margin", "El espacio externo que separa cajas"]] },
+              { tipo: "multiple", pregunta: "¿Qué hace box-sizing: border-box?", opciones: ["Hace el borde redondeado", "Incluye padding y border dentro del width", "Elimina el padding de la caja", "Convierte el margin en padding"], correcta: 1 },
+              { tipo: "completar", frase: "El ____ es el espacio interno entre el contenido y el borde; el ____ es el espacio externo que separa esta caja de las demás.", banco: ["padding", "margin", "border", "content"], respuestas: ["padding", "margin"] },
+              { tipo: "vf", afirmacion: "El margin se pinta con el mismo fondo que el elemento y se ve en pantalla.", correcta: false, explicacion: "el margin es transparente y no pinta nada: solo crea espacio entre cajas." },
+              { tipo: "ordenar", instruccion: "Ordena las capas de la caja, de adentro hacia afuera:", elementos: ["content", "padding", "border", "margin"] }
+            ]
+          },
+          {
+            id: "m3-a15",
+            titulo: "Unidades: px, %, rem, em, vh, vw y cuándo usar cada una",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Cada medida de tu página usa una <strong>unidad</strong>, y elegir la correcta es lo que separa una página que se rompe de una que se adapta. Las seis que dominarás:</p><ul><li><strong>px</strong> — píxeles fijos. \"Esta línea mide 2px\". No cambia con nada. Úsalo en detalles que no deben moverse: bordes, sombras, radios.</li><li><strong>%</strong> — porcentaje <strong>del contenedor padre</strong>. \"Ocupa el 50% de su papá\". Úsalo en anchos de layout.</li><li><strong>rem</strong> — relativo al tamaño de letra <strong>de la raíz</strong> (el <code>&lt;html&gt;</code>). Por defecto 1rem = 16px, así que 2rem = 32px. Úsalo para textos: respeta la configuración de accesibilidad del usuario.</li><li><strong>em</strong> — relativo al tamaño de letra <strong>de su propio elemento o su padre</strong>. Se usa en paddings y espacios que deben escalar con el texto. Cuidado: se multiplica en cascada y puede desbocarse.</li><li><strong>vh</strong> — 1vh = 1% de la <strong>altura de la ventana</strong> (viewport). <code>100vh</code> = una pantalla de alto. Úsalo en secciones hero.</li><li><strong>vw</strong> — 1vw = 1% del <strong>ancho de la ventana</strong>. Útil para tipografías gigantes que escalan con la pantalla.</li></ul><p>La regla rápida de los equipos reales: <strong>texto en rem, layouts en %, cajas en px, pantallas en vh/vw</strong>.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Son <strong>cuatro reglas de medición de un taller de carpintería</strong>. El <strong>px</strong> es el centímetro de la regla rígida: no cambia jamás, ideal para el bisel del marco. El <strong>%</strong> es \"la mitad del largo de la mesa sobre la que trabajo\": depende de dónde apoyes la pieza (el padre). El <strong>rem</strong> es \"una zancada del maestro carpintero\": todos miden contra él, y si el maestro crece, todo el taller crece. El <strong>em</strong> es \"una zancada del aprendiz que trabaja esa pieza\": escala con su propia pieza. Y el <strong>vh/vw</strong> es la pared con ventana del taller: \"este estante ocupa todo el alto de la ventana\". Medir con la regla equivocada es exactamente por qué tu página se rompe al cambiar de pantalla.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Una sección que usa cada familia de unidades:</p><pre><code>html { font-size: 16px; }\n\n.hero {\n  height: 100vh;            /* toda la pantalla de alto */\n}\n\n.hero h1 {\n  font-size: 3rem;          /* 48px, escala con el html */\n}\n\n.contenedor {\n  width: 80%;               /* 80% del padre */\n}\n\n.tarjeta {\n  padding: 1em;             /* escala con su propio texto */\n  border: 1px solid #ccc;   /* detalle fijo */\n}</code></pre><p>En pantalla verás: una sección que ocupa exactamente el alto de tu ventana (<code>100vh</code>), un título de 48px (3rem × 16px), un contenedor que se estira al 80% del bloque que lo contiene, tarjetas con aire interno que crece si crece su letra, y un borde de 1px inmutable. Cambia el ancho de tu ventana y observa: el <code>vh</code> se ajusta al alto, el <code>%</code> se ajusta al ancho, el <code>rem</code> no se mueve si no cambias el <code>html</code>, y el <code>px</code> del borde permanece clavado. Así se ve la diferencia en vivo.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Haz mi landing responsive desde el primer píxel: textos siempre en rem, el contenedor principal al 80% con max-width, la sección hero con height de 100vh, y bordes y radios en px. Nada de medidas fijas para textos ni contenedores. Explícame qué unidad elegiste en cada caso y por qué.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "relacionar", pares: [["px", "Fija, no cambia con nada"], ["%", "Relativo al contenedor padre"], ["rem", "Relativo al font-size de la raíz"], ["vh", "Relativo a la altura de la ventana"]] },
+              { tipo: "multiple", pregunta: "Con el font-size de html en 16px, ¿cuánto mide un título con font-size: 2rem?", opciones: ["16px", "24px", "32px", "2px"], correcta: 2 },
+              { tipo: "completar", frase: "Los textos se miden en ____ (relativo a la raíz); los anchos de layout se miden en ____ (relativo al padre).", banco: ["rem", "%", "px", "vw"], respuestas: ["rem", "%"] },
+              { tipo: "vf", afirmacion: "vh y vw dependen del tamaño de la ventana del navegador, no del contenedor padre.", correcta: true, explicacion: "vw/vh se miden contra el viewport (la ventana), no contra el elemento que los contiene." },
+              { tipo: "quehace", codigo: ".hero { height: 100vh; }", pregunta: "¿Qué hace esta regla?", opciones: ["La sección mide 100 píxeles de alto", "La sección ocupa todo el alto de la ventana", "La sección mide el 100% de su padre", "La sección se vuelve invisible"], correcta: 1 }
+            ]
+          },
+          {
+            id: "m3-a16",
+            titulo: "Colores: hex, rgb, hsl y variables CSS",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>En CSS hay tres formas de escribir un color y una forma de administrarlos todos. No necesitas memorizar códigos: necesitas <strong>reconocer</strong> qué formato estás viendo y saber cuál conviene pedirle a la IA.</p><ul><li><strong>hex</strong> — seis dígitos (o tres abreviados) precedidos de <code>#</code>: <code>#ff0000</code> es rojo puro. Compacto y omnipresente: es el formato de los color pickers y de casi todo el código existente.</li><li><strong>rgb</strong> — tres valores de 0 a 255, uno por canal: <code>rgb(255, 0, 0)</code>. Se lee como una receta: cuánto rojo, cuánto verde, cuánto azul. Con <code>rgba(255, 0, 0, 0.5)</code> agregas un cuarto valor: la <strong>opacidad</strong> (0 es invisible, 1 es opaco).</li><li><strong>hsl</strong> — tres valores pensados para humanos: <code>hsl(0, 100%, 50%)</code>. Primero el <strong>tono</strong> en grados (0° rojo, 120° verde, 240° azul), luego la <strong>saturación</strong> (0% gris, 100% vivo) y al final la <strong>luminosidad</strong> (0% negro, 100% blanco). Perfecto para pedir un azul más claro sin volverte loco.</li></ul><p>Y encima de los tres formatos están las <strong>variables CSS</strong>: <code>--nombre: valor;</code> se declaran en <code>:root</code> y se leen con <code>var(--nombre)</code>. Cambias el valor en un solo lugar y se actualiza en todos los que lo usen. Ahí vive tu paleta, y es lo primero que le vas a pedir a la IA que arme por ti.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Los tres formatos son <strong>tres etiquetas de la misma pintura</strong>. El hex es el código de barras del bote: sirve para escanearlo en el almacén, pero no te dice si es azul cielo o azul marino. El rgb es la receta en mililitros: \"255 de rojo, 0 de verde, 0 de azul\". El hsl es el muestrario del ferretero: eliges la familia de color (tono), qué tan vivo lo quieres (saturación) y qué tan claro u oscuro (luminosidad). Y las variables CSS son los <strong>botes etiquetados de tu taller</strong>: no buscas el azul en cada pincelada, agarras el bote <code>--color-primario</code>, y si mañana quieres otro azul, cambias el contenido del bote y todas las pinceladas cambian solas.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Una paleta con variables aplicada a tres tarjetas:</p><pre><code>:root {\n  --color-primario: #2d6cdf;\n  --color-exito: #1e8e3e;\n  --color-peligro: #d93025;\n  --radio: 8px;\n}\n\n.tarjeta {\n  background: var(--color-primario);\n  border-radius: var(--radio);\n  padding: 16px;\n}</code></pre><p>En pantalla verás tres tarjetas del mismo azul <code>#2d6cdf</code> con las esquinas redondeadas de 8px. Si ese azul deja de gustarte, cambias <strong>una línea</strong> en <code>:root</code> y todas las tarjetas que usen <code>var(--color-primario)</code> cambian juntas, sin tocar el resto del archivo. Compara: si el color estuviera escrito como hex en cada tarjeta, tendrías que buscarlo y reemplazarlo en diez lugares. Esa es la diferencia entre mantener una página y mantener un caos.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Voy a definir la paleta de mi sitio. Crea 5 variables CSS en :root (primario, secundario, exito, peligro y texto) y muéstrame cada color en los tres formatos: hex, rgb y hsl. Quiero cambiar cualquier color editando un solo lugar.\"</p></blockquote><p>Ese prompt te devuelve una paleta mantenible de una sola pasada — y de paso ves los tres formatos lado a lado para reconocerlos.</p>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "multiple", pregunta: "¿Qué código hex representa el rojo puro?", opciones: ["#ff0000", "#00ff00", "#0000ff", "#ffffff"], correcta: 0 },
+              { tipo: "relacionar", pares: [["hex", "Formato compacto que empieza con #"], ["rgb", "Tres canales de 0 a 255"], ["hsl", "Tono, saturación y luminosidad"], ["var(--x)", "Lee el valor de una variable CSS"]] },
+              { tipo: "completar", frase: "Una variable CSS se ____ con --nombre: valor; y se ____ con var(--nombre).", banco: ["declara", "lee", "borra", "pinta"], respuestas: ["declara", "lee"] },
+              { tipo: "vf", afirmacion: "En hsl, el primer valor es el tono: hsl(0, 100%, 50%) es rojo.", correcta: true, explicacion: "el hue (tono) va primero; 0° es rojo en el círculo cromático." },
+              { tipo: "quehace", codigo: ":root { --primario: #2d6cdf; }\n.boton { background: var(--primario); }", pregunta: "Cambiaste --primario a #000. ¿Qué pasa con todos los botones?", opciones: ["Solo cambia el primero", "Todos los botones que usan var(--primario) cambian a negro", "Nada: las variables no se actualizan", "La página deja de cargar"], correcta: 1 }
+            ]
+          },
+          {
+            id: "m3-a17",
+            titulo: "Tipografía web: fuentes, escala y jerarquía",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>La tipografía decide si tu página se lee sola o si le cuesta trabajo a quien la ve. Tres piezas la controlan:</p><ul><li><strong>font-family</strong> — la familia de letras, siempre como cadena de respaldo: <code>font-family: \"Inter\", Arial, sans-serif;</code>. El navegador intenta la primera fuente; si no está instalada ni cargada, pasa a la siguiente, y al final siempre hay una genérica (<code>serif</code>, <code>sans-serif</code>, <code>monospace</code>) para no quedarse sin letra.</li><li><strong>font-size</strong> — el tamaño. En web se usa <code>rem</code> (lo viste en m3-a15) para que el texto respete la configuración de accesibilidad del usuario.</li><li><strong>font-weight</strong> — el grosor: <code>400</code> normal, <code>700</code> negrita. Y <code>line-height</code> — la distancia entre líneas; un texto cómodo anda entre 1.5 y 1.8.</li></ul><p>Combinando tamaño y peso creas la <strong>jerarquía</strong>: el ojo aterriza en el título, baja a los subtítulos y por último lee el cuerpo. Las fuentes externas (como Google Fonts) se cargan con un <code>&lt;link&gt;</code> en el <code>head</code> — pídele a la IA que te las instale y que te explique qué línea cargó.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>La tipografía es la <strong>voz de tu página</strong>, y la jerarquía es el volumen. La <code>font-family</code> es el timbre: una persona que habla formal (serif), una casual (sans-serif) y una de máquina de escribir (monospace). El <code>font-size</code> es el volumen base y el <code>font-weight</code> el golpe con que dices ciertas palabras. Un párrafo donde todo suena igual es un discurso plano; la jerarquía es saber cuándo gritar (título), cuándo conversar (subtítulo) y cuándo susurrar (pie de foto). El lector no piensa en las voces: siente qué importa primero.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Primero el HTML de una jerarquía típica:</p><pre><code>&lt;h1&gt;Vende más, sin manual&lt;/h1&gt;\n&lt;h2&gt;El curso que dirige IA&lt;/h2&gt;\n&lt;p&gt;Construye software real desde tu primer mes.&lt;/p&gt;</code></pre><p>Y el CSS que la produce:</p><pre><code>h1 { font-family: \"Inter\", Arial, sans-serif; font-size: 2.5rem; font-weight: 700; }\nh2 { font-family: \"Inter\", Arial, sans-serif; font-size: 1.5rem; font-weight: 600; }\np  { font-family: \"Inter\", Arial, sans-serif; font-size: 1rem; line-height: 1.6; }</code></pre><p>En pantalla verás: un titular grande y sólido que atrapa la mirada primero, un subtítulo visiblemente menor pero con peso, y un cuerpo chico y espaciado que se lee sin esfuerzo. El salto entre niveles — 2.5rem, 1.5rem, 1rem — es la <strong>escala</strong>: tamaños que se distinguen a la primera. Si todo usara el mismo tamaño y peso, la página sería un mar plano sin dónde agarrarse.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Dame la jerarquía tipográfica de mi sitio: elige 2 fuentes de Google Fonts (una para títulos, una para cuerpo), arma la escala completa en rem (h1, h2, h3, p y caption) y dame el &lt;link&gt; para cargarlas. Explícame por qué elegiste esa combinación.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "multiple", pregunta: "¿Para qué sirve escribir font-family: \"Inter\", Arial, sans-serif; con tres fuentes?", opciones: ["Para que cada párrafo use una distinta", "Son respaldos: si la primera no está disponible, el navegador usa la siguiente", "Para que el texto se vea en negrita automáticamente", "Para cargar tres tamaños a la vez"], correcta: 1 },
+              { tipo: "relacionar", pares: [["font-family", "La familia de letras"], ["font-size", "El tamaño de la letra"], ["font-weight", "El grosor: 400 o 700"], ["line-height", "El espacio entre líneas"]] },
+              { tipo: "completar", frase: "Combinando ____ y ____ creas la jerarquía visual: el ojo lee el título antes que el cuerpo.", banco: ["tamaño", "peso", "color", "espaciado"], respuestas: ["tamaño", "peso"] },
+              { tipo: "vf", afirmacion: "El texto de una página se mide en rem para respetar la configuración de accesibilidad del usuario.", correcta: true, explicacion: "rem escala con el font-size de la raíz, que el usuario puede ajustar (m3-a15)." },
+              { tipo: "ordenar", instruccion: "Acomoda de mayor a menor jerarquía visual:", elementos: ["h1", "h2", "p", "caption"] }
+            ]
+          },
+          {
+            id: "m3-a18",
+            titulo: "Display: block, inline, inline-block",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p><code>display</code> decide cómo se comporta cada caja dentro del flujo de la página. Tres valores usarás todos los días:</p><ul><li><strong>block</strong> — la caja ocupa todo el ancho de su padre y arranca en una línea nueva. Respeta <code>width</code>, <code>height</code>, <code>margin</code> y <code>padding</code> en las cuatro direcciones. Por defecto: <code>&lt;div&gt;</code>, <code>&lt;p&gt;</code>, <code>&lt;h1&gt;</code>, <code>&lt;section&gt;</code>.</li><li><strong>inline</strong> — vive <em>dentro</em> de la línea del texto, como una letra más. No arranca línea nueva y <strong>no respeta</strong> <code>width</code> ni <code>height</code>; sus márgenes y paddings horizontales sí funcionan, pero los verticales no mueven a los vecinos. Por defecto: <code>&lt;span&gt;</code>, <code>&lt;a&gt;</code>, <code>&lt;strong&gt;</code>, <code>&lt;em&gt;</code>.</li><li><strong>inline-block</strong> — lo mejor de los dos: se acomoda en la misma línea que el texto (como inline), pero respeta <code>width</code>, <code>height</code> y los márgenes verticales (como block). Es el clásico para botones y chips.</li></ul><p>Cuando algo no se acomoda, el primer sospechoso es <code>display</code>: el elemento heredó un comportamiento que no esperabas. Esa pregunta — por qué esto no se acomoda — es un prompt de oro para la IA.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Son <strong>tres tipos de vehículo en la misma calle</strong>. El <strong>block</strong> es un camión de mudanzas: ocupa todo el carril, va solo y nadie lo rebasa. El <strong>inline</strong> es un peatón en medio de una fila: no puede reclamar ancho propio, es uno más de la fila. El <strong>inline-block</strong> es una moto: viaja en el mismo flujo que los peatones (se acomoda en la línea), pero tiene dimensiones propias y separación vertical. Si quieres que algo quepa junto a otra cosa pero con tamaño propio, elige la moto, no el camión.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>El mismo HTML con tres displays distintos:</p><pre><code>&lt;span&gt;Uno&lt;/span&gt;&lt;span&gt;Dos&lt;/span&gt;&lt;span&gt;Tres&lt;/span&gt;</code></pre><pre><code>span { display: inline-block; width: 120px; text-align: center; }</code></pre><p>Con <code>display: inline</code> (lo natural de un <code>&lt;span&gt;</code>) verás <code>Uno Dos Tres</code> corriendo como texto continuo, sin ancho propio. Con <code>inline-block</code> y <code>width: 120px</code> verás tres cajitas centradas una al lado de la otra, cada una de 120px: <code>[ Uno ][ Dos ][ Tres ]</code>. Con <code>block</code>, cada una ocuparía su propia línea completa. El mismo contenido, tres disposiciones — eso es lo que elige <code>display</code>.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Tengo 3 elementos que quiero uno al lado del otro, con ancho fijo de 120px y espacio entre ellos. Explícame por qué display: inline-block funciona aquí y qué pasaría con block o inline. No uses flexbox todavía: quiero entender la diferencia antes.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "multiple", pregunta: "¿Cuál de estos elementos es inline por defecto?", opciones: ["<div>", "<span>", "<p>", "<h1>"], correcta: 1 },
+              { tipo: "relacionar", pares: [["block", "Ocupa toda la línea y respeta width y height"], ["inline", "Se acomoda en la línea del texto, sin width"], ["inline-block", "En la línea, pero con width y height"], ["display: none", "Saca el elemento del flujo por completo"]] },
+              { tipo: "vf", afirmacion: "Un elemento inline respeta el width y el height que le asignes.", correcta: false, explicacion: "inline ignora width y height; si los necesitas, usa inline-block." },
+              { tipo: "completar", frase: "display: ____ ocupa toda la línea de su padre; display: ____ respeta dimensiones pero se acomoda junto a otros en la misma línea.", banco: ["block", "inline-block", "inline", "none"], respuestas: ["block", "inline-block"] },
+              { tipo: "quehace", codigo: "span { display: inline-block; width: 120px; }", pregunta: "Con tres spans así, ¿qué verás en pantalla?", opciones: ["Tres cajas de 120px una al lado de la otra", "Tres cajas apiladas a todo el ancho", "Texto corrido sin ancho fijo", "Tres elementos invisibles"], correcta: 0 }
+            ]
+          },
+          {
+            id: "m3-a19",
+            titulo: "Flexbox I: el eje principal y la dirección",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Flexbox es el primer sistema de layout de una dimensión: acomoda a los hijos de un contenedor a lo largo de <strong>una sola dirección</strong>. Se activa con <code>display: flex</code> en el contenedor (el <em>flex container</em>), y sus hijos directos se vuelven <em>flex items</em>. De golpe, los items ya no se apilan: se encadenan.</p><p>Flexbox trabaja sobre <strong>dos ejes</strong>. El <strong>eje principal</strong> es por donde avanza el layout; el <strong>eje cruzado</strong> es perpendicular. Cuál es cuál lo decide <code>flex-direction</code>:</p><ul><li><strong>row</strong> — el valor por defecto: el eje principal va de izquierda a derecha, los items en fila horizontal.</li><li><strong>row-reverse</strong> — la misma fila, pero de derecha a izquierda.</li><li><strong>column</strong> — el eje principal va de arriba a abajo: los items en columna vertical.</li><li><strong>column-reverse</strong> — la columna, pero de abajo hacia arriba.</li></ul><p>La clave: <strong>primero decides la dirección, después la alineación</strong>. Alinear a lo largo del eje principal es <code>justify-content</code>; a lo largo del cruzado, <code>align-items</code>. Esos dos los ves a fondo en la siguiente lección (m3-a20).</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Flexbox es un <strong>tren de vagones</strong>. El contenedor es la vía y <code>flex-direction</code> decide hacia dónde va: <code>row</code> es una vía horizontal y <code>column</code> una vía que sube la montaña en vertical. Los vagones (los flex items) no deciden dónde van: la vía los encadena en fila. La otra pregunta — con qué separación, centrados o pegados a un lado — la resuelve el maquinista, y es exactamente lo que verás en m3-a20. Por ahora: <strong>dirección primero, alineación después</strong>.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Tres cajas dentro de un contenedor flex:</p><pre><code>&lt;div class=\"fila\"&gt;\n  &lt;div class=\"caja\"&gt;A&lt;/div&gt;\n  &lt;div class=\"caja\"&gt;B&lt;/div&gt;\n  &lt;div class=\"caja\"&gt;C&lt;/div&gt;\n&lt;/div&gt;</code></pre><pre><code>.fila { display: flex; }\n.caja { width: 80px; padding: 12px; }</code></pre><p>Con <code>display: flex</code> y dirección <code>row</code> (la de fábrica) verás <code>[ A ][ B ][ C ]</code>: tres cajitas en una sola fila horizontal. Cambia a <code>flex-direction: column</code> y la vía gira 90°: verás las tres cajas <strong>apiladas</strong>, A arriba, B al centro, C abajo. Mismo HTML, misma regla de <code>display: flex</code> — solo cambió hacia dónde apunta el eje principal. Esa es toda la lección: <strong>dirección</strong>.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Tengo un menú con 3 enlaces dentro de un div. Pon display: flex al contenedor y explícame en palabras qué les pasó a los hijos: por qué quedaron en fila y qué cambia si uso flex-direction: column en lugar de row. Todavía no alinees nada.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "multiple", pregunta: "¿Cuál es el valor por defecto de flex-direction?", opciones: ["column", "row", "row-reverse", "column-reverse"], correcta: 1 },
+              { tipo: "relacionar", pares: [["row", "Fila: de izquierda a derecha"], ["column", "Columna: de arriba a abajo"], ["row-reverse", "Fila: de derecha a izquierda"], ["column-reverse", "Columna: de abajo hacia arriba"]] },
+              { tipo: "completar", frase: "Con flex-direction: ____ el eje principal es horizontal; con ____ el eje principal es vertical.", banco: ["row", "column", "flex", "gap"], respuestas: ["row", "column"] },
+              { tipo: "vf", afirmacion: "Los hijos directos de un contenedor con display: flex se llaman flex items y se acomodan a lo largo del eje principal.", correcta: true, explicacion: "flexbox organiza a los hijos directos en el eje que define flex-direction." },
+              { tipo: "quehace", codigo: ".cont { display: flex; flex-direction: column; }", pregunta: "A, B y C son hijos de .cont. ¿Cómo se acomodan?", opciones: ["En fila: [ A ][ B ][ C ]", "Apilados: A arriba, B al centro, C abajo", "En orden aleatorio", "Todos en el mismo punto"], correcta: 1 }
+            ]
+          },
+          {
+            id: "m3-a20",
+            titulo: "Flexbox II: alineación, distribución y el gap",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Ya sabes controlar la <strong>dirección</strong> del eje principal (m3-a19). Ahora toca el reparto: dónde quedan los items a lo largo de cada eje y cuánto aire hay entre ellos. Tres propiedades lo resuelven:</p><ul><li><strong>justify-content</strong> — alinea a lo largo del <strong>eje principal</strong>. Los de uso diario: <code>flex-start</code> (pegados al inicio), <code>center</code> (centrados), <code>flex-end</code> (pegados al final), <code>space-between</code> (el espacio sobrante se reparte <em>entre</em> los items) y <code>space-evenly</code> (espacio igual alrededor de todos).</li><li><strong>align-items</strong> — alinea a lo largo del <strong>eje cruzado</strong>: <code>stretch</code> (el valor por defecto: los items se estiran para llenar), <code>flex-start</code>, <code>center</code> y <code>flex-end</code>.</li><li><strong>gap</strong> — la distancia <em>fija</em> entre cada par de items: <code>gap: 16px;</code> separa todo en una línea, sin márgenes raros. <code>row-gap</code> y <code>column-gap</code> lo controlan por eje.</li></ul><p>Truco de memoria que te ahorra errores: <strong>justify-content sigue a la dirección (flex-direction); align-items siempre es perpendicular</strong>. Si cambias la dirección, justo ahí cambian los dos ejes.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Imagina a <strong>tres meseros acomodando platillos en una barra</strong> (la barra es la dirección que aprendiste en m3-a19). <code>justify-content</code> decide cómo se reparten a lo largo de la barra: todos a la izquierda (<code>flex-start</code>), todos al centro (<code>center</code>), o el espacio de sobra entre platillo y platillo (<code>space-between</code>). <code>align-items</code> decide a qué altura quedan en el eje perpendicular: todos tocando la base (<code>flex-end</code>), todos colgando del techo (<code>flex-start</code>) o estirándose hasta llenar el estante (<code>stretch</code>). Y <code>gap</code> es la distancia fija entre platillos, la que no cambia aunque la barra crezca. Distribución y alineación son dos decisiones distintas; flexbox las separa para que no las mezcles.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Una barra de herramientas con reparto y aire:</p><pre><code>.barra {\n  display: flex;\n  justify-content: space-between;\n  align-items: center;\n  gap: 8px;\n}</code></pre><pre><code>&lt;div class=\"barra\"&gt;\n  &lt;div&gt;A&lt;/div&gt;\n  &lt;div&gt;B&lt;/div&gt;\n  &lt;div&gt;C&lt;/div&gt;\n&lt;/div&gt;</code></pre><p>En pantalla verás <code>[A]    [B]    [C]</code>: A pegado a la izquierda, C pegado a la derecha, B justo al centro del espacio sobrante (por el <code>space-between</code>), los tres a la misma altura vertical (por <code>align-items: center</code>) y con 8px de aire entre los que quedan tocando (por <code>gap</code>). Cambia a <code>justify-content: center</code> y verás los tres juntos al centro, sin repartir nada. Mismo display, misma dirección, otro reparto — eso es flexbox II.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Hazme una barra de herramientas con display: flex: 3 elementos, justify-content: space-between, align-items: center y gap de 8px. Luego muéstrame la misma barra con justify-content: center para que vea la diferencia. Explícame en una línea qué controla cada propiedad.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "multiple", pregunta: "¿Qué propiedad alinea los items a lo largo del eje principal (el de flex-direction)?", opciones: ["align-items", "justify-content", "gap", "flex-direction"], correcta: 1 },
+              { tipo: "relacionar", pares: [["justify-content", "Alineación a lo largo del eje principal"], ["align-items", "Alineación a lo largo del eje cruzado"], ["gap", "Espacio fijo entre items"], ["space-between", "El espacio sobrante se reparte entre los items"]] },
+              { tipo: "completar", frase: "Con justify-content: ____ el primero queda a la izquierda, el último a la derecha y el sobrante en medio. El ____ es el aire fijo entre cada par.", banco: ["space-between", "gap", "center", "stretch"], respuestas: ["space-between", "gap"] },
+              { tipo: "vf", afirmacion: "El valor por defecto de align-items es stretch: los items se estiran para llenar el eje cruzado.", correcta: true, explicacion: "por eso los hijos de un flex suelen llenar la altura del contenedor sin que se lo pidas." },
+              { tipo: "quehace", codigo: ".menu { display: flex; justify-content: space-between; gap: 8px; }", pregunta: "Con tres items en .menu, ¿qué verás?", opciones: ["Los tres juntos a la izquierda", "Uno a la izquierda, uno al centro y uno a la derecha, con 8px de aire", "Los tres centrados en la pantalla", "Una columna apilada"], correcta: 1 }
+            ]
+          },
+          {
+            id: "m3-a21",
+            titulo: "Grid I: filas, columnas y fr",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Ya controlas una dimensión con flexbox (m3-a19 y m3-a20). CSS Grid es el sistema de layout de <strong>dos dimensiones</strong>: acomoda a los hijos en <strong>filas y columnas a la vez</strong>, como una rejilla. Se activa con <code>display: grid</code> en el contenedor, y sus hijos se colocan solos, celda por celda.</p><p>Las dos propiedades que definen la rejilla:</p><ul><li><strong>grid-template-columns</strong> — el ancho de cada columna. <code>grid-template-columns: 100px 1fr 1fr;</code> crea tres columnas: una fija de 100px y dos flexibles.</li><li><strong>grid-template-rows</strong> — el alto de cada fila. Si no la defines, las filas crecen con su contenido.</li></ul><p>La unidad estrella es <strong>fr</strong> (fraction): una fracción del espacio disponible. <code>repeat(3, 1fr)</code> repite tres columnas iguales, y <code>2fr 1fr</code> hace una columna del doble de ancho que la otra. Comparada con los píxeles, <code>fr</code> reparte el espacio que sobra y se adapta solo.</p><p>El aire entre celdas es <code>gap</code>, igual que en flexbox (m3-a20): sin él, las celdas se pegan.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Flexbox es un <strong>búfete de una sola fila</strong>: los platillos avanzan en línea. CSS Grid es el <strong>mapa de la ciudad</strong>: las columnas son las avenidas que van de arriba a abajo y las filas son las calles que van de izquierda a derecha. Cada celda es una manzana. La unidad <code>fr</code> es repartir el terreno: si el plano dice tres manzanas iguales (<code>repeat(3, 1fr)</code>), cada avenida recibe un tercio del terreno disponible; si dice <code>2fr 1fr</code>, una avenida recibe el doble de terreno que la otra.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Una cuadrícula de seis tarjetas:</p><pre><code>.galeria {\n  display: grid;\n  grid-template-columns: repeat(3, 1fr);\n  gap: 16px;\n}</code></pre><pre><code>&lt;div class=\"galeria\"&gt;\n  &lt;div&gt;Tarjeta 1&lt;/div&gt;\n  &lt;div&gt;Tarjeta 2&lt;/div&gt;\n  &lt;div&gt;Tarjeta 3&lt;/div&gt;\n  &lt;div&gt;Tarjeta 4&lt;/div&gt;\n  &lt;div&gt;Tarjeta 5&lt;/div&gt;\n  &lt;div&gt;Tarjeta 6&lt;/div&gt;\n&lt;/div&gt;</code></pre><p>En una pantalla amplia verás <strong>3 columnas × 2 filas</strong>: seis tarjetas del mismo ancho (cada <code>1fr</code> toma un tercio del espacio) con 16px de aire entre todas. Cambia a <code>grid-template-columns: repeat(2, 1fr)</code> y verás 2 columnas × 3 filas. Cambia a <code>grid-template-columns: 2fr 1fr</code> y la primera columna quedará al doble de ancho que la segunda. Los hijos no eligen su celda: el contenedor los acomoda automáticamente, en orden, uno tras otro.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Tengo 6 tarjetas de producto que quiero en cuadrícula. Crea un contenedor con display: grid, tres columnas iguales con repeat y la unidad fr, y gap de 16px. Después muéstrame la misma cuadrícula con 2fr 1fr y explícame en una línea qué hace fr y por qué no usar píxeles aquí.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "multiple", pregunta: "¿Qué sistema de layout trabaja con filas y columnas al mismo tiempo?", opciones: ["Flexbox", "CSS Grid", "Display inline", "La propiedad float"], correcta: 1 },
+              { tipo: "completar", frase: "display: ____ activa la rejilla; la unidad ____ reparte el espacio disponible en partes iguales.", banco: ["grid", "fr", "px", "flex"], respuestas: ["grid", "fr"] },
+              { tipo: "relacionar", pares: [["grid-template-columns", "El ancho de cada columna"], ["grid-template-rows", "El alto de cada fila"], ["repeat(3, 1fr)", "Tres columnas iguales"], ["gap", "El aire entre celdas"]] },
+              { tipo: "vf", afirmacion: "Con grid-template-columns: 1fr 1fr 1fr; las tres columnas reciben la misma porción del espacio disponible.", correcta: true, explicacion: "cada fr toma una fracción igual del espacio tras descontar los gaps." },
+              { tipo: "quehace", codigo: ".panel { display: grid; grid-template-columns: 2fr 1fr; gap: 12px; }", pregunta: "Con dos hijos en .panel, ¿cómo se acomodan?", opciones: ["La primera columna es el doble de ancha que la segunda, con 12px de aire", "Las dos columnas de ancho idéntico", "Los dos hijos se apilan en vertical", "La segunda columna es el doble de ancha"], correcta: 0 }
+            ]
+          },
+          {
+            id: "m3-a22",
+            titulo: "Grid II: áreas nombradas y layouts completos",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Definir columnas con <code>fr</code> (m3-a21) funciona, pero para una página completa es más claro <strong>nombrar las zonas</strong> con <code>grid-template-areas</code>: dibujas el layout en texto, como un mapa, y después cada hijo dice en qué zona vive.</p><p>El mapa se lee así:</p><pre><code>.layout {\n  display: grid;\n  grid-template-columns: 1fr 3fr;\n  grid-template-areas:\n    \"cabecera cabecera\"\n    \"lateral  principal\"\n    \"pie      pie\";\n}</code></pre><p>Cada fila del mapa es una <strong>fila del grid</strong>, y cada palabra es una celda. Que <code>cabecera</code> aparezca dos veces en la primera fila significa que la cabecera abarca <strong>las dos columnas</strong>. Los hijos se asignan con <code>grid-area</code>: <code>header { grid-area: cabecera; }</code>. Un punto (<code>.</code>) marca una celda vacía.</p><p>Dos reglas que te ahorran errores: el mapa debe formar <strong>rectángulos</strong> (nada de formas de L o de T), y cada área del mapa necesita un hijo con ese mismo nombre. La magia de este sistema: cambiar el layout es cambiar el mapa, sin tocar el HTML.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p><code>grid-template-areas</code> es el <strong>plano del arquitecto</strong>. No le dices a cada mueble en qué esquina va con coordenadas: dibujas el plano — cocina aquí, sala allá — y cada mueble se instala en su zona. Si mañana quieres la cocina a la derecha, <strong>redibujas el plano</strong>; no mueves la estufa con un margen. Eso es exactamente lo que cambia entre Grid I y Grid II (m3-a21): primero aprendiste a dibujar líneas, ahora dibujas el plano entero de la casa.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>La estructura clásica de una página: cabecera, barra lateral, contenido y pie.</p><pre><code>&lt;div class=\"layout\"&gt;\n  &lt;header&gt;Cabecera&lt;/header&gt;\n  &lt;aside&gt;Barra lateral&lt;/aside&gt;\n  &lt;main&gt;Contenido&lt;/main&gt;\n  &lt;footer&gt;Pie&lt;/footer&gt;\n&lt;/div&gt;</code></pre><pre><code>.layout {\n  display: grid;\n  grid-template-columns: 1fr 3fr;\n  grid-template-areas:\n    \"cabecera cabecera\"\n    \"lateral  principal\"\n    \"pie      pie\";\n  gap: 12px;\n}\nheader { grid-area: cabecera; }\naside  { grid-area: lateral; }\nmain   { grid-area: principal; }\nfooter { grid-area: pie; }</code></pre><p>En pantalla verás un layout completo: la <strong>cabecera</strong> ocupa todo el ancho en la primera fila; debajo, la <strong>barra lateral</strong> a la izquierda (un cuarto del ancho, por el <code>1fr</code>) y el <strong>contenido</strong> a la derecha (tres cuartos, por el <code>3fr</code>); al fondo, el <strong>pie</strong> cruza las dos columnas. Ahora prueba la magia: cambia el mapa a <code>\"lateral lateral\"</code> en la primera fila y verás la barra lateral arriba, a todo el ancho, sin tocar una línea de HTML. El mapa gobierna; los hijos obedecen.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Quiero el layout completo de mi página: cabecera arriba, barra lateral a la izquierda, contenido principal a la derecha y pie abajo. Usa display: grid, grid-template-columns: 1fr 3fr y grid-template-areas con nombres en español, y asigna cada sección con grid-area. Explícame en una línea qué significa cada fila del mapa.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "relacionar", pares: [["grid-template-areas", "El mapa del layout escrito en texto"], ["grid-area", "Le dice a cada hijo en qué zona del mapa vive"], ["Repetir un nombre en el mapa", "Esa zona abarca varias celdas"], ["Un punto (.) en el mapa", "Una celda vacía"]] },
+              { tipo: "multiple", pregunta: "¿Cuál de estas figuras NO se puede dibujar en grid-template-areas?", opciones: ["Un rectángulo de 2 columnas por 2 filas", "Una forma de L", "Una fila con tres nombres distintos", "Un rectángulo de 1 fila por 3 columnas"], correcta: 1 },
+              { tipo: "completar", frase: "Cada hijo que ocupa una zona recibe la propiedad ____ con el mismo ____ que usaste en el mapa.", banco: ["grid-area", "nombre", "fr", "gap"], respuestas: ["grid-area", "nombre"] },
+              { tipo: "vf", afirmacion: "En el mapa puedes repetir el nombre de una zona en varias celdas, siempre que las celdas formen un rectángulo.", correcta: true, explicacion: "las zonas deben ser rectangulares; las formas de L no son válidas." },
+              { tipo: "quehace", codigo: ".layout {\n  display: grid;\n  grid-template-areas:\n    \"header header\"\n    \"sidebar main\"\n    \"footer footer\";\n}", pregunta: "¿Cómo se acomoda la página con este mapa?", opciones: ["Cabecera arriba en todo el ancho, barra lateral izquierda, contenido a la derecha, pie abajo en todo el ancho", "Cabecera y pie a la izquierda, todo en una columna", "Cuatro celdas idénticas en una sola fila", "La página no se dibuja: falta grid-template-columns"], correcta: 0 }
+            ]
+          },
+          {
+            id: "m3-a23",
+            titulo: "Posicionamiento: static, relative, absolute, fixed, sticky",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Hasta ahora todo se acomodaba en el flujo normal de la página. La propiedad <code>position</code> cambia eso: decide <strong>cómo se ubica un elemento y respecto a qué referencia</strong>. Tiene cinco valores, y verlos en orden es la forma de entenderlos:</p><ul><li><strong>static</strong> — el valor por defecto: el elemento vive en el flujo normal y <code>top</code>, <code>right</code>, <code>bottom</code> y <code>left</code> no hacen nada.</li><li><strong>relative</strong> — se desplaza desde su lugar normal (con <code>top: 10px</code>, etc.) pero <strong>conserva su espacio original</strong>: nadie más lo ocupa. Además se convierte en el ancestro posicionado de referencia para sus hijos absolutos.</li><li><strong>absolute</strong> — se sale del flujo por completo (su espacio se libera) y se posiciona respecto a su <strong>ancestro posicionado más cercano</strong>; si no hay ninguno, respecto a la página.</li><li><strong>fixed</strong> — se sale del flujo y se posiciona respecto a la <strong>ventana del navegador</strong>: se queda clavado aunque hagas scroll. El clásico menú superior o el botón de \"volver arriba\".</li><li><strong>sticky</strong> — un híbrido: fluye con la página (como relative) y al llegar a un límite que tú defines (como <code>top: 0</code>) se <strong>pega</strong> y se comporta como fixed hasta que su contenedor termina. Ideal para encabezados de sección.</li></ul><p>Cuatro de los cinco (<code>relative</code>, <code>absolute</code>, <code>fixed</code>, <code>sticky</code>) trabajan con los desplazamientos <code>top</code>, <code>right</code>, <code>bottom</code> y <code>left</code>. <code>static</code> es el caso base: el que todo elemento tiene si nadie toca <code>position</code>.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Imagina una <strong>fila de bailarines en un escenario</strong>. <code>static</code> es el bailarín en su marca, en el flujo de la coreografía. <code>relative</code> es el que da dos pasos a un lado desde su marca, pero <strong>deja la marca reservada</strong>: nadie más la pisa. <code>absolute</code> es el que sale de la coreografía y es colocado exactamente en una X marcada en el escenario (o en el grupo que esté marcado). <code>fixed</code> es el director de cámara en su plataforma: pase lo que pase en escena, siempre lo ves en el mismo lugar de la ventana. <code>sticky</code> es el maestro de ceremonias que avanza con la fila y, al llegar al borde del escenario, se queda pegado ahí hasta que el show termina.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Tres usos que verás en cualquier sitio:</p><p><strong>1. Menú fijo (fixed):</strong></p><pre><code>.barra {\n  position: fixed;\n  top: 0;\n  left: 0;\n  width: 100%;\n}\nbody { padding-top: 60px; }</code></pre><p>En pantalla: la barra queda pegada al borde superior de la ventana. Al hacer scroll, el contenido se mueve por debajo y la barra no se mueve. El <code>padding-top</code> del body evita que el inicio de la página quede escondido debajo de la barra.</p><p><strong>2. Insignia pegada a una tarjeta (relative + absolute):</strong></p><pre><code>.tarjeta { position: relative; }\n.badge {\n  position: absolute;\n  top: -10px;\n  right: -10px;\n}</code></pre><p>El badge se asoma por la esquina superior derecha de la tarjeta. Funciona porque la tarjeta es el ancestro posicionado: el badge no mira a la ventana, mira a la tarjeta.</p><p><strong>3. Encabezado que se pega (sticky):</strong></p><pre><code>.titulo-seccion {\n  position: sticky;\n  top: 0;\n}</code></pre><p>El encabezado de la sección avanza con el scroll y, al tocar el borde superior de la ventana, se pega y acompaña mientras recorres la sección; al terminar la sección, se va con ella.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Necesito un menú superior que se quede fijo al hacer scroll, y una insignia \"NUEVO\" pegada en la esquina de una tarjeta de producto. Usa position: fixed para el menú y relative + absolute para la insignia, y explícame en una línea por qué cada uno mira a una referencia distinta. No uses sticky todavía.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "relacionar", pares: [["static", "El valor por defecto: vive en el flujo normal"], ["relative", "Se desplaza desde su lugar y conserva su espacio"], ["absolute", "Se sale del flujo y se ancla a su ancestro posicionado"], ["fixed", "Se ancla a la ventana: no se mueve con el scroll"], ["sticky", "Fluye con la página y se pega al llegar a un límite"]] },
+              { tipo: "multiple", pregunta: "¿Qué valor de position deja un elemento clavado en la pantalla aunque hagas scroll?", opciones: ["relative", "absolute", "fixed", "static"], correcta: 2 },
+              { tipo: "completar", frase: "Con position: ____ el elemento se sale del flujo y se posiciona respecto a su ancestro ____ más cercano.", banco: ["absolute", "posicionado", "static", "flotante"], respuestas: ["absolute", "posicionado"] },
+              { tipo: "vf", afirmacion: "Con position: relative, el espacio original del elemento queda libre para que otro lo ocupe.", correcta: false, explicacion: "relative desplaza la vista pero conserva su espacio en el flujo: nadie más lo ocupa." },
+              { tipo: "quehace", codigo: ".tarjeta { position: relative; }\n.badge { position: absolute; top: -10px; right: -10px; }", pregunta: "El badge se asoma en la esquina de la tarjeta. ¿Por qué funciona?", opciones: ["El badge se ancla a la ventana del navegador", "La tarjeta es el ancestro posicionado, así que el badge se ubica respecto a ella", "relative y absolute se ignoran mutuamente", "El badge se ubica respecto al primer elemento de la página"], correcta: 1 }
+            ]
+          },
+          {
+            id: "m3-a24",
+            titulo: "Responsive I: media queries y breakpoints",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p><strong>Responsive design</strong> es que tu página se vea bien en cualquier pantalla: del celular de 360px al monitor de 1920px. La base es una etiqueta que va en el <code>head</code> y sin la cual los móviles asumen un ancho de escritorio:</p><pre><code>&lt;meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"&gt;</code></pre><p>Con eso, la herramienta principal son las <strong>media queries</strong>:</p><pre><code>@media (max-width: 768px) {\n  .grid { grid-template-columns: 1fr; }\n}</code></pre><p>Traducción: \"si la pantalla mide <strong>768px o menos</strong>, aplica estas reglas\". Dentro del bloque metes las reglas que sobreescriben el diseño base. Y los <strong>breakpoints</strong> son los anchos donde cambia el diseño — los clásicos: <code>768px</code> (tablet) y <code>1024px</code> (desktop chico). No son mágicos: los eliges tú según donde se rompa tu layout.</p><p>Este bloque con <code>max-width</code> es el enfoque <strong>desktop-first</strong>: escribes el diseño grande primero y lo vas colapsando para pantallas chicas. En la siguiente lección (m3-a25) verás el enfoque opuesto. Por ahora: reconocer <code>@media</code> y saber que dentro de esos corchetes <strong>el diseño cambia según el tamaño de la pantalla</strong>.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Es la <strong>mesa que se acomoda a los comensales</strong>. En la mesa de 8 puestos (desktop) caben 3 columnas de platos; si llegan 4 personas (tablet), la mesera cambia la disposición a 2 columnas; si llega una sola persona (celular), todo se acomoda en una fila. Los platos son los mismos — solo cambia cómo se acomodan según el espacio. La media query es la instrucción \"si la mesa mide menos de X, cambia la disposición\". Y el breakpoint es esa X: el ancho en el que la mesa deja de caber cómoda y hay que reacomodar.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>El ejemplo que resume todo: la cuadrícula de Grid I (m3-a21) que se colapsa.</p><pre><code>.galeria {\n  display: grid;\n  grid-template-columns: repeat(3, 1fr);\n  gap: 16px;\n}\n\n@media (max-width: 1024px) {\n  .galeria { grid-template-columns: repeat(2, 1fr); }\n}\n\n@media (max-width: 600px) {\n  .galeria { grid-template-columns: 1fr; }\n}</code></pre><p>En pantalla: en un monitor ancho verás <strong>3 columnas</strong>; al bajar la ventana por debajo de 1024px, la cuadrícula pasa a <strong>2 columnas</strong>; por debajo de 600px, a <strong>1 columna</strong> apilada. Redimensiona la ventana del navegador y verás el cambio en vivo: los mismos seis elementos, tres disposiciones distintas según el ancho. Eso es responsive design en su forma más visible: <strong>un grid de 3 columnas que colapsa</strong>.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Mi galería de 3 columnas se ve apretada en el celular. Agrégale media queries: 3 columnas en pantallas mayores a 1024px, 2 columnas hasta 1024px y 1 columna hasta 600px. Pon también la meta viewport en el head. Explícame en una línea qué condición cumple cada @media.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "completar", frase: "En @media (____: 768px) las reglas se aplican cuando la pantalla mide 768px o ____.", banco: ["max-width", "menos", "min-width", "más"], respuestas: ["max-width", "menos"] },
+              { tipo: "multiple", pregunta: "¿Qué es un breakpoint?", opciones: ["Un error del CSS que rompe el layout", "El ancho de pantalla donde cambia el diseño", "La velocidad de carga de una página", "Un tipo de letra para pantallas chicas"], correcta: 1 },
+              { tipo: "vf", afirmacion: "Sin la meta viewport, un celular puede mostrar tu página como si fuera un monitor de escritorio: diminuta y sin zoom.", correcta: true, explicacion: "la meta viewport le dice al navegador móvil que use el ancho real del dispositivo." },
+              { tipo: "relacionar", pares: [["max-width: 1024px", "Aplica en pantallas de 1024px o menos"], ["max-width: 600px", "Aplica en pantallas de 600px o menos"], ["@media", "La regla que activa estilos condicionales"], ["meta viewport", "Habilita el diseño responsive en móvil"]] },
+              { tipo: "quehace", codigo: "@media (max-width: 600px) {\n  .galeria { grid-template-columns: 1fr; }\n}", pregunta: "¿Qué verá un usuario con un celular de 390px?", opciones: ["Tres columnas de la galería", "Una sola columna apilada", "La galería oculta por completo", "Dos columnas de la galería"], correcta: 1 }
+            ]
+          },
+          {
+            id: "m3-a25",
+            titulo: "Responsive II: mobile-first de verdad",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>En m3-a24 hiciste desktop-first: diseño grande primero y <code>max-width</code> para colapsar. <strong>Mobile-first</strong> invierte la lógica: escribes <strong>primero los estilos de la pantalla más chica</strong>, sin media query, y luego agregas estilos con <code>min-width</code> para las pantallas más grandes.</p><pre><code>.plan {\n  display: grid;\n  grid-template-columns: 1fr;  ← base: el celular\n  gap: 12px;\n}\n\n@media (min-width: 768px) {\n  .plan { grid-template-columns: repeat(2, 1fr); }\n}\n\n@media (min-width: 1024px) {\n  .plan { grid-template-columns: repeat(3, 1fr); }\n}</code></pre><p><code>min-width</code> se lee \"desde este ancho en adelante\": a 768px sumas la segunda columna, a 1024px la tercera. La base ya funciona en el celular tal cual; las media queries solo <strong>agregan</strong> en pantallas grandes.</p><p>¿Por qué \"de verdad\"? Porque el tráfico real de la web es mayoritariamente móvil, el CSS base es más corto y simple, y te obliga a decidir qué es esencial antes de adornar. Además el orden importa: los bloques de <code>min-width</code> van de menor a mayor, porque el último que se cumple es el que gana. En el desktop-first de m3-a24 sobreescribes para hacer pequeño; aquí construyes de chico a grande.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Mobile-first es <strong>cocinar la base primero</strong>. Primero preparas el caldo (la pantalla chica): con solo el caldo ya hay sopa completa y rica. Cuando llegan más invitados (tablet), agregas verduras. Cuando llega la mesa llena (desktop), agregas la carne. Nunca quitas nada para adaptarte a una mesa chica: <strong>creces hacia arriba</strong>. El desktop-first de m3-a24 era al revés: cocinar el banquete grande y luego, si llegan pocos, retirar platos. Las dos sirven, pero la mayoría del mundo llega a tu página desde el plato chico — así que conviene que el plato chico sea perfecto desde el inicio.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Los planes de precio en mobile-first, con su base y sus dos crecimientos:</p><pre><code>.planes {\n  display: grid;\n  grid-template-columns: 1fr;\n  gap: 12px;\n}\n\n@media (min-width: 768px) {\n  .planes { grid-template-columns: repeat(2, 1fr); }\n}\n\n@media (min-width: 1024px) {\n  .planes { grid-template-columns: repeat(3, 1fr); }\n}</code></pre><p>En un celular de 390px verás los tres planes <strong>apilados en una columna</strong>, cómodos de leer y tocar — y esa disposición es la base, sin ninguna media query. En una tablet de 900px verás <strong>2 columnas</strong>: dos planes arriba y el tercero abajo. En un monitor de 1280px verás <strong>3 columnas</strong> lado a lado. El flujo es siempre agregar, nunca colapsar: escribe la base para el celular, prueba redimensionando, y añade <code>min-width</code> solo donde el layout lo pida.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Voy a mostrar mis 3 planes de precio. Házmelo en mobile-first: la base sin media query para que apilen en 1 columna en el celular, y con min-width pasen a 2 columnas a partir de 768px y a 3 a partir de 1024px. Explícame por qué la base no lleva media query y qué diferencia hay con usar max-width.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "multiple", pregunta: "En mobile-first, ¿dónde escribes los estilos base del celular?", opciones: ["Dentro de un @media (min-width: 1024px)", "Al inicio, sin media query", "Dentro de un @media (max-width: 768px)", "En un archivo aparte para escritorio"], correcta: 1 },
+              { tipo: "vf", afirmacion: "Mobile-first usa min-width: los estilos de pantallas grandes se agregan encima de la base del celular.", correcta: true, explicacion: "creces hacia arriba: cada media query suma reglas a partir de un ancho." },
+              { tipo: "completar", frase: "Desktop-first usa ____; mobile-first usa ____.", banco: ["max-width", "min-width", "gap", "fr"], respuestas: ["max-width", "min-width"] },
+              { tipo: "relacionar", pares: [["Base sin media query", "Mobile-first: el estilo del celular"], ["min-width: 768px", "Se activa desde 768px en adelante"], ["max-width: 768px", "Se activa hasta 768px (desktop-first)"], ["min-width: 1024px", "Se activa solo en pantallas grandes"]] },
+              { tipo: "quehace", codigo: ".plan { display: grid; grid-template-columns: 1fr; }\n@media (min-width: 1024px) {\n  .plan { grid-template-columns: repeat(3, 1fr); }\n}", pregunta: "¿Qué verá un usuario en una laptop de 1280px?", opciones: ["Una sola columna", "Tres columnas lado a lado", "Dos columnas", "Las tarjetas se desbordan"], correcta: 1 }
+            ]
+          },
+          {
+            id: "m3-a26",
+            titulo: "Transiciones y animaciones: movimiento con criterio",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>El movimiento en una página no es decoración: es <strong>información</strong>. Una transición le dice al ojo \"este botón está vivo, responde\"; una animación le dice \"algo está pasando aquí\". CSS te da dos herramientas, y cada una responde a una pregunta distinta.</p><p><strong>transition</strong> — el cambio <em>entre</em> dos estados. Lo activa un cambio de estado (hover, focus, una clase nueva) y suaviza el salto entre el estado original y el nuevo:</p><pre><code>.boton {\n  background: #2d6cdf;\n  transition: background 0.3s ease;\n}\n.boton:hover {\n  background: #1b4fae;\n}</code></pre><p>Traducción: \"cuando algo cambie el <code>background</code>, tómate 0.3 segundos y hazlo suave (<code>ease</code>)\". Sin la transición, el color cambiaría de golpe, como un flash; con ella, se desliza. El atajo <code>transition: all 0.3s ease</code> anima cualquier propiedad que cambie.</p><p><strong>animation + @keyframes</strong> — el movimiento <em>autónomo</em>: no necesita que pase nada. Defines los fotogramas y el elemento los recorre solo:</p><pre><code>@keyframes pulso {\n  0%   { transform: scale(1); }\n  50%  { transform: scale(1.05); }\n  100% { transform: scale(1); }\n}\n.badge { animation: pulso 2s infinite; }</code></pre><p>Un badge con <code>animation: pulso 2s infinite</code> crece y encoge suavemente por siempre, sin que el usuario toque nada.</p><p>La regla del criterio: <strong>si algo cambia porque el usuario hizo algo, es transition; si se mueve solo, es animation</strong>. El movimiento bueno es breve (0.2–0.4s) y con propósito. Y guarda el nombre <code>prefers-reduced-motion</code>: hay usuarios que piden menos movimiento, y la buena práctica es respetarlos (lo retomamos en m3-a29).</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Las transiciones son una <strong>puerta automática</strong>: se abre suave porque te acercaste — la acción es tuya. Las animaciones son el <strong>neón del letrero</strong>: parpadea solo, sin que nadie lo pida, para atraer miradas. Un edificio bien diseñado no llena el pasillo de luces parpadeantes: usa puertas que responden con elegancia y apenas un letrero que invite. Eso es la diferencia entre transición y animación — y por qué el \"movimiento con criterio\" es casi siempre poca transición y menos animación.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>La combinación clásica: una tarjeta que se levanta al pasar el mouse.</p><pre><code>.tarjeta {\n  background: #fff;\n  box-shadow: 0 2px 8px rgba(0,0,0,0.1);\n  transition: transform 0.25s ease, box-shadow 0.25s ease;\n}\n.tarjeta:hover {\n  transform: translateY(-4px);\n  box-shadow: 0 12px 24px rgba(0,0,0,0.18);\n}</code></pre><p>En pantalla: la tarjeta descansa con una sombra ligera. Cuando el mouse entra, se <strong>eleva 4px</strong> y la sombra se hace más grande y profunda — como si se acercara a ti. El movimiento dura un cuarto de segundo: lo notas, pero no te cansa. Cambio pequeño, rápido y con propósito: esa es la diferencia entre una página que se siente viva y una que se siente mareante.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Voy a añadir movimiento a mi página con criterio. Primero dime dónde el movimiento aporta y dónde estorba. Después agrega transiciones suaves (0.25s) a los botones y tarjetas, y respeta prefers-reduced-motion: si el usuario prefiere menos movimiento, que los cambios sean instantáneos. Explícame cada regla que agregues.\"</p></blockquote><p>Ese prompt no solo le pide animar: le pide <strong>decidir</strong> dónde animar — el criterio que separa a un director de un decorador.</p>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "multiple", pregunta: "¿Cuál es la diferencia clave entre transition y animation?", opciones: ["transition se usa para imágenes y animation para texto", "transition responde a un cambio de estado; animation se mueve sola", "transition solo funciona en hover y animation en click", "Son lo mismo, solo cambia la sintaxis"], correcta: 1 },
+              { tipo: "completar", frase: "En transition: background 0.3s ease, el ____ es la propiedad que cambia, 0.3s es la ____ y ease es la ____.", banco: ["background", "duración", "curva", "pantalla"], respuestas: ["background", "duración", "curva"] },
+              { tipo: "vf", afirmacion: "animation con @keyframes necesita que el usuario haga hover para moverse.", correcta: false, explicacion: "la animación se mueve sola; la transición es la que responde a un cambio de estado." },
+              { tipo: "relacionar", pares: [["transition", "Suaviza el cambio entre dos estados"], ["animation + @keyframes", "Movimiento autónomo que se repite solo"], ["prefers-reduced-motion", "Respeta a quienes prefieren menos movimiento"], ["transition: all 0.3s ease", "Atajo para animar cualquier propiedad en 0.3s"]] },
+              { tipo: "quehace", codigo: ".boton { transition: background 0.3s ease; }\n.boton:hover { background: #1b4fae; }", pregunta: "Al pasar el mouse por el botón, ¿qué verás?", opciones: ["El color cambia de golpe, sin suavizado", "El fondo cambia a azul oscuro de forma suave en 0.3 segundos", "El botón se mueve hacia arriba", "No pasa nada"], correcta: 1 }
+            ]
+          },
+          {
+            id: "m3-a27",
+            titulo: "Sombras, bordes y radios: el detalle que se nota",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Hay un 90% de la \"calidad visual\" de una página que no viene de las fuentes ni de los colores: viene de tres propiedades discretas que le dan <strong>profundidad, marco y amabilidad</strong> a cualquier caja:</p><ul><li><strong>box-shadow</strong> — la sombra que da profundidad. Sintaxis: <code>box-shadow: desplazamiento-x desplazamiento-y desenfoque color;</code>. <code>box-shadow: 0 4px 12px rgba(0,0,0,0.15)</code> es una sombra suave que \"levanta\" la caja del fondo. Sin desenfoque (0), la sombra se vuelve un anillo sólido — otra herramienta útil para bordes que no ocupan espacio.</li><li><strong>border</strong> — el marco. Tres partes: grosor, estilo y color. <code>border: 1px solid #d0d0d0;</code> es el clásico: un borde fino y discreto. No lo confundas con <code>outline</code>: el outline no ocupa espacio y es el rey del foco visible (m3-a29).</li><li><strong>border-radius</strong> — qué tan redondeadas son las esquinas. <code>border-radius: 8px</code> suaviza apenas; <code>50%</code> convierte una caja cuadrada en círculo; <code>999px</code> hace píldoras — el clásico de botones y badges.</li></ul><p>Las tres juntas sobre una caja:</p><pre><code>.caja {\n  box-shadow: 0 4px 12px rgba(0,0,0,0.15);\n  border: 1px solid #d0d0d0;\n  border-radius: 8px;\n}</code></pre><p>En pantalla: una caja con borde fino, esquinas suaves y una sombra que la eleva del fondo. La regla mental para recordar el papel de cada una: <strong>la sombra dice qué tan alto está, el borde dice dónde termina, y el radio dice qué tan amigable es</strong>.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Son los <strong>tres acabados de un mueble de madera</strong>. El borde (border) es el marco que delimita la pieza. El radio (border-radius) es el lijado de las esquinas: una esquina a 90 grados se ve ruda y fría; lijada, se ve cómoda y pensada. Y la sombra (box-shadow) es la elevación: un mueble pegado al suelo se ve plano; con una sombra proyectada, se ve que está a 10 cm del piso — que flota, que tiene presencia. Una caja sin estos tres acabados es madera cruda; con ellos, es mobiliario terminado.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>La tarjeta de producto que ves en cualquier tienda:</p><pre><code>.tarjeta {\n  background: #fff;\n  border: 1px solid #e2e2e2;\n  border-radius: 12px;\n  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);\n  padding: 16px;\n}</code></pre><p>En pantalla: un recuadro blanco con un borde casi invisible (<code>#e2e2e2</code>), esquinas suavemente redondeadas (12px) y una sombra discreta que lo separa del fondo. El conjunto: la tarjeta <strong>no toca</strong> la página — parece flotar a unos centímetros. Quítale la sombra y el borde y verás un bloque blanco plano flotando en el vacío. Esa es la diferencia que el ojo nota aunque no sepa nombrarla: profundidad y marco.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Estiliza esta tarjeta para que se vea terminada: borde fino, esquinas redondeadas y una sombra suave. Explícame qué le aporta cada propiedad (box-shadow, border, border-radius) al resultado visual, y dame dos variantes: una sutil para contenido y una con más sombra para elementos destacados.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "multiple", pregunta: "¿Qué hace border-radius: 50% en una caja cuadrada?", opciones: ["La convierte en un círculo", "Le agrega un marco dorado", "La achica a la mitad", "Redondea solo una esquina"], correcta: 0 },
+              { tipo: "completar", frase: "En box-shadow: 0 4px 12px rgba(0,0,0,0.15), el 0 es el desplazamiento ____, el 4px el desplazamiento ____ y el 12px es el ____.", banco: ["horizontal", "vertical", "desenfoque", "radio"], respuestas: ["horizontal", "vertical", "desenfoque"] },
+              { tipo: "vf", afirmacion: "border y outline son exactamente lo mismo.", correcta: false, explicacion: "el borde ocupa espacio en el layout; el outline no, y se usa para el foco visible (m3-a29)." },
+              { tipo: "relacionar", pares: [["box-shadow", "Da profundidad: eleva la caja"], ["border", "El marco que delimita la caja"], ["border-radius", "Redondea las esquinas"], ["padding", "El aire entre el borde y el contenido"]] },
+              { tipo: "quehace", codigo: ".tarjeta {\n  border: 1px solid #e2e2e2;\n  border-radius: 12px;\n  box-shadow: 0 4px 12px rgba(0,0,0,0.08);\n}", pregunta: "¿Cómo se verá la tarjeta en pantalla?", opciones: ["Plana, sin bordes ni sombra", "Con borde fino, esquinas redondeadas y una sombra suave que la levanta del fondo", "Con un marco grueso y negro", "Redonda por completo"], correcta: 1 }
+            ]
+          },
+          {
+            id: "m3-a28",
+            titulo: "Dark mode y prefers-color-scheme",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>El <strong>dark mode</strong> no es \"poner el fondo negro\": es cambiar la paleta de luz según la preferencia del sistema del usuario. La herramienta es una media query que lee esa preferencia:</p><pre><code>@media (prefers-color-scheme: dark) {\n  :root {\n    --fondo: #1a1a1a;\n    --texto: #eaeaea;\n  }\n}</code></pre><p>El navegador le pregunta al sistema operativo: \"¿este usuario prefiere tema oscuro?\". Si la respuesta es sí, se aplican esas reglas. La palabra clave es <strong>prefers</strong>: no es que el usuario esté \"en modo oscuro\" por decreto — es que lo <em>prefiere</em>.</p><p>Aquí es donde las variables CSS (m3-a16) dejan de ser un lujo: si tus colores viven en variables, activar el dark mode es <strong>sobreescribir las variables</strong> en una sola media query. El mismo HTML, el mismo CSS base — solo cambia el contenido de los botes de pintura. Sin variables, tendrías que reescribir el color en cada regla que lo use: un dolor que no quieres.</p><p>El patrón completo: defines los valores claros en <code>:root</code> (el light mode es la base, sin media query, igual que mobile-first en m3-a25) y dentro de la media query sobreescribes solo lo que cambia. Trampa común: creer que en dark mode \"todo se vuelve negro\". No: el texto también cambia (claro en vez de oscuro), los bordes se suavizan y el <strong>contraste se mantiene</strong> (m3-a29). Dark mode no es diseño oscuro: es <em>iluminación distinta con la misma legibilidad</em>.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Es la <strong>misma cafetería en dos turnos</strong>. De día: luz natural, mesas claras, tarjetas blancas — light mode. De noche: bajan las luces, encienden lámparas cálidas, y los manteles oscuros hacen que lo importante resalte sin cansar los ojos. No se rediseñó el local: solo cambió la <strong>iluminación</strong>. Las variables son los interruptores: cambias uno y toda la sala responde. Por eso el dark mode con variables toma cinco líneas, y sin variables es remodelar el local entero cada vez que un cliente pide la noche.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Una tarjeta que respeta la preferencia del sistema:</p><pre><code>:root {\n  --fondo: #ffffff;\n  --texto: #111111;\n  --sombra: rgba(0, 0, 0, 0.08);\n}\n\n@media (prefers-color-scheme: dark) {\n  :root {\n    --fondo: #1a1a1a;\n    --texto: #eaeaea;\n    --sombra: rgba(0, 0, 0, 0.5);\n  }\n}\n\n.tarjeta {\n  background: var(--fondo);\n  color: var(--texto);\n  box-shadow: 0 4px 12px var(--sombra);\n}</code></pre><p>En pantalla: si tu sistema está en tema claro verás una tarjeta blanca con texto oscuro. Cambia tu sistema a tema oscuro, recarga, y la misma tarjeta aparecerá con fondo <code>#1a1a1a</code> y texto claro. El HTML no se tocó: solo se sobreescribieron tres variables. Esa es la demostración más clara de por qué la paleta vive en <code>:root</code> (m3-a16): el dark mode es literalmente <strong>cambiar el contenido de tres botes</strong>.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Voy a agregar dark mode a mi sitio. Usa variables CSS para la paleta: define light mode como base y agrega una media query prefers-color-scheme: dark que las sobreescriba. Asegúrate de que el contraste del texto se mantenga en ambos modos y dime qué colores cambiaste y por qué.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "multiple", pregunta: "¿Qué media query detecta la preferencia de tema del usuario?", opciones: ["@media (max-width: 768px)", "@media (prefers-color-scheme: dark)", "@media (orientation: portrait)", "@media (min-width: 1024px)"], correcta: 1 },
+              { tipo: "completar", frase: "El dark mode se logra ____ las variables CSS dentro de la media query; por eso conviene que la paleta viva en ____.", banco: ["sobreescribiendo", ":root", "borrando", "el body"], respuestas: ["sobreescribiendo", ":root"] },
+              { tipo: "vf", afirmacion: "En dark mode, el texto debe seguir teniendo buen contraste contra el fondo.", correcta: true, explicacion: "dark mode es otra iluminación, no una excusa para bajar la legibilidad (m3-a29)." },
+              { tipo: "relacionar", pares: [["prefers-color-scheme", "Lee si el usuario prefiere tema claro u oscuro"], ["light", "El valor por defecto del tema"], ["dark", "El tema de iluminación baja"], ["var(--fondo)", "Lee el color de fondo desde :root"]] },
+              { tipo: "quehace", codigo: ":root { --fondo: #fff; --texto: #111; }\n@media (prefers-color-scheme: dark) {\n  :root { --fondo: #1a1a1a; --texto: #eaeaea; }\n}\nbody { background: var(--fondo); color: var(--texto); }", pregunta: "En un dispositivo con tema oscuro activado, ¿cómo se verá la página?", opciones: ["Fondo blanco con texto oscuro", "Fondo oscuro #1a1a1a con texto claro #eaeaea", "Sin colores definidos", "Fondo azul con texto rojo"], correcta: 1 }
+            ]
+          },
+          {
+            id: "m3-a29",
+            titulo: "Accesibilidad: contraste, foco visible y lectores de pantalla",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>La <strong>accesibilidad</strong> es que tu página la pueda usar <strong>todas</strong> las personas: con baja visión, sin mouse, con lector de pantalla. No es un extra: es parte de la maquetación. Tres piezas controlas desde CSS y HTML:</p><ul><li><strong>Contraste</strong> — la diferencia entre texto y fondo. La pauta web (WCAG) pide <strong>4.5:1</strong> para texto normal y <strong>3:1</strong> para texto grande. El gris claro sobre blanco es bonito… e ilegible. La forma de no equivocarte: pídele a la IA los valores y que verifique la proporción.</li><li><strong>Foco visible</strong> — cuando navegas con el teclado (Tab), el navegador dibuja un anillo alrededor del elemento enfocado. Nunca lo borres: es la única pista del usuario de teclado sobre dónde está parado. La práctica moderna es estilizarlo bien con <code>:focus-visible</code>:</li></ul><pre><code>button:focus-visible {\n  outline: 3px solid #2d6cdf;\n  outline-offset: 2px;\n}</code></pre><p>Ese anillo azul de 3px con una separación de 2px aparece al navegar con Tab y no molesta a quien usa mouse. <strong>Nunca uses <code>outline: none</code> sin reemplazarlo</strong> — eso es apagar la luz del pasillo.</p><ul><li><strong>Lectores de pantalla</strong> — programas que leen la página en voz alta. Se apoyan en la semántica (m3-a3), en el <code>alt</code> de las imágenes y en <code>aria-label</code> para nombrar lo que no tiene texto visible: <code>&lt;button aria-label=\"Cerrar\"&gt;×&lt;/button&gt;</code>.</li></ul><p>La mentalidad: la accesibilidad <strong>no se ve</strong> en una captura, pero se siente en quién puede usar tu página. Y no es caridad: es buen negocio — más personas pueden pagarte.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>La accesibilidad son las <strong>rampas y el braille de un edificio</strong>. Se construyen al diseñar, no después. Y una rampa bien hecha no la usa solo alguien en silla de ruedas: la usa quien llega con maletas, quien empuja una carriola, quien carga cajas. El foco visible es la <strong>luz de emergencia del pasillo</strong>: nadie la piensa cuando hay luz de día, pero sin ella caminar de noche es imposible. El contraste es la <strong>señalética legible</strong>: no sirve un letrero que solo leen los de vista perfecta a mediodía. Diseñar accesible no limita tu página: la abre para todos — tú incluido.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>El botón de icono que solo tiene un símbolo — el caso clásico donde fallan los lectores de pantalla:</p><pre><code>&lt;button aria-label=\"Cerrar sesión\"&gt;⏻&lt;/button&gt;\n\nbutton {\n  padding: 8px;\n  border-radius: 8px;\n}\nbutton:focus-visible {\n  outline: 3px solid #2d6cdf;\n  outline-offset: 2px;\n}</code></pre><p>En pantalla: un botón pequeño con un símbolo de apagado. Si navegas con Tab hasta él, verás un <strong>anillo azul de 3px</strong> rodeándolo con un pequeño respiro — imposible perderlo. Y un lector de pantalla no dirá \"símbolo raro\": dirá \"botón, cerrar sesión\", gracias al <code>aria-label</code>. Los dos canales cubiertos: visual y sonoro.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Audita la accesibilidad de mi página: revisa el contraste de todo el texto (verifica la proporción WCAG 4.5:1), confirma que el foco visible exista en botones y enlaces, y dime qué imágenes faltan de alt y qué botones necesitan aria-label. Dame la lista de correcciones, no el sermón.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "multiple", pregunta: "¿Qué proporción de contraste pide la pauta web (WCAG) para texto normal?", opciones: ["1:1", "2:1", "4.5:1", "10:1"], correcta: 2 },
+              { tipo: "vf", afirmacion: "Un botón que solo muestra un icono puede ser entendido por un lector de pantalla gracias a aria-label.", correcta: true, explicacion: "aria-label le da un nombre legible a lo que no tiene texto visible." },
+              { tipo: "completar", frase: "El ____ visible es la pista de dónde está parado el usuario de ____; se estiliza con :focus-visible.", banco: ["foco", "teclado", "mouse", "tacto"], respuestas: ["foco", "teclado"] },
+              { tipo: "relacionar", pares: [["Contraste 4.5:1", "Texto legible sobre su fondo"], [":focus-visible", "El anillo que ves al navegar con Tab"], ["aria-label", "Nombre para elementos sin texto visible"], ["alt", "Descripción de una imagen"]] },
+              { tipo: "quehace", codigo: "button:focus-visible {\n  outline: 3px solid #2d6cdf;\n  outline-offset: 2px;\n}", pregunta: "¿Cuándo verás ese anillo azul?", opciones: ["Siempre que el botón esté en pantalla", "Solo cuando el botón recibe foco por teclado", "Solo cuando haces clic con el mouse", "Nunca: outline no se renderiza"], correcta: 1 }
+            ]
+          },
+          {
+            id: "m3-a30",
+            titulo: "Repaso integrador de maquetación (mega-quiz jugable)",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Treinta lecciones después tienes el mapa completo de la maquetación. Este repaso te lo devuelve en un solo vistazo — <strong>reconocer, no memorizar</strong>:</p><ul><li><strong>Estructura</strong> — HTML semántico (m3-a3): <code>header</code>, <code>nav</code>, <code>main</code>, <code>section</code>, <code>footer</code>. La página es un esqueleto con nombre.</li><li><strong>Texto</strong> — encabezados, listas y énfasis (m3-a4); tipografía con jerarquía en <code>rem</code> (m3-a15 y m3-a17).</li><li><strong>Cajas</strong> — el box model (m3-a14), <code>display</code> (m3-a18) y los acabados: borde, radio y sombra (m3-a27).</li><li><strong>Layout</strong> — flexbox para una dimensión (m3-a19 y m3-a20) y grid para dos (m3-a21 y m3-a22).</li><li><strong>Respuesta</strong> — colores y variables en <code>:root</code> (m3-a16), responsive con media queries (m3-a24 y m3-a25) y dark mode con <code>prefers-color-scheme</code> (m3-a28).</li><li><strong>Vida</strong> — transiciones y animaciones con criterio (m3-a26) y accesibilidad para todos (m3-a29).</li></ul><p>Cada pieza responde a una pregunta concreta: ¿qué es esta caja? (semántica), ¿cómo se ve? (estilo), ¿dónde vive? (layout), ¿cómo se comporta al cambiar de pantalla? (responsive), ¿cómo lo percibe cada persona? (accesibilidad). El mega-quiz viene abajo: si lo resuelves sin ayuda, <strong>ya sabes dirigir a la IA para maquetar</strong> — solo falta que se lo pidas.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Este repaso es la <strong>entrega de la casa</strong>. Durante el mes construiste por habitaciones: el cimiento (HTML semántico), los muros (cajas y display), la distribución (flexbox y grid), las ventanas que se adaptan (responsive), la iluminación (dark mode), los acabados (sombra, borde, radio) y las rampas de entrada (accesibilidad). Ahora recorres la casa entera con el propietario: cada habitación que viste por separado cobra sentido en conjunto. El mega-quiz es ese recorrido: <strong>no te preguntan cómo se hace una pared; te preguntan si la casa funciona</strong>.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>La mini-página que junta todo el mes — una cuadrícula de tarjetas responsive, accesible y con vida:</p><pre><code>:root {\n  --fondo: #fff;\n  --texto: #111;\n  --sombra: rgba(0, 0, 0, 0.08);\n}\n@media (prefers-color-scheme: dark) {\n  :root { --fondo: #1a1a1a; --texto: #eaeaea; --sombra: rgba(0, 0, 0, 0.5); }\n}\n\nbody { background: var(--fondo); color: var(--texto); }\n\n.grid {\n  display: grid;\n  grid-template-columns: repeat(3, 1fr);\n  gap: 16px;\n}\n@media (max-width: 768px) {\n  .grid { grid-template-columns: 1fr; }\n}\n\n.tarjeta {\n  background: var(--fondo);\n  border: 1px solid rgba(0,0,0,0.1);\n  border-radius: 12px;\n  box-shadow: 0 4px 12px var(--sombra);\n  transition: transform 0.25s ease;\n}\n.tarjeta:hover { transform: translateY(-4px); }\n.tarjeta:focus-visible { outline: 3px solid #2d6cdf; outline-offset: 2px; }</code></pre><p>En pantalla: tres tarjetas con borde fino, esquinas redondeadas y sombra suave. Al pasar el mouse se elevan 4px; al navegar con Tab se iluminan con el anillo de foco; en una pantalla angosta se apilan en una columna; y si el sistema del usuario está en oscuro, toda la página cambia de iluminación sin tocar el HTML. Cada línea de ese bloque llegó de una lección distinta del mes — y ahora se lee como una sola cosa.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Hazme un examen de repaso de maquetación: 10 preguntas que mezclen semántica HTML, box model, flexbox, grid, responsive, dark mode, transiciones y accesibilidad. Sin opciones de respuesta: yo respondo libre, y al final dime en cuáles fallé y a qué lección debo volver. Quiero medir lo que ya sé, no memorizar.\"</p></blockquote><p>Ese prompt convierte a la IA en tu <strong>examinador personal</strong>. La autoevaluación es el cierre del mes: reconoces lo que sabes y vuelves exactamente a la lección que lo completa.</p>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "multiple", pregunta: "¿Cuál de estas es la estructura semántica correcta de una página?", opciones: ["header, footer, nav y main en cualquier orden", "Un solo &lt;div&gt; que contiene todo", "header, nav, un solo main y footer", "main repetido tres veces para tener más contenido"], correcta: 2 },
+              { tipo: "completar", frase: "El box model (m3-a14) se compone de content + ____ + border + ____.", banco: ["padding", "margin", "gap", "radio"], respuestas: ["padding", "margin"] },
+              { tipo: "relacionar", pares: [["justify-content", "La alineación en el eje principal de flexbox"], ["grid-template-columns", "El ancho de las columnas"], ["border-radius", "Qué tan redondeadas están las esquinas"], ["prefers-color-scheme", "Detecta la preferencia de tema del usuario"]] },
+              { tipo: "vf", afirmacion: "En mobile-first los estilos del celular van en la base, sin media query, y las media queries usan min-width.", correcta: true, explicacion: "creces de chico a grande: la base es el celular y cada media query suma a partir de un ancho (m3-a25)." },
+              { tipo: "ordenar", instruccion: "Pasos para construir una página responsive y accesible:", elementos: ["esqueleto semántico con header, nav, main y footer", "estilos base con variables en :root", "grid con columnas flexibles (fr)", "media query para pantallas chicas", "foco visible y aria-label"] },
+              { tipo: "quehace", codigo: ".plan { display: grid; grid-template-columns: 1fr; }\n@media (min-width: 768px) {\n  .plan { grid-template-columns: repeat(2, 1fr); }\n}", pregunta: "Un usuario en un celular de 400px, ¿cuántas columnas verá?", opciones: ["Dos columnas", "Una columna", "Tres columnas", "La página se desborda"], correcta: 1 },
+              { tipo: "multiple", pregunta: "Un texto gris claro sobre fondo blanco (contraste bajo) es un problema de…", opciones: ["Estética: solo se ve feo", "Accesibilidad: la pauta pide 4.5:1 para texto normal", "Velocidad de carga", "Responsive design"], correcta: 1 },
+              { tipo: "completar", frase: "El foco visible se estiliza con :focus-____ y le da la pista de navegación a quien usa ____.", banco: ["visible", "teclado", "mouse", "tacto"], respuestas: ["visible", "teclado"] }
+            ]
+          },
+      ] },
+      "b": { nombre: "JavaScript en el navegador", icono: "⚡", lecciones: [
+          { id: "m3-b1", titulo: "Dónde vive el JavaScript de una página y cuándo se ejecuta", proximamente: true },
+          { id: "m3-b2", titulo: "El DOM: la página como árbol de objetos", proximamente: true },
+          { id: "m3-b3", titulo: "Seleccionar elementos: querySelector y compañía", proximamente: true },
+          { id: "m3-b4", titulo: "Cambiar contenido: textContent vs innerHTML", proximamente: true },
+          { id: "m3-b5", titulo: "Cambiar estilos y clases desde JavaScript", proximamente: true },
+          { id: "m3-b6", titulo: "Eventos I: el click, el más importante de todos", proximamente: true },
+          { id: "m3-b7", titulo: "Eventos II: input, change y submit", proximamente: true },
+          { id: "m3-b8", titulo: "Eventos III: el objeto event y preventDefault", proximamente: true },
+          { id: "m3-b9", titulo: "Crear y borrar elementos dinámicamente", proximamente: true },
+          { id: "m3-b10", titulo: "Recorrer listas: pintar datos en pantalla", proximamente: true },
+          { id: "m3-b11", titulo: "Funciones flecha y sintaxis moderna", proximamente: true },
+          { id: "m3-b12", titulo: "Métodos de arreglo: map, filter, find", proximamente: true },
+          { id: "m3-b13", titulo: "Objetos y destructuring", proximamente: true },
+          { id: "m3-b14", titulo: "Template literals: armar HTML desde datos", proximamente: true },
+          { id: "m3-b15", titulo: "Condicionales en la interfaz: mostrar, ocultar, alternar", proximamente: true },
+          { id: "m3-b16", titulo: "localStorage: recordar cosas en el navegador", proximamente: true },
+          { id: "m3-b17", titulo: "JSON en la práctica: parse y stringify", proximamente: true },
+          { id: "m3-b18", titulo: "Asincronía I: por qué existe el mientras tanto", proximamente: true },
+          { id: "m3-b19", titulo: "Asincronía II: promesas", proximamente: true },
+          { id: "m3-b20", titulo: "Asincronía III: async / await", proximamente: true },
+          { id: "m3-b21", titulo: "fetch: traer datos de una API", proximamente: true },
+          { id: "m3-b22", titulo: "Manejo de errores: try/catch y estados de carga", proximamente: true },
+          { id: "m3-b23", titulo: "Formularios con JavaScript: capturar, validar, enviar", proximamente: true },
+          { id: "m3-b24", titulo: "Debugging I: la consola es tu mejor amiga", proximamente: true },
+          { id: "m3-b25", titulo: "Debugging II: el inspector y los breakpoints", proximamente: true },
+          { id: "m3-b26", titulo: "Módulos: import y export", proximamente: true },
+          { id: "m3-b27", titulo: "¿Qué es un framework y por qué existen?", proximamente: true },
+          { id: "m3-b28", titulo: "React en concepto: componentes, props y estado", proximamente: true },
+          { id: "m3-b29", titulo: "Next.js en concepto: cuándo vale la pena y cuándo no", proximamente: true },
+          { id: "m3-b30", titulo: "Repaso integrador de JavaScript (mega-quiz jugable)", proximamente: true },
+      ] },
+      "c": { nombre: "Construye con IA III", icono: "🖼", lecciones: [
+          { id: "m3-c1", titulo: "El brief de interfaz: describir lo que todavía no existe", proximamente: true },
+          { id: "m3-c2", titulo: "PRÁCTICA: maquetar una landing completa con IA", proximamente: true },
+          { id: "m3-c3", titulo: "Leer el HTML que la IA generó, etiqueta por etiqueta", proximamente: true },
+          { id: "m3-c4", titulo: "PRÁCTICA: hacerla responsive de verdad", proximamente: true },
+          { id: "m3-c5", titulo: "Pedir cambios visuales con precisión quirúrgica", proximamente: true },
+          { id: "m3-c6", titulo: "PRÁCTICA: agregar dark mode a tu landing", proximamente: true },
+          { id: "m3-c7", titulo: "El vocabulario visual: lo que debes saber nombrar", proximamente: true },
+          { id: "m3-c8", titulo: "PRÁCTICA: formulario de contacto que funciona", proximamente: true },
+          { id: "m3-c9", titulo: "Conectar el formulario a WhatsApp o correo", proximamente: true },
+          { id: "m3-c10", titulo: "PRÁCTICA: galería de productos desde datos", proximamente: true },
+          { id: "m3-c11", titulo: "Separar datos de presentación: por qué cambia todo", proximamente: true },
+          { id: "m3-c12", titulo: "PRÁCTICA: filtros y buscador en el navegador", proximamente: true },
+          { id: "m3-c13", titulo: "Cuando la IA genera código que no entiendes", proximamente: true },
+          { id: "m3-c14", titulo: "PRÁCTICA: consumir una API pública real", proximamente: true },
+          { id: "m3-c15", titulo: "Los tres estados de toda interfaz: cargando, vacío, error", proximamente: true },
+          { id: "m3-c16", titulo: "PRÁCTICA: manejar los tres estados", proximamente: true },
+          { id: "m3-c17", titulo: "Diseño desde referencia: darle una imagen a la IA", proximamente: true },
+          { id: "m3-c18", titulo: "PRÁCTICA: replicar la estructura de un sitio que te gusta", proximamente: true },
+          { id: "m3-c19", titulo: "Componentes: pensar en piezas reutilizables", proximamente: true },
+          { id: "m3-c20", titulo: "PRÁCTICA: convertir tu sitio en componentes", proximamente: true },
+          { id: "m3-c21", titulo: "Herramientas de generación de UI: v0, Bolt, Lovable", proximamente: true },
+          { id: "m3-c22", titulo: "PRÁCTICA: generar una interfaz con v0 y adaptarla", proximamente: true },
+          { id: "m3-c23", titulo: "Cuándo usar framework y cuándo basta HTML plano", proximamente: true },
+          { id: "m3-c24", titulo: "PRÁCTICA: tu primer proyecto en React dirigido con IA", proximamente: true },
+          { id: "m3-c25", titulo: "Rendimiento: por qué tu sitio carga lento", proximamente: true },
+          { id: "m3-c26", titulo: "PRÁCTICA: optimizar imágenes y tiempo de carga", proximamente: true },
+          { id: "m3-c27", titulo: "SEO básico: que Google entienda de qué va tu sitio", proximamente: true },
+          { id: "m3-c28", titulo: "PRÁCTICA: meta tags, Open Graph y favicon", proximamente: true },
+          { id: "m3-c29", titulo: "Tu flujo completo de construcción de interfaces", proximamente: true },
+          { id: "m3-c30", titulo: "Repaso + arranque del proyecto final del mes", proximamente: true },
+      ] }
+    }
   }
 };
