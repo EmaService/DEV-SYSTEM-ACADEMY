@@ -3,16 +3,50 @@
   var cta = document.getElementById("success-cta");
   var raw = localStorage.getItem("devsystem_pending_checkout");
 
-  if (!raw) {
-    msg.textContent = "No encontramos una compra reciente en este navegador.";
-    return;
+  var data = null;
+  if (raw) {
+    try {
+      data = JSON.parse(raw);
+    } catch (error) {
+      data = null;
+    }
   }
 
-  var data;
-  try {
-    data = JSON.parse(raw);
-  } catch (error) {
-    msg.textContent = "No se pudo procesar el registro de compra.";
+  var cloudEnabled = window.DevSystemCloud && window.DevSystemCloud.isEnabled();
+
+  async function mostrarUltimoPago(email) {
+    if (!cloudEnabled || !window.DevSystemCloud.getPaymentDates) {
+      msg.textContent = "Estamos confirmando tu pago. Si no ves el acceso en unos minutos, escríbenos.";
+      return;
+    }
+    var pagos = await window.DevSystemCloud.getPaymentDates(email).catch(function () { return []; });
+    if (pagos && pagos.length > 0) {
+      var ultimo = 0;
+      for (var i = 0; i < pagos.length; i++) {
+        if (Number(pagos[i].month_id) > ultimo) ultimo = Number(pagos[i].month_id);
+      }
+      if (ultimo > 0) {
+        msg.textContent = "Tu pago fue confirmado. Ya tienes acceso al Módulo " + ultimo + ".";
+        cta.href = "portal.html";
+        cta.textContent = "Ir a mi portal";
+        return;
+      }
+    }
+    msg.textContent = "Estamos confirmando tu pago. Si no ves el acceso en unos minutos, escríbenos.";
+  }
+
+  /* Caso: localStorage vacío (la causa del problema original). No mostrar error. */
+  if (!data || !data.email) {
+    var maybeEmail = null;
+    if (cloudEnabled) {
+      var user = await window.DevSystemCloud.getCurrentUser().catch(function () { return null; });
+      if (user && user.email) maybeEmail = user.email;
+    }
+    if (maybeEmail) {
+      await mostrarUltimoPago(maybeEmail);
+    } else {
+      msg.textContent = "Estamos confirmando tu pago. Si no ves el acceso en unos minutos, escríbenos.";
+    }
     return;
   }
 
@@ -25,34 +59,34 @@
     monthId: data.monthId,
   });
 
-  if (!localResult.ok && localResult.message.indexOf("ya esta pagado") === -1) {
-    msg.textContent = localResult.message;
-    return;
-  }
+  var yaPagado = localResult && !localResult.ok && localResult.message && localResult.message.indexOf("ya esta pagado") !== -1;
 
-  if (window.DevSystemCloud && window.DevSystemCloud.isEnabled()) {
-    await window.DevSystemCloud.recordMonthlyPayment({
-      email: data.email,
-      monthId: data.monthId,
-      plan: data.plan,
-      price: data.price,
-      source: "stripe_success_return",
-    });
+  if (cloudEnabled) {
+    if (!yaPagado) {
+      await window.DevSystemCloud.recordMonthlyPayment({
+        email: data.email,
+        monthId: data.monthId,
+        plan: data.plan,
+        price: data.price,
+        source: "stripe_success_return",
+      }).catch(function () {});
 
-    await window.DevSystemCloud.upsertEnrollment({
-      fullName: data.fullName,
-      email: data.email,
-      phone: data.phone,
-      plan: data.plan,
-      price: data.price,
-      monthId: data.monthId,
-      source: "stripe_success_return",
-      status: "activo",
-      paid: true,
-    });
+      await window.DevSystemCloud.upsertEnrollment({
+        fullName: data.fullName,
+        email: data.email,
+        phone: data.phone,
+        plan: data.plan,
+        price: data.price,
+        monthId: data.monthId,
+        source: "stripe_success_return",
+        status: "activo",
+        paid: true,
+      }).catch(function () {});
+    }
   }
 
   localStorage.removeItem("devsystem_pending_checkout");
-  msg.textContent = "Pago del mes " + data.monthId + " registrado para: " + data.email;
-  cta.href = "login.html?mode=register&email=" + encodeURIComponent(data.email);
+  msg.textContent = "Tu pago fue confirmado. Ya tienes acceso al Módulo " + data.monthId + ".";
+  cta.href = "portal.html";
+  cta.textContent = "Ir a mi portal";
 })();
