@@ -8237,36 +8237,1029 @@ window.DEV_SYSTEM_LECCIONES = {
           },
       ] },
       "c": { nombre: "Construye con IA III", icono: "🖼", lecciones: [
-          { id: "m3-c1", titulo: "El brief de interfaz: describir lo que todavía no existe", proximamente: true },
-          { id: "m3-c2", titulo: "PRÁCTICA: maquetar una landing completa con IA", proximamente: true },
-          { id: "m3-c3", titulo: "Leer el HTML que la IA generó, etiqueta por etiqueta", proximamente: true },
-          { id: "m3-c4", titulo: "PRÁCTICA: hacerla responsive de verdad", proximamente: true },
-          { id: "m3-c5", titulo: "Pedir cambios visuales con precisión quirúrgica", proximamente: true },
-          { id: "m3-c6", titulo: "PRÁCTICA: agregar dark mode a tu landing", proximamente: true },
-          { id: "m3-c7", titulo: "El vocabulario visual: lo que debes saber nombrar", proximamente: true },
-          { id: "m3-c8", titulo: "PRÁCTICA: formulario de contacto que funciona", proximamente: true },
-          { id: "m3-c9", titulo: "Conectar el formulario a WhatsApp o correo", proximamente: true },
-          { id: "m3-c10", titulo: "PRÁCTICA: galería de productos desde datos", proximamente: true },
-          { id: "m3-c11", titulo: "Separar datos de presentación: por qué cambia todo", proximamente: true },
-          { id: "m3-c12", titulo: "PRÁCTICA: filtros y buscador en el navegador", proximamente: true },
-          { id: "m3-c13", titulo: "Cuando la IA genera código que no entiendes", proximamente: true },
-          { id: "m3-c14", titulo: "PRÁCTICA: consumir una API pública real", proximamente: true },
-          { id: "m3-c15", titulo: "Los tres estados de toda interfaz: cargando, vacío, error", proximamente: true },
-          { id: "m3-c16", titulo: "PRÁCTICA: manejar los tres estados", proximamente: true },
-          { id: "m3-c17", titulo: "Diseño desde referencia: darle una imagen a la IA", proximamente: true },
-          { id: "m3-c18", titulo: "PRÁCTICA: replicar la estructura de un sitio que te gusta", proximamente: true },
-          { id: "m3-c19", titulo: "Componentes: pensar en piezas reutilizables", proximamente: true },
-          { id: "m3-c20", titulo: "PRÁCTICA: convertir tu sitio en componentes", proximamente: true },
-          { id: "m3-c21", titulo: "Herramientas de generación de UI: v0, Bolt, Lovable", proximamente: true },
-          { id: "m3-c22", titulo: "PRÁCTICA: generar una interfaz con v0 y adaptarla", proximamente: true },
-          { id: "m3-c23", titulo: "Cuándo usar framework y cuándo basta HTML plano", proximamente: true },
-          { id: "m3-c24", titulo: "PRÁCTICA: tu primer proyecto en React dirigido con IA", proximamente: true },
-          { id: "m3-c25", titulo: "Rendimiento: por qué tu sitio carga lento", proximamente: true },
-          { id: "m3-c26", titulo: "PRÁCTICA: optimizar imágenes y tiempo de carga", proximamente: true },
-          { id: "m3-c27", titulo: "SEO básico: que Google entienda de qué va tu sitio", proximamente: true },
-          { id: "m3-c28", titulo: "PRÁCTICA: meta tags, Open Graph y favicon", proximamente: true },
-          { id: "m3-c29", titulo: "Tu flujo completo de construcción de interfaces", proximamente: true },
-          { id: "m3-c30", titulo: "Repaso + arranque del proyecto final del mes", proximamente: true },
+          {
+            id: "m3-c1",
+            titulo: "El brief de interfaz: describir lo que todavía no existe",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Para una página que ya existe, puedes señalar con el dedo lo que no te gusta. Para una que todavía no existe — la que vamos a construir este mes — no hay nada que señalar: tienes que describirla completa antes de que exista. Ese documento se llama <strong>brief de interfaz</strong>: la descripción escrita de una página que la IA va a materializar.</p><p>Un buen brief de interfaz responde cinco preguntas, y cada una evita que la IA adivine:</p><ul><li><strong>Propósito</strong> — para qué existe la página. \"Que la gente pida por WhatsApp\" es un propósito. \"Que se vea bonita\" no.</li><li><strong>Contenido</strong> — qué bloques tiene: nombre, menú, horario, botón. Lo que no está en el brief no va a aparecer.</li><li><strong>Estilo visual</strong> — cómo se ve: colores, tipografía, sensación. Sin esto, la IA elige su \"bonito\" — y el suyo no es el tuyo.</li><li><strong>Restricciones</strong> — límites técnicos: una sola página, archivo único, que funcione en celular.</li><li><strong>Éxito</strong> — cómo sabrás que funcionó. Para una landing suele ser una acción concreta: \"un clic por visita\".</li></ul><p>¿Te suena? Es la versión grande de las 4 piezas del prompt que viste en el Mes 1 (contexto, objetivo, restricciones, formato): el brief de interfaz es ese mismo músculo, aplicado a una página completa.</p><p>Esto te importa directamente: quien dirige IA no dibuja, pero el brief es su forma de dibujar con palabras. Cuanto mejor lo describas, menos adivina la máquina — y menos tendrás que corregir después.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Un brief de interfaz es como <strong>encargar un mueble a un carpintero que nunca ha visto tu sala</strong>. Si solo dices \"quiero algo para las botellas\", recibirás lo que sea. Si dices \"un mueble de 1.20 m de ancho, para la pared libre junto a la puerta, madera clara, 3 niveles, que no pase del tope del marco\", el carpintero — mismo taller, mismo precio — te entrega exactamente eso. La IA es el mejor carpintero del mundo, y es un carpintero ciego: tu brief es sus ojos.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Este es el brief real de la taquería que vamos a construir a lo largo del mes — <strong>Tacos El Volcán</strong>. Guárdalo en tus notas: es el mismo negocio en C2, C3, C4 y C5.</p><pre><code>BRIEF DE INTERFAZ — Tacos El Volcán\n1. Propósito: que la gente vea el menú y pida por WhatsApp.\n2. Contenido: nombre, eslogan, menú con 6 tacos y precios,\n   horario, dirección, botón de WhatsApp.\n3. Estilo: rojo ladrillo y crema, tipografía gruesa estilo\n   cantina, con buen espacio entre secciones.\n4. Restricciones: una sola página, archivo HTML único con el\n   CSS dentro, etiquetas semánticas, que se vea bien en celular.\n5. Éxito: al menos un clic al botón de WhatsApp por visita.</code></pre><p>Cada línea le dice a la IA algo que de otro modo tendría que inventar. El punto 2 ya define la estructura (la verás como header, main, section y footer en m3-a3); el 3 define los estilos; el 4 son las reglas técnicas; el 5 es tu criterio para revisar el resultado. Con esto en la mano, el prompt de la C2 se escribe solo.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Voy a crear la página de mi negocio: [describe tu negocio en dos líneas]. Antes de escribir una sola línea de código, actúa como director de arte y entrevístame para armar un brief de interfaz: pregúntame propósito, contenido, estilo visual, restricciones y cómo sabré si funcionó. Después de mis respuestas, entrégame el brief completo en una lista numerada.\"</p></blockquote><p>Ese prompt convierte a la IA en entrevistadora: las preguntas que te haga son exactamente la información que necesita para no adivinar. Tú solo respondes y verificas el resultado.</p>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "multiple", pregunta: "¿Cuál es la función principal de un brief de interfaz?", opciones: ["Diseñar los colores de la página", "Describir una página que todavía no existe para que la IA la materialice", "Servir como contrato con el cliente", "Reemplazar el HTML de la página"], correcta: 1 },
+              { tipo: "completar", frase: "El brief de interfaz es la versión grande de las 4 ____ del prompt — contexto, objetivo, restricciones y ____ — aplicadas a una página completa.", banco: ["piezas", "formato", "secciones", "diseños"], respuestas: ["piezas", "formato"] },
+              { tipo: "relacionar", pares: [["Propósito", "Para qué existe la página"], ["Contenido", "Qué bloques incluye: menú, horario, botón"], ["Estilo visual", "Colores, tipografía y sensación"], ["Restricciones", "Archivo único, que se vea bien en celular"], ["Éxito", "Cómo sabrás que funcionó"]] },
+              { tipo: "vf", afirmacion: "Lo que no está escrito en el brief, la IA lo adivina con su propio criterio.", correcta: true, explicacion: "por eso el brief debe ser completo: todo lo que no escribes, ella lo decide." },
+              { tipo: "ordenar", instruccion: "Ordena el proceso para arrancar una landing:", elementos: ["Describes tu negocio en dos líneas", "La IA te entrevista con las cinco preguntas del brief", "La IA entrega el brief completo en lista", "Tú revisas que cada punto sea cierto", "Pasas el brief al prompt de maquetación de la C2"] }
+            ]
+          },
+          {
+            id: "m3-c2",
+            titulo: "PRÁCTICA: maquetar una landing completa con IA",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>\"Maquetar\" (del inglés <em>mock-up</em>: modelo o prototipo) es armar la estructura visual de una página: dónde va el nombre, dónde el menú, dónde el botón, y con qué estilos. No es programar la lógica — eso llega después con JavaScript (m3-b1 en adelante). Es darle forma y cara al proyecto.</p><p>Lo que vas a construir es una <strong>landing</strong> (página de aterrizaje): un sitio de una sola página pensado para una sola acción. En nuestro caso, que el visitante vea el menú y pida por WhatsApp. Toda landing seria se construye en el mismo orden: brief (C1) → estructura → estilos → responsive (C4) → detalles (C5). Hoy haces los primeros tres pasos en una sola sesión, porque la IA ejecuta la maquetación y tú diriges.</p><p>Tu papel en esta práctica NO es escribir HTML. Es: (1) dar el brief claro, (2) pedir el archivo con el formato correcto, (3) guardarlo donde corresponde y (4) revisar que cumplió lo pedido. El 80% del trabajo es definir y verificar; el tecleo lo hace la IA. Eso es dirigir, y es exactamente lo que harás en tu vida laboral real.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Maquetar una landing es como <strong>montar la cocina de un taquero nuevo</strong>: primero la parrilla, la mesa de trabajo y el mostrador donde el cliente va a pedir. Todavía no hay salsa en el fuego (los detalles finos) ni fachada pintada (el estilo de lujo), pero la disposición ya funciona: el cliente entra, ve el menú y pide. Así debe quedar tu landing al terminar esta práctica: estructura completa, con estilo, lista para afinar en C4 y C5.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Sigue estos pasos y termina con un archivo real en tu computadora:</p><ol><li>Crea una carpeta llamada <code>tacos-el-volcan</code> en tu escritorio.</li><li>Dentro, crea un archivo vacío llamado <code>index.html</code> (en el Mes 2 viste por qué se llama así: es el nombre que los servidores usan como página principal).</li><li>Abre tu asistente de IA (ChatGPT, Claude o Gemini) y pega el prompt de la sección \"Díselo a la IA\".</li><li>Copia el bloque de código completo de la respuesta y pégalo en <code>index.html</code>. Guarda con Ctrl+S.</li><li>Da doble clic en <code>index.html</code>: se abre en el navegador. Revisa contra el brief de la C1:</li></ol><ul><li>¿Aparece el nombre grande arriba?</li><li>¿Se ven los 6 tacos con precio?</li><li>¿Está el botón de WhatsApp?</li><li>¿Los colores son rojo ladrillo y crema?</li></ul><p>Si algo falta, NO lo corrijas a mano todavía: vuelve a pedirlo. C5 es exactamente para pedir ajustes sin romper nada. Tu trabajo en C2 es verificar que la estructura exista y se vea presentable.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Hazme la landing de una sola página para la taquería 'Tacos El Volcán'. Entrégame un archivo HTML único, con el CSS dentro de la etiqueta style (no archivos separados). Contenido: nombre grande arriba, eslogan 'El sabor que hace temblar', menú con 6 tacos y sus precios, horario de 11 am a 11 pm, dirección, y un botón verde de WhatsApp con el número 55-1234-5678 que abra wa.me/5215512345678. Estilo: rojo ladrillo y crema, tipografía gruesa estilo cantina, con buen espacio entre secciones. Usa etiquetas semánticas: header, nav, main, section y footer. Que se vea bien en celular y en computadora. Dame el archivo completo en un solo bloque de código, listo para guardar como index.html.\"</p></blockquote><p>Ese prompt lleva las 4 piezas del Mes 1 (contexto, objetivo, restricciones, formato) a escala landing: la IA sabe para quién, qué construir, bajo qué reglas y cómo entregarlo. Si la respuesta trae archivos separados o faltan secciones, repite el pedido señalando qué falta.</p>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "quehace", codigo: "<a href=\"https://wa.me/5215512345678\">Pide por WhatsApp</a>", pregunta: "¿Qué hace este enlace en la landing?", opciones: ["Abre una conversación de WhatsApp con ese número", "Envía un correo electrónico", "Abre la ubicación en Google Maps", "Descarga la página"], correcta: 0 },
+              { tipo: "multiple", pregunta: "¿Qué significa \"maquetar\" una página?", opciones: ["Escribir toda la lógica de negocio", "Armar la estructura visual: dónde va cada bloque y con qué estilos", "Publicar la página en internet", "Conectar la página a una base de datos"], correcta: 1 },
+              { tipo: "completar", frase: "Una ____ es un sitio de una sola página pensado para una sola ____: en nuestro caso, pedir por WhatsApp.", banco: ["landing", "acción", "aplicación", "carpeta"], respuestas: ["landing", "acción"] },
+              { tipo: "relacionar", pares: [["header", "El nombre y el eslogan arriba"], ["main", "El contenido principal de la página"], ["section", "Cada bloque temático: menú, horario, contacto"], ["footer", "Dirección, horario y pie de página"], ["botón de WhatsApp", "La acción que queremos que el visitante haga"]] },
+              { tipo: "vf", afirmacion: "Si a tu landing le falta el botón de WhatsApp, lo correcto es editarla a mano para agregarlo de inmediato.", correcta: false, explicacion: "tu trabajo en C2 es verificar y pedir; editar a mano no es dirigir, y C5 te enseña a pedir cambios sin romper nada." }
+            ]
+          },
+          {
+            id: "m3-c3",
+            titulo: "Leer el HTML que la IA generó, etiqueta por etiqueta",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Ya tienes la landing de Tacos El Volcán funcionando. Ahora viene la habilidad que separa a un usuario de un director: <strong>leer el HTML que otra entidad escribió</strong>. No para reproducirlo de memoria (eso es trabajo de la máquina), sino para (1) saber qué hay ahí, (2) saber dónde tocar cuando pidas un cambio y (3) verificar que la IA cumplió tu brief.</p><p>Leer HTML es leer de arriba a abajo, por bloques. La regla de oro: <strong>toda etiqueta que abre, cierra</strong>. <code>&lt;header&gt;</code> se cierra con <code>&lt;/header&gt;</code>, y lo que está en medio es el contenido de ese bloque. Así, un documento de 300 líneas se reduce a 6 o 7 bloques: head (lo que no se ve), header, nav, main (que a su vez contiene sections), footer.</p><p>Lo que NO necesitas hacer: entender cada propiedad CSS o cada atributo. Necesitas identificar para qué sirve cada bloque y dónde está lo que quieres cambiar. Recuerda el lema del programa: <strong>reconocer, no memorizar</strong>. Cuando le pidas a la IA que \"el botón de WhatsApp se ve pequeño\", le vas a poder decir \"el que está en la sección de contacto\" porque lo ubicas en el código.</p><p>Esto es la práctica del vocabulario que viste en m3-a2 y m3-a3: ahora lo lees en código real, no en un ejemplo de libro.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Leer el HTML que generó la IA es como <strong>revisar los planos que el arquitecto dibujó por ti</strong>. Tú no dibujaste, pero sabes leer un plano: ubicas dónde está la cocina, dónde el baño, si las medidas coinciden con lo que pediste. El albañil (la IA) va a hacer el trabajo; tú, antes, verificas que los cuartos estén donde los pediste. Leer un plano no te hace albañil: te hace un cliente que no se deja engañar.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Un pedazo del HTML que la IA te generó para el menú de Tacos El Volcán — esto es lo que debes ser capaz de leer:</p><pre><code>&lt;main&gt;\n  &lt;section class=\"menu\"&gt;\n    &lt;h2&gt;Nuestros tacos&lt;/h2&gt;\n    &lt;ul&gt;\n      &lt;li&gt;Suadero — $25&lt;/li&gt;\n      &lt;li&gt;Pastor — $22&lt;/li&gt;\n      &lt;li&gt;Campechano — $28&lt;/li&gt;\n    &lt;/ul&gt;\n  &lt;/section&gt;\n  &lt;section class=\"horario\"&gt;\n    &lt;h2&gt;Horario&lt;/h2&gt;\n    &lt;p&gt;Lunes a domingo, 11 am – 11 pm&lt;/p&gt;\n  &lt;/section&gt;\n&lt;/main&gt;</code></pre><p>Fíjate en el patrón: <code>&lt;main&gt;</code> abre el bloque principal y adentro viven dos <code>&lt;section&gt;</code> — la del menú (class=\"menu\") y la del horario. Cada bloque abre con su etiqueta, tiene su contenido y cierra con la misma etiqueta con diagonal: <code>&lt;/section&gt;</code>. Truco rápido: en tu archivo usa <strong>Ctrl+F</strong> y escribe \"WhatsApp\": verás exactamente dónde vive el botón. Hay además una forma de poner notas invisibles en el código (se llaman comentarios): pídele a la IA que te los ponga para aprender a ubicarte.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Aquí está el HTML completo de mi landing de Tacos El Volcán. Recórrelo bloque por bloque y: 1) dime si incluye todas las secciones del brief (nombre, menú, horario, dirección y botón de WhatsApp); 2) agrégame comentarios que marquen cada bloque —header, nav, main, section, footer— para que yo aprenda a ubicarme; 3) avísame si hay etiquetas mal cerradas o si usaste div donde debía ir una etiqueta semántica.\"</p></blockquote><p>Este prompt te entrega un mapa anotado de tu propia página: después de esto vas a saber dónde vive cada cosa, y los pedidos de C5 los vas a poder apuntar con precisión.</p>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "quehace", codigo: "<section>\n  <h2>Nuestros tacos</h2>\n  <ul>\n    <li>Suadero — $25</li>\n  </ul>\n</section>", pregunta: "¿Qué contiene este bloque?", opciones: ["Una sección con un título y una lista", "Una tabla de precios", "Un formulario de contacto", "Un enlace a otra página"], correcta: 0 },
+              { tipo: "relacionar", pares: [["&lt;header&gt;", "El nombre y el eslogan de la taquería"], ["&lt;main&gt;", "El contenido principal de la página"], ["&lt;section&gt;", "Un bloque temático como el menú"], ["&lt;footer&gt;", "Dirección, horario y pie de página"]] },
+              { tipo: "multiple", pregunta: "¿Cuál es el primer paso para leer un HTML que no escribiste tú?", opciones: ["Memorizar cada línea", "Leerlo de arriba a abajo y agruparlo en bloques que abren y cierran", "Borrar los estilos para ver solo la estructura", "Traducirlo a otro idioma"], correcta: 1 },
+              { tipo: "completar", frase: "La regla de oro: toda etiqueta que ____, ____. Lo que está en medio es el ____ del bloque.", banco: ["abre", "cierra", "contenido", "clase"], respuestas: ["abre", "cierra", "contenido"] },
+              { tipo: "vf", afirmacion: "Los comentarios del código se ven como texto al final de la página.", correcta: false, explicacion: "los comentarios son invisibles en pantalla: son notas para quien lee el código, no contenido de la página." }
+            ]
+          },
+          {
+            id: "m3-c4",
+            titulo: "PRÁCTICA: hacerla responsive de verdad",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>En el brief pediste \"que se vea bien en celular\". Esa frase, sola, es la más vaga del diseño web. <strong>Responsive</strong> (adaptable) es la técnica para que una página cambie su acomodo según el ancho de la pantalla: lo que en computadora son tres columnas, en celular es una; lo que arriba es un menú horizontal, en celular se apila.</p><p>¿Cómo lo logra una página? Con dos piezas. El <strong>viewport</strong> es una metaetiqueta que le dice al celular: \"no me encoges como si fuera la versión de computadora, me ajustas a tu pantalla\". Sin ella, el celular muestra tu página de escritorio diminuta y el usuario hace zoom como en 2010. Las <strong>media queries</strong> (a fondo en m3-a24 y m3-a25) son reglas de CSS con condición: \"cuando la pantalla mida menos de 768 px, haz esto\".</p><p>Por qué te importa como director: porque \"hazlo responsive\" es una orden floja. Decir \"cuando el ancho sea menor a 768 px, el menú pasa a una columna y el botón ocupa el ancho completo\" es una orden que la IA ejecuta sin adivinar. Tu criterio es saber qué debe pasar en cada tamaño y pedirlo con nombre.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Responsive es como <strong>el puesto del taquero que se adapta a la plaza</strong>. En la plaza grande (pantalla de computadora) pone mesas en filas de tres, el letrero enorme y los condimentos repartidos a los lados. En el callejón angosto (celular) el mismo puesto se reacomoda: todo en una columna, el letrero centrado y el contenedor de salsas a la mano. La mercancía es la misma — lo que cambia es el acomodo según el espacio. Tu página no debe \"verse más chiquita\": debe reacomodarse.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Vas a romper tu landing a propósito para descubrir sus debilidades, y después la arreglas. Paso a paso:</p><ol><li>Abre tu <code>index.html</code> en el navegador y presiona <strong>F12</strong>. En la barra superior, activa el ícono de celular (device toolbar, Ctrl+Shift+M).</li><li>Prueba tres anchos: <strong>360 px</strong> (celular chico), <strong>768 px</strong> (tablet) y <strong>1280 px</strong> (computadora).</li><li>Anota lo que se rompe: lo típico es que el menú se salga del ancho, que el botón de WhatsApp quede diminuto o que los tacos se amontonen.</li><li>Verifica que en el <code>head</code> esté el viewport. Sin él, ningún arreglo funciona:</li></ol><pre><code>&lt;meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"&gt;</code></pre><ol start=\"5\"><li>Con tu lista de fallas a la mano, pega el prompt de \"Díselo a la IA\". Cuando responda, reemplaza el contenido de <code>index.html</code> y repite el paso 2.</li><li>Termina cuando los tres anchos se vean aceptables: nada se sale, todo se lee y el botón se puede tocar con el pulgar.</li></ol><p>Un ejemplo de lo que la IA te va a escribir (lo verás a fondo en m3-a24):</p><pre><code>@media (max-width: 768px) {\n  .menu {\n    grid-template-columns: 1fr;   /* una columna en celular */\n  }\n  .btn-whatsapp {\n    width: 100%;                  /* el botón ocupa todo el ancho */\n  }\n}</code></pre><p>Fíjate en la estructura: <code>@media (condición) { reglas }</code> — adentro va lo que debe pasar cuando la condición se cumple.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Mi landing de Tacos El Volcán no es responsive de verdad. Probé en DevTools a 360 px y pasan estas cosas: [pega tu lista de fallas]. Corrige el CSS para que se vea bien en celular, tablet y computadora: agrega el viewport en el head si falta, y usa media queries en los breakpoints de 768 px y 1024 px. El menú debe pasar a una columna en celular, el botón de WhatsApp debe ocupar el ancho completo y ser fácil de tocar, y nada debe salirse de la pantalla. No cambies el contenido ni los textos. Dame el archivo completo actualizado.\"</p></blockquote><p>Cada frase de este prompt le da a la IA un dato accionable: fallas concretas, breakpoints con nombre y reglas que aplicar. Cero adivinación.</p>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "completar", frase: "El ____ le dice al celular que ajuste la página a su pantalla; las ____ aplican estilos según el ancho.", banco: ["viewport", "media queries", "grid", "favicon"], respuestas: ["viewport", "media queries"] },
+              { tipo: "multiple", pregunta: "Sin la etiqueta viewport, un celular muestra tu página de escritorio…", opciones: ["Perfectamente ajustada a su pantalla", "Diminuta, como si la vieras desde lejos, con zoom manual", "En modo oscuro automático", "Sin estilos de ningún tipo"], correcta: 1 },
+              { tipo: "quehace", codigo: "@media (max-width: 768px) {\n  .menu {\n    grid-template-columns: 1fr;\n  }\n}", pregunta: "¿Qué hace este bloque CSS?", opciones: ["Cuando la pantalla mide menos de 768 px, el menú pasa a una columna", "Cuando la pantalla mide más de 768 px, el menú pasa a una columna", "Cambia el color de fondo del menú", "Elimina el menú en pantallas pequeñas"], correcta: 0 },
+              { tipo: "relacionar", pares: [["360 px", "Celular chico"], ["768 px", "Tablet o celular grande"], ["1024 px", "Laptop pequeña"], ["1280 px", "Computadora de escritorio"]] },
+              { tipo: "vf", afirmacion: "La metaetiqueta viewport se coloca dentro del body, junto al contenido visible.", correcta: false, explicacion: "va en el head, junto a los metadatos (m3-a2): es configuración, no contenido visible." }
+            ]
+          },
+          {
+            id: "m3-c5",
+            titulo: "Pedir cambios visuales con precisión quirúrgica",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Tu flujo del día a día no va a ser \"pedir una página\": va a ser <strong>pedir 20 ajustes a una página que ya existe</strong>. Y ahí está el truco del director: los cambios visuales se piden como se describen los síntomas a un doctor. La IA no ve tu pantalla: tienes que decirle qué se ve ahora, dónde, y qué quieres en su lugar.</p><p>Tres técnicas que vuelven quirúrgico un pedido:</p><ul><li><strong>Apunta al elemento por su nombre.</strong> \"El h1\", \"el botón de WhatsApp\", \"la sección del menú\" — el vocabulario de m3-a3 y m3-a12 es tu puntero.</li><li><strong>Describe el antes y el después.</strong> \"Se ve pegado a la izquierda\" → \"lo quiero centrado\". \"El espacio entre tarjetas es chico\" → \"dame un gap de 24 px\".</li><li><strong>Usa el vocabulario CSS.</strong> padding (aire adentro), margin (aire afuera), gap (espacio entre), font-size, color, border-radius. No necesitas programar: necesitas saber nombrar lo que ves (m3-a14 te da el modelo de caja completo).</li></ul><p>Una advertencia que te ahorra un día: si pides un cambio y \"no pasó nada\", casi siempre es la <strong>cascada y la especificidad</strong> (m3-a13): otra regla con más peso le está ganando. No se arregla repitiendo más fuerte. Se arregla preguntándole a la IA qué regla le gana a la tuya y cómo hacerla ganar.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Pedir un cambio visual es como <strong>pedirle un corte a un barbero que no te está viendo</strong>. Si dices \"córtame bonito\", te corta según su gusto. Si dices \"bájame un centímetro de los lados, arriba déjame el fleco entero y no toques la barba\", el resultado es exacto. Y si algo sale mal, no se arregla gritando \"¡más bonito!\": se arregla siendo más específico. La precisión de tu pedido es la precisión del corte.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>La misma intención dicha de dos formas — mira la diferencia:</p><pre><code>FLOJO:  \"El botón se ve mal, arréglalo.\"\n\nQUIRÚRGICO: \"El botón de WhatsApp que está en la sección de contacto\nse ve verde brillante y muy pegado al texto de arriba. Quiero:\nfondo verde mate, padding de 16px por todos lados, margin-top\nde 24px y esquinas redondeadas con border-radius de 12px.\nEl texto debe quedar blanco y centrado.\"</code></pre><p>El flojo obliga a la IA a adivinar cuál botón, qué \"mal\" y qué \"arreglo\". El quirúrgico nombra el elemento, el defecto y el resultado exacto en vocabulario CSS. Lo que la IA te va a devolver se ve así:</p><pre><code>.btn-whatsapp {\n  background: #2f9e44;      /* verde mate */\n  padding: 16px;\n  margin-top: 24px;\n  border-radius: 12px;\n  color: #fff;\n  text-align: center;\n}</code></pre><p>Regla de práctica: <strong>pocos cambios por mensaje</strong> — uno, o tres como máximo, bien descritos. Pides poco, verificas, y sigues. Muchos pedidos de golpe: la IA cumple el primero y olvida el resto.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Te voy a pedir tres cambios visuales a mi landing de Tacos El Volcán, y quiero que los hagas uno por uno. Por cada uno: dime en una línea qué bloque vas a tocar, haz el cambio y explícame qué CSS usaste. 1) El h1 se ve pequeño: quiero que ocupe el ancho completo y tenga font-weight 900. 2) Las tarjetas del menú están pegadas: dales un gap de 24 px. 3) El footer se ve gris y feo: pásalo a fondo crema con un borde superior fino. Solo esos tres cambios: no toques nada más.\"</p></blockquote><p>Un pedido por cambio, con el resultado esperado descrito en vocabulario CSS: la IA actúa y tú aprendes qué propiedad hizo qué. Al final te da un mini-tutorial de tu propia página.</p>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "multiple", pregunta: "¿Cuál de estos pedidos es quirúrgico?", opciones: ["Arregla el botón para que se vea mejor", "El botón de WhatsApp: pásalo a verde mate, con padding de 16 px y borde redondeado de 12 px", "Haz que todo se vea más moderno y fresco", "Me late que la página cambie su vibra"], correcta: 1 },
+              { tipo: "completar", frase: "El ____ es el aire adentro de un elemento; el ____ es el aire afuera; el ____ es el espacio entre elementos.", banco: ["padding", "margin", "gap", "border"], respuestas: ["padding", "margin", "gap"] },
+              { tipo: "relacionar", pares: [["font-size", "El tamaño de la letra"], ["font-weight", "Qué tan gruesa se ve la letra"], ["border-radius", "Qué tan redondeadas son las esquinas"], ["background", "El color de fondo del elemento"]] },
+              { tipo: "vf", afirmacion: "Si pediste un cambio y no pasó nada, lo correcto es repetir el mismo pedido con más énfasis.", correcta: false, explicacion: "casi siempre es la cascada y la especificidad (m3-a13): otra regla le gana; pregunta a la IA cuál regla gana y cómo hacer ganar la tuya." },
+              { tipo: "quehace", codigo: ".btn-whatsapp {\n  background: #2f9e44;\n  padding: 16px;\n  border-radius: 12px;\n}", pregunta: "¿Qué cambio visual produce este CSS?", opciones: ["Un botón con fondo verde, aire adentro y esquinas redondeadas", "Un botón que parpadea al pasar el mouse", "Un botón más ancho que la pantalla", "Un botón con el texto en negritas"], correcta: 0 }
+            ]
+          },
+          {
+            id: "m3-c6",
+            titulo: "PRÁCTICA: agregar dark mode a tu landing",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Tu landing ya se ve bien de día. Ahora la vas a hacer que también se vea bien de noche: eso es el <strong>dark mode</strong> (modo oscuro), y agregarlo sin duplicar estilos es el truco que diferencia a una página armada a mano de una dirigida con criterio.</p><p>La idea es simple: en vez de tener los colores sueltos por todo el CSS, los mueves a <strong>variables CSS</strong> (custom properties) — nombres como <code>--fondo</code> o <code>--texto</code> que guardan un valor y se reutilizan con <code>var(--fondo)</code>. Esto lo viste a fondo en m3-a16. Después, con una <strong>media query</strong> (m3-a24) escuchas una preferencia del sistema llamada <code>prefers-color-scheme</code>: si el celular o la computadora del visitante está en modo oscuro, el navegador te avisa y tú cambias las variables por la paleta de noche.</p><p>Punto clave: el <strong>dark mode automático no necesita JavaScript</strong>. Es puro CSS. El botón manual para que el usuario cambie de tema con un clic es otro nivel de complejidad (ahí sí entra JS con m3-b5 y m3-b6, cambiando una clase en el body). Hoy haces la versión automática: gratis, sin lógica, y ya le da a tu proyecto un toque profesional. Reconocer, no memorizar: no vas a escribir la media query de memoria, vas a saber qué pedir y cómo verificar que se cumplió.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Dark mode es como <strong>la iluminación del puesto de Tacos El Volcán</strong>. El menú, los precios y la estructura son los mismos de día y de noche; lo que cambia es la luz: de día la parrilla se ve dorada sobre fondo claro, de noche el letrero se ve brillante sobre un fondo oscuro y los detalles no te lastiman los ojos. No reescribes el negocio para la noche — solo cambias la iluminación. Tus variables CSS son esa luz: la misma página, dos ambientes.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Paso a paso, termina con dark mode funcionando en tu <code>index.html</code>:</p><ol><li>Abre tu landing en el editor y ubica los colores: usa <strong>Ctrl+F</strong> y busca \"background\" y \"color\". Vas a encontrar el rojo ladrillo y la crema repetidos en muchas reglas — eso es justo lo que vamos a centralizar.</li><li>Pega el prompt de \"Díselo a la IA\". La primera pasada mueve todos los colores a variables dentro de <code>:root</code> y las usa con <code>var()</code>.</li><li>La segunda pasada agrega la media query <code>prefers-color-scheme: dark</code>. El resultado se ve así:</li></ol><pre><code>:root {\n  --fondo: #fdf6ec;        /* crema de día */\n  --texto: #5c1f14;        /* rojo ladrillo oscuro */\n  --acento: #b22222;       /* rojo ladrillo */\n  --tarjeta: #ffffff;\n}\n\n@media (prefers-color-scheme: dark) {\n  :root {\n    --fondo: #1a1210;      /* casi negro, cálido */\n    --texto: #f5e6d8;      /* crema claro */\n    --acento: #e05a3f;     /* rojo más luminoso */\n    --tarjeta: #2a1d18;\n  }\n}\n\nbody {\n  background: var(--fondo);\n  color: var(--texto);\n}</code></pre><ol start=\"4\"><li>Prueba en DevTools: <strong>F12</strong> → activa el device toolbar (Ctrl+Shift+M) → en el menú de tres puntos busca \"Emulate CSS media feature prefers-color-scheme\" y cámbialo a <em>dark</em>. Tu página debe cambiar de crema a casi negro sin que toques nada.</li><li>Verifica contraste (m3-a29): en modo oscuro el texto claro sobre fondo oscuro debe leerse sin esfuerzo, y el botón de WhatsApp debe seguir destacando. Si algo queda apagado, pide ajustes con la técnica de la C5.</li></ol><p>Regla final: el contenido de tu landing es el mismo en los dos modos. Si al oscurecer algo \"desaparece\", es señal de que ese color no estaba centralizado — regrésalo a variable.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Mi landing de Tacos El Volcán tiene los colores fijos en el CSS y quiero agregarle dark mode sin duplicar estilos. 1) Refactoriza todos los colores a variables CSS dentro de :root con nombres descriptivos (--fondo, --texto, --acento, --tarjeta, --boton). 2) Agrega una media query @media (prefers-color-scheme: dark) que sobreescriba esas variables con una paleta oscura cálida: fondo casi negro con tono café, texto crema claro, y el rojo ladrillo en una versión más luminosa para el acento y el botón. 3) Asegúrate de que todas las reglas usen var(--nombre) y que no quede ningún color suelto. 4) No cambies la estructura ni los textos. Dame el archivo completo actualizado.\"</p></blockquote><p>Ese prompt hace el trabajo en un solo pedido: centraliza (paso 1), define el modo oscuro (paso 2), elimina colores sueltos (paso 3) y protege tu contenido (paso 4). Cuando lo verifiques en DevTools y algo no cambie, no edites a mano: describe qué se quedó igual y repítele el pedido.</p>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "multiple", pregunta: "¿Cuál es la forma limpia de agregar dark mode sin duplicar estilos?", opciones: ["Reescribir todo el CSS en un segundo archivo aparte", "Mover los colores a variables CSS y cambiarlas con prefers-color-scheme", "Ponerle un filtro gris a toda la página", "Pedirle al usuario que cambie el fondo a mano cada vez"], correcta: 1 },
+              { tipo: "completar", frase: "Las ____ CSS (custom properties) se definen en ____ y permiten reutilizar un valor en todo el documento.", banco: ["variables", ":root", "clases", "footer"], respuestas: ["variables", ":root"] },
+              { tipo: "quehace", codigo: "@media (prefers-color-scheme: dark) {\n  :root {\n    --fondo: #1a1210;\n  }\n}", pregunta: "¿Qué hace este bloque CSS?", opciones: ["Aplica un fondo casi negro a la página cuando el sistema está en modo oscuro", "Oscurece la pantalla del navegador del usuario", "Obliga al sitio a estar siempre en modo claro", "Cambia el fondo solo cuando se ve en celular"], correcta: 0 },
+              { tipo: "vf", afirmacion: "El dark mode automático con prefers-color-scheme necesita JavaScript para funcionar.", correcta: false, explicacion: "es una media query de CSS: el navegador detecta la preferencia del sistema sin JS; el JavaScript solo se necesita si quieres un botón manual para cambiar de tema (m3-b5 y m3-b6)." },
+              { tipo: "relacionar", pares: [["--fondo", "El color de fondo principal"], ["--texto", "El color de la letra"], ["--acento", "El color destacado, como el botón"], ["var(--fondo)", "La forma de usar el valor definido"]] }
+            ]
+          },
+          {
+            id: "m3-c7",
+            titulo: "El vocabulario visual: lo que debes saber nombrar",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Para dirigir una interfaz no necesitas saber dibujar: necesitas saber <strong>nombrar</strong>. El vocabulario visual es el idioma que compartes con la IA para decirle qué se ve y qué quieres cambiar. Sin él, tus pedidos son señas: \"esa cosita de arriba\", \"que se vea más bonito\". Con él, son órdenes precisas que la IA ejecuta sin adivinar.</p><p>No tienes que memorizar listas: tienes que reconocer los términos cuando los veas (el lema del programa). Esto es lo que vale la pena saber nombrar:</p><ul><li><strong>Espaciado</strong> — <code>padding</code> (aire adentro de un elemento), <code>margin</code> (aire afuera), <code>gap</code> (espacio entre elementos), <code>line-height</code> (espacio entre renglones). Modelo de caja completo en m3-a14.</li><li><strong>Tipografía</strong> — <code>font-family</code> (la familia de letra), <code>font-size</code> (tamaño), <code>font-weight</code> (qué tan gruesa), <code>text-align</code> (centrado o alineado), <code>letter-spacing</code> (separación entre letras). m3-a17.</li><li><strong>Color</strong> — matiz (el tono), saturación (qué tan vivo), brillo, contraste y opacidad. m3-a16.</li><li><strong>Estructura</strong> — <code>navbar</code> (barra de navegación), <code>hero</code> (el bloque de entrada con el nombre grande), <code>card</code> (tarjeta), <code>grid</code> (cuadrícula), <code>footer</code>. m3-a3 y m3-a21.</li><li><strong>Detalles</strong> — <code>border-radius</code> (esquinas redondeadas), <code>box-shadow</code> (sombra), <code>hover</code> (estado al pasar el mouse), <code>focus</code> (estado al enfocar con teclado o clic).</li></ul><p>Cada término que aprendes le quita una adivinación a la IA. Y hay una forma rápida de construir tu vocabulario sobre tu propio proyecto: pedirle que te explique el CSS que te entrega. De esa conversación sale tu diccionario, hecho a la medida de lo que tú construyes.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>El vocabulario visual es como <strong>saber los nombres del menú en la taquería</strong>. No sabes preparar el pastor ni cocer el suadero — y no hace falta. Pero pedir \"dos de suadero, una de pastor con todo y una coca\" te da exactamente lo que quieres; decir \"lo que usted guste\" te da lo que el taquero decida. La IA es el mejor taquero del mundo: conoce todas las recetas. Tu trabajo no es cocinar, es pedir con nombre y apellido. Saber nombrar no te vuelve cocinero: te vuelve un cliente que nunca recibe lo que no pidió.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Este es el puente entre \"síntoma\" y \"término\" — lo que ves y lo que le pides a la IA:</p><pre><code>\"El texto está pegado al borde\"        → padding / margin\n\"Las letras se ven muy juntas\"         → letter-spacing\n\"Las tarjetas se amontonan\"            → gap\n\"El título se ve flojito\"              → font-weight: 700\n\"Las esquinas se ven duras\"            → border-radius\n\"El botón no reacciona al pasar el mouse\" → hover</code></pre><p>Pruébalo sobre tu landing: abre el inspector con <strong>F12</strong> (m3-b25) y señala con el cursor el hero, las tarjetas del menú y el botón. Verás la lista de propiedades de cada uno. Ahora describe en voz alta lo que ves usando el vocabulario: \"el hero tiene padding grande y el título usa font-weight 900\". Ese ejercicio de nombrar lo que ves es exactamente lo que haces cuando le escribes a la IA.</p><p>Truco para crecer tu vocabulario sin estudiar: pídele a la IA que te explique cada bloque de CSS \"como si me lo enseñaras en la cocina\", con lo que pasaría si cambiaras el valor. Cada explicación te deja un término nuevo y la intuición de para qué sirve.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Voy a construir mi vocabulario visual usando mi propia página. Toma el CSS de mi landing de Tacos El Volcán y: 1) hazme una tabla con cada bloque (hero, menú, horario, botón, footer) y las propiedades CSS que usa; 2) por cada propiedad, explícala en una línea con lenguaje de todos los días y dime qué pasaría si la quitara o la cambiara; 3) propón 5 mejoras visuales concretas y descríbelas usando ese vocabulario, por ejemplo 'al footer le falta padding' o 'el hero necesita un border-radius mayor'. No cambies nada del código: esta respuesta es solo para aprender.\"</p></blockquote><p>Ese prompt convierte a la IA en maestra de tu propio proyecto: el diccionario que te devuelve usa exactamente las propiedades de tu código, no ejemplos de libro. Lo guardas, y los pedidos de las próximas prácticas los vas a escribir con esos términos.</p>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "relacionar", pares: [["padding", "El aire adentro de un elemento"], ["margin", "El aire afuera de un elemento"], ["gap", "El espacio entre elementos"], ["line-height", "El espacio entre líneas de texto"]] },
+              { tipo: "multiple", pregunta: "El texto del hero está pegado al borde de la pantalla y quieres que respire. ¿Qué le pides a la IA?", opciones: ["El hero necesita más font-weight", "El hero necesita más padding", "El hero necesita un border-radius mayor", "El hero necesita más saturación"], correcta: 1 },
+              { tipo: "completar", frase: "Cuando el usuario pasa el mouse sobre un botón, ese estado se llama ____; cuando el botón recibe el foco del teclado, se llama ____.", banco: ["hover", "focus", "gap", "padding"], respuestas: ["hover", "focus"] },
+              { tipo: "vf", afirmacion: "Para dirigir a la IA con precisión necesitas escribir CSS de memoria.", correcta: false, explicacion: "necesitas saber nombrar lo que ves y lo que quieres cambiar (reconocer, no memorizar); la escritura del código la hace la IA, y el vocabulario se construye pidiéndole que te explique el CSS que te entrega." },
+              { tipo: "quehace", codigo: "letter-spacing: 2px;", pregunta: "¿Qué produce esta propiedad sobre un título?", opciones: ["Separa las letras entre sí, dándole aire al título", "Pone el título en mayúsculas", "Cambia el peso de la letra", "Agrega espacio entre líneas de texto"], correcta: 0 }
+            ]
+          },
+          {
+            id: "m3-c8",
+            titulo: "PRÁCTICA: formulario de contacto que funciona",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Un formulario \"que funciona\" tiene dos capas. La primera es la <strong>estructura</strong>: cada campo con su <code>&lt;label&gt;</code> (el texto que le dice al usuario qué escribir), un atributo <code>name</code> (el nombre interno del campo), y el <code>type</code> correcto (<code>text</code>, <code>tel</code>, <code>email</code>) — esto lo viste en m3-a8. La segunda capa es la <strong>validación</strong>: el navegador bloquea el envío si un campo obligatorio está vacío o si el correo no parece correo, usando <code>required</code> y los tipos de campo de m3-a9.</p><p>Y la tercera — la que convierte un formulario estático en uno que \"funciona\" — es el <strong>JavaScript</strong>: cuando el usuario presiona Enviar, tu script escucha el evento <code>submit</code> (m3-b7), hace <code>preventDefault</code> para que la página no se recargue (m3-b8), lee los valores con el atributo <code>name</code> y hace algo con ellos: hoy, mostrar una confirmación.</p><p>Importante: en esta práctica el formulario \"funciona\" significa que captura bien los datos y confirma al usuario. Todavía no lo manda a ningún lado — conectarlo a WhatsApp o correo es exactamente la m3-c9. No mezcles las dos cosas o vas a depurar a ciegas.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Un formulario es la <strong>comanda del taquero</strong>. Una buena comanda tiene espacios marcados: cuántas, de qué, para llevar o aquí. Si el taquero solo apunta garabatos, la cocina no sabe qué preparar. Cada <code>&lt;label&gt;</code> es el letrero del espacio, y el atributo <code>name</code> es el nombre del espacio en la receta: sin <code>name</code>, aunque el cliente escriba su número, tu código no tiene manera de saber que ese texto es el teléfono. Formulario bien nombrado, cocina (o IA) bien alimentada.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Termina con un formulario que captura datos y confirma al visitante. Paso a paso:</p><ol><li>Pega el prompt de \"Díselo a la IA\" y deja que agregue la sección de contacto con el formulario y el script.</li><li>Verifica la estructura con <strong>Ctrl+F</strong> buscando \"form\": cada campo debe tener <code>&lt;label&gt;</code>, su atributo <code>name</code> y <code>required</code>. Sin esas tres piezas, no funciona aunque se vea bonito.</li><li>Prueba el primer nivel: deja el formulario vacío y presiona Enviar. El navegador debe marcar los campos vacíos y <strong>no</strong> recargar la página. Eso es la validación nativa (m3-a9) trabajando.</li><li>Llena los campos y vuelve a enviar: debajo del botón debe aparecer el mensaje de confirmación con el nombre del visitante. Si la página recarga y se pierde todo, el <code>preventDefault</code> no está — pídelo de nuevo.</li><li>Para terminar, abre la consola (F12 → pestaña Console, m3-b24) y escribe <code>document.querySelector(\"#contacto\")</code>: verás el formulario como objeto. Reconoce su estructura — es el DOM del que habla m3-b2.</li></ol><p>El resultado, en resumen, se ve así:</p><pre><code>&lt;form id=\"contacto\"&gt;\n  &lt;label for=\"nombre\"&gt;Tu nombre&lt;/label&gt;\n  &lt;input type=\"text\" id=\"nombre\" name=\"nombre\" required&gt;\n\n  &lt;label for=\"telefono\"&gt;Tu teléfono&lt;/label&gt;\n  &lt;input type=\"tel\" id=\"telefono\" name=\"telefono\" required&gt;\n\n  &lt;label for=\"mensaje\"&gt;Mensaje&lt;/label&gt;\n  &lt;textarea id=\"mensaje\" name=\"mensaje\" required&gt;&lt;/textarea&gt;\n\n  &lt;button type=\"submit\"&gt;Enviar&lt;/button&gt;\n&lt;/form&gt;\n\n&lt;p id=\"confirmacion\"&gt;&lt;/p&gt;</code></pre><p>Y el script que captura los datos (m3-b7 y m3-b8):</p><pre><code>const form = document.querySelector(\"#contacto\");\n\nform.addEventListener(\"submit\", function (e) {\n  e.preventDefault();\n  const datos = {\n    nombre: form.nombre.value,\n    telefono: form.telefono.value,\n    mensaje: form.mensaje.value,\n  };\n  document.querySelector(\"#confirmacion\").textContent =\n    \"Gracias \" + datos.nombre + \", recibimos tu mensaje.\";\n});</code></pre><p>Un formulario que cumpla estos tres niveles — estructura, validación, captura — ya es la pieza que la m3-c9 va a conectar con WhatsApp.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Agrega a mi landing de Tacos El Volcán una sección de contacto con un formulario que funcione: 1) tres campos con su label y su atributo name — nombre (text), teléfono (tel) y mensaje (textarea) —, todos con required; 2) que use la validación nativa del navegador (type y required), con los mismos estilos que ya uso, sin exagerar; 3) un script que escuche el evento submit, haga preventDefault, lea los valores con el atributo name y muestre debajo del botón un mensaje de confirmación con el nombre del visitante; 4) no conectes el envío a ningún servicio todavía, eso lo haremos en la siguiente lección. Dame el archivo completo actualizado.\"</p></blockquote><p>Cada punto del prompt protege una capa: estructura (1), validación (2), captura con confirmación (3) y el límite para no adelantar la m3-c9 (4).</p>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "multiple", pregunta: "¿Cuál es la forma correcta de capturar los valores de un formulario en JavaScript?", opciones: ["Hacer clic en el botón y copiar el texto de la página", "Escuchar el evento submit, hacer preventDefault y leer los valores por su atributo name", "Reiniciar el formulario y ver lo que aparece en la consola", "Poner un enlace de WhatsApp dentro del HTML"], correcta: 1 },
+              { tipo: "completar", frase: "Cada campo necesita un atributo ____ que lo identifica, y con el atributo ____ el navegador bloquea el envío si está vacío.", banco: ["name", "required", "style", "href"], respuestas: ["name", "required"] },
+              { tipo: "quehace", codigo: "e.preventDefault();", pregunta: "¿Qué hace esta línea dentro del evento submit?", opciones: ["Evita que la página se recargue al enviar el formulario", "Bloquea el botón de Enviar para siempre", "Guarda los datos directamente en WhatsApp", "Cierra el formulario automáticamente"], correcta: 0 },
+              { tipo: "vf", afirmacion: "La validación nativa del navegador bloquea el envío cuando un campo obligatorio está vacío, sin necesidad de JavaScript.", correcta: true, explicacion: "con required y el type adecuado, el navegador valida antes de disparar el submit (m3-a9); tu script escucha el evento solo cuando ya pasó la validación." },
+              { tipo: "relacionar", pares: [["&lt;label&gt;", "El texto que le dice al usuario qué escribir"], ["name", "El identificador del campo para leer su valor"], ["required", "El campo es obligatorio"], ["submit", "El evento que se dispara al enviar"]] }
+            ]
+          },
+          {
+            id: "m3-c9",
+            titulo: "Conectar el formulario a WhatsApp o correo",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Ya tienes un formulario que captura datos. Ahora la pregunta real: ¿a dónde van esos datos? Un sitio guardado en tu computadora no tiene servidor, y el navegador no puede enviar correos ni mensajes por sí solo. Las opciones que funcionan sin servidor son tres:</p><ul><li><strong>WhatsApp (la más natural para un negocio local)</strong> — armas un mensaje con los datos y abres <code>wa.me</code> con el texto ya escrito, igual que el botón de la C2 pero ahora con contenido variable del formulario.</li><li><strong>Correo con <code>mailto:</code></strong> — abre la aplicación de correo del usuario con el asunto y el cuerpo ya llenos. No lo manda solo: lo deja listo para que el usuario presione Enviar en su app.</li><li><strong>Servicios de formularios</strong> (como Formspree o FormSubmit) — guardan los envíos en la nube y te llega un correo. Es la vía \"profesional\" sin programar un servidor; la verás con calma cuando hables de backends.</li></ul><p>La pieza técnica que hace posibles las dos primeras es el <strong>encodado de URL</strong>: los mensajes con espacios, acentos y saltos de línea no pueden viajar así en una URL. La función <code>encodeURIComponent()</code> los convierte a un formato seguro (los espacios se vuelven %20, y así cada carácter especial). Reconocer, no memorizar: no vas a escribir el encodado a mano, vas a saber por qué existe y cuándo pedirlo.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Es como <strong>la comanda que se entrega por la ventanilla de WhatsApp</strong>. El taquero no tiene radio interna entre la cocina y la clientela, así que escribe el pedido en un papelito y lo manda por la app que todo el mundo ya tiene. Tu formulario escribe el papelito; <code>wa.me</code> o <code>mailto:</code> es la ventanilla que lo entrega. El mensaje viaja por un canal que ya existe y que el cliente ya usa — sin instalar nada nuevo, sin servidor.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Así se ve la conexión a WhatsApp — este es el script que tu formulario va a usar:</p><pre><code>form.addEventListener(\"submit\", function (e) {\n  e.preventDefault();\n\n  const nombre = form.nombre.value;\n  const telefono = form.telefono.value;\n  const mensaje = form.mensaje.value;\n\n  const texto = `Hola Tacos El Volcán, soy ${nombre}.\nQuiero pedir: ${mensaje}\nMi teléfono: ${telefono}`;\n\n  const url = \"https://wa.me/5215512345678?text=\" + encodeURIComponent(texto);\n  window.open(url, \"_blank\");\n});</code></pre><p>Dos piezas que debes poder reconocer: el mensaje se arma con <strong>template literals</strong> (m3-b14) — los acentos graves y <code>${...}</code> insertan valores — y después <code>encodeURIComponent</code> lo convierte para que quepa en la URL. Si lo quieres por correo, cambias la última parte:</p><pre><code>const url = \"mailto:tacos@elvolcan.com\" +\n  \"?subject=\" + encodeURIComponent(\"Pedido de \" + nombre) +\n  \"&body=\" + encodeURIComponent(texto);\nwindow.location.href = url;</code></pre><p>Pasos para probarlo:</p><ol><li>Pega el prompt de \"Díselo a la IA\" y reemplaza tu <code>index.html</code>.</li><li>Llena el formulario y envía: se abre WhatsApp en una pestaña nueva con el mensaje completo y el número correcto.</li><li>Verifica el encodado: en la barra del navegador verás <code>%20</code> en vez de espacios — es el texto seguro, no un error.</li><li>Cambia a la versión <code>mailto:</code>, envía de nuevo y revisa que el correo llegue pre-lleno a tu app de correo.</li><li>Decide cuál usarás para la taquería y deja solo esa versión en el código.</li></ol><p>Advertencia: el número de <code>wa.me</code> va en formato internacional sin signos (para México: 521 + 10 dígitos). Si pones ceros o espacios, WhatsApp no encuentra el chat.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Conecta el formulario de contacto de mi landing de Tacos El Volcán a WhatsApp. Cuando el usuario haga submit: 1) haz preventDefault; 2) arma un mensaje legible con los valores del formulario usando template literals — saludo, nombre, mensaje y teléfono; 3) usa encodeURIComponent para convertir ese mensaje en un texto apto para URL; 4) abre wa.me/5215512345678?text=... en una pestaña nueva con window.open; 5) deja en un comentario la versión con mailto: por si prefiero cambiar a correo. El número va en formato internacional sin signos: 5215512345678. No cambies el diseño del formulario. Dame el archivo completo actualizado.\"</p></blockquote><p>El prompt pide la versión WhatsApp y deja la de correo anotada en el código (paso 5), para que cambies de canal con un clic sin pedir todo de nuevo.</p>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "completar", frase: "El navegador no puede enviar correos por sí solo: con ____ abre la app de correo del usuario; con ____ abre WhatsApp con el mensaje ya escrito.", banco: ["mailto", "wa.me", "encodeURIComponent", "formulario"], respuestas: ["mailto", "wa.me"] },
+              { tipo: "multiple", pregunta: "¿Por qué se usa encodeURIComponent sobre el texto del mensaje?", opciones: ["Para poner el mensaje en mayúsculas", "Para convertir espacios, acentos y saltos de línea en un formato seguro para la URL", "Para cifrar el mensaje y que nadie lo lea", "Para que el mensaje se borre después de enviarse"], correcta: 1 },
+              { tipo: "quehace", codigo: "const url = \"https://wa.me/5215512345678?text=\" + encodeURIComponent(\"Hola, quiero un pedido\");", pregunta: "¿Qué hace esta línea?", opciones: ["Abre WhatsApp con ese mensaje ya escrito para ese número", "Descarga la página de WhatsApp", "Envía un correo electrónico automático", "Guarda el mensaje en la memoria del navegador"], correcta: 0 },
+              { tipo: "vf", afirmacion: "Para abrir WhatsApp con el mensaje pre-escrito, el número va en formato internacional sin signos — en México, 521 + 10 dígitos.", correcta: true, explicacion: "wa.me exige el formato internacional sin + ni espacios; en México es 521 + 10 dígitos, el mismo número que pediste en el botón de la C2." },
+              { tipo: "ordenar", instruccion: "Ordena el flujo de un envío a WhatsApp:", elementos: ["El usuario llena el formulario y presiona Enviar", "JavaScript hace preventDefault y lee los valores", "Se arma el mensaje legible con template literals", "encodeURIComponent lo convierte a formato seguro", "window.open abre wa.me con el mensaje listo"] }
+            ]
+          },
+          {
+            id: "m3-c10",
+            titulo: "PRÁCTICA: galería de productos desde datos",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Hasta hoy, los seis tacos de tu menú están escritos uno por uno en el HTML. Eso funciona para seis. Para sesenta, se vuelve insostenible: cada cambio de precio te obliga a buscar la tarjeta y editar a mano. La solución es cambiar de paradigma: <strong>separar los datos de la presentación</strong> (tema que la m3-c11 va a llevar al extremo).</p><p>En vez de seis bloques de HTML, tienes un <strong>arreglo de objetos</strong> (m3-b13) — cada objeto es un taco con <code>nombre</code>, <code>precio</code> y <code>descripcion</code> — y la página lo recorre con <code>map</code> (m3-b12) para pintar una tarjeta por cada elemento usando <strong>template literals</strong> (m3-b14). Esto lo viste en m3-b10: pintar datos en pantalla. Hoy lo aplicas a tu proyecto real.</p><p>La ganancia no es estética: es que <strong>los datos mandan y la página obedece</strong>. Para agregar un taco nuevo, editas el arreglo y la tarjeta aparece sola. Para actualizar un precio, cambias un número en un solo lugar. El HTML deja de ser donde viven tus productos: es solo el molde que los repite.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Es como <strong>el pizarrón del menú del taquero</strong>. El taquero no escribe cada taco en un cartel distinto y los pega a la pared: tiene una lista en la cocina y un pizarrón que repite el mismo formato para cada uno — nombre arriba, descripción chiquita, precio abajo. Si sube el precio del suadero, cambia el número en la lista, no arranca el cartel. Tu arreglo de objetos es la lista de la cocina; el <code>map</code> es el pizarrón que la muestra.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Vas a convertir el menú estático en una galería que se pinta desde datos. Paso a paso:</p><ol><li>Pega el prompt de \"Díselo a la IA\". Cuando termine, abre tu <code>index.html</code> y ubica el <code>script</code>: arriba verás el arreglo <code>tacos</code>, abajo el render con <code>map</code>.</li><li>Verifica el arreglo: cada taco es un objeto con <code>nombre</code>, <code>precio</code> y <code>descripcion</code>. Reconoce los seis del menú original.</li><li>Haz el \"momento ajá\": agrega un séptimo objeto al arreglo — una birria a $35 — y guarda (Ctrl+S). Recarga la página: la tarjeta apareció sola, sin tocar el HTML.</li><li>Cambia el precio del suadero en el arreglo y recarga: se actualizó en la tarjeta. Ahí está el poder de los datos centralizados.</li><li>Cierra el ciclo leyendo el render y explicándolo con tus palabras: el contenedor está vacío en el HTML, y el JavaScript arma el HTML de cada tarjeta y lo mete con <code>innerHTML</code> (m3-b4).</li></ol><p>El código clave se ve así:</p><pre><code>const tacos = [\n  { nombre: \"Suadero\", precio: 25, descripcion: \"Jugoso, con cebolla y cilantro\" },\n  { nombre: \"Pastor\", precio: 22, descripcion: \"El clásico, con piña\" },\n  { nombre: \"Campechano\", precio: 28, descripcion: \"La mezcla de todo\" }\n];\n\nconst contenedor = document.querySelector(\"#menu\");\nconst html = tacos.map(function (taco) {\n  return `<article class=\"taco\">\n    <h3>${taco.nombre}</h3>\n    <p>${taco.descripcion}</p>\n    <strong>$${taco.precio}</strong>\n  </article>`;\n}).join(\"\");\ncontenedor.innerHTML = html;</code></pre><p>Fíjate en la secuencia: datos (el arreglo) → transformación (<code>map</code> devuelve un arreglo de strings HTML) → inserción (<code>innerHTML</code> lo pone en la página). Ese es el patrón que vas a usar en las próximas prácticas del mes.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Convierte el menú estático de mi landing de Tacos El Volcán en una galería que se pinta desde datos: 1) crea un arreglo llamado tacos con objetos — nombre, precio y descripcion — para los 6 tacos actuales; 2) deja el contenedor del menú vacío en el HTML y pinta las tarjetas con JavaScript usando map y template literals, guardando el HTML armado con innerHTML; 3) que cada tarjeta se vea igual a las actuales, con los mismos estilos; 4) agrega al final del arreglo un séptimo taco de birria a $35 para que yo vea que basta editarlo ahí. No cambies los estilos ni los textos. Dame el archivo completo actualizado.\"</p></blockquote><p>El paso 4 del prompt es tu prueba de que funcionó: si el séptimo taco aparece solo, la galería ya es de datos. La m3-c11 te va a explicar por qué esta separación cambia todo.</p>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "quehace", codigo: "const html = tacos.map(function (t) {\n  return \"<h3>\" + t.nombre + \"</h3>\";\n}).join(\"\");", pregunta: "¿Qué hace este código?", opciones: ["Crea un texto HTML con el nombre de cada taco del arreglo", "Cambia el precio de todos los tacos", "Elimina los tacos que no tienen nombre", "Ordena el arreglo por precio"], correcta: 0 },
+              { tipo: "completar", frase: "En una galería desde datos, los productos viven en un ____ de ____; la página solo repite el mismo formato para cada uno.", banco: ["arreglo", "objetos", "colores", "enlaces"], respuestas: ["arreglo", "objetos"] },
+              { tipo: "multiple", pregunta: "Agregaste un taco nuevo al arreglo y guardaste. ¿Qué pasa con la página?", opciones: ["Aparece una nueva tarjeta sin tocar el HTML", "La página deja de funcionar hasta reiniciar", "Hay que copiar y pegar una tarjeta a mano", "El taco aparece solo en el buscador de Google"], correcta: 0 },
+              { tipo: "relacionar", pares: [["const tacos", "El arreglo de objetos con los datos"], ["map", "Repite el formato para cada elemento"], ["template literals", "Armar el HTML con valores del objeto"], ["innerHTML", "Poner el HTML armado dentro del contenedor"]] },
+              { tipo: "vf", afirmacion: "Cuando los datos están separados de la presentación, editar el contenido ya no requiere tocar la estructura de la página.", correcta: true, explicacion: "cambias el arreglo y el render lo refleja: es la idea que la m3-c11 va a llevar al extremo." }
+            ]
+          },
+          {
+            id: "m3-c11",
+            titulo: "Separar datos de presentación: por qué cambia todo",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>En la m3-c10 convertiste el menú estático en una galería que se pinta desde un arreglo. Hoy vas a entender por qué ese cambio no fue estético: fue un cambio de paradigma. <strong>Separar datos de presentación</strong> significa que el contenido — los tacos, los precios, las descripciones — vive aparte de la forma en que se muestra — las tarjetas, los colores, la estructura. Dos mundos que se comunican a través del <strong>render</strong>: el código que toma los datos y produce HTML.</p><p>Hay tres capas, y aprender a distinguirlas es la mitad de tu trabajo como director:</p><ul><li><strong>Datos</strong> — el arreglo <code>tacos</code> con sus objetos (m3-b13). El \"qué\" del menú.</li><li><strong>Lógica</strong> — el <code>map</code>, los filtros y los condicionales que transforman los datos (m3-b12, m3-b15). El \"cómo se procesa\".</li><li><strong>Presentación</strong> — el HTML y el CSS que muestran el resultado. El \"cómo se ve\".</li></ul><p>Cuando las tres capas viven juntas — seis tarjetas escritas a mano en el HTML — cambiar un precio es una cacería: buscas la línea, la editas y rezas porque no haya otra copia. Cuando los datos están separados, cambiar un precio es editar <strong>un solo número</strong>. Y eso desbloquea todo lo que viene este mes: los filtros de la m3-c12, las APIs reales de la m3-c14 y los estados de la m3-c15. Ninguna de esas cosas existe si los datos siguen pegados a la presentación.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Es la diferencia entre la <strong>receta</strong> y la <strong>vitrina</strong>. La taquería tiene una sola receta de suadero (los datos), pero la presenta en taco, en torta y en volcán (las presentaciones). Si el suadero sube de precio, cambias la receta <strong>una vez</strong> y las tres presentaciones lo reflejan. Si mezclas receta con presentación — la receta del taco, la receta de la torta y la receta del volcán como tres documentos separados — subir el precio es editar tres hojas. Y el día que alguien se olvida de una, vendes tortas con el precio de hace tres meses. Tu <code>tacos</code> es la receta; tu render es la vitrina que la muestra.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>El antes y el después, frente a frente:</p><pre><code>// ANTES — datos y presentación mezclados\n&lt;li&gt;Suadero — $25&lt;/li&gt;\n&lt;li&gt;Pastor — $22&lt;/li&gt;\n&lt;li&gt;Campechano — $28&lt;/li&gt;\n\n// DESPUÉS — los datos viven solos\nconst tacos = [\n  { nombre: \"Suadero\", precio: 25 },\n  { nombre: \"Pastor\", precio: 22 },\n  { nombre: \"Campechano\", precio: 28 }\n];\n\n// y la presentación es un molde que los repite\nconst html = tacos.map(function (t) {\n  return `&lt;li&gt;${t.nombre} — $${t.precio}&lt;/li&gt;`;\n}).join(\"\");</code></pre><p>Haz la prueba del poder en tu propia página:</p><ol><li>Pega el prompt de \"Díselo a la IA\". Cuando termine, tendrás un archivo nuevo <code>datos.js</code> con el arreglo, y el render en tu script principal leyendo <code>window.TACOS</code>.</li><li>Verifica que la página se vea idéntica: el mismo menú, los mismos estilos. Separar datos no cambia lo que se ve — cambia dónde viven las cosas.</li><li>Abre <code>datos.js</code> y cambia el precio del suadero. Guarda y recarga: la tarjeta se actualizó sin tocar una sola etiqueta HTML.</li><li>Agrega un taco nuevo al arreglo en <code>datos.js</code>. Recarga: la tarjeta apareció sola. Eso es la fuente única de verdad: el contenido manda y la presentación obedece.</li></ol><p>El detalle del orden importa: <code>datos.js</code> debe cargarse <em>antes</em> que tu script principal, porque <code>window.TACOS</code> tiene que existir cuando el render lo lea (m3-b1 te explica este orden de ejecución). Si ves <code>window.TACOS is not defined</code>, casi siempre es eso: el archivo de datos cargó después.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Quiero separar totalmente los datos de la presentación en mi landing de Tacos El Volcán. 1) Crea un archivo nuevo datos.js que declare el arreglo tacos como window.TACOS = [...], con los mismos objetos de ahora; 2) en index.html carga datos.js antes del script principal y ajusta el render para que lea window.TACOS; 3) agrega al inicio de datos.js un comentario que explique cómo agregar un taco nuevo o cambiar un precio; 4) el resultado en pantalla debe verse idéntico al actual. No cambies estilos ni textos. Dame los dos archivos completos.\"</p></blockquote><p>Ese prompt pone los datos en su propia casa (paso 1), ordena las dependencias (paso 2) y deja instrucciones para el que edite después — tú incluido (paso 3). El paso 4 es tu control de calidad: si la página cambia visualmente, algo se movió de más.</p>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "multiple", pregunta: "¿Cuál es la ganancia principal de separar datos de presentación?", opciones: ["La página carga más rápido", "El contenido vive en un solo lugar y cualquier cambio se refleja en toda la página", "La IA ya no necesita prompts tan largos", "Los estilos se aplican solos"], correcta: 1 },
+              { tipo: "completar", frase: "Separar datos de presentación significa que el ____ (tacos, precios) vive aparte de la ____ (tarjetas, colores); el ____ los conecta convirtiendo datos en HTML.", banco: ["contenido", "presentación", "render", "servidor"], respuestas: ["contenido", "presentación", "render"] },
+              { tipo: "relacionar", pares: [["Datos", "El arreglo tacos con nombre, precio y descripcion"], ["Presentación", "Las tarjetas y los estilos del menú"], ["Render", "El código que convierte datos en HTML"], ["Fuente única de verdad", "Cambias un dato una vez y toda la página lo refleja"]] },
+              { tipo: "vf", afirmacion: "Separar datos de presentación solo vale la pena en proyectos enormes.", correcta: false, explicacion: "vale desde el primer producto: el día que cambies un precio o agregues un taco, te lo agradece. Es disciplina, no tamaño." },
+              { tipo: "quehace", codigo: "const tacos = [\n  { nombre: \"Suadero\", precio: 25 },\n  { nombre: \"Pastor\", precio: 22 }\n];\ntacos[0].precio = 30;", pregunta: "¿Qué pasa la próxima vez que la página se renderice?", opciones: ["El suadero aparece a $30 sin tocar el HTML", "El pastor desaparece del menú", "La página muestra un error de sintaxis", "El menú se duplica"], correcta: 0 }
+            ]
+          },
+          {
+            id: "m3-c12",
+            titulo: "PRÁCTICA: filtros y buscador en el navegador",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Ya tienes los datos separados de la presentación (m3-c11). Eso convierte la interacción en algo trivial: un filtro ya no tiene que buscar en el HTML — le pregunta al arreglo. <strong>Filtrar</strong> es seleccionar de lo que ya existe: \"los tacos que cuesten menos de $25\", \"los de res\". <strong>Buscar</strong> es filtrar por texto: \"los que tengan 'su' en el nombre\". En ambos casos no creas nada nuevo: le haces una pregunta al arreglo y pintas la respuesta.</p><p>Las herramientas ya las conoces de la materia B:</p><ul><li><code>filter</code> (m3-b12) — recorre el arreglo y devuelve uno nuevo solo con los elementos que cumplen la condición.</li><li><code>toLowerCase()</code> e <code>includes()</code> — convierten todo a minúsculas y preguntan \"¿contiene este texto?\". Sin <code>toLowerCase</code>, \"Suadero\" y \"suadero\" serían cosas distintas.</li><li>El evento <code>input</code> (m3-b7) — se dispara en cada tecla que escribes en el buscador, para volver a filtrar en vivo.</li><li>El re-render — el patrón de la m3-c10: recomputas, armas el HTML con <code>map</code> + template literals (m3-b14) y lo metes con <code>innerHTML</code> (m3-b4).</li></ul><p>El dato que más se malinterpreta: <code>filter</code> <strong>no modifica el arreglo original</strong>. Devuelve una copia filtrada. Tus <code>tacos</code> quedan intactos para siempre — por eso al limpiar el filtro vuelve la lista completa. Y cuando la búsqueda no encuentra nada, no es un error: es el <strong>estado vacío</strong>, del que la m3-c15 va a hablar como se merece.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Filtrar es como <strong>el chalan del mostrador con la lista de pedidos</strong>. El cliente pregunta \"¿cuáles llevan cebolla?\" y el chalan recorre la lista y aparta los que sí llevan — no reescribe el recetario ni tacha a los demás: <em>selecciona</em> de lo que ya está anotado. Pregunta otra cosa, \"¿cuáles son de res?\", y vuelve a recorrer la misma lista. El recetario nunca cambia; lo que cambia es la selección que le muestras. Tu <code>filter</code> es ese chalan: la lista original es sagrada.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Paso a paso, terminas con buscador y filtros en tu landing:</p><ol><li>Pega el prompt de \"Díselo a la IA\" y deja que agregue el campo <code>tipo</code> a tus tacos, el buscador y los chips de filtro.</li><li>Verifica en tu archivo: el buscador es un <code>&lt;input id=\"buscador\"&gt;</code>, y hay botones para Todos, De res, De puerco y Veggie. Ambos escriben sobre el mismo render.</li><li>Prueba el buscador: escribe \"pas\". ¿Solo queda el pastor? Eso es <code>toLowerCase</code> + <code>includes</code> trabajando.</li><li>Prueba los chips: haz clic en \"De res\". Se marcan los que son y se ocultan los demás.</li><li>Combina todo: chip \"De res\" + texto \"su\" — el filtro es la suma de las dos condiciones. ¿Vacío? Aparece el mensaje del estado vacío; es la m3-c15, no un bug.</li><li>Presiona \"Limpiar\": la lista completa vuelve. Eso es posible porque el arreglo original nunca se tocó.</li></ol><p>El corazón del código, la función que decide qué se muestra:</p><pre><code>function tacosVisibles() {\n  const texto = buscador.value.toLowerCase().trim();\n\n  return tacos.filter(function (taco) {\n    const coincideTexto = taco.nombre.toLowerCase().includes(texto);\n    const coincideTipo = tipoActivo === \"todos\" || taco.tipo === tipoActivo;\n    return coincideTexto &amp;&amp; coincideTipo;\n  });\n}</code></pre><p>Lee la lógica: <code>coincideTexto</code> pregunta si el nombre contiene lo escrito; <code>coincideTipo</code> pregunta si el taco es del chip activo. Un taco pasa solo si las <strong>dos</strong> respuestas son sí. Después, en cada evento (<code>input</code> en el buscador, <code>click</code> en un chip), vuelves a calcular <code>tacosVisibles()</code> y repintas. Repintar no es \"borrar y volver a crear el menú\": es recalcular la lista y llamar a la misma función de pintado que ya tienes de la m3-c10.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Mi landing de Tacos El Volcán pinta el menú desde el arreglo tacos (window.TACOS en datos.js). Agrégale buscador y filtros: 1) agrega a cada taco un campo tipo ('res', 'puerco' o 'veggie'); 2) un input con id 'buscador' que filtre por nombre en cada tecla, comparando con toLowerCase() e includes(); 3) botones de filtro por tipo — Todos, De res, De puerco, Veggie — que marquen visualmente el chip activo; 4) que buscador y filtros se combinen entre sí; 5) si no hay resultados, muestra 'No encontramos tacos con esos filtros'; 6) un botón 'Limpiar' que restaure la lista completa. No cambies estilos ni textos. Dame el archivo completo actualizado.\"</p></blockquote><p>Cada número del prompt es un requisito verificable: el 4 es el que casi todos olvidan (los filtros se suman), y el 5 conecta directo con el estado vacío de la m3-c15.</p>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "quehace", codigo: "const resultado = tacos.filter(function (t) {\n  return t.precio &lt;= 25;\n});", pregunta: "El arreglo tacos tiene precios de $25, $22, $28 y $30. ¿Qué contiene resultado?", opciones: ["Solo los tacos de $25 o menos", "Todos los tacos, ordenados por precio", "Solo los tacos de exactamente $25", "El taco más caro"], correcta: 0 },
+              { tipo: "completar", frase: "El evento ____ se dispara en cada tecla que escribes en el buscador; el método ____ devuelve un arreglo nuevo con los elementos que cumplen la condición.", banco: ["input", "filter", "click", "sort"], respuestas: ["input", "filter"] },
+              { tipo: "multiple", pregunta: "¿Por qué se usa .toLowerCase() en el buscador?", opciones: ["Para que el buscador distinga entre mayúsculas y minúsculas", "Para que 'Suadero' y 'suadero' cuenten como lo mismo", "Para ordenar los resultados alfabéticamente", "Para que la búsqueda sea más rápida"], correcta: 1 },
+              { tipo: "relacionar", pares: [["tacos.filter(fn)", "Selecciona los tacos que cumplen la condición"], ["input", "El evento que se dispara con cada tecla"], ["includes(texto)", "Pregunta si el nombre contiene ese texto"], ["renderTacos(lista)", "Pinta en pantalla cualquier lista que le pases"]] },
+              { tipo: "vf", afirmacion: "filter modifica el arreglo original: por eso después de buscar, los tacos filtrados desaparecen del arreglo.", correcta: false, explicacion: "filter devuelve un arreglo NUEVO y deja el original intacto; por eso al limpiar el filtro vuelve la lista completa." }
+            ]
+          },
+          {
+            id: "m3-c13",
+            titulo: "Cuando la IA genera código que no entiendes",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Te va a pasar — de hecho ya te pasó o está por pasarte. La IA te entrega un bloque de código que resuelve algo, y tú no entiendes todo lo que hay adentro. Aclaremos algo desde ya: <strong>eso es normal y no te hace mal director</strong>. El error no es no entender; el error es fingir que entiendes y pegar el código a ciegas. Entre \"no entiendo nada\" y \"entiendo esta parte y esta no\" hay un océano — y tu trabajo es caer siempre del segundo lado.</p><p>No necesitas entender cada carácter: necesitas una <strong>comprensión operativa</strong> — saber tres cosas de cada bloque:</p><ul><li><strong>¿Qué hace?</strong> En una línea, sin profundidad innecesaria.</li><li><strong>¿Qué pasa si lo quito?</strong> ¿Se rompe la página o solo pierde una función secundaria?</li><li><strong>¿Dónde se ancla?</strong> Qué parte ya reconoces de la materia B — <code>fetch</code> (m3-b21), <code>filter</code> y <code>map</code> (m3-b12), <code>innerHTML</code> (m3-b4), <code>try/catch</code> (m3-b22). Tus conocidos son los postes del mapa: los desconocidos son solo calles entre postes.</li></ul><p>El protocolo completo antes de integrar código que no entiendes:</p><ol><li>Pídele a la IA que te lo explique <em>antes</em> de integrarlo.</li><li>Léelo por bloques, no por caracteres — el mismo ejercicio de la m3-c3, pero con JavaScript.</li><li>Pruébalo por comportamiento: cambia un valor, recarga y observa qué pasó. El comportamiento es la verdad (m3-b25 te deja pausar y ver variables).</li><li>Si hay comandos de terminal o toca datos reales de clientes: <strong>alto total</strong>. Ahí no avanzas sin entender (m1-a7).</li></ol><p>No todas las zonas exigen el mismo nivel. Un ajuste de <code>padding</code> se puede probar sin entender nada. Un comando que borra archivos o un cambio que toca pagos no se tocan sin entender. La IA es excelente — pero es excelente obedeciendo, y obedeció a muchos antes que a ti. La responsabilidad de lo que entra a tu proyecto es tuya.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>La IA es <strong>un chef famoso que te dicta la receta por teléfono</strong>. No necesitas saber la química del maíz ni por qué la salsa cambia de color para seguirla — pero sí necesitas saber qué ingrediente estás agregando en cada paso y qué función cumple. \"Agrega la taza de caldo\" lo entiendes; \"agrega una taza de sal\" te hace detener la llamada. Y además pruebas mientras cocinas: no esperas a servir el platillo para descubrir si le falta sal, lo pruebas a medio camino (tu prueba por comportamiento). El chef nunca sabrá si tú entiendes la química — pero el platillo que sale a la mesa es tuyo, y tú respondes por él.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Vamos a practicar con un bloque real — el tipo de código que la IA te genera cuando conectas datos (m3-b21 y m3-b22):</p><pre><code>async function cargarSugerencias() {\n  try {\n    const res = await fetch(\"https://api.example.com/sugerencias\");\n    if (!res.ok) throw new Error(\"Servidor \" + res.status);\n    const datos = await res.json();\n    const cards = datos\n      .filter((d) =&gt; d.disponible)\n      .slice(0, 3)\n      .map((d) =&gt; `&lt;article&gt;${d.nombre}&lt;/article&gt;`)\n      .join(\"\");\n    document.querySelector(\"#recomendados\").innerHTML = cards;\n  } catch (error) {\n    document.querySelector(\"#recomendados\").textContent =\n      \"No se pudieron cargar las sugerencias\";\n  }\n}</code></pre><p>Haz el inventario de lo que sí reconoces: <code>fetch</code> + <code>res.json()</code> (m3-b21), <code>filter</code> y <code>map</code> (m3-b12), <code>innerHTML</code> (m3-b4), <code>try/catch</code> y <code>res.ok</code> (m3-b22). ¿Lo único nuevo? <code>.slice(0, 3)</code>. Entonces el protocolo es un mensaje: \"¿qué hace slice aquí?\". Respuesta: toma solo los primeros 3 elementos del arreglo filtrado. Ya no tienes 30 líneas desconocidas: tienes 29 conocidas y una pregunta. Eso es dirigir.</p><p>El diálogo con la IA, en la práctica:</p><pre><code>Tú: Antes de integrar este bloque, explícame qué hace\n    slice(0, 3) y qué pasaría si lo quito.\n\nIA: slice(0, 3) recorta el arreglo a los primeros 3\n    elementos. Si lo quitas, se pintarían todas las\n    sugerencias en vez de solo 3.\n\nTú: Perfecto. Intégralo.</code></pre><p>Y la prueba por comportamiento al final: cambia el <code>3</code> por <code>5</code>, recarga y cuenta las tarjetas. Si salen 5, tu comprensión operativa era correcta.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Te voy a pegar el código que me diste para [describe la función] porque quiero entenderlo antes de integrarlo. Recórrelo bloque por bloque y: 1) dime en una línea qué hace cada bloque; 2) por cada bloque, dime qué pasaría si lo quitara — si se rompe la página o solo pierde una función; 3) márca qué piezas ya conozco (fetch, res.json, filter, map, innerHTML, try/catch) y cuáles son nuevas para mí; 4) si algo toca datos de clientes o requiere comandos de terminal, adviérteme antes de que yo lo corra. No cambies el código: esta respuesta es solo para que yo entienda.\"</p></blockquote><p>Ese prompt convierte a la IA en traductora de su propio código y te da el mapa de lo que es nuevo para ti. Después de esa respuesta, integrar deja de ser un acto de fe y se vuelve una decisión informada.</p>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "multiple", pregunta: "La IA te entrega un bloque de 30 líneas y entiendes 25. ¿Qué haces?", opciones: ["Pegarlo completo y esperar que funcione", "Pedir que te explique las 5 que no entiendes antes de integrarlo", "Borrar las 5 que no entiendes", "Decirle que reescriba todo en otro lenguaje"], correcta: 1 },
+              { tipo: "completar", frase: "No necesitas entender cada ____; necesitas saber qué hace cada ____ y qué pasaría si lo quitas.", banco: ["carácter", "bloque", "librería", "prompt"], respuestas: ["carácter", "bloque"] },
+              { tipo: "vf", afirmacion: "Antes de correr un comando de terminal que no entiendes, debes pedirle a la IA que te explique qué hace y qué puede afectar.", correcta: true, explicacion: "un comando puede instalar algo… o borrar algo (m1-a7); nunca se corre a ciegas." },
+              { tipo: "relacionar", pares: [["fetch + res.json", "Pedir datos y desempacarlos (m3-b21)"], ["filter + map", "Seleccionar y transformar elementos (m3-b12)"], ["try/catch", "Si algo falla, la página no se rompe (m3-b22)"], ["slice(0, 3)", "Tomar solo los primeros 3 elementos"]] },
+              { tipo: "quehace", codigo: ".slice(0, 3)", pregunta: "En medio de un código que te dio la IA aparece .slice(0, 3). ¿Qué hace?", opciones: ["Toma solo los primeros 3 elementos del arreglo", "Elimina los 3 primeros elementos", "Ordena los primeros 3 alfabéticamente", "Convierte el arreglo en texto"], correcta: 0 }
+            ]
+          },
+          {
+            id: "m3-c14",
+            titulo: "PRÁCTICA: consumir una API pública real",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Ya sabes pedir datos con <code>fetch</code> (m3-b21). Hoy los pides de verdad: a una <strong>API pública real</strong> — un servidor de otra empresa que expone sus datos por internet. La habilidad del director aquí no es escribir el fetch: es <strong>leer la documentación, probar el endpoint y verificar la respuesta</strong>.</p><p>Una API se compone de tres cosas que ya puedes reconocer:</p><ul><li><strong>Endpoints</strong> — URLs que devuelven datos. Cada una es un \"mostrador\" distinto: uno te da platillos, otro precios, otro imágenes.</li><li><strong>La respuesta JSON</strong> — al abrir un endpoint en el navegador ves el dato crudo: un objeto con claves. Leerlo es reconocer la estructura (m3-b13 y m3-b17): <code>meals</code> guarda el arreglo, y cada elemento tiene claves como <code>strMeal</code> o <code>strMealThumb</code>.</li><li><strong>Documentación</strong> — la página que explica qué hace cada endpoint. Ahí confirmas la URL exacta, los parámetros (<code>?s=taco</code>) y si pide una clave (API key).</li></ul><p>La API de esta práctica es <strong>TheMealDB</strong>, un catálogo abierto de recetas: <code>https://www.themealdb.com/api/json/v1/1/search.php?s=taco</code>. Busca recetas de taco y no pide clave. La vas a usar para darle a la taquería una sección nueva: <strong>Tacos del mundo</strong>. Y si algún día TheMealDB está caída, <code>https://jsonplaceholder.typicode.com/users</code> es tu banco de pruebas: devuelve usuarios falsos siempre que la necesites para probar el patrón.</p><p>El flujo del director: (1) abres el endpoint en el navegador y ves el JSON, (2) le describes a la IA la URL y la estructura que viste, (3) verificas que lo que pintó coincide con lo que prometía la respuesta.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Una API es <strong>el proveedor de ingredientes de la taquería</strong>. No entras a su cocina ni a su almacén: hay un mostrador (el endpoint) con un catálogo (la documentación), pides el platillo exacto (la URL con sus parámetros) y te entregan un paquete estandarizado (el JSON) — siempre con el mismo formato, aunque el contenido cambie. Tú no sabes cómo consiguieron el suadero: sabes que al pedir 'search.php?s=taco' te llega un paquete con la clave <code>meals</code> y adentro los platillos. Confías en el empaque, no en la cocina del proveedor.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Paso a paso, terminas con una sección 'Tacos del mundo' alimentada por una API real:</p><ol><li><strong>Recon:</strong> abre <code>https://www.themealdb.com/api/json/v1/1/search.php?s=taco</code> en una pestaña nueva. Lo que ves es JSON crudo. Identifica la clave <code>meals</code>, y dentro de cada platillo, <code>strMeal</code> (nombre) y <code>strMealThumb</code> (imagen).</li><li>Pega el prompt de \"Díselo a la IA\".</li><li><strong>Verifica el código:</strong> busca la URL exacta, <code>res.json()</code> y que la condición de vacío revise <code>!datos.meals || datos.meals.length === 0</code>. Si meals llegara <code>null</code>, sin esa condición tu página revienta (adelanto de la m3-c15).</li><li>Recarga la página: las tarjetas de Tacos del mundo aparecen con foto y nombre.</li><li><strong>Juega con el endpoint:</strong> cambia <code>s=taco</code> por <code>s=burrito</code> en el código, recarga y observa cómo cambia la sección entera sin tocar el render. Vuelve a <code>taco</code>.</li><li>Abre la consola (m3-b24) y prueba: <code>console.table(datos.meals)</code> — la estructura completa en tabla.</li><li>Si la página no muestra nada: abre la consola, mira el error, y pídele a la IA que lo corrija describiendo lo que viste. No edites a ciegas (m3-c13).</li></ol><p>El corazón del render se ve así:</p><pre><code>const res = await fetch(\"https://www.themealdb.com/api/json/v1/1/search.php?s=taco\");\nconst datos = await res.json();\n\nif (!datos.meals || datos.meals.length === 0) {\n  contenedor.textContent = \"Hoy no encontramos tacos del mundo\";\n} else {\n  contenedor.innerHTML = datos.meals.map(function (platillo) {\n    return `&lt;article class=\"taco-mundo\"&gt;\n      &lt;img src=\"${platillo.strMealThumb}\" alt=\"${platillo.strMeal}\"&gt;\n      &lt;h3&gt;${platillo.strMeal}&lt;/h3&gt;\n      &lt;p&gt;${platillo.strArea}&lt;/p&gt;\n    &lt;/article&gt;`;\n  }).join(\"\");\n}</code></pre><p>Lee el flujo: pides → desempacas → decides (¿hay datos o no?) → pintas. El <code>img</code> usa <code>src</code> con la URL que manda la API: la imagen se descarga desde el servidor de TheMealDB, no desde tu proyecto.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Agrega a mi landing de Tacos El Volcán una sección 'Tacos del mundo' que consuma una API pública real. Usa TheMealDB con este endpoint: https://www.themealdb.com/api/json/v1/1/search.php?s=taco. Con fetch y async/await: desempaca con res.json(), revisa res.ok, y guarda el arreglo de platillos que viene en la clave meals. Pinta una tarjeta por platillo con la imagen (strMealThumb), el nombre (strMeal) y el país (strArea), reutilizando el estilo de las tarjetas del menú. Si meals llega vacío o null, muestra 'Hoy no encontramos tacos del mundo'. Si la petición falla, muestra un mensaje de error amable sin romper el resto de la página. No uses alert. Dame el archivo completo actualizado.\"</p></blockquote><p>El prompt le da a la IA la URL exacta (paso que casi nadie hace y que evita que invente una), le dice dónde viven los datos en la respuesta (<code>meals</code>) y define qué mostrar en los casos raros.</p>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "multiple", pregunta: "Abres el endpoint de una API en el navegador y ves texto JSON. ¿Qué está pasando?", opciones: ["La API está fallando", "Estás viendo los datos crudos que devuelve la API, tal cual viajan por internet", "El navegador está mostrando el código fuente de la API", "Necesitas instalar un programa para leerlo"], correcta: 1 },
+              { tipo: "completar", frase: "Una API expone datos por internet a través de ____ (URLs); al abrir uno en el navegador ves la respuesta en formato ____.", banco: ["endpoints", "JSON", "tarjetas", "HTML"], respuestas: ["endpoints", "JSON"] },
+              { tipo: "quehace", codigo: "const res = await fetch(\"https://www.themealdb.com/api/json/v1/1/search.php?s=taco\");\nconst datos = await res.json();\nconsole.log(datos.meals[0].strMeal);", pregunta: "¿Qué imprime la consola?", opciones: ["El nombre del primer platillo de la búsqueda", "Todo el JSON de la respuesta", "El arreglo completo de platillos", "Un error porque falta res.ok"], correcta: 0 },
+              { tipo: "relacionar", pares: [["Endpoint", "La URL donde vive el dato"], ["meals", "La clave del JSON que guarda el arreglo de platillos"], ["strMealThumb", "La URL de la imagen del platillo"], ["res.json()", "Convierte la respuesta en datos"]] },
+              { tipo: "vf", afirmacion: "Todas las APIs públicas requieren una clave (API key) para funcionar.", correcta: false, explicacion: "muchas son abiertas y sin clave, como TheMealDB y JSONPlaceholder de esta práctica; otras — pagos, mapas — sí piden una llave. Se confirma en la documentación." }
+            ]
+          },
+          {
+            id: "m3-c15",
+            titulo: "Los tres estados de toda interfaz: cargando, vacío, error",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Todo bloque de interfaz que muestra datos vive, en cada momento, en uno de estos estados — y el buen director los diseña todos:</p><ul><li><strong>Cargando</strong> — los datos todavía no llegan. El usuario debe saber que la página está trabajando, no congelada. Un mensaje ('Cargando tacos...') o un esqueleto visual.</li><li><strong>Éxito</strong> — los datos llegaron y se pintan. Es el estado donde tu página ya pasa el 90% del tiempo.</li><li><strong>Vacío</strong> — la respuesta llegó, es válida, pero trae cero resultados: una búsqueda sin coincidencias, un historial sin pedidos. <strong>No es un error.</strong> Es una respuesta correcta con la lista vacía — y la interfaz debe decir algo útil y dar un camino a seguir ('No encontramos tacos con esos filtros' y una sugerencia).</li><li><strong>Error</strong> — la petición falló: red caída, servidor 500, URL mal escrita. Aquí sí es un fallo: mensaje claro y un botón de <strong>Reintentar</strong> que vuelva a intentar (m3-b22).</li></ul><p>La regla de oro: <strong>el usuario nunca debe quedarse sin saber qué pasa</strong>. Una pantalla en blanco mientras carga o cuando falla es el peor estado de todos — peor que un error bien comunicado. El nombre de estos tres estados es lenguaje de industria: si lo reconoces, ya puedes leer discusiones de equipos de producto y pedirle a la IA exactamente lo que quieres. Lo montarás en tu página en la m3-c16, así que hoy la misión es reconocer los estados y saber pedirlos por su nombre.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Son los tiempos de <strong>la comanda en la taquería</strong>. Pides tu orden y el taquero te dice 'ahorita mismo' — ese es el estado <strong>cargando</strong>: sabes que el trabajo está en camino. Llega el plato a tu mesa: <strong>éxito</strong>. 'Se nos acabó el suadero' — eso es el <strong>vacío</strong>: no es un error, es una respuesta válida con cero resultados, y el buen taquero te sugiere el pastor para que no te vayas sin comer. Y si la cocina se cae, el dueño no se esconde: te dice 'la parrilla falló, dame dos minutos' — <strong>error</strong> con reintento. El taquero que te deja parado sin decirte nada pierde al cliente; la interfaz que se queda en blanco pierde al usuario.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>El mismo bloque de datos con los tres estados, en un solo flujo — este patrón ya lo rozaste en m3-b22, hoy lo nombras con precisión:</p><pre><code>const contenedor = document.querySelector(\"#tacos-del-mundo\");\n\nasync function cargarTacos() {\n  contenedor.textContent = \"Cargando tacos del mundo...\";   // 1. CARGANDO\n\n  try {\n    const res = await fetch(\"https://www.themealdb.com/api/json/v1/1/search.php?s=taco\");\n    if (!res.ok) throw new Error(\"Servidor respondió \" + res.status);\n\n    const datos = await res.json();\n\n    if (!datos.meals || datos.meals.length === 0) {\n      contenedor.textContent =\n        \"Hoy no encontramos tacos del mundo. Prueba la sección del menú.\";  // 2. VACÍO\n    } else {\n      contenedor.innerHTML = renderTacos(datos.meals);   // ÉXITO\n    }\n  } catch (error) {\n    contenedor.innerHTML =\n      \"&lt;p&gt;No pudimos cargar los tacos del mundo.&lt;/p&gt;\" +\n      \"&lt;button onclick=\\\"cargarTacos()\\\"&gt;Reintentar&lt;/button&gt;\";  // 3. ERROR\n  }\n}\n\ncargarTacos();</code></pre><p>Recorre la historia: el contenedor empieza en <strong>cargando</strong>. Si todo sale bien, el <code>if</code> decide entre <strong>vacío</strong> y <strong>éxito</strong> según lo que traiga la respuesta. Si algo falla (<code>!res.ok</code> o un fallo de red), el <code>catch</code> deja el <strong>error</strong> en pantalla con su botón de Reintentar, que llama a la misma función para volver a empezar (m3-b6). Solo uno de los estados se muestra a la vez — y el usuario nunca ve una pantalla muda.</p><p>Truco de reconocimiento para revisar el código de la IA: busca las tres marcas. <strong>El texto de cargando</strong> antes del <code>fetch</code>, <strong>la condición de vacío</strong> (<code>.length === 0</code> o <code>!datos.algo</code>) después de desempacar, y <strong>el <code>catch</code></strong> con su mensaje. Si una de las tres no está, pídelo por su nombre.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"La sección de datos de mi landing de Tacos El Volcán solo pinta cuando todo sale bien. Agrega los tres estados por su nombre: 1) cargando — mientras espera la respuesta, muestra 'Cargando tacos del mundo...' en el contenedor; 2) vacío — si la respuesta llega válida pero sin datos, muestra un mensaje amable distinto del error, con una sugerencia; 3) error — si res.ok es falso o hay un fallo de red, muestra 'No pudimos cargar los tacos del mundo' con un botón de Reintentar que llame a la función de nuevo. Asegúrate de que solo uno de los tres se muestre a la vez. No uses alert. Dame el archivo completo actualizado.\"</p></blockquote><p>Pedir los estados 'por su nombre' es exactamente el lenguaje de industria: la IA no tiene que adivinar que quieres estados, solo ejecutarlos. En la m3-c16 vas a pulir los tres estados hasta que se vean profesionales.</p>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "multiple", pregunta: "El buscador de la m3-c12 no encuentra nada y muestra 'No encontramos tacos con esos filtros'. ¿Qué estado es?", opciones: ["Error", "Vacío", "Cargando", "Éxito"], correcta: 1 },
+              { tipo: "relacionar", pares: [["Cargando", "El usuario espera: 'Cargando tacos...'"], ["Éxito", "Los datos llegaron y se pintan"], ["Vacío", "Respuesta válida sin resultados: mensaje con sugerencia"], ["Error", "Algo falló: mensaje claro con Reintentar"]] },
+              { tipo: "completar", frase: "El estado ____ no es un error: es una respuesta ____ que trae cero resultados.", banco: ["vacío", "válida", "lenta", "cargando"], respuestas: ["vacío", "válida"] },
+              { tipo: "vf", afirmacion: "Si una interfaz se queda en blanco mientras carga o cuando falla, el usuario no debería enterarse de qué pasó.", correcta: false, explicacion: "la interfaz debe estar siempre en un estado y comunicarlo; la pantalla muda es el peor estado de todos." },
+              { tipo: "quehace", codigo: "if (datos.length === 0) {\n  contenedor.textContent = \"Se nos acabó el suadero. Prueba el pastor.\";\n} else {\n  contenedor.innerHTML = renderTacos(datos);\n}", pregunta: "La respuesta de la API es válida pero datos está vacío. ¿Qué se muestra en pantalla?", opciones: ["El mensaje 'Se nos acabó el suadero. Prueba el pastor.'", "La lista de tacos renderizada", "Un error en rojo con Reintentar", "El contenedor queda en blanco"], correcta: 0 }
+            ]
+          },
+          {
+            id: "m3-c16",
+            titulo: "PRÁCTICA: manejar los tres estados",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>La teoría de la m3-c15 ya está montada: tu landing tiene los tres estados (cargando, vacío y error) en la sección 'Tacos del mundo'. Hoy los pones a prueba. Un director no reza para que los estados funcionen: <strong>rompe la página a propósito</strong> para verlos aparecer. Cada estado se fuerza de una manera distinta:</p><ul><li><strong>Cargando</strong> — se ve mientras pides los datos, pero con tu internet vuela y no alcanzas a verlo. Lo haces visible con una red lenta.</li><li><strong>Vacío</strong> — cambias el endpoint a una búsqueda que no devuelve nada, o filtras a cero resultados.</li><li><strong>Error</strong> — apagas la red (Offline) o escribes mal la URL del endpoint.</li></ul><p>Regla de director: <strong>si no puedes reproducir un estado, no sabes si existe</strong> — y lo que no está probado no está hecho. Hoy el orden es: forzar cada estado, confirmar el mensaje correcto y pulir su apariencia para que se vea profesional.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Es <strong>el simulacro de incendio de la taquería</strong>. Nadie espera a que la cocina se incendie de verdad para descubrir que el extintor está vacío: se hace el simulacro un martes a propósito, con el restaurante vacío, y se verifica que todos saben salir y que el extintor dispara. Hoy apagas la página: desconectas la red, le das un endpoint sin resultados, la pones a cargar en cámara lenta. El día que la API real se caiga — y algún día se cae — tus estados ya estarán entrenados, y el usuario jamás verá una pantalla muda.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Hoy no escribes funciones nuevas: <strong>pruebas y pules</strong>. Abre tu landing de Tacos El Volcán y sigue el orden:</p><ol><li><strong>Camino feliz:</strong> recarga normal y verifica el estado <strong>éxito</strong>: las tarjetas de Tacos del mundo aparecen (m3-c14).</li><li><strong>Fuerza el vacío:</strong> en el código cambia <code>s=taco</code> por <code>s=nadita</code> en la URL del endpoint, recarga y confirma el mensaje amable con sugerencia — distinto del error. Vuelve a <code>s=taco</code>.</li><li><strong>Fuerza el error:</strong> abre DevTools (F12), ve a la pestaña <strong>Network</strong>, marca <strong>Offline</strong> y recarga. Debe aparecer el mensaje de error con su botón <strong>Reintentar</strong>. Desmarca Offline, haz clic en Reintentar y confirma que recupera los datos.</li><li><strong>Fuerza el cargando:</strong> en Network cambia la velocidad a <strong>Slow 3G</strong> y recarga: ahora sí alcanzas a ver 'Cargando...' antes de las tarjetas. Restaura la velocidad normal.</li><li><strong>Pule:</strong> pega el prompt de \"Díselo a la IA\" para que los tres estados se vean profesionales, cada uno con su clase CSS y un spinner para el cargando.</li><li><strong>Regla final:</strong> recarga una última vez y confirma que solo <em>uno</em> de los tres estados se muestra a la vez (m3-c15).</li></ol><p>Si algún estado no aparece cuando lo fuerzas, no lo toques a ciegas: describe lo que viste a la IA y pídele que lo corrija (m3-c13).</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Mi landing de Tacos El Volcán ya tiene los tres estados de la sección 'Tacos del mundo' (cargando, vacío y error), pero se ven planos y genéricos. Déjalos profesionales: 1) cargando — un mensaje claro con un indicador visual simple (un spinner con CSS puro, sin librerías); 2) vacío — un mensaje amable distinto del error, con una sugerencia y un botón para recargar la sección; 3) error — mensaje claro con botón Reintentar que vuelva a llamar la función. Dale a cada estado su propia clase CSS, bien espaciado y coherente con la paleta rojo ladrillo y crema. Asegúrate de que solo uno de los tres se muestre a la vez. No uses alert. Dame el archivo completo actualizado.\"</p></blockquote><p>La práctica de forzar los estados te dio la evidencia de qué faltaba; este prompt la convierte en instrucciones precisas. Pedir el spinner 'con CSS puro' evita que la IA agregue una librería entera para un adorno.</p>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "multiple", pregunta: "Abres DevTools, en Network marcas Offline y recargas. ¿Qué estado de la sección 'Tacos del mundo' deberías ver?", opciones: ["Cargando", "Vacío", "Error", "Éxito"], correcta: 2 },
+              { tipo: "completar", frase: "Para probar el estado vacío cambias el endpoint a una búsqueda sin ____; si aparece el mensaje con ____, el estado está bien separado del error.", banco: ["resultados", "sugerencia", "errores", "imágenes"], respuestas: ["resultados", "sugerencia"] },
+              { tipo: "vf", afirmacion: "Si no puedes reproducir un estado en tu máquina, lo más seguro es asumir que funciona igual para los usuarios reales.", correcta: false, explicacion: "si no lo viste funcionar, no lo viste: cada estado se fuerza y se prueba; lo que no se prueba es lo que se rompe el día menos esperado." },
+              { tipo: "quehace", codigo: "async function cargarTacos() {\n  contenedor.textContent = \"Cargando...\";\n  try {\n    const res = await fetch(\"https://www.themealdb.com/api/json/v1/1/search.php?s=nadita\");\n    if (!res.ok) throw new Error(\"falló\");\n    const datos = await res.json();\n    if (!datos.meals || datos.meals.length === 0) {\n      contenedor.textContent = \"Hoy no hay tacos del mundo. Prueba el menú.\";\n    } else {\n      contenedor.innerHTML = renderTacos(datos.meals);\n    }\n  } catch (error) {\n    contenedor.textContent = \"No pudimos cargar.\";\n  }\n}", pregunta: "El endpoint existe y responde 200, pero la búsqueda no trae platillos. ¿Qué se muestra en pantalla?", opciones: ["'Cargando...'", "'Hoy no hay tacos del mundo. Prueba el menú.'", "'No pudimos cargar.'", "Las tarjetas de tacos del mundo"], correcta: 1 },
+              { tipo: "relacionar", pares: [["Vacío", "Cambia el endpoint a una búsqueda sin resultados"], ["Error", "Marca Offline en DevTools"], ["Cargando", "Red lenta (Slow 3G) al recargar"], ["Éxito", "Recarga normal con internet"]] }
+            ]
+          },
+          {
+            id: "m3-c17",
+            titulo: "Diseño desde referencia: darle una imagen a la IA",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Decirle a la IA 'hazla moderna' o 'que se vea bonita' es apostar: tu 'moderno' no es el suyo. <strong>Diseño desde referencia</strong> es darle a la IA algo que ver: la URL de un sitio que te gusta, o una imagen (screenshot) subida directamente. La referencia transfiere lo que los adjetivos destrozan — colores, tipografías, espaciado, distribución.</p><p>Tienes dos formas de pasarla:</p><ul><li><strong>Por URL</strong> — pegas el enlace del sitio de referencia en el prompt y varios asistentes lo abren y lo analizan.</li><li><strong>Por imagen</strong> — subes un screenshot (del sitio, de un menú, de un cartel, de una fachada) y el asistente lo lee como imagen.</li></ul><p>La regla de oro: <strong>referencia de estilo, no de contenido</strong>. No quieres que copie los textos ni las fotos del sitio de referencia — quieres que copie su lenguaje visual. La referencia responde la pregunta del estilo del brief (m3-c1) con evidencia en vez de opinión. Y antes de pedir el rediseño, pídele que te diga qué extrajo: paleta en HEX, tipografías, espaciado. Si lo nombró bien, lo va a aplicar bien.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Es <strong>probarle la salsa al chef en vez de describírsela</strong>. Decir 'un toque ahumado, picante medio, con un dulzor sutil' es una apuesta: el chef imaginó algo distinto de lo que tú probaste. Ponerle el platillo enfrente y decirle 'así lo quiero' es comunicación instantánea. La IA no puede probar salsas, pero sí puede ver un sitio o una imagen y extraer de ahí su paleta, su letra y su ritmo. Tú eres el que lleva la muestra al chef.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Antes de abrir el chat, haz tu <strong>receta de la referencia</strong>: elige un sitio que te guste y escribe 3-4 cosas concretas que te gustan de él. Nada de 'me gusta todo': cosas nombrables.</p><pre><code>RECETA DE REFERENCIA — [nombre del sitio]\n1. Paleta: fondo crema, acentos verde oscuro.\n2. Tipografía: títulos gruesos tipo cartel.\n3. Menú en grid de 3 columnas con tarjetas.\n4. Botón grande y redondeado en cada tarjeta.</code></pre><p>Con eso en la mano:</p><ol><li>Sube el screenshot o pega la URL de la referencia en el chat.</li><li>Pide el primer paso de verificación: 'dime qué extrajiste de esta referencia — paleta en HEX, tipografías, espaciados' <em>antes</em> de tocar código.</li><li>Compara su lista contra tu receta: si faltó algo, señálalo ('no mencionaste el grid de 3 columnas').</li><li>Recién ahí pega el prompt de \"Díselo a la IA\" para el rediseño.</li></ol><p>Ese paso de 'nómbrame lo que viste' es el que separa a quien adivina de quien dirige: verificas la lectura de la IA antes de que toque tu código.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Te voy a pasar una referencia visual para rediseñar mi landing de Tacos El Volcán. Primero, sin tocar mi código: dime qué extrajiste de la referencia — paleta de colores en HEX, tipografías, espaciados y cómo distribuye las secciones. Espera a que yo confirme. Después rediseña mi landing con ese lenguaje visual: misma sensación y distribución, pero con mi contenido (nombre, eslogan, menú de 6 tacos con precios, horario, dirección y botón de WhatsApp). No copies los textos, productos ni fotos de la referencia. Mantén la identidad de mi taquería: rojo ladrillo y crema si el contraste lo permite, o adapta la paleta para que siga viéndose mía. Dame el archivo completo actualizado.\"</p></blockquote><p>Fíjate en la estructura del prompt: primero extraer y esperar confirmación, después rediseñar. Ese 'espera a que yo confirme' es el control del director — la IA no avanza hasta que tú verificaste que leyó bien la referencia.</p>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "multiple", pregunta: "Le pides a la IA 'hazla moderna' y el resultado no se parece a lo que imaginabas. ¿Cuál es la causa?", opciones: ["La IA no sabe diseñar", "Los adjetivos son subjetivos: le diste una opinión, no una referencia", "Necesitas otro plan de pago", "Le faltaba más texto de explicación"], correcta: 1 },
+              { tipo: "relacionar", pares: [["URL de un sitio", "Referencia que la IA abre y analiza"], ["Screenshot subido", "Referencia en imagen que la IA lee"], ["Paleta en HEX", "Colores exactos verificables"], ["'Moderno' o 'bonito'", "Adjetivos subjetivos que no transfieren estilo"]] },
+              { tipo: "completar", frase: "La referencia transfiere el ____ visual: colores, tipografías y ____. El contenido — textos y fotos — es tuyo.", banco: ["lenguaje", "espaciado", "código", "dominio"], respuestas: ["lenguaje", "espaciado"] },
+              { tipo: "vf", afirmacion: "Una referencia bien usada implica que la IA copie también el contenido del sitio de referencia.", correcta: false, explicacion: "la referencia es de estilo, no de contenido: se copia el lenguaje visual, no los textos ni productos del otro sitio." },
+              { tipo: "ordenar", instruccion: "Ordena el flujo para diseñar desde referencia:", elementos: ["Eliges un sitio que te gusta y anotas 3-4 cosas concretas", "Subes screenshot o pegas la URL en el chat", "Pides que nombre la paleta y tipografías extraídas", "Verificas su lista contra tus notas", "Pides el rediseño con tu contenido"] }
+            ]
+          },
+          {
+            id: "m3-c18",
+            titulo: "PRÁCTICA: replicar la estructura de un sitio que te gusta",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Ayer viste la teoría (m3-c17); hoy la ejecutas. Elegiste un sitio que te gusta y hoy copias su <strong>estructura</strong> — el esqueleto, no el contenido ni el estilo. Estructura es el orden y tipo de secciones: header, hero, menú en grid, testimonios, footer — y cómo se distribuyen. Dos sitios pueden compartir el mismo esqueleto y verse completamente distintos (el brief de la m3-c1 te dio el método; hoy el brief se apoya en algo real que puedes señalar).</p><p>El método tiene tres pasos: <strong>inventariar</strong> (escribes las secciones de arriba a abajo), <strong>mapear</strong> (decides cuáles de tus secciones ya existen y cuáles cambian de lugar) y <strong>replicar</strong> (pasas referencia + inventario a la IA y verificas). El inventario es la parte que casi nadie hace — y es la que te da el control: si lo escribiste tú, sabes exactamente qué verificar cuando la IA termine.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Es <strong>pedirle los planos al vecino para tu casa</strong>. No vas a copiar sus muebles (contenido) ni su pintura (estilo): copias que la recámara dé al oriente, que la cocina esté junto al comedor y que la entrada tenga escalones. Con los mismos planos, dos familias arman casas totalmente distintas. La estructura es de todos; el contenido y el estilo son tuyos. Hoy le pides a la IA que levante tu landing siguiendo los planos del sitio que te gusta — con tus muebles y tu pintura.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Hoy terminas con tu landing reestructurada. Pasos:</p><ol><li><strong>Elige la referencia:</strong> usa el sitio que elegiste en la m3-c17 (si es una taquería o un restaurante, mejor: la estructura va a encajar casi directo).</li><li><strong>Inventaría su esqueleto</strong> de arriba a abajo, así:</li></ol><pre><code>ESTRUCTURA DE [SITIO]:\n1. Header fijo: logo a la izquierda, navegación a la derecha.\n2. Hero: foto grande, titular arriba, botón de WhatsApp.\n3. Menú: grid de 3 columnas con tarjetas.\n4. Testimonios: 3 citas en fila.\n5. Footer: 3 columnas (horario, dirección, redes).</code></pre><ol start=\"3\"><li><strong>Mapea:</strong> compara contra tu landing. Tu header y tu hero ya existen (m3-c2); tu menú ya es un grid de tarjetas que se pinta desde datos (m3-c10); te faltan los testimonios y el footer de 3 columnas.</li><li>Pega el prompt de \"Díselo a la IA\" con tu inventario.</li><li><strong>Verifica:</strong> recarga y compárala con tu lista, sección por sección, de arriba a abajo. Si falta una sección o cambió el orden, señálalo.</li><li><strong>Revisa el contenido:</strong> confirma que tus textos y tu menú siguen intactos — se copió estructura, no contenido (m3-c13 para lo que no entiendas del código).</li></ol>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Voy a reestructurar mi landing de Tacos El Volcán siguiendo la referencia: [URL del sitio]. Replica únicamente su ESTRUCTURA: el orden y tipo de secciones y cómo distribuye cada una — header con logo y navegación, hero con imagen grande y botón, menú en grid de 3 columnas, testimonios en fila, footer de 3 columnas. No copies sus textos, productos, fotos ni colores. Usa mi contenido: nombre, eslogan, menú de 6 tacos con precios, horario, dirección y botón de WhatsApp. Mantén mi estilo (rojo ladrillo y crema). Antes de tocar código, devuélveme la lista de secciones en el mismo orden para confirmar. Después dame el archivo completo actualizado.\"</p></blockquote><p>El prompt separa estructura de contenido explícitamente ('no copies sus textos... usa mi contenido') porque la IA tiende a mezclarlos. Y de nuevo el doble paso: primero confirma el plan, después ejecuta.</p>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "multiple", pregunta: "Al replicar la estructura de un sitio, ¿qué es exactamente lo que copias?", opciones: ["Sus textos y fotografías", "El orden, tipo y distribución de sus secciones", "Su dominio y servidor", "Sus colores y tipografías exactos"], correcta: 1 },
+              { tipo: "ordenar", instruccion: "Ordena el método de la práctica:", elementos: ["Eliges un sitio de referencia", "Inventarías su esqueleto de arriba a abajo", "Mapeas sus secciones contra tu landing", "Pasas referencia + inventario a la IA", "Verificas sección por sección"] },
+              { tipo: "relacionar", pares: [["Inventariar", "Escribir las secciones del sitio de arriba a abajo"], ["Mapear", "Comparar el esqueleto con tu landing actual"], ["Replicar", "Pasar referencia + inventario a la IA"], ["Verificar", "Revisar sección por sección contra tu lista"]] },
+              { tipo: "completar", frase: "Se copia la ____ del sitio de referencia, pero el ____ y el estilo son tuyos.", banco: ["estructura", "contenido", "foto", "servidor"], respuestas: ["estructura", "contenido"] },
+              { tipo: "vf", afirmacion: "Si la IA mezcla el contenido de la referencia con el tuyo, la culpa es de la IA y no tienes cómo evitarlo.", correcta: false, explicacion: "se evita pidiéndolo en el prompt ('no copies textos ni fotos, usa mi contenido') y verificando después que el contenido siga intacto." }
+            ]
+          },
+          {
+            id: "m3-c19",
+            titulo: "Componentes: pensar en piezas reutilizables",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Ya usas componentes sin llamarlos así. Desde la m3-c10, tu menú se pinta desde el arreglo <code>tacos</code> con <code>map</code>; en la m3-c14 hiciste <code>renderTacos</code> para las tarjetas de Tacos del mundo. Un <strong>componente</strong> es exactamente eso, con nombre: una pieza de interfaz reutilizable — una función que recibe los datos de un elemento y devuelve su HTML (m3-b14). Datos entran, HTML sale.</p><p>La diferencia que hoy aprendes a nombrar: en la m3-c10 el molde vivía escondido <em>adentro</em> del <code>map</code> (una línea larga); convertirlo en una función nombrada — <code>renderTaco(taco)</code> — lo vuelve una pieza aparte que puedes reusar y editar en un solo lugar. ¿Por qué importa?</p><ul><li><strong>Escribes una vez</strong> — la tarjeta existe en un solo lugar, no repetida ni incrustada en cada render.</li><li><strong>Cambias una vez</strong> — modificas el molde y se actualiza en todos lados a la vez (la m3-c11 te dio la idea con los datos; esto es la misma idea con la pieza visual).</li><li><strong>Menos lugares donde romperse</strong> — un error de tarjeta se corrige en un punto, no en seis.</li><li><strong>Piensas en piezas</strong> — tu landing deja de ser un muro de HTML y se vuelve un catálogo de moldes que puedes mover y reusar (m3-c20 lo pondrá en práctica).</li></ul><p>Y esto no es un truco de este curso: los frameworks de la m3-c24 (React y compañía) existen para hacer exactamente esto a escala industrial. Si entiendes la tarjeta del menú como componente, ya entendiste la mitad de React.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Un componente es <strong>la tortilla de la taquería</strong>. La cocina no arma cada tortilla a mano para cada orden: hay un molde estándar, y cada comanda le pone su relleno. El taco al pastor y el de suadero comparten la misma tortilla — mismo molde, distinto relleno. Si mañana el dueño decide tortillas más grandes, cambia el molde una vez y todas las órdenes salen con la nueva tortilla; nadie rehace taco por taco. Tu <code>renderTaco(taco)</code> es ese molde: cámbialo una vez y los seis tacos del menú se actualizan sin que toques sus rellenos.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Compara las dos formas del mismo menú. Sin componente, el molde vive dentro del <code>map</code> (m3-c10):</p><pre><code>// SIN componente — el molde escondido en el map\nmenuHTML = tacos.map(function (t) {\n  return `&lt;article class=\"menu-card\"&gt;\n    &lt;h3&gt;${t.nombre}&lt;/h3&gt;\n    &lt;p&gt;${t.descripcion}&lt;/p&gt;\n    &lt;p&gt;$${t.precio}&lt;/p&gt;\n  &lt;/article&gt;`;\n}).join(\"\");</code></pre><p>Con componente, el molde sale del <code>map</code> y recibe nombre:</p><pre><code>// CON componente — un molde nombrado y reutilizable\nfunction renderTaco(taco) {\n  return `&lt;article class=\"menu-card\"&gt;\n    &lt;h3&gt;${taco.nombre}&lt;/h3&gt;\n    &lt;p&gt;${taco.descripcion}&lt;/p&gt;\n    &lt;p&gt;$${taco.precio}&lt;/p&gt;\n  &lt;/article&gt;`;\n}\n\nmenuHTML = tacos.map(renderTaco).join(\"\");</code></pre><p>Lee la segunda por bloques (m3-c3): <code>map</code> llama a <code>renderTaco</code> por cada elemento del arreglo (m3-b12), cada llamada devuelve el HTML de su tarjeta, y <code>.join(\"\")</code> une todas en un solo texto que se pinta con <code>innerHTML</code> (m3-b4). La pantalla no cambia en nada — pero ahora la tarjeta tiene dirección: si mañana cambias <code>menu-card</code> en la función, cambian las seis tarjetas sin tocar el <code>map</code>. Esa es la jugada que en la m3-c20 vas a aplicar a todo tu sitio.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Mi landing de Tacos El Volcán pinta el menú desde el arreglo tacos, pero el HTML de la tarjeta está incrustado dentro del map y las tarjetas de 'Tacos del mundo' (m3-c14) repiten una estructura parecida por separado. Extrae la tarjeta del menú a una función componente renderTaco(taco) que reciba un objeto con nombre, descripción y precio y devuelva el HTML; pinta el menú con .map(renderTaco). Deja también las tarjetas de 'Tacos del mundo' como su propio componente. El resultado debe verse idéntico en pantalla. No cambies contenido ni estilos, solo organiza el código en piezas. Dame el archivo completo actualizado.\"</p></blockquote><p>Nota cómo el prompt describe el componente por su forma ('recibe un objeto... devuelve el HTML') en vez de pedir 'usa componentes' a secas. Tú no memorizas la sintaxis: describes el molde y la IA lo escribe (reconocer, no memorizar — m3-c13).</p>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "quehace", codigo: "function renderTaco(taco) {\n  return `&lt;article class=\"menu-card\"&gt;${taco.nombre}&lt;/article&gt;`;\n}\nconst html = tacos.map(renderTaco).join(\"\");", pregunta: "¿Qué produce este código?", opciones: ["Un solo taco con datos fijos", "Una tarjeta HTML por cada taco del arreglo, unidas en un solo texto", "Los tacos ordenados por precio", "Un error porque falta un ciclo for"], correcta: 1 },
+              { tipo: "multiple", pregunta: "Tu menú se muestra en la landing y en una versión móvil separada. Cambias el estilo de la tarjeta dentro del componente renderTaco. ¿Qué pasa?", opciones: ["Solo cambia en la landing", "Cambia en todos lados donde se usa el componente", "Hay que duplicar el cambio", "No cambia nada hasta reescribir el arreglo"], correcta: 1 },
+              { tipo: "completar", frase: "Un componente recibe los ____ del taco y devuelve su ____; el mismo molde, distinto relleno.", banco: ["datos", "HTML", "estilos", "prompt"], respuestas: ["datos", "HTML"] },
+              { tipo: "relacionar", pares: [["Componente", "Pieza de interfaz reutilizable"], ["renderTaco(taco)", "Recibe los datos de un taco y devuelve el HTML de su tarjeta"], [".map()", "Llama al componente por cada elemento"], [".join(\"\")", "Une las tarjetas en un solo texto"]] },
+              { tipo: "vf", afirmacion: "Si escribes el HTML de la tarjeta a mano seis veces y mañana cambia el diseño, corrigen en seis lugares.", correcta: true, explicacion: "por eso el componente: el molde se cambia una vez y se actualiza en todos lados (lo practicarás en la m3-c20)." }
+            ]
+          },
+          {
+            id: "m3-c20",
+            titulo: "PRÁCTICA: convertir tu sitio en componentes",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>La teoría de la m3-c19 ya la tienes; hoy conviertes tu landing de Tacos El Volcán en componentes de verdad. La meta: <strong>ninguna pieza de interfaz queda escondida ni repetida</strong>. Donde el mismo molde aparezca más de una vez, se vuelve función componente y se pinta con <code>.map</code> (m3-b12).</p><p>El criterio de éxito no es visual: <strong>la página debe verse exactamente igual</strong>. Lo que cambia es invisible y vale oro — el mantenimiento. La prueba final es la del 'cambio único': pides un cambio pequeño en la tarjeta (una insignia, un borde) y aparece en todas las tarjetas a la vez. Ese es el momento en que el componente demuestra que funciona.</p><p>¿Qué convertimos? El menú (ya pinta desde datos, m3-c11, pero su molde puede salir del <code>map</code>), las tarjetas de Tacos del mundo (ya son componente desde la m3-c14) y cualquier bloque que repita estructura — header, footer, lo que se repita. Piensa en piezas (m3-c19): tu landing es un catálogo de moldes, no un muro de HTML.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Es <strong>abrir la tortilladora en la taquería</strong>. Antes, cada orden se armaba a mano, bloque por bloque; hoy, un solo molde produce la tortilla estándar y cada comanda solo decide el relleno. Cuando la cocina se modernizó así, nadie notó la diferencia en el sabor — pero la cocina se volvió mantenible: para hacer tortillas más grandes, cambias la tortilladora una vez, no cada orden. Tu landing pasa por lo mismo: se ve igual, pero a partir de hoy, cambiar una pieza cambia todo lo que la usa.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Paso a paso, terminas con una landing hecha de piezas:</p><ol><li><strong>Recon (m3-c19):</strong> abre tu landing y busca los moldes. El menú se pinta desde <code>tacos</code> (m3-c11), pero su tarjeta puede estar incrustada en el <code>map</code> o repetida. Anota también header, footer y tarjetas de Tacos del mundo.</li><li><strong>Inventaría los datos:</strong> ¿qué necesita cada tarjeta? Nombre, descripción y precio — los 'inputs' del componente. Tus tacos ya viven en <code>datos.js</code> como <code>window.TACOS</code> (m3-c11): el componente es el molde que los toma.</li><li>Pega el prompt de \"Díselo a la IA\".</li><li><strong>Verifica visual:</strong> recarga y confirma que se ve idéntico. Si algo cambió de aspecto, descríbelo a la IA y que lo corrija (m3-c13) — el refactor no debe alterar lo que ve el cliente.</li><li><strong>Prueba del cambio único:</strong> pide un cambio pequeño en el componente — 'agrega una insignia RECOMENDADO a la tarjeta del menú'. Recarga: si aparece en las seis tarjetas desde un solo cambio, el componente funciona (m3-b25 te deja pausar y ver el arreglo si algo no cuadra).</li><li><strong>Verifica los datos:</strong> confirma que el contenido del menú (nombres y precios) quedó intacto después del refactor.</li></ol><p>Ese paso 5 es la cereza: no es un adorno, es la evidencia de que convertiste tu sitio en componentes.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Mi landing de Tacos El Volcán ya usa componentes para las tarjetas, pero quiero que revises todo el archivo y elimines cualquier pieza de interfaz que quede escondida o repetida: si el mismo molde aparece más de una vez (menú, header, footer, tarjetas), conviértelo en una función componente que reciba sus datos y devuelva el HTML. Guarda el contenido del menú en el arreglo de datos.js y pinta con .map. La pantalla debe verse exactamente igual después del cambio — no cambies contenido ni estilos, solo organiza el código en piezas. Al terminar, dime cuántos componentes quedaron y qué repeticiones eliminaste. Dame el archivo completo actualizado.\"</p></blockquote><p>Dos detalles que hacen fuerte este prompt: pedir el <em>reporte final</em> ('dime cuántos componentes quedaron') te da la evidencia de qué se hizo sin leer el archivo completo, y la condición 'la pantalla debe verse igual' fija la regla de oro del refactor.</p>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "ordenar", instruccion: "Ordena la práctica de hoy:", elementos: ["Buscas los moldes repetidos en tu landing", "Anotas qué datos necesita cada tarjeta", "Pides convertir las repeticiones en componentes", "Recargas y verificas que se vea idéntico", "Pruebas un cambio y lo ves en todos lados"] },
+              { tipo: "multiple", pregunta: "Después del refactor, tu landing se ve exactamente igual que antes. ¿El cambio falló?", opciones: ["Sí, algo se rompió en silencio", "No — verse idéntica es el resultado correcto; el beneficio está en mantener el código, no en el aspecto", "Hay que reiniciar el navegador", "Significa que los componentes no se usaron"], correcta: 1 },
+              { tipo: "completar", frase: "La prueba del cambio único: modificas el ____ una vez y el cambio aparece en todas las tarjetas a la vez.", banco: ["componente", "código", "taco", "estilo"], respuestas: ["componente"] },
+              { tipo: "vf", afirmacion: "Convertir tu sitio en componentes cambia la apariencia de tu página.", correcta: false, explicacion: "el aspecto queda idéntico; lo que cambia es el mantenimiento: cada pieza se edita en un solo lugar." },
+              { tipo: "relacionar", pares: [["renderTaco", "Componente del menú de Tacos El Volcán"], ["renderTacos", "Componente de las tarjetas de la API (m3-c14)"], [".map()", "Genera una tarjeta por elemento del arreglo"], ["Insignia RECOMENDADO", "Cambio que se propaga a todas las tarjetas"]] }
+            ]
+          },
+          {
+            id: "m3-c21",
+            titulo: "Herramientas de generación de UI: v0, Bolt, Lovable",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Ya sabes dirigir a un LLM para maquetar desde el chat (todo este mes, con ChatGPT, Claude o Gemini). Pero existe una familia de herramientas pensadas <strong>exclusivamente</strong> para eso: las <strong>herramientas de generación de UI</strong>. No te dan un chat que escribe código y te lo pega en un bloque: te dan un taller donde escribes tu prompt, la herramienta genera la interfaz y te la muestra <strong>en vivo</strong> en una vista previa, la iteras con más prompts y al final exportas el código de un proyecto completo y estructurado.</p><p>Tres nombres que vas a oír (y vas a probar en la m3-c22):</p><ul><li><strong>v0</strong> (de Vercel) — nació para generar interfaces con React y Tailwind (m3-b28 y m3-a11). Es la favorita del ecosistema Next.js y la que probamos mañana.</li><li><strong>Bolt</strong> (de StackBlitz) — no solo maqueta: puede correr el proyecto entero en la nube, backend incluido. Tú escribes, y la herramienta ejecuta y te enseña el resultado.</li><li><strong>Lovable</strong> — apunta a producto completo: en lenguaje natural generas apps con autenticación y base de datos, pensada para que el dueño del negocio arme su MVP sin equipo técnico.</li></ul><p>Lo que importa entender: no compiten contra los LLMs que ya usas — <strong>los usan por debajo</strong>. El modelo sigue siendo el que habla; lo que cambia es el <strong>entorno</strong>: vista previa en vivo, código en archivos organizados en vez de un bloque de texto que pegas a mano, y un ciclo prompt → ver → corregir instantáneo. Tu prompt deja de ser de una sola pasada y se vuelve una conversación con la página enfrente.</p><p>Como director, tus habilidades viajan igual: el brief de la m3-c1, el vocabulario visual de la m3-c7 y los cambios quirúrgicos de la m3-c5 funcionan exactamente igual aquí. Cambia la herramienta, no el músculo.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Dirigir desde el chat es como <strong>pedirle un platillo al chef por teléfono</strong>: te lo describen, confías, y esperas a que llegue para ver si era eso. Con una herramienta de generación de UI es como <strong>llevar la receta al restaurante y que el chef cocine frente a ti</strong>: ves el platillo tomando forma en la barra, pruebas el caldo, le pides más sal y menos picante, y hasta te llevas la receta escrita en limpio (el código exportado). El chef es el mismo — cambia que ahora trabajas con el platillo enfrente, no con la descripción de un sueño.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Así se ve una sesión típica de v0, de principio a fin — esto es lo que vas a reconocer mañana:</p><pre><code>PROMPT inicial:\n  \"Landing de una página para Tacos El Volcán,\n   estilo cantina, rojo ladrillo y crema...\"\n\n     ↓ v0 genera la interfaz y la muestra en vivo\n\nITERACIÓN 1:\n  \"El menú en 3 columnas en escritorio y 1 en celular.\"\n\nITERACIÓN 2:\n  \"El botón de WhatsApp más grande y pegado arriba en celular.\"\n\n     ↓ cuando te gusta: EXPORTAR\n\nSe descarga un proyecto React con carpetas y archivos:\napp/\n├── page.jsx\n├── layout.jsx\n└── components/\n    ├── Hero.jsx\n    ├── Menu.jsx\n    └── Footer.jsx</code></pre><p>Reconoce la estructura: <code>components/</code> guarda las piezas (m3-c19) y cada archivo <code>.jsx</code> es un componente de React (m3-b28). El plan de la m3-c22: generas la interfaz con v0, y después adaptas ese diseño a tu <code>index.html</code> con tu asistente habitual. Los planes gratuitos de estas herramientas dan una cuota de generaciones al día — suficiente para la práctica; no pagues nada hoy.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Necesito elegir una herramienta de generación de UI para mi proyecto: [describe tu negocio en dos líneas]. Compara v0, Bolt y Lovable en una tabla: qué stack generan, si incluyen backend, qué tan fácil es para un principiante y qué límites tiene el plan gratuito. Recomiéndame una para mi caso y dame el primer prompt exacto que debo pegarle para arrancar.\"</p></blockquote><p>Ese prompt te arma la comparación antes de que te enamores de una marca (m3-c1): con el veredicto y el prompt inicial listos, la práctica de mañana arranca sin fricción.</p>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "multiple", pregunta: "¿Qué distingue a una herramienta de generación de UI (v0, Bolt, Lovable) de un chat LLM común?", opciones: ["No usa IA por debajo", "Te muestra la interfaz en vivo y exporta un proyecto estructurado, con ciclo prompt → ver → corregir instantáneo", "Solo genera imágenes, no código", "No acepta prompts en lenguaje natural"], correcta: 1 },
+              { tipo: "relacionar", pares: [["v0", "Generada por Vercel, para interfaces con React y Tailwind"], ["Bolt", "Corre el proyecto completo en la nube, backend incluido"], ["Lovable", "Apps completas con autenticación y base de datos desde lenguaje natural"]] },
+              { tipo: "completar", frase: "Las herramientas de generación de UI usan los mismos ____ por debajo que tu chat habitual; lo que cambia es el ____: vista previa en vivo y código en un proyecto estructurado.", banco: ["LLMs", "entorno", "diseños", "precio"], respuestas: ["LLMs", "entorno"] },
+              { tipo: "vf", afirmacion: "Con una herramienta de generación de UI, el ciclo prompt → ver → corregir es instantáneo, así que tu prompt se vuelve iterativo en vez de una sola pasada.", correcta: true, explicacion: "la vista previa en vivo convierte el prompt en conversación: escribes, ves y vuelves a escribir." },
+              { tipo: "quehace", codigo: "app/\n├── page.jsx\n├── layout.jsx\n└── components/\n    ├── Hero.jsx\n    ├── Menu.jsx\n    └── Footer.jsx", pregunta: "Terminaste tu sesión en v0 y exportaste. Esto es lo que descargaste. ¿Qué es?", opciones: ["Un error de compilación", "El árbol de archivos de tu proyecto generado, con los componentes en components/", "La vista previa de la página", "El log de la consola del navegador"], correcta: 1 }
+            ]
+          },
+          {
+            id: "m3-c22",
+            titulo: "PRÁCTICA: generar una interfaz con v0 y adaptarla",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>La meta de hoy es concreta: <strong>generar una interfaz para Tacos El Volcán con v0 y adaptarla a tu landing</strong>. No empezamos de cero: ya tienes el brief (m3-c1), el contenido (menú desde datos, formulario, botón de WhatsApp) y un diseño que ha evolucionado todo el mes. v0 te sirve como segundo par de ojos: una herramienta distinta que propone un diseño completo en segundos.</p><p>Un detalle que evita el susto: v0 genera el proyecto en <strong>React</strong> (m3-b28), y tu landing es HTML plano. La práctica no es \"borrar tu landing\": es <strong>adaptar</strong>. Tú tomas el diseño que v0 propuso y lo llevas a tu <code>index.html</code> con tu asistente habitual, conservando tus datos y tu lógica. El flujo completo: prompt inicial → iterar → exportar → adaptar → verificar.</p><p>Y un punto de director: tu trabajo aquí no es escribir React ni CSS. Es (1) dar un prompt claro, (2) iterar pidiendo cambios con nombre (m3-c5), (3) decidir cuándo el diseño ya está bueno y (4) verificar que, al adaptarlo, nada de tu contenido se rompió.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Es como <strong>probar el menú del chef de la esquina antes de encargarlo en tu cocina</strong>. No vas a mudarte a su restaurante: vas a comer un platillo de muestra, decidir cuáles de sus ideas te gustan (el acomodo, los colores, el tamaño del botón) y volver a tu cocina a prepararlo a tu manera, con tus ingredientes (tus datos y tu lógica). La muestra es del chef; el platillo es tuyo.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Sigue el orden y termina con el diseño de v0 adaptado en tu landing:</p><ol><li><strong>Cuenta:</strong> entra a v0.dev y regístrate con tu cuenta de Google o GitHub. El plan gratuito alcanza para esta práctica.</li><li><strong>Prompt inicial:</strong> pega el prompt de la sección \"Díselo a la IA\". v0 genera la interfaz y la muestra en vivo.</li><li><strong>Itera:</strong> pide 2 o 3 cambios concretos, uno por mensaje, con el vocabulario de la m3-c7: \"el menú en grid de 3 columnas en escritorio y 1 en celular\", \"el botón de WhatsApp verde y que ocupe el ancho completo en móvil\".</li><li><strong>Congela:</strong> cuando el diseño te guste, busca el botón de <em>exportar/copiar código</em> y guárdalo en una carpeta <code>v0-export</code>. No lo mezcles todavía con tu landing.</li><li><strong>Adapta:</strong> abre tu asistente habitual (ChatGPT, Claude o Gemini), pégale el código exportado y pídele que traduzca el diseño a tu <code>index.html</code> conservando tu contenido.</li><li><strong>Verifica:</strong> recarga y compara contra la vista previa de v0. Confirma las tres cosas que no pueden romperse: el menú sigue pintándose desde <code>datos.js</code> (m3-c11), el formulario sigue conectado a WhatsApp (m3-c9) y el botón sigue abriendo <code>wa.me</code> (m3-c2).</li></ol><p>Si al adaptar algo se rompe, no edites a ciegas: describe el daño a la IA y que lo corrija (m3-c13). La adaptación es de la piel; los datos y la lógica son el esqueleto.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Genera una landing de una sola página para la taquería 'Tacos El Volcán'. Contenido: nombre grande arriba, eslogan 'El sabor que hace temblar', menú con 6 tacos y sus precios, horario de 11 am a 11 pm, dirección, y un botón verde de WhatsApp. Estilo: rojo ladrillo y crema, tipografía gruesa estilo cantina, con buen espacio entre secciones. Que se vea bien en celular y en computadora. Primero muéstrame la vista previa, no el código.\"</p></blockquote><p>Ese prompt lleva el brief de la m3-c1 completo y termina con \"primero muéstrame la vista previa\": la regla de la m3-c17 aplicada a v0 — ver antes de exportar.</p>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "ordenar", instruccion: "Ordena el flujo de la práctica de hoy:", elementos: ["Te registras en v0.dev", "Pegas el prompt del brief de Tacos El Volcán", "Iteras pidiendo 2 o 3 cambios concretos", "Exportas el código a una carpeta", "Adaptas el diseño a tu index.html y verificas que nada se rompa"] },
+              { tipo: "multiple", pregunta: "v0 genera el proyecto en React, pero tu landing es HTML plano. ¿Cuál es el movimiento correcto?", opciones: ["Borrar tu landing y pegar el código de v0 tal cual", "Tomar el diseño de v0 como referencia y pedirle a tu asistente habitual que lo adapte a tu index.html con tu contenido", "Renunciar al diseño de v0", "Copiar a mano los textos de la vista previa"], correcta: 1 },
+              { tipo: "completar", frase: "En la práctica, el flujo con v0 es: prompt ____ → ver la vista previa en vivo → ____ con cambios con nombre → ____ el código.", banco: ["inicial", "iterar", "exportar", "comprar"], respuestas: ["inicial", "iterar", "exportar"] },
+              { tipo: "vf", afirmacion: "Al adaptar el diseño de v0, tu menú debe seguir pintándose desde datos.js y el formulario debe seguir abriendo WhatsApp: solo cambia la piel, no el esqueleto.", correcta: true, explicacion: "adaptar es llevar el diseño; los datos y la lógica (m3-c11 y m3-c9) se conservan intactos." },
+              { tipo: "quehace", codigo: "El menú en grid de 3 columnas en escritorio y 1 en celular.", pregunta: "En tu sesión de v0 escribes esto como siguiente mensaje. ¿Qué es?", opciones: ["Un comando de terminal", "Una iteración: un cambio visual concreto sobre la vista previa", "El contenido de datos.js", "Un error de JavaScript"], correcta: 1 }
+            ]
+          },
+          {
+            id: "m3-c23",
+            titulo: "Cuándo usar framework y cuándo basta HTML plano",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>En la m3-b27 viste qué es un framework y en la m3-b29 por qué Next.js vale la pena solo en ciertos casos. Hoy pones el criterio en orden: la pregunta no es \"¿framework sí o no?\" sino <strong>\"¿a qué escala mi proyecto lo merece?\"</strong>. Y la respuesta empieza por saber qué es HTML plano: tu landing de Tacos El Volcán — un <code>index.html</code>, un CSS y un JS, todo estático, sin procesos de compilación ni herramientas.</p><p>El diagnóstico se hace con cinco preguntas:</p><ul><li><strong>¿Cuántas vistas tiene?</strong> Una página de una sola vista (landing) vive feliz en HTML plano. Varias páginas reales con rutas propias empujan al framework.</li><li><strong>¿Hay estado que cambia en vivo?</strong> Carrito, login, filtros que comparten datos entre pantallas. Ese es el terreno de React (m3-b28).</li><li><strong>¿Los datos cambian y se comparten?</strong> Si varias pantallas leen lo mismo y se actualizan juntas, el framework paga su costo.</li><li><strong>¿El SEO importa?</strong> Si tu negocio depende de aparecer en Google, ahí es donde entra Next.js (m3-b29). Una landing interna no lo necesita.</li><li><strong>¿Voy a crecerlo?</strong> Un proyecto que sabes que va a sumar pantallas y funciones crece mejor con la estructura desde el día uno.</li></ul><p>La regla del director: <strong>el framework es un préstamo, no una medalla</strong>. No se adopta por prestigio ni porque \"es lo moderno\": se adopta cuando la complejidad que ahorra es mayor que la que agrega. Y agrega: más que instalar, más que aprender, más que mantener, y casi siempre una carga más pesada para el visitante (m3-c25).</p><p>Con IA dirigida, portar entre las dos opciones es barato — lo viste en la m3-c22 y lo harás en la m3-c24. Eso te libera: puedes arrancar simple y migrar cuando el proyecto lo pida, sin miedo a quedar atrapado.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Es la diferencia entre <strong>el puesto de tacos y el restaurante con cocina central</strong>. El puesto atiende un mostrador, un menú corto y una cocina a la vista: perfecto para lo que es, y cualquier equipo extra le estorba. El restaurante tiene cocina central, brigada de meseros y sistema de pedidos porque la operación lo exige. Nadie pone una cocina central en un puesto de la esquina — y nadie atiende un restaurante con un puesto plegable. La escala decide la cocina; la herramienta sigue a la operación, no al orgullo.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Este es el diagnóstico que vas a usar — guárdalo en tus notas:</p><pre><code>¿ME CONVIENE FRAMEWORK?\n□ ¿Más de una vista real (no solo secciones)?\n□ ¿Estado que cambia en vivo y se comparte (carrito, login)?\n□ ¿Datos en vivo que varias pantallas leen juntas?\n□ ¿El SEO importa (vender, aparecer en Google)?\n□ ¿Planeo crecerlo con más funciones?\n\n2+ casillas marcadas → framework.\n0-1 casillas → HTML plano. Revisa otra vez antes de seguir.</code></pre><p>Pruébalo con tu propio proyecto: Tacos El Volcán es una landing de una vista, sin login, sin carrito, con datos estáticos (m3-c11) y sin SEO crítico por ahora. Resultado: 0-1 casillas → HTML plano es la respuesta correcta, y todo lo que construiste este mes lo demuestra. Ahora pruébalo con un negocio hipotético — \"una tienda online con carrito, 12 páginas de productos y que vive de Google\": 4 casillas → framework, sin discusión.</p><p>El veredicto no es eterno: cuando tu landing crezca (¿pedidos en línea? ¿perfiles de cliente?), re-corres el diagnóstico y migras con la IA a tu ritmo.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Voy a construir [describe tu proyecto: qué hace, cuántas vistas, si hay estado en vivo, si el SEO importa y si planeas crecerlo]. Llena conmigo el diagnóstico de framework y dime el veredicto entre HTML + JavaScript puro, React simple y Next.js. Explícame el porqué en tres líneas. Si me toca framework, dime qué archivos y dependencias pedirle a la IA para arrancar; si me toca HTML plano, dime qué NO debo agregarle para no complicar el proyecto.\"</p></blockquote><p>El prompt llena el checklist contigo (en vez de que la IA adivine tu escala) y cierra con un consejo específico para cada veredicto: qué pedir si migras, y qué evitar si te quedas simple.</p>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "multiple", pregunta: "¿Cuándo basta HTML plano para un proyecto web?", opciones: ["Cuando quiero usar la herramienta más popular", "Cuando es una landing de pocas vistas, sin estado complejo ni SEO crítico", "Cuando la IA ya lo construyó", "Nunca: todo proyecto moderno debe usar framework"], correcta: 1 },
+              { tipo: "relacionar", pares: [["HTML + JS puro", "Landing de una vista, sin estado ni SEO crítico"], ["React simple", "Interfaz con estado en vivo, sin SEO multi-ruta"], ["Next.js", "Varias rutas, SEO importante y datos que cambian"]] },
+              { tipo: "completar", frase: "La regla del director: el framework es un ____, no una ____: se adopta según la ____ del proyecto, no por moda.", banco: ["préstamo", "medalla", "escala", "opinión"], respuestas: ["préstamo", "medalla", "escala"] },
+              { tipo: "vf", afirmacion: "Un framework siempre hace que tu sitio cargue más rápido que HTML plano.", correcta: false, explicacion: "suele ser lo contrario: más JavaScript y herramientas que cargar (m3-c25). Se adopta por estructura y mantenimiento, no por velocidad." },
+              { tipo: "ordenar", instruccion: "Ordena el proceso para decidir tu herramienta:", elementos: ["Describes el proyecto: vistas, estado, datos, SEO, crecimiento", "Rellenas el checklist de framework", "Cuentas las casillas marcadas", "Pides el veredicto a la IA con sus razones", "Decides y arrancas con la herramienta elegida"] }
+            ]
+          },
+          {
+            id: "m3-c24",
+            titulo: "PRÁCTICA: tu primer proyecto en React dirigido con IA",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Hoy creas tu primer proyecto en <strong>React</strong> de verdad — dirigido por IA, claro. La teoría ya la tienes: componentes, props y estado (m3-b28), y los componentes los construiste a mano en la m3-c19 y la m3-c20, solo que con funciones que devolvían texto HTML. React es el mismo molde, a escala industrial: cada pieza es una función que devuelve su parte de la pantalla, y cuando el estado cambia, React repinta solo — olvídate del <code>querySelector</code> y del <code>innerHTML</code> a mano.</p><p>Para que un proyecto React funcione hace falta herramienta que lo prepare: <strong>Vite</strong>. Es el montador que crea el esqueleto del proyecto en segundos y levanta un servidor local para que veas tu página mientras trabajas. Los comandos los escribes en la terminal (m1-a5 y m1-a10), pero no los memorizas: reconoces qué hace cada paso, y la IA te acompaña en el proceso.</p><p>Tu papel hoy: <strong>dirigir</strong>. No escribes componentes: le das a la IA el contenido de tu landing, le pides que lo convierta en componentes de React, corres el proyecto y verificas. Al final vas a reconocer en el código las tres piezas de la m3-b28: la tarjeta del menú como componente que recibe props, el <code>map</code> que la repite, y — si algo cambia en vivo — el <code>useState</code>.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Vite es <strong>el local ya acondicionado que rentas para tu taquería</strong>. Llegas con las llaves, la cocina ya tiene gas y conexiones, y solo falta que instales tus ingredientes y decidas qué platillos preparar. Sin Vite, montar React a mano sería comprar el terreno, poner los muros y hacer la instalación eléctrica antes de cocinar. Con Vite, el local está listo: corres <code>npm run dev</code> y en segundos tu taquería (tu proyecto) está abierta en <code>localhost</code>, lista para que la IA ponga los platillos.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Paso a paso, terminas con una versión React de tu landing corriendo en tu computadora:</p><ol><li><strong>Verifica Node:</strong> abre la terminal y escribe <code>node --version</code>. Si responde algo como <code>v20.x</code> o mayor, listo. Si no, instálalo (m1-a10: <code>winget install --id OpenJS.NodeJS</code>).</li><li><strong>Crea el proyecto:</strong> en la terminal, dentro de tu carpeta de proyectos: <code>npm create vite@latest tacos-react -- --template react</code>.</li><li><strong>Entra y levanta:</strong> <code>cd tacos-react</code>, después <code>npm install</code> (baja las dependencias, m1-a11) y <code>npm run dev</code>. La terminal te da una dirección: abre <code>http://localhost:5173</code>. Verás la página de bienvenida de Vite.</li><li><strong>Pide la conversión:</strong> pega el prompt de \"Díselo a la IA\" con tu contenido. La IA te dirá qué archivos editar: casi siempre <code>src/App.jsx</code> y <code>src/index.css</code>.</li><li><strong>Aplica y verifica:</strong> reemplaza el contenido de esos archivos, guarda (Ctrl+S) y mira el navegador: tu landing debe verse ahí, servida por React. Si hay un error, la pantalla roja del servidor lo dice — pásale el mensaje a la IA y que lo corrija (m3-c13).</li><li><strong>Prueba del cambio único (m3-c20):</strong> pide cambiar el color de fondo de la tarjeta del menú dentro del componente <code>TarjetaTaco</code>. Guarda: cambian todas las tarjetas a la vez. Ese es React haciendo el trabajo de la m3-c19 solo.</li><li><strong>Reconoce:</strong> abre <code>src/App.jsx</code> e identifica el componente, las props y el <code>map</code> (m3-b28). No necesitas escribir más: necesitas saber qué hay ahí.</li></ol><p>Para cerrar la sesión: Ctrl+C en la terminal detiene el servidor. El proyecto queda en tu carpeta para las prácticas de rendimiento (m3-c25 y m3-c26).</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Acabo de crear un proyecto de React con Vite (npm create vite, template react). Voy a convertir mi landing de Tacos El Volcán: [pega aquí el contenido: nombre, eslogan, los 6 tacos con precios del menú, horario, dirección, botón de WhatsApp]. 1) Organiza la interfaz en componentes: Hero, Menu, TarjetaTaco, Footer. 2) El menú se pinta pasando el arreglo de tacos por props a TarjetaTaco y repitiéndolo con map. 3) Conserva el estilo rojo ladrillo y crema. 4) El botón de WhatsApp debe abrir wa.me/5215512345678. 5) Explícame en dos líneas qué componentes creaste y qué props usaste. Dame el contenido completo de los archivos que debo reemplazar en src/.\"</p></blockquote><p>Cada número del prompt es un requisito verificable: componentes (1), datos por props con map (2), estilo (3), acción real del botón (4) y el reporte que te enseña a reconocer (5). Con eso, la IA te entrega los archivos y tú solo aplicas y verificas.</p>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "ordenar", instruccion: "Ordena la práctica de hoy:", elementos: ["Verificas que Node esté instalado", "Creas el proyecto con Vite", "Instalas dependencias y corres el servidor", "Le pides a la IA convertir tu landing en componentes", "Verificas en el navegador y pruebas el cambio único"] },
+              { tipo: "multiple", pregunta: "Ya creaste el proyecto con Vite. ¿Cuál comando levanta tu página en el navegador?", opciones: ["npm start", "npm run dev", "node index.html", "npm build"], correcta: 1 },
+              { tipo: "relacionar", pares: [["src/App.jsx", "El componente raíz donde viven Hero, Menu y Footer"], ["TarjetaTaco", "Recibe los datos de un taco por props"], ["props", "Datos de entrada que el componente no modifica"], ["map", "Genera una TarjetaTaco por cada taco del arreglo"]] },
+              { tipo: "completar", frase: "En tu proyecto React, el menú se pinta pasando el arreglo de tacos por ____ al componente y repitiéndolo con ____.", banco: ["props", "map", "clase", "fetch"], respuestas: ["props", "map"] },
+              { tipo: "vf", afirmacion: "En React, si cambias el estilo dentro del componente TarjetaTaco, solo cambia la primera tarjeta del menú.", correcta: false, explicacion: "el componente es un molde (m3-c19): el cambio se propaga a todas las tarjetas a la vez — es la prueba del cambio único que viste en la m3-c20." }
+            ]
+          },
+          {
+            id: "m3-c25",
+            titulo: "Rendimiento: por qué tu sitio carga lento",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Cuando alguien abre tu sitio, el navegador tiene que <strong>descargar y procesar archivos antes de poder mostrar nada</strong>. Si esa espera es larga, el visitante se va — un segundo extra de carga puede costarte una parte importante de tus clientes. Saber por qué un sitio carga lento es la primera mitad de arreglarlo (la otra mitad, las correcciones, es la m3-c26).</p><p>Las cuatro causas clásicas, en orden de frecuencia:</p><ul><li><strong>Imágenes pesadas</strong> — el culpable número uno de casi todos los sitios. Una foto de 5 MB se descarga entera aunque en pantalla mida 400 px. Formato y peso correctos desde la m3-a6.</li><li><strong>JavaScript grande</strong> — cada script se descarga <em>y después se ejecuta</em>. Un archivo de un megabyte deja la página parpadeando y los botones sin responder mientras el navegador lo procesa.</li><li><strong>Archivos que bloquean el pintado</strong> — ciertos CSS y JS en el <code>head</code> (m3-a2) se procesan <em>antes</em> de dibujar: mientras tanto, pantalla en blanco.</li><li><strong>Demasiadas peticiones</strong> — cada fuente, ícono o librería es un viaje de ida y vuelta al servidor (m3-c21): cincuenta archivos chicos pesan más en tiempo que uno mediano.</li></ul><p>Y cómo se mide: el <strong>Network</strong> de DevTools (m3-b24) te muestra cada petición con su tamaño y su tiempo; <strong>Lighthouse</strong> (incluido en el navegador) te da una calificación y una lista de culpables. Los nombres que oirás de Google son los <strong>Core Web Vitals</strong>: el <strong>LCP</strong> (cuánto tarda en aparecer el contenido principal), la <strong>interactividad</strong> (cuánto tarda en responder un clic) y la <strong>estabilidad visual</strong> (si la página brinca mientras carga). Reconocerlos te basta: las correcciones las pides con nombre.</p><p>La regla del director: <strong>medir antes de tocar</strong>. Adivinar qué está lento es apostar; el reporte de Lighthouse y la tabla de Network dicen exactamente qué archivo cuesta. Y eso se lo pasas a la IA como evidencia, no como sospecha.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Es <strong>el servicio de la taquería en hora pico</strong>. El cliente que pidió de primero ve su platillo tarde si el mesero hace muchos viajes (cada viaje es una petición), si el chef tiene que cortar la carne en la mesa (el JavaScript que se ejecuta frente al cliente) o si la bodega está lejos y el producto llega en camiones pesados (las imágenes de 5 MB). El taquero que mide su servicio — cuánto tarda cada platillo en promedio — descubre dónde está el cuello de botella; el que solo se apura sin medir sigue sirviendo lento. Tu Network y tu Lighthouse son el cronómetro del servicio.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Este es el tipo de evidencia que tu Network te va a dar. Con F12 → pestaña Network, recargas y ves:</p><pre><code>Nombre                 Tamaño      Tiempo\nhero.jpg (foto)        5.2 MB      3.1 s   ← el culpable\napp.js                 1.4 MB      980 ms\nstyles.css              45 KB      210 ms\nlogo.png                80 KB      120 ms</code></pre><p>Lee la tabla como quien lee la comanda: <code>hero.jpg</code> pesa más que todo lo demás junto. Ese archivo es la respuesta — no el CSS ni el servidor. Ahora corre Lighthouse: F12 → pestaña Lighthouse → <em>Generate report</em>. Te dará una nota de 0 a 100 y una lista de oportunidades ordenadas por impacto.</p><p>Ejercicio de lectura de un reporte típico:</p><pre><code>Lighthouse — Rendimiento: 58/100\nOportunidades:\n  Servir imágenes en formatos modernos  -24 s  WebP/AVIF\n  Reducir el peso de las imágenes       -9 s\n  Eliminar JavaScript sin usar          -4 s\n  Aplazar las hojas de estilo           -2 s</code></pre><p>La primera oportunidad casi siempre gana: comprimir y convertir imágenes. Eso y el resto de las correcciones son exactamente la m3-c26 — pero hoy ya sabes <em>por qué</em> tu sitio carga lento y dónde mirar.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Mi landing de Tacos El Volcán tarda en cargar. Abre la pestaña Network de DevTools y corre Lighthouse: 1) dime la calificación de rendimiento; 2) lista las peticiones de mayor a menor tamaño con su tiempo; 3) dime cuál es el archivo que más cuesta y por qué; 4) ordena las correcciones por impacto (imágenes, JavaScript, peticiones, CSS) y explícame cada una en una línea. No cambies nada todavía: primero el diagnóstico completo, después me das el plan.\"</p></blockquote><p>Ese prompt convierte a la IA en auditora: no te da el código, te da el reporte y el plan ordenado por impacto. Con eso en la mano, la m3-c26 ejecuta las correcciones una por una.</p>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "multiple", pregunta: "En la gran mayoría de los sitios web, la causa número uno de lentitud es…", opciones: ["El servidor es demasiado lento", "Las imágenes pesadas", "El color de fondo", "La computadora del usuario"], correcta: 1 },
+              { tipo: "relacionar", pares: [["Imágenes pesadas", "El archivo más grande de la página, casi siempre"], ["JavaScript grande", "Se descarga y se ejecuta; retrasa la interactividad"], ["Archivos que bloquean", "La página queda en blanco mientras se procesan"], ["Demasiadas peticiones", "Cada una es un viaje de ida y vuelta al servidor"]] },
+              { tipo: "completar", frase: "Las métricas de Google para medir la velocidad se llaman ____; el ____ mide cuánto tarda en aparecer el contenido principal de la página.", banco: ["Core Web Vitals", "LCP", "HTML", "SEO"], respuestas: ["Core Web Vitals", "LCP"] },
+              { tipo: "vf", afirmacion: "Para optimizar el rendimiento, lo primero es medir y ver qué peticiones pesan más; corregir a ciegas casi siempre ataca lo que no era.", correcta: true, explicacion: "el Network y Lighthouse dicen qué archivo cuesta; sin ese diagnóstico, optimizas a ciegas." },
+              { tipo: "quehace", codigo: "Nombre                 Tamaño      Tiempo\nhero.jpg (foto)        5.2 MB      3.1 s\napp.js                 1.4 MB      980 ms\nstyles.css              45 KB      210 ms", pregunta: "Abres la pestaña Network de DevTools y ves esta tabla. ¿Qué archivo atacas primero?", opciones: ["styles.css", "hero.jpg", "app.js", "Todos pesan igual"], correcta: 1 }
+            ]
+          },
+          {
+            id: "m3-c26",
+            titulo: "PRÁCTICA: optimizar imágenes y tiempo de carga",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Ayer diagnosticaste (m3-c25): tu Network y tu Lighthouse señalaron al culpable — casi siempre una imagen de 5 MB. Hoy ejecutas las correcciones, en el orden que te dio el diagnóstico. Y la regla sigue siendo la misma: <strong>medir antes, medir después</strong>. Sin el antes y el después, no sabes si cambiaste algo o solo moviste el problema de lugar.</p><p>Las correcciones, ordenadas por impacto:</p><ul><li><strong>Comprimir y convertir imágenes</strong> — el plato fuerte. WebP o AVIF pesan una fracción del JPG o PNG con la misma calidad visual (m3-a6). Una hero de 5.2 MB debe terminar en unos 150 KB.</li><li><strong>Redimensionar al tamaño real</strong> — tu hero se muestra a 1200 px de ancho; si el archivo es de 4000 px, descargas píxeles que nadie verá. El navegador encoge la imagen, pero la descarga completa igual.</li><li><strong>Cargar con pereza (lazy loading)</strong> — <code>loading=\"lazy\"</code> en las imágenes que no se ven al abrir la página: el navegador las descarga hasta que el usuario hace scroll. La hero no se marca: es el contenido principal (el LCP de la m3-c25).</li><li><strong>Aplazar el JavaScript</strong> — tu script no debe bloquear el pintado: se mueve al final del body o se le pone el atributo <code>defer</code> para que el texto y las tarjetas aparezcan primero.</li><li><strong>Reducir peticiones</strong> — cada fuente o ícono externo es un viaje de ida y vuelta (m3-c21): si una fuente trae 5 pesos y usas 2, carga solo los que usas.</li></ul><p>La meta no es un número mágico: es <strong>ver el puntaje subir</strong> en Lighthouse y los tiempos bajar en Network. Y ojo, porque el puntaje perfecto no existe: hay sitios con 100 que se sienten lentos y sitios con 80 que vuelan. El criterio real es el que sentiste todo el mes — que la página aparezca rápido y no brinque mientras carga.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Comprimir imágenes es como <strong>empacar el pedido para llevar</strong>. El cliente pidió dos tacos: no le cargas el costal de maíz, la caja de cebolla ni el tanque de gas — le empacas lo que va a consumir, en un contenedor del tamaño justo. La foto original de la cámara es el costal completo: sirve para imprimir una lona gigante, no para un plato en pantalla. Comprimir y redimensionar es servir el pedido en su tamaño; el <code>loading=\"lazy\"</code> es dejar en la cocina lo que el cliente todavía no pide y pasárselo cuando lo pide. Mismo sabor, mucho menos peso en las manos.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Paso a paso, terminas con una landing más rápida y el puntaje subido:</p><ol><li><strong>Corre tu línea base:</strong> F12 → pestaña Lighthouse → <em>Generate report</em> (m3-c25). Anota el puntaje — el típico del mes es 58/100. Ese es tu 'antes'.</li><li><strong>Lista los culpables:</strong> en la pestaña Network, filtra por imágenes y ordena por tamaño. Anota: archivo, peso y cuánto mide en pantalla (clic en la imagen y mira en el inspector, m3-b25).</li><li><strong>Redimensiona y convierte:</strong> para cada imagen grande, pide la receta a la IA (el prompt de abajo) y conviértelas a WebP: hero a ~1200 px de ancho y ~150 KB; tarjetas a ~400 px y ~30-60 KB. Guárdalas en tu carpeta con nombre limpio (m3-a6).</li><li><strong>Actualiza el HTML:</strong> pide que reemplacen las rutas por las versiones <code>.webp</code> y que cada imagen tenga <code>width</code> y <code>height</code> — eso evita que la página brinque mientras carga (la estabilidad visual de la m3-c25).</li><li><strong>Lazy loading:</strong> pide <code>loading=\"lazy\"</code> en las imágenes que no se ven al abrir (galería y menú) y que <strong>no</strong> se lo pongan a la hero.</li><li><strong>Aplaza el script:</strong> verifica que tu <code>script</code> esté antes de <code>&lt;/body&gt;</code> o con el atributo <code>defer</code>. Si el botón tarda en responder, ese era el problema (la interactividad de la m3-c25).</li><li><strong>Vuelve a medir:</strong> corre Lighthouse de nuevo y compara con tu línea base. Más importante que el número: recarga en <em>Slow 3G</em> (Network, como en la m3-c16) y siente la diferencia.</li></ol><p>El resultado típico: la hero pasa de 5.2 MB a ~150 KB, el menú entero deja de pesar, y Lighthouse sube de los 50s a los 90s. Si un archivo sigue pesando, repite la receta: la calidad visual tiene un límite de compresión, pero el tamaño en pantalla siempre se puede corregir.</p><p>Nota de oficio: las imágenes optimizadas viven en tu carpeta y se publican con la landing. Si también hiciste la versión React de la m3-c24, las mismas imágenes sirven — WebP funciona igual ahí.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Mi landing de Tacos El Volcán ya está diagnosticada: Lighthouse 58/100 y la hero pesa 5.2 MB. Vamos a optimizarla: 1) dame una tabla con cada imagen del proyecto — tamaño actual, tamaño que debe tener según lo que mide en pantalla (hero ~1200 px de ancho, tarjetas ~400 px) y peso objetivo en KB en formato WebP; 2) para cada una, dime con qué herramienta gratuita convertirla (Squoosh o tu equivalente) y con qué ajustes exactos; 3) cuando las convierta, dime los cambios exactos en index.html: rutas nuevas a las versiones .webp, width y height en cada imagen para que no brinque la página, y loading=\"lazy\" en las que no se ven al abrir — nunca en la hero; 4) revisa el script y dime si debe ir con defer o al final del body para no bloquear el pintado. No cambies textos ni estilos. Dame el archivo completo actualizado.\"</p></blockquote><p>Cada número es un requisito verificable: la tabla (1) te da la receta de compresión, el (3) cuida que el HTML no se rompa y el (4) cierra el JavaScript de la m3-c25.</p>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "relacionar", pares: [["WebP", "Formato moderno: misma calidad visual, fracción del peso"], ["loading=\"lazy\"", "Se descarga hasta que el usuario hace scroll"], ["width y height", "Evitan que la página brinque mientras carga"], ["defer", "No bloquea el pintado de la página"]] },
+              { tipo: "multiple", pregunta: "Tu Lighthouse señala la hero de 5.2 MB como el archivo que más cuesta. ¿Cuál es la primera corrección de mayor impacto?", opciones: ["Borrar el script de la página", "Comprimir y redimensionar la imagen a WebP", "Cambiar el color de fondo", "Agregar más fuentes al head"], correcta: 1 },
+              { tipo: "completar", frase: "Las imágenes que no se ven al abrir llevan <code>loading=____</code> para descargarse hasta que el usuario hace scroll; la ____ no se marca porque es el contenido principal (el LCP).", banco: ["lazy", "hero", "defer", "logo"], respuestas: ["lazy", "hero"] },
+              { tipo: "vf", afirmacion: "El objetivo de optimizar es alcanzar el puntaje perfecto de 100 en Lighthouse, aunque la imagen se vea destruida.", correcta: false, explicacion: "el puntaje perfecto no es la meta: el criterio real es que cargue rápido y no brinque; comprimir hasta dañar la calidad visual para subir unos puntos no vale la pena." },
+              { tipo: "quehace", codigo: "<img src=\"imagenes/menu/suadero.webp\" alt=\"Taco de suadero\" width=\"400\" height=\"300\" loading=\"lazy\">", pregunta: "Esta imagen de la galería del menú…", opciones: ["Se descarga hasta que el usuario se acerca con el scroll", "Se descarga antes que el texto de la página", "Solo funciona en computadoras de escritorio", "Se recarga cada vez que el usuario la mira"], correcta: 0 }
+            ]
+          },
+          {
+            id: "m3-c27",
+            titulo: "SEO básico: que Google entienda de qué va tu sitio",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p><strong>SEO</strong> (Search Engine Optimization) es hacer que tu sitio sea fácil de entender para Google — y con eso, más fácil de encontrar. Traducido a tu caso: cuando alguien busca 'tacos cerca de mí', Google decide a quién mostrarle primero. Tu trabajo no es engañar a Google: es <strong>hablarle claro</strong>.</p><p>Así funciona Google, en tres pasos:</p><ul><li><strong>Rastreo (crawl)</strong> — los robots de Google recorren internet siguiendo enlaces y descargan las páginas: entran por tu URL, leen tu HTML de arriba a abajo y siguen los enlaces que encuentran.</li><li><strong>Indexación (index)</strong> — lo que leyeron se guarda en un catálogo gigantesco: el índice de Google. Lo que es confuso o duplicado se queda fuera.</li><li><strong>Posicionamiento (rank)</strong> — cuando alguien busca, Google ordena las páginas indexadas usando cientos de señales.</li></ul><p>La clave que lo cambia todo: <strong>Google no ve tu página como tú</strong>. No mira colores, fotos ni animaciones: lee texto y estructura. Es un cliente que llega a tu taquería con los ojos vendados — lo único que puede hacer es leer el menú escrito. Tu menú es tu HTML.</p><p>Lo que Google lee de tu página:</p><ul><li><strong>El title</strong> — el texto de la pestaña del navegador y el título de los resultados de búsqueda.</li><li><strong>La meta description</strong> — el párrafo que aparece debajo del título en Google (la escribes en la m3-c28).</li><li><strong>Los encabezados</strong> — la jerarquía: un solo <code>h1</code> (el plato principal), <code>h2</code> para cada sección y <code>h3</code> para subsecciones (m3-a4).</li><li><strong>Las etiquetas semánticas</strong> — <code>header</code>, <code>main</code>, <code>section</code>, <code>footer</code> le dicen qué es cada bloque (m3-a3). Tu landing de Tacos El Volcán ya nació con ellas.</li><li><strong>El alt de las imágenes</strong> — Google no ve la foto del taco, pero lee el <code>alt</code> (m3-a6). Ahí le dices qué es.</li><li><strong>El texto mismo</strong> — las palabras naturales. Escribe 'tacos de suadero al pastor en la colonia Roma' y Google sabrá de qué hablas; repetir 'tacos' 50 veces (el relleno de palabras) es justo lo que castiga.</li></ul><p>Para un negocio local, el <strong>SEO local</strong> pesa tanto como lo anterior: registrar el negocio en <strong>Google Business Profile</strong> (dirección, horario y fotos reales), juntar reseñas de clientes y tener tu dirección en el footer de tu página. Cuando alguien busca 'taquería cerca de mí', Google mezcla ese directorio con las señales de tu sitio.</p><p>La regla del director: <strong>SEO no es hackear a Google — es estructura y honestidad</strong>. Escribes para humanos, y al hacerlo con estructura, las máquinas te entienden gratis. Mañana (m3-c28) lo pones en tu landing con meta tags, Open Graph y favicon.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Google es como <strong>el crítico gastronómico que no puede probar nada</strong>: no ve tu fachada, no huele tu salsa ni prueba tu suadero. Lo único que puede hacer es leer tu menú escrito (tu HTML). Si el menú es un desorden — platillos sin nombres claros, sin precios, sin secciones — no puede recomendarte. Si el menú está impecable, le das todo para recomendarte. Y en el barrio, el crítico también pregunta a los vecinos (las reseñas) y consulta el directorio (Google Business Profile). Tu trabajo es dejar el menú tan claro que el crítico ciego lo entienda a la primera.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Esto es lo que Google lee de tu landing — y dónde lo vas a buscar mañana (m3-c28):</p><pre><code>&lt;title&gt;Tacos El Volcán | El sabor que hace temblar&lt;/title&gt;\n&lt;meta name=\"description\" content=\"Tacos de suadero, pastor y más en la colonia Roma. Menú completo, horarios y pedido directo por WhatsApp.\"&gt;\n\n&lt;main&gt;\n  &lt;h1&gt;Tacos El Volcán&lt;/h1&gt;            ← un solo h1: el plato principal\n  &lt;section class=\"menu\"&gt;\n    &lt;h2&gt;Nuestros tacos&lt;/h2&gt;           ← h2: cada sección\n    &lt;h3&gt;Suadero — $25&lt;/h3&gt;            ← h3: cada platillo\n    &lt;img src=\"suadero.webp\" alt=\"Taco de suadero con salsa verde\"&gt;\n  &lt;/section&gt;\n&lt;/main&gt;</code></pre><p>Pruébalo sobre tu página ya publicada (el hosting del Mes 1 o GitHub Pages):</p><ol><li><strong>Mira tu title:</strong> ¿dice 'Tacos El Volcán' o algo genérico como 'index'? Ese texto es tu título en Google.</li><li><strong>Busca <code>site:</code>:</strong> escribe en Google <code>site:tu-sitio.netlify.app</code>. Todo lo que Google indexó de tu página aparece ahí. Si no sale nada, tu página aún no se rastreó: los sitios nuevos tardan en entrar al índice.</li><li><strong>Cuenta los h1:</strong> Ctrl+F en tu HTML y escribe <code>&lt;h1</code>. Debe haber exactamente uno. Varios h1 es el error de SEO más común y el más fácil de arreglar.</li><li><strong>Revisa los alt:</strong> cada imagen debe decir qué es ('Taco de suadero con salsa verde'), no 'img0234.jpg' (m3-a6).</li><li><strong>Piensa la búsqueda real:</strong> escribe cómo buscaría un cliente — 'taquería en la Roma', 'tacos de pastor cerca de mí'. ¿Están esas palabras en tu texto? Como contenido natural, no como relleno.</li></ol><p>La herramienta que conocerás con calma es <strong>Google Search Console</strong>: el panel donde Google te dice qué rastreó, qué indexó y qué buscaron para llegar a ti. Hoy solo la mencionas; en tu proyecto final (m3-c30) la conectas a tu sitio publicado para verificar que Google te encontró.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Evalúa el SEO de mi landing de Tacos El Volcán sin cambiar nada todavía. 1) Revisa el title y la meta description actuales: dime si existen, si son buenos y cómo los mejorarías (longitud y palabras del negocio). 2) Recorre el HTML y dime si la jerarquía de encabezados es correcta: un solo h1, h2 por sección, h3 por platillo; si algo está mal, señálalo. 3) Revisa los alt de las imágenes y dime cuáles no describen su contenido. 4) Dame una lista de 5 mejoras de SEO ordenadas por impacto para una taquería local, y dime cuáles corresponden a meta tags (las arreglamos mañana).\"</p></blockquote><p>Es un prompt de auditoría, no de cambio: el diagnóstico primero (la m3-c25 te dio la misma disciplina para el rendimiento) y la ejecución al día siguiente.</p>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "multiple", pregunta: "Google no puede 'ver' tu página como tú. ¿Qué es lo que realmente lee?", opciones: ["Los colores y las animaciones", "El texto y la estructura del HTML", "Las fotos en alta calidad", "El diseño del logo"], correcta: 1 },
+              { tipo: "relacionar", pares: [["Rastreo (crawl)", "Los robots descargan tu página siguiendo enlaces"], ["Indexación (index)", "Tu página entra al catálogo de Google"], ["Posicionamiento (rank)", "Google ordena los resultados para cada búsqueda"]] },
+              { tipo: "completar", frase: "Un solo ____ por página es el plato principal de tu contenido; cada ____ es una sección. Google lee esa jerarquía.", banco: ["h1", "h2", "alt", "enlace"], respuestas: ["h1", "h2"] },
+              { tipo: "vf", afirmacion: "El atributo alt de una imagen solo sirve para accesibilidad; a Google no le importa.", correcta: false, explicacion: "Google no ve la imagen, lee el alt (m3-a6): es una de las señales que usa para entender qué hay ahí, además de servir a los lectores de pantalla." },
+              { tipo: "ordenar", instruccion: "Acomoda cómo procesa Google tu página:", elementos: ["Los robots rastrean tu URL y leen tu HTML", "Tu página entra al índice de Google", "Google ordena los resultados según la búsqueda del usuario"] }
+            ]
+          },
+          {
+            id: "m3-c28",
+            titulo: "PRÁCTICA: meta tags, Open Graph y favicon",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>La m3-c27 te dijo qué lee Google. Hoy lo pones en tu landing: los tres bloques del <code>head</code> que todavía no tienes, y que se notan más de lo que crees:</p><ul><li><strong>Meta tags de SEO</strong> — el <code>title</code> (el texto de la pestaña y de Google) y la <code>meta description</code> (el párrafo de los resultados). Dos piezas, escritas con oficio.</li><li><strong>Open Graph</strong> — las etiquetas <code>og:</code> que controlan la <strong>tarjeta de vista previa</strong> cuando compartes tu URL por WhatsApp, Facebook o mensaje. Sin ellas, el enlace se comparte 'pelón': una URL cruda. Con ellas, aparece título, descripción y una imagen — el antojo que se antoja. Twitter tiene su propia variante (las etiquetas <code>twitter:</code>).</li><li><strong>Favicon</strong> — el ícono chiquito de la pestaña del navegador. Sin él, el navegador muestra un globo genérico; con él, tu sitio tiene carita. Un SVG con un taco dibujado basta y sobra para empezar.</li></ul><p>Una regla de oro que te ahorra el susto: <strong>la <code>og:image</code> necesita una URL pública, no un archivo local</strong>. Si pruebas la tarjeta en tu computadora con <code>file:///</code>, la imagen no aparece. No es un bug: la tarjeta la arma quien comparte el enlace, no tu navegador.</p><p>Y la <code>meta description</code> tiene una longitud que importa: <strong>~155 caracteres</strong>. Más larga, Google la corta con '...'. Menos, desperdicias espacio. Escríbela como la frase de la comanda: clara, con el negocio, sin relleno.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Los meta tags son la <strong>ficha del platillo que repartes en la calle</strong>. Cuando compartes tu enlace por WhatsApp, la gente no ve tu local: ve la ficha — título, descripción y foto. Sin ficha (sin Open Graph), entregas un papel en blanco con solo la dirección. Con ficha, entregas el antojo: nombre del platillo, dos líneas que enamoran y la foto bien servida. El favicon, por su parte, es el <strong>letrerito de la puerta</strong>: chiquito, pero cuando tienes 20 pestañas abiertas, es lo único que distingue tu local de los demás.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Paso a paso, terminas con el head completo y una tarjeta de WhatsApp que enamora:</p><ol><li><strong>Abre tu head:</strong> en tu <code>index.html</code>, localiza el <code>head</code> (m3-a2). Ahí están el <code>charset</code>, el <code>viewport</code> (m3-c4) y el <code>title</code> de la C2. Falta el resto.</li><li><strong>Pega el prompt</strong> de 'Díselo a la IA'.</li><li><strong>Verifica el title:</strong> la pestaña del navegador debe decir 'Tacos El Volcán | El sabor que hace temblar' — no 'index' ni 'Documento'.</li><li><strong>Mide la description:</strong> selecciona el texto de la <code>meta description</code> y cuéntale los caracteres; pídele a la IA que la ajuste a ~155. Debe decir qué es, dónde está y cómo pedir.</li><li><strong>Crea el favicon:</strong> pide a la IA un SVG de taco o tu logo, guárdalo como <code>favicon.svg</code> en tu carpeta y confirma el <code>&lt;link rel=\"icon\"&gt;</code> en el head. Refresca: la pestaña ya tiene carita.</li><li><strong>Publica</strong> — la tarjeta necesita la URL pública (hosting del Mes 1 o GitHub Pages).</li><li><strong>Prueba la tarjeta:</strong> mándate el enlace publicado por WhatsApp y mira la vista previa: título, descripción y la imagen del hero. Si sale la URL pelona, revisa que las <code>og:</code> estén en el head y que <code>og:image</code> apunte a una URL completa.</li><li><strong>Verifica con una herramienta:</strong> pega tu URL pública en un validador de Open Graph (busca 'Open Graph debugger' o 'meta tags validator') y confirma que lee todas las etiquetas sin errores.</li></ol><p>El head terminado, en lo que agregaste hoy:</p><pre><code>&lt;title&gt;Tacos El Volcán | El sabor que hace temblar&lt;/title&gt;\n&lt;meta name=\"description\" content=\"Tacos de suadero, pastor y más en la colonia Roma. Menú completo, horarios y pedido directo por WhatsApp.\"&gt;\n\n&lt;meta property=\"og:title\" content=\"Tacos El Volcán\"&gt;\n&lt;meta property=\"og:description\" content=\"Tacos de suadero, pastor y más en la colonia Roma. Pedido directo por WhatsApp.\"&gt;\n&lt;meta property=\"og:type\" content=\"website\"&gt;\n&lt;meta property=\"og:url\" content=\"https://tacos-el-volcan.netlify.app\"&gt;\n&lt;meta property=\"og:image\" content=\"https://tacos-el-volcan.netlify.app/imagenes/hero.webp\"&gt;\n&lt;meta name=\"twitter:card\" content=\"summary_large_image\"&gt;\n\n&lt;link rel=\"icon\" href=\"favicon.svg\" type=\"image/svg+xml\"&gt;</code></pre><p>Detalle de oficio: <code>og:url</code> y <code>og:image</code> usan la URL <strong>completa</strong> (con <code>https://</code>), no rutas relativas. Es la diferencia entre una tarjeta bonita y un enlace pelón.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Mi landing de Tacos El Volcán ya está publicada en [tu URL]. Agrégale los meta tags completos en el head: 1) un title único y descriptivo con el nombre del negocio y su eslogan; 2) una meta description de ~155 caracteres que diga qué es, dónde está y que el pedido es por WhatsApp; 3) las etiquetas Open Graph — og:title, og:description, og:type website, og:url con la URL pública completa, y og:image apuntando a la URL pública de mi hero en WebP; 4) twitter:card con summary_large_image; 5) un favicon: crea un SVG simple de un taco en rojo ladrillo, guárdalo como favicon.svg en la carpeta y enlázalo con link rel=\"icon\". No cambies el contenido visible ni los estilos. Dame el archivo completo actualizado y la lista de lo que agregaste.\"</p></blockquote><p>El prompt pide la lista final (el punto extra): cuando la IA te reporta lo que agregó, tu verificación tiene nombre y apellido.</p>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "multiple", pregunta: "¿Dónde viven los meta tags y el favicon?", opciones: ["Dentro del body, junto al contenido visible", "En el head, junto al charset y al viewport", "En un archivo aparte llamado meta.js", "En el footer de la página"], correcta: 1 },
+              { tipo: "completar", frase: "Las etiquetas ____ controlan la tarjeta de vista previa al compartir el enlace en WhatsApp o Facebook; la imagen de esa tarjeta (og:image) necesita una URL ____, no un archivo local.", banco: ["og:", "pública", "local", "escondida"], respuestas: ["og:", "pública"] },
+              { tipo: "vf", afirmacion: "Si pruebas la tarjeta de Open Graph en tu computadora con file:/// y la imagen no aparece, es porque tu código está mal.", correcta: false, explicacion: "la og:image necesita una URL pública: la tarjeta la arma quien comparte el enlace, no tu navegador local." },
+              { tipo: "quehace", codigo: "<link rel=\"icon\" href=\"favicon.svg\" type=\"image/svg+xml\">", pregunta: "¿Qué hace esta línea del head?", opciones: ["Pone el ícono de la pestaña del navegador (el favicon)", "Convierte la página en un archivo SVG", "Agrega una fuente nueva al sitio", "Define la imagen que se comparte en WhatsApp"], correcta: 0 },
+              { tipo: "relacionar", pares: [["title", "El texto de la pestaña y de los resultados de Google"], ["meta description", "El párrafo que aparece bajo el título en Google"], ["og:image", "La foto de la tarjeta al compartir el enlace"], ["twitter:card", "La tarjeta de vista previa en X (Twitter)"], ["favicon", "El ícono chiquito de la pestaña del navegador"]] }
+            ]
+          },
+          {
+            id: "m3-c29",
+            titulo: "Tu flujo completo de construcción de interfaces",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Este mes construiste un proyecto completo de principio a fin — y de camino, sin que lo notaras, se te formó un método. Hoy lo nombras y lo fijas. El <strong>flujo completo de construcción de interfaces</strong> es la secuencia que repites en cada proyecto, sin importar el tamaño ni la herramienta:</p><ol><li><strong>Reconocer</strong> — mirar antes de construir: la referencia que te gusta (m3-c17), el sitio que quieres replicar (m3-c18), lo que ya tienes y lo que falta. El diagnóstico de rendimiento también arranca aquí: medir, no adivinar (m3-c25).</li><li><strong>Brief</strong> — describir lo que todavía no existe (m3-c1): propósito, contenido, estilo, restricciones y éxito. Es la piedra del flujo: lo que no está en el brief, la IA lo inventa.</li><li><strong>Prompt</strong> — el brief convertido en instrucción con nombre: las 4 piezas del Mes 1 (contexto, objetivo, restricciones, formato) + el vocabulario visual (m3-c7) + las reglas técnicas (m3-c4, m3-c11).</li><li><strong>Construir por partes</strong> — por secciones (m3-c18), con componentes (m3-c19), con datos separados de la presentación (m3-c11). Nunca de un golpe.</li><li><strong>Verificar en cada paso</strong> — el inventario de la m3-c18, la prueba del cambio único (m3-c20), los tres estados forzados (m3-c16) y la prueba en celular (m3-c4). Lo que no se verificó, no se hizo.</li><li><strong>Corregir sin romper</strong> — pedir cambios con precisión (m3-c5), describir el daño en vez de editar a ciegas (m3-c13), iterar con la vista previa enfrente (m3-c22).</li><li><strong>Medir y pulir</strong> — el rendimiento (m3-c25, m3-c26) y el SEO (m3-c27, m3-c28): los dos detalles que separan un proyecto terminado de uno profesional.</li><li><strong>Publicar y versionar</strong> — salir del boceto: hosting (m1-c16) o GitHub Pages (m2-b20), y Git con commits, ramas y tags (Mes 2). La URL pública es el negocio abierto.</li></ol><p>La idea que te tiene que quedar grabada: <strong>el flujo no cambia cuando cambia la herramienta</strong>. Lo usaste con HTML plano (m3-c2), con una API (m3-c14), con v0 (m3-c22) y con React (m3-c24). Lo que cambia es la herramienta; lo que no cambia es el método: reconocer, brief, construir, verificar, medir, publicar.</p><p>Y el flujo es el mismo en todas las escalas: una sección, una landing o una web app completa son el mismo bucle. La diferencia es cuántas veces lo repites y con qué tamaño de piezas.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Es la <strong>receta del taquero que ya no piensa al preparar la orden</strong>. Al principio, cada taco era un proceso: ¿dónde está la tortilla?, ¿cuánta cebolla?, ¿primero la salsa? Después de miles de órdenes, el taquero tiene un flujo: parrilla, tortilla, carne, salsa, servir — lo repite sin pensarlo y no se le olvida el paso. Tu flujo de interfaces es esa receta: cada vez que arrancas un proyecto no empiezas a adivinar — comienzas por el mismo lado, pasas por los mismos pasos y el resultado sale parejo. El que domina su flujo construye cualquier platillo; el que no, improvisa y el cliente lo nota.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Este es tu flujo como lista de verificación — la misma que vas a usar mañana (m3-c30) en tu proyecto final:</p><pre><code>MI FLUJO COMPLETO DE CONSTRUCCIÓN\n\n□ 1. RECONOCER — la referencia (m3-c17, m3-c18), lo que ya tengo\n     y lo que falta. Medir, no adivinar (m3-c25).\n□ 2. BRIEF — propósito, contenido, estilo, restricciones y éxito\n     (m3-c1). Completarlo con la IA antes del código.\n□ 3. PROMPT — brief + vocabulario visual (m3-c7) + reglas\n     técnicas: responsive (m3-c4), datos (m3-c11), estados (m3-c15).\n□ 4. CONSTRUIR — por secciones (m3-c18) y componentes (m3-c19),\n     datos separados de presentación (m3-c11).\n□ 5. VERIFICAR — inventario arriba-abajo (m3-c18), cambio único\n     (m3-c20), estados forzados (m3-c16), celular (m3-c4).\n□ 6. CORREGIR — con precisión (m3-c5), sin editar a ciegas\n     (m3-c13), iterando (m3-c22).\n□ 7. MEDIR — Lighthouse y Network (m3-c25) → optimizar (m3-c26)\n     → SEO y meta tags (m3-c27, m3-c28).\n□ 8. PUBLICAR — hosting (m1-c16) o GitHub Pages (m2-b20)\n     + versionar con Git: commits, ramas, tag v1.0.0 al terminar.</code></pre><p>Hoy lo aplicas una vez más a algo que ya conoces: recorre tu landing de Tacos El Volcán con la lista en la mano y marca lo que ya tiene: brief completo (sí, desde la m3-c1), datos separados (sí, desde la m3-c10), estados (sí, desde la m3-c15), rendimiento (sí, desde la m3-c26), meta tags (sí, desde la m3-c28), publicada y versionada (sí, desde el Mes 2 o el hosting del Mes 1).</p><p>Si te queda algo sin marcar, esa es exactamente tu tarea en el proyecto final. Y ahí está la jugada: el proyecto final no es otra landing de tacos — es <strong>tu lista aplicada a un proyecto tuyo, de principio a fin, sin las instrucciones de esta clase</strong>.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Repasa conmigo el flujo completo que aprendí este mes antes de mi proyecto final. 1) Te doy mi lista de verificación: reconocer, brief, prompt, construir por partes, verificar, corregir, medir, publicar. 2) Aplícala a mi landing de Tacos El Volcán y dime qué pasos cumplo bien y cuáles son mis puntos débiles típicos — por ejemplo, si verifico poco, si pido todo de un golpe o si edito a ciegas. 3) Devuélveme una versión de mi lista adaptada a mi forma de trabajar, con 2 o 3 recordatorios personales por etapa. No cambies nada del código: esto es un repaso de método.\"</p></blockquote><p>Ese prompt convierte a la IA en entrenadora de tu proceso, no en productora de código: de la respuesta sale tu lista personalizada para la m3-c30.</p>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "ordenar", instruccion: "Acomoda el flujo completo de construcción de interfaces:", elementos: ["Reconocer y medir", "Escribir el brief", "Armar el prompt con vocabulario visual", "Construir por partes y verificar", "Medir rendimiento y SEO", "Publicar y versionar"] },
+              { tipo: "multiple", pregunta: "Este mes usaste HTML plano, una API, v0 y React. ¿Qué es lo que NO cambia entre herramientas?", opciones: ["La sintaxis de los componentes", "El flujo completo: reconocer, brief, construir, verificar, medir, publicar", "El archivo index.html", "Los comandos de la terminal"], correcta: 1 },
+              { tipo: "relacionar", pares: [["Brief", "Describir lo que todavía no existe (m3-c1)"], ["Verificar", "Inventario, cambio único y estados forzados (m3-c18, m3-c20, m3-c16)"], ["Medir", "Lighthouse y Network antes de tocar (m3-c25)"], ["Publicar", "Hosting + Git con tag al terminar"]] },
+              { tipo: "completar", frase: "El flujo se repite en todas las ____: una sección, una landing y una web app son el mismo ____; lo que cambia es el tamaño de las piezas.", banco: ["escalas", "bucle", "herramientas", "archivos"], respuestas: ["escalas", "bucle"] },
+              { tipo: "vf", afirmacion: "Lo que no está en el brief, la IA lo decide con su propio criterio — por eso el brief es la piedra del flujo.", correcta: true, explicacion: "es el principio de la m3-c1: todo lo que no escribes, ella lo adivina." }
+            ]
+          },
+          {
+            id: "m3-c30",
+            titulo: "Repaso + arranque del proyecto final del mes",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Llegaste al cierre del Mes 3. Hoy haces dos cosas: <strong>repasas el mes en tres bloques</strong> y <strong>arrancas el proyecto final</strong> — una web app completa, tuya, publicada y versionada.</p><p>El repaso:</p><ul><li><strong>Estructura</strong> — viste una página por dentro: el navegador que la pinta (m3-a1), el head y el body (m3-a2), las etiquetas semánticas (m3-a3), Flexbox y Grid (m3-a19 a m3-a22), el responsive con media queries (m3-a24, m3-a25) y el dark mode (m3-a28).</li><li><strong>Datos e interacción</strong> — JavaScript en el navegador: el DOM (m3-b2), pintar datos (m3-b10), map y filter (m3-b12), objetos (m3-b13), template literals (m3-b14), fetch y async (m3-b19 a m3-b21) y la consola (m3-b24).</li><li><strong>Dirigir</strong> — el oficio del mes: brief (m3-c1), maquetar (m3-c2), leer HTML (m3-c3), responsive (m3-c4), cambios quirúrgicos (m3-c5), datos separados (m3-c11), filtros (m3-c12), estados (m3-c15), componentes (m3-c19), rendimiento (m3-c26) y SEO (m3-c28).</li></ul><p>El proyecto final junta todo eso: <strong>una web app real de un negocio — el tuyo o uno que conozcas — con estos requisitos exactos:</strong></p><ul><li>Layout responsive con <strong>Grid o Flexbox</strong> (m3-a19 a m3-a22, m3-a24).</li><li><strong>Dark mode</strong> (m3-a28).</li><li>Un <strong>catálogo pintado desde datos</strong> — no HTML escrito a mano (m3-c10, m3-c11).</li><li><strong>Buscador o filtro funcional</strong> (m3-c12).</li><li><strong>Formulario de contacto conectado</strong> a WhatsApp o correo (m3-c8, m3-c9).</li><li>Los <strong>tres estados de interfaz</strong> manejados: cargando, vacío y error (m3-c15, m3-c16).</li><li><strong>Meta tags</strong> para compartir: title, description, Open Graph y favicon (m3-c28).</li><li><strong>Publicada y versionada</strong>: el sitio vive en una URL pública (hosting del Mes 1 o GitHub Pages, m2-b20) y el código vive en un repositorio de Git versionado, con un tag v1.0.0 y su release al terminar (m2-a23, m2-b23).</li></ul><p>Se entregan dos URLs: la del sitio y la del repositorio. Nada de esto es nuevo: cada requisito es una lección que ya pasaste. El reto es unirlos sin instrucciones — con tu flujo de la m3-c29 como única guía.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>El proyecto final es <strong>montar tu propio puesto, no trabajar en el puesto de Tacos El Volcán</strong>. Este mes fuiste el aprendiz que acompaña: el taquero te dejaba la parrilla encendida, los ingredientes puestos y te decía cada paso. Hoy te dan un local vacío y te dicen 'ábrelo'. Los ingredientes los eliges tú, el menú lo diseñas tú, y los clientes — cualquiera que abra tu URL — deciden si vuelven. No hay receta secreta: es la misma receta del mes — brief, construir por partes, verificar, medir, publicar y versionar — aplicada sin mano que te guíe. Y cuando tu puesto queda abierto (URL pública) con su letrero registrado (repo versionado con v1.0.0), ese local es tuyo: para presumirlo y para crecerlo.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>El arranque del proyecto final, paso a paso, con tu flujo de la m3-c29:</p><ol><li><strong>Elige el negocio.</strong> El tuyo, el de alguien que conoces o uno real de tu colonia. Esta es la ocasión de usar contenido verdadero: precios y horarios reales. No otro taco — algo tuyo.</li><li><strong>Escribe el brief completo</strong> (m3-c1): propósito, contenido, estilo, restricciones y éxito. Pásalo por la entrevista de la IA para que te haga las preguntas que faltan.</li><li><strong>Convierte el brief en requisitos técnicos:</strong> catálogo desde datos, buscador o filtro, dark mode, formulario, tres estados y meta tags. Ese puente entre brief y requisitos es el oficio de la m3-c29.</li><li><strong>Crea la carpeta y versiona desde el día uno</strong> (Mes 2): <code>mkdir</code>, <code>git init</code>, <code>.gitignore</code> y primer commit. El proyecto nace versionado, no 'se le agrega Git después'.</li><li><strong>Construye por secciones</strong> (m3-c18), una a la vez, verificando cada una en el navegador (m3-c4). El catálogo desde datos desde el principio (m3-c10, m3-c11) — escribirlo a mano 'para ahorrar tiempo' te cuesta el doble cuando llegues al filtro.</li><li><strong>Pule y mide:</strong> estados forzados (m3-c16), Lighthouse (m3-c26) y meta tags (m3-c28).</li><li><strong>Publica y versiona:</strong> sube el repo a GitHub, publica con GitHub Pages (m2-b20) o tu hosting del Mes 1, y cuando todo esté verde marca <code>git tag -a v1.0.0</code> y crea la release (m2-b23).</li></ol><pre><code>ENTREGABLES DEL PROYECTO FINAL:\nURL del sitio .... https://tuusuario.github.io/tu-app/   (o .netlify.app)\nURL del repo .... https://github.com/tuusuario/tu-app\n\nLISTA DE REQUISITOS:\n□ Layout responsive con Grid o Flexbox\n□ Dark mode (prefers-color-scheme o botón)\n□ Catálogo pintado desde datos (no a mano)\n□ Buscador o filtro funcional\n□ Formulario de contacto conectado (WhatsApp o correo)\n□ Tres estados: cargando, vacío, error\n□ Meta tags: title, description, Open Graph, favicon\n□ Publicada en URL pública\n□ Versionada en Git con tag v1.0.0 y release\n\nSe entrega la URL del sitio y la del repositorio.</code></pre><p>La regla de cierre: no avances a 'pulir' con requisitos pendientes — cada casilla sin marcar se paga después con rehacer. El proyecto termina cuando las nueve están marcadas y la URL se abre en tu celular.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Voy a arrancar mi proyecto final del Mes 3: [describe tu negocio en dos líneas]. Antes de escribir código, actúa como evaluador: 1) hazme un examen corto de 8 preguntas sobre los temas del mes — brief, datos separados de presentación, filtros, los tres estados, componentes, rendimiento, SEO y publicar/versionar; 2) cuando responda, dime cuáles me fallaron y qué lección debo repasar de cada una; 3) después entrevístame para completar el brief de mi proyecto final — propósito, contenido, estilo, restricciones y éxito — y devuélveme el plan de construcción por etapas, cada una con su verificación y con la lección del mes que la respalda. No generes código todavía.\"</p></blockquote><p>Es un prompt de auto-evaluación, no de construcción: primero confirmas que el mes quedó en ti, después arrancas el proyecto con el brief completo y el plan por etapas.</p>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "multiple", pregunta: "¿Cuál de estos NO es un requisito del proyecto final del Mes 3?", opciones: ["Catálogo pintado desde datos", "Dark mode", "Usar React con Vite", "Buscador o filtro funcional"], correcta: 2 },
+              { tipo: "completar", frase: "El proyecto final se entrega con dos URLs: la del ____, donde vive la web app publicada, y la del ____, donde vive el código versionado.", banco: ["sitio", "repositorio", "negocio", "servidor"], respuestas: ["sitio", "repositorio"] },
+              { tipo: "relacionar", pares: [["Catálogo desde datos", "m3-c10 y m3-c11"], ["Tres estados de interfaz", "m3-c15 y m3-c16"], ["Formulario conectado", "m3-c8 y m3-c9"], ["Meta tags para compartir", "m3-c28"]] },
+              { tipo: "vf", afirmacion: "Puedes escribir el catálogo del proyecto final a mano en el HTML: es más rápido y cumple igual.", correcta: false, explicacion: "el catálogo desde datos (m3-c10, m3-c11) es requisito: sin él no hay filtro (m3-c12) y cada cambio de precio sería una cacería por el código." },
+              { tipo: "ordenar", instruccion: "Acomoda el arranque del proyecto final:", elementos: ["Elegir el negocio y escribir el brief", "Crear la carpeta, git init y .gitignore con el primer commit", "Construir el catálogo desde datos", "Agregar buscador, filtro y dark mode", "Manejar los tres estados de interfaz", "Publicar, marcar la tag v1.0.0 y entregar las dos URLs"] },
+              { tipo: "quehace", codigo: "git tag -a v1.0.0 -m \"Proyecto final del Mes 3\"", pregunta: "Terminaste tu proyecto y corres este comando. ¿Qué logra?", opciones: ["Marca el commit actual como la versión 1.0.0: el punto exacto del proyecto terminado", "Sube el proyecto a GitHub Pages", "Crea una rama nueva para seguir trabajando", "Borra el historial de commits anteriores"], correcta: 0 },
+              { tipo: "multiple", pregunta: "Abres tu web app en el celular, el buscador no encuentra nada y aparece un mensaje amable con una sugerencia. ¿Qué estado de interfaz está funcionando?", opciones: ["Error", "Vacío", "Cargando", "Éxito"], correcta: 1 },
+              { tipo: "vf", afirmacion: "El proyecto final 'publicado y versionado' significa que el sitio está en una URL pública y el código está en un repositorio de Git con un tag de lanzamiento como v1.0.0.", correcta: true, explicacion: "las dos entregas son la URL del sitio y la del repositorio (Mes 2): el tag marca la versión terminada para siempre." }
+            ]
+          },
       ] }
     }
   }
