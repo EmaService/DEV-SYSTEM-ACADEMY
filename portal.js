@@ -308,6 +308,7 @@
     var xpPerLesson = cfg2.xpPerLesson || 50;
     var xpPerFirstTry = cfg2.xpPerFirstTry || 10;
     var rachaEl = document.getElementById("metrica-racha");
+    var rachaCtx = document.getElementById("metrica-racha-ctx");
     var xpEl = document.getElementById("metrica-xp");
     var xpCtx = document.getElementById("metrica-xp-ctx");
     var modEl = document.getElementById("metrica-modulos");
@@ -323,6 +324,7 @@
       if (progressFill) progressFill.style.width = pct + "%";
       if (modEl) modEl.textContent = paidCount;
       if (modCtx) modCtx.textContent = Math.round((paidCount / 12) * 100) + "% del programa";
+      if (xpCtx) xpCtx.textContent = done + (done === 1 ? " unidad completada" : " unidades completadas");
     }
 
     if (cloudMode && window.DevSystemCloud.getPaidMonthIds) {
@@ -348,6 +350,7 @@
 
       window.DevSystemCloud.getStreakDays(user.email).then(function (streak) {
         if (rachaEl) rachaEl.textContent = streak;
+        if (rachaCtx) rachaCtx.textContent = streak >= 1 ? "Racha activa" : "Retoma hoy tu racha";
       }).catch(function () {});
       window.DevSystemCloud.getAllLessonStats(user.email).then(function (allStats) {
         var totalXp = 0;
@@ -356,11 +359,9 @@
         }
         localStorage.setItem("devsystem_xp_" + user.email, totalXp);
         if (xpEl) xpEl.textContent = totalXp.toLocaleString();
-        if (xpCtx) xpCtx.textContent = "Puntos de avance";
       }).catch(function () {
         var localXp = parseInt(localStorage.getItem("devsystem_xp_" + user.email) || "0", 10);
         if (xpEl) xpEl.textContent = localXp.toLocaleString();
-        if (xpCtx) xpCtx.textContent = "Puntos de avance";
       });
       window.DevSystemCloud.getMonthExams(user.email).then(function (exams) {
         var scores = [];
@@ -401,7 +402,10 @@
 
   function renderDayCard() {
     var dayTitle = document.getElementById("day-lesson-title");
+    var dayDesc = document.getElementById("day-lesson-desc");
     if (!dayTitle) return;
+    dayTitle.textContent = "Cargando tu actividad...";
+    if (dayDesc) dayDesc.textContent = "";
     var build = function (progress, paidMonths) {
       renderDayCardWithProgress(progress || {}, paidMonths || []);
     };
@@ -410,7 +414,10 @@
       var progPromise = window.DevSystemCloud.getProgressMap(user.email).catch(function () { return {}; });
       Promise.all([progPromise, paidPromise])
         .then(function (res) { build(res[0], res[1]); })
-        .catch(function () { build({}, []); });
+        .catch(function () {
+          dayTitle.textContent = "No pudimos cargar tu actividad de hoy.";
+          if (dayDesc) dayDesc.textContent = "";
+        });
       return;
     }
     build(window.DevSystemState.getProgress(user.email), window.DevSystemState.getPaidMonthIds(user.email));
@@ -495,91 +502,112 @@
     }
   }
 
-  function renderGlosario(containerOverride) {
-    var glosarioCard = document.getElementById("glosario-card");
-    if (!containerOverride) {
-      if (enrollmentStatus !== "activo") {
-        if (glosarioCard) glosarioCard.style.display = "none";
-        return;
-      }
-      if (glosarioCard) glosarioCard.style.display = "block";
-    }
+  function renderGlosario(containerOverride, filtro) {
     var container = containerOverride || document.getElementById("glosario-list");
     if (!container) return;
+    if (!containerOverride && enrollmentStatus !== "activo") return;
     container.innerHTML = "";
+    filtro = filtro || glosarioFiltro || { buscar: "", modulo: "todos" };
+
+    var icons = window.DevSystemIcons || { icon: function () { return ""; } };
+
+    function moduloLabel(term) {
+      var mes = term.mes || term.month_ref;
+      if (mes) return "MÓD. " + String(mes).padStart(2, "0");
+      if (term.known_term === false) return "SIN CLASIFICAR";
+      return "";
+    }
 
     function renderTerms(terms) {
+      var buscar = (filtro.buscar || "").toLowerCase();
+      var modulo = filtro.modulo || "todos";
+      terms = terms.filter(function (t) {
+        var nombre = (t.termino || t.term || "").toLowerCase();
+        if (buscar && nombre.indexOf(buscar) === -1) return false;
+        var mes = t.mes || t.month_ref;
+        if (modulo !== "todos" && String(mes) !== String(modulo)) return false;
+        return true;
+      });
       terms.sort(function (a, b) {
         if (a.reviewed === b.reviewed) return 0;
         return a.reviewed ? 1 : -1;
       });
+      container.innerHTML = "";
+      var count = document.getElementById("glosario-count-header");
+      var sinRepasar = 0;
+      for (var ci = 0; ci < terms.length; ci++) if (!terms[ci].reviewed) sinRepasar++;
+      if (count) count.textContent = terms.length + " TÉRMINOS · " + sinRepasar + " POR REPASAR";
+
       for (var i = 0; i < terms.length; i += 1) {
         var term = terms[i];
-        var card = document.createElement("div");
-        card.className = "glosario-item";
+        var row = document.createElement("div");
+        row.className = "glosario-row";
+
+        var head = document.createElement("div");
+        head.style.cssText = "display:flex;align-items:center;gap:0.5rem";
 
         var nameEl = document.createElement("strong");
         nameEl.className = "glosario-termino";
         nameEl.textContent = term.termino || term.term || "";
+        if (term.reviewed) nameEl.style.color = "var(--muted)";
+        head.appendChild(nameEl);
+
+        if (term.reviewed) {
+          var chkIcon = document.createElement("span");
+          chkIcon.style.cssText = "color:var(--success);display:inline-flex";
+          chkIcon.innerHTML = icons.icon("check", 14);
+          head.appendChild(chkIcon);
+        }
+
+        var meta = document.createElement("span");
+        meta.className = "glosario-mes";
+        meta.textContent = moduloLabel(term);
+        head.appendChild(meta);
 
         var defEl = document.createElement("p");
         defEl.className = "glosario-def";
         defEl.textContent = term.definicion || term.definition || "";
 
-        var meta = document.createElement("span");
-        meta.className = "glosario-meta";
-        meta.textContent = term.mes
-          ? "Mes " + term.mes
-          : term.month_ref
-          ? "Mes " + term.month_ref
-          : term.known_term === false
-          ? "Próximamente"
-          : "";
+        var acciones = document.createElement("div");
+        acciones.className = "glosario-acciones";
 
-        var toggle = document.createElement("label");
-        toggle.className = "glosario-toggle";
-        toggle.style.cssText = "display:flex;align-items:center;gap:0.3rem;font-size:0.82rem";
-        var chk = document.createElement("input");
-        chk.type = "checkbox";
-        chk.checked = Boolean(term.reviewed);
-        chk.setAttribute("data-term", term.termino || term.term || "");
-        chk.addEventListener("change", async function (e) {
-          var t = e.target.getAttribute("data-term");
-          var r = e.target.checked;
+        var termName = term.termino || term.term || "";
+        var reviewed = Boolean(term.reviewed);
+        var repBtn = document.createElement("button");
+        repBtn.textContent = reviewed ? "No repasado" : "Repasado";
+        repBtn.setAttribute("aria-label", "Marcar como repasado");
+        repBtn.addEventListener("click", async function () {
+          var t = this.getAttribute("data-term");
+          var r = this.getAttribute("data-reviewed") === "1";
           if (cloudMode && window.DevSystemCloud.setGlossaryReviewed) {
-            await window.DevSystemCloud.setGlossaryReviewed(user.email, t, r);
+            await window.DevSystemCloud.setGlossaryReviewed(user.email, t, !r);
           }
-          renderGlosario(containerOverride);
+          renderGlosario(containerOverride, filtro);
         });
-        toggle.appendChild(chk);
-        toggle.appendChild(document.createTextNode(" Repasado"));
+        repBtn.setAttribute("data-term", termName);
+        repBtn.setAttribute("data-reviewed", reviewed ? "1" : "0");
+        acciones.appendChild(repBtn);
 
         var delBtn = document.createElement("button");
-        delBtn.className = "btn btn-ghost";
-        delBtn.style.cssText = "padding:0.2rem 0.5rem;font-size:0.8rem";
-        delBtn.textContent = "✕";
-        delBtn.setAttribute("data-term", term.termino || term.term || "");
-        delBtn.addEventListener("click", async function (e) {
-          var t = e.currentTarget.getAttribute("data-term");
+        delBtn.textContent = "Eliminar";
+        delBtn.setAttribute("aria-label", "Eliminar término");
+        delBtn.addEventListener("click", async function () {
+          var t = this.getAttribute("data-term");
           if (cloudMode && window.DevSystemCloud.deleteGlossaryTerm) {
             await window.DevSystemCloud.deleteGlossaryTerm(user.email, t);
           }
-          renderGlosario(containerOverride);
+          renderGlosario(containerOverride, filtro);
         });
+        delBtn.setAttribute("data-term", termName);
+        acciones.appendChild(delBtn);
 
-        card.style.cssText =
-          "padding:0.6rem;border-bottom:1px solid var(--line);display:grid;grid-template-columns:1fr auto auto;gap:0.3rem 0.6rem;align-items:center";
-        nameEl.style.gridColumn = "1";
-        defEl.style.cssText = "grid-column:1/-1;font-size:0.82rem;color:var(--muted)";
-        meta.style.cssText = "font-size:0.78rem;color:var(--accent)";
-        toggle.style.gridColumn = "2";
-
-        card.appendChild(nameEl);
-        card.appendChild(defEl);
-        card.appendChild(meta);
-        card.appendChild(toggle);
-        card.appendChild(delBtn);
-        container.appendChild(card);
+        row.appendChild(head);
+        row.appendChild(defEl);
+        row.appendChild(acciones);
+        container.appendChild(row);
+      }
+      if (terms.length === 0) {
+        container.innerHTML = "<p class='small' style='color:var(--muted)'>No hay términos guardados todavía.</p>";
       }
     }
 
@@ -788,19 +816,9 @@
     });
   }
 
-  var glosarioToggle = document.getElementById("glosario-toggle-btn");
-  var glosarioDrawer = document.getElementById("glosario-drawer");
-  var glosarioClose = document.getElementById("glosario-close-btn");
-  if (glosarioToggle && glosarioDrawer) {
-    glosarioToggle.addEventListener("click", function () {
-      glosarioDrawer.classList.toggle("open");
-    });
-  }
-  if (glosarioClose && glosarioDrawer) {
-    glosarioClose.addEventListener("click", function () {
-      glosarioDrawer.classList.remove("open");
-    });
-  }
+  var glosarioToggle = null;
+  var glosarioDrawer = null;
+  var glosarioClose = null;
 
   var collapsibles = document.querySelectorAll(".collapsible-section summary");
   for (var ci = 0; ci < collapsibles.length; ci++) {
@@ -1014,25 +1032,30 @@
     }
     container.style.display = "block";
     var latestMonth = paidMonths[paidMonths.length - 1];
-    var payments = await getPaymentDatesForUser(user.email);
+    var payments = await getPaymentDatesForUser(user.email).catch(function () { return []; });
     var periodStart = null;
     for (var pi = 0; pi < payments.length; pi++) {
       if (Number(payments[pi].month_id) === Number(latestMonth)) {
-        var rawDate = payments[pi].created_at || payments[pi].payment_date || null;
-        if (rawDate) periodStart = new Date(rawDate);
+        var rawDate = payments[pi].updated_at || payments[pi].created_at || null;
+        if (rawDate) periodStart = fechaBase(rawDate);
         break;
       }
     }
-    if (!periodStart) periodStart = new Date();
-    var periodEnd = addMonthsSafe(periodStart, 1);
+    if (!periodStart) {
+      container.innerHTML = "<div class='card'><p class='eyebrow'>Periodo actual</p><p class='small' style='color:var(--muted)'>—</p></div>";
+      return;
+    }
+    var periodEnd = sumarMeses(periodStart, 1);
     var totalDays = Math.round((periodEnd - periodStart) / 86400000);
     var elapsed = Math.round((new Date() - periodStart) / 86400000);
     if (elapsed < 0) elapsed = 0;
     if (elapsed > totalDays) elapsed = totalDays;
     var pct = totalDays > 0 ? Math.round((elapsed / totalDays) * 100) : 0;
-    var title = getMonthTitle(latestMonth);
 
-    container.innerHTML = "<div class='periodo-card'><p class='eyebrow'>Periodo actual — Mes " + latestMonth + "</p><h3>" + title + "</h3><div class='progress-bar' style='margin:0.6rem 0'><div class='progress-fill' style='width:" + pct + "%'></div></div><p class='small'>Día " + elapsed + " de " + totalDays + " (" + pct + "%)</p></div>";
+    var fmt = function (d) { return d.getDate() + " " + d.toLocaleDateString("es-MX", { month: "short" }); };
+    var rango = fmt(periodStart) + " – " + fmt(periodEnd) + " " + periodEnd.getFullYear();
+
+    container.innerHTML = "<div class='card'><p class='eyebrow'>Periodo actual — Módulo " + String(latestMonth).padStart(2, "0") + "</p><h3 style='font-size:1rem;font-family:var(--font-body)'>" + rango + "</h3><div class='progress-bar' style='margin:0.6rem 0'><div class='progress-fill' style='width:" + pct + "%'></div></div><p class='small'>Día " + elapsed + " de " + totalDays + " (" + pct + "%)</p></div>";
   }
 
   async function renderAvanceMes() {
@@ -1192,7 +1215,7 @@
       }
     } else {
       var title = MONTH_TITLES[monthNum] || "Mes " + monthNum;
-      contentArea.innerHTML = "<div style='padding:2rem;text-align:center;color:var(--line)'><h3>" + title + "</h3><p class='small' style='margin-top:1rem;color:var(--muted)'>✨ El contenido del Mes " + monthNum + " se publicará próximamente.</p><p class='small' style='color:var(--muted)'>Completa los meses anteriores para mantener tu avance.</p></div>";
+      contentArea.innerHTML = "<div style='padding:2rem;text-align:center;color:var(--line)'><h3>" + title + "</h3><p class='small' style='margin-top:1rem;color:var(--muted)'>El contenido del Módulo " + monthNum + " se publicará próximamente.</p><p class='small' style='color:var(--muted)'>Completa los módulos anteriores para mantener tu avance.</p></div>";
     }
   }
 
@@ -1237,7 +1260,7 @@
     if (firstUncompleted) {
       container.innerHTML = "<div class='card card-highlighted'><p class='eyebrow'>Continúa donde te quedaste</p><h3>" + materiaIcon + " " + firstUncompleted.titulo + "</h3><p class='small'>" + materiaName + "</p><a href='leccion.html?id=" + firstUncompleted.id + "' class='btn btn-block' style='margin-top:0.8rem'>Ir a la lección</a></div>";
     } else {
-      container.innerHTML = "<div class='card card-highlighted'><p class='eyebrow'>Continúa donde te quedaste</p><h3>🎉 ¡Todo completado!</h3><p class='small'>Has terminado todas las lecciones disponibles.</p></div>";
+      container.innerHTML = "<div class='card card-highlighted'><p class='eyebrow'>Continúa donde te quedaste</p><h3>Módulo completado</h3><p class='small'>Has terminado todas las lecciones disponibles.</p></div>";
     }
   }
 
@@ -1417,7 +1440,7 @@
           if (total > 0 && done >= total) {
             html += "<span class='badge' style='background:rgba(173,199,255,0.12);color:var(--accent);padding:0.25rem 0.6rem;border-radius:999px;font-size:0.75rem;font-weight:700'>Disponible</span></div><p class='small' style='margin-top:0.3rem;color:var(--accent)'>Completaste todas las lecciones del mes. ¡Presenta tu examen!</p><a href='examen-mes.html?mes=" + m + "' class='btn btn-block' style='margin-top:0.6rem'>Presentar examen</a>";
           } else {
-            html += "<span class='badge' style='background:var(--line);color:var(--muted);padding:0.25rem 0.6rem;border-radius:999px;font-size:0.75rem;font-weight:700'>🔒 Bloqueado</span></div><p class='small' style='margin-top:0.3rem;color:var(--muted)'>Completa todas las lecciones del mes (" + done + "/" + total + " lecciones) para desbloquear el examen.</p>";
+            html += "<span class='badge' style='background:var(--line);color:var(--muted);padding:0.25rem 0.6rem;border-radius:999px;font-size:0.75rem;font-weight:700'>Bloqueado</span></div><p class='small' style='margin-top:0.3rem;color:var(--muted)'>Completa todas las lecciones del mes (" + done + "/" + total + " lecciones) para desbloquear el examen.</p>";
           }
         }
         html += "</div>";
@@ -1435,40 +1458,47 @@
      =================================================================== */
 
   function renderMarcadores() {
-    renderMarcadoresCount();
+    renderGlosario(document.getElementById("glosario-list"), glosarioFiltro);
     renderMarcadoresSugeridos();
-    renderGlosario(document.getElementById("marcadores-glosario-list"));
+    wireGlosarioControls();
   }
 
-  function renderMarcadoresCount() {
-    var container = document.getElementById("marcadores-header");
-    if (!container) return;
+  var glosarioFiltro = { buscar: "", modulo: "todos" };
 
-    function buildCount(terms) {
-      var total = terms.length;
-      var unreviewed = 0;
-      for (var i = 0; i < terms.length; i++) {
-        if (!terms[i].reviewed) unreviewed++;
+  function wireGlosarioControls() {
+    var buscar = document.getElementById("glosario-buscar");
+    var filtro = document.getElementById("glosario-filtro");
+    if (!buscar || !filtro) return;
+
+    if (filtro.options.length <= 1) {
+      var opciones = ["todos"];
+      for (var oi = 1; oi <= 12; oi++) opciones.push(String(oi));
+      for (var oi2 = 0; oi2 < opciones.length; oi2++) {
+        var opt = document.createElement("option");
+        opt.value = opciones[oi2];
+        opt.textContent = opciones[oi2] === "todos" ? "Todos los módulos" : "Módulo " + String(opciones[oi2]).padStart(2, "0");
+        filtro.appendChild(opt);
       }
-      container.innerHTML = "<p><strong>" + total + "</strong> términos · <span style='color:var(--accent)'>" + unreviewed + " sin repasar</span></p>";
     }
 
-    if (cloudMode) {
-      window.DevSystemCloud.getGlossaryTerms(user.email).then(function (terms) {
-        buildCount(terms || []);
-      });
-    } else {
-      var stored = {};
-      try { stored = JSON.parse(localStorage.getItem("devsystem_glosario_reviewed_" + user.email) || "{}"); } catch (e) { }
-      var terms = (glosarioData || []).map(function (entry) {
-        return { termino: entry.termino, reviewed: Boolean(stored[entry.termino]) };
-      });
-      buildCount(terms);
-    }
+    buscar.removeEventListener("input", glosarioBuscarHandler);
+    filtro.removeEventListener("change", glosarioFiltroHandler);
+    buscar.addEventListener("input", glosarioBuscarHandler);
+    filtro.addEventListener("change", glosarioFiltroHandler);
+  }
+
+  function glosarioBuscarHandler() {
+    glosarioFiltro.buscar = this.value;
+    renderGlosario(document.getElementById("glosario-list"), glosarioFiltro);
+  }
+
+  function glosarioFiltroHandler() {
+    glosarioFiltro.modulo = this.value;
+    renderGlosario(document.getElementById("glosario-list"), glosarioFiltro);
   }
 
   function renderMarcadoresSugeridos() {
-    var container = document.getElementById("marcadores-sugeridos");
+    var container = document.getElementById("suggested-terms");
     if (!container) return;
 
     var suggested = [];
@@ -1487,12 +1517,11 @@
         return;
       }
       container.style.display = "block";
-      var html = "<p class='eyebrow'>Términos sugeridos del mes</p><div style='display:flex;flex-wrap:wrap;gap:0.5rem;margin-top:0.5rem'>";
+      var html = "";
       for (var fi = 0; fi < filtered.length; fi++) {
         var t = filtered[fi];
-        html += "<div class='glosario-suggested-item'><strong>" + t.termino + "</strong><p class='small'>" + t.definicion + "</p><button class='btn btn-ghost btn-sm add-term-btn' data-term='" + t.termino + "' data-def='" + (t.definicion || "").replace(/'/g, "&#39;") + "' data-mes='1'>+ Agregar</button></div>";
+        html += "<div class='glosario-row' style='display:flex;align-items:center;gap:0.8rem'><div style='flex:1;min-width:0'><div style='display:flex;align-items:center;gap:0.5rem'><strong class='glosario-termino'>" + t.termino + "</strong><span class='glosario-mes'>MÓD. " + String(t.mes).padStart(2, "0") + "</span></div><p class='glosario-def'>" + t.definicion + "</p></div><button class='btn-text add-term-btn' data-term='" + t.termino.replace(/'/g, "&#39;") + "' data-def='" + (t.definicion || "").replace(/'/g, "&#39;") + "' data-mes='" + (t.mes || 1) + "'>Agregar</button></div>";
       }
-      html += "</div>";
       container.innerHTML = html;
 
       var addBtns = container.querySelectorAll(".add-term-btn");
@@ -1501,12 +1530,13 @@
           btn.addEventListener("click", async function () {
             var termino = btn.getAttribute("data-term");
             var definicion = btn.getAttribute("data-def");
+            var mes = btn.getAttribute("data-mes") || "1";
             if (cloudMode && window.DevSystemCloud.saveGlossaryTerm) {
               await window.DevSystemCloud.saveGlossaryTerm({
                 email: user.email,
                 term: termino,
                 definition: definicion,
-                month_ref: 1,
+                month_ref: Number(mes),
                 known_term: true,
                 reviewed: false,
               });
@@ -1514,7 +1544,7 @@
               var key = "devsystem_glosario_saved_" + user.email;
               var saved = {};
               try { saved = JSON.parse(localStorage.getItem(key) || "{}"); } catch (e) { }
-              saved[termino] = { definition: definicion, month_ref: 1 };
+              saved[termino] = { definition: definicion, month_ref: Number(mes) };
               localStorage.setItem(key, JSON.stringify(saved));
             }
             renderMarcadores();
@@ -1757,12 +1787,15 @@
     if (estadoContent) {
       var fechaStr = info.fechaVencimiento.toLocaleDateString("es-MX", { day: "numeric", month: "long", year: "numeric" });
       var msg = "";
+      var dias = info.diasRestantes;
       if (info.estado === "vencido") {
-        msg = "Tu mensualidad venció el " + fechaStr + ". Paga para desbloquear el Mes " + info.proximoMes + ". Tu contenido de meses anteriores sigue disponible.";
+        msg = "Tu mensualidad venció el " + fechaStr + ". Paga para acceder al Módulo " + info.proximoMes + ".";
       } else if (info.estado === "por_vencer") {
-        msg = "Tu mensualidad vence en " + (info.diasRestantes === 1 ? "1 día" : info.diasRestantes + " días") + ". Paga para desbloquear el Mes " + info.proximoMes + ".";
+        if (dias <= 0) msg = "Tu mensualidad vence hoy. Paga para acceder al Módulo " + info.proximoMes + ".";
+        else if (dias === 1) msg = "Tu mensualidad vence mañana.";
+        else msg = "Tu mensualidad vence en " + dias + " días.";
       } else {
-        msg = "Tu acceso al Mes " + info.mesActual + " está vigente hasta el " + fechaStr + ". Paga el " + fechaStr + " para desbloquear el Mes " + info.proximoMes + ".";
+        msg = "Tu acceso al Módulo " + info.mesActual + " está vigente hasta el " + fechaStr + ". Paga el " + fechaStr + " para desbloquear el Módulo " + info.proximoMes + ".";
       }
       estadoContent.innerHTML =
         "<div style='display:flex;align-items:center;gap:0.6rem;flex-wrap:wrap'><span class='badge' style='background:" + badge.color + ";color:#001a41;padding:0.3rem 0.8rem;border-radius:999px;font-size:0.78rem;font-weight:800'>" + badge.label + "</span><span class='small' style='color:var(--muted)'>" + msg + "</span></div>" +
@@ -1880,7 +1913,16 @@
     if (banner) {
       if (showWarning) {
         var bannerColor = info.estado === "vencido" ? "var(--danger)" : "var(--amber)";
-        var bannerText = info.estado === "vencido" ? "Tu mensualidad venció. Paga para desbloquear el Módulo " + info.proximoMes + "." : "Tu mensualidad vence en " + info.diasRestantes + " día(s). Paga para desbloquear el Módulo " + info.proximoMes + ".";
+        var bannerText;
+        if (info.estado === "vencido") {
+          bannerText = "Tu mensualidad venció el " + info.fechaVencimiento.toLocaleDateString("es-MX", { day: "numeric", month: "long" }) + ". Paga para acceder al Módulo " + info.proximoMes + ".";
+        } else if (info.diasRestantes <= 0) {
+          bannerText = "Tu mensualidad vence hoy. Paga para acceder al Módulo " + info.proximoMes + ".";
+        } else if (info.diasRestantes === 1) {
+          bannerText = "Tu mensualidad vence mañana.";
+        } else {
+          bannerText = "Tu mensualidad vence en " + info.diasRestantes + " días.";
+        }
         banner.style.display = "block";
         banner.innerHTML =
           "<div style='display:flex;align-items:center;justify-content:space-between;gap:0.8rem;flex-wrap:wrap;background:" + bannerColor + ";color:" + (info.estado === "vencido" ? "#ffffff" : "#001a41") + ";padding:0.7rem 1rem;border-radius:0.75rem;font-size:0.85rem;font-weight:700'>" +

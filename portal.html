@@ -38,14 +38,16 @@
     </header>
 
     <nav class="portal-tabs" id="portal-tabs">
-      <button class="active" data-tab="inicio" aria-label="Inicio"><span data-icon="inicio"></span> Inicio</button>
-      <button data-tab="plan" aria-label="Plan de estudios"><span data-icon="plan"></span> Plan de estudios</button>
-      <button data-tab="aula" aria-label="Aula virtual"><span data-icon="aula"></span> Aula virtual</button>
-      <button data-tab="examenes" aria-label="Exámenes"><span data-icon="examenes"></span> Exámenes</button>
-      <button data-tab="pagos" aria-label="Pagos"><span data-icon="pagos"></span> Pagos</button>
-      <button data-tab="marcadores" aria-label="Glosario"><span data-icon="marcadores"></span> Glosario</button>
-      <button data-tab="expediente" aria-label="Expediente académico"><span data-icon="expediente"></span> Expediente académico</button>
-      <button data-tab="humanizador" id="tab-humanizador" aria-label="Humanizador" style="display:none"><span data-icon="aula"></span> Humanizador</button>
+      <div class="container portal-tabs-inner">
+        <button class="active" data-tab="inicio" aria-label="Inicio"><span data-icon="inicio"></span> Inicio</button>
+        <button data-tab="plan" aria-label="Plan de estudios"><span data-icon="plan"></span> Plan de estudios</button>
+        <button data-tab="aula" aria-label="Aula virtual"><span data-icon="aula"></span> Aula virtual</button>
+        <button data-tab="examenes" aria-label="Exámenes"><span data-icon="examenes"></span> Exámenes</button>
+        <button data-tab="pagos" aria-label="Pagos"><span data-icon="pagos"></span> Pagos</button>
+        <button data-tab="marcadores" aria-label="Glosario"><span data-icon="marcadores"></span> Glosario</button>
+        <button data-tab="expediente" aria-label="Expediente académico"><span data-icon="expediente"></span> Expediente académico</button>
+        <button data-tab="humanizador" id="tab-humanizador" aria-label="Humanizador" style="display:none"><span data-icon="aula"></span> Humanizador</button>
+      </div>
     </nav>
 
     <main class="section portal-main">
@@ -62,11 +64,14 @@
           <div class="metricas-block" id="metricas-block" style="margin-top:1.2rem">
             <div class="metrica"><span class="label">Módulos cursados</span><div class="metrica-num" id="metrica-modulos">0</div><div class="metrica-ctx" id="metrica-modulos-ctx">0% del programa</div></div>
             <div class="metrica"><span class="label">Puntos de avance</span><div class="metrica-num" id="metrica-xp">0</div><div class="metrica-ctx" id="metrica-xp-ctx">—</div></div>
-            <div class="metrica"><span class="label">Días consecutivos</span><div class="metrica-num" id="metrica-racha">0</div><div class="metrica-ctx">—</div></div>
+            <div class="metrica"><span class="label">Días consecutivos</span><div class="metrica-num" id="metrica-racha">0</div><div class="metrica-ctx" id="metrica-racha-ctx"></div></div>
             <div class="metrica"><span class="label">Promedio general</span><div class="metrica-num" id="metrica-promedio">—</div><div class="metrica-ctx" id="metrica-promedio-ctx">—</div></div>
           </div>
 
           <div id="inicio-avance"></div>
+
+          <div id="inicio-periodo" style="margin-top:1rem"></div>
+          <p id="certificate-status" class="small" style="margin-top:0.6rem;color:var(--muted)"></p>
 
           <section id="day-card" class="card card-highlighted reveal">
             <p class="eyebrow">Tu día de hoy</p>
@@ -75,7 +80,6 @@
             <div class="progress-bar" style="margin-top:0.8rem">
               <div id="progress-fill" class="progress-fill"></div>
             </div>
-            <p id="certificate-status" class="notice" style="margin-top:0.5rem"></p>
             <div id="day-lessons" style="margin-top:1rem;display:grid;gap:0.5rem"></div>
             <div style="display:none">
               <strong id="student-plan"></strong>
@@ -269,16 +273,18 @@
 
         <!-- ═══ MARCADORES ═══ -->
         <section id="marcadores" class="tab-content">
-          <p class="eyebrow" id="glosario-count-header">12 términos · 3 por repasar</p>
-          <div id="glosario-list" style="display:grid;gap:0.5rem;margin-top:1rem"></div>
+          <div class="glosario-search">
+            <input id="glosario-buscar" type="text" placeholder="Buscar término..." aria-label="Buscar término">
+            <select id="glosario-filtro" aria-label="Filtrar por módulo">
+              <option value="todos">Todos los módulos</option>
+            </select>
+          </div>
+          <p class="label" id="glosario-count-header" style="margin-bottom:0.5rem"></p>
+          <div id="glosario-list" class="glosario-list-2col"></div>
 
           <section style="margin-top:1.5rem">
-            <h2>Términos sugeridos del mes</h2>
-            <div id="suggested-terms" style="display:grid;gap:0.5rem;margin-top:0.5rem">
-              <div class="glosario-item"><span class="glosario-termino">Algoritmo</span><p class="glosario-def">Conjunto de instrucciones ordenadas para resolver un problema computacional.</p></div>
-              <div class="glosario-item"><span class="glosario-termino">Variable</span><p class="glosario-def">Espacio de memoria que almacena un valor que puede cambiar durante la ejecución.</p></div>
-              <div class="glosario-item"><span class="glosario-termino">API</span><p class="glosario-def">Interfaz de programación que permite la comunicación entre distintos sistemas.</p></div>
-            </div>
+            <p class="label">Términos sugeridos del módulo</p>
+            <div id="suggested-terms" style="display:grid;margin-top:0.5rem"></div>
           </section>
         </section>
 
@@ -288,7 +294,7 @@
             <h2>Credencial digital</h2>
             <div class="card" id="credencial-card">
               <div style="display:flex;align-items:center;gap:1rem;flex-wrap:wrap">
-                <div id="credencial-avatar" style="width:64px;height:64px;border-radius:50%;background:var(--bg-card-hi);border:2px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:1.5rem;color:var(--muted)">👤</div>
+                <div id="credencial-avatar" style="width:64px;height:64px;border-radius:50%;background:var(--surface-3);border:1px solid var(--line-2);display:flex;align-items:center;justify-content:center;font-size:1.4rem;font-family:var(--font-serif);font-weight:600;color:var(--muted)"></div>
                 <div>
                   <strong id="credencial-nombre" style="font-size:1.1rem">—</strong>
                   <p class="small" style="margin-top:0.2rem">Matrícula: <span id="credencial-matricula">—</span></p>
@@ -332,21 +338,6 @@
               <div class="summary-row"><span>✓ CV</span><strong style="color:var(--green)">Entregado</strong></div>
             </div>
           </section>
-        </section>
-
-        <!-- Hidden glosario drawer for legacy toggle support -->
-        <section id="glosario-card" class="glosario-widget reveal" style="display:none">
-          <button id="glosario-toggle-btn" class="glosario-widget-header">
-            <span>📖 Mi glosario</span>
-            <span id="glosario-count">0</span>
-          </button>
-          <div id="glosario-drawer" class="glosario-drawer">
-            <div class="glosario-drawer-header">
-              <h3 style="font-size:1rem">Mi glosario</h3>
-              <button id="glosario-close-btn" class="btn btn-ghost btn-sm">✕</button>
-            </div>
-            <div style="padding:1rem"><p class="small" style="color:var(--muted)">Los términos se muestran en la sección Marcadores.</p></div>
-          </div>
         </section>
 
       </div>

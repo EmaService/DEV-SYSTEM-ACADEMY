@@ -1,4 +1,4 @@
-(async function () {
+﻿(async function () {
   var cloudEnabled = window.DevSystemCloud && window.DevSystemCloud.isEnabled()
   var cloudUser = null
   var email = null
@@ -115,7 +115,7 @@
   if (stickyMeta) {
     var modNum = String(lessonId.split("-")[0]).replace("m", "")
     var unidadNum = parseInt(lessonId.split("-")[1].substring(1), 10)
-    stickyMeta.textContent = "Módulo " + String(modNum).padStart(2, "0") + " · " + (materiaInfo ? materiaInfo.nombre : "") + " · Unidad " + String(unidadNum).padStart(2, "0") + " de 30"
+    stickyMeta.textContent = "MÃ³dulo " + String(modNum).padStart(2, "0") + " Â· " + (materiaInfo ? materiaInfo.nombre : "") + " Â· Unidad " + String(unidadNum).padStart(2, "0") + " de 30"
   }
 
   var lecturaSection = document.getElementById("lectura-section")
@@ -135,7 +135,7 @@
   var nextLessonBtn = document.getElementById("next-lesson-btn")
 
   if (!lesson) {
-    lecturaSection.innerHTML = "<p class='notice'>Lección no encontrada. <a href='portal.html'>Volver al portal</a></p>"
+    lecturaSection.innerHTML = "<p class='notice'>LecciÃ³n no encontrada. <a href='portal.html'>Volver al portal</a></p>"
     startBtn.style.display = "none"
     return
   }
@@ -159,7 +159,7 @@
 
       var slideLabel = document.createElement("span")
       slideLabel.className = "slide-label"
-      slideLabel.textContent = (i + 1) + " de " + secciones.length + " · " + sec.titulo
+      slideLabel.textContent = (i + 1) + " de " + secciones.length + " Â· " + sec.titulo
       slide.appendChild(slideLabel)
 
       if (sec.tipo === "prompt") {
@@ -182,7 +182,7 @@
           return function () {
             var text = html.replace(/<[^>]*>/g, "").replace(/&quot;/g, '"').replace(/&amp;/g, "&").replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&#39;/g, "'")
             navigator.clipboard.writeText(text).catch(function () {})
-            btn.textContent = "Copiado ✓"
+            btn.textContent = "Copiado âœ“"
             setTimeout(function () { btn.textContent = "Copiar prompt" }, 2000)
           }
         }(sec.html, copyBtn))
@@ -327,12 +327,12 @@
         if (result && result.ok === false) {
           var msg = (result.message || "").toLowerCase()
           if (msg.indexOf("duplicate") !== -1 || msg.indexOf("ya existe") !== -1 || msg.indexOf("already") !== -1) {
-            showToast("Ya está en tu glosario")
+            showToast("Ya estÃ¡ en tu glosario")
           } else {
             showToast("Error: " + result.message)
           }
         } else {
-          showToast("Definición: " + found.definicion)
+          showToast("DefiniciÃ³n: " + found.definicion)
         }
       } else {
         var result2 = await window.DevSystemCloud.saveGlossaryTerm({
@@ -346,16 +346,16 @@
         if (result2 && result2.ok === false) {
           var msg2 = (result2.message || "").toLowerCase()
           if (msg2.indexOf("duplicate") !== -1 || msg2.indexOf("ya existe") !== -1 || msg2.indexOf("already") !== -1) {
-            showToast("Ya está en tu glosario")
+            showToast("Ya estÃ¡ en tu glosario")
           } else {
             showToast("Error: " + result2.message)
           }
         } else {
-          showToast("Guardado en tu glosario — este término lo cubriremos más adelante.")
+          showToast("Guardado en tu glosario â€” este tÃ©rmino lo cubriremos mÃ¡s adelante.")
         }
       }
     } catch (err) {
-      showToast("Ya está en tu glosario")
+      showToast("Ya estÃ¡ en tu glosario")
     }
   })
 
@@ -500,12 +500,12 @@
           var correct = idx === ej.correcta
           if (correct) {
             this.classList.add("correct")
-            showFeedback("✔ ¡Correcto!", true)
+            showFeedback("âœ” Â¡Correcto!", true)
             advanceAfter(1200, true)
           } else {
             this.classList.add("wrong")
             all[ej.correcta].classList.add("correct")
-            showFeedback("❌ Incorrecto. La respuesta correcta es: " + ej.opciones[ej.correcta], false)
+            showFeedback("Incorrecto. La respuesta correcta es: " + ej.opciones[ej.correcta], false)
             advanceAfter(2000, false)
           }
         }
@@ -577,7 +577,7 @@
           blanks[k2].style.borderColor = "var(--success)"
           blanks[k2].style.color = "#fff"
         }
-        showFeedback("✔ ¡Correcto!", true)
+        showFeedback("âœ” Â¡Correcto!", true)
         advanceAfter(1200, true)
       } else {
         for (var k3 = 0; k3 < blanks.length; k3++) {
@@ -592,7 +592,7 @@
           }
         }
         var correctResp = ej.respuestas.join(", ")
-        showFeedback("❌ Incorrecto. Respuestas correctas: " + correctResp, false)
+        showFeedback("âŒ Incorrecto. Respuestas correctas: " + correctResp, false)
         advanceAfter(2000, false)
       }
     }
@@ -674,13 +674,13 @@
         if (correct) {
           btn.style.background = "var(--green)"
           btn.style.color = "#fff"
-          showFeedback("✔ ¡Correcto! " + (ej.explicacion || ""), true)
+          showFeedback("âœ” Â¡Correcto! " + (ej.explicacion || ""), true)
           advanceAfter(1200, true)
         } else {
           btn.style.background = "var(--red)"
           btn.style.color = "#fff"
           var correctLabel = ej.correcta ? "Verdadero" : "Falso"
-          showFeedback("❌ Incorrecto. Respuesta correcta: " + correctLabel + ". " + (ej.explicacion || ""), false)
+          showFeedback("âŒ Incorrecto. Respuesta correcta: " + correctLabel + ". " + (ej.explicacion || ""), false)
           advanceAfter(2000, false)
         }
       })
@@ -810,10 +810,10 @@
             if (allPaired) {
               answering = true
               if (wrongPairings > 0) {
-                showFeedback("✔ Has completado todos los pares.", true)
+                showFeedback("âœ” Has completado todos los pares.", true)
                 advanceAfter(1200, false)
               } else {
-                showFeedback("✔ \u00a1Todos los pares correctos!", true)
+                showFeedback("âœ” \u00a1Todos los pares correctos!", true)
                 advanceAfter(1200, true)
               }
             }
@@ -919,7 +919,7 @@
       if (correct) {
         seqDiv.style.borderColor = "var(--success)"
         seqDiv.style.background = "rgba(34,197,94,0.05)"
-        showFeedback("✔ ¡Orden correcto!", true)
+        showFeedback("âœ” Â¡Orden correcto!", true)
         advanceAfter(1200, true)
       } else {
         seqDiv.style.borderColor = "var(--red)"
@@ -927,8 +927,8 @@
         seqDiv.style.animation = "none"
         seqDiv.offsetHeight
         seqDiv.style.animation = "shake 0.4s ease"
-        var correctStr = correctOrder.join(" → ")
-        showFeedback("❌ Incorrecto. El orden correcto es: " + correctStr, false)
+        var correctStr = correctOrder.join(" â†’ ")
+        showFeedback("âŒ Incorrecto. El orden correcto es: " + correctStr, false)
         var savedSeq = sequence.slice()
         setTimeout(function () {
           sequence.length = 0
@@ -1032,12 +1032,12 @@
           var correct = idx === ej.correcta
           if (correct) {
             this.classList.add("correct")
-            showFeedback("✔ ¡Correcto!", true)
+            showFeedback("âœ” Â¡Correcto!", true)
             advanceAfter(1200, true)
           } else {
             this.classList.add("wrong")
             all[ej.correcta].classList.add("correct")
-            showFeedback("❌ Incorrecto. La respuesta correcta es: " + ej.opciones[ej.correcta], false)
+            showFeedback("Incorrecto. La respuesta correcta es: " + ej.opciones[ej.correcta], false)
             advanceAfter(2000, false)
           }
         }
