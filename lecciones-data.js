@@ -7212,36 +7212,1029 @@ window.DEV_SYSTEM_LECCIONES = {
           },
       ] },
       "b": { nombre: "JavaScript en el navegador", icono: "⚡", lecciones: [
-          { id: "m3-b1", titulo: "Dónde vive el JavaScript de una página y cuándo se ejecuta", proximamente: true },
-          { id: "m3-b2", titulo: "El DOM: la página como árbol de objetos", proximamente: true },
-          { id: "m3-b3", titulo: "Seleccionar elementos: querySelector y compañía", proximamente: true },
-          { id: "m3-b4", titulo: "Cambiar contenido: textContent vs innerHTML", proximamente: true },
-          { id: "m3-b5", titulo: "Cambiar estilos y clases desde JavaScript", proximamente: true },
-          { id: "m3-b6", titulo: "Eventos I: el click, el más importante de todos", proximamente: true },
-          { id: "m3-b7", titulo: "Eventos II: input, change y submit", proximamente: true },
-          { id: "m3-b8", titulo: "Eventos III: el objeto event y preventDefault", proximamente: true },
-          { id: "m3-b9", titulo: "Crear y borrar elementos dinámicamente", proximamente: true },
-          { id: "m3-b10", titulo: "Recorrer listas: pintar datos en pantalla", proximamente: true },
-          { id: "m3-b11", titulo: "Funciones flecha y sintaxis moderna", proximamente: true },
-          { id: "m3-b12", titulo: "Métodos de arreglo: map, filter, find", proximamente: true },
-          { id: "m3-b13", titulo: "Objetos y destructuring", proximamente: true },
-          { id: "m3-b14", titulo: "Template literals: armar HTML desde datos", proximamente: true },
-          { id: "m3-b15", titulo: "Condicionales en la interfaz: mostrar, ocultar, alternar", proximamente: true },
-          { id: "m3-b16", titulo: "localStorage: recordar cosas en el navegador", proximamente: true },
-          { id: "m3-b17", titulo: "JSON en la práctica: parse y stringify", proximamente: true },
-          { id: "m3-b18", titulo: "Asincronía I: por qué existe el mientras tanto", proximamente: true },
-          { id: "m3-b19", titulo: "Asincronía II: promesas", proximamente: true },
-          { id: "m3-b20", titulo: "Asincronía III: async / await", proximamente: true },
-          { id: "m3-b21", titulo: "fetch: traer datos de una API", proximamente: true },
-          { id: "m3-b22", titulo: "Manejo de errores: try/catch y estados de carga", proximamente: true },
-          { id: "m3-b23", titulo: "Formularios con JavaScript: capturar, validar, enviar", proximamente: true },
-          { id: "m3-b24", titulo: "Debugging I: la consola es tu mejor amiga", proximamente: true },
-          { id: "m3-b25", titulo: "Debugging II: el inspector y los breakpoints", proximamente: true },
-          { id: "m3-b26", titulo: "Módulos: import y export", proximamente: true },
-          { id: "m3-b27", titulo: "¿Qué es un framework y por qué existen?", proximamente: true },
-          { id: "m3-b28", titulo: "React en concepto: componentes, props y estado", proximamente: true },
-          { id: "m3-b29", titulo: "Next.js en concepto: cuándo vale la pena y cuándo no", proximamente: true },
-          { id: "m3-b30", titulo: "Repaso integrador de JavaScript (mega-quiz jugable)", proximamente: true },
+          {
+            id: "m3-b1",
+            titulo: "Dónde vive el JavaScript de una página y cuándo se ejecuta",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>El JavaScript de una página vive en tu propio documento HTML, y puede llegar de tres maneras:</p><ul><li><strong>En línea</strong> — una etiqueta <code>&lt;script&gt;</code> con el código adentro: <code>&lt;script&gt;console.log(\"hola\");&lt;/script&gt;</code>.</li><li><strong>Archivo externo</strong> — el caso que usarás siempre: <code>&lt;script src=\"app.js\"&gt;&lt;/script&gt;</code>. El código vive en otro archivo y la etiqueta lo carga.</li><li><strong>Desde la consola</strong> — en DevTools (F12) puedes correr JavaScript al vuelo; no vive en ningún archivo, sirve para probar.</li></ul><p>¿Y cuándo se ejecuta? El navegador lee el documento <strong>de arriba a abajo</strong>, como tú lees una carta. Cuando encuentra una etiqueta <code>&lt;script&gt;</code>, se <strong>detiene</strong>: descarga el archivo (si es externo), ejecuta todo el código, y <em>después</em> sigue leyendo el resto de la página. Por eso un script normal que toca elementos de la página se coloca casi al final del <code>body</code>: así los elementos ya existen cuando el código corre. La alternativa moderna es el atributo <code>defer</code>, que le dice al navegador \"descarga mientras tanto y ejecuta hasta que el documento termine\".</p><p>Regla que te va a ahorrar sustos: <strong>el script se ejecuta cuando el navegador lo encuentra, no cuando tú lo escribiste.</strong> Si tu código busca un elemento que todavía no se ha leído, falla. (Cómo encontrarlo sin fallar, en m3-b3.)</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>La página es un <strong>teatro y el navegador es el director que lee el guion de corrido</strong>. Cuando llega a una etiqueta <code>&lt;script&gt;</code>, levanta la mano: \"alto, entra el actor a decir su parlamento\". El actor (el JavaScript) ejecuta sus líneas y se va; el director sigue leyendo. Si el actor entra antes de que el escenario esté armado —script en el <code>head</code> sin <code>defer</code>— puede querer tocar sillas que todavía no existen. Por eso el buen director coloca al actor casi al final: escenario listo, parlamento a tiempo.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Crea dos archivos en la misma carpeta. Primero <code>index.html</code>:</p><pre><code>&lt;!DOCTYPE html&gt;\n&lt;html lang=\"es\"&gt;\n  &lt;head&gt;\n    &lt;meta charset=\"UTF-8\"&gt;\n    &lt;title&gt;Mi página con JavaScript&lt;/title&gt;\n  &lt;/head&gt;\n  &lt;body&gt;\n    &lt;h1 id=\"titulo\"&gt;Hola, mundo&lt;/h1&gt;\n    &lt;script src=\"app.js\"&gt;&lt;/script&gt;\n  &lt;/body&gt;\n&lt;/html&gt;</code></pre><p>Y después <code>app.js</code>:</p><pre><code>console.log(\"El JavaScript se está ejecutando\");\ndocument.getElementById(\"titulo\").textContent = \"Cambiado desde JS\";</code></pre><p>Ábrelo en el navegador: verás el texto cambiado en pantalla, y en DevTools (F12 → Consola) la línea \"El JavaScript se está ejecutando\". Si mueves la etiqueta <code>&lt;script&gt;</code> al <code>head</code> y recargas, verás un error: el <code>h1</code> aún no existe cuando el código corre. (Esa manipulación la armamos pieza por pieza en m3-b2 a m3-b4.)</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Voy a añadir JavaScript a mi página. Dime si el script debe ir en el head, al final del body o con el atributo defer según lo que quiero lograr: [describe tu objetivo]. Explícame en una línea por qué esa posición y no otra.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "multiple", pregunta: "¿Cuál es la posición clásica de un script normal (sin atributos) que va a tocar elementos de la página?", opciones: ["Dentro del &lt;head&gt;", "Justo antes de cerrar &lt;/body&gt;", "En un archivo CSS", "Después de &lt;/html&gt;"], correcta: 1 },
+              { tipo: "completar", frase: "El atributo ____ de la etiqueta ____ apunta al archivo externo de JavaScript.", banco: ["src", "script", "href", "link"], respuestas: ["src", "script"] },
+              { tipo: "vf", afirmacion: "Un script externo detiene temporalmente el renderizado de la página mientras se descarga y ejecuta.", correcta: true, explicacion: "el navegador lee en orden: al encontrar un script normal se pausa, lo ejecuta y sigue." },
+              { tipo: "quehace", codigo: "console.log(\"Hola desde la consola\");", pregunta: "Corres esa línea en app.js. ¿Dónde la verás?", opciones: ["En la página, como texto visible", "En la Consola de DevTools", "En la pestaña del navegador", "En un cuadro de alerta"], correcta: 1 },
+              { tipo: "ordenar", instruccion: "Ordena qué pasa al abrir una página que carga un script externo al final del body:", elementos: ["El servidor envía el HTML", "El navegador lee el documento de arriba a abajo", "Encuentra la etiqueta &lt;script&gt;", "Descarga y ejecuta el archivo JS", "El navegador termina de leer el documento"] }
+            ]
+          },
+          {
+            id: "m3-b2",
+            titulo: "El DOM: la página como árbol de objetos",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>DOM son las siglas de <strong>Document Object Model</strong>: el modelo de la página como objetos. Cuando el navegador lee tu HTML, no se limita a pintarlo: construye en memoria un <strong>árbol de nodos</strong>. Cada etiqueta se convierte en un elemento, cada texto en un nodo de texto, cada atributo en una propiedad. Ese árbol es el DOM — y es exactamente lo que JavaScript ve y modifica.</p><p>Tres datos para que no se te escape:</p><ul><li><strong>Es un árbol</strong> — hay padres, hijos y hermanos. El bloque <code>&lt;body&gt;</code> es hijo de <code>&lt;html&gt;</code>, y una <code>&lt;section&gt;</code> es hija de <code>&lt;main&gt;</code>.</li><li><strong>La raíz es <code>document</code></strong> — <code>document.body</code> es el body, <code>document.title</code> es el título de la pestaña. Todo cuelga de ahí.</li><li><strong>Está vivo</strong> — cuando JavaScript cambia un nodo, el navegador vuelve a pintar esa parte solo, sin recargar la página.</li></ul><p>Distinción clave: el archivo <code>.html</code> es el texto fuente; el DOM es el modelo viviente que el navegador mantiene en memoria. Por eso en DevTools → Elements (lo viste en m3-a1) ves el árbol tal como está <em>ahora</em>, no necesariamente tal como lo escribiste.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>El DOM es un <strong>árbol genealógico</strong>. <code>document</code> es el abuelo fundador. <code>html</code> es su hijo; <code>head</code> y <code>body</code> son sus nietos. Cada <code>&lt;div&gt;</code> es hijo del bloque que lo contiene, y los elementos al mismo nivel son hermanos. Cuando JavaScript toca un nodo es como llamar por teléfono a un familiar: el apellido del árbol se entera y la página se redibuja sola. No memorizas la genealogía de cada página: la <em>reconoces</em> en un vistazo cuando abres Elements.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Con este HTML:</p><pre><code>&lt;main&gt;\n  &lt;h1 id=\"titulo\"&gt;Mi tienda&lt;/h1&gt;\n  &lt;div class=\"producto\"&gt;\n    &lt;h2&gt;Audífonos&lt;/h2&gt;\n    &lt;p class=\"precio\"&gt;$499&lt;/p&gt;\n  &lt;/div&gt;\n&lt;/main&gt;</code></pre><p>El navegador construye este árbol:</p><pre><code>document\n└─ html\n    ├─ head\n    └─ body\n        └─ main\n            ├─ h1#titulo\n            └─ div.producto\n                ├─ h2\n                └─ p.precio</code></pre><p>Para comprobarlo tú, abre DevTools (F12 → Elements): la pestaña es una foto del DOM. Y en la Consola puedes inspeccionar el modelo desde JavaScript:</p><pre><code>console.log(document.body.children);\nconsole.log(document.title);</code></pre><p>El primero imprime los hijos directos del body; el segundo, el título de la pestaña. En m3-b3 aprendes a agarrar de ese árbol el nodo exacto que quieres.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Tengo este HTML: [pega tu código]. Dibújame el árbol del DOM en texto, marcando padres, hijos y hermanos, y dime qué nodos tendría que modificar con JavaScript para lograr [objetivo].\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "relacionar", pares: [["DOM", "El documento como árbol de objetos"], ["document", "La raíz del árbol"], ["elemento", "Un bloque como &lt;h1&gt; o &lt;div&gt;"], ["nodo", "Cada punto del árbol: elementos y texto"]] },
+              { tipo: "multiple", pregunta: "Cuando el navegador lee el HTML, ¿qué es exactamente el DOM que construye?", opciones: ["El archivo original tal cual se descargó", "El árbol de objetos que representa la página", "La lista de estilos CSS", "El historial de navegación"], correcta: 1 },
+              { tipo: "completar", frase: "El DOM es el documento como un ____ de ____ que JavaScript puede modificar.", banco: ["árbol", "objetos", "pantalla", "archivo"], respuestas: ["árbol", "objetos"] },
+              { tipo: "vf", afirmacion: "Cuando JavaScript modifica el DOM, la página se actualiza sola, sin recargar.", correcta: true, explicacion: "el DOM es el modelo vivo; el navegador repinta solo lo que cambió." },
+              { tipo: "quehace", codigo: "console.log(document.title);", pregunta: "¿Qué hace esta línea?", opciones: ["Cambia el título de la pestaña", "Muestra el título de la página en la consola", "Carga un archivo JavaScript", "Borra el título"], correcta: 1 }
+            ]
+          },
+          {
+            id: "m3-b3",
+            titulo: "Seleccionar elementos: querySelector y compañía",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Antes de cambiar cualquier cosa necesitas <strong>una referencia al elemento</strong>: un punto de agarre en el árbol del DOM (m3-b2). Cuatro herramientas:</p><ul><li><code>document.getElementById(\"titulo\")</code> — por id, devuelve un solo elemento. Rápida y directa.</li><li><code>document.getElementsByClassName(\"precio\")</code> — por clase, devuelve una <strong>lista viva</strong>: se actualiza sola si el DOM cambia.</li><li><code>document.querySelector(\"#titulo\")</code> — el <strong>caballito de batalla</strong>: acepta cualquier selector CSS y devuelve el <em>primer</em> elemento que coincida.</li><li><code>document.querySelectorAll(\".precio\")</code> — igual que arriba, pero devuelve <strong>todos</strong> los que coinciden.</li></ul><p>Por qué <code>querySelector</code> es el favorito: <strong>reutiliza los selectores CSS que ya sabes</strong> — <code>#id</code>, <code>.clase</code>, etiqueta, o combinados como <code>button.cta</code>. Un solo método para casi todo. Los otros casos de uso: <code>getElementById</code> cuando quieres máxima velocidad con un id conocido, y <code>querySelectorAll</code> cuando necesitas la lista completa para recorrerla.</p><p>Dos detalles que no son trivia: si <code>querySelector</code> no encuentra nada, devuelve <code>null</code> (y tocar <code>null</code> da error); y <code>querySelectorAll</code> te da una foto estática, mientras que <code>getElementsByClassName</code> es una lista viva. Reconócelo cuando aparezca, no lo memorices.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p><code>querySelector</code> es el <strong>recepcionista de un hotel</strong>: le das una descripción —\"el primer huésped con camisa roja\", \"la habitación 401\"— y te trae <em>una sola persona</em>. <code>querySelectorAll</code> es el conserje que junta a <em>todos</em> los invitados con sombrero en una fila. Y <code>getElementById</code> es la llave maestra de la habitación 401: no hay descripción que pensar, solo funciona si el cuarto tiene número. La descripción que le das al recepcionista es exactamente un selector CSS — por eso ya sabes la mitad del truco.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Este HTML:</p><pre><code>&lt;button id=\"comprar\" class=\"boton\"&gt;Comprar&lt;/button&gt;\n&lt;button class=\"boton\"&gt;Agregar&lt;/button&gt;\n&lt;p class=\"precio\"&gt;$499&lt;/p&gt;</code></pre><p>Con estas líneas en la consola:</p><pre><code>const boton = document.querySelector(\"#comprar\");\nconst todos = document.querySelectorAll(\".boton\");\nconst porId = document.getElementById(\"comprar\");\nconst primerPrecio = document.querySelector(\"p.precio\");\n\nconsole.log(boton, todos.length, porId, primerPrecio);</code></pre><p>Resultado: <code>boton</code> es el botón \"Comprar\", <code>todos</code> es una lista con los dos botones (<code>todos.length</code> da 2), <code>porId</code> es el mismo botón que <code>boton</code>, y <code>primerPrecio</code> es el <code>&lt;p&gt;</code>. Fíjate: <code>querySelector</code> se queda con la primera coincidencia; <code>querySelectorAll</code> con todas. El siguiente paso (m3-b4) es usar esas referencias para cambiar contenido.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Tengo esta página: [pega tu HTML]. Dame las líneas de JavaScript para seleccionar [elemento o grupo], y dime si el resultado es un elemento suelto o una lista, para no equivocarme al usarlo.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "multiple", pregunta: "¿Cuál de estos métodos devuelve solo el PRIMER elemento que coincide?", opciones: ["querySelectorAll(\".precio\")", "querySelector(\".precio\")", "getElementsByClassName(\"precio\")", "getElementsByTagName(\"p\")"], correcta: 1 },
+              { tipo: "relacionar", pares: [["#logo", "Selecciona por id"], [".precio", "Selecciona por clase"], ["h2", "Selecciona por etiqueta"], ["button.cta", "Combina etiqueta y clase"]] },
+              { tipo: "completar", frase: "querySelector usa ____ CSS: el ____ selecciona por id y el ____ por clase.", banco: ["selectores", "#", ".", "tag"], respuestas: ["selectores", "#", "."] },
+              { tipo: "vf", afirmacion: "querySelectorAll devuelve una lista con todos los elementos que coinciden con el selector.", correcta: true, explicacion: "querySelectorAll junta todas las coincidencias; querySelector se queda con la primera." },
+              { tipo: "quehace", codigo: "const titulo = document.querySelector(\"#titulo\");\nconsole.log(titulo);", pregunta: "Si NO existe ningún elemento con id \"titulo\", ¿qué imprime la consola?", opciones: ["null", "Un error que detiene todo el script", "Un elemento vacío", "El primer &lt;div&gt; de la página"], correcta: 0 }
+            ]
+          },
+          {
+            id: "m3-b4",
+            titulo: "Cambiar contenido: textContent vs innerHTML",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Ya sabes agarrar un elemento (m3-b3). Ahora, a cambiar su contenido. Dos herramientas con personalidades opuestas:</p><ul><li><code>elemento.textContent = \"...\"</code> — <strong>texto plano</strong>. Todo lo que asignes se muestra literal, tal cual, sin interpretar nada. Sirve para leer y para escribir.</li><li><code>elemento.innerHTML = \"...\"</code> — <strong>interpreta HTML</strong>. Si la cadena trae etiquetas, el navegador las parsea, crea los nodos y los pinta.</li></ul><p>¿Cuál usar? <strong>textContent para datos; innerHTML para construir HTML conscientemente.</strong> Si el valor es un nombre, un precio, un mensaje — textContent. Si estás armando una tarjeta con <code>&lt;h2&gt;</code> y <code>&lt;p&gt;</code> a partir de datos — innerHTML.</p><p>El peligro real de innerHTML se llama <strong>XSS</strong> (cross-site scripting). Si el contenido viene de un usuario —un formulario, una URL— y lo metes con innerHTML, el usuario podría inyectar etiquetas maliciosas. Regla de seguridad: <strong>contenido ajeno, solo textContent</strong>. (Validar entradas lo ves a fondo en m3-b23; el <code>value</code> de los inputs, en m3-b7.)</p><p>Dato extra: existe <code>innerText</code>, que devuelve solo el texto <em>visible</em>; en la práctica <code>textContent</code> es el que vas a usar.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p><code>textContent</code> es <strong>escribir con plumón sobre una foto</strong>: escribes sobre lo que hay y nada más; la foto no cambia de forma. <code>innerHTML</code> es <strong>entregar el diseño a una imprenta</strong>: la imprenta lee tus instrucciones (las etiquetas) y maqueta el resultado completo. El riesgo: si un extraño —el usuario— te pasa la hoja de instrucciones, la imprenta le obedece a él también. Con contenido ajeno, siempre plumón.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Este HTML:</p><pre><code>&lt;p id=\"mensaje\"&gt;&lt;/p&gt;\n&lt;div id=\"tarjeta\"&gt;&lt;/div&gt;</code></pre><p>Texto plano:</p><pre><code>const mensaje = document.querySelector(\"#mensaje\");\nmensaje.textContent = \"Gracias por tu compra &lt;3\";</code></pre><p>Interpretando HTML:</p><pre><code>const tarjeta = document.querySelector(\"#tarjeta\");\ntarjeta.innerHTML = \"&lt;h2&gt;\" + nombre + \"&lt;/h2&gt;\" + \"&lt;p&gt;\" + precio + \"&lt;/p&gt;\";</code></pre><p>Con <code>mensaje</code>, lo que escribiste aparece tal cual. Con <code>tarjeta</code>, el navegador convierte las cadenas <code>&lt;h2&gt;</code> y <code>&lt;p&gt;</code> en nodos reales del DOM. Ahora el caso de seguridad:</p><pre><code>// Si `usuario` viene de un formulario o de la URL:\n// tarjeta.innerHTML = \"&lt;p&gt;Hola \" + usuario + \"&lt;/p&gt;\";  // riesgoso\n\ntarjeta.textContent = \"Hola \" + usuario;  // seguro</code></pre><p>La diferencia no se ve en la pantalla (se ve igual); se ve en la seguridad. Y ya que estás tocando nodos, el siguiente paso natural es cambiarles el look — m3-b5.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Tengo que mostrar datos en esta parte de la página: [elemento]. Dime si conviene textContent o innerHTML para este caso, escríbeme el código, y si en algún punto entra contenido del usuario, muéstrame cómo sanearlo.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "multiple", pregunta: "¿Cuál es la diferencia central entre textContent e innerHTML?", opciones: ["textContent trata el valor como texto; innerHTML lo interpreta como HTML", "Son exactamente iguales", "textContent solo sirve para números", "innerHTML no funciona en el navegador"], correcta: 0 },
+              { tipo: "quehace", codigo: "tarjeta.innerHTML = \"&lt;b&gt;Hola&lt;/b&gt;\";", pregunta: "¿Qué mostrará la tarjeta?", opciones: ["Hola en negritas", "El texto literal &lt;b&gt;Hola&lt;/b&gt;", "Nada, da un error", "Un botón"], correcta: 0 },
+              { tipo: "completar", frase: "Para insertar HTML desde una cadena usa ____; para texto plano que no se interprete usa ____.", banco: ["innerHTML", "textContent", "querySelector", "appendChild"], respuestas: ["innerHTML", "textContent"] },
+              { tipo: "vf", afirmacion: "Si pegas contenido del usuario con innerHTML sin limpiarlo, existe riesgo de inyección de código (XSS).", correcta: true, explicacion: "innerHTML interpreta etiquetas; contenido ajeno puede traer &lt;script&gt; u otras etiquetas maliciosas." },
+              { tipo: "relacionar", pares: [["textContent", "Texto plano, seguro"], ["innerHTML", "Interpreta etiquetas HTML"], ["innerText", "Solo el texto visible"], ["value", "El contenido de un input"]] }
+            ]
+          },
+          {
+            id: "m3-b5",
+            titulo: "Cambiar estilos y clases desde JavaScript",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Última pieza del bloque: ya seleccionas (m3-b3) y cambias contenido (m3-b4). Ahora el aspecto. Dos caminos:</p><ul><li><strong>Estilo en línea</strong> — <code>elemento.style.color = \"red\"</code>. Las propiedades CSS cambian de <code>kebab-case</code> a <strong>camelCase</strong>: <code>background-color</code> se vuelve <code>backgroundColor</code>, <code>font-size</code> se vuelve <code>fontSize</code>. Lo que tocas con <code>style</code> es el atributo <code>style=\"...\"</code> del elemento.</li><li><strong>Clases</strong> — el camino profesional: <code>classList.add(\"dark\")</code>, <code>classList.remove(\"dark\")</code>, <code>classList.toggle(\"dark\")</code> y <code>classList.contains(\"dark\")</code> (pregunta si la tiene). Los estilos viven en tu CSS; JavaScript solo decide <em>cuándo</em> se aplican.</li></ul><p>La regla de reparto: <strong>CSS decide cómo se ve; JavaScript decide cuándo.</strong> Para estados (resaltado, modo oscuro, tarjeta activa) usa clases: es mantenible y deja el diseño en un solo lugar. Guarda <code>style</code> para valores dinámicos que no conocías al escribir el CSS — posiciones, tamaños, coordenadas que llegan de datos.</p><p>Nota: <code>classList.add</code> agrega sin pisar las clases que ya tiene; <code>toggle</code> enciende y apaga en una sola llamada. El click que dispara todo esto llega en m3-b6; aquí domina el interruptor.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>El estilo en línea es <strong>pintar una pared con brocha de mano</strong>: sirve para una pared puntual, es un desastre para toda la casa. Las clases son el <strong>guardarropa del escenario</strong>: el vestuario (el CSS) ya está diseñado, y JavaScript es el asistente que decide cuándo el actor se pone el traje \"dark\" o se lo quita. Cambiar de vestuario es más barato que repintar la casa cada vez que cambia la escena.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Primero los estilos en tu CSS:</p><pre><code>.dark {\n  background: #111;\n  color: #eee;\n}\n.destacada {\n  border: 2px solid #0a0;\n  box-shadow: 0 0 12px rgba(0, 170, 0, 0.4);\n}</code></pre><p>Y el JavaScript que los enciende:</p><pre><code>const body = document.body;\nconst tarjeta = document.querySelector(\".tarjeta\");\n\nbody.classList.add(\"dark\");        // el fondo cambia a oscuro\ntarjeta.classList.toggle(\"destacada\"); // la resalta, y al repetir la apaga\ntarjeta.style.borderColor = \"gold\"; // un valor puntual en línea</code></pre><p>Observa la división de trabajo: <code>dark</code> y <code>destacada</code> están definidas en CSS y solo se prenden y apagan desde JS; el dorado, en cambio, es un capricho del momento y se pone con <code>style</code>. Ahora repite la línea de <code>toggle</code> en la consola: la clase aparece y desaparece. Ese interruptor es la base de todo botón que cambia de tema, y el botón mismo llega en m3-b6.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Cuando el usuario [acción, ej. presione el botón] quiero que [estado visual, ej. la tarjeta se resalte y el fondo se oscurezca]. Dame el CSS de las clases y el JavaScript con classList. Y dime si algún valor dinámico (posiciones, tamaños desde datos) conviene ponerlo con style en vez de clase.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "multiple", pregunta: "¿Cómo cambias el color de fondo de un elemento desde JavaScript?", opciones: ["elemento.style.backgroundColor", "elemento.style.background-color", "elemento.background = \"red\"", "elemento.style.backgroundcolor"], correcta: 0 },
+              { tipo: "vf", afirmacion: "Para estados visuales (resaltar, modo oscuro) es mejor definir clases en CSS y prenderlas con classList que pintar estilos uno por uno.", correcta: true, explicacion: "las clases dejan el diseño en CSS y hacen que JavaScript solo decida cuándo se aplican." },
+              { tipo: "completar", frase: "classList.____ agrega la clase si no existe y la quita si ya existe; a eso se le llama ____.", banco: ["toggle", "alternar", "add", "style"], respuestas: ["toggle", "alternar"] },
+              { tipo: "quehace", codigo: "const c = document.querySelector(\".tarjeta\");\nc.classList.add(\"destacada\");", pregunta: "Si la clase .destacada tiene estilos en el CSS, ¿qué pasa?", opciones: ["La tarjeta recibe los estilos de .destacada", "La tarjeta pierde todas sus clases", "El CSS se borra de la página", "La tarjeta se oculta"], correcta: 0 },
+              { tipo: "relacionar", pares: [["style.backgroundColor", "Estilo en línea, un solo valor"], ["classList.add", "Añade una clase"], ["classList.remove", "Quita una clase"], ["classList.toggle", "Enciende o apaga una clase"]] }
+            ]
+          },
+          {
+            id: "m3-b6",
+            titulo: "Eventos I: el click, el más importante de todos",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Hasta m3-b5, tu página solo actuaba cuando se cargaba. Los <strong>eventos</strong> son lo que la hacen <em>reaccionar</em>: el navegador está pendiente de lo que pasa —un clic, una tecla, un movimiento— y cuando pasa, ejecuta tu código. El modelo es simple: <strong>escuchar + reaccionar</strong>.</p><p>Para escuchar usas <code>addEventListener</code>, con dos datos: <strong>qué evento</strong> escuchar (su nombre en inglés, en minúsculas, entre comillas) y <strong>qué función</strong> ejecutar cuando ocurra:</p><pre><code>boton.addEventListener(\"click\", function () {\n  alert(\"Me hiciste clic\");\n});</code></pre><p>El evento más usado de todos es <code>click</code>: botones, enlaces, tarjetas, iconos — todo se vuelve clickeable. Detalles que valen oro:</p><ul><li>El nombre es el primer argumento: <code>\"click\"</code> no lleva mayúsculas.</li><li>La función que reacciona se llama <strong>callback</strong>: se ejecuta en <em>cada</em> clic, no una sola vez.</li><li>Puedes registrar varios listeners sobre el mismo elemento: se ejecutan todos, en orden.</li><li>El atributo HTML <code>onclick=\"...\"</code> existe, pero es el camino viejo: mezcla HTML y JS. <code>addEventListener</code> es el profesional: el JavaScript vive separado, como viste en m3-b1.</li></ul><p>Con esto tu página deja de ser un póster y se vuelve un interlocutor. Y el click que dispara los interruptores de clases que dejaste listos en m3-b5 ya está aquí.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Un evento es el <strong>timbre de la puerta</strong>: no necesitas quedarte todo el día mirando por la ventanita si alguien llega (eso sería revisar en un bucle eterno). Instalas el timbre —el <code>addEventListener</code>— y vives tu vida. Cuando alguien toca —el <code>click</code>—, suena la campana y se ejecuta la respuesta que programaste: abrir, saludar, pedir identificación. El timbre no decide quién toca: solo te avisa. La respuesta es tuya.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Este HTML:</p><pre><code>&lt;button id=\"boton\"&gt;Clic aquí&lt;/button&gt;\n&lt;p id=\"contador\"&gt;0&lt;/p&gt;</code></pre><p>Con este JavaScript:</p><pre><code>const boton = document.querySelector(\"#boton\");\nconst contador = document.querySelector(\"#contador\");\nlet veces = 0;\n\nboton.addEventListener(\"click\", function () {\n  veces = veces + 1;\n  contador.textContent = veces;\n});</code></pre><p>Cada clic suma uno y pinta el número nuevo en el <code>&lt;p&gt;</code> (textContent lo viste en m3-b4). Nota que la función no tiene nombre y no se llama en ninguna parte: la <strong>registras</strong> en el listener y el navegador la invoca por ti en cada clic. Ese es el corazón de toda interfaz. En m3-b7 verás los eventos de formularios; en m3-b8, el objeto que el navegador te pasa cuando el evento ocurre.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Quiero que [botón, tarjeta o enlace] responda cuando el usuario le haga clic y ocurra esto: [describe la acción, ej. mostrar un mensaje, cambiar de tema, abrir un panel]. Dame el JavaScript con addEventListener, dime qué evento usar, y si necesito un solo listener o varios sobre el mismo elemento.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "multiple", pregunta: "¿Cuál es la forma moderna de escuchar un clic sobre el elemento boton?", opciones: ["boton.addEventListener(\"click\", function () { ... })", "boton.onclick = \"alert('hola')\"", "click(boton)", "boton.addEvent(\"click\")"], correcta: 0 },
+              { tipo: "completar", frase: "Para escuchar un evento usas ____ con dos datos: el nombre del evento y la función que se ____ en cada ocurrencia.", banco: ["addEventListener", "ejecuta", "click", "carga"], respuestas: ["addEventListener", "ejecuta"] },
+              { tipo: "relacionar", pares: [["addEventListener", "Registra la función que reacciona"], ["\"click\"", "El evento a escuchar"], ["callback", "La función que se ejecuta"], ["varios listeners", "Se ejecutan en orden sobre el mismo elemento"]] },
+              { tipo: "vf", afirmacion: "Un addEventListener registrado sobre un botón se ejecuta una sola vez en toda la sesión.", correcta: false, explicacion: "se ejecuta en CADA clic; por eso sirve para contadores e interruptores." },
+              { tipo: "quehace", codigo: "const b = document.querySelector(\"#miboton\");\nb.addEventListener(\"click\", function () {\n  document.body.classList.toggle(\"oscuro\");\n});", pregunta: "¿Qué efecto tiene cada clic en el botón?", opciones: ["Prende y apaga la clase oscuro en el body", "Borra el botón", "Recarga la página", "Cambia el texto del botón"], correcta: 0 }
+            ]
+          },
+          {
+            id: "m3-b7",
+            titulo: "Eventos II: input, change y submit",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>El <code>click</code> (m3-b6) es el evento de los botones. Los formularios tienen los suyos, y hay tres que vas a usar todos los días:</p><ul><li><code>input</code> — se dispara <strong>con cada tecla</strong> mientras el usuario escribe (o con cada cambio en un checkbox). Ideal para búsquedas en vivo y contadores de caracteres.</li><li><code>change</code> — se dispara cuando el valor <strong>se consolida</strong>: el usuario termina de escribir y sale del campo (o elige en un <code>&lt;select&gt;</code>). No se dispara tecla por tecla.</li><li><code>submit</code> — se dispara cuando el formulario <strong>se envía</strong> (clic en el botón de enviar o Enter). Vive en el <code>&lt;form&gt;</code>, no en el botón.</li></ul><p>El dato que siempre te interesa es <strong>el valor actual</strong>, y se lee con <code>.value</code>: en cada evento, lees <code>campo.value</code> para saber qué escribió el usuario. (Ese <code>value</code> ya lo conoces de m3-b4.)</p><p>Regla de reparto: si necesitas <em>cada letra</em> → <code>input</code>. Si necesitas el resultado <em>final</em> → <code>change</code>. Si es el envío completo → <code>submit</code>. Los tres, escuchados sobre elementos distintos del formulario. (Capturar y validar el formulario completo a fondo lo ves en m3-b23; aquí domina el vocabulario.)</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Llenas una solicitud frente a un empleado. <code>input</code> es el empleado que <strong>va en voz alta con cada letra</strong> mientras tipeas: reacciona al instante, tecla por tecla. <code>change</code> es cuando el empleado <strong>da por terminado el campo</strong>: dejas el casillero y él sella \"anotado\" con el valor final. <code>submit</code> es cuando <strong>firmas y entregas la solicitud completa</strong>: ya no es un campo, es el documento entero. Tres momentos distintos de la misma conversación: escribes, te detienes, entregas.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Este HTML:</p><pre><code>&lt;input type=\"text\" id=\"busqueda\" placeholder=\"Escribe...\"&gt;\n&lt;p id=\"vivo\"&gt;&lt;/p&gt;\n&lt;form id=\"formulario\"&gt;\n  &lt;input type=\"text\" name=\"nombre\" placeholder=\"Tu nombre\"&gt;\n  &lt;button type=\"submit\"&gt;Enviar&lt;/button&gt;\n&lt;/form&gt;</code></pre><p>Con este JavaScript:</p><pre><code>const busqueda = document.querySelector(\"#busqueda\");\nconst vivo = document.querySelector(\"#vivo\");\n\nbusqueda.addEventListener(\"input\", function () {\n  vivo.textContent = \"Buscando: \" + busqueda.value;\n});\n\nconst formulario = document.querySelector(\"#formulario\");\nformulario.addEventListener(\"submit\", function () {\n  alert(\"Enviado: \" + formulario.querySelector(\"input\").value);\n});</code></pre><p>El <code>input</code> actualiza la vista con cada tecla: es el patrón de las búsquedas en vivo. El <code>submit</code> reacciona al envío completo. Ojo: con <code>submit</code>, el navegador también recarga la página por defecto — cómo evitarlo es exactamente el tema de m3-b8. Y nota dónde vive cada evento: <code>input</code> y <code>change</code> se escuchan sobre el campo; <code>submit</code>, sobre el <code>&lt;form&gt;</code> completo.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Tengo un formulario con un campo de búsqueda y un botón de enviar. Quiero [reacción en vivo mientras escribe] y [reacción al enviar]. Dime cuál de los eventos input, change o submit corresponde a cada caso, dónde se escucha cada uno (campo o form), y el código con .value.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "multiple", pregunta: "¿Cuál evento se dispara con CADA tecla que escribe el usuario?", opciones: ["input", "change", "submit", "click"], correcta: 0 },
+              { tipo: "relacionar", pares: [["input", "Reacción en vivo, cada tecla"], ["change", "Cuando el valor se consolida"], ["submit", "Cuando se envía el formulario"], ["value", "El contenido actual del campo"]] },
+              { tipo: "quehace", codigo: "const campo = document.querySelector(\"#nombre\");\ncampo.addEventListener(\"change\", function () {\n  console.log(campo.value);\n});", pregunta: "¿Cuándo se ejecuta el console.log?", opciones: ["En cada tecla mientras escribe", "Cuando el usuario termina el campo y sale de él", "Al cargar la página", "Cada vez que se envía el formulario"], correcta: 1 },
+              { tipo: "completar", frase: "El evento ____ se escucha sobre el elemento form, y se dispara cuando el usuario ____ el formulario.", banco: ["submit", "envía", "click", "borra"], respuestas: ["submit", "envía"] },
+              { tipo: "vf", afirmacion: "El evento change se dispara una vez por cada letra que escribe el usuario.", correcta: false, explicacion: "change se dispara cuando el valor se consolida (al salir del campo); el que dispara por letra es input." }
+            ]
+          },
+          {
+            id: "m3-b8",
+            titulo: "Eventos III: el objeto event y preventDefault",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Cuando el evento ocurre (m3-b6 y m3-b7), el navegador no llama a tu función a ciegas: le pasa un <strong>objeto event</strong> — una bolsa de datos sobre lo que pasó. Lo recibes como primer parámetro del callback, y por convención se llama <code>event</code> o <code>e</code>:</p><pre><code>boton.addEventListener(\"click\", function (event) {\n  console.log(event.target);  // sobre qué elemento se hizo clic\n  console.log(event.type);    // el nombre del evento\n});</code></pre><p>Tres usos que resuelven problemas reales:</p><ul><li><code>event.target</code> — <strong>qué elemento</strong> disparó el evento. Clave cuando varios elementos comparten el mismo listener (lo necesitas en m3-b9 para borrar el elemento correcto).</li><li><code>event.type</code> — el nombre del evento que ocurrió.</li><li><code>event.preventDefault()</code> — el superpoder: muchos eventos traen un <strong>comportamiento por defecto</strong> del navegador. Un <code>submit</code> recarga la página; un clic en un <code>&lt;a href&gt;</code> navega a otra URL. <code>preventDefault()</code> cancela eso y te deja a ti el control.</li></ul><p>Es la pieza que faltaba en m3-b7: sin <code>preventDefault</code>, tu submit recarga la página y pierdes lo que JavaScript estaba haciendo.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>El objeto event es el <strong>parte del evento</strong>: cuando tocan el timbre (m3-b6), no solo suena la campana — te dejan en la puerta una hoja con los datos: quién tocó (<code>target</code>), qué tipo de timbre (<code>type</code>). Y <code>preventDefault</code> es el <strong>freno de mano</strong>: el navegador trae acciones por defecto rodando cuesta abajo —recargar, navegar—; con <code>preventDefault</code> jalas el freno antes de que las haga, y decides tú qué pasa.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Este HTML:</p><pre><code>&lt;a href=\"https://ejemplo.com\" id=\"enlace\"&gt;Ir a ejemplo.com&lt;/a&gt;\n&lt;form id=\"formulario\"&gt;\n  &lt;input type=\"text\" id=\"email\" placeholder=\"Email\"&gt;\n  &lt;button type=\"submit\"&gt;Registrarme&lt;/button&gt;\n&lt;/form&gt;</code></pre><p>Con este JavaScript:</p><pre><code>document.querySelector(\"#enlace\").addEventListener(\"click\", function (event) {\n  event.preventDefault();\n  console.log(\"Navegación detenida. Target: \" + event.target.tagName);\n});\n\ndocument.querySelector(\"#formulario\").addEventListener(\"submit\", function (event) {\n  event.preventDefault();\n  const email = document.querySelector(\"#email\").value;\n  console.log(\"Enviando sin recargar: \" + email);\n});</code></pre><p>En el clic, <code>preventDefault</code> cancela la navegación y <code>event.target.tagName</code> te dice que tocaste un <code>A</code> (anchor). En el submit, el formulario no recarga y tú decides qué hacer con el dato. Ese patrón —detener lo por defecto y controlar el flujo— es la base de los formularios modernos (m3-b23).</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Tengo [un formulario que recarga la página al enviarse / un enlace que navega y no quiero que navegue]. Muéstrame el código con addEventListener y event.preventDefault(), y dime cómo usar event.target si quiero que varios elementos compartan un solo listener.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "quehace", codigo: "const form = document.querySelector(\"#form\");\nform.addEventListener(\"submit\", function (event) {\n  event.preventDefault();\n  console.log(\"Atrapado\");\n});", pregunta: "¿Qué logra preventDefault() en este submit?", opciones: ["Evita que el formulario recargue la página", "Borra el formulario", "Detiene todos los clicks de la página", "Impide que el submit se dispare"], correcta: 0 },
+              { tipo: "multiple", pregunta: "¿Qué información te da event.target?", opciones: ["El elemento sobre el que ocurrió el evento", "La hora exacta del evento", "El número de veces que ocurrió", "El navegador del usuario"], correcta: 0 },
+              { tipo: "relacionar", pares: [["event", "El objeto con los datos del evento"], ["event.target", "Qué elemento lo disparó"], ["event.type", "El nombre del evento"], ["preventDefault()", "Cancela el comportamiento por defecto"]] },
+              { tipo: "completar", frase: "El callback del listener recibe como primer parámetro el objeto ____; para cancelar la recarga de un submit se llama a ____.", banco: ["event", "preventDefault()", "target", "submit()"], respuestas: ["event", "preventDefault()"] },
+              { tipo: "vf", afirmacion: "El objeto event tiene que llamarse obligatoriamente 'event' para que el navegador lo reconozca.", correcta: false, explicacion: "es una convención: puedes llamarlo e o evt, porque es un parámetro normal de la función." }
+            ]
+          },
+          {
+            id: "m3-b9",
+            titulo: "Crear y borrar elementos dinámicamente",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Hasta m3-b5 modificabas elementos que ya existían en el HTML. Ahora vas a <strong>crearlos en tiempo real</strong>: la página crece según los datos o las acciones del usuario. Tres herramientas:</p><ul><li><code>document.createElement(\"li\")</code> — crea un elemento <strong>en memoria</strong> (todavía no se ve en pantalla).</li><li><code>padre.append(nuevo)</code> — lo <strong>inserta</strong> al final del padre. (<code>appendChild</code> es el clásico; <code>append</code> acepta varios nodos y también texto.)</li><li><code>nuevo.remove()</code> — <strong>borra el elemento</strong> del documento.</li></ul><p>El patrón es siempre el mismo: <strong>crear → llenar → insertar</strong>:</p><pre><code>const item = document.createElement(\"li\");   // crear\nitem.textContent = \"Pan\";                    // llenar (textContent: m3-b4)\nlista.append(item);                           // insertar</code></pre><p>Combinado con eventos (m3-b6), tienes el clásico \"agregar y borrar\": un botón agrega, y al hacer clic sobre un item lo eliminas con <code>item.remove()</code>. Cuando varios elementos comparten listener, necesitas <code>event.target</code> (m3-b8) para saber cuál borrar. Cuidado con el atajo <code>padre.innerHTML += \"...\"</code>: funciona, pero reconstruye todo el contenido del padre y, con datos ajenos, abre la puerta a XSS (m3-b4).</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>El DOM es un <strong>tablero de LEGO</strong> y tú tienes la caja de piezas: <code>createElement</code> es sacar una pieza nueva de la caja —aún en tu mano, no en el tablero—, <code>append</code> es encajarla en su lugar, y <code>remove</code> es desmontar una pieza y retirarla. Puedes armar y desarmar el tablero en tiempo real sin romper lo demás. La pieza no existe en el tablero hasta que la encajas: un elemento creado no se ve hasta que lo insertas.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Este HTML:</p><pre><code>&lt;ul id=\"lista\"&gt;&lt;/ul&gt;\n&lt;button id=\"agregar\"&gt;Agregar tarea&lt;/button&gt;</code></pre><p>Con este JavaScript:</p><pre><code>const lista = document.querySelector(\"#lista\");\nconst boton = document.querySelector(\"#agregar\");\n\nboton.addEventListener(\"click\", function () {\n  const item = document.createElement(\"li\");\n  item.textContent = \"Tarea \" + (lista.children.length + 1);\n  item.addEventListener(\"click\", function () {\n    item.remove();\n  });\n  lista.append(item);\n});</code></pre><p>Cada clic crea un <code>&lt;li&gt;</code>, lo llena, le pone su propio listener de borrado y lo encaja en la lista; y cada <code>&lt;li&gt;</code> se elimina a sí mismo con <code>remove()</code> al hacerle clic. Fíjate en el orden: <strong>crear, llenar, insertar</strong> — y cada elemento nuevo lleva sus propios oídos. Cuando quieras que la lista se llene sola desde un arreglo de datos (sin clic por clic), eso es m3-b10.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Quiero que el usuario pueda [agregar / borrar / marcar] elementos de una lista, como una lista de tareas. Dame el código: crear con createElement, llenar con textContent, insertar con append, y el borrado con remove() usando addEventListener. Dime si conviene un listener por elemento o uno compartido con event.target.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "completar", frase: "El patrón para crear elementos es: ____ el elemento con createElement, ____ con textContent y ____ al padre con append.", banco: ["crear", "llenar", "insertar", "borrar"], respuestas: ["crear", "llenar", "insertar"] },
+              { tipo: "multiple", pregunta: "¿Qué hace exactamente document.createElement(\"li\")?", opciones: ["Crea un &lt;li&gt; en memoria que aún no se ve en la página", "Lo inserta al instante al final del body", "Busca un &lt;li&gt; que ya existe", "Borra el &lt;li&gt; más reciente"], correcta: 0 },
+              { tipo: "relacionar", pares: [["createElement", "Crea el elemento en memoria"], ["append", "Inserta el elemento en el padre"], ["remove", "Borra el elemento del documento"], ["textContent", "Llena el elemento con texto plano"]] },
+              { tipo: "quehace", codigo: "const lista = document.querySelector(\"#lista\");\nconst item = document.createElement(\"li\");\nitem.textContent = \"Nuevo\";\nlista.append(item);", pregunta: "¿Qué pasa con el &lt;li&gt; creado?", opciones: ["Aparece como un nuevo elemento dentro de la lista", "Aparece en el body fuera de la lista", "No aparece porque falta addEventListener", "Reemplaza a todos los &lt;li&gt; existentes"], correcta: 0 },
+              { tipo: "vf", afirmacion: "Un elemento creado con createElement se muestra en pantalla automáticamente en cuanto se crea.", correcta: false, explicacion: "createElement solo lo crea en memoria; necesita append (o similar) para insertarse en el DOM y verse." }
+            ]
+          },
+          {
+            id: "m3-b10",
+            titulo: "Recorrer listas: pintar datos en pantalla",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Ya sabes crear elementos sueltos (m3-b9). El problema real es: <strong>tengo 50 productos en un arreglo, ¿los escribo a mano?</strong> No — los recorres con un <strong>bucle</strong>. Un bucle es la instrucción \"haz esto con cada elemento de la lista\". Dos sintaxis que vas a reconocer:</p><pre><code>for (const producto of productos) {\n  // una vuelta por cada elemento\n}\n\nproductos.forEach(function (producto) {\n  // igual: una vuelta por cada elemento\n});</code></pre><p>El patrón completo para pintar datos se arma con lo que ya sabes:</p><pre><code>productos.forEach(function (producto) {\n  const item = document.createElement(\"li\");  // crear (m3-b9)\n  item.textContent = producto.nombre;           // llenar (m3-b4)\n  lista.append(item);                          // insertar (m3-b9)\n});</code></pre><p>Tres datos que te ahorran errores:</p><ul><li>Dentro del bucle, <code>producto</code> es el elemento <strong>de turno</strong>: cambia en cada vuelta.</li><li><code>forEach</code> también funciona en las listas de nodos del DOM: <code>document.querySelectorAll(\"...\").forEach(...)</code> (m3-b3).</li><li>El bucle corre hasta terminar de recorrer: con 50 elementos, se ejecuta 50 veces y pinta 50 elementos.</li></ul>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>El bucle es la <strong>línea de empaque</strong>: los productos pasan uno por uno por la banda y en cada uno haces el mismo gesto —ponerle etiqueta y colocarlo en la caja—. No preparas 50 etiquetas a mano: configuras la banda una vez y ella repite el gesto con cada producto. La caja al final (el <code>&lt;ul&gt;</code>) queda llena sin que hayas tocado pieza por pieza.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Este HTML:</p><pre><code>&lt;ul id=\"productos\"&gt;&lt;/ul&gt;</code></pre><p>Con este JavaScript:</p><pre><code>const productos = [\n  { nombre: \"Audífonos\", precio: 499 },\n  { nombre: \"Teclado\", precio: 899 },\n  { nombre: \"Mouse\", precio: 349 }\n];\nconst lista = document.querySelector(\"#productos\");\n\nproductos.forEach(function (producto) {\n  const item = document.createElement(\"li\");\n  item.textContent = producto.nombre + \" — $\" + producto.precio;\n  lista.append(item);\n});</code></pre><p>El arreglo tiene 3 objetos; el bucle da 3 vueltas y la lista termina con 3 <code>&lt;li&gt;</code>. Si mañana agregas un cuarto producto al arreglo, el código no cambia: el bucle lo pinta solo. La ventaja es que <strong>el código describe la operación, no los datos</strong>. (Cuando quieras transformar esos datos antes de pintarlos —filtrar o buscar—, los métodos de m3-b12 se encargan.)</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Tengo esta lista de datos: [pega tu arreglo de objetos]. Quiero pintarlos dentro de [contenedor], cada uno como [formato, ej. un li con nombre y precio]. Dame el código con forEach o for...of usando createElement y append, y dime qué hacer si quiero que la lista se repinte cuando los datos cambien.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "quehace", codigo: "const frutas = [\"mango\", \"papaya\", \"coco\"];\nfrutas.forEach(function (fruta) {\n  console.log(fruta);\n});", pregunta: "¿Qué imprime la consola?", opciones: ["mango, papaya, coco — uno por línea", "fruta, fruta, fruta", "El arreglo completo en una sola línea", "Nada, porque falta addEventListener"], correcta: 0 },
+              { tipo: "completar", frase: "El método ____ ejecuta la función una vez por ____ elemento del arreglo.", banco: ["forEach", "cada", "uno", "click"], respuestas: ["forEach", "cada"] },
+              { tipo: "multiple", pregunta: "¿Cuál es el propósito de recorrer un arreglo de datos con un bucle?", opciones: ["Aplicar la misma operación a cada elemento", "Borrar la página", "Recargar el navegador", "Crear un solo elemento, una sola vez"], correcta: 0 },
+              { tipo: "ordenar", instruccion: "Ordena los pasos para pintar un arreglo de datos en una lista:", elementos: ["Tener el arreglo de datos", "Seleccionar el contenedor con querySelector", "Recorrer el arreglo con forEach", "Crear un elemento con createElement", "Llenarlo con textContent e insertarlo con append"] },
+              { tipo: "vf", afirmacion: "querySelectorAll devuelve una lista de nodos sobre la que puedes usar forEach directamente.", correcta: true, explicacion: "las NodeList soportan forEach, así que puedes recorrer todos los elementos seleccionados sin convertirlos." }
+            ]
+          },
+          {
+            id: "m3-b11",
+            titulo: "Funciones flecha y sintaxis moderna",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Desde m3-b9 escribes funciones con la palabra <code>function</code>. La <strong>función flecha</strong> (arrow function) es la misma idea con una sintaxis más corta — y hoy es la que verás en casi todo código moderno, incluido el que la IA genera. La diferencia es de forma, no de poder:</p><pre><code>// Función normal (lo que ya conoces)\nfunction doble(numero) {\n  return numero * 2;\n}\n\n// Función flecha\nconst doble = (numero) =&gt; {\n  return numero * 2;\n};\n\n// Función flecha con return implícito\nconst doble = (numero) =&gt; numero * 2;</code></pre><p>Lee la flecha <code>=&gt;</code> como <strong>\"va y regresa\"</strong>: <code>numero =&gt; numero * 2</code> se lee \"numero va y regresa numero por 2\". Tres reglas de sintaxis moderna:</p><ul><li>Si el cuerpo es una sola expresión, se omite <code>return</code>: es el <strong>return implícito</strong>. La última expresión se devuelve sola.</li><li>Si hay un solo parámetro, los paréntesis son opcionales: <code>n =&gt; n * 2</code>.</li><li>Si el cuerpo necesita varias líneas, usas <code>{ }</code> y entonces sí escribes <code>return</code>.</li></ul><p>La flecha es omnipresente en los <strong>callbacks</strong> —las funciones que pasas como argumento—: <code>forEach</code> (m3-b10), eventos (m3-b6) y, desde la próxima lección, <code>map</code>, <code>filter</code> y <code>find</code>. La reconoces al instante: una línea con <code>=&gt;</code>. Un detalle que aparece en la documentación: las flechas no tienen su propio <code>this</code>; en la práctica, dentro de un callback flecha <code>this</code> sigue siendo el de afuera. Reconócelo cuando lo veas, no lo memorices.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>La función normal es la <strong>receta completa</strong>: \"mezcla, reposa, revuelve y regresa el resultado\". La flecha es la <strong>nota de cocina</strong>: \"2 × n, regresa eso\". Cuando el platillo es una sola operación, la nota alcanza; cuando son varios pasos, vuelves a la receta con llaves. Las dos producen exactamente lo mismo — cambia la forma de escribirlo, no el resultado. Por eso la IA alterna entre las dos sin drama.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Este HTML (el mismo de m3-b10):</p><pre><code>&lt;ul id=\"productos\"&gt;&lt;/ul&gt;</code></pre><p>Y este JavaScript en las dos versiones:</p><pre><code>const lista = document.querySelector(\"#productos\");\n\n// Versión con function (patrón de m3-b10)\nproductos.forEach(function (producto) {\n  const item = document.createElement(\"li\");\n  item.textContent = producto.nombre;\n  lista.append(item);\n});\n\n// Versión con flecha\nproductos.forEach((producto) =&gt; {\n  const item = document.createElement(\"li\");\n  item.textContent = producto.nombre;\n  lista.append(item);\n});</code></pre><p>Cuando el callback es una sola línea, la flecha se encoge:</p><pre><code>productos.forEach(producto =&gt; console.log(producto.nombre));</code></pre><p>Mismo recorrido de m3-b10, distinto empaque. Y en los eventos (m3-b6) el patrón es igual: <code>boton.addEventListener(\"click\", (e) =&gt; { ... })</code> — el evento llega como parámetro y la flecha lo recibe.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Este código usa callbacks con function. Conviértemelo a funciones flecha y explícame en una línea qué cambió en cada caso. Si alguna flecha necesita return explícito o varias líneas, dime por qué.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "multiple", pregunta: "¿Cuál es la forma flecha con return implícito de una función que duplica?", opciones: ["const doble = (n) => n * 2;", "const doble = (n) => { n * 2 };", "function doble(n) { return n * 2; }", "const doble = (n) => return n * 2;"], correcta: 0 },
+              { tipo: "completar", frase: "En una función flecha con una sola ____, el ____ se puede omitir: la última expresión se devuelve sola.", banco: ["expresión", "return", "función", "llaves"], respuestas: ["expresión", "return"] },
+              { tipo: "quehace", codigo: "const precioFinal = (monto, impuesto) => monto + monto * impuesto;\nconsole.log(precioFinal(100, 0.16));", pregunta: "¿Qué imprime la consola?", opciones: ["116", "100", "0.16", "100.16"], correcta: 0 },
+              { tipo: "vf", afirmacion: "Una función flecha con un solo parámetro puede omitir los paréntesis: n => n * 2.", correcta: true, explicacion: "con un solo parámetro los paréntesis son opcionales; con varios o ninguno se necesitan." },
+              { tipo: "relacionar", pares: [["function (x) { return x + 1; }", "Versión clásica con function"], ["(x) => x + 1", "Flecha con return implícito"], ["x => x + 1", "Flecha sin paréntesis (un parámetro)"], ["(x) => { return x + 1; }", "Flecha con cuerpo de varias líneas"]] }
+            ]
+          },
+          {
+            id: "m3-b12",
+            titulo: "Métodos de arreglo: map, filter, find",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>En m3-b10 recorriste arreglos con <code>forEach</code> para pintarlos. Los métodos de esta lección hacen más que recorrer: <strong>transforman, filtran y buscan</strong> — y usan las flechas de m3-b11. Tres herramientas que verás todos los días:</p><ul><li><code>map</code> — <strong>transforma cada elemento</strong> y devuelve un arreglo nuevo del mismo tamaño. Aplica la función a cada elemento y junta los resultados.</li><li><code>filter</code> — <strong>selecciona los que pasan una prueba</strong> y devuelve un arreglo nuevo (casi siempre más corto). El callback regresa <code>true</code> o <code>false</code>.</li><li><code>find</code> — <strong>devuelve el primer elemento que pasa la prueba</strong>, o <code>undefined</code> si ninguno.</li></ul><p>El punto que más gente olvida: <strong>ninguno modifica el arreglo original</strong>. <code>map</code> y <code>filter</code> regresan arreglos nuevos; <code>find</code> regresa un elemento. Para modificar un arreglo de verdad existen <code>push</code>, <code>splice</code> y compañía — reconócelos cuando aparezcan.</p><pre><code>const nombres = productos.map(p =&gt; p.nombre);\nconst baratos = productos.filter(p =&gt; p.precio &lt; 500);\nconst buscado = productos.find(p =&gt; p.id === 2);</code></pre><p>El patrón mental: el callback decide <strong>cómo</strong> (map) o <strong>si</strong> (filter y find). <code>map</code> describe una transformación; <code>filter</code> describe un criterio. En m3-b14 combinarás <code>map</code> con template literals para generar HTML desde un arreglo entero.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p><code>map</code> es la <strong>fábrica de empaque</strong>: cada pieza entra y sale convertida en otra cosa —cada producto sale convertido en su nombre— y todas salen, ninguna se pierde. <code>filter</code> es el <strong>control de calidad</strong>: solo pasan las piezas que cumplen la norma (precio menor a 500); las demás no llegan a la caja. <code>find</code> es el <strong>conserje del edificio</strong>: le preguntas por el departamento 2 y te trae al primer habitante que lo tiene; si no existe, te regresa un encogimiento de hombros (<code>undefined</code>). Las tres trabajan sobre la misma banda: el arreglo original sigue intacto en el almacén.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Este arreglo de productos (mismo estilo de m3-b10):</p><pre><code>const productos = [\n  { id: 1, nombre: \"Audífonos\", precio: 499 },\n  { id: 2, nombre: \"Teclado\", precio: 899 },\n  { id: 3, nombre: \"Mouse\", precio: 349 }\n];</code></pre><p>Transformar, filtrar y buscar:</p><pre><code>const nombres = productos.map(p =&gt; p.nombre);\nconsole.log(nombres);          // [\"Audífonos\", \"Teclado\", \"Mouse\"]\n\nconst accesibles = productos.filter(p =&gt; p.precio &lt; 500);\nconsole.log(accesibles);       // Audífonos y Mouse\n\nconst teclado = productos.find(p =&gt; p.id === 2);\nconsole.log(teclado.nombre);   // \"Teclado\"\n\nconst inexistente = productos.find(p =&gt; p.id === 99);\nconsole.log(inexistente);      // undefined</code></pre><p>Fíjate en las flechas (m3-b11): cada callback es una línea y regresa la transformación o la prueba. Y <strong><code>productos</code> queda intacto</strong>: <code>nombres</code>, <code>accesibles</code> y <code>teclado</code> son cosas nuevas. Cuando quieras pintar esos resultados, en m3-b14 los conviertes en HTML con <code>map</code> + template literals.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Tengo este arreglo de datos: [pega tu arreglo]. Necesito: 1) una versión transformada con solo [campos], 2) filtrar por [criterio], 3) encontrar el que cumpla [condición]. Dame el código con map, filter y find usando funciones flecha, y dime cuál de los tres toca el arreglo original.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "relacionar", pares: [["map", "Transforma cada elemento y devuelve un arreglo del mismo tamaño"], ["filter", "Devuelve los que pasan la prueba"], ["find", "Devuelve el primer elemento que pasa la prueba"], ["forEach", "Recorre sin devolver un arreglo nuevo"]] },
+              { tipo: "completar", frase: "____ y ____ devuelven arreglos nuevos y no modifican el ____ original.", banco: ["map", "filter", "arreglo", "HTML"], respuestas: ["map", "filter", "arreglo"] },
+              { tipo: "quehace", codigo: "const notas = [8, 9, 6, 10];\nconst aprobadas = notas.filter(n => n >= 8);\nconsole.log(aprobadas);", pregunta: "¿Qué imprime la consola?", opciones: ["[8, 9, 10]", "[6]", "[8, 9, 6, 10]", "[9, 10]"], correcta: 0 },
+              { tipo: "multiple", pregunta: "¿Qué devuelve find cuando ningún elemento cumple la prueba?", opciones: ["undefined", "Un arreglo vacío []", "El último elemento del arreglo", "null"], correcta: 0 },
+              { tipo: "vf", afirmacion: "filter modifica el arreglo original quitando los elementos que no cumplen.", correcta: false, explicacion: "filter no toca el original: devuelve un arreglo nuevo solo con los que pasan la prueba." }
+            ]
+          },
+          {
+            id: "m3-b13",
+            titulo: "Objetos y destructuring",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Los objetos te acompañan desde m3-b10: cada producto de tu lista era un objeto con <code>nombre</code> y <code>precio</code>. Un objeto agrupa datos relacionados con el formato <code>{ clave: valor }</code>, y los accedes con un punto:</p><pre><code>const producto = { nombre: \"Audífonos\", precio: 499, stock: 12 };\nconsole.log(producto.nombre);   // \"Audífonos\"\nconsole.log(producto.precio);   // 499</code></pre><p>La sintaxis moderna de esta lección es el <strong>destructuring</strong> (desestructuración): en una sola línea <strong>extraes varias propiedades y las conviertes en variables</strong>.</p><pre><code>const { nombre, precio } = producto;\nconsole.log(nombre);  // \"Audífonos\"\nconsole.log(precio);  // 499</code></pre><p>Lee la línea como \"saca <code>nombre</code> y <code>precio</code> del objeto\". Trucos que vas a reconocer: puedes renombrar (<code>{ nombre: n }</code>), dar un valor por defecto (<code>{ stock = 0 }</code>), extraer propiedades anidadas, y el mismo patrón funciona con arreglos (<code>const [primero, segundo] = productos</code>). El objeto original no se modifica: solo copias sus valores a variables nuevas. El destructuring brilla al leer datos de una API (m3-b21) o cuando una función recibe un objeto y quieres las partes por separado.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Un objeto es un <strong>folder de archivo etiquetado</strong>: cada ficha tiene un nombre y un dato. Leer <code>producto.nombre</code> es abrir el folder y sacar la ficha del nombre. El destructuring es <strong>vaciar el folder sobre el escritorio</strong>: de un solo movimiento todas las fichas quedan como papeles sueltos (variables) listos para usar. El folder no se vacía de verdad — solo hiciste copias en tu escritorio.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Con el arreglo de productos:</p><pre><code>const productos = [\n  { id: 1, nombre: \"Audífonos\", precio: 499 },\n  { id: 2, nombre: \"Teclado\", precio: 899 }\n];</code></pre><p>Acceso clásico:</p><pre><code>const primero = productos[0];\nconsole.log(primero.nombre + \" — \" + primero.precio);</code></pre><p>Y con destructuring dentro de un <code>map</code> (flechas: m3-b11, map: m3-b12):</p><pre><code>const fichas = productos.map(({ nombre, precio }) =&gt; {\n  return nombre + \" — \" + precio;\n});\nconsole.log(fichas);  // [\"Audífonos — 499\", \"Teclado — 899\"]</code></pre><p>Las llaves en el parámetro <code>({ nombre, precio })</code> dicen: \"del objeto que voy a recibir, sácame <code>nombre</code> y <code>precio</code>\". En m3-b14 este patrón — <code>map</code> + destructuring + template literal — es exactamente el que genera listas de HTML desde datos.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Tengo este arreglo de objetos: [pega tus datos]. Usa destructuring para extraer [campos] y muéstrame: 1) cómo desestructurar dentro de un map, 2) cómo renombrar una propiedad, y 3) cómo dar un valor por defecto cuando una propiedad no existe.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "completar", frase: "El destructuring extrae propiedades de un objeto y las convierte en ____, sin tocar el ____ original.", banco: ["variables", "objeto", "página", "DOM"], respuestas: ["variables", "objeto"] },
+              { tipo: "multiple", pregunta: "¿Qué hace exactamente const { precio } = producto;?", opciones: ["Crea una variable precio con el valor de producto.precio", "Borra la propiedad precio del objeto", "Multiplica precio por 2", "Crea una copia completa del objeto"], correcta: 0 },
+              { tipo: "quehace", codigo: "const usuario = { nombre: \"Luis\", edad: 30 };\nconst { edad } = usuario;\nconsole.log(edad);", pregunta: "¿Qué imprime la consola?", opciones: ["30", "Luis", "usuario", "undefined"], correcta: 0 },
+              { tipo: "vf", afirmacion: "El destructuring modifica el objeto original quitando las propiedades extraídas.", correcta: false, explicacion: "el destructuring solo copia los valores a variables nuevas; el objeto queda intacto." },
+              { tipo: "relacionar", pares: [["producto.nombre", "Acceso con punto"], ["const { nombre } = producto", "Extraer nombre como variable"], ["{ nombre: n }", "Renombrar al desestructurar"], ["{ stock = 0 }", "Valor por defecto si falta la propiedad"]] }
+            ]
+          },
+          {
+            id: "m3-b14",
+            titulo: "Template literals: armar HTML desde datos",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Hasta ahora uniste texto con <code>+</code>: <code>\"Hola \" + nombre</code>. El <strong>template literal</strong> es la forma moderna de armar cadenas — y, unido a lo que ya sabes, se vuelve la máquina que convierte datos en HTML. Se escribe con <strong>backticks</strong> (`` ` ``) y mete valores con <code>${...}</code>:</p><pre><code>const nombre = \"Audífonos\";\nconst precio = 499;\n\nconst texto = `El ${nombre} cuesta $${precio}`;\nconsole.log(texto);  // \"El Audífonos cuesta $499\"</code></pre><p>Tres superpoderes sobre las comillas normales:</p><ul><li><strong>Interpolación</strong> — <code>${expresion}</code> mete el valor de cualquier expresión: variable, suma, llamada a función.</li><li><strong>Multilínea</strong> — puedes escribir saltos de línea reales sin <code>\\n</code>.</li><li><strong>Se combinan</strong> — con <code>map</code> (m3-b12) y destructuring (m3-b13) conviertes un arreglo en una lista de HTML.</li></ul><p>El patrón que arma listas desde datos (compáralo con el crear-llenar-insertar de m3-b10):</p><pre><code>const htmlLista = productos\n  .map(p =&gt; `&lt;li&gt;${p.nombre} — $${p.precio}&lt;/li&gt;`)\n  .join(\"\");\ncontenedor.innerHTML = htmlLista;</code></pre><p><code>map</code> convierte cada producto en un pedazo de HTML, <code>join(\"\")</code> los pega en una sola cadena, <code>innerHTML</code> (m3-b4) la pinta. Ojo: un template literal <strong>no sanitiza nada</strong> — si el dato viene de un usuario, el riesgo XSS de m3-b4 sigue ahí. Datos ajenos, <code>textContent</code> o sanitiza antes.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>El template literal es la <strong>maqueta de formulario con huecos</strong>: el texto ya está impreso y <code>${...}</code> son los campos en blanco donde se llena el dato de turno. Escribir la misma carta 50 veces no tiene sentido: escribes el molde una vez y en cada pasada solo cambian los valores. <code>map</code> (m3-b12) es la imprenta que pasa las 50 copias por el molde.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Este HTML:</p><pre><code>&lt;ul id=\"productos\"&gt;&lt;/ul&gt;</code></pre><p>Y estos datos (mismo arreglo de m3-b12):</p><pre><code>const productos = [\n  { nombre: \"Audífonos\", precio: 499 },\n  { nombre: \"Teclado\", precio: 899 },\n  { nombre: \"Mouse\", precio: 349 }\n];</code></pre><p>Convertirlos a HTML en dos líneas:</p><pre><code>const contenedor = document.querySelector(\"#productos\");\n\ncontenedor.innerHTML = productos\n  .map(p =&gt; `&lt;li&gt;${p.nombre} — $${p.precio}&lt;/li&gt;`)\n  .join(\"\");</code></pre><p>Resultado: una <code>&lt;ul&gt;</code> con tres <code>&lt;li&gt;</code>, sin crear elementos a mano. Con destructuring (m3-b13) queda igual de claro:</p><pre><code>contenedor.innerHTML = productos\n  .map(({ nombre, precio }) =&gt; `&lt;li&gt;${nombre} — $${precio}&lt;/li&gt;`)\n  .join(\"\");</code></pre><p>Si mañana agregas un cuarto producto, el código no cambia: el molde lo pinta solo. En m3-b15 vas a condicionar qué se muestra — aquí generas el HTML, allá decides cuándo pintarlo.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Tengo este arreglo de datos: [pega tus objetos]. Quiero generar el HTML de [estructura, ej. una tarjeta con título y precio] dentro de [contenedor]. Dame el código con map, destructuring y template literals, y dime cómo manejar los casos en que un dato llegue vacío.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "quehace", codigo: "const producto = \"Teclado\";\nconsole.log(`Oferta: ${producto}`);", pregunta: "¿Qué imprime la consola?", opciones: ["Oferta: Teclado", "Oferta: ${producto}", "Oferta: \"Teclado\"", "Un error de sintaxis"], correcta: 0 },
+              { tipo: "completar", frase: "Los template literals se escriben con ____ (backticks) e insertan valores con ____.", banco: ["`", "${}", "comillas", "paréntesis"], respuestas: ["`", "${}"] },
+              { tipo: "multiple", pregunta: "¿Qué hace .join(\"\") después de un map que genera HTML?", opciones: ["Pega todos los pedazos en una sola cadena", "Borra el arreglo", "Convierte todo a números", "Repite el primer elemento"], correcta: 0 },
+              { tipo: "vf", afirmacion: "Un template literal puede contener saltos de línea reales sin usar \\n.", correcta: true, explicacion: "los backticks permiten escribir el texto en varias líneas tal cual." },
+              { tipo: "relacionar", pares: [["`...`", "Template literal (backticks)"], ["${precio}", "Interpola el valor de una expresión"], ["join(\"\")", "Une los elementos de un arreglo en una cadena"], ["innerHTML", "Pinta el HTML generado (m3-b4)"]] }
+            ]
+          },
+          {
+            id: "m3-b15",
+            titulo: "Condicionales en la interfaz: mostrar, ocultar, alternar",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Toda la interfaz moderna es un juego de <strong>mostrar y ocultar</strong>: menús que se despliegan, mensajes que aparecen, secciones que cambian según los datos. Dos formas de hacerlo:</p><ul><li><strong>Con estilo directo</strong> — <code>elemento.style.display = \"none\"</code> lo oculta (sale del flujo, no deja hueco) y <code>elemento.style.display = \"\"</code> lo regresa: el CSS de la página vuelve a mandar.</li><li><strong>Con clases</strong> (la favorita) — <code>classList.add(\"oculto\")</code>, <code>classList.remove(\"oculto\")</code> y la joya <code>classList.toggle(\"oculto\")</code>, que <strong>alterna</strong>: si la clase no está, la pone; si está, la quita.</li></ul><p>Y cuando la decisión depende de los datos, usas los condicionales que ya reconoces:</p><pre><code>if (producto.stock === 0) {\n  boton.classList.add(\"deshabilitado\");\n  mensaje.textContent = \"Agotado\";\n} else {\n  boton.classList.remove(\"deshabilitado\");\n}</code></pre><p>Dos principios que ordenan todo: <strong>la clase <code>oculto</code> se define una vez en CSS</strong> (por ejemplo <code>.oculto { display: none; }</code>) y JavaScript solo la prende o la apaga; y <strong>la interfaz es un reflejo del estado</strong> — si el dato cambia (stock llega a 0), vuelves a correr la lógica y la pantalla se actualiza. Cuando quieras recordar ese estado entre visitas, entra en juego localStorage (m3-b16).</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Mostrar y ocultar es el <strong>telón del teatro</strong>. <code>display: none</code> es el telón cerrado: el escenario deja de existir para el público, pero está intacto detrás; <code>display: \"\"</code> lo vuelve a abrir. <code>classList.toggle</code> es el <strong>interruptor de luz</strong>: cada clic cambia el estado — si estaba prendido, apaga; si estaba apagado, prende. No revisas nada: el interruptor decide solo. Tú solo defines una vez qué significa \"apagado\" en el CSS, como defines en el teatro qué es \"telón abajo\".</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Este HTML:</p><pre><code>&lt;button id=\"menuBoton\"&gt;Menú&lt;/button&gt;\n&lt;nav id=\"menu\" class=\"oculto\"&gt;\n  &lt;a href=\"#\"&gt;Inicio&lt;/a&gt;\n  &lt;a href=\"#\"&gt;Tienda&lt;/a&gt;\n&lt;/nav&gt;\n\n&lt;p id=\"aviso\" class=\"oculto\"&gt;&lt;/p&gt;</code></pre><p>Este CSS (una sola regla, la clase):</p><pre><code>.oculto { display: none; }</code></pre><p>Y este JavaScript:</p><pre><code>const menu = document.querySelector(\"#menu\");\nconst boton = document.querySelector(\"#menuBoton\");\nconst aviso = document.querySelector(\"#aviso\");\n\n// Alternar: cada clic prende o apaga la clase\nboton.addEventListener(\"click\", () =&gt; {\n  menu.classList.toggle(\"oculto\");\n});\n\n// Condicional según datos\nconst stock = 0;\nif (stock === 0) {\n  aviso.textContent = \"Agotado, vuelve pronto\";\n  aviso.classList.remove(\"oculto\");\n} else {\n  aviso.textContent = \"Disponible\";\n  aviso.classList.add(\"oculto\");\n}</code></pre><p>Fíjate en el reparto: el CSS decide <strong>cómo se ve</strong> oculto; JavaScript decide <strong>cuándo</strong>. El botón usa la flecha de m3-b11 y el toggle no necesita ningún <code>if</code>: la clase se prende y se apaga sola. Cambia <code>stock</code> a 5 y corre otra vez: el aviso pasa de oculto a visible — la pantalla refleja los datos. Y si quieres guardar esa decisión (\"menú abierto\") entre visitas, eso es m3-b16.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Quiero que [elemento] se muestre u oculte según [condición o acción, ej. clic en un botón / stock mayor que 0]. Dame el código con classList (add, remove, toggle), define la clase oculto en CSS, y dime si para mi caso conviene toggle o un if/else explícito.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "multiple", pregunta: "¿Cuál es la forma más limpia de alternar una clase entre visible y oculto en cada clic?", opciones: ["classList.toggle(\"oculto\")", "classList.replace(\"oculto\")", "elemento.className = true", "elemento.style = undefined"], correcta: 0 },
+              { tipo: "quehace", codigo: "const aviso = document.querySelector(\"#aviso\");\naviso.classList.toggle(\"oculto\");\naviso.classList.toggle(\"oculto\");", pregunta: "¿Cómo queda el elemento después de las dos líneas?", opciones: ["Igual que al inicio", "Sin la clase oculto", "Con la clase oculto", "Con un error porque toggle se usa dos veces"], correcta: 0 },
+              { tipo: "completar", frase: "La clase ____ se define en ____ (por ejemplo, display: none) y JavaScript solo la ____ con classList.", banco: ["oculto", "CSS", "alterna", "HTML"], respuestas: ["oculto", "CSS", "alterna"] },
+              { tipo: "vf", afirmacion: "style.display = \"none\" saca el elemento del flujo de la página y no deja espacio vacío.", correcta: true, explicacion: "display: none quita el elemento del layout; visibility: hidden lo oculta pero deja el hueco." },
+              { tipo: "relacionar", pares: [["classList.add(\"oculto\")", "Esconde el elemento"], ["classList.remove(\"oculto\")", "Vuelve a mostrarlo"], ["classList.toggle(\"oculto\")", "Alterna entre los dos estados"], ["style.display = \"none\"", "Lo esconde directamente, sin clases"]] }
+            ]
+          },
+          {
+            id: "m3-b16",
+            titulo: "localStorage: recordar cosas en el navegador",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Tu página vive y muere en cada recarga: todo lo que JavaScript guardó en variables se borra al actualizar. Para <strong>recordar cosas entre visitas</strong> existe <strong>localStorage</strong> — un mini-almacén que el navegador mantiene en tu computadora, dominio por dominio.</p><p>Tres movimientos lo cubren todo:</p><ul><li><code>localStorage.setItem(\"clave\", \"valor\")</code> — guarda. Los dos datos son <strong>cadenas de texto</strong>.</li><li><code>localStorage.getItem(\"clave\")</code> — lee. Regresa el valor guardado, o <code>null</code> si esa clave nunca se guardó.</li><li><code>localStorage.removeItem(\"clave\")</code> — borra esa clave.</li></ul><p>Tres detalles que definen cómo se usa:</p><ul><li><strong>Todo es texto.</strong> Guardas un número o un objeto y al leerlos te llegan cadenas (o <code>[object Object]</code>) — por eso los objetos se pasan por JSON (m3-b17).</li><li><strong>Es persistente.</strong> Cierra el navegador, reinicia la compu: los datos siguen ahí hasta que tu código los borre o el usuario limpie los datos del sitio.</li><li><strong>Tiene límite y casa propia.</strong> Unos 5 MB, y vive aislado por dominio: lo que guarda tu sitio no lo lee otro sitio.</li></ul><p>Dato extra: <code>sessionStorage</code> es el primo que solo recuerda mientras la pestaña esté abierta. En la práctica, el que usarás es localStorage.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>localStorage es la <strong>taquilla con cerradura del gimnasio</strong>: no dependes de tu memoria (variables, que se borran al cerrar), guardas el boleto y mañana regresas, abres tu taquilla y ahí sigue tu bolsa. Cada miembro (dominio) tiene su propia taquilla y no ve la del vecino. Y como la taquilla solo guarda bolsas (texto), no mesas de ping-pong: para guardar un objeto entero tienes que empacarlo — eso es exactamente JSON (m3-b17).</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Este HTML:</p><pre><code>&lt;input type=\"text\" id=\"nombre\" placeholder=\"Tu nombre\"&gt;\n&lt;button id=\"guardar\"&gt;Guardar&lt;/button&gt;\n&lt;p id=\"saludo\"&gt;&lt;/p&gt;</code></pre><p>Y este JavaScript:</p><pre><code>const nombre = document.querySelector(\"#nombre\");\nconst boton = document.querySelector(\"#guardar\");\nconst saludo = document.querySelector(\"#saludo\");\n\n// Al cargar, lee lo que haya guardado\nconst guardado = localStorage.getItem(\"nombre\");\nif (guardado) {\n  saludo.textContent = \"Hola otra vez, \" + guardado;\n  nombre.value = guardado;\n}\n\n// Al hacer clic, guarda\nboton.addEventListener(\"click\", () =&gt; {\n  localStorage.setItem(\"nombre\", nombre.value);\n  saludo.textContent = \"Guardado: \" + nombre.value;\n});</code></pre><p>Escenario para probarlo: escribe tu nombre, da clic, recarga la página. El saludo te recibe de nuevo — los datos sobrevivieron la recarga. Para comprobarlo a fondo, abre DevTools (F12) → Application → Local Storage y verás tu par clave-valor viviendo ahí; en la Consola también puedes leerlo con <code>localStorage.getItem(\"nombre\")</code>. El <code>if</code> con <code>guardado</code> maneja la primera visita (cuando <code>getItem</code> regresa <code>null</code> y no hay nada que saludar) — es el mismo <code>if</code> de m3-b15, ahora decidiendo según lo que guardó la memoria.</p><p>Una advertencia profesional: no guardes ahí contraseñas ni tarjetas. localStorage es de tu dominio, pero cualquier script de tu propia página puede leerlo — es para preferencias y datos no sensibles.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Quiero que mi página recuerde [qué: preferencias, un nombre, un estado] entre visitas. Guíame para guardarlo con localStorage y recuperarlo al cargar. Dime qué debe guardarse como texto y, si necesito guardar un objeto o un arreglo, cómo encadenar JSON.stringify y JSON.parse. Y adviérteme si alguno de los datos no debería vivir en localStorage.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "multiple", pregunta: "¿Con qué par de métodos guardas y lees en localStorage?", opciones: ["setItem / getItem", "push / pop", "addEventListener / removeEventListener", "createElement / append"], correcta: 0 },
+              { tipo: "completar", frase: "localStorage guarda todo como ____; por eso los objetos pasan por ____ antes de guardarse.", banco: ["texto", "JSON", "imágenes", "números"], respuestas: ["texto", "JSON"] },
+              { tipo: "vf", afirmacion: "Los datos de localStorage se borran automáticamente cada vez que recargas la página.", correcta: false, explicacion: "persisten entre visitas; se borran cuando el código los elimina o el usuario limpia los datos del sitio." },
+              { tipo: "quehace", codigo: "localStorage.setItem(\"tema\", \"oscuro\");\nconsole.log(localStorage.getItem(\"tema\"));", pregunta: "¿Qué imprime la consola?", opciones: ["oscuro", "null", "true", "Un error"], correcta: 0 },
+              { tipo: "relacionar", pares: [["setItem", "Guarda un valor"], ["getItem", "Lee un valor (o null)"], ["removeItem", "Borra una clave"], ["sessionStorage", "Solo recuerda con la pestaña abierta"]] }
+            ]
+          },
+          {
+            id: "m3-b17",
+            titulo: "JSON en la práctica: parse y stringify",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>JSON (<strong>JavaScript Object Notation</strong>) es el <strong>formato de texto</strong> en que viajan los datos por internet y el que usan las APIs (m3-b21). Su genialidad: parece JavaScript (objetos y arreglos), pero es solo <strong>texto plano</strong> — cualquier sistema lo entiende, sea el lenguaje que sea.</p><p>Dos funciones lo resuelven todo:</p><ul><li><code>JSON.stringify(objeto)</code> — convierte un valor (objeto, arreglo, número…) en <strong>texto JSON</strong>. <em>String</em> + <em>ify</em>: \"convertir a cadena\".</li><li><code>JSON.parse(texto)</code> — convierte el texto JSON <strong>de vuelta a un valor real</strong> de JavaScript. <em>Parse</em>: \"leer y desarmar\".</li></ul><p>El par ida y vuelta:</p><pre><code>const carrito = [{ nombre: \"Audífonos\", precio: 499 }];\nconst texto = JSON.stringify(carrito);  // \"[{\"nombre\":\"Audífonos\",\"precio\":499}]\"\nconst original = JSON.parse(texto);     // el arreglo otra vez</code></pre><p>Cuatro datos que te van a salvar:</p><ul><li><strong>Las comillas son obligatorias y dobles.</strong> En JSON las claves van entre <code>\"</code>; en JavaScript pueden ir sin ellas. Por eso el texto de <code>stringify</code> tiene comillas que el objeto original no tenía.</li><li><strong>Solo datos.</strong> JSON guarda texto, números, booleanos, <code>null</code>, arreglos y objetos. Las funciones y <code>undefined</code> se ignoran.</li><li><strong>Es la pieza que le faltaba a localStorage (m3-b16):</strong> guardar un objeto entero = <code>stringify</code> al guardar y <code>parse</code> al leer.</li><li><code>JSON.parse</code> con texto inválido <strong>lanza un error</strong> que detiene el script; el manejo de errores se ve en m3-b22.</li></ul><p>Y un mito a derribar: JSON se parece a los objetos de JavaScript (m3-b13), pero es un <strong>formato de texto independiente</strong> — Python, Java, todo lo lee. De hecho casi nunca lo escribes a mano: <code>stringify</code> y <code>parse</code> lo hacen por ti.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>JSON es la <strong>maleta del viajero</strong>. En casa tienes tu ropa en cajones (objetos de JavaScript: cómodos, con etiquetas claras). Para viajar, empacas todo en la maleta (<code>stringify</code>): ahora es un bulto de texto compacto, con reglas de embalaje estrictas. Llegas a destino, desempacas (<code>parse</code>) y vuelves a tener ropa en cajones. La maleta no entiende de cajones: entiende de bultos. Toda comunicación entre sistemas —guardar en localStorage (m3-b16), hablar con una API (m3-b21)— es mandar la maleta y desempacarla del otro lado.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>El caso que usarás en serio: guardar el carrito completo (un arreglo de objetos) y recuperarlo.</p><pre><code>const carrito = [\n  { nombre: \"Audífonos\", precio: 499, cantidad: 1 },\n  { nombre: \"Teclado\", precio: 899, cantidad: 2 }\n];\n\n// Guardar: objeto → texto\nlocalStorage.setItem(\"carrito\", JSON.stringify(carrito));\n\n// Leer: texto → objeto\nconst texto = localStorage.getItem(\"carrito\");\nconst carritoRecuperado = texto ? JSON.parse(texto) : [];\n\nconsole.log(carritoRecuperado[0].nombre);     // \"Audífonos\"\nconsole.log(Array.isArray(carritoRecuperado)); // true</code></pre><p>Fíjate en la guardia de la línea de <code>carritoRecuperado</code>: si <code>texto</code> es <code>null</code> —aún no hay nada guardado— no hay nada que desempacar y arrancamos con <code>[]</code>. El resultado es un arreglo de objetos de verdad, listo para pintarse con <code>map</code> + template literals (m3-b14) o recorrerse (m3-b10). Y ese par <code>stringify</code>/<code>parse</code> es el mismo que verás en cada <code>fetch</code> de m3-b21: los datos llegan como texto JSON y tú los desempacas con <code>parse</code>.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Voy a guardar y recuperar estos datos en el navegador: [pega tu objeto o arreglo]. Escríbeme el código con JSON.stringify al guardar y JSON.parse al recuperar, y maneja el caso en que todavía no exista nada guardado sin que la página truene.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "multiple", pregunta: "¿Qué hace JSON.stringify?", opciones: ["Convierte texto JSON en un objeto", "Convierte un valor de JavaScript en texto JSON", "Borra los datos guardados", "Comprime imágenes"], correcta: 1 },
+              { tipo: "quehace", codigo: "const texto = JSON.stringify({ nombre: \"Ray\", edad: 30 });\nconsole.log(texto);", pregunta: "¿Qué imprime la consola?", opciones: ["{\"nombre\":\"Ray\",\"edad\":30}", "{nombre: Ray, edad: 30}", "Un error de sintaxis", "[object Object]"], correcta: 0 },
+              { tipo: "completar", frase: "____ convierte un valor en texto JSON; ____ convierte el texto de vuelta en un valor.", banco: ["JSON.stringify", "JSON.parse", "JSON.format", "JSON.load"], respuestas: ["JSON.stringify", "JSON.parse"] },
+              { tipo: "vf", afirmacion: "JSON solo guarda datos: texto, números, booleanos, null, arreglos y objetos; las funciones se ignoran.", correcta: true, explicacion: "JSON es un formato de datos, no de código: las funciones no sobreviven a stringify." },
+              { tipo: "relacionar", pares: [["JSON.stringify", "Objeto → texto"], ["JSON.parse", "Texto → objeto"], ["localStorage.getItem", "Devuelve null si la clave no existe"], ["JSON.parse con texto inválido", "Lanza un error (m3-b22)"]] }
+            ]
+          },
+          {
+            id: "m3-b18",
+            titulo: "Asincronía I: por qué existe el mientras tanto",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Hasta ahora cada línea de tu código se ejecuta <strong>en orden, una tras otra, y la página espera</strong>. Eso es código <strong>síncrono</strong>: termino esto, luego hago esto otro, y nadie me interrumpe. ¿El problema? Algunas operaciones tardan — pedir datos a un servidor puede tomar medio segundo o más. Si el navegador se quedara esperando en silencio, tu página se congelaría: nada de clics, nada de scroll, solo un bloqueo feo.</p><p>Por eso existe la <strong>asincronía</strong>: la capacidad de <strong>empezar algo que tarda y seguir adelante con el resto</strong>, para retomar el resultado <em>cuando llegue</em>. Es el \"mientras tanto\" del mundo real: pones la comida a calentar (tarda) y mientras tanto pones la mesa.</p><p>El ejemplo más accesible es <code>setTimeout</code>, que programa una función para más tarde:</p><pre><code>console.log(\"1. Pongo la mesa\");\n\nsetTimeout(() =&gt; {\n  console.log(\"3. La comida está lista\");\n}, 1000);  // 1000 milisegundos = 1 segundo\n\nconsole.log(\"2. Mientras tanto, sirvo las bebidas\");</code></pre><p>El orden en la consola será <code>1, 2, 3</code>: la línea del <code>setTimeout</code> <strong>no espera el segundo</strong>; agenda la función y el código sigue corriendo. Cuando el temporizador termina, el navegador ejecuta la función que le diste (el callback — los callbacks te suenan de m3-b6).</p><p>El corazón del asunto: <strong>JavaScript es de un solo hilo</strong> — una sola línea de trabajo a la vez. Para no congelarse con operaciones que tardan, no espera: <strong>agenda y sigue</strong>. Las funciones que corren \"más tarde\" viven en la <strong>cola de eventos</strong>, y el <strong>event loop</strong> es el maestro de ceremonias que revisa si la operación ya terminó para ejecutar su función. Reconócelo cuando aparezca, no lo memorices.</p><p>Las operaciones que de verdad te importan —pedir datos, leer archivos— usan el mismo principio, pero con una herramienta más potente que <code>setTimeout</code>: las <strong>promesas</strong>, que son el tema de m3-b19.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>La asincronía es el <strong>mesero con cocina atrasada</strong>. Si el mesero esperara de pie junto a la cocina hasta que cada platillo esté listo, el restaurante sería un desastre: solo habría una mesa atendida a la vez. En vez de eso, toma la orden, la lleva a la cocina y <strong>sigue atendiendo otras mesas</strong>. Cuando la cocina grita \"¡orden 7 lista!\", el mesero corre a llevarla. Ese grito —\"ya está tu pedido\"— es exactamente lo que hace el callback de <code>setTimeout</code>: no bloquea nada, avisa cuando hay resultado.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>La demostración clásica: el orden de los <code>console.log</code> te cuenta toda la historia.</p><pre><code>console.log(\"Inicio\");\n\nsetTimeout(() =&gt; {\n  console.log(\"Tarea que tarda\");\n}, 2000);\n\nconsole.log(\"Fin\");</code></pre><p>Abre la consola y observa: <code>Inicio</code> y <code>Fin</code> aparecen al instante; <code>Tarea que tarda</code> aparece dos segundos después. El código no se \"detuvo\" en el <code>setTimeout</code>: agendó y siguió.</p><p>Ahora el caso que te va a importar de verdad. Cuando en m3-b21 hagas esto:</p><pre><code>fetch(\"https://api.example.com/productos\")\n  .then(res =&gt; res.json());  // avísame cuando lleguen los datos</code></pre><p>La página no se congela mientras el servidor responde: el usuario sigue interactuando. La promesa (m3-b19) es el mecanismo de esa \"promesa de resultado futuro\", y <code>then</code> es tu forma de decir qué hacer cuando llegue. Tú <strong>no escribes esto de memoria</strong>: lo reconoces porque ya sabes qué historia cuenta — \"inicio, hago lo mío, y cuando llegue el resultado, entonces...\"</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"En mi página hay una operación que tarda (pedir datos, procesar algo) y el usuario siente que se congela. Explícame qué está pasando y muéstrame el patrón para convertirla en asíncrona: dónde inicia la operación, qué se ejecuta mientras tanto, y dónde retomo el resultado cuando llegue.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "ordenar", instruccion: "Ordena qué pasa en el navegador con este código:", elementos: ["El script corre console.log(\"A\")", "setTimeout agenda la función para dentro de 1 segundo", "El script termina su ejecución", "El temporizador termina y se ejecuta console.log(\"B\")"] },
+              { tipo: "multiple", pregunta: "¿Cuál es el orden en la consola?  console.log(\"1\");  setTimeout(() =&gt; console.log(\"2\"), 500);  console.log(\"3\");", opciones: ["1, 2, 3", "1, 3, 2", "2, 1, 3", "3, 2, 1"], correcta: 1 },
+              { tipo: "completar", frase: "El código ____ se ejecuta en orden y bloquea; la ____ permite empezar algo que tarda y seguir adelante.", banco: ["síncrono", "asincronía", "promesa", "recursión"], respuestas: ["síncrono", "asincronía"] },
+              { tipo: "vf", afirmacion: "setTimeout hace que el código se detenga y espere hasta que pasen los milisegundos indicados.", correcta: false, explicacion: "no espera: agenda la función para después y el resto del código corre de inmediato." },
+              { tipo: "quehace", codigo: "setTimeout(() =&gt; console.log(\"Listo\"), 1000);", pregunta: "¿Qué hace esta línea?", opciones: ["Espera 1 segundo bloqueando la página y luego imprime", "Agenda imprimir \"Listo\" dentro de 1 segundo y sigue con el resto del código", "Borra la consola después de 1 segundo", "Imprime \"Listo\" al instante"], correcta: 1 }
+            ]
+          },
+          {
+            id: "m3-b19",
+            titulo: "Asincronía II: promesas",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>En m3-b18 viste que JavaScript agenda lo que tarda y sigue. <strong>Promise</strong> (promesa) es la herramienta profesional para manejar el resultado que aún no llega: un objeto que <strong>representa un valor futuro</strong> — o un futuro error.</p><p>Una promesa nace con <code>new Promise(...)</code>, pero la verdad es que <strong>casi nunca la creas tú</strong>: las funciones que tardan —pedir datos, leer archivos— te la <em>regresan</em> lista. Tu trabajo es reaccionar a ella. Una promesa tiene tres estados:</p><ul><li><strong>pending</strong> (pendiente) — aún trabajando, el resultado no ha llegado.</li><li><strong>fulfilled</strong> (cumplida) — todo salió bien y trae un valor.</li><li><strong>rejected</strong> (rechazada) — algo falló y trae un error.</li></ul><p>Para reaccionar usas dos métodos:</p><pre><code>pedirDatos()\n  .then((datos) =&gt; {\n    // se ejecuta si la promesa se cumplió\n    console.log(\"Llegaron:\", datos);\n  })\n  .catch((error) =&gt; {\n    // se ejecuta si se rechazó\n    console.log(\"Falló:\", error);\n  });</code></pre><p>Lee <code>then</code> como \"<strong>cuando llegue</strong>\" y <code>catch</code> como \"<strong>si falla</strong>\". El callback de <code>then</code> recibe el valor; el de <code>catch</code>, el error.</p><p>Tres ideas que ordenan todo:</p><ul><li><strong>La promesa se resuelve una sola vez.</strong> Pasa de pending a fulfilled o a rejected, y ahí se queda. No es un botón que repites.</li><li><strong>Se pueden encadenar.</strong> <code>.then(a).then(b)</code>: cada <code>then</code> puede devolver otra promesa (o un valor) y el siguiente la espera. Así se encadenan pasos — traer datos, transformarlos, pintarlos.</li><li><strong>El encadenamiento nació para salir del infierno.</strong> Antes todo eran callbacks anidados adentro de callbacks (callback hell); las promesas lo aplastan en una fila horizontal de <code>.then</code>.</li></ul><p>¿Cuándo vas a ver una promesa en tu vida real? En <code>fetch</code> (m3-b21) y en cualquier función marcada con la palabra <code>async</code> (m3-b20). Esta lección te da el idioma para leerlas.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Una promesa es un <strong>pedido a domicilio</strong>. Al llamar, <code>pedirPizza()</code> te <strong>devuelve de inmediato un ticket</strong> (la promesa) que representa tu futura pizza, sin quedarte pegado al teléfono. El ticket pasa por estados: <em>en preparación</em> (pending), <em>entregada con tu pizza</em> (fulfilled), o <em>rechazada, llegó quemada y reclamas</em> (rejected). Tu <code>.then</code> es \"cuando llegue la pizza, ábrela y pon la mesa\"; tu <code>.catch</code> es \"si no llega o llega mal, reclama\". El ticket solo se resuelve una vez: no te llaman dos veces por la misma pizza.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Primero, ver una promesa en vivo. Este código la crea y la consume:</p><pre><code>const pedido = new Promise((resolver, rechazar) =&gt; {\n  const llego = Math.random() &gt; 0.3;  // 70% de probabilidad\n\n  setTimeout(() =&gt; {\n    if (llego) {\n      resolver(\"Pizza de pepperoni\");\n    } else {\n      rechazar(\"La pizza se perdió en el camino\");\n    }\n  }, 1500);\n});\n\npedido\n  .then((platillo) =&gt; console.log(\"Comiendo:\", platillo))\n  .catch((error) =&gt; console.log(\"Error:\", error));</code></pre><p>La función que le pasas a <code>new Promise</code> recibe dos herramientas: <code>resolver</code> y <code>rechazar</code>. Cuando llamas <code>resolver(\"...\")</code>, la promesa se cumple con ese valor; cuando llamas <code>rechazar(\"...\")</code>, se rechaza con ese error. El <code>then</code> o el <code>catch</code> se ejecuta según el camino.</p><p>Ahora el caso que sí usarás todos los días: una función que <strong>regresa</strong> una promesa. En m3-b21, <code>fetch</code> es exactamente eso:</p><pre><code>const pedirProductos = fetch(\"https://api.example.com/productos\");\n\npedirProductos\n  .then((respuesta) =&gt; respuesta.json())  // transforma la respuesta\n  .then((productos) =&gt; console.log(productos))\n  .catch((error) =&gt; console.log(\"No se pudo:\", error));</code></pre><p>Fíjate en el encadenado: el primer <code>then</code> recibe la respuesta y regresa otra promesa (<code>respuesta.json()</code>), y el segundo <code>then</code> espera ese resultado. Leer promesas es reconocer el ticket y saber qué hacer en cada caso.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Voy a usar una función que tarda y regresa una promesa (por ejemplo fetch). Escríbeme el patrón con .then para el caso de éxito y .catch para el error, y si hay pasos que dependen uno del otro, muéstrame cómo encadenarlos sin anidar callbacks.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "multiple", pregunta: "¿Cuáles son los tres estados de una promesa?", opciones: ["inicio, medio, fin", "pending, fulfilled, rejected", "listo, preparando, enviado", "true, false, null"], correcta: 1 },
+              { tipo: "relacionar", pares: [["pending", "El resultado aún no llega"], ["fulfilled", "Salió bien y trae un valor"], ["rejected", "Algo falló y trae un error"], [".then()", "Qué hacer cuando se cumple"]] },
+              { tipo: "completar", frase: "El método ____ se ejecuta si la promesa se cumplió; el método ____ se ejecuta si se rechazó.", banco: ["then", "catch", "resolve", "finally"], respuestas: ["then", "catch"] },
+              { tipo: "quehace", codigo: "miPromesa\n  .then((dato) =&gt; console.log(\"OK:\", dato))\n  .catch((error) =&gt; console.log(\"ERROR:\", error));", pregunta: "Si miPromesa se RECHAZA (rejected), ¿qué imprime la consola?", opciones: ["OK: ...", "ERROR: ...", "Nada, se queda pendiente", "Imprime ambas líneas"], correcta: 1 },
+              { tipo: "vf", afirmacion: "Una promesa solo se resuelve una vez: pasa de pending a fulfilled o rejected, y ahí se queda.", correcta: true, explicacion: "no es un botón que se repite; una vez cumplida o rechazada, ese es su estado final." }
+            ]
+          },
+          {
+            id: "m3-b20",
+            titulo: "Asincronía III: async / await",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Las promesas (m3-b19) resolvieron el caos de los callbacks, pero su sintaxis de encadenado sigue siendo un poco maratón: <code>.then</code> tras <code>.then</code>. <strong>async / await</strong> es la forma moderna de escribir lo mismo <strong>como si el código fuera síncrono</strong>: lectura de arriba a abajo, sin encadenados.</p><p>Dos palabras, dos reglas:</p><ul><li><code>async</code> — se escribe antes de la función. Le dice a JavaScript: \"esta función devuelve una promesa\". Todo lo que regreses con <code>return</code> queda envuelto en una promesa cumplida.</li><li><code>await</code> — solo vive dentro de una función <code>async</code>. Se pone antes de una promesa y significa: <strong>\"pausa esta función hasta que la promesa se resuelva y usa su valor\"</strong>. Mientras espera, el resto de la página sigue viva (no se congela); solo esa función hace una pausa.</li></ul><p>El mismo ejemplo de m3-b19 en las dos versiones:</p><pre><code>// Promesas\npedirProductos()\n  .then((productos) =&gt; console.log(productos))\n  .catch((error) =&gt; console.log(error));\n\n// async / await (la moderna)\nasync function cargarProductos() {\n  try {\n    const productos = await pedirProductos();\n    console.log(productos);\n  } catch (error) {\n    console.log(error);\n  }\n}</code></pre><p>Lee <code>await pedirProductos()</code> como \"<strong>espera a que esto llegue y pon el resultado en <code>productos</code></strong>\". El <code>try/catch</code> es el <code>.catch</code> de la promesa: si <code>pedirProductos()</code> se rechaza, el error cae en <code>catch</code> (a fondo en m3-b22).</p><p>Tres reglas de oro para no tropezar:</p><ul><li><strong><code>await</code> solo funciona dentro de <code>async</code>.</strong> Usarlo en una función normal es error de sintaxis.</li><li><strong><code>async</code> siempre devuelve una promesa.</strong> Si otro código llama a tu función, recibe una promesa y él decide si la <code>await</code> o la encadena.</li><li><strong>No es magia, es azúcar.</strong> async/await es promesas por dentro — el mismo juego de m3-b18 y m3-b19, con mejor letra. Reconócelo, no lo memorices.</li></ul><p>Nota de actualidad: casi todo el código que una IA genera hoy —incluido <code>fetch</code>, m3-b21— está escrito con async/await. Esta lección es el idioma para leerlo.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>async / await es el <strong>mesero con libreta de pedidos</strong>. La versión promesas era un mesero que anota tu orden y te avisa mesa por mesa con gritos (.then). La versión async/await es un mesero que escribe la orden en su libreta y <strong>vuelve a tu mesa cuando la cocina tiene tu plato</strong>, como quien dice \"espera y te traigo\". La cocina sigue trabajando en paralelo; el mesero no se queda clavado. En el código, <code>await</code> es la marca en la libreta: \"hasta que esto esté, no sigo con esta mesa\" — sin bloquear a las demás mesas (el resto de la página).</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>El patrón que verás en todo código moderno de datos:</p><pre><code>// Función que simula una petición que tarda\nfunction pedirProductos() {\n  return new Promise((resolver) =&gt; {\n    setTimeout(() =&gt; resolver([\"Audífonos\", \"Teclado\"]), 1000);\n  });\n}\n\n// Función async: la que usa await\nasync function cargarLista() {\n  const productos = await pedirProductos();  // espera 1 segundo y sigue\n  console.log(productos);                    // [\"Audífonos\", \"Teclado\"]\n}\n\ncargarLista();  // llama a la función (devuelve una promesa)\nconsole.log(\"Esto se imprime ANTES\");</code></pre><p>El orden en la consola: <code>Esto se imprime ANTES</code> primero, y un segundo después el arreglo. ¿Por qué? Porque <code>cargarLista()</code> es async: al llegar a <code>await</code>, pausa <em>su propia</em> ejecución y el script sigue con lo que sigue. Cuando la promesa se resuelve, la función retoma.</p><p>Con errores, la versión completa (la que usarás con <code>fetch</code> en m3-b21):</p><pre><code>async function cargarLista() {\n  try {\n    const productos = await pedirProductos();\n    console.log(productos);\n  } catch (error) {\n    console.log(\"Falló la carga:\", error);\n  }\n}</code></pre><p>Lo que te falta para el cuadro completo es qué mostrarle al usuario mientras espera —\"Cargando...\"— que se ve en m3-b22 junto con el manejo de errores. Este es el vocabulario; allá es la escena completa.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Tengo una función que regresa una promesa (un fetch o una petición). Escríbeme la versión con async/await: la función async, el await de la petición, y el try/catch para el error. Y dime qué le debería mostrar al usuario mientras espera la carga.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "multiple", pregunta: "¿Qué hace await dentro de una función async?", opciones: ["Pausa la ejecución de esa función hasta que la promesa se resuelva", "Borra la promesa", "Convierte todo en síncrono y congela la página", "Convierte la promesa en un arreglo"], correcta: 0 },
+              { tipo: "completar", frase: "La palabra ____ antes de una función hace que devuelva una promesa; ____ solo puede usarse dentro de ella.", banco: ["async", "await", "then", "promise"], respuestas: ["async", "await"] },
+              { tipo: "vf", afirmacion: "Puedes usar await dentro de cualquier función, normal o async.", correcta: false, explicacion: "await solo funciona dentro de funciones marcadas como async; fuera de ellas es error de sintaxis." },
+              { tipo: "quehace", codigo: "async function mostrar() {\n  const resultado = await tarea();\n  console.log(resultado);\n}", pregunta: "¿Qué regresa la función mostrar() al ser llamada?", opciones: ["El resultado de tarea()", "Una promesa", "Siempre undefined", "Un error"], correcta: 1 },
+              { tipo: "relacionar", pares: [["async", "La función devuelve una promesa"], ["await", "Pausa hasta que la promesa se resuelva"], ["try/catch", "El equivalente del .catch"], ["fetch", "Pedir datos: tema de m3-b21"]] }
+            ]
+          },
+          {
+            id: "m3-b21",
+            titulo: "fetch: traer datos de una API",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p><code>fetch</code> es la función del navegador para <strong>pedirle datos a una API</strong> — un servidor que entrega información por internet. Le pasas la <strong>URL</strong> (la dirección del recurso) y, por defecto, hace una petición <strong>GET</strong>: \"dame los datos\".</p><p><code>fetch</code> es la pieza que esperabas desde m3-b19: <strong>devuelve una promesa</strong>. Cuando la promesa se cumple, recibes un objeto <code>Response</code> — la respuesta del servidor, que todavía trae el cuerpo como texto. Para leerlo llamas a <code>res.json()</code> (m3-b17): lee el cuerpo y lo convierte en datos reales. Y como ese \"lee y convierte\" también puede tardar, <code>res.json()</code> <strong>regresa otra promesa</strong>. Por eso el encadenado clásico:</p><pre><code>fetch(\"https://api.example.com/productos\")\n  .then((res) =&gt; res.json())\n  .then((productos) =&gt; console.log(productos));</code></pre><p>Que es lo mismo de m3-b20 en su versión <code>async/await</code>:</p><pre><code>async function cargarProductos() {\n  const res = await fetch(\"https://api.example.com/productos\");\n  const productos = await res.json();\n  console.log(productos);\n}</code></pre><p>Lee el flujo: <strong>pido → espero la respuesta → desempaco el JSON → uso los datos</strong>. Para pintarlos en pantalla usas el patrón de m3-b14 (map + template literals) o el <code>forEach</code> de m3-b10.</p><p>Un dato que te ahorra sustos: <code>fetch</code> <strong>no se rechaza si el servidor responde con un error HTTP</strong> (404, 500): la respuesta llega igual, y hay que revisarla con <code>res.ok</code>. Eso es m3-b22.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p><code>fetch</code> es <strong>mandar al mensajero al almacén del proveedor</strong>. Le das la dirección (la URL) y te <strong>devuelve de inmediato un recibo</strong> (la promesa): no te quedas pegado a la puerta. Cuando el mensajero vuelve, trae un <strong>paquete cerrado</strong> (la <code>Response</code>): los datos están adentro, pero no los ves hasta abrirlo. <code>res.json()</code> es abrir el paquete y desempacar — y desempacar también toma su tiempo, por eso es otra promesa y por eso los <code>.then</code> se encadenan: \"cuando vuelva, abre; cuando abras, úsalo\". El recibo, el paquete y el desempacado: esa es toda la historia de <code>fetch</code>.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>La escena completa: pedir productos y pintarlos en una lista. Este HTML:</p><pre><code>&lt;ul id=\"productos\"&gt;&lt;/ul&gt;\n&lt;p id=\"estado\"&gt;&lt;/p&gt;</code></pre><p>Y este JavaScript:</p><pre><code>async function cargarProductos() {\n  const res = await fetch(\"https://api.example.com/productos\");\n  const productos = await res.json();\n\n  const lista = document.querySelector(\"#productos\");\n  lista.innerHTML = productos\n    .map((p) =&gt; `&lt;li&gt;${p.nombre} — $${p.precio}&lt;/li&gt;`)\n    .join(\"\");\n}\n\ncargarProductos();</code></pre><p>En pantalla: los nombres y precios de los productos dentro de la lista. Las dos primeras líneas son puro m3-b20: <code>await</code> detiene <em>esta función</em> hasta que llega la respuesta y hasta que el JSON se desempaca. El <code>map</code> + template literals es m3-b14, y el <code>innerHTML</code> m3-b4. <code>fetch</code> no es una pieza nueva: es el <strong>punto de partida</strong> de los datos que ya sabes procesar.</p><p>Para verlo en vivo ahora mismo: abre la consola y prueba con una API pública real, por ejemplo <code>fetch(\"https://jsonplaceholder.typicode.com/users\")</code> encadenado con <code>.then(res =&gt; res.json())</code>. Verás un arreglo de usuarios listo para usar.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Tengo una API que me devuelve [describe los datos, ej. un arreglo de productos con nombre y precio]. Escríbeme el código con fetch y async/await: la URL, await res.json() para desempacar el cuerpo, y pinta los datos en [elemento] con map y template literals. Si la respuesta llega con error, no lo dejes pasar: dime dónde revisarla.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "multiple", pregunta: "¿Qué regresa fetch(\"url\") de inmediato, antes de que llegue cualquier dato?", opciones: ["Los datos ya convertidos en objeto", "Una promesa que representa la respuesta futura", "Un arreglo vacío listo para llenarse", "El texto JSON crudo"], correcta: 1 },
+              { tipo: "completar", frase: "fetch(\"url\") pide datos a una ____ y devuelve una ____; el método ____() lee el cuerpo de la respuesta y lo convierte en datos.", banco: ["API", "promesa", "json", "parse"], respuestas: ["API", "promesa", "json"] },
+              { tipo: "vf", afirmacion: "Por defecto, fetch hace una petición GET: para solo traer datos no necesitas indicarle ningún método.", correcta: true, explicacion: "GET es la petición por defecto de fetch; cuando quieras enviar datos (m3-b23) indicarás otro método explícitamente." },
+              { tipo: "quehace", codigo: "fetch(\"https://api.example.com/productos\")\n  .then((res) =&gt; res.json())\n  .then((productos) =&gt; console.log(productos[0].nombre));", pregunta: "La API devuelve un arreglo de productos. ¿Qué imprime la consola?", opciones: ["Todo el arreglo de productos", "El nombre del primer producto", "La URL de la API", "Un error porque falta await"], correcta: 1 },
+              { tipo: "relacionar", pares: [["fetch(url)", "Pide datos a la API"], ["res.json()", "Lee el cuerpo y lo convierte en datos"], ["await", "Espera a que la promesa se resuelva"], ["URL", "La dirección del recurso"]] }
+            ]
+          },
+          {
+            id: "m3-b22",
+            titulo: "Manejo de errores: try/catch y estados de carga",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Cuando pides datos a una API (m3-b21), las cosas pueden fallar: se cae la red, la URL está mal, el servidor responde 500. Un código sin manejo de errores deja al usuario con una pantalla vacía o, peor, con un error que nunca ve. Tienes dos herramientas y un patrón.</p><p><strong>1. try/catch</strong> — el bloque de m3-b20. Todo lo que puede fallar va dentro de <code>try</code>; si algo lanza un error, la ejecución salta a <code>catch</code> con ese error en su parámetro:</p><pre><code>try {\n  const res = await fetch(\"https://api.example.com/productos\");\n  const datos = await res.json();\n} catch (error) {\n  console.log(\"Falló:\", error);\n}</code></pre><p><strong>2. La trampa de HTTP</strong> — <code>fetch</code> solo se rechaza (y cae en <code>catch</code>) cuando la <em>red</em> falla. Si el servidor responde con un 404 o un 500, la respuesta <strong>llega igual</strong> — y tú tienes que revisarla con <code>res.ok</code>. Si no está <code>ok</code>, lanzas el error a propósito con <code>throw</code>:</p><pre><code>const res = await fetch(\"https://api.example.com/productos\");\nif (!res.ok) throw new Error(\"El servidor respondió \" + res.status);</code></pre><p><strong>3. Los tres estados</strong> — toda carga de datos debe mostrar tres momentos en pantalla: <strong>cargando</strong> (mientras esperas), <strong>éxito</strong> (los datos llegaron) y <strong>error</strong> (algo falló, con mensaje claro). El usuario nunca debe quedarse sin saber qué pasa.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p><code>try/catch</code> es la <strong>red de seguridad del trapecista</strong>. Intentas el truco (todo dentro de <code>try</code>); si el truco sale mal, caes en la red (<code>catch</code>) y sigues intacto para contarlo. Sin red, el error cae al piso y el script muere en seco. Y los estados de carga son un <strong>semáforo</strong>: amarillo mientras esperas (\"Cargando...\"), verde cuando los datos llegaron, rojo cuando algo falló. El semáforo nunca está en blanco — tu interfaz tampoco debería estarlo.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>La versión completa, con los tres estados en pantalla:</p><pre><code>const lista = document.querySelector(\"#productos\");\nconst estado = document.querySelector(\"#estado\");\n\nasync function cargarProductos() {\n  estado.textContent = \"Cargando...\";\n\n  try {\n    const res = await fetch(\"https://api.example.com/productos\");\n    if (!res.ok) throw new Error(\"El servidor respondió \" + res.status);\n\n    const productos = await res.json();\n    estado.textContent = \"Listo: \" + productos.length + \" productos\";\n    lista.innerHTML = productos\n      .map((p) =&gt; `&lt;li&gt;${p.nombre} — $${p.precio}&lt;/li&gt;`)\n      .join(\"\");\n  } catch (error) {\n    estado.textContent = \"No se pudo cargar: \" + error.message;\n  }\n}\n\ncargarProductos();</code></pre><p>Recorre la historia: primero se pinta \"Cargando...\" con <code>textContent</code> (m3-b4). El <code>try</code> hace la petición; si <code>res.ok</code> es falso, el <code>throw</code> lanza un error y el flujo salta directo al <code>catch</code>, que cambia el mensaje. <code>error.message</code> te da el texto legible de lo que lanzaste. Si todo sale bien, el estado se vuelve \"Listo\" y la lista se pinta con map (m3-b14). Un solo flujo cubre los tres semáforos.</p><p>Para reintentar no hace falta nada especial: <code>cargarProductos()</code> es una función y un botón puede volver a llamarla (m3-b6).</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Tengo esta función con fetch: [pega tu código]. Agrégale manejo de errores completo: revisa res.ok y lanza un error si la respuesta no es buena, envuelve todo en try/catch, y muéstrame los tres estados en pantalla — un mensaje 'Cargando...' al inicio, los datos cuando lleguen, y un mensaje claro con opción de reintentar si falla. No uses alert.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "multiple", pregunta: "Si el servidor responde con un 404 (el recurso no existe), ¿qué pasa con un fetch normal?", opciones: ["fetch se rechaza y cae en catch automáticamente", "La respuesta llega igual, con res.ok en false", "El navegador muestra una página de error", "fetch devuelve null"], correcta: 1 },
+              { tipo: "completar", frase: "En el patrón async/await, el código que puede fallar va dentro de ____ y la recuperación, dentro de ____.", banco: ["try", "catch", "throw", "finally"], respuestas: ["try", "catch"] },
+              { tipo: "vf", afirmacion: "throw new Error(\"...\") detiene el bloque try y salta directo al catch con ese error.", correcta: true, explicacion: "throw crea el error y transfiere el control al bloque catch, que lo recibe en su parámetro." },
+              { tipo: "ordenar", instruccion: "Ordena el flujo de una carga de datos en pantalla:", elementos: ["La función marca 'Cargando...'", "fetch pide los datos a la API", "La respuesta llega y se revisa res.ok", "Los datos se convierten con res.json()", "La lista se pinta con los productos"] },
+              { tipo: "quehace", codigo: "const res = await fetch(\"https://api.example.com/productos\");\nif (!res.ok) throw new Error(\"Respuesta mala\");\nconst datos = await res.json();", pregunta: "¿Qué pasa si el servidor responde con 404?", opciones: ["Se lanza 'Respuesta mala' y el control salta al catch", "Los datos se convierten igual", "fetch se rechaza solo", "La página se recarga"], correcta: 0 }
+            ]
+          },
+          {
+            id: "m3-b23",
+            titulo: "Formularios con JavaScript: capturar, validar, enviar",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Un formulario en el navegador tiene tres momentos, y este es el mapa completo:</p><ul><li><strong>Capturar</strong> — leer lo que escribió el usuario. En el evento <code>submit</code> (m3-b7) lees cada campo con <code>.value</code>. Y lo primero de todo: <code>preventDefault()</code> (m3-b8) para <strong>detener la recarga</strong> que hace el formulario por defecto.</li><li><strong>Validar</strong> — revisar que los datos cumplen reglas antes de mandarlos: que no estén vacíos, que el correo tenga formato. Si algo falla, muestras el error y <code>return</code>: no envías basura.</li><li><strong>Enviar</strong> — mandar los datos ya validados a su destino: una API con <code>fetch</code> (m3-b21) en modo <code>POST</code>, o un servicio como WhatsApp o correo (m3-c9).</li></ul><p>El truco de <code>.trim()</code>: quita los espacios de los extremos. \" ana@mail.com \" y \"ana@mail.com\" son la misma persona — y un campo lleno solo de espacios cuenta como vacío. Valida siempre sobre el valor recortado.</p><p>Regla de oro: <strong>la validación es de dos lados</strong>. El navegador valida para que el usuario no se equivoque al escribir; el servidor valida porque es la única autoridad. Lo que haces aquí es la primera capa.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>El formulario es la <strong>aduana del aeropuerto</strong>. El usuario se acerca con sus documentos (los datos). El oficial (tu JavaScript) los revisa contra las reglas: ¿nombre escrito? ¿formato de correo válido? Cada documento que no cumple se devuelve con la indicación de qué falta, y nadie pasa hasta que está en orden. Solo cuando todo cumple, el oficial sella (valida) y el viajero sigue su camino (envía). Si la aduana dejara pasar a cualquiera sin revisar, el problema lo tendrías tú del otro lado.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Un formulario mínimo con los tres momentos:</p><pre><code>&lt;form id=\"contacto\"&gt;\n  &lt;input type=\"text\" id=\"nombre\" placeholder=\"Nombre\"&gt;\n  &lt;input type=\"email\" id=\"email\" placeholder=\"Email\"&gt;\n  &lt;p id=\"mensaje\"&gt;&lt;/p&gt;\n  &lt;button type=\"submit\"&gt;Enviar&lt;/button&gt;\n&lt;/form&gt;</code></pre><p>Y el JavaScript:</p><pre><code>const form = document.querySelector(\"#contacto\");\nconst mensaje = document.querySelector(\"#mensaje\");\n\nform.addEventListener(\"submit\", function (event) {\n  event.preventDefault();  // sin recarga\n\n  // 1. Capturar\n  const nombre = form.querySelector(\"#nombre\").value.trim();\n  const email = form.querySelector(\"#email\").value.trim();\n\n  // 2. Validar\n  if (nombre === \"\") {\n    mensaje.textContent = \"El nombre es obligatorio\";\n    return;\n  }\n  if (!email.includes(\"@\")) {\n    mensaje.textContent = \"Correo inválido\";\n    return;\n  }\n\n  // 3. Enviar (aquí iría el fetch por POST, m3-b21)\n  mensaje.textContent = \"Enviando a \" + email + \"...\";\n});</code></pre><p>Lee el flujo: <code>preventDefault</code> primero — sin eso la página recarga y pierdes todo. Capturas con <code>.value</code> + <code>.trim()</code>. Cada validación que falla muestra su mensaje y <code>return</code> detiene la función: el envío solo ocurre si pasaste todas las revisiones. El mensaje se pinta con <code>textContent</code> (m3-b4) en el <code>&lt;p&gt;</code>.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Tengo este formulario HTML: [pega tu HTML]. Escríbeme el JavaScript que: capture los valores con .value en el evento submit, detenga la recarga con preventDefault, valide que los campos obligatorios no estén vacíos y que el correo tenga formato, muestre el mensaje de error junto al campo que falló, y cuando todo pase, arme el objeto con los datos y envíelo con fetch por POST. No uses alert.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "multiple", pregunta: "¿Qué hace event.preventDefault() en el submit de un formulario?", opciones: ["Detiene la recarga y el envío por defecto", "Borra los campos del formulario", "Valida los datos automáticamente", "Cierra el formulario"], correcta: 0 },
+              { tipo: "completar", frase: "El evento ____ se escucha en el &lt;form&gt; (no en el botón); el texto escrito se lee con ____; y ____ quita los espacios de los extremos antes de validar.", banco: ["submit", "value", "trim", "change"], respuestas: ["submit", "value", "trim"] },
+              { tipo: "vf", afirmacion: "El evento submit se dispara en el botón 'Enviar', y por eso el addEventListener se pone en el botón.", correcta: false, explicacion: "submit vive en el &lt;form&gt; y se dispara al enviar, sea por el botón o por Enter; el listener va en el form." },
+              { tipo: "relacionar", pares: [["preventDefault", "Detiene el envío y la recarga"], ["campo.value", "El texto escrito en el campo"], ["campo.trim()", "Quita espacios al inicio y al final"], ["validar", "Revisar el dato contra reglas antes de enviar"]] },
+              { tipo: "quehace", codigo: "const email = form.querySelector(\"#email\").value.trim();\nif (!email.includes(\"@\")) {\n  mensaje.textContent = \"Correo inválido\";\n  return;\n}\nmensaje.textContent = \"Correo válido: \" + email;", pregunta: "El usuario escribe 'ana@mail.com'. ¿Qué se muestra en el mensaje?", opciones: ["Correo inválido", "Correo válido: ana@mail.com", "La página se recarga", "Nada: el código se detiene"], correcta: 1 }
+            ]
+          },
+          {
+            id: "m3-b24",
+            titulo: "Debugging I: la consola es tu mejor amiga",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Llegó el momento en que las cosas se rompen — y se rompen <em>siempre</em>. <strong>Debugging</strong> (depurar) es encontrar y corregir errores, y la primera herramienta la conoces desde m3-b1: <strong>la consola</strong>. Es donde el navegador te habla.</p><p>Tres formas de hablarle tú:</p><ul><li><code>console.log(valor)</code> — registra un valor en cualquier punto del código. Tu instrumento de medición.</li><li><code>console.warn(...)</code> — advertencia en amarillo: algo raro, pero no fatal.</li><li><code>console.error(...)</code> — error en rojo, lo que querías evitar.</li><li><code>console.table(arreglo)</code> — los arreglos de objetos (m3-b13) como una tabla legible de un vistazo.</li></ul><p>Y los errores que la consola te muestra: cada mensaje dice <strong>qué pasó, en qué archivo y en qué línea</strong>. Aprende a leerlos — son la respuesta, no el enemigo:</p><ul><li><code>SyntaxError</code> — mala sintaxis: un paréntesis que falta, una coma mal puesta. El navegador ni siquiera corrió tu código.</li><li><code>ReferenceError: X is not defined</code> — usaste el nombre <code>X</code> y no existe en ese punto (m3-b13): lo declaraste después, o con otro nombre.</li><li><code>TypeError: Cannot read properties of null</code> — tocaste algo que es <code>null</code>. Y <code>null</code> es lo que regresa <code>querySelector</code> cuando no encuentra nada (m3-b3).</li></ul><p>La estrategia: cuando algo falla, <strong>no adivines</strong>. Pega un <code>console.log</code> en cada paso y observa en qué punto el valor deja de ser el esperado. Divide el problema: el dato, el <code>fetch</code> (m3-b21) o el pintado — sabrás en cuál parar de mirar.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>La consola es el <strong>cronista del navegador</strong>: te va contando qué hizo tu código, paso a paso. <code>console.log</code> es el cronista que registra lo que pasa en cada punto; el mensaje de error es el reportero que llega gritando \"¡esto se rompió!\" y te dice <em>la calle y el número</em> (archivo y línea) del accidente. Sin consola buscarías el error a ciegas, línea por línea, como quien busca un arete en un estacionamiento. Con ella, el cronista te dice exactamente dónde empezar a mirar.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>El caso clásico: seleccionar un elemento que no existe.</p><pre><code>const boton = document.querySelector(\"#comprar\");\nboton.textContent = \"Agregar\";</code></pre><p>Si en tu HTML no hay ningún elemento con <code>id=\"comprar\"</code>, la consola muestra algo como:</p><pre><code>Uncaught TypeError: Cannot read properties of null (reading 'textContent')\n    at archivo.js:2:1</code></pre><p>Traducción: <code>boton</code> es <code>null</code> (no encontró nada) y en la línea 2 lo intentaste usar. El mensaje te dice el archivo y la línea — ya sabes dónde empezar.</p><p>El método de observación en tres pasos:</p><pre><code>// 1. ¿Qué tengo en realidad?\nconst boton = document.querySelector(\"#comprar\");\nconsole.log(\"El botón es:\", boton);\n\n// 2. Observa el dato antes de usarlo\nconst precio = 499;\nconsole.log(\"Precio sin descuento:\", precio);\n\n// 3. Verifica el resultado\nconsole.log(\"Precio final:\", precio * 0.9);</code></pre><p>El <code>console.log</code> no corrige nada: <strong>te enseña lo que hay</strong>. Corriges tú, con el dato frente a los ojos. Y para arreglos de objetos, <code>console.table</code> te ahorra el scroll:</p><pre><code>console.table([\n  { nombre: \"Audífonos\", precio: 499 },\n  { nombre: \"Teclado\", precio: 899 }\n]);</code></pre>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Esta parte de mi página no funciona como debería: [describe el síntoma]. Aquí está mi código: [código]. Guíame a depurarlo con la consola: dime qué console.log poner en cada paso para ver dónde se rompe, y cuando yo te pegue el error, explícame qué significa, en qué archivo y línea ocurre, y cómo lo corrijo. No adivines: guíame a observar.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "multiple", pregunta: "¿Qué información te da un mensaje de error como 'at app.js:12'?", opciones: ["La fecha y hora del error", "El archivo y la línea exacta donde ocurrió", "El navegador donde corre la página", "La velocidad de la conexión"], correcta: 1 },
+              { tipo: "completar", frase: "Para registrar un valor usas console.____; para marcar un error, console.____; y para ver un arreglo de objetos ordenado, console.____.", banco: ["log", "error", "table", "print"], respuestas: ["log", "error", "table"] },
+              { tipo: "vf", afirmacion: "'ReferenceError: precio is not defined' significa que la variable precio no existe (o no está en alcance) en ese punto del código.", correcta: true, explicacion: "not defined = el nombre no existe ahí; revisa dónde declaraste la variable y el orden del código." },
+              { tipo: "relacionar", pares: [["console.log", "Registrar un valor para observar"], ["console.error", "Marcar el error en rojo"], ["console.table", "Ver un arreglo de objetos como tabla"], ["Archivo:línea", "Dónde ocurrió el problema"]] },
+              { tipo: "quehace", codigo: "const boton = document.querySelector(\"#comprar\");\nboton.textContent = \"Agregar\";", pregunta: "No existe ningún elemento con id 'comprar'. ¿Qué error ves en la consola?", opciones: ["SyntaxError: missing ) after argument list", "TypeError: Cannot read properties of null", "ReferenceError: boton is not defined", "RangeError: Maximum call stack size exceeded"], correcta: 1 }
+            ]
+          },
+          {
+            id: "m3-b25",
+            titulo: "Debugging II: el inspector y los breakpoints",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>La consola (m3-b24) te dice <em>qué</em> pasó. El inspector y los breakpoints te dicen <em>por qué</em>: puedes <strong>pausar la ejecución en cualquier línea y examinarlo todo</strong> en ese instante exacto.</p><p>Dos herramientas del mismo DevTools (F12):</p><ul><li><strong>El inspector</strong> — la pestaña <code>Elements</code> te muestra el DOM <em>tal como está ahora</em> (m3-b2), no como lo escribiste; si JavaScript lo cambió, lo ves. Las pestañas <code>Styles</code> y <code>Event Listeners</code> te dicen qué CSS aplica a un elemento y qué eventos tiene conectados.</li><li><strong>Los breakpoints</strong> — en la pestaña <code>Sources</code> abres el archivo y haces clic en el número de una línea: aparece un punto rojo. Cuando el código llega a esa línea, la ejecución <strong>se pausa</strong> y el panel <code>Scope</code> te muestra todas las variables de ese momento. Con <code>step over</code> (avanza a la siguiente línea) y <code>step into</code> (entra a la función) caminas línea por línea viendo cómo cambian los valores; el <code>Call Stack</code> te muestra la fila de funciones que te trajeron hasta ahí.</li></ul><p>También existe el breakpoint en el código: la línea <code>debugger;</code> pausa cuando la alcanza, sin abrir el inspector.</p><p>Por qué es mejor que adivinar: <strong>ves el valor real en el momento exacto</strong>. El <code>console.log</code> de m3-b24 es medir antes y después; el breakpoint es congelar la escena y mirar todo a la vez.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>El breakpoint es <strong>la pausa del videojuego</strong>. En plena acción, pausas la partida y examinas cada personaje: sus puntos de vida, su posición, sus objetos. Sabes exactamente qué pasaba en ese instante, sin que el juego siga y cambie todo. El <code>step over</code> es avanzar un cuadro a la vez, como mirar la película en cámara lenta para no perder detalle. Y el inspector es la <strong>ventana de la cocina del navegador</strong>: ves el DOM, los estilos y los eventos tal como están ahora, no como los imaginaste al escribirlos.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Este código se ve bien, pero quieres ver qué está pasando adentro:</p><pre><code>function calcularTotal(precio, cantidad) {\n  const subtotal = precio * cantidad;\n  const impuesto = subtotal * 0.16;\n  return subtotal + impuesto;\n}\n\nconst total = calcularTotal(499, 2);\nconsole.log(\"Total:\", total);</code></pre><p>Pon un breakpoint en la línea <code>const subtotal = precio * cantidad;</code>:</p><ol><li>Abre DevTools (F12) → <code>Sources</code> → abre tu <code>app.js</code>.</li><li>Haz clic en el número de línea: aparece el punto rojo.</li><li>Recarga la página. La ejecución <strong>se detiene</strong> en esa línea, resaltada en azul.</li><li>En el panel <code>Scope</code> ves los valores de <code>precio</code> (499) y <code>cantidad</code> (2). Con <code>step over</code> avanzas línea por línea y ves nacer a <code>subtotal</code> y luego a <code>impuesto</code>.</li></ol><p>Si un valor no es el que esperabas, ya sabes en qué línea se tuerce. Y la versión con el breakpoint escrito en el código:</p><pre><code>function calcularTotal(precio, cantidad) {\n  debugger;  // pausa aquí cuando se ejecute\n  const subtotal = precio * cantidad;\n  const impuesto = subtotal * 0.16;\n  return subtotal + impuesto;\n}</code></pre><p>La diferencia con el <code>console.log</code> de m3-b24: ahí imprimes lo que pensaste medir; aquí <strong>ves todo lo que existe</strong> en ese instante, sin escribir una línea extra.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Mi código hace [describe el síntoma] y los console.log ya no me alcanzan. Guíame a depurarlo con el inspector: dime en qué archivo y línea pongo el breakpoint, qué paneles reviso (Scope, Call Stack, Watch) y cómo avanzo con step over para encontrar dónde cambia el valor. Aquí está mi código: [código].\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "multiple", pregunta: "¿Qué hace un breakpoint en la pestaña Sources?", opciones: ["Borra la línea donde se pone", "Pausa la ejecución en esa línea para inspeccionar el estado", "Acelera la página al saltarse esa línea", "Muestra un error en rojo automáticamente"], correcta: 1 },
+              { tipo: "completar", frase: "El DOM en vivo se ve en la pestaña ____; los breakpoints se ponen en la pestaña ____; y la pila de funciones que te trajeron a un punto es el ____ ____.", banco: ["Elements", "Sources", "Call", "Stack"], respuestas: ["Elements", "Sources", "Call", "Stack"] },
+              { tipo: "vf", afirmacion: "La línea debugger; dentro del código funciona como un breakpoint: pausa la ejecución cuando la alcanza.", correcta: true, explicacion: "debugger es el breakpoint escrito en el código; al llegar a ella, DevTools pausa la ejecución." },
+              { tipo: "relacionar", pares: [["Elements", "El DOM tal como está ahora"], ["Sources", "Los archivos del código"], ["Step over", "Avanzar a la siguiente línea"], ["Scope", "Las variables visibles en el punto de pausa"]] },
+              { tipo: "quehace", codigo: "function doblar(n) {\n  return n * 2;  // breakpoint aquí\n}\nconst resultado = doblar(21);", pregunta: "El breakpoint pausa en el return. ¿Qué valor tiene n en el panel Scope?", opciones: ["21", "42", "undefined", "null"], correcta: 0 }
+            ]
+          },
+          {
+            id: "m3-b26",
+            titulo: "Módulos: import y export",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Hasta ahora cada archivo <code>.js</code> era una hoja suelta: todo lo que declarabas quedaba visible para los demás, y a medida que el proyecto crece eso es un desastre — dos archivos que declaran la misma función chocan entre sí. La solución se llama <strong>módulos</strong>: dividir el código en archivos independientes donde cada uno <strong>exporta</strong> lo que quiere compartir e <strong>importa</strong> lo que necesita de los demás.</p><p>Dos palabras lo resuelven todo:</p><ul><li><code>export</code> — le pone etiqueta de \"compartible\" a una función, variable o clase. Lo que no lleva <code>export</code> queda privado: nadie de afuera puede tocarlo.</li><li><code>import</code> — trae lo que otro módulo exportó. Traes lo que necesitas, no el archivo entero.</li></ul><p>Dos formas de exportar que vas a reconocer:</p><ul><li><strong>Export nombrado</strong> — <code>export function calcularTotal(...)</code> o <code>export const IVA = 0.16;</code>. Al importar usas llaves y el nombre exacto: <code>import { calcularTotal, IVA } from \"./utilidades.js\"</code>.</li><li><strong>Export por defecto</strong> — <code>export default function calcularTotal(...)</code>. Un solo protagonista por módulo, y al importarlo le puedes poner cualquier nombre: <code>import calcularTotal from \"./utilidades.js\"</code>.</li></ul><p>Tres datos prácticos: para que el navegador los trate como módulos, el script se carga con <code>&lt;script type=\"module\" src=\"app.js\"&gt;&lt;/script&gt;</code>; los módulos corren en modo estricto automáticamente; y no funcionan abriendo el archivo directo (<code>file://</code>) — necesitan un servidor local, porque importar y exportar es comunicación entre archivos. Puedes arrancar uno con la extensión Live Server de VS Code.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Un módulo es un <strong>cajón de herramientas del taller</strong>. Tu proyecto es el taller completo; cada cajón (módulo) guarda sus herramientas y su orden interno. <code>export</code> es pegarle la etiqueta \"esta se presta\" a las piezas que sí compartes; sin etiqueta, nadie las pide. <code>import</code> es ir al cajón del vecino con la lista exacta: pides <code>{ calcularTotal, IVA }</code> y te las dan tal cual, sin abrir el cajón entero. Igual que el destructuring de m3-b13, importar es pedir solo lo que necesitas, no el archivo completo.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Dos archivos en la misma carpeta. Primero <code>utilidades.js</code>, que solo guarda y exporta:</p><pre><code>export const IVA = 0.16;\n\nexport function calcularTotal(precio, cantidad) {\n  return precio * cantidad;\n}</code></pre><p>Y <code>app.js</code>, que importa y usa:</p><pre><code>import { calcularTotal, IVA } from \"./utilidades.js\";\n\nconst subtotal = calcularTotal(499, 2);\nconsole.log(\"Total con IVA: $\" + (subtotal + subtotal * IVA));</code></pre><p>En el HTML, el script que carga la app lleva <code>type=\"module\"</code>:</p><pre><code>&lt;script type=\"module\" src=\"app.js\"&gt;&lt;/script&gt;</code></pre><p>Compara: sin módulos, <code>calcularTotal</code> viviría en un archivo global visible para todos. Con módulos, <code>utilidades.js</code> es un cajón: exporta sus dos piezas y nada más. Cuando leas un proyecto con estructura de carpetas, los <code>import</code> son el mapa de qué pieza usa qué otra — y así es exactamente como React y las apps grandes organizan su código.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Tengo este archivo que se está volviendo largo: [pega tu código]. Divídelo en módulos separándolo por responsabilidades, y dime qué exportar en cada archivo y qué importar en app.js. Usa export nombrado donde haya varias piezas y export default donde haya un protagonista claro.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "multiple", pregunta: "¿Qué hace export en un módulo?", opciones: ["Hace que el archivo se ejecute más rápido", "Marca qué piezas quedan disponibles para importar desde otros archivos", "Borra el código que no se usa", "Obliga a que el archivo sea de una sola línea"], correcta: 1 },
+              { tipo: "completar", frase: "Con export ____ importas usando llaves y el nombre exacto; con export ____ le puedes poner el nombre que quieras al importar.", banco: ["nombrado", "default", "privado", "global"], respuestas: ["nombrado", "default"] },
+              { tipo: "relacionar", pares: [["export function x", "Comparte una función con nombre"], ["export default x", "Comparte un protagonista único"], ["import { x }", "Trae la pieza con su nombre exacto"], ["type=\"module\"", "Le dice al navegador que el script es un módulo"]] },
+              { tipo: "vf", afirmacion: "Un archivo con import y export funciona abriéndolo directo desde el disco (file://), sin necesidad de servidor.", correcta: false, explicacion: "los módulos necesitan un servidor local: importar y exportar es comunicación entre archivos, y file:// la bloquea." },
+              { tipo: "quehace", codigo: "// utilidades.js\nexport const IVA = 0.16;\n\n// app.js\nimport { IVA } from \"./utilidades.js\";\nconsole.log(IVA);", pregunta: "¿Qué imprime la consola?", opciones: ["0.16", "Un error: no se puede importar solo una pieza", "IVA", "undefined"], correcta: 0 }
+            ]
+          },
+          {
+            id: "m3-b27",
+            titulo: "¿Qué es un framework y por qué existen?",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Ya sabes construir páginas a mano: HTML, CSS y JavaScript puro (m3-b1 a m3-b25). Eso funciona perfecto mientras el proyecto es chico. Pero cuando una app crece —muchas páginas, datos que cambian, decenas de componentes— el código suelto se vuelve un caos: cada quien ordena como quiere, y repetir y mantener es un dolor. Un <strong>framework</strong> es la respuesta: un <strong>esqueleto con reglas ya decididas</strong> que te da la estructura, las herramientas comunes y la forma de trabajar, para que tú solo llenes las partes que hacen único a TU proyecto.</p><p>Tres cosas que un framework te da:</p><ul><li><strong>Estructura y convenciones</strong> — ya hay carpetas y reglas de cómo ordenar: nadie reinventa el acomodo.</li><li><strong>Herramientas listas</strong> — manejo de páginas (routing), actualizar la pantalla cuando cambian datos, componentes reutilizables.</li><li><strong>Estándares compartidos</strong> — el código que genera la IA y otros equipos se parece al tuyo, porque todos siguen el mismo manual.</li></ul><p>Distinción que te hará quedar bien en cualquier conversación: una <strong>librería</strong> es una herramienta que tú llamas cuando la necesitas (<em>you call the library</em>); un <strong>framework</strong> es la estructura que te llama a ti (<em>the framework calls your code</em>). En el primer caso decides el rumbo; en el segundo, aceptas el reglamento del juego. Los nombres que vas a oír: <strong>React</strong> (m3-b28) es, en rigor, una librería de interfaces; <strong>Next.js</strong> (m3-b29) es un framework construido sobre ella; Vue y Angular son otros frameworks.</p><p>La pregunta correcta no es \"¿framework sí o no?\" sino \"<strong>¿a qué escala vale la pena?</strong>\" — y a eso le entras en m3-c23.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Un framework es un <strong>juego de mesa con reglamento oficial</strong>. Si juegas ajedrez con tus primos, cada partida se arregla \"a mano\": las reglas varían, falta una pieza y la suplen con una moneda. Eso es HTML + JavaScript puro: flexible, pero cada mesa juega distinto. El framework es el reglamento impreso: tablero estandarizado, piezas definidas, turnos claros. Ya no discutes las reglas — las aprendes una vez y te concentras en jugar bien. Y la IA, que también leyó el reglamento, juega contigo sin explicarte cada movimiento.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Para que lo reconozcas cuando lo veas, así se ve la misma idea —\"una tarjeta de producto\"— con y sin framework. Sin framework, todo a mano (m3-b14):</p><pre><code>const lista = document.querySelector(\"#productos\");\nlista.innerHTML = productos\n  .map(p =&gt; `&lt;li&gt;${p.nombre} — $${p.precio}&lt;/li&gt;`)\n  .join(\"\");</code></pre><p>Con un framework de componentes, la misma tarjeta se declara como una pieza reutilizable (es JavaScript con una extensión llamada JSX — no lo escribes, solo lo reconoces):</p><pre><code>function Tarjeta({ nombre, precio }) {\n  return &lt;li&gt;{nombre} — ${precio}&lt;/li&gt;;\n}</code></pre><p>La diferencia no está en la pantalla: está en <strong>cómo se organiza el trabajo</strong>. Sin framework decides todo tú (y repites todo tú). Con framework, la pieza se usa, se reusa y se mantiene sola. Lo bueno: todo lo de m3-b13 y m3-b14 —objetos, map y template literals— sigue sirviendo. Los datos viajan igual; solo cambia el empaque.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Estoy por construir [describe tu proyecto: qué hace, cuántas páginas, si necesita SEO o datos en vivo]. Dime si me conviene HTML + JavaScript puro, una librería como React o un framework como Next.js, y explícame en tres líneas por qué. Si me recomiendas framework, dime qué necesito aprender a reconocer antes de empezar.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "multiple", pregunta: "¿Para qué se inventaron los frameworks?", opciones: ["Para que las páginas carguen más lento", "Para ordenar proyectos que crecen: estructura, reglas y herramientas comunes", "Para reemplazar a HTML y CSS", "Para que solo las empresas grandes puedan hacer webs"], correcta: 1 },
+              { tipo: "relacionar", pares: [["Librería", "Herramienta que tú llamas cuando la necesitas"], ["Framework", "Estructura que llama a tu código"], ["Routing", "Manejo de páginas dentro de la app"], ["Convenciones", "Reglas de cómo ordenar el código"]] },
+              { tipo: "vf", afirmacion: "Adoptar un framework obliga a cambiar tus datos a un formato especial que solo ese framework entiende.", correcta: false, explicacion: "los datos (objetos y arreglos, m3-b13) viajan igual; el framework cambia cómo se organiza el código, no el formato de los datos." },
+              { tipo: "completar", frase: "En una librería tú llamas a la ____; en un framework, el framework ____ a tu código.", banco: ["herramienta", "llama", "ignora", "escribe"], respuestas: ["herramienta", "llama"] },
+              { tipo: "ordenar", instruccion: "Ordena cuándo conviene pasar de HTML + JavaScript puro a un framework:", elementos: ["Una landing estática de una página, sin planes de crecer", "Empiezas a repetir el mismo bloque de código en varios lugares", "Agregas una segunda página con datos que cambian en vivo", "Divides la interfaz en componentes reutilizables", "Adoptas un framework con reglas y herramientas listas"] }
+            ]
+          },
+          {
+            id: "m3-b28",
+            titulo: "React en concepto: componentes, props y estado",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p><strong>React</strong> es la librería de interfaces más usada del mundo (creada por Meta) y la base de apps como Instagram o WhatsApp Web. Su idea central cabe en tres palabras: <strong>componentes, props y estado</strong>. Con esas tres se construye casi todo React, y tú solo necesitas <em>reconocerlas</em>.</p><ul><li><strong>Componente</strong> — una pieza reutilizable de interfaz. En React, un componente es una función que regresa la descripción de su parte de la pantalla. Es la evolución de lo que hiciste a mano en m3-b14: ahí convertías un arreglo en HTML con <code>map</code>; aquí declaras la \"receta\" de la tarjeta una vez y la usas mil veces.</li><li><strong>Props</strong> (de <em>properties</em>) — los datos de entrada que le pasas a un componente desde afuera. Son como los parámetros de una función (m3-b9): el componente los recibe y los usa, pero <strong>no puede modificarlos</strong>. El padre manda; el hijo solo lee.</li><li><strong>Estado</strong> (state) — los datos que cambian con el tiempo y que el componente controla él mismo: un contador, lo que está escrito en un input, si un menú está abierto. Cuando el estado cambia, <strong>React vuelve a pintar el componente solo</strong> — olvídate de seleccionar con <code>querySelector</code> y repintar a mano: la pantalla es un reflejo del estado (m3-b15).</li></ul><p>El flujo que ordena todo: los datos bajan por <strong>props</strong> (de padre a hijo), los cambios nacen en el <strong>estado</strong>, y los <strong>componentes</strong> se rearman solos cuando algo cambia.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Un componente es una <strong>máquina expendedora</strong>. La máquina (el componente) tiene una receta fija: botón, y por dentro decide qué sacar. Las <strong>props</strong> son lo que alguien le carga desde afuera: cambias el precio o el nombre del producto sin abrir la máquina. El <strong>estado</strong> es el contador interno: cuántos quedan, si ya está vacía. Y lo clave: cuando el contador cambia —te llevas un producto— la máquina <strong>actualiza su vitrina sola</strong>. Nadie va con un <code>querySelector</code> a quitar el letrero \"Agotado\": el cambio de estado <em>es</em> el cambio en pantalla.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Un componente de contador en React — léelo, no lo escribas (es JavaScript con JSX, la extensión que mezcla HTML):</p><pre><code>function Contador({ inicio }) {\n  const [cuenta, setCuenta] = React.useState(inicio);\n\n  return (\n    &lt;button onClick={() =&gt; setCuenta(cuenta + 1)}&gt;\n      Clics: {cuenta}\n    &lt;/button&gt;\n  );\n}</code></pre><p>Identifica las tres piezas: <code>{ inicio }</code> es una <strong>prop</strong> — viene de afuera y el componente no la modifica. <code>React.useState(inicio)</code> crea el <strong>estado</strong>: <code>cuenta</code> es el valor actual y <code>setCuenta</code> la función para cambiarlo. El <code>onClick</code> es el evento de m3-b6, pero en vez de tocar el DOM con <code>classList</code> (m3-b5), llamas <code>setCuenta</code> y React repinta solo. Compara con tu versión a mano de m3-b15: ahí tú decidías cuándo mostrar; aquí el cambio de estado lo decide. Reconocer ese patrón — <code>useState</code>, una variable y su función para cambiarla — te basta para leer cualquier componente.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Voy a dirigir con IA los cambios de un proyecto en React. Toma este componente: [pega el código]. Explícamelo en español como si yo fuera el product owner: cuáles son los componentes, cuáles las props (de dónde vienen y qué pasan) y cuál es el estado (qué cambia con el tiempo y qué efecto tiene en pantalla). No me enseñes a escribir React: enséñame a leerlo.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "multiple", pregunta: "¿Qué es un componente en React?", opciones: ["Una base de datos", "Una pieza reutilizable de interfaz, declarada como función", "Un archivo CSS", "Un tipo de servidor"], correcta: 1 },
+              { tipo: "relacionar", pares: [["Props", "Datos de entrada que un componente no puede modificar"], ["Estado", "Datos que cambian con el tiempo dentro del componente"], ["Componente", "Pieza reutilizable de interfaz"], ["Re-render", "React repinta solo cuando el estado cambia"]] },
+              { tipo: "vf", afirmacion: "Un componente hijo puede modificar directamente las props que recibe de su padre.", correcta: false, explicacion: "las props son de solo lectura: el padre las manda y el hijo solo las usa; los cambios viven en el estado." },
+              { tipo: "completar", frase: "En React, los datos bajan de padre a hijo por ____, y cuando el ____ cambia, el componente se vuelve a pintar solo.", banco: ["props", "estado", "clase", "servidor"], respuestas: ["props", "estado"] },
+              { tipo: "quehace", codigo: "function Saludo({ nombre }) {\n  return &lt;p&gt;Hola, {nombre}&lt;/p&gt;;\n}", pregunta: "Le pasas la prop nombre=\"Ana\". ¿Qué muestra?", opciones: ["Hola, Ana", "Hola, {nombre}", "Un error: no hay estado", "Nada: las props no se usan para texto"], correcta: 0 }
+            ]
+          },
+          {
+            id: "m3-b29",
+            titulo: "Next.js en concepto: cuándo vale la pena y cuándo no",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p><strong>Next.js</strong> es un framework construido <em>sobre</em> React (m3-b28): toma componentes, props y estado, y les suma lo que una app seria necesita — <strong>rutas por archivos</strong> (cada página es un archivo o carpeta de tu proyecto), <strong>renderizado en el servidor</strong> (SSR), <strong>generación estática</strong> (SSG), optimización de imágenes y la opción de tener una API propia sin levantar otro proyecto.</p><p>¿Por qué existe? Porque las apps de React \"puras\" tienen dos costos: la página <strong>se arma en el navegador</strong> (el usuario ve un blanco mientras carga el JavaScript) y <strong>los buscadores la leen peor</strong>. Cuando tu contenido depende de aparecer en Google —tienda, blog, sitio de servicios— eso importa. Next.js cocina la página antes: la arma en el servidor y la entrega lista (SSR), o la pre-genera en el momento del build (SSG). El usuario recibe HTML ya servido: rápido y legible para Google.</p><p>La decisión, sin misterio:</p><ul><li><strong>Vale la pena cuando</strong> — el proyecto tiene varias páginas, necesita SEO, carga datos en vivo o va a crecer.</li><li><strong>No vale cuando</strong> — es una landing simple de una página, un prototipo rápido o una app interna sin SEO: ahí React simple o hasta HTML + JS puro (m3-b1 a m3-b25) alcanzan y pesan menos.</li></ul><p>Regla que te ahorra dramas: <strong>más framework = más potencia, pero también más que aprender y configurar</strong>. Elige la herramienta que la escala de TU proyecto merece, no la más famosa. (Y la pregunta de cuándo basta HTML plano está en m3-c23.)</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Next.js es el <strong>concierge de un hotel</strong>. Con React puro, el huésped llega a la habitación y arma el mueble (el navegador arma la página). Con Next.js, el concierge te lo deja armado: la página llega lista (SSR) o pre-armada de fábrica para cada habitación (SSG — se genera una vez y se sirve a todos). El concierge también conoce las rutas del hotel (routing) y tiene su propia cocina (API). ¿Cuándo lo contratas? Cuando tu hotel es grande, los huéspedes llegan a todas horas y la reseña del hotel (el SEO) lo es todo. Si tu proyecto es un puesto de café de una página, el concierge te estorba y cuesta. El tamaño del proyecto decide, no la moda.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>En Next.js, las páginas se declaran con archivos: cada archivo dentro de <code>app</code> es una URL. Reconócelo, no lo configures:</p><pre><code>app/\n  index.jsx        →  /\n  tienda.jsx       →  /tienda\n  blog/[slug].jsx  →  /blog/cualquier-titulo</code></pre><p>El corchete <code>[slug]</code> es un comodín: una sola plantilla sirve miles de artículos. Y esta es la diferencia que hace al SEO: la página que el usuario recibe ya trae el contenido puesto, en vez de una hoja en blanco que el navegador llena después:</p><pre><code>// con Next.js: llega cocinada\n&lt;h1&gt;Audífonos a $499&lt;/h1&gt;\n&lt;p&gt;3 disponibles&lt;/p&gt;\n\n// React puro: el navegador tiene que armarla\n&lt;div id=\"root\"&gt;&lt;/div&gt;</code></pre><p>Para Google y para el usuario con internet lenta, la primera es oro: contenido visible al instante. Cuando dirijas un proyecto con Next.js, tu trabajo no es escribirlo: es saber <em>cuándo</em> pedirlo y <em>por qué</em> — esa pregunta se la haces a la IA antes de empezar.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Voy a construir [describe tu proyecto: tipo de negocio, cuántas páginas, si te importa aparecer en Google, si los datos cambian a cada rato]. Dado lo que ya sé de HTML, CSS y JavaScript: ¿me conviene HTML puro, React simple o Next.js? Dame tu veredicto con tres razones, y si me conviene Next.js, dime exactamente qué estructura y archivos pedirle a la IA para arrancar. Si no me conviene, dime qué me ahorro al no usarlo.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "multiple", pregunta: "¿Qué le agrega Next.js a React?", opciones: ["Colores y fuentes", "Rutas por archivos, renderizado en servidor y generación estática", "Una base de datos obligatoria", "Un lenguaje de programación nuevo"], correcta: 1 },
+              { tipo: "vf", afirmacion: "Para una landing de una sola página, sin SEO, un framework completo como Next.js casi siempre es sobrado: HTML + JS puro o React simple alcanzan.", correcta: true, explicacion: "más framework = más potencia pero también más complejidad; la escala del proyecto decide." },
+              { tipo: "completar", frase: "El renderizado en ____ entrega la página ya cocinada; la generación ____ la pre-genera en el build y la sirve a todos igual.", banco: ["servidor", "estática", "cliente", "manual"], respuestas: ["servidor", "estática"] },
+              { tipo: "relacionar", pares: [["Rutas por archivos", "Cada archivo en app/ es una URL"], ["SSR", "La página se arma en el servidor y llega lista"], ["SSG", "Se pre-genera una vez y se sirve a todos"], ["SEO", "Que Google encuentre y lea tu contenido"]] },
+              { tipo: "ordenar", instruccion: "Ordena el proceso para decidir si tu proyecto usa framework:", elementos: ["Describe el proyecto: páginas, SEO, datos en vivo", "Pregunta a la IA si conviene HTML puro, React o Next.js", "Pide tres razones del veredicto", "Si es Next.js, pide la estructura de archivos", "Compara lo que ganas contra la complejidad extra"] }
+            ]
+          },
+          {
+            id: "m3-b30",
+            titulo: "Repaso integrador de JavaScript (mega-quiz jugable)",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Llegaste al final de Materia B. Antes de seguir, cierra el círculo: en estas 29 lecciones recorriste la historia completa de una página web viva — de dónde vive el JavaScript (m3-b1), cómo agarrar y cambiar el DOM (m3-b3 a m3-b5), cómo reaccionar a clics y formularios (m3-b6 a m3-b8), cómo organizar datos con arreglos y objetos (m3-b10 a m3-b13), cómo convertirlos en HTML (m3-b14), cómo pedirlos a un servidor (m3-b18 a m3-b21), cómo manejar errores y depurarlos (m3-b22 a m3-b25), cómo partir tu código en módulos (m3-b26) y por qué existen los frameworks (m3-b27 a m3-b29).</p><p>Este mega-quiz junta todo para que descubras <em>qué ya reconoces sin esfuerzo</em> y <em>qué conviene repasar</em>. La meta no es memorizar: es que cada pregunta te caiga como déjà vu — \"esto lo vi, esto lo usé\". Si alguna te cuesta, la lección correspondiente está a un clic. Y tu prueba final es la del mundo real: dirigir a la IA un proyecto pequeño y entender el código que te devuelve, línea por línea. Eso es exactamente lo que hace el próximo bloque de práctica.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Este repaso es el <strong>vuelo de verificación del piloto</strong>: antes de volar solo, el instructor te hace pasar por cada instrumento —subir, virar, aterrizar— para confirmar que todo responde. No te pide la física del avión de memoria (memorizar): te pide que <em>hagas</em> los movimientos y reconozcas qué hace cada uno. Cada pregunta de este quiz es un instrumento. Las que respondas al vuelo, son tuyas. Las que te hagan dudar, son tu lista de repaso antes del vuelo real: tu primer proyecto completo dirigido con IA.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>El clásico que junta casi todo el mes: pedir datos, transformarlos y pintarlos — la app que ya armaste pieza por pieza en m3-b21:</p><pre><code>async function cargarProductos() {\n  try {\n    const res = await fetch(\"https://api.example.com/productos\");\n    if (!res.ok) throw new Error(\"Servidor respondió \" + res.status);\n\n    const productos = await res.json();\n    document.querySelector(\"#lista\").innerHTML = productos\n      .map(({ nombre, precio }) =&gt; `&lt;li&gt;${nombre} — $${precio}&lt;/li&gt;`)\n      .join(\"\");\n  } catch (error) {\n    document.querySelector(\"#estado\").textContent = \"Falló: \" + error.message;\n  }\n}\n\ncargarProductos();</code></pre><p>Reconoce cada pieza: <code>async/await</code> (m3-b20), <code>fetch</code> (m3-b21), <code>res.ok</code> y <code>try/catch</code> (m3-b22), <code>res.json()</code> (m3-b17), destructuring (m3-b13), map + template literal (m3-b12 y m3-b14), <code>querySelector</code> (m3-b3) y <code>textContent</code> vs <code>innerHTML</code> (m3-b4). Si lees esa función completa sin dudar, ya estás listo para dirigir proyectos. Si alguna pieza te saca, esa es tu lección a repasar.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Autoevaluación: díselo a la IA",
+                html: "<blockquote><p>\"Voy a autoevaluarme en JavaScript del navegador. Hazme 8 preguntas cortas en español, tipo quiz, mezclando: seleccionar el DOM, eventos, arreglos y objetos, map y template literals, fetch y async/await, módulos, y conceptos de React y Next.js. Hazlas una por una, espera mi respuesta en cada una, y al final dime en cuáles me equivoqué y qué lección me conviene repasar. No expliques la respuesta antes de que yo responda.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "multiple", pregunta: "Quieres cambiar el texto de un párrafo con id \"mensaje\". ¿Cuál línea lo hace?", opciones: ["document.querySelector(\"#mensaje\").textContent = \"Hola\";", "document.querySelector(\".mensaje\").innerHTML = \"Hola\";", "mensaje.textContent = \"Hola\";", "document.getElementById(\"mensaje\") = \"Hola\";"], correcta: 0 },
+              { tipo: "completar", frase: "Para recorrer un arreglo y transformarlo usas ____; para quedarte con los que pasan una prueba, ____; y para buscar el primero que cumpla, ____.", banco: ["map", "filter", "find", "forEach"], respuestas: ["map", "filter", "find"] },
+              { tipo: "relacionar", pares: [["querySelector(\"#x\")", "Primer elemento que coincide con el selector"], ["addEventListener(\"click\", fn)", "Reaccionar a un clic"], ["JSON.stringify", "Convertir un objeto a texto JSON"], ["localStorage.setItem", "Guardar algo entre visitas"]] },
+              { tipo: "vf", afirmacion: "fetch se rechaza automáticamente cuando el servidor responde un 404, así que no hace falta revisar la respuesta.", correcta: false, explicacion: "fetch solo se rechaza si la conexión falla; un 404 o 500 llega igual y se revisa con res.ok (m3-b22)." },
+              { tipo: "ordenar", instruccion: "Ordena el flujo de una app que carga y pinta productos:", elementos: ["Se llama a cargarProductos()", "fetch pide los datos a la API", "res.json() convierte el texto en datos", "map + template literals arman el HTML", "innerHTML pinta la lista en pantalla"] },
+              { tipo: "quehace", codigo: "const productos = [\n  { nombre: \"Audífonos\", precio: 499 },\n  { nombre: \"Teclado\", precio: 899 },\n  { nombre: \"Mouse\", precio: 349 }\n];\n\nconst precios = productos\n  .filter(p =&gt; p.precio &gt; 400)\n  .map(p =&gt; p.nombre);\n\nconsole.log(precios);", pregunta: "¿Qué imprime la consola?", opciones: ["[\"Audífonos\", \"Teclado\", \"Mouse\"]", "[\"Audífonos\", \"Teclado\"]", "[\"Teclado\", \"Mouse\"]", "[\"Mouse\", \"Audífonos\"]"], correcta: 1 },
+              { tipo: "multiple", pregunta: "En React, los datos que bajan del padre al hijo y que el hijo no modifica se llaman…", opciones: ["Estado", "Props", "Módulos", "Eventos"], correcta: 1 },
+              { tipo: "completar", frase: "Next.js cocina la página en el ____ o la pre-genera en el ____, para que llegue lista al navegador y a Google.", banco: ["servidor", "build", "navegador", "cliente"], respuestas: ["servidor", "build"] }
+            ]
+          },
       ] },
       "c": { nombre: "Construye con IA III", icono: "🖼", lecciones: [
           { id: "m3-c1", titulo: "El brief de interfaz: describir lo que todavía no existe", proximamente: true },
