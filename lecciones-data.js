@@ -4,6 +4,7 @@ window.DEV_SYSTEM_LECCIONES = {
     materias: {
       "a": {
         nombre: "La Máquina",
+        codigo: "FND-101",
         icono: "🖥",
         lecciones: [
           {
@@ -1033,6 +1034,7 @@ window.DEV_SYSTEM_LECCIONES = {
       },
       "b": {
         nombre: "El Idioma del Código",
+        codigo: "FND-102",
         icono: "🗣",
         lecciones: [
           {
@@ -2062,6 +2064,7 @@ window.DEV_SYSTEM_LECCIONES = {
       },
       "c": {
         nombre: "Construye con IA",
+        codigo: "FND-103",
         icono: "🤖",
         lecciones: [
           {
@@ -3096,6 +3099,7 @@ window.DEV_SYSTEM_LECCIONES = {
     materias: {
       "a": {
         nombre: "Git: la máquina del tiempo",
+        codigo: "VCS-201",
         icono: "⏳",
         lecciones: [
           {
@@ -4125,6 +4129,7 @@ window.DEV_SYSTEM_LECCIONES = {
       },
       "b": {
         nombre: "GitHub: la plaza pública del código",
+        codigo: "VCS-202",
         icono: "🐙",
         lecciones: [
           {
@@ -5154,6 +5159,7 @@ window.DEV_SYSTEM_LECCIONES = {
       },
       "c": {
         nombre: "Construye con IA II",
+        codigo: "VCS-203",
         icono: "🔧",
         lecciones: [
           {
@@ -6186,7 +6192,7 @@ window.DEV_SYSTEM_LECCIONES = {
   "m3": {
     titulo: "La web por dentro: interfaces que se ven bien y funcionan",
     materias: {
-      "a": { nombre: "Maquetación: HTML y CSS", icono: "🎨", lecciones: [
+      "a": { nombre: "Maquetación: HTML y CSS", codigo: "WEB-301", icono: "🎨", lecciones: [
           {
             id: "m3-a1",
             titulo: "El navegador por dentro: cómo se pinta una página",
@@ -7211,7 +7217,7 @@ window.DEV_SYSTEM_LECCIONES = {
             ]
           },
       ] },
-      "b": { nombre: "JavaScript en el navegador", icono: "⚡", lecciones: [
+      "b": { nombre: "JavaScript en el navegador", codigo: "WEB-302", icono: "⚡", lecciones: [
           {
             id: "m3-b1",
             titulo: "Dónde vive el JavaScript de una página y cuándo se ejecuta",
@@ -8236,7 +8242,7 @@ window.DEV_SYSTEM_LECCIONES = {
             ]
           },
       ] },
-      "c": { nombre: "Construye con IA III", icono: "🖼", lecciones: [
+      "c": { nombre: "Construye con IA III", codigo: "WEB-303", icono: "🖼", lecciones: [
           {
             id: "m3-c1",
             titulo: "El brief de interfaz: describir lo que todavía no existe",
@@ -9260,6 +9266,107 @@ window.DEV_SYSTEM_LECCIONES = {
               { tipo: "vf", afirmacion: "El proyecto final 'publicado y versionado' significa que el sitio está en una URL pública y el código está en un repositorio de Git con un tag de lanzamiento como v1.0.0.", correcta: true, explicacion: "las dos entregas son la URL del sitio y la del repositorio (Mes 2): el tag marca la versión terminada para siempre." }
             ]
           },
+      ] }
+    }
+  },
+  "m4": {
+    titulo: "El motor por dentro: backend, datos y seguridad",
+    materias: {
+      "a": { nombre: "Del navegador al servidor", codigo: "BCK-401", icono: "🛰", lecciones: [
+          { id: "m4-a1", titulo: "¿Qué pasa realmente cuando tu app pide datos?", proximamente: true },
+          { id: "m4-a2", titulo: "Cliente y servidor: quién hace qué y por qué importa", proximamente: true },
+          { id: "m4-a3", titulo: "HTTP por dentro: la conversación completa", proximamente: true },
+          { id: "m4-a4", titulo: "Los métodos: GET, POST, PUT, PATCH y DELETE", proximamente: true },
+          { id: "m4-a5", titulo: "Códigos de estado: 200, 401, 404, 500 y los que vas a ver", proximamente: true },
+          { id: "m4-a6", titulo: "Headers: los metadatos de cada petición", proximamente: true },
+          { id: "m4-a7", titulo: "El cuerpo de la petición: JSON en acción", proximamente: true },
+          { id: "m4-a8", titulo: "¿Qué es una API? (y por qué hoy todo es una API)", proximamente: true },
+          { id: "m4-a9", titulo: "REST: el estilo que domina la web", proximamente: true },
+          { id: "m4-a10", titulo: "Endpoints: diseñar las ventanillas de tu sistema", proximamente: true },
+          { id: "m4-a11", titulo: "Parámetros: query, path y body", proximamente: true },
+          { id: "m4-a12", titulo: "Probar una API sin escribir código", proximamente: true },
+          { id: "m4-a13", titulo: "Autenticación I: demostrar quién eres", proximamente: true },
+          { id: "m4-a14", titulo: "Autenticación II: tokens y JWT explicados sin misterio", proximamente: true },
+          { id: "m4-a15", titulo: "Autorización: una cosa es quién eres y otra qué puedes hacer", proximamente: true },
+          { id: "m4-a16", titulo: "Contraseñas: por qué nunca se guardan tal cual", proximamente: true },
+          { id: "m4-a17", titulo: "Sesiones vs tokens: dos formas de recordarte", proximamente: true },
+          { id: "m4-a18", titulo: "CORS: el error que todo principiante sufre", proximamente: true },
+          { id: "m4-a19", titulo: "Variables de entorno: dónde viven los secretos", proximamente: true },
+          { id: "m4-a20", titulo: "Rate limiting: protegerte del abuso", proximamente: true },
+          { id: "m4-a21", titulo: "Validación: nunca confíes en lo que manda el cliente", proximamente: true },
+          { id: "m4-a22", titulo: "Webhooks: cuando el servidor te busca a ti", proximamente: true },
+          { id: "m4-a23", titulo: "Serverless: backend sin administrar servidores", proximamente: true },
+          { id: "m4-a24", titulo: "Node.js y Express en concepto", proximamente: true },
+          { id: "m4-a25", titulo: "Logs: los ojos de tu servidor", proximamente: true },
+          { id: "m4-a26", titulo: "Errores: cómo responder cuando algo falla", proximamente: true },
+          { id: "m4-a27", titulo: "Documentar tu API para que otros (y tu IA) la entiendan", proximamente: true },
+          { id: "m4-a28", titulo: "Versionado: cambiar sin romperle a nadie", proximamente: true },
+          { id: "m4-a29", titulo: "Seguridad: las 5 fallas que más dinero cuestan", proximamente: true },
+          { id: "m4-a30", titulo: "Repaso integrador del servidor (mega-quiz jugable)", proximamente: true },
+      ] },
+      "b": { nombre: "Bases de datos", codigo: "DAT-402", icono: "🗄", lecciones: [
+          { id: "m4-b1", titulo: "¿Qué es una base de datos? (y por qué no es un Excel grande)", proximamente: true },
+          { id: "m4-b2", titulo: "Relacional vs NoSQL: cuándo conviene cada una", proximamente: true },
+          { id: "m4-b3", titulo: "Tablas, filas y columnas: el vocabulario base", proximamente: true },
+          { id: "m4-b4", titulo: "Tipos de datos: elegir bien desde el principio", proximamente: true },
+          { id: "m4-b5", titulo: "Llave primaria: la identidad de cada registro", proximamente: true },
+          { id: "m4-b6", titulo: "Relaciones uno a muchos", proximamente: true },
+          { id: "m4-b7", titulo: "Relaciones muchos a muchos", proximamente: true },
+          { id: "m4-b8", titulo: "Llaves foráneas y la integridad de tus datos", proximamente: true },
+          { id: "m4-b9", titulo: "SELECT: traer exactamente lo que necesitas", proximamente: true },
+          { id: "m4-b10", titulo: "WHERE: filtrar con precisión", proximamente: true },
+          { id: "m4-b11", titulo: "ORDER BY y LIMIT: ordenar y acotar", proximamente: true },
+          { id: "m4-b12", titulo: "INSERT, UPDATE, DELETE: modificar con cuidado", proximamente: true },
+          { id: "m4-b13", titulo: "JOIN: unir tablas para responder preguntas reales", proximamente: true },
+          { id: "m4-b14", titulo: "Agregación: COUNT, SUM, AVG", proximamente: true },
+          { id: "m4-b15", titulo: "GROUP BY: resumir información", proximamente: true },
+          { id: "m4-b16", titulo: "Índices: por qué tu consulta tarda y cómo se arregla", proximamente: true },
+          { id: "m4-b17", titulo: "Normalización sin dolor", proximamente: true },
+          { id: "m4-b18", titulo: "Transacciones: todo o nada", proximamente: true },
+          { id: "m4-b19", titulo: "Migraciones: cambiar la estructura sin romper lo que existe", proximamente: true },
+          { id: "m4-b20", titulo: "Respaldos: la lección que casi nadie aprende a tiempo", proximamente: true },
+          { id: "m4-b21", titulo: "Supabase por dentro: qué te da exactamente", proximamente: true },
+          { id: "m4-b22", titulo: "Row Level Security: quién puede ver cada fila", proximamente: true },
+          { id: "m4-b23", titulo: "Storage: guardar archivos e imágenes", proximamente: true },
+          { id: "m4-b24", titulo: "Auth de Supabase: usuarios sin construirlo tú", proximamente: true },
+          { id: "m4-b25", titulo: "Realtime: datos que se actualizan solos", proximamente: true },
+          { id: "m4-b26", titulo: "Consultar la base desde el frontend", proximamente: true },
+          { id: "m4-b27", titulo: "Modelar tu primer sistema de principio a fin", proximamente: true },
+          { id: "m4-b28", titulo: "Los 6 errores de modelado que se pagan caro después", proximamente: true },
+          { id: "m4-b29", titulo: "Cuándo NO necesitas una base de datos", proximamente: true },
+          { id: "m4-b30", titulo: "Repaso integrador de datos (mega-quiz jugable)", proximamente: true },
+      ] },
+      "c": { nombre: "Construye con IA IV", codigo: "PRA-403", icono: "⚙", lecciones: [
+          { id: "m4-c1", titulo: "El brief de backend: describir un sistema que recuerda", proximamente: true },
+          { id: "m4-c2", titulo: "PRÁCTICA: diseñar el modelo de datos de tu negocio", proximamente: true },
+          { id: "m4-c3", titulo: "PRÁCTICA: crear tu proyecto en Supabase", proximamente: true },
+          { id: "m4-c4", titulo: "PRÁCTICA: crear tus primeras tablas dirigiendo a la IA", proximamente: true },
+          { id: "m4-c5", titulo: "Leer el SQL que la IA generó, línea por línea", proximamente: true },
+          { id: "m4-c6", titulo: "PRÁCTICA: insertar y consultar tus primeros datos", proximamente: true },
+          { id: "m4-c7", titulo: "PRÁCTICA: conectar tu sitio del Módulo 3 a la base", proximamente: true },
+          { id: "m4-c8", titulo: "PRÁCTICA: un formulario que guarda de verdad", proximamente: true },
+          { id: "m4-c9", titulo: "PRÁCTICA: mostrar datos reales en tu interfaz", proximamente: true },
+          { id: "m4-c10", titulo: "Seguridad con IA: lo que nunca debes compartirle", proximamente: true },
+          { id: "m4-c11", titulo: "PRÁCTICA: activar RLS y comprobar qué protege", proximamente: true },
+          { id: "m4-c12", titulo: "PRÁCTICA: login de usuarios en tu sitio", proximamente: true },
+          { id: "m4-c13", titulo: "PRÁCTICA: contenido solo para usuarios registrados", proximamente: true },
+          { id: "m4-c14", titulo: "PRÁCTICA: subir imágenes a Storage", proximamente: true },
+          { id: "m4-c15", titulo: "Pedirle a la IA una función de servidor", proximamente: true },
+          { id: "m4-c16", titulo: "PRÁCTICA: tu primera función serverless", proximamente: true },
+          { id: "m4-c17", titulo: "PRÁCTICA: consumir una API externa desde el servidor", proximamente: true },
+          { id: "m4-c18", titulo: "Qué va en el navegador y qué va en el servidor", proximamente: true },
+          { id: "m4-c19", titulo: "PRÁCTICA: panel de administración para tu negocio", proximamente: true },
+          { id: "m4-c20", titulo: "PRÁCTICA: buscador que consulta la base de datos", proximamente: true },
+          { id: "m4-c21", titulo: "Depurar errores de backend con IA", proximamente: true },
+          { id: "m4-c22", titulo: "PRÁCTICA: leer logs y encontrar la causa real", proximamente: true },
+          { id: "m4-c23", titulo: "PRÁCTICA: dejar tus respaldos automatizados", proximamente: true },
+          { id: "m4-c24", titulo: "PRÁCTICA: exportar todos tus datos", proximamente: true },
+          { id: "m4-c25", titulo: "Costos: qué se paga realmente en un backend", proximamente: true },
+          { id: "m4-c26", titulo: "PRÁCTICA: medir y arreglar una consulta lenta", proximamente: true },
+          { id: "m4-c27", titulo: "Migrar datos de un lado a otro sin perder nada", proximamente: true },
+          { id: "m4-c28", titulo: "Tu flujo completo de backend dirigido con IA", proximamente: true },
+          { id: "m4-c29", titulo: "El sistema completo: interfaz + servidor + datos", proximamente: true },
+          { id: "m4-c30", titulo: "Repaso + arranque del proyecto final del módulo", proximamente: true },
       ] }
     }
   }
