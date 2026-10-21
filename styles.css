@@ -324,25 +324,68 @@ p { color: var(--text-2); }
 .continuar-card .asignatura-codigo { font-family: var(--font-mono); font-size: 0.75rem; color: var(--muted); }
 .continuar-card h2 { margin-top: 0.2rem; }
 
-/* Roadmap (legacy, conservado) */
-.roadmap { margin-top: 0.8rem; }
-.roadmap-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; }
-.roadmap-col { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 1rem; min-width: 0; }
-.roadmap-col h3 { font-size: 0.92rem; margin-bottom: 0.7rem; display: flex; align-items: center; gap: 0.4rem; }
-.roadmap-nodes { display: flex; flex-direction: column; gap: 0.2rem; }
-.roadmap-node { display: grid; grid-template-columns: 12px 32px 1fr; gap: 0.5rem; align-items: center; padding: 0.4rem 0.4rem; border-radius: var(--radius); font-size: 0.8rem; border-left: 2px solid var(--line); margin-left: 4px; transition: background 0.12s; }
+/* Plan de estudios — rejilla de módulos */
+.modulos-grid { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 0.6rem; margin: 0.8rem 0 1.4rem; }
+@media (max-width: 1080px) { .modulos-grid { grid-template-columns: repeat(3, minmax(0,1fr)); } }
+@media (max-width: 760px)  { .modulos-grid { grid-template-columns: repeat(2, minmax(0,1fr)); } }
+
+.modulo-card {
+  position: relative; text-align: left; cursor: pointer;
+  background: var(--surface); border: 1px solid var(--line);
+  border-radius: var(--radius-lg); padding: 0.75rem 0.8rem 0.85rem;
+  font: inherit; color: var(--text-2); overflow: hidden;
+  transition: border-color 0.15s, background 0.15s;
+}
+.modulo-card:hover:not(.modulo-bloqueado) { border-color: var(--line-2); background: var(--surface-2); }
+.modulo-card.activo { border-color: var(--accent); background: var(--surface-2); }
+.modulo-card.modulo-bloqueado { opacity: 0.5; cursor: pointer; }
+.modulo-num { font-family: var(--font-mono); font-size: 1.15rem; font-weight: 500; color: var(--text); line-height: 1; }
+.modulo-card.activo .modulo-num { color: var(--accent); }
+.modulo-titulo { display: block; margin-top: 0.35rem; font-size: 0.76rem; line-height: 1.3; color: var(--muted); min-height: 2em; }
+.modulo-estado { display: flex; align-items: center; gap: 0.3rem; margin-top: 0.5rem; font-size: 0.68rem; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; }
+.modulo-estado::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: currentColor; flex-shrink: 0; }
+.modulo-estado svg { width: 11px; height: 11px; }
+.modulo-barra { position: absolute; left: 0; right: 0; bottom: 0; height: 3px; background: var(--line); }
+.modulo-barra span { display: block; height: 100%; }
+
+/* Detalle del módulo */
+.plan-modulo-head { margin-bottom: 0.9rem; }
+.plan-modulo-head h2 { margin-top: 0.15rem; }
+
+.asignatura-tabs { display: none; }
+.roadmap { margin-top: 0; }
+.roadmap-grid { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 1rem; }
+.roadmap-col { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 0.9rem; min-width: 0; }
+.roadmap-col .asignatura-head { display: flex; align-items: baseline; gap: 0.5rem; padding-bottom: 0.6rem; margin-bottom: 0.3rem; border-bottom: 1px solid var(--line); }
+.roadmap-col .asignatura-head .codigo { font-family: var(--font-mono); font-size: 0.72rem; color: var(--muted); }
+.roadmap-col .asignatura-head .nombre { font-family: var(--font-body); font-size: 0.92rem; font-weight: 600; color: var(--text); flex: 1; min-width: 0; }
+.roadmap-col .asignatura-head .count { font-family: var(--font-mono); font-size: 0.72rem; color: var(--muted); white-space: nowrap; }
+.roadmap-nodes { display: flex; flex-direction: column; }
+.roadmap-node { display: grid; grid-template-columns: 28px 1fr 16px; gap: 0.5rem; align-items: center; min-height: 38px; padding: 0 0.35rem; border-bottom: 1px solid var(--line); font-size: 0.82rem; }
+.roadmap-node:last-child { border-bottom: 0; }
+.roadmap-node .node-num { font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-faint); }
+.roadmap-node .node-title { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.roadmap-node .node-ico { display: flex; justify-content: flex-end; }
+.roadmap-node .node-ico svg { width: 14px; height: 14px; }
+.roadmap-node.node-done .node-title { color: var(--text-2); }
+.roadmap-node.node-done .node-ico { color: var(--success); }
+.roadmap-node.node-current .node-title { color: var(--text); font-weight: 500; }
+.roadmap-node.node-current .node-ico { color: var(--accent); }
+.roadmap-node.node-locked .node-title, .roadmap-node.node-soon .node-title { color: var(--text-faint); }
+.roadmap-node.node-locked .node-ico, .roadmap-node.node-soon .node-ico { color: var(--text-faint); }
+.roadmap-node a { color: inherit; }
 .roadmap-node:hover { background: var(--surface-2); }
-.node-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
-.node-done .node-dot { background: var(--success); }
-.node-current .node-dot { background: var(--accent); }
-.node-locked .node-dot { background: var(--line-2); }
-.node-soon .node-dot { background: transparent; border: 1px dashed var(--line-2); }
-.node-label { color: var(--text-faint); font-size: 0.72rem; min-width: 2rem; font-family: var(--font-mono); }
-.node-title { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.node-done .node-title { color: var(--text-2); }
-.node-current .node-title a { color: var(--accent); font-weight: 600; }
-.node-locked .node-title, .node-soon .node-title { color: var(--text-faint); }
-@media (max-width: 900px) { .roadmap-grid { grid-template-columns: 1fr; } }
+@media (max-width: 900px) {
+  .roadmap-grid { grid-template-columns: 1fr; }
+  .asignatura-tabs { display: flex; gap: 0; border-bottom: 1px solid var(--line); margin-bottom: 0.9rem; overflow-x: auto; scrollbar-width: none; }
+  .asignatura-tabs::-webkit-scrollbar { display: none; }
+  .asignatura-tabs button { flex-shrink: 0; background: none; border: none; border-bottom: 2px solid transparent; padding: 0.55rem 0.8rem; color: var(--muted); font: inherit; font-size: 0.8rem; font-weight: 500; cursor: pointer; display: inline-flex; flex-direction: column; gap: 0.1rem; }
+  .asignatura-tabs button .tab-count { font-family: var(--font-mono); font-size: 0.66rem; color: var(--text-faint); }
+  .asignatura-tabs button.active { color: var(--text); border-bottom-color: var(--accent); }
+  .asignatura-tabs button.active .tab-count { color: var(--accent); }
+  .roadmap-col { display: none; }
+  .roadmap-col.asignatura-activa { display: block; }
+}
 
 /* Glosario widget legacy */
 .glosario-item { padding: 0.6rem 0; border-bottom: 1px solid var(--line); }

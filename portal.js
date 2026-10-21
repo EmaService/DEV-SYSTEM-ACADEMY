@@ -201,26 +201,6 @@
     return active;
   }
 
-  function getMonthState(m, progress, selectedMonth) {
-    var data = leccionesData["m" + m];
-    var total = 0;
-    var done = 0;
-    if (data && data.materias) {
-      var keys = Object.keys(data.materias);
-      for (var ki = 0; ki < keys.length; ki++) {
-        var mat = data.materias[keys[ki]];
-        for (var li = 0; li < mat.lecciones.length; li++) {
-          var l = mat.lecciones[li];
-          if (!l.proximamente) { total++; if (progress[l.id]) done++; }
-        }
-      }
-    }
-    if (total > 0 && done >= total) {
-      return selectedMonth === m ? "Repaso" : "Completado ✓";
-    }
-    return "En curso";
-  }
-
   function getMonthlyMonto(monthNum) {
     var cfgNow = window.DEV_SYSTEM_CONFIG || {};
     var pricing = cfgNow.monthlyPricing || {};
@@ -1098,10 +1078,25 @@
      NEW: Plan de estudios tab (renderPlan)
      =================================================================== */
 
+  function monthProgress(monthNum, progress) {
+    var data = leccionesData["m" + monthNum];
+    var done = 0, total = 0;
+    if (data && data.materias) {
+      var keys = Object.keys(data.materias);
+      for (var ki = 0; ki < keys.length; ki++) {
+        var lessons = data.materias[keys[ki]].lecciones || [];
+        for (var li = 0; li < lessons.length; li++) {
+          if (!lessons[li].proximamente) { total++; if (progress[lessons[li].id]) done++; }
+        }
+      }
+    }
+    return { done: done, total: total };
+  }
+
   async function renderPlan() {
-    var chipsRow = document.getElementById("month-chips");
-    var roadmapRoot = document.getElementById("curriculum-root");
-    if (!chipsRow || !roadmapRoot) return;
+    var grid = document.getElementById("month-chips");
+    var detalle = document.getElementById("plan-detalle");
+    if (!grid || !detalle) return;
 
     var paidMonths = cloudMode
       ? (await window.DevSystemCloud.getPaidMonthIds(user.email).catch(function () { return []; }))
@@ -1109,113 +1104,137 @@
     var progress = cloudMode
       ? (await window.DevSystemCloud.getProgressMap(user.email).catch(function () { return {}; }))
       : window.DevSystemState.getProgress(user.email);
-    var payments = await getPaymentDatesForUser(user.email);
 
     var paidMap = {};
     for (var pi = 0; pi < paidMonths.length; pi++) paidMap[paidMonths[pi]] = true;
     var activeMonth = getActiveMonth(paidMonths, progress);
-    var pagoInfo = getPagoEstado(payments);
+    var selected = paidMap[activeMonth] ? activeMonth : (paidMonths.length ? Math.max.apply(null, paidMonths) : 1);
+    if (!paidMap[selected] && paidMonths.length) selected = paidMonths[paidMonths.length - 1];
 
-    chipsRow.innerHTML = "";
+    var icons = window.DevSystemIcons || { icon: function () { return ""; } };
+
+    grid.innerHTML = "";
     for (var m = 1; m <= 12; m++) {
-      var title = getMonthTitle(m);
       var isPaid = Boolean(paidMap[m]);
-      var chip = document.createElement("button");
-      chip.className = "month-chip";
-      chip.setAttribute("data-paid", isPaid ? "1" : "0");
-      chip.style.cssText = "text-align:left;flex-shrink:0;display:flex;flex-direction:column;gap:0.15rem;padding:0.55rem 0.8rem;border-radius:0.75rem;border:1px solid var(--line);background:var(--bg-card);color:var(--text);font:inherit;cursor:pointer;min-width:150px;transition:all 0.2s";
-      if (m === activeMonth) {
-        chip.classList.add("month-chip-active");
-        chip.style.borderColor = "var(--accent)";
-        chip.style.background = "rgba(173,199,255,0.08)";
-      }
-      var stateTxt = "";
-      var stateColor = "var(--muted)";
-      if (isPaid) {
-        stateTxt = getMonthState(m, progress, activeMonth);
-        stateColor = "var(--green)";
+      var stats = monthProgress(m, progress);
+      var card = document.createElement("button");
+      card.className = "modulo-card";
+      card.type = "button";
+      card.setAttribute("data-month", m);
+
+      var estadoTxt, estadoColor, pct = 0, showBar = true;
+      if (!isPaid) {
+        estadoTxt = "Bloqueado"; estadoColor = "var(--text-faint)"; showBar = false;
+        card.classList.add("modulo-bloqueado");
+      } else if (stats.total > 0 && stats.done >= stats.total) {
+        estadoTxt = "Completado"; estadoColor = "var(--success)"; pct = 100;
+      } else if (stats.done > 0) {
+        estadoTxt = "En curso"; estadoColor = "var(--accent)"; pct = Math.round((stats.done / stats.total) * 100);
       } else {
-        var lockFecha = addMonthsSafe(pagoInfo.baseDate, m - 1);
-        stateTxt = "Disponible al pagar tu mensualidad del " + lockFecha.toLocaleDateString("es-MX", { month: "long", year: "numeric" });
+        estadoTxt = "Disponible"; estadoColor = "var(--accent)"; pct = 0;
       }
-      chip.innerHTML = "<strong style='font-size:0.82rem'>M" + m + "</strong><span class='small' style='font-size:0.72rem;color:var(--muted)'>" + title + "</span><span class='small' style='font-size:0.7rem;color:" + stateColor + "'>" + stateTxt + "</span>";
-      (function (mid, paid) {
-        chip.addEventListener("click", function () {
-          if (paid) {
-            var allChips = chipsRow.querySelectorAll(".month-chip");
-            for (var ci = 0; ci < allChips.length; ci++) {
-              allChips[ci].classList.remove("month-chip-active");
-              allChips[ci].style.borderColor = "var(--line)";
-              allChips[ci].style.background = "var(--bg-card)";
-            }
-            chip.classList.add("month-chip-active");
-            chip.style.borderColor = "var(--accent)";
-            chip.style.background = "rgba(173,199,255,0.08)";
-            updateChipStates(chipsRow, mid, progress);
-            renderPlanRoadmap(mid, roadmapRoot, progress);
-          } else {
-            switchTab("pagos");
-          }
+      if (m === selected) card.classList.add("activo");
+
+      var lockIcon = !isPaid ? "<span style='display:inline-flex'>" + icons.icon("lock", 11) + "</span>" : "";
+      card.innerHTML =
+        "<span class='modulo-num'>" + String(m).padStart(2, "0") + "</span>" +
+        "<span class='modulo-titulo'>" + getMonthTitle(m) + "</span>" +
+        "<span class='modulo-estado' style='color:" + estadoColor + "'>" + estadoTxt + lockIcon + "</span>" +
+        (showBar ? "<span class='modulo-barra'><span style='width:" + pct + "%;background:" + estadoColor + "'></span></span>" : "");
+
+      (function (mid, paid, el) {
+        el.addEventListener("click", function () {
+          if (!paid) { switchTab("pagos"); return; }
+          var cards = grid.querySelectorAll(".modulo-card");
+          for (var ci = 0; ci < cards.length; ci++) cards[ci].classList.remove("activo");
+          el.classList.add("activo");
+          renderModuleDetail(mid, progress, paidMonths);
         });
-      })(m, isPaid);
-      chipsRow.appendChild(chip);
+      })(m, isPaid, card);
+
+      grid.appendChild(card);
     }
 
-    renderPlanRoadmap(activeMonth, roadmapRoot, progress);
+    renderModuleDetail(selected, progress, paidMonths);
   }
 
-  function updateChipStates(chipsRow, selectedMonth, progress) {
-    var chips = chipsRow.querySelectorAll(".month-chip");
-    for (var ci = 0; ci < chips.length; ci++) {
-      var c = chips[ci];
-      if (c.getAttribute("data-paid") !== "1") continue;
-      var strong = c.querySelector("strong");
-      if (!strong) continue;
-      var mid = Number(String(strong.textContent).replace("M", ""));
-      var spans = c.querySelectorAll("span");
-      if (spans.length >= 2) {
-        var st = getMonthState(mid, progress, selectedMonth);
-        spans[1].textContent = st;
-        spans[1].style.color = "var(--green)";
-      }
-    }
-  }
+  function renderModuleDetail(monthNum, progress, paidMonths) {
+    var detalle = document.getElementById("plan-detalle");
+    if (!detalle) return;
+    detalle.innerHTML = "";
 
-  function renderPlanRoadmap(monthNum, roadmapRoot, progress) {
-    if (!roadmapRoot) return;
-    roadmapRoot.innerHTML = "<h3 style='margin-bottom:0.8rem'>" + getMonthTitle(monthNum) + "</h3><div id='plan-roadmap-root' class='roadmap'></div>";
-    var roadmapEl = document.getElementById("plan-roadmap-root");
-    if (roadmapEl) renderCurriculumForMonth(monthNum, progress || null, roadmapEl);
-  }
+    var paidMap = {};
+    for (var pi = 0; pi < paidMonths.length; pi++) paidMap[paidMonths[pi]] = true;
+    var isPaid = Boolean(paidMap[monthNum]);
+    var icons = window.DevSystemIcons || { icon: function () { return ""; } };
 
-  function renderPlanContent(monthNum, contentArea, paidMonthsArg) {
-    if (!contentArea) return;
-    var isPaid = false;
-    var paidMonths = paidMonthsArg || [];
-    for (var pi = 0; pi < paidMonths.length; pi++) {
-      if (paidMonths[pi] === monthNum) { isPaid = true; break; }
-    }
+    var head = "<div class='plan-modulo-head'><p class='label'>Módulo " + String(monthNum).padStart(2, "0") + "</p><h2>" + getMonthTitle(monthNum) + "</h2></div>";
 
     if (!isPaid) {
-      contentArea.innerHTML = "<div style='padding:2rem;text-align:center;color:var(--muted)'><p>Módulo " + monthNum + "</p><p class='small'>Este módulo está bloqueado. Realiza el pago correspondiente para acceder.</p></div>";
+      detalle.innerHTML = head + "<div class='card'><p class='small' style='color:var(--muted)'>Este módulo está bloqueado. Realiza el pago correspondiente para acceder.</p></div>";
       return;
     }
 
-    if (monthNum === 1) {
-      contentArea.innerHTML = "<h3 style='margin-bottom:1rem'>" + MONTH_TITLES[1] + "</h3><div id='plan-curriculum-root'></div>";
-      var planRoot = document.getElementById("plan-curriculum-root");
-      if (planRoot) {
-        if (cloudMode) {
-          window.DevSystemCloud.getProgressMap(user.email).then(function (map) {
-            renderCurriculum(map || {}, planRoot);
-          });
-        } else {
-          renderCurriculum(null, planRoot);
-        }
+    var data = leccionesData["m" + monthNum];
+    if (!data || !data.materias) {
+      detalle.innerHTML = head + "<div class='card'><p class='small' style='color:var(--muted)'>El contenido de este módulo se publicará próximamente.</p></div>";
+      return;
+    }
+
+    var materiaKeys = Object.keys(data.materias);
+    var columnsHtml = "";
+    var tabsHtml = "";
+
+    for (var ti = 0; ti < materiaKeys.length; ti++) {
+      var mk = materiaKeys[ti];
+      var mat = data.materias[mk];
+      var lecciones = mat.lecciones || [];
+      var publicadas = 0, hechas = 0;
+      for (var pi2 = 0; pi2 < lecciones.length; pi2++) {
+        if (!lecciones[pi2].proximamente) { publicadas++; if (progress[lecciones[pi2].id]) hechas++; }
       }
-    } else {
-      var title = MONTH_TITLES[monthNum] || "Mes " + monthNum;
-      contentArea.innerHTML = "<div style='padding:2rem;text-align:center;color:var(--line)'><h3>" + title + "</h3><p class='small' style='margin-top:1rem;color:var(--muted)'>El contenido del Módulo " + monthNum + " se publicará próximamente.</p><p class='small' style='color:var(--muted)'>Completa los módulos anteriores para mantener tu avance.</p></div>";
+      var code = asignaturaCodigo(monthNum, mk);
+
+      tabsHtml += "<button data-asig='" + mk + "' class='" + (ti === 0 ? "active" : "") + "'>" + code + "<span class='tab-count'>" + hechas + "/" + publicadas + "</span></button>";
+
+      columnsHtml += "<div class='roadmap-col" + (ti === 0 ? " asignatura-activa" : "") + "' data-asig='" + mk + "'>";
+      columnsHtml += "<div class='asignatura-head'><span class='codigo'>" + code + "</span><span class='nombre'>" + mat.nombre + "</span><span class='count'>" + hechas + "/" + publicadas + "</span></div>";
+      columnsHtml += "<div class='roadmap-nodes'>";
+
+      var sequentialUnlocked = true;
+      for (var li = 0; li < lecciones.length; li++) {
+        var lesson = lecciones[li];
+        var numStr = String(li + 1).padStart(2, "0");
+        var completed = Boolean(progress[lesson.id]);
+        var unlocked = sequentialUnlocked && !lesson.proximamente;
+        if (!completed) sequentialUnlocked = false;
+        var clickable = completed || unlocked;
+        var cls = completed ? "node-done" : unlocked ? "node-current" : lesson.proximamente ? "node-soon" : "node-locked";
+        var ico = completed ? icons.icon("check", 14) : unlocked ? icons.icon("play", 14) : icons.icon("lock", 14);
+        var title = clickable
+          ? "<a href='leccion.html?id=" + lesson.id + "'>" + lesson.titulo + "</a>"
+          : "<span>" + lesson.titulo + "</span>";
+        columnsHtml += "<div class='roadmap-node " + cls + "'><span class='node-num'>" + numStr + "</span><span class='node-title'>" + title + "</span><span class='node-ico'>" + ico + "</span></div>";
+      }
+
+      columnsHtml += "</div></div>";
+    }
+
+    detalle.innerHTML = head + "<div class='asignatura-tabs'>" + tabsHtml + "</div><div class='roadmap-grid'>" + columnsHtml + "</div>";
+
+    var tabBtns = detalle.querySelectorAll(".asignatura-tabs button");
+    for (var tbi = 0; tbi < tabBtns.length; tbi++) {
+      (function (btn) {
+        btn.addEventListener("click", function () {
+          var key = btn.getAttribute("data-asig");
+          for (var x = 0; x < tabBtns.length; x++) tabBtns[x].classList.remove("active");
+          btn.classList.add("active");
+          var cols = detalle.querySelectorAll(".roadmap-col");
+          for (var y = 0; y < cols.length; y++) {
+            cols[y].classList.toggle("asignatura-activa", cols[y].getAttribute("data-asig") === key);
+          }
+        });
+      })(tabBtns[tbi]);
     }
   }
 
@@ -1978,8 +1997,6 @@
   renderDayCard();
 
   if (enrollmentStatus === "activo") {
-    if (curriculumSection) curriculumSection.style.display = "block";
-    renderCurriculum();
     renderGlosario();
     renderInicioLecciones();
     renderPeriodoActual();
