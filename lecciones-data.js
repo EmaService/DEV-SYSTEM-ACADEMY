@@ -14230,36 +14230,2810 @@ window.DEV_SYSTEM_LECCIONES = {
           },
       ] },
       "c": { nombre: "Construye con IA IV", codigo: "PRA-403", icono: "⚙", lecciones: [
-          { id: "m4-c1", titulo: "El brief de backend: describir un sistema que recuerda", proximamente: true },
-          { id: "m4-c2", titulo: "PRÁCTICA: diseñar el modelo de datos de tu negocio", proximamente: true },
-          { id: "m4-c3", titulo: "PRÁCTICA: crear tu proyecto en Supabase", proximamente: true },
-          { id: "m4-c4", titulo: "PRÁCTICA: crear tus primeras tablas dirigiendo a la IA", proximamente: true },
-          { id: "m4-c5", titulo: "Leer el SQL que la IA generó, línea por línea", proximamente: true },
-          { id: "m4-c6", titulo: "PRÁCTICA: insertar y consultar tus primeros datos", proximamente: true },
-          { id: "m4-c7", titulo: "PRÁCTICA: conectar tu sitio del Módulo 3 a la base", proximamente: true },
-          { id: "m4-c8", titulo: "PRÁCTICA: un formulario que guarda de verdad", proximamente: true },
-          { id: "m4-c9", titulo: "PRÁCTICA: mostrar datos reales en tu interfaz", proximamente: true },
-          { id: "m4-c10", titulo: "Seguridad con IA: lo que nunca debes compartirle", proximamente: true },
-          { id: "m4-c11", titulo: "PRÁCTICA: activar RLS y comprobar qué protege", proximamente: true },
-          { id: "m4-c12", titulo: "PRÁCTICA: login de usuarios en tu sitio", proximamente: true },
-          { id: "m4-c13", titulo: "PRÁCTICA: contenido solo para usuarios registrados", proximamente: true },
-          { id: "m4-c14", titulo: "PRÁCTICA: subir imágenes a Storage", proximamente: true },
-          { id: "m4-c15", titulo: "Pedirle a la IA una función de servidor", proximamente: true },
-          { id: "m4-c16", titulo: "PRÁCTICA: tu primera función serverless", proximamente: true },
-          { id: "m4-c17", titulo: "PRÁCTICA: consumir una API externa desde el servidor", proximamente: true },
-          { id: "m4-c18", titulo: "Qué va en el navegador y qué va en el servidor", proximamente: true },
-          { id: "m4-c19", titulo: "PRÁCTICA: panel de administración para tu negocio", proximamente: true },
-          { id: "m4-c20", titulo: "PRÁCTICA: buscador que consulta la base de datos", proximamente: true },
-          { id: "m4-c21", titulo: "Depurar errores de backend con IA", proximamente: true },
-          { id: "m4-c22", titulo: "PRÁCTICA: leer logs y encontrar la causa real", proximamente: true },
-          { id: "m4-c23", titulo: "PRÁCTICA: dejar tus respaldos automatizados", proximamente: true },
-          { id: "m4-c24", titulo: "PRÁCTICA: exportar todos tus datos", proximamente: true },
-          { id: "m4-c25", titulo: "Costos: qué se paga realmente en un backend", proximamente: true },
-          { id: "m4-c26", titulo: "PRÁCTICA: medir y arreglar una consulta lenta", proximamente: true },
-          { id: "m4-c27", titulo: "Migrar datos de un lado a otro sin perder nada", proximamente: true },
-          { id: "m4-c28", titulo: "Tu flujo completo de backend dirigido con IA", proximamente: true },
-          { id: "m4-c29", titulo: "El sistema completo: interfaz + servidor + datos", proximamente: true },
-          { id: "m4-c30", titulo: "Repaso + arranque del proyecto final del módulo", proximamente: true },
+          {
+            id: "m4-c1",
+            titulo: "El brief de backend: describir un sistema que recuerda",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>En el Módulo 3, tu landing de <strong>Tacos El Volcán</strong> tomaba el pedido y lo mandaba por WhatsApp. Se veía completa, pero no recordaba nada: cerrabas la pestaña y del pedido solo quedaba un chat en el teléfono de alguien. Este mes el sitio cambia de naturaleza. Deja de ser un folleto con un botón y se convierte en un sistema que <strong>recuerda</strong>: cada pedido tendrá folio, estado y dueño; el cliente podrá volver a consultarlo; tú podrás saber cuántos platos vendiste el viernes.</p><p>Recordar trae tres cosas que una landing no tenía. <strong>Usuarios</strong>: alguien tiene que poder entrar y ser reconocido, aunque al principio sea solo el dueño. <strong>Estados</strong>: un pedido no está hecho o no hecho; está pendiente, en preparación, entregado o cancelado, y cada cambio importa. <strong>Permisos</strong>: no todos ven lo mismo. El empleado ve los pedidos del día; el dueño ve ventas, costos y clientes; el cliente ve solo lo suyo.</p><p>El <strong>brief de backend</strong> es un documento de una página que describe ese sistema antes de construirlo. Responde cuatro preguntas, siempre las mismas: <strong>quién entra</strong>, <strong>qué se guarda</strong>, <strong>quién puede verlo</strong> y <strong>qué pasa si falla</strong>. No lleva código ni colores. Lleva decisiones: el cliente pide sin crear cuenta; un pedido cancelado no se borra, se marca; si la base no responde, el sitio avisa y no promete un pedido que no guardó.</p><p>La segunda pregunta incluye lo que <em>no</em> se guarda. No guardas números de tarjeta, no guardas contraseñas en texto plano (m4-a16) y no usas el chat de WhatsApp como base de datos. Escribirlo evita que dentro de tres meses alguien, por si acaso, meta la tarjeta en un campo de texto.</p><p>Te importa aunque la IA escriba el código, porque la IA no estuvo en tu negocio. Sabe escribir SQL y sabe qué es una llave foránea, pero no sabe que en Tacos El Volcán un pedido puede cancelarse después de cobrar, ni que el sobrino del dueño no debe ver los márgenes. Cuando el brief tiene un hueco, la IA lo rellena con una suposición razonable, y esa suposición se convierte en un bug o en un hoyo de seguridad (m4-a19, m4-c11).</p><p><strong>Dato para recordar:</strong> un sistema que recuerda sin permisos no es un sistema, es un archivo abierto.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>El brief es el <strong>rol de zarpe de un barco pesquero</strong>. Antes de soltar amarras, el capitán llena una hoja: quién va a bordo con nombre y puesto, qué carga va en qué bodega, quién tiene llave de la bodega de víveres y a qué puerto se regresa si el motor falla. No es papeleo: en altamar no hay a quién preguntarle. Si el rol dice doce tripulantes y a bordo hay once, alguien se quedó en el muelle. El cuaderno de bitácora —lo que el barco recuerda— solo sirve si el rol dijo qué anotar y quién puede leerlo; si cualquiera escribe cualquier cosa, la bitácora miente. Y cuando el barco vuelve, ese rol es lo que permite explicar por qué se gastó el diésel y por qué faltó una caja.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Así se ve el brief de Tacos El Volcán, respondido en cuatro renglones:</p><ul><li><strong>Quién entra:</strong> el cliente pide sin cuenta; el dueño y un empleado entran al panel con correo y contraseña (m4-c12).</li><li><strong>Qué se guarda:</strong> clientes, platillos, pedidos con sus renglones y reseñas. No se guardan tarjetas ni contraseñas en texto plano.</li><li><strong>Quién puede verlo:</strong> el cliente ve sus pedidos; el empleado, los del día; el dueño, ventas y márgenes. Eso se implementa con reglas en la base (m4-c11).</li><li><strong>Qué pasa si falla:</strong> el sitio muestra un aviso y no confirma el pedido; hay respaldo diario y una copia probada (m4-b20).</li></ul><p>La diferencia técnica está en lo que pasa después del botón. Antes, el sitio construía un mensaje y lo entregaba a WhatsApp; el dato salía de tu control. Ahora el pedido se escribe en la base con un estado inicial y vuelve con folio:</p><pre><code>// Módulo 3: el pedido se va al chat y el sitio lo olvida\nconst texto = '2 al pastor, 1 horchata';\nwindow.open('https://wa.me/5215512345678?text=' + encodeURIComponent(texto));\n\n// Módulo 4: el pedido se guarda, tiene folio y estado\nconst { data, error } = await supabase\n  .from('pedidos')\n  .insert({ cliente_id: 7, estado: 'pendiente', total: 185.00 })\n  .select('id, estado, creado_en')\n  .single();\n\n// data = { id: 41, estado: 'pendiente', creado_en: '2026-11-24T21:14:03+00:00' }</code></pre><p>Ese <code>id: 41</code> es la diferencia entre un chat y un sistema. Con él puedes buscar el pedido, cambiar su estado, sumar el día y reclamar cuando algo no cuadra. Y la pregunta <em>qué pasa si falla</em> se vuelve concreta: si <code>error</code> no es nulo, el sitio no debe decir pedido recibido (m4-c8).</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Actúa como analista de sistemas. Te describo mi negocio: Tacos El Volcán, una taquería con menú, pedidos por WhatsApp y un formulario de contacto. Hoy el sitio no guarda nada y quiero que empiece a recordar: pedidos con folio y estado, clientes, platillos y reseñas. Hazme un brief de backend de una página que responda exactamente cuatro cosas: 1) quién entra y cómo se identifica, 2) qué se guarda y qué no, 3) quién puede ver qué información, 4) qué pasa si algo falla o si el pedido llega a medias. Para cada respuesta dame una decisión concreta, no un menú de opciones. Después hazme cinco preguntas que mi brief todavía no responde y que podrían costarme dinero o un problema de seguridad. No escribas código ni SQL todavía.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              {
+                tipo: "multiple",
+                pregunta: "Tu brief dice que el cliente puede ver sus pedidos y el empleado los del día. ¿Qué pieza del sistema hace cumplir esa diferencia?",
+                opciones: [
+                  "El color y el tamaño de los botones del panel",
+                  "Las reglas de permisos aplicadas en la base y en el servidor",
+                  "El logo de Tacos El Volcán en la esquina",
+                  "El ancho de la pantalla desde donde se consulta"
+                ],
+                correcta: 1
+              },
+              {
+                tipo: "vf",
+                afirmacion: "Si la IA va a escribir el backend, el brief puede quedarse en la cabeza del dueño.",
+                correcta: false,
+                explicacion: "la IA no estuvo en el negocio: todo lo que no esté escrito lo va a suponer. Un brief que solo existe en la cabeza no se puede revisar, ni comparar contra lo entregado, ni corregir cuando cambie el negocio."
+              },
+              {
+                tipo: "relacionar",
+                pares: [
+                  [
+                    "Quién entra",
+                    "Define usuarios y cómo se identifican"
+                  ],
+                  [
+                    "Qué se guarda",
+                    "Define entidades, estados y datos que se evitan"
+                  ],
+                  [
+                    "Quién puede verlo",
+                    "Define permisos por rol y por fila"
+                  ],
+                  [
+                    "Qué pasa si falla",
+                    "Define respaldos, avisos y qué hacer con un pedido a medias"
+                  ]
+                ]
+              },
+              {
+                tipo: "completar",
+                frase: "Un pedido que pasa de pendiente a preparando y luego a entregado tiene ____; la decisión de que el empleado no vea los costos es un ____.",
+                banco: [
+                  "estados",
+                  "permiso",
+                  "respaldo",
+                  "formulario"
+                ],
+                respuestas: [
+                  "estados",
+                  "permiso"
+                ]
+              },
+              {
+                tipo: "ordenar",
+                instruccion: "Ordena cómo se escribe un brief de backend antes de pedir código.",
+                elementos: [
+                  "Describir el negocio y el flujo actual, incluido lo que hoy se pierde",
+                  "Responder las cuatro preguntas: quién entra, qué se guarda, quién lo ve, qué pasa si falla",
+                  "Listar las entidades y los estados que el sistema necesita recordar",
+                  "Pedirle a la IA que señale huecos y riesgos del brief",
+                  "Congelar esa versión y usarla como contrato para el modelo de datos"
+                ]
+              }
+            ]
+          },
+          {
+            id: "m4-c2",
+            titulo: "PRÁCTICA: diseñar el modelo de datos de tu negocio",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Un <strong>modelo de datos</strong> es la lista de cosas que tu negocio necesita recordar y la forma en que se conectan. No empieza en Supabase ni en SQL: empieza en una hoja con preguntas.</p><p>Hazlas como si el sistema ya existiera y estuvieras platicando con él: ¿qué vendí hoy?, ¿quién hizo ese pedido?, ¿cuánto lleva gastado ese cliente?, ¿qué platillo tiene las peores reseñas?, ¿qué pedidos están pendientes desde ayer? Cada respuesta exige guardar algo. Los sustantivos que se repiten y tienen vida propia son las <strong>entidades</strong>: cliente, platillo, pedido, reseña.</p><p>Una entidad merece tabla propia cuando cumple tres condiciones: tiene datos que solo le pertenecen (un cliente tiene teléfono; un pedido no), aparece en varias operaciones (el mismo platillo se vende cien veces) y se conecta con otras entidades. Si no cumple las tres, probablemente es una columna.</p><p>El error más común es meter todo en una tabla. Al principio parece simple: <code>pedidos</code> con una columna <code>detalle</code> que dice 2 al pastor, 1 horchata. Funciona una semana. Después quieres saber cuántos platillos vendiste, cuánto dejó cada uno o qué se canceló, y no puedes: la información está escrita dentro de un texto, como una nota en una servilleta. Separar el pedido de sus renglones es lo que convierte esa nota en algo que se puede sumar.</p><p>Las relaciones se dibujan con cardinalidad: un cliente hace <strong>muchos</strong> pedidos; un pedido tiene <strong>muchos</strong> renglones; cada renglón apunta a <strong>un</strong> platillo. La parte de muchos se resuelve con una columna en la tabla del lado muchos, la llave foránea (m4-b8). Ese dibujo es lo que hoy vas a entregar, antes de escribir una línea de SQL.</p><p>Modelar es barato; remodelar con datos adentro es caro (m4-b27). Si te equivocas en el dibujo, corregirlo cuesta una tarde. Si te equivocas con dos mil pedidos reales, cuesta migraciones, copias y una noche sin dormir.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Modelar se parece al <strong>gabinete de cajones de un relojero</strong>. El relojero no echa todos los engranes, resortes y cristales en un mismo frasco: tiene un cajón rotulado para cada tipo de pieza, y cada reloj que entra al taller lleva una ficha con su número. La ficha de reparación no dice le puse un resorte; dice reloj 114, resortes del cajón 3. Así, cuando vuelve el mismo reloj, sabe qué le puso; si se acaba un resorte, sabe cuántos quedan; y si el cajón 3 se reordena, las fichas siguen apuntando al número correcto, no al tercer compartimento de la izquierda. Meter todo en un frasco ahorra cajones el primer día y arruina el taller el primer mes.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Estas son las cinco tablas que salen de las preguntas de Tacos El Volcán, con la pregunta que responde cada una:</p><ul><li><code>clientes</code>: ¿quién pidió? Nombre, teléfono, correo.</li><li><code>platillos</code>: ¿qué vendes y a cuánto? Nombre, precio, si está disponible.</li><li><code>pedidos</code>: ¿qué orden se hizo, de quién y en qué estado va?</li><li><code>pedido_items</code>: ¿qué platillos lleva ese pedido y cuántos de cada uno?</li><li><code>resenas</code>: ¿qué opinó un cliente de un platillo?</li></ul><p>El diagrama en texto, que es la entrega de esta práctica:</p><pre><code>clientes   1 ──── N  pedidos\npedidos    1 ──── N  pedido_items\nplatillos  1 ──── N  pedido_items\nclientes   1 ──── N  resenas\nplatillos  1 ──── N  resenas\n\npedido_items es la tabla que une pedidos con platillos:\nun renglón = un platillo dentro de un pedido.</code></pre><p>Dos decisiones que el diagrama no muestra pero el brief sí. Primero, <code>pedido_items</code> guarda el <code>precio_unitario</code> del momento de la venta: si mañana sube el precio del pastor, los pedidos viejos deben seguir valiendo lo que valían. Segundo, <code>resenas</code> permite cliente vacío si la reseña es anónima, pero exige platillo: una reseña sin platillo no sirve para decidir qué quitar del menú.</p><p>Con ese dibujo, la pregunta <em>¿cuánto vendí de pastor esta semana?</em> se contesta con una consulta, no abriendo el chat:</p><pre><code>select pl.nombre, sum(pi.cantidad) as vendidos\nfrom pedido_items pi\njoin pedidos p    on p.id = pi.pedido_id\njoin platillos pl on pl.id = pi.platillo_id\nwhere p.creado_en &gt;= now() - interval '7 days'\n  and p.estado &lt;&gt; 'cancelado'\ngroup by pl.nombre\norder by vendidos desc;</code></pre><p>Si esa consulta se puede escribir sin adivinar nada, el modelo está bien. Si te obliga a partir textos o a cruzar dos hojas, falta una tabla.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Voy a modelar la base de datos de Tacos El Volcán, una taquería con menú, pedidos, clientes y reseñas. Primero te doy las preguntas del negocio: ¿qué se vendió hoy y cuánto?, ¿quién hizo cada pedido?, ¿qué platillos lleva un pedido y en qué estado va?, ¿qué opinan los clientes de cada platillo? Devuélveme: 1) las entidades que salen de esas preguntas, cada una con la razón por la que merece tabla propia; 2) lo que NO merece tabla propia y debería ser solo una columna; 3) las relaciones entre entidades con su cardinalidad; 4) un diagrama en texto que pueda pegar en mi documentación; 5) tres preguntas del negocio que mi modelo todavía no puede responder. No escribas SQL ni nombres de tipos de dato todavía.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              {
+                tipo: "multiple",
+                pregunta: "En Tacos El Volcán, ¿por qué los platillos de un pedido van en `pedido_items` y no en una columna de texto dentro de `pedidos`?",
+                opciones: [
+                  "Porque una columna de texto no puede guardar más de un platillo",
+                  "Porque cada renglón necesita cantidad y precio propio, y así se puede sumar y consultar por platillo",
+                  "Porque las tablas con muchas columnas no se pueden respaldar",
+                  "Porque Supabase prohíbe guardar texto libre"
+                ],
+                correcta: 1
+              },
+              {
+                tipo: "relacionar",
+                pares: [
+                  [
+                    "clientes",
+                    "Una persona que hace pedidos"
+                  ],
+                  [
+                    "platillos",
+                    "Un producto del menú con su precio"
+                  ],
+                  [
+                    "pedidos",
+                    "Una orden con fecha, estado y total"
+                  ],
+                  [
+                    "pedido_items",
+                    "Cuántos de qué platillo lleva una orden"
+                  ],
+                  [
+                    "resenas",
+                    "La opinión de un cliente sobre un platillo"
+                  ]
+                ]
+              },
+              {
+                tipo: "ordenar",
+                instruccion: "Ordena el trabajo de modelar antes de pedir SQL.",
+                elementos: [
+                  "Escribir las preguntas que el negocio necesita responder",
+                  "Marcar los sustantivos que se repiten y tienen datos propios",
+                  "Decidir qué merece tabla propia y qué es solo una columna",
+                  "Dibujar las relaciones y su cardinalidad",
+                  "Pedirle a la IA el SQL de las tablas"
+                ]
+              },
+              {
+                tipo: "completar",
+                frase: "Cada pedido pertenece a ____ cliente y puede tener ____ renglones; por eso la llave foránea vive en la tabla ____.",
+                banco: [
+                  "un",
+                  "muchos",
+                  "pedido_items",
+                  "clientes",
+                  "ninguno"
+                ],
+                respuestas: [
+                  "un",
+                  "muchos",
+                  "pedido_items"
+                ]
+              },
+              {
+                tipo: "quehace",
+                codigo: "clientes   1 ──── N  pedidos\nplatillos  1 ──── N  pedido_items",
+                pregunta: "¿Qué significa la segunda línea del diagrama?",
+                opciones: [
+                  "Un platillo puede aparecer en muchos renglones de pedido, y cada renglón apunta a un solo platillo",
+                  "Un pedido puede tener un solo platillo y ese platillo se guarda dentro de pedidos",
+                  "Cada renglón de pedido puede contener varios platillos a la vez",
+                  "Los platillos se guardan como texto dentro de la tabla pedidos"
+                ],
+                correcta: 0
+              }
+            ]
+          },
+          {
+            id: "m4-c3",
+            titulo: "PRÁCTICA: crear tu proyecto en Supabase",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p><strong>Supabase</strong> es PostgreSQL administrado con un panel encima. Te da una base real, un editor de SQL, autenticación, almacenamiento de archivos y una API lista para tu sitio. No instalas nada ni rentas un servidor: creas un proyecto y trabajas.</p><p>Un proyecto es un paquete con cuatro cosas: una base de datos, una dirección web, un juego de llaves y una región. El nombre es para ti; la región decide qué tan lejos viven tus datos de tus usuarios; la contraseña de la base es un secreto distinto al de tu cuenta; las llaves son lo que usa el código para entrar.</p><p>Hay dos llaves que vas a oír todo el tiempo y no son intercambiables. La <strong>anon key</strong> (en proyectos nuevos aparece como <em>publishable key</em>) está hecha para el navegador: es pública, y lo que limita lo que puede hacer son las reglas por fila que activarás en m4-c11. La <strong>service_role key</strong> (o <em>secret key</em>) es la llave maestra: salta esas reglas y puede leer, escribir y borrar todo. Va solo en el servidor, nunca en el navegador ni en GitHub.</p><p>La contraseña de la base es un tercer secreto: sirve para conectarte directo a PostgreSQL con <code>psql</code> o con herramientas de migración. No es la llave de la API y no se vuelve a mostrar después de crear el proyecto. Si la pierdes, se resetea; si la compartes, cambias la base.</p><p>El plan gratuito tiene letra chica que conviene saber antes y no después: permite dos proyectos activos, alrededor de 500 MB de base y <strong>pausa el proyecto tras siete días sin actividad</strong>. Pausado no es borrado: los datos siguen ahí y se reactiva desde el panel, pero mientras está pausado tu sitio no puede leer ni guardar. Para el proyecto del curso alcanza; para un negocio que cobra, se paga.</p><p><strong>Dato para recordar:</strong> la anon key es pública a propósito. Lo que protege tus datos no es el secreto de la llave, son las reglas de la base (m4-c11).</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Crear el proyecto es <strong>rentar una bodega en un edificio de almacenaje</strong>. Te dan una dirección (la Project URL), un número de bodega (la referencia del proyecto) y pones tu propio candado. La llave de ese candado es la anon key: abre tu puerta, no la del vecino, y el reglamento del edificio decide qué puedes meter y sacar de tu cuarto. La service_role es la llave maestra del administrador: abre todas las bodegas y no le pide permiso a nadie; por eso no se la prestas a un visitante. La región es la ciudad donde está el edificio: si queda al otro lado del país, cada viaje tarda más. Y si dejas de pagar, no te tiran las cajas: te ponen un candado temporal en la puerta hasta que arregles la cuenta.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Los pasos, en orden. Antes de empezar, ten abierto tu gestor de contraseñas.</p><ol><li>Entra a <code>supabase.com</code> y crea la cuenta con GitHub o con correo. Verifica el correo.</li><li><strong>New project</strong>: elige la organización, ponle nombre (<code>tacos-el-volcan</code>), genera una contraseña de base de 24 caracteres o más y guárdala en el gestor. Selecciona la región más cercana a tus usuarios; desde México, normalmente el este de Estados Unidos. Deja el plan gratuito.</li><li>Espera uno o dos minutos a que termine la provisión. El panel debe mostrar el proyecto como <em>Active</em>.</li><li>Abre <strong>Project Settings → API</strong> (o <em>Data API</em>). Ahí están la <strong>Project URL</strong>, con la forma <code>https://tuproyecto.supabase.co</code>, y la <strong>anon key</strong>. Copia las dos.</li><li>Pégalas en un archivo <code>.env</code> en la raíz de tu proyecto, no dentro del HTML.</li><li>Agrega <code>.env</code> a <code>.gitignore</code> antes del primer commit.</li></ol><pre><code>VITE_SUPABASE_URL=https://tuproyecto.supabase.co\nVITE_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6...</code></pre><p>Y el cliente que usará tu sitio:</p><pre><code>import { createClient } from '@supabase/supabase-js';\n\nconst supabase = createClient(\n  import.meta.env.VITE_SUPABASE_URL,\n  import.meta.env.VITE_SUPABASE_ANON_KEY\n);</code></pre><p>Para comprobar que la dirección y la llave sirven, pide la raíz de la API:</p><pre><code>curl \"https://tuproyecto.supabase.co/rest/v1/\" -H \"apikey: TU_ANON_KEY\"</code></pre><p>Debe responder un JSON con la lista de endpoints. Si responde <code>401</code>, la llave está mal copiada; si no responde, revisa que el proyecto no esté pausado.</p><p><strong>Advertencia:</strong> la service_role key no se pone en el navegador, ni en un archivo <code>config.js</code>, ni en una variable con prefijo <code>VITE_</code>. Todo lo que llega al navegador lo puede leer cualquiera con Ctrl+U, y esa llave ignora las reglas por fila: con ella se puede borrar tu base completa. Si crees que se filtró, revócala en el panel y genera otra (m4-c10).</p><p><strong>Advertencia:</strong> el plan gratuito pausa el proyecto a los siete días sin uso. Si vas a entregar el sitio o enseñarlo en una demo, entra al panel esa semana o pasa a un plan de pago; un proyecto pausado se ve exactamente como un sitio descompuesto.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Voy a crear mi proyecto de Supabase para Tacos El Volcán y nunca lo he hecho. Guíame paso a paso sin saltarte nada: qué nombre ponerle, cómo elegir la región desde México, cómo generar y guardar la contraseña de la base, y en qué parte del panel veo la Project URL y la anon key. Explícame la diferencia entre anon key, service_role y contraseña de la base, y dime exactamente en qué archivo va cada una en un sitio con Vite. Al final dame un checklist de seis puntos para confirmar que el proyecto quedó bien, y una lista de las tres cosas que nunca debo subir a GitHub. Si algún paso depende de que el proyecto ya esté activo, dímelo.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              {
+                tipo: "multiple",
+                pregunta: "¿Cuál de estas llaves puedes usar en el código que corre en el navegador?",
+                opciones: [
+                  "La anon key (publishable key), porque está pensada para eso y queda limitada por las reglas de la base",
+                  "La service_role key, porque es más segura",
+                  "La contraseña de la base de datos",
+                  "Cualquiera, siempre que el archivo esté en una carpeta privada"
+                ],
+                correcta: 0
+              },
+              {
+                tipo: "vf",
+                afirmacion: "La service_role key se puede usar en el frontend si la guardas en un archivo aparte del HTML.",
+                correcta: false,
+                explicacion: "todo lo que el navegador descarga lo puede leer cualquiera, incluso si está en otro archivo. La service_role salta las reglas por fila y permite borrar la base; solo va en variables de entorno del servidor."
+              },
+              {
+                tipo: "ordenar",
+                instruccion: "Ordena la creación y configuración del proyecto.",
+                elementos: [
+                  "Crear la cuenta en supabase.com y verificar el correo",
+                  "Crear el proyecto con nombre, región y contraseña de base",
+                  "Esperar a que el proyecto quede activo",
+                  "Copiar la Project URL y la anon key desde Settings → API",
+                  "Guardar los valores en .env y agregar .env a .gitignore"
+                ]
+              },
+              {
+                tipo: "completar",
+                frase: "La dirección del proyecto es la ____. La llave que puede ir al navegador es la ____. La llave que salta las reglas y solo vive en el servidor es la ____.",
+                banco: [
+                  "Project URL",
+                  "anon key",
+                  "service_role",
+                  "contraseña de la base"
+                ],
+                respuestas: [
+                  "Project URL",
+                  "anon key",
+                  "service_role"
+                ]
+              },
+              {
+                tipo: "relacionar",
+                pares: [
+                  [
+                    "Project URL",
+                    "Dirección base a la que el sitio hace las peticiones"
+                  ],
+                  [
+                    "anon key",
+                    "Llave pública del navegador, limitada por las reglas por fila"
+                  ],
+                  [
+                    "service_role",
+                    "Llave administrativa que ignora esas reglas"
+                  ],
+                  [
+                    "Contraseña de la base",
+                    "Secreto para conexión directa a PostgreSQL"
+                  ],
+                  [
+                    "Región",
+                    "Ciudad del servidor; define latencia y no se cambia fácil"
+                  ]
+                ]
+              }
+            ]
+          },
+          {
+            id: "m4-c4",
+            titulo: "PRÁCTICA: crear tus primeras tablas dirigiendo a la IA",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Ya tienes el brief, el dibujo y el proyecto. Falta lo que convierte el dibujo en una base real: las tablas. No las vas a escribir de memoria. Vas a dirigir a la IA, y tu trabajo es dar el contrato y verificar la entrega.</p><p>Dirigir no es pedir. <em>Hazme las tablas de mi taquería</em> produce algo plausible: la IA inventa nombres, decide tipos y a veces mete datos de ejemplo. Cada corrida da un resultado distinto y ninguno es el tuyo. Un prompt de tablas incluye nombres exactos, columnas, tipos, qué es obligatorio, qué se conecta con qué y en qué orden se ejecuta.</p><p>El orden no es estilo, es una restricción. Una llave foránea no puede apuntar a una tabla que todavía no existe, así que <code>clientes</code> y <code>platillos</code> van primero, luego <code>pedidos</code>, luego <code>pedido_items</code> y al final <code>resenas</code>. Si corres todo de un jalón y falla a la mitad, el editor te deja tablas sueltas; por eso conviene ejecutar en ese orden y revisar.</p><p>Los tipos importan más de lo que parece: <code>bigint</code> para identificadores, <code>text</code> para nombres, <code>numeric(10,2)</code> para dinero —nunca <code>float</code>, que redondea centavos—, <code>integer</code> para cantidades, <code>boolean</code> para sí o no, <code>timestamptz</code> para fechas y <code>text</code> con <code>check</code> para estados.</p><p>Y las reglas: cada tabla necesita llave primaria; cada relación, llave foránea; <code>not null</code> donde el negocio no admite vacío; <code>default</code> donde hay un valor sensato; <code>check</code> para lo que el sistema debe rechazar. Todo eso se decide con el brief en la mano, no después.</p><p><strong>Advertencia:</strong> define tipos y llaves antes de meter datos. Cambiar una columna de <code>text</code> a <code>numeric</code> con dos mil filas adentro exige convertir y limpiar; una tabla sin llave primaria no permite actualizar una fila con seguridad; una llave foránea mal puesta acepta renglones que apuntan a un pedido que no existe. Corregir eso con datos reales cuesta una migración (m4-b19), no un clic.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Es encargarle un mueble a un <strong>carpintero</strong>. No le dices hazme algo de madera: le das el alto, el ancho, cuántos cajones, de qué lado abren y para qué pared es. Él corta, arma y entrega. Cuando llega, tú no pagas y lo metes a la casa: revisas con cinta métrica que quepa en el hueco, que los cajones corran, que el fondo esté clavado y que las bisagras sean las que pediste. Si no revisas, el mueble ya está en tu sala y el error también. La IA es el carpintero: rápida, competente y sin idea de cómo es tu pared.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>El flujo completo son seis pasos.</p><ol><li>Abre <strong>SQL Editor → New query</strong>.</li><li>Pega el prompt de la siguiente sección. La IA debe devolver solo SQL, en orden y comentado.</li><li>Lee los nombres de las tablas en voz alta: deben ser exactamente <code>clientes</code>, <code>platillos</code>, <code>pedidos</code>, <code>pedido_items</code> y <code>resenas</code>.</li><li>Ejecuta. Si aparece <code>relation \"clientes\" does not exist</code>, el orden está mal: las llaves foráneas van después de las tablas que referencian.</li><li>Verifica en el <strong>Table Editor</strong> que existen las cinco tablas y que cada una tiene su columna <code>id</code>.</li><li>Solo cuando lo anterior esté bien, inserta datos (m4-c6).</li></ol><p>El SQL que debes obtener, en orden, es este:</p><pre><code>create table clientes (\n  id        bigint generated always as identity primary key,\n  nombre    text not null,\n  telefono  text not null unique,\n  correo    text,\n  creado_en timestamptz not null default now()\n);\n\ncreate table platillos (\n  id          bigint generated always as identity primary key,\n  nombre      text not null,\n  descripcion text,\n  precio      numeric(10,2) not null check (precio &gt; 0),\n  disponible  boolean not null default true,\n  creado_en   timestamptz not null default now()\n);\n\ncreate table pedidos (\n  id         bigint generated always as identity primary key,\n  cliente_id bigint not null references clientes(id),\n  estado     text not null default 'pendiente'\n             check (estado in ('pendiente','preparando','entregado','cancelado')),\n  total      numeric(10,2) not null default 0,\n  creado_en  timestamptz not null default now()\n);\n\ncreate table pedido_items (\n  id              bigint generated always as identity primary key,\n  pedido_id       bigint not null references pedidos(id) on delete cascade,\n  platillo_id     bigint not null references platillos(id),\n  cantidad        integer not null check (cantidad &gt; 0),\n  precio_unitario numeric(10,2) not null\n);\n\ncreate table resenas (\n  id           bigint generated always as identity primary key,\n  cliente_id   bigint references clientes(id),\n  platillo_id  bigint not null references platillos(id),\n  calificacion smallint not null check (calificacion between 1 and 5),\n  comentario   text,\n  creado_en    timestamptz not null default now()\n);</code></pre><p>Verificar no es mirar la pantalla. Pregúntale a la base qué quedó guardado:</p><pre><code>select table_name\nfrom information_schema.tables\nwhere table_schema = 'public'\norder by table_name;</code></pre><pre><code>select column_name, data_type, is_nullable, column_default\nfrom information_schema.columns\nwhere table_name = 'pedidos'\norder by ordinal_position;</code></pre><pre><code>select conname, contype, pg_get_constraintdef(oid) as definicion\nfrom pg_constraint\nwhere conrelid = 'pedidos'::regclass;</code></pre><p>En la tercera consulta debes ver tres renglones: <code>pedidos_pkey</code> con tipo <code>p</code>, <code>pedidos_cliente_id_fkey</code> con tipo <code>f</code> y el <code>check</code> del estado con tipo <code>c</code>. Si falta la <code>p</code>, no hay llave primaria; si falta la <code>f</code>, la relación con clientes no existe aunque el SQL se haya ejecutado sin error.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Actúa como DBA de PostgreSQL en Supabase. Escribe el SQL para crear las tablas de Tacos El Volcán, en un solo script ordenado por dependencias. Estas son las tablas y columnas exactas: clientes (id, nombre, telefono, correo, creado_en); platillos (id, nombre, descripcion, precio, disponible, creado_en); pedidos (id, cliente_id, estado, total, creado_en); pedido_items (id, pedido_id, platillo_id, cantidad, precio_unitario); resenas (id, cliente_id, platillo_id, calificacion, comentario, creado_en). Reglas: identificadores bigint con identity y llave primaria; dinero en numeric(10,2); fechas en timestamptz con default now(); estados en text con check para pendiente, preparando, entregado y cancelado; calificación con check de 1 a 5; llaves foráneas con references y dime qué pasa al borrar el registro padre. Devuelve solo SQL comentado, sin datos de ejemplo, sin RLS y sin DROP ni TRUNCATE. Al final, cinco consultas de verificación para comprobar columnas, tipos, llave primaria y llaves foráneas.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              {
+                tipo: "multiple",
+                pregunta: "¿Qué le falta al prompt `Hazme las tablas de mi taquería` para que sirva?",
+                opciones: [
+                  "Nada: mientras más corto, mejor entiende la IA",
+                  "Nombres exactos de tablas y columnas, tipos, obligatoriedad, relaciones y orden de creación",
+                  "Indicarle el color del panel de Supabase",
+                  "Pedirle que incluya datos de ejemplo de pedidos reales"
+                ],
+                correcta: 1
+              },
+              {
+                tipo: "ordenar",
+                instruccion: "Ordena la creación de las tablas para que cada llave foránea encuentre su tabla. Empieza por clientes.",
+                elementos: [
+                  "clientes",
+                  "platillos",
+                  "pedidos",
+                  "pedido_items",
+                  "resenas"
+                ]
+              },
+              {
+                tipo: "quehace",
+                codigo: "create table pedidos (\n  estado text not null default 'pendiente'\n);\n\ninsert into pedidos (id) values (1);",
+                pregunta: "¿Qué queda en la columna estado después del insert?",
+                opciones: [
+                  "NULL, porque no se envió",
+                  "La palabra pendiente, porque el default se aplica cuando no se da valor",
+                  "Un error, porque estado es obligatorio",
+                  "El texto 'estado', porque así se llama la columna"
+                ],
+                correcta: 1
+              },
+              {
+                tipo: "vf",
+                afirmacion: "Si el SQL se ejecutó sin errores, las tablas quedaron como tu negocio las necesita.",
+                correcta: false,
+                explicacion: "ejecutar sin errores solo prueba que la sintaxis es válida. Hay que verificar nombres, tipos, llave primaria y llaves foráneas con consultas; una tabla puede existir y aun así no guardar lo que el brief pide."
+              },
+              {
+                tipo: "completar",
+                frase: "Cada tabla necesita una llave ____ que identifique la fila; la columna que apunta a otra tabla es una llave ____ y exige que el valor exista allá.",
+                banco: [
+                  "primaria",
+                  "foránea",
+                  "índice",
+                  "única"
+                ],
+                respuestas: [
+                  "primaria",
+                  "foránea"
+                ]
+              }
+            ]
+          },
+          {
+            id: "m4-c5",
+            titulo: "Leer el SQL que la IA generó, línea por línea",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>El SQL corrió y las tablas existen. Eso prueba que la sintaxis es válida, no que el sistema haga lo que tu negocio necesita. Leer lo que la IA generó es el paso que separa dirigir de copiar.</p><p>Un <code>create table</code> se lee en cinco capas: el nombre, las columnas con sus tipos, la obligatoriedad (<code>not null</code>), los valores por defecto y las reglas (<code>default</code>, <code>check</code>, <code>unique</code>), y las llaves (primaria y foráneas). Al final, las marcas de tiempo.</p><p>Cada pieza responde una pregunta. La llave primaria dice quién es esa fila y prohíbe repetidos. La llave foránea dice a quién pertenece y obliga a que el otro exista. <code>not null</code> es una decisión de negocio: un pedido sin cliente no se puede cobrar. <code>default</code> dice qué pasa cuando nadie captura. <code>check</code> es lo que el sistema se niega a aceptar. Y <code>timestamptz</code> significa que la hora la pone el servidor con zona horaria, no el navegador del cliente.</p><p>Lo que hay que buscar con lupa: dinero en <code>float</code> o <code>real</code> en vez de <code>numeric</code>; fechas en <code>timestamp</code> sin zona; tablas sin llave primaria; llaves foráneas sin <code>on delete</code> cuando el brief pide un comportamiento; <code>text</code> para absolutamente todo; un <code>drop</code> o un <code>truncate</code> escondido entre las líneas; y datos de ejemplo que no pediste.</p><p>Si no puedes explicar una línea en voz alta, no la ejecutes. Pídele a la IA que te la explique como si tuvieras quince años, y luego verifícala en la documentación. La IA también se equivoca en cosas de seguridad, y un <code>on delete cascade</code> mal puesto borra pedidos cuando borras un cliente.</p><p><strong>Dato para recordar:</strong> si no puedes explicar una línea en voz alta, esa línea no está lista para producción.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Leer el SQL es revisar el <strong>tablero eléctrico de una casa antes de conectar todo</strong>. El electricista no prende el interruptor principal y cruza los dedos: lee el diagrama. Qué breaker alimenta cada cuarto, cuál es el principal, qué cable va al tablero del vecino, qué circuito no puede quedar sin protección. Si un breaker dice 15 amperes y el cable es del 10, no hay margen: hay incendio. Cada línea del tablero se puede rastrear hasta un cuarto y un cable. El SQL es ese diagrama; cada línea es un circuito que debes poder seguir con el dedo antes de dar corriente.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Este es el <code>create table</code> real de <code>pedidos</code>, tal como salió en la práctica anterior:</p><pre><code>create table pedidos (\n  id         bigint generated always as identity primary key,\n  cliente_id bigint not null references clientes(id),\n  estado     text not null default 'pendiente'\n             check (estado in ('pendiente','preparando','entregado','cancelado')),\n  total      numeric(10,2) not null default 0,\n  creado_en  timestamptz not null default now()\n);</code></pre><p>Línea por línea:</p><ol><li><code>create table pedidos (</code> abre la tabla. El nombre va en minúsculas, sin acentos ni espacios. Si dice <code>Pedidos</code> o <code>pedido</code>, no es lo que pediste.</li><li><code>id bigint generated always as identity primary key</code> crea el identificador: número entero grande, lo genera la base, no se repite y no acepta vacío. Es la llave primaria.</li><li><code>cliente_id bigint not null references clientes(id)</code> es la llave foránea. <code>not null</code> significa que todo pedido tiene cliente; <code>references</code> obliga a que ese <code>id</code> exista en <code>clientes</code>.</li><li><code>estado text not null default 'pendiente'</code> dice que el estado es obligatorio y que, si nadie lo manda, queda en pendiente. El <code>check</code> de la línea siguiente limita los valores a cuatro; un <code>'entregadoo'</code> se rechaza.</li><li><code>total numeric(10,2) not null default 0</code> guarda dinero exacto: hasta diez dígitos y dos decimales. <code>float</code> habría redondeado centavos.</li><li><code>creado_en timestamptz not null default now()</code> guarda la fecha con zona horaria y la pone el servidor. El navegador no puede mentir ni adelantar la hora.</li><li><code>);</code> cierra. Si falta, el editor marca error hasta el final del archivo.</li></ol><p>Ahora mira la diferencia entre lo que pediste y lo que la IA pudo escribir sin avisar:</p><pre><code>-- lo que pediste\ncliente_id bigint not null references clientes(id)\n\n-- lo que pudo escribir\ncliente_id bigint references clientes(id) on delete cascade</code></pre><p>Sin <code>not null</code> puedes tener pedidos huérfanos, sin cliente. Con <code>on delete cascade</code>, borrar un cliente borra todo su historial de compras: quizá quieras eso para <code>pedido_items</code>, casi nunca para <code>pedidos</code>.</p><p><strong>Antes de aceptar, revisa:</strong> que el nombre de la tabla sea el del brief; que exista <code>primary key</code>; que cada <code>references</code> apunte a la tabla y columna correctas; que <code>not null</code> esté donde el negocio lo exige; que el dinero sea <code>numeric</code>; que las fechas sean <code>timestamptz</code>; que los <code>check</code> cubran los estados reales; que no haya <code>drop</code>, <code>truncate</code> ni datos de ejemplo; y que el comportamiento al borrar sea el que quieres. Lo que falte se decide ahora, no con la base llena.</p><p><strong>Advertencia:</strong> un <code>timestamp</code> sin zona horaria en la Ciudad de México se guarda como si fuera UTC y aparece seis horas corrido. Si vas a mostrar horas de pedidos, usa <code>timestamptz</code> y deja que la base haga la conversión.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Te pego el SQL que generaste para la tabla pedidos de Tacos El Volcán. Explícamelo línea por línea, en español llano, sin dar por sabido nada: qué pieza crea cada línea, qué dato acepta y cuál rechaza, y qué pasaría si la quito. Después hazme seis preguntas de verificación que pueda contestar mirando el esquema, y una lista de los errores típicos que debo buscar en un create table generado por IA: tipos de dinero, fechas sin zona horaria, llaves primarias ausentes, llaves foráneas sin comportamiento al borrar y columnas de texto sin reglas. No reescribas el SQL todavía; primero quiero entenderlo. Aquí va: [pega tu SQL].\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              {
+                tipo: "multiple",
+                pregunta: "¿Qué significa `total numeric(10,2)`?",
+                opciones: [
+                  "Un número decimal exacto de hasta diez dígitos, dos de ellos decimales",
+                  "Un texto de diez caracteres con dos comas",
+                  "Un número flotante que redondea a dos decimales al mostrarse",
+                  "Diez columnas de dos dígitos cada una"
+                ],
+                correcta: 0
+              },
+              {
+                tipo: "quehace",
+                codigo: "cliente_id bigint not null references clientes(id)",
+                pregunta: "¿Qué impide exactamente esa línea?",
+                opciones: [
+                  "Que se repita el mismo cliente en dos pedidos",
+                  "Que un pedido se guarde sin cliente o con un cliente que no existe en clientes",
+                  "Que se borre un cliente con pedidos",
+                  "Que el cliente cambie de teléfono"
+                ],
+                correcta: 1
+              },
+              {
+                tipo: "vf",
+                afirmacion: "Una columna `estado text` sin `check` acepta cualquier texto, incluido 'entregadoo'.",
+                correcta: true,
+                explicacion: "el tipo text no valida contenido. Sin una regla check, la base acepta cualquier cadena y los errores de captura se vuelven datos válidos."
+              },
+              {
+                tipo: "relacionar",
+                pares: [
+                  [
+                    "primary key",
+                    "Identifica la fila y prohíbe repetidos o vacíos"
+                  ],
+                  [
+                    "not null",
+                    "Obliga a capturar un valor"
+                  ],
+                  [
+                    "default now()",
+                    "Si nadie manda fecha, usa la hora del servidor"
+                  ],
+                  [
+                    "check (...)",
+                    "Rechaza valores fuera de una lista o rango"
+                  ],
+                  [
+                    "references",
+                    "Exige que el valor exista en otra tabla"
+                  ]
+                ]
+              },
+              {
+                tipo: "completar",
+                frase: "El tipo ____ guarda dinero exacto; el tipo ____ guarda fecha con zona horaria; el tipo ____ guarda texto libre y no valida su contenido.",
+                banco: [
+                  "numeric",
+                  "timestamptz",
+                  "text",
+                  "float"
+                ],
+                respuestas: [
+                  "numeric",
+                  "timestamptz",
+                  "text"
+                ]
+              }
+            ]
+          },
+          {
+            id: "m4-c6",
+            titulo: "PRÁCTICA: insertar y consultar tus primeros datos",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Ya tienes tablas, pero una tabla vacía no prueba nada: es una repisa nueva, limpia y sin un solo frasco. Hasta que no escribes una fila, lees lo escrito, corriges un valor y borras algo, no sabes si tu base funciona o solo si el panel se ve bonito. Esta unidad es eso: cuatro operaciones y una costumbre.</p><p>Las cuatro operaciones se llaman <strong>INSERT</strong> (agregar), <strong>SELECT</strong> (leer), <strong>UPDATE</strong> (modificar) y <strong>DELETE</strong> (borrar). Son las mismas cuatro de cualquier base relacional desde los años setenta, y son las que tu sitio va a disparar todo el tiempo: el formulario hace INSERT, el menú hace SELECT, el panel del dueño hace UPDATE, y cuando alguien cancela un pedido de prueba, DELETE.</p><p>Tienes dos puertas para hacerlo y conviene usar las dos. La <strong>Table Editor</strong> de Supabase es una hoja de cálculo: das clic, escribes, guardas. El <strong>SQL Editor</strong> es una consola donde escribes la instrucción completa. La Table Editor es más rápida para tres filas; el SQL Editor es más honesto, porque te muestra exactamente qué instrucción se ejecutó y te obliga a decir <em>cuál</em> fila, no solo <em>qué</em> valor. En esta práctica usas el SQL Editor y compruebas en la Table Editor: escribir en una puerta y verificar en la otra es el hábito que te va a salvar cuando algo salga raro.</p><p>Dos detalles técnicos que te ahorran media hora de confusión. Primero: tu tabla tiene columnas con <em>default</em>, como <code>id</code> y <code>creado_en</code>; no las escribas, la base las llena sola. Segundo: los tipos importan. <code>18.00</code> es un número y <code>'18.00'</code> es texto; si la columna es <code>numeric</code>, el segundo puede fallar o guardarse raro. Y si tu tabla tiene <code>not null</code> en una columna que olvidaste, el INSERT no se guarda a medias: se rechaza completo.</p><p>La quinta operación no está en ningún manual y es la más importante: <strong>volver a leer</strong>. Después de cada escritura, haz un SELECT. No porque desconfíes de la base, sino porque así distingues \"creo que se guardó\" de \"se guardó\". Un negocio que no puede comprobar sus datos vive de suposiciones, y las suposiciones no cuadran al final del mes.</p><p>Esto te importa aunque la IA escriba el código: cuando el formulario de tu landing falle, el error puede estar en el HTML, en el JavaScript, en la política RLS o en el dato. Si tú sabes insertar tres platillos a mano y leerlos, puedes aislar el problema en dos minutos. Si no, dependes de que la IA adivine.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Esto es la repisa de frascos del laboratorio de tu secundaria. Cada frasco lleva su etiqueta de cinta adhesiva con el nombre y la fecha escritos con plumón. <strong>INSERT</strong> es poner un frasco nuevo y pegarle su etiqueta; <strong>SELECT</strong> es recorrer la repisa leyendo etiquetas; <strong>UPDATE</strong> es despegar una etiqueta, corregir el precio con thinner y volver a escribir; <strong>DELETE</strong> es tirar un frasco caducado. Y la regla del laboratorio es la misma que la de la base: después de mover algo, vuelves a leer la repisa, porque el plumón se corre y el frasco que creías en el tercer lugar está en el segundo. Nadie vacía la repisa completa para quitar un frasco: se toma el frasco correcto, se revisa la etiqueta y se tira ese.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Vas a hacer el ciclo completo sobre <code>platillos</code> de Tacos El Volcán. Abre <strong>SQL Editor</strong> en Supabase y ejecuta un paso a la vez; no corras los cuatro de golpe.</p><ol><li><strong>Inserta tres platillos</strong> y pide que te devuelva lo insertado.</li><li><strong>Lee</strong> la tabla ordenada para comprobar que están los tres.</li><li><strong>Cambia un precio</strong> y vuelve a leer esa fila.</li><li><strong>Borra una fila de prueba</strong> (no un platillo real) y confirma que quedaron dos.</li><li><strong>Verifica en la Table Editor</strong> que la tabla coincide con lo que dijeron tus consultas.</li></ol><pre><code>insert into platillos (nombre, precio, categoria, activo)\nvalues\n  ('Taco al pastor', 18.00, 'tacos', true),\n  ('Volcán', 42.00, 'especiales', true),\n  ('Agua de horchata', 25.00, 'bebidas', true)\nreturning id, nombre, precio;</code></pre><p>Ese <code>returning</code> es el dato memorable de la unidad: la base te devuelve las filas que acaba de escribir, con el <code>id</code> que ella generó. Sin él, insertas a ciegas. Ahora lee y luego modifica:</p><pre><code>select id, nombre, precio, categoria\nfrom platillos\norder by categoria, nombre;\n\nupdate platillos\nset precio = 45.00\nwhere nombre = 'Volcán'\nreturning nombre, precio;</code></pre><p>Y el borrado de prueba, siempre con <code>where</code>:</p><pre><code>insert into platillos (nombre, precio, categoria)\nvalues ('Platillo de prueba', 1.00, 'pruebas')\nreturning id;\n\ndelete from platillos\nwhere nombre = 'Platillo de prueba'\nreturning nombre, categoria;</code></pre><p><strong>Qué deberías ver:</strong> tres filas tras el primer insert, el precio de Volcán en 45.00 después del update, y un solo renglón devuelto por el delete. En la Table Editor, un clic en <em>Refresh</em> debe mostrar exactamente eso. Si el update devuelve cero filas, el <code>where</code> no encontró nada: revisa acentos y mayúsculas, porque <code>'Volcan'</code> no es <code>'Volcán'</code>.</p><p>El mismo ciclo desde tu JavaScript, que es lo que hará el sitio:</p><pre><code>const { data, error } = await db\n  .from('platillos')\n  .insert({ nombre: 'Taco al pastor', precio: 18.00, categoria: 'tacos' })\n  .select()\n  .single();</code></pre><p><strong>Advertencia:</strong> <code>delete from platillos;</code> sin <code>where</code> borra todas las filas, y <code>update platillos set precio = 0;</code> sin <code>where</code> deja el menú gratis. El SQL Editor no tiene papelera ni deshacer: ejecuta y ya. Antes de un DELETE o un UPDATE masivo, corre el mismo filtro como <code>select count(*)</code> para ver cuántas filas vas a tocar, y ten un respaldo (m4-b20).</p><p>Si el insert falla desde JavaScript con <code>new row violates row-level security policy</code>, la sintaxis está bien y el problema es la política, no el código (m4-c11).</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Mi tabla platillos tiene estas columnas: id uuid, nombre text not null, precio numeric(10,2) not null, categoria text, activo boolean default true, creado_en timestamptz default now(). Escríbeme cuatro bloques de SQL para el SQL Editor de Supabase, en este orden: (1) insertar tres platillos de tacos con returning, (2) un select ordenado por categoria y nombre, (3) un update de un solo platillo filtrando por nombre con returning, (4) un delete de un platillo de prueba con returning. No uses delete ni update sin where en ningún bloque. Al final, dime qué debo ver en cada paso para saber que funcionó y qué error esperaría si la política RLS bloquea el insert.\"</p></blockquote><p>La frase \"qué debo ver en cada paso\" convierte a la IA en instructora, no solo en generadora. Y pedir el error esperado te prepara para reconocerlo en vez de asustarte.</p>"
+              }
+            ],
+            ejercicios: [
+              {
+                tipo: "multiple",
+                pregunta: "¿Para qué sirve la cláusula returning al final de un INSERT?",
+                opciones: [
+                  "Para que la base devuelva las filas que acaba de escribir, con sus valores generados",
+                  "Para repetir el insert si falla la primera vez",
+                  "Para ordenar las filas antes de guardarlas",
+                  "Para evitar que se ejecute el insert hasta confirmarlo"
+                ],
+                correcta: 0
+              },
+              {
+                tipo: "vf",
+                afirmacion: "Un UPDATE sin cláusula where modifica todas las filas de la tabla.",
+                correcta: true,
+                explicacion: "Sin where no hay filtro: la base aplica el cambio a cada fila. Por eso se prueba primero con un select count(*) y se ejecuta con respaldo a la mano (m4-b20)."
+              },
+              {
+                tipo: "completar",
+                frase: "Después de un UPDATE conviene usar ____ para ver qué filas cambiaron, y para borrar solo una fila nunca olvido la cláusula ____.",
+                banco: [
+                  "RETURNING",
+                  "WHERE",
+                  "ORDER BY",
+                  "LIMIT"
+                ],
+                respuestas: [
+                  "RETURNING",
+                  "WHERE"
+                ]
+              },
+              {
+                tipo: "relacionar",
+                pares: [
+                  [
+                    "INSERT",
+                    "Agrega filas nuevas"
+                  ],
+                  [
+                    "SELECT",
+                    "Lee filas sin modificarlas"
+                  ],
+                  [
+                    "UPDATE",
+                    "Cambia valores de filas existentes"
+                  ],
+                  [
+                    "DELETE",
+                    "Elimina filas"
+                  ],
+                  [
+                    "RETURNING",
+                    "Devuelve las filas afectadas por la escritura"
+                  ]
+                ]
+              },
+              {
+                tipo: "quehace",
+                codigo: "delete from platillos\nwhere categoria = 'bebidas'\nreturning nombre;",
+                pregunta: "¿Qué pasa exactamente al ejecutar esta instrucción?",
+                opciones: [
+                  "Borra todas las filas de categoría bebidas y devuelve el nombre de cada una",
+                  "Borra solo la primera bebida que encuentre",
+                  "Borra la tabla platillos completa",
+                  "Marca las bebidas como inactivas sin borrarlas"
+                ],
+                correcta: 0
+              }
+            ]
+          },
+          {
+            id: "m4-c7",
+            titulo: "PRÁCTICA: conectar tu sitio del Módulo 3 a la base",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Tu landing de Tacos El Volcán es un conjunto de archivos que el navegador ya sabe leer: HTML, CSS y JavaScript. La base de datos vive en otro edificio, en los servidores de Supabase. Para que se hablen hacen falta tres cosas: un <strong>cliente</strong>, una <strong>dirección</strong> y una <strong>llave</strong>.</p><p>El cliente es una biblioteca de JavaScript llamada <code>@supabase/supabase-js</code>. No la vas a escribir: la descargas. Hay dos formas. Con <code>npm</code> si tu proyecto tiene un paso de compilación, o por <strong>CDN</strong> (Content Delivery Network, un servidor público que sirve archivos) con una etiqueta <code>&lt;script&gt;</code>. Para tu landing del Módulo 3, que es HTML puro, el CDN es el camino corto: una línea y ya tienes el cliente disponible.</p><p>La dirección es la URL de tu proyecto, algo como <code>https://abcdefgh.supabase.co</code>. La llave es la <code>anon key</code>, un texto largo que empieza con <code>eyJ</code>. Las dos están en <strong>Project Settings → API</strong>. Juntas le dicen al cliente a qué proyecto llamar y con qué identidad presentarse.</p><p>Aquí viene la decisión que separa a quien entiende de quien copia: <strong>esas dos variables van en un archivo aparte</strong>, <code>js/config.js</code>, no enterradas en cada página. Tienes seis u ocho páginas en el sitio; si la URL cambia o migras a otro proyecto, quieres tocar un archivo y no ocho. Además, cuando llegues a un panel de administración (m4-c19), la misma configuración alimenta todas las pantallas.</p><p>¿Y no es peligroso que la llave esté en un archivo que cualquiera descarga? La <code>anon key</code> es pública <em>por diseño</em>: identifica a tu proyecto y al rol \"visitante sin sesión\". No es una contraseña, es un identificador. Lo que decide qué puede leer o escribir ese visitante es <strong>RLS</strong> (m4-b22). Con RLS encendido y políticas escritas, la llave pública abre solo lo que debe abrir. Con RLS apagado, esa misma llave es la puerta abierta de tu negocio.</p><p>El día que conectas esto, tu landing deja de ser un folleto. El menú que hasta ahora estaba escrito a mano empieza a poder venir de la base, y el formulario de contacto empieza a poder guardar de verdad. La conexión es una sola vez; lo que construyes encima es todo el módulo.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Conectar tu sitio a Supabase es instalar la impresora compartida del pasillo. Primero consigues el <strong>driver</strong> (esa es la biblioteca que baja por CDN), luego escribes la <strong>dirección IP de la impresora</strong> en tu computadora (la URL del proyecto) y por último usas la <strong>contraseña del wifi que está anotada en un post-it junto al router</strong> (la anon key): está a la vista de todos y no pasa nada, porque lo que decide quién imprime qué es el cupo asignado a tu usuario en el servidor de impresión (RLS). Lo que jamás se pega en el pasillo es la llave maestra del edificio, la que abre el cuarto de servidores y todas las oficinas: esa se queda con el administrador (service_role, en el servidor).</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Vas a dejar el sitio conectado y con una consulta de prueba funcionando. No toques todavía el menú ni el formulario: primero comprueba la tubería.</p><ol><li>En Supabase, entra a <strong>Project Settings → API</strong> y copia <em>Project URL</em> y <em>anon public key</em>.</li><li>Crea <code>js/config.js</code> con esas dos variables.</li><li>En cada página, carga primero el CDN, luego <code>config.js</code>, luego tu cliente y al final tu lógica.</li><li>Inicializa el cliente una sola vez, en <code>js/supabase-client.js</code>.</li><li>Abre el sitio con un servidor local (no con doble clic) y corre una consulta de prueba en la consola.</li></ol><pre><code>// js/config.js — público a propósito: NO contiene secretos\nwindow.CONFIG = {\n  SUPABASE_URL: 'https://abcdefgh.supabase.co',\n  SUPABASE_ANON_KEY: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...'\n};</code></pre><pre><code>&lt;!-- al final de menu.html, en este orden exacto --&gt;\n&lt;script src=\"https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2\"&gt;&lt;/script&gt;\n&lt;script src=\"js/config.js\"&gt;&lt;/script&gt;\n&lt;script src=\"js/supabase-client.js\"&gt;&lt;/script&gt;\n&lt;script src=\"js/app.js\"&gt;&lt;/script&gt;</code></pre><pre><code>// js/supabase-client.js\nconst { createClient } = supabase; // el global que dejó el CDN\n\nconst db = createClient(\n  window.CONFIG.SUPABASE_URL,\n  window.CONFIG.SUPABASE_ANON_KEY\n);</code></pre><p>Prueba de humo en la consola del navegador (F12):</p><pre><code>const { data, error } = await db.from('platillos').select('nombre').limit(1);\nconsole.log({ data, error });</code></pre><p><strong>Qué deberías ver:</strong> un objeto <code>{ data: [...], error: null }</code>. En la pestaña <em>Network</em> aparece una petición a <code>https://tu-proyecto.supabase.co/rest/v1/platillos?select=nombre&amp;limit=1</code>. Si <code>error</code> trae <code>relation \"public.platillos\" does not exist</code>, el nombre de la tabla o el proyecto están mal; si trae <code>permission denied</code>, la tubería funciona y falta la política RLS.</p><p><strong>Advertencia:</strong> abre el sitio con un servidor local (<code>npx serve</code> o la extensión Live Server), no con <code>file://</code>. Varios navegadores bloquean las peticiones desde archivos locales y vas a culpar a Supabase de un problema que es del protocolo.</p><p><strong>Advertencia:</strong> la <code>service_role</code> key jamás va en <code>config.js</code> ni en ninguna parte del navegador, porque se salta RLS por completo. Si necesitas una operación que la anon no permite, la respuesta es una función de servidor (m4-c16), no pegar la llave maestra.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Estoy conectando una landing estática (HTML, CSS y JavaScript sin build) a Supabase. Revisa mi integración y dime si el orden de los scripts es correcto: [pega las etiquetas script]. Mi config.js es este: [pega config.js con la URL real y la anon key reemplazada por ANON_KEY_AQUI]. Quiero que (1) confirmes que no hay ninguna service_role en el frontend, (2) me des un supabase-client.js que inicialice el cliente una sola vez y falle con un mensaje claro si falta una variable, (3) me des una consulta de prueba que distinga entre error de red, tabla inexistente y permiso denegado por RLS. No inventes nombres de tablas: solo existe platillos, con las columnas nombre, precio, categoria y activo.\"</p></blockquote><p>Fíjate que la llave se pega como marcador, no real. Esa costumbre se explica en m4-c10, y adoptarla desde hoy te evita el susto de después.</p>"
+              }
+            ],
+            ejercicios: [
+              {
+                tipo: "multiple",
+                pregunta: "¿Por qué la anon key puede vivir en un archivo público del sitio?",
+                opciones: [
+                  "Porque identifica al rol de visitante y RLS decide qué filas puede ver o escribir",
+                  "Porque Supabase la cifra automáticamente al publicarla",
+                  "Porque solo funciona desde localhost",
+                  "Porque caduca a las 24 horas y deja de servir"
+                ],
+                correcta: 0
+              },
+              {
+                tipo: "vf",
+                afirmacion: "Guardar la anon key en un archivo config.js separado la mantiene secreta frente a los visitantes.",
+                correcta: false,
+                explicacion: "El archivo se sirve al navegador igual que el HTML. La anon key es pública por diseño; separarla sirve para mantener el código ordenado, no para esconderla. Lo que protege los datos es RLS (m4-b22)."
+              },
+              {
+                tipo: "completar",
+                frase: "El cliente de Supabase se descarga por ____, se inicializa con la ____ del proyecto y la llave ____, que es pública.",
+                banco: [
+                  "CDN",
+                  "URL",
+                  "anon",
+                  "service_role"
+                ],
+                respuestas: [
+                  "CDN",
+                  "URL",
+                  "anon"
+                ]
+              },
+              {
+                tipo: "relacionar",
+                pares: [
+                  [
+                    "URL del proyecto",
+                    "Dirección a la que el cliente manda cada consulta"
+                  ],
+                  [
+                    "anon key",
+                    "Identificador público; los permisos los decide RLS"
+                  ],
+                  [
+                    "service_role",
+                    "Secreto de servidor; nunca en el navegador"
+                  ],
+                  [
+                    "config.js",
+                    "Archivo público con la URL y la anon key"
+                  ]
+                ]
+              },
+              {
+                tipo: "quehace",
+                codigo: "&lt;script src=\"js/app.js\"&gt;&lt;/script&gt;\n&lt;script src=\"js/config.js\"&gt;&lt;/script&gt;\n\n// dentro de app.js\nconst db = supabase.createClient(\n  window.CONFIG.SUPABASE_URL,\n  window.CONFIG.SUPABASE_ANON_KEY\n);",
+                pregunta: "El sitio carga en blanco y la consola dice que no puede leer SUPABASE_URL. ¿Cuál es la causa?",
+                opciones: [
+                  "config.js se carga después de app.js, así que window.CONFIG todavía no existe cuando se inicializa el cliente",
+                  "La anon key está mal copiada",
+                  "El CDN de Supabase no permite usarse en HTML estático",
+                  "Falta declarar la variable como const global"
+                ],
+                correcta: 0
+              }
+            ]
+          },
+          {
+            id: "m4-c8",
+            titulo: "PRÁCTICA: un formulario que guarda de verdad",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>En el Módulo 3 tu formulario de contacto era una promesa: el visitante escribía, le dabas las gracias y el mensaje se perdía en el aire (o abría WhatsApp con un texto prellenado). Hoy esa promesa se cumple: el formulario escribe una fila en la base y esa fila sigue ahí mañana, cuando el dueño abra su panel.</p><p>El recorrido de un envío tiene seis estaciones y el orden no es negociable: <strong>detener el envío del navegador</strong> con <code>preventDefault()</code>, <strong>leer</strong> los valores, <strong>validar</strong>, <strong>bloquear el botón</strong>, <strong>insertar</strong> y <strong>decidir el mensaje según la respuesta</strong>. Si te saltas una, el formulario miente: dice \"enviado\" cuando no lo está, o guarda basura que después nadie puede usar.</p><p>La validación vive en dos capas y las dos hacen falta. La del navegador (atributos <code>required</code>, <code>maxlength</code>, <code>type</code>) es <strong>experiencia de usuario</strong>: evita que alguien mande el formulario vacío y le avisa antes de esperar. La de la base (columnas <code>not null</code>, restricciones <code>check</code>, tipos) es la que <strong>protege los datos</strong>, porque nadie garantiza que la petición venga de tu formulario: se puede mandar con curl o desde la consola (m4-a21). Valida en el HTML para ayudar, valida en la base para dormir tranquilo.</p><p>El botón tiene tres estados y la mayoría de los tutoriales solo implementa dos. <em>Listo</em>: dice \"Enviar\" y se puede pulsar. <em>Enviando</em>: está deshabilitado y dice \"Enviando...\", porque sin esto un usuario impaciente manda el mismo pedido tres veces y tú tienes tres tacos de más en la cocina. <em>Terminado</em>: vuelve a estar disponible y el mensaje aparece al lado. Si el insert falla, el botón regresa a <em>listo</em> y el mensaje dice qué hacer, no \"error 500\".</p><p>Y el pecado que hay que nombrar: <strong>guardar sin validar y avisar antes de saber</strong>. Un formulario que hace <code>insert()</code> y luego muestra \"¡Gracias!\" sin esperar la respuesta no está guardando: está esperando que nadie revise. El usuario se va contento, el pedido no existe, y el negocio se enteró una semana después.</p><p>Cuando esto funcione, tendrás la primera prueba de que tu landing ya es un sistema: alguien fuera de tu computadora escribió, y tú lo puedes leer en Supabase sin que te avise por WhatsApp.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Esto es la máquina de boletos del metro. Metes las monedas y la máquina las cuenta antes de darte nada: una moneda doblada o de otro país la rechaza y te la devuelve con un aviso en pantalla (la validación). Mientras cuenta, el botón de \"agregar otra moneda\" se bloquea, porque si lo aprietas a media cuenta el mecanismo se atora y pagas dos veces (el botón deshabilitado). Solo cuando el total cuadra escupe el boleto (el éxito), y solo después de que el boleto salió puedes soltar la palanca del torniquete. Lo que nadie hace es empujar el torniquete y <em>luego</em> meter las monedas: eso es guardar sin validar, y el de la caseta te regresa a la fila.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Toma el formulario de contacto de tu landing y conviértelo en un formulario de reseñas que escribe en <code>resenas</code>. Empieza por el HTML, sin estilos nuevos, para no mezclar problemas.</p><pre><code>&lt;form id=\"form-resena\"&gt;\n  &lt;input id=\"nombre\" name=\"nombre\" maxlength=\"60\" required&gt;\n  &lt;select id=\"calificacion\" name=\"calificacion\" required&gt;\n    &lt;option value=\"\"&gt;Elige 1 a 5&lt;/option&gt;\n    &lt;option value=\"5\"&gt;5&lt;/option&gt;\n    &lt;option value=\"4\"&gt;4&lt;/option&gt;\n    &lt;option value=\"3\"&gt;3&lt;/option&gt;\n    &lt;option value=\"2\"&gt;2&lt;/option&gt;\n    &lt;option value=\"1\"&gt;1&lt;/option&gt;\n  &lt;/select&gt;\n  &lt;textarea id=\"comentario\" name=\"comentario\" maxlength=\"400\" required&gt;&lt;/textarea&gt;\n  &lt;button id=\"btn-enviar\" type=\"submit\"&gt;Enviar reseña&lt;/button&gt;\n  &lt;p id=\"mensaje\" role=\"status\" aria-live=\"polite\"&gt;&lt;/p&gt;\n&lt;/form&gt;</code></pre><p>Los atributos <code>required</code> y <code>maxlength</code> son la primera capa; el JavaScript es la segunda y la que decide el mensaje. Y el manejador, con las seis estaciones en orden:</p><pre><code>const form = document.querySelector('#form-resena');\nconst btn = document.querySelector('#btn-enviar');\nconst msg = document.querySelector('#mensaje');\n\nfunction avisar(texto, tipo) {\n  msg.textContent = texto;\n  msg.dataset.tipo = tipo; // 'error' o 'exito', para el color\n}\n\nform.addEventListener('submit', async (e) =&gt; {\n  e.preventDefault();\n\n  const nombre = form.nombre.value.trim();\n  const calificacion = Number(form.calificacion.value);\n  const comentario = form.comentario.value.trim();\n\n  if (nombre.length &lt; 2) return avisar('Escribe tu nombre.', 'error');\n  if (!Number.isInteger(calificacion) || calificacion &lt; 1 || calificacion &gt; 5) {\n    return avisar('Elige de 1 a 5 estrellas.', 'error');\n  }\n  if (comentario.length &lt; 10) {\n    return avisar('Cuéntanos un poco más (mínimo 10 caracteres).', 'error');\n  }\n\n  btn.disabled = true;\n  btn.textContent = 'Enviando...';\n  avisar('', '');\n\n  try {\n    const { error } = await db.from('resenas').insert({\n      nombre,\n      calificacion,\n      comentario\n    });\n\n    if (error) {\n      console.error('insert resenas:', error);\n      avisar('No pudimos guardar tu reseña. Intenta de nuevo.', 'error');\n      return;\n    }\n\n    form.reset();\n    avisar('¡Gracias! Tu reseña ya quedó guardada.', 'exito');\n  } catch (falla) {\n    console.error('falla de red:', falla);\n    avisar('Se cayó la conexión. Revisa tu internet e intenta otra vez.', 'error');\n  } finally {\n    btn.disabled = false;\n    btn.textContent = 'Enviar reseña';\n  }\n});</code></pre><p><strong>Qué deberías ver:</strong> al enviar, el botón se apaga un instante y luego aparece el mensaje verde; en la Table Editor hay una fila nueva con los acentos intactos y la calificación como número. Si dejas el nombre vacío, el navegador ni siquiera deja enviar (primera capa); si escribes un comentario de cinco letras, el navegador lo acepta y tu validación lo rechaza con el aviso rojo (segunda capa). En ninguno de los dos casos se crea una fila. Si apagas el wifi y envías, el mensaje es de conexión y el botón vuelve a estar disponible.</p><p>Para el mismo formulario guardando pedidos, el patrón es idéntico; solo cambia la tabla y el objeto: <code>db.from('pedidos').insert({ estado: 'pendiente', notas: comentario }).select().single()</code>. Si necesitas el <code>cliente_id</code>, primero busca o crea el cliente por teléfono y usa el <code>id</code> que regrese (m4-b27).</p><p><strong>Advertencia:</strong> el <code>try/finally</code> no es decoración. Si la petición lanza una excepción de red (wifi caído, DNS), sin <code>finally</code> el botón se queda deshabilitado para siempre y el visitante cree que tu sitio se rompió.</p><p><strong>Advertencia:</strong> no muestres <code>error.message</code> al visitante. Ahí vienen nombres de tablas, columnas y políticas; es información gratis para quien esté probando. Regístralo en la consola para ti y muestra una frase humana.</p><p><strong>Advertencia:</strong> que la tabla exista no significa que el formulario pueda escribir en ella. Si el insert responde <code>permission denied</code>, falta una política de INSERT para el rol que envía (visitante o usuario con sesión); escríbela antes de culpar al JavaScript (m4-c11).</p><p><strong>Advertencia:</strong> la base debe rechazar lo que tu formulario no atrapó. Agrega <code>check (calificacion between 1 and 5)</code> y <code>not null</code> a las columnas de <code>resenas</code>; sin eso, un script puede guardar \"999 estrellas\" y tu promedio queda inservible.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Tengo este formulario HTML de contacto y quiero que guarde en la tabla resenas de Supabase (columnas: id, nombre, calificacion int, comentario, creado_en). Reescribe el JavaScript con este orden obligatorio: preventDefault, leer con trim, validar nombre de 2 a 60 caracteres, calificacion entera de 1 a 5 y comentario de 10 a 400; deshabilitar el botón y cambiar su texto mientras espera; insertar; revisar error antes de mostrar éxito; volver a habilitar el botón en un finally. Muéstrame un mensaje distinto para error de validación, error de la base y falla de red, sin exponer error.message al usuario. No uses innerHTML en ningún lado. Al final, dime qué restricciones check y not null debo agregar a la tabla para que la base rechace lo mismo que el formulario.\"</p></blockquote><p>La última frase es la que cierra el círculo: la IA te devuelve la validación en los dos lados, y tú ya sabes por qué hacen falta las dos.</p>"
+              }
+            ],
+            ejercicios: [
+              {
+                tipo: "multiple",
+                pregunta: "¿Dónde debe vivir la validación que de verdad protege los datos?",
+                opciones: [
+                  "En la base, con restricciones not null y check, además de la validación del formulario",
+                  "Solo en los atributos required del HTML",
+                  "En el CSS, ocultando el botón cuando falta un campo",
+                  "En el botón, que se deshabilita hasta que todo esté lleno"
+                ],
+                correcta: 0
+              },
+              {
+                tipo: "vf",
+                afirmacion: "Mostrar el mensaje de éxito antes de que termine el insert es aceptable si la conexión es rápida.",
+                correcta: false,
+                explicacion: "La velocidad no cambia el hecho: si el insert falla, el usuario ya se fue con una mentira. El éxito solo se muestra cuando error es null (m4-a21)."
+              },
+              {
+                tipo: "completar",
+                frase: "Mientras el insert viaja, el botón debe quedar ____ y solo después de revisar ____ puedo mostrar el mensaje de éxito.",
+                banco: [
+                  "deshabilitado",
+                  "error",
+                  "habilitado",
+                  "data"
+                ],
+                respuestas: [
+                  "deshabilitado",
+                  "error"
+                ]
+              },
+              {
+                tipo: "ordenar",
+                instruccion: "Ordena lo que ocurre cuando un visitante envía una reseña válida:",
+                elementos: [
+                  "El visitante pulsa Enviar",
+                  "El código detiene el envío del navegador con preventDefault",
+                  "Se leen y se validan los valores del formulario",
+                  "El botón se deshabilita y cambia a Enviando...",
+                  "El insert viaja a la tabla resenas",
+                  "La respuesta llega sin error y se muestra el mensaje de éxito",
+                  "El formulario se limpia y el botón vuelve a estar disponible"
+                ]
+              },
+              {
+                tipo: "quehace",
+                codigo: "form.addEventListener('submit', (e) =&gt; {\n  e.preventDefault();\n  db.from('resenas').insert({ nombre, comentario });\n  avisar('¡Gracias!', 'exito');\n});",
+                pregunta: "¿Qué problema tiene este manejador?",
+                opciones: [
+                  "Anuncia el éxito antes de saber la respuesta y no revisa el error del insert",
+                  "Le falta el preventDefault",
+                  "Inserta en la tabla equivocada",
+                  "No puede usar insert sin un select previo"
+                ],
+                correcta: 0
+              }
+            ]
+          },
+          {
+            id: "m4-c9",
+            titulo: "PRÁCTICA: mostrar datos reales en tu interfaz",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Hasta el Módulo 3, tu menú era HTML escrito a mano: doce platillos, doce bloques, y el precio copiado en dos lugares porque también aparecía en la sección de promociones. Cambiar el precio del Volcán eran tres ediciones y un deploy. Peor: si se te olvidaba una, el sitio decía dos precios distintos y el cliente elegía el más barato.</p><p>Mostrar datos reales significa invertir la dirección. El HTML ya no <em>contiene</em> el menú: contiene un <strong>hueco</strong> y las instrucciones para llenarlo. Al cargar la página, un SELECT trae las filas de <code>platillos</code> y un ciclo crea un elemento por cada una. El HTML se vuelve una plantilla; la base se vuelve la única verdad.</p><p>Ese cambio trae tres estados que tu sitio del Módulo 3 no tenía y que ahora son obligatorios. <strong>Cargando</strong>: la consulta tarda, y mientras tanto no muestras \"no hay platillos\" (el visitante se va). <strong>Vacío</strong>: la consulta funcionó y devolvió <code>[]</code>, que es un dato legítimo —el dueño no ha publicado el menú de hoy—. <strong>Error</strong>: la consulta falló, y ahí sí hay que ofrecer un teléfono o un botón de reintento. Cero filas no es un error; confundirlos es el bug más común de esta lección.</p><p>El tercer tema es la seguridad al pintar. Los datos vienen de tu base, pero también de un formulario que cualquiera pudo llenar. Si escribes <code>elemento.innerHTML = platillo.nombre</code>, un nombre como <code>&lt;img src=x onerror=alerta()&gt;</code> se ejecuta en el navegador de tus visitantes. La regla es simple: <code>textContent</code> para texto, <code>createElement</code> para estructura, <code>innerHTML</code> solo con cadenas que tú escribiste.</p><p>Y la razón de fondo para dejar de editar el HTML a mano no es la elegancia: es que la base se va a llenar desde otros lados. El panel de administración (m4-c19) va a cambiar precios, marcar platillos agotados y subir fotos. Si el menú está hardcodeado, cada cambio del panel necesita además un programador. Si el menú se pinta desde la base, el dueño cambia el precio y el sitio ya dice la verdad.</p><p>El día que edites una fila en Supabase, recargues tu landing y veas el precio nuevo sin tocar una línea de código, vas a entender de qué se trataba todo el módulo.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Tu menú es el marcador de un partido de básquetbol. Nadie sube a pintar los números en el tablero: el tablero solo <strong>muestra</strong> lo que la mesa de anotación registra, y cuando el anotador suma dos puntos, el número cambia en la cancha y en la transmisión al mismo tiempo. Mientras arranca el cuarto, el tablero muestra guiones porque todavía no hay marcador (cargando); un 0 a 0 al minuto uno es un marcador real, no una falla (vacío); y si se va la luz del tablero, el sonido anuncia el marcador por bocina en vez de dejar a todos adivinando (error). El que pinta los números a mano cada partido termina con dos tableros distintos en el mismo gimnasio.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Deja el diseño de tu landing intacto y cambia solo el contenido de la sección del menú. Primero el hueco:</p><pre><code>&lt;section id=\"menu\"&gt;\n  &lt;p id=\"menu-estado\"&gt;Cargando menú...&lt;/p&gt;\n  &lt;div id=\"menu-lista\"&gt;&lt;/div&gt;\n&lt;/section&gt;</code></pre><p>Luego la función que consulta, distingue los tres estados y pinta:</p><pre><code>async function pintarMenu() {\n  const estado = document.querySelector('#menu-estado');\n  const lista = document.querySelector('#menu-lista');\n\n  estado.textContent = 'Cargando menú...';\n\n  const { data, error } = await db\n    .from('platillos')\n    .select('nombre, precio, categoria')\n    .eq('activo', true)\n    .order('categoria')\n    .order('nombre');\n\n  if (error) {\n    console.error('select platillos:', error);\n    estado.textContent = 'No pudimos cargar el menú. Llámanos al 55 1234 5678.';\n    return;\n  }\n\n  if (data.length === 0) {\n    estado.textContent = 'Hoy no hay platillos publicados. Vuelve más tarde.';\n    return;\n  }\n\n  estado.textContent = '';\n  lista.replaceChildren(...data.map(crearTarjeta));\n}\n\nfunction crearTarjeta(platillo) {\n  const tarjeta = document.createElement('article');\n  const titulo = document.createElement('h3');\n  const precio = document.createElement('p');\n\n  titulo.textContent = platillo.nombre;\n  precio.textContent = '$' + Number(platillo.precio).toFixed(2);\n\n  tarjeta.append(titulo, precio);\n  return tarjeta;\n}\n\npintarMenu();</code></pre><p><strong>Qué deberías ver:</strong> el texto \"Cargando menú...\" aparece y desaparece en menos de un segundo; luego, una tarjeta por platillo activo, ordenadas por categoría. Si marcas un platillo como <code>activo = false</code> en Supabase y recargas, desaparece sin que toques el código. Si borras todos los platillos, aparece el mensaje de menú vacío y <em>no</em> un error.</p><p>Para probar el estado de error, cambia el nombre de la tabla a <code>platillosx</code> por un minuto: debe salir el mensaje con el teléfono, no una pantalla en blanco. Regrésalo después.</p><p><strong>Advertencia:</strong> no filtres ni ordenes en JavaScript lo que la base puede filtrar. Traer las 200 filas para quedarte con 12 activas gasta datos del visitante y se vuelve lento cuando crezca el menú (m4-b9, m4-b11). <code>.eq('activo', true)</code> y <code>.order()</code> hacen ese trabajo antes de que los datos salgan del servidor.</p><p><strong>Advertencia:</strong> <code>innerHTML</code> con datos de la base es una puerta abierta a XSS. Aunque hoy solo tú escribas en <code>platillos</code>, mañana el formulario de reseñas o el panel de un empleado escriben ahí. Usa <code>textContent</code> siempre.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Este es el HTML actual de mi sección de menú, con los platillos escritos a mano: [pega el HTML]. Conviértelo para que se pinte desde Supabase, tabla platillos (nombre, precio, categoria, activo), sin cambiar el diseño ni agregar librerías. Requisitos: (1) un solo SELECT que filtre activo = true y ordene por categoria y nombre; (2) estados separados de cargando, vacío y error, con un mensaje distinto para cada uno; (3) construir el DOM con createElement y textContent, nunca innerHTML con datos de la base; (4) precio formateado a dos decimales; (5) un botón de reintento solo en el estado de error. Al final, dime qué parte del HTML viejo debo borrar y qué debo conservar.\"</p></blockquote><p>El punto 5 es el que casi nadie pide y el que salva la venta: cuando la consulta falla, el visitante necesita una salida, no un mensaje bonito.</p>"
+              }
+            ],
+            ejercicios: [
+              {
+                tipo: "multiple",
+                pregunta: "La consulta responde sin error y data es un arreglo vacío. ¿Qué significa?",
+                opciones: [
+                  "La consulta funcionó y no hay filas que mostrar: es el estado vacío",
+                  "La tabla no existe",
+                  "RLS bloqueó la lectura por falta de permisos",
+                  "El navegador no pudo conectarse a Supabase"
+                ],
+                correcta: 0
+              },
+              {
+                tipo: "vf",
+                afirmacion: "Pintar el nombre de un platillo con innerHTML es seguro porque los datos vienen de tu propia base.",
+                correcta: false,
+                explicacion: "La base también recibe datos de formularios y paneles. Un nombre con etiquetas HTML se ejecuta en el navegador del visitante. Usa textContent."
+              },
+              {
+                tipo: "completar",
+                frase: "Que la consulta devuelva ____ filas no es una falla: es el estado ____, que es distinto del estado de ____.",
+                banco: [
+                  "cero",
+                  "vacío",
+                  "error",
+                  "cargando"
+                ],
+                respuestas: [
+                  "cero",
+                  "vacío",
+                  "error"
+                ]
+              },
+              {
+                tipo: "ordenar",
+                instruccion: "Ordena lo que hace la página al cargar el menú:",
+                elementos: [
+                  "El navegador ejecuta pintarMenu()",
+                  "Se muestra el texto Cargando menú...",
+                  "El SELECT viaja a la tabla platillos con filtro y orden",
+                  "Llega la respuesta y se revisa error",
+                  "Se revisa si data está vacío",
+                  "Se crea una tarjeta por platillo y se inserta en el contenedor"
+                ]
+              },
+              {
+                tipo: "quehace",
+                codigo: "const { data } = await db.from('platillos').select('nombre');\nif (data.length === 0) {\n  estado.textContent = 'Error al cargar el menú';\n}",
+                pregunta: "La consulta falla por un problema de red. ¿Qué ocurre?",
+                opciones: [
+                  "Si la tabla está vacía muestra Error, y si la consulta falla truena porque data es null",
+                  "Muestra Error al cargar el menú en los dos casos, sin distinguirlos",
+                  "Muestra el menú vacío correctamente en ambos casos",
+                  "Reintenta la consulta automáticamente"
+                ],
+                correcta: 0
+              }
+            ]
+          },
+          {
+            id: "m4-c10",
+            titulo: "Seguridad con IA: lo que nunca debes compartirle",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>La IA que te ayuda a programar es un colaborador extraordinario y un desconocido. No tiene mala fe: tiene una libreta donde apunta todo lo que le pegas, y esa libreta vive en servidores que no controlas. Puede quedar en registros, en el historial de tu equipo, en la memoria de la herramienta o en un reporte de incidentes. Por eso la pregunta correcta no es \"¿me va a robar?\", sino \"¿qué pasa si esto se filtra?\".</p><p>Hay tres cosas que nunca se comparten, y las tres caben en una frase: <strong>la llave maestra, la contraseña de la base y los datos de tus clientes</strong>. La llave maestra es la <code>service_role</code> key. Se ve casi igual que la anon, pero su contenido dice <code>service_role</code> y su poder es distinto: <strong>se salta RLS por completo</strong>. Quien la tenga lee, escribe y borra todas las tablas, incluidas las de usuarios y pedidos. No es \"una llave más\": es el edificio entero.</p><p>La segunda es la contraseña de la base de datos y su cadena de conexión (<code>postgresql://postgres:...@db....supabase.co:5432/postgres</code>). Con ella no pasas por la API ni por RLS: entras directo al motor. La tercera son los datos personales de tus clientes: nombres, teléfonos, direcciones, correos, historial de pedidos. En México son datos personales protegidos por la LFPDPPP, y regalarlos a un chat es una fuga, aunque el chat sea privado y aunque la IA sea amable.</p><p>Lo que <strong>sí</strong> puedes compartir es casi todo lo demás. El esquema de tus tablas (<code>create table platillos (...)</code>) describe la forma, no el contenido. Tu código, con las llaves reemplazadas por marcadores, es necesario para que te ayude. El mensaje de error es oro puro para depurar, siempre que quites tokens, correos y teléfonos. La consulta SQL y la forma de la respuesta también. La regla: <strong>forma sí, contenido no</strong>.</p><p>Y la forma de pedir las cosas cambia el resultado. Si le dices \"pon la llave aquí\", la IA te va a escribir la llave en el archivo, porque es lo que le pediste. Si le dices \"asume que la llave viene de <code>process.env.SUPABASE_SERVICE_ROLE_KEY</code> y nunca la escribas en el código\", te va a dar código que sobrevive a un repo público. Esa instrucción debería ser automática en cada prompt que toque un secreto (m4-a19).</p><p>Esto te importa porque el error no se comete por descuido de principiante: se comete por prisa. Pegas el archivo completo \"para que la IA vea el contexto\", y con él se van la llave y tres teléfonos. La prisa cuesta más que la revisión.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Es llevar la laptop al taller de reparación. Le muestras el modelo, la pantalla con el error y qué programa se cierra solo: eso es el esquema, y sin ello el técnico no puede trabajar. Le dejas la máquina y hasta le dices qué tanto la usas. Lo que no le entregas es la contraseña de tu correo, la sesión abierta del banco ni la carpeta con los expedientes de tus clientes; y no porque el técnico sea ladrón, sino porque para cambiar el ventilador no necesita nada de eso. Si un día descubres que dejaste la contraseña anotada en un papel debajo del teclado, no arrancas el papel y sigues: la cambias esa misma tarde.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Compara dos formas de pedir lo mismo. La primera ya está comprometida en el momento en que la escribes:</p><pre><code>// MAL: esto ya no es un secreto\nconst admin = createClient(\n  'https://abcdefgh.supabase.co',\n  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoic2VydmljZV9yb2xlIn0.FIRMA'\n);</code></pre><p>La segunda es la misma funcionalidad, sin regalar nada:</p><pre><code>// BIEN: el secreto vive fuera del código\nconst admin = createClient(\n  process.env.SUPABASE_URL,\n  process.env.SUPABASE_SERVICE_ROLE_KEY\n);</code></pre><p>Y así se ve el archivo que nunca se sube al repositorio:</p><pre><code># .env — NO se sube a git\nSUPABASE_URL=https://abcdefgh.supabase.co\nSUPABASE_SERVICE_ROLE_KEY=eyJhbGciOi...service_role...llave_inventada</code></pre><p>Y la línea que lo excluye del repositorio:</p><pre><code># .gitignore\n.env</code></pre><p><strong>Qué deberías ver:</strong> <code>git status</code> no lista <code>.env</code>, y si buscas <code>eyJ</code> en tu repositorio solo aparece la anon key (que es pública) o ningún resultado. Si aparece la service_role, tienes trabajo hoy, no mañana.</p><p>Antes de pegar un error en el chat, redáctalo. Así viene:</p><pre><code>POST /rest/v1/pedidos 401\nAuthorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhbmEifQ.firma\nbody: {\"telefono\":\"5567891234\",\"nombre\":\"Ana Ruiz\"}</code></pre><p>Y así se comparte, con la misma información útil y sin el contenido sensible:</p><pre><code>POST /rest/v1/pedidos 401\nAuthorization: Bearer [REDACTADO]\nbody: {\"telefono\":\"[TELÉFONO]\",\"nombre\":\"[NOMBRE]\"}\nEl error dice: new row violates row-level security policy</code></pre><p><strong>Qué deberías ver:</strong> la IA puede diagnosticar exactamente igual —es un problema de política en el insert— sin haber visto ni un dato real.</p><p><strong>Advertencia:</strong> borrar el mensaje donde pegaste una llave <em>no</em> la vuelve secreta. Ya viajó, ya quedó en registros y pudo quedar en caché. La única respuesta es <strong>rotarla</strong>: genera una nueva en el panel, actualiza donde vive y desactiva la anterior. Y si compartiste la contraseña de la base, cámbiala y revisa los logs de acceso.</p><p><strong>Advertencia:</strong> en un sitio estático no existen las variables de entorno del servidor. Si tu landing es HTML puro, no hay dónde esconder un secreto: cualquier operación que necesite la service_role va en una función de servidor (m4-c16). Poner el secreto en el navegador \"para no montar backend\" es exactamente cómo se filtran las bases.</p><p><strong>Advertencia:</strong> no pegues volcados completos de una tabla \"para dar contexto\". Pega el <code>create table</code> y, si necesitas un ejemplo, inventa uno con la misma forma: <code>('Cliente de ejemplo', '5500000000')</code>.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Voy a pegarte el esquema de tres tablas y un mensaje de error de Supabase. Antes de analizarlo, revísalo y dime si contiene algo que no debería compartir: llaves que empiecen con eyJ, cadenas postgresql://, correos, teléfonos o nombres de clientes. Si encuentras algo, no lo repitas en tu respuesta: nómbralo como [REDACTADO]. Después, dame el código que necesito asumiendo que la URL y la service_role vienen de process.env.SUPABASE_URL y process.env.SUPABASE_SERVICE_ROLE_KEY; nunca escribas el valor de una llave en el código ni en un ejemplo, ni siquiera como comentario. Y si esta operación se puede hacer con la anon key y una política RLS, dímelo antes de proponer la service_role.\"</p></blockquote><p>Esa última frase es la más valiosa del curso: la IA deja de asumir que necesitas la llave maestra y te propone la ruta segura primero.</p>"
+              }
+            ],
+            ejercicios: [
+              {
+                tipo: "multiple",
+                pregunta: "¿Cuál de estos SÍ puedes pegar en un chat de IA sin comprometer nada?",
+                opciones: [
+                  "El create table de tus tablas, con nombres de columnas y tipos",
+                  "La service_role key de tu proyecto",
+                  "La contraseña de la base y su cadena de conexión",
+                  "Un CSV con los teléfonos de tus últimos 50 clientes"
+                ],
+                correcta: 0
+              },
+              {
+                tipo: "vf",
+                afirmacion: "Si borras el mensaje donde pegaste la service_role key, la llave queda a salvo.",
+                correcta: false,
+                explicacion: "El mensaje ya viajó y pudo quedar en registros o caché. La única respuesta es rotar la llave y actualizar donde vive (m4-a19)."
+              },
+              {
+                tipo: "completar",
+                frase: "Los secretos se leen de ____ y el archivo que los contiene se excluye del repositorio con una línea en ____.",
+                banco: [
+                  "process.env",
+                  ".gitignore",
+                  ".env",
+                  "config.js"
+                ],
+                respuestas: [
+                  "process.env",
+                  ".gitignore"
+                ]
+              },
+              {
+                tipo: "relacionar",
+                pares: [
+                  [
+                    "service_role key",
+                    "Se salta RLS: acceso total a la base"
+                  ],
+                  [
+                    "Contraseña de la base",
+                    "Entra directo al motor, sin pasar por la API"
+                  ],
+                  [
+                    "Esquema de tablas",
+                    "Seguro de compartir: describe la forma, no el contenido"
+                  ],
+                  [
+                    "Datos personales de clientes",
+                    "Nunca se comparten; usa datos inventados con la misma forma"
+                  ]
+                ]
+              },
+              {
+                tipo: "ordenar",
+                instruccion: "Descubres que pegaste la service_role en un chat. Ordena tu respuesta:",
+                elementos: [
+                  "Detener cualquier uso de esa llave en tus scripts",
+                  "Generar una llave nueva en el panel de Supabase",
+                  "Actualizar la llave en el servidor y verificar que todo siga funcionando",
+                  "Cambiar la contraseña de la base y revisar los logs de acceso",
+                  "Desactivar la llave vieja y documentar lo ocurrido"
+                ]
+              }
+            ]
+          },
+          {
+            id: "m4-c11",
+            titulo: "PRÁCTICA: activar RLS y comprobar qué protege",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Tu base de datos ya responde. Ese es justo el problema. En Supabase, una tabla recién creada es legible por cualquiera que tenga la URL del proyecto y la llave <code>anon</code>, y esa llave viaja dentro del JavaScript de tu sitio (m4-b26). Si <code>pedidos</code> quedó sin protección, un visitante abre la consola con F12, escribe dos líneas y se lleva nombre, teléfono y dirección de todos tus clientes. En esta práctica vas a cerrar esa puerta y a comprobar con tus propios ojos qué quedó protegido.</p><p>Activar RLS es una línea de SQL y cambia el valor por defecto de la tabla: deja de responderle a todo el mundo. Row Level Security significa que <strong>cada fila decide quién la ve</strong>, y mientras no exista una política, la respuesta es nadie. Vas a vivir el momento incómodo: activas RLS, recargas tu menú y aparece vacío. No se rompió nada; acabas de instalar la reja.</p><p>Las políticas son las llaves. Cada una contesta tres cosas: para qué operación aplica (<code>select</code>, <code>insert</code>, <code>update</code>, <code>delete</code>), para quién (<code>anon</code> es el visitante sin sesión, <code>authenticated</code> es el usuario con sesión) y con qué condición sobre la fila (<code>using</code> para leer o filtrar, <code>with check</code> para lo que se escribe). Para el menú quieres lectura pública de los platillos activos; para los pedidos, que cada usuario vea solo los suyos comparando <code>cliente_id</code> con <code>auth.uid()</code>, el id del usuario que trae el token.</p><p>Aquí va el detalle que más tardes cuesta: cuando RLS filtra, <strong>no lanza error</strong>. Un visitante sin sesión que consulta <code>pedidos</code> recibe <code>[]</code> y un código 200, como si la tabla estuviera vacía. En cambio, un <code>insert</code> que ninguna política permite sí falla, con el mensaje <code>new row violates row-level security policy</code> y código 42501. Vacío no es lo mismo que prohibido, y confundirlos te va a hacer pensar que la política no sirve cuando en realidad sí está trabajando.</p><p>Y una trampa de laboratorio que hay que decir en voz alta: el editor SQL de Supabase entra como dueño del proyecto y se salta RLS. Ahí tus pruebas siempre pasan, incluso cuando la tabla está abierta al mundo. La prueba válida se hace desde afuera, con la llave <code>anon</code>: una vez sin sesión y otra con la sesión de dos clientes distintos.</p><p>Te importa aunque la IA escriba el SQL porque la IA te va a decir «listo, RLS activado» y puede dejarte dos desastres silenciosos: tablas con RLS y cero políticas (nada funciona y parece que tu código está roto) o una política <code>using (true)</code> en <code>pedidos</code> (todo abierto y parece que funciona). Leer las políticas y probar con <code>anon</code> es lo único que distingue una cosa de la otra.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Activar RLS es instalar la reja del almacén de una obra. Hasta ese día el material estaba sobre el pasillo y lo tomaba quien pasara; el día que llega la reja, nadie entra, ni tú, hasta que exista una llave. Cada política es una llave con su etiqueta escrita: «esta abre la puerta de herramienta, solo para el maestro de obra, solo de siete a seis». Y ojo con el ingeniero que vive dentro de la obra: ese tiene llave maestra y te va a jurar que todo está abierto. La prueba de verdad es pararte en la calle con la llave que le das a los visitantes y empujar la reja.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Vas a proteger dos tablas con criterios distintos: <code>platillos</code> se lee sin sesión, <code>pedidos</code> solo con sesión y solo lo propio. Guarda esta convención del proyecto: <code>pedidos.cliente_id</code> guarda el id del usuario de Supabase Auth, el mismo que devuelve <code>auth.uid()</code>.</p><ol><li>Entra al <strong>SQL Editor</strong> de Supabase y ejecuta el bloque de abajo completo. No ejecutes solo la primera línea: si activas RLS y te vas a comer, tu sitio se queda sin menú.</li><li>Recarga la página del menú de Tacos El Volcán. Debe salir vacía.</li><li>Vuelve a ejecutar solo la política de <code>platillos</code> y recarga. Debe salir el menú, pero sin los platillos marcados como inactivos.</li><li>Haz las pruebas de la segunda caja, primero sin sesión y luego con la sesión de dos clientes.</li></ol><pre><code>-- 1) Cerrar las dos tablas\nalter table public.platillos enable row level security;\nalter table public.pedidos  enable row level security;\n\n-- 2) El menú es público, pero solo lo que está a la venta\ncreate policy menu_publico_activos\n  on public.platillos for select\n  to anon, authenticated\n  using (activo = true);\n\n-- 3) Cada cliente ve solo sus pedidos\ncreate policy cliente_ve_sus_pedidos\n  on public.pedidos for select\n  to authenticated\n  using (cliente_id = auth.uid());\n\n-- 4) Y puede crear los suyos, sin ponerse el nombre de otro\ncreate policy cliente_crea_sus_pedidos\n  on public.pedidos for insert\n  to authenticated\n  with check (cliente_id = auth.uid());</code></pre><p>Ahora la prueba que importa, desde una terminal. Sin sesión, la primera consulta debe traer el menú y la segunda debe venir vacía:</p><pre><code># Menú, sin sesión: 200 y los platillos activos\ncurl \"https://tu-proyecto.supabase.co/rest/v1/platillos?select=nombre,precio\" \\\n  -H \"apikey: TU_ANON_KEY\" \\\n  -H \"Authorization: Bearer TU_ANON_KEY\"\n\n# Pedidos, sin sesión: 200 y []  (no es un 403)\ncurl \"https://tu-proyecto.supabase.co/rest/v1/pedidos?select=id,total\" \\\n  -H \"apikey: TU_ANON_KEY\" \\\n  -H \"Authorization: Bearer TU_ANON_KEY\"\n\n# Pedidos, con la sesión del cliente A: solo los de A\ncurl \"https://tu-proyecto.supabase.co/rest/v1/pedidos?select=id,total\" \\\n  -H \"apikey: TU_ANON_KEY\" \\\n  -H \"Authorization: Bearer TOKEN_DEL_CLIENTE_A\"</code></pre><p>El token de la sesión lo sacas en la consola del navegador con <code>(await supabase.auth.getSession()).data.session.access_token</code>. Repite con el cliente B y compara: los dos ven su propio arreglo, con distinto contenido y el mismo código 200. Si el cliente A ve el pedido de B, tu política no está comparando la columna correcta o la tabla sigue sin RLS.</p><p><strong>Advertencia:</strong> RLS activo sin políticas deja la tabla cerrada para todos, incluido tu panel, y la tentación va a ser apagarlo «solo un momento» en producción. No lo hagas: ese momento es el que un visitante aprovecha. Si tu panel necesita ver todo, se le da una política con su rol de administrador (m4-c19), no se abre la tabla. Y nunca dejes una política <code>using (true)</code> en <code>pedidos</code>, <code>clientes</code> o <code>resenas</code>: esa línea es exactamente lo mismo que no tener RLS, con la falsa tranquilidad de verlo activado.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Audita y activa RLS en mi proyecto de Supabase de Tacos El Volcán. Tablas: platillos, pedidos, pedido_items, clientes y resenas. (1) Dame el SQL para activar RLS en las cinco y dime en qué orden ejecutarlo sin tumbar el sitio. (2) Para platillos, una política de lectura pública solo de los activos. (3) Para pedidos, una política de select y una de insert donde cliente_id = auth.uid(), y para pedido_items una que herede del pedido. (4) Ninguna tabla puede quedar con using (true) sin que me expliques por qué es seguro. (5) Escribe tres pruebas con curl usando solo la anon key: sin sesión, con la sesión del cliente A y con la del cliente B; para cada una dime el código HTTP y el cuerpo que debo esperar. Si alguna tabla no debería ser legible sin sesión, dímelo antes de darme el SQL.\"</p></blockquote><p>La última frase es la que convierte a la IA en auditora en vez de generadora. Sin ella, casi siempre te entrega políticas que copian el ejemplo de la documentación, y el ejemplo de la documentación suele ser <code>using (true)</code>.</p>"
+              }
+            ],
+            ejercicios: [
+              {
+                tipo: "multiple",
+                pregunta: "Acabas de ejecutar alter table pedidos enable row level security; y no creaste ninguna política. Tu sitio consulta pedidos con la anon key, sin sesión. ¿Qué recibes?",
+                opciones: [
+                  "Un error 500 del servidor",
+                  "Un arreglo vacío con código 200",
+                  "Todos los pedidos, porque falta la política que los prohíba",
+                  "Un 401 que pide usuario y contraseña"
+                ],
+                correcta: 1
+              },
+              {
+                tipo: "quehace",
+                codigo: "create policy cliente_ve_sus_pedidos\n  on public.pedidos for select\n  to authenticated\n  using (cliente_id = auth.uid());",
+                pregunta: "¿Qué logra exactamente esta política?",
+                opciones: [
+                  "Que cualquier visitante lea todos los pedidos",
+                  "Que un usuario con sesión lea solo las filas cuyo cliente_id coincide con su id",
+                  "Que un usuario inserte pedidos a nombre de otro",
+                  "Que se active RLS en la tabla"
+                ],
+                correcta: 1
+              },
+              {
+                tipo: "vf",
+                afirmacion: "Si consultas pedidos con la anon key y recibes un arreglo vacío, puedes concluir que RLS está protegiendo la tabla.",
+                correcta: false,
+                explicacion: "Vacío puede significar tres cosas: RLS activo sin políticas, una política que no coincide con ninguna fila, o simplemente que no hay pedidos. Para distinguirlas hay que probar con la sesión de un cliente que sí tenga pedidos y revisar las políticas en el panel (m4-b22)."
+              },
+              {
+                tipo: "completar",
+                frase: "La política de pedidos compara la columna ____ de cada fila con ____, que devuelve el id del usuario del token.",
+                banco: [
+                  "cliente_id",
+                  "auth.uid()",
+                  "id",
+                  "auth.email()",
+                  "service_role"
+                ],
+                respuestas: [
+                  "cliente_id",
+                  "auth.uid()"
+                ]
+              },
+              {
+                tipo: "ordenar",
+                instruccion: "Ordena los pasos para dejar pedidos protegido y comprobarlo:",
+                elementos: [
+                  "Activar RLS en platillos y en pedidos",
+                  "Crear la política de lectura pública de platillos activos",
+                  "Crear la política de pedidos por usuario",
+                  "Probar sin sesión con la anon key",
+                  "Probar con la sesión de dos clientes distintos y comparar"
+                ]
+              }
+            ]
+          },
+          {
+            id: "m4-c12",
+            titulo: "PRÁCTICA: login de usuarios en tu sitio",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Un login son tres llamadas y un aviso. Crear la cuenta, entrar y salir. Todo lo difícil de un sistema de contraseñas —guardar el hash, emitir el token, mandar el correo de confirmación, refrescar la sesión antes de que caduque— ya lo hace Supabase Auth (m4-b24). Tú solo llamas a las funciones y decides qué se ve en pantalla.</p><p><code>signUp</code> crea la cuenta. Si tu proyecto tiene activada la confirmación por correo, que es lo que viene por defecto, no te devuelve una sesión: te devuelve un usuario pendiente y manda un correo. Hasta que la persona abra ese enlace no puede entrar. Ese «no pasa nada» es la causa número uno de que un login parezca roto, y no lo está.</p><p><code>signInWithPassword</code> valida correo y contraseña y guarda la sesión en el navegador. Desde ese momento el cliente manda el token en cada petición, y del lado de la base <code>auth.uid()</code> ya tiene un valor. <code>signOut</code> hace lo contrario: borra la sesión local, avisa al servidor y deja al usuario como visitante. Ninguna de las tres toca la contraseña más allá de pasarla; si tu código la guarda en una variable global, en un log o en una tabla, el problema es tuyo y es grave.</p><p>El cuarto elemento no es una llamada, es un aviso: <code>onAuthStateChange</code>. Se dispara cuando la persona entra, cuando sale y cuando el token se refresca solo. Si pintas el estado una única vez al cargar la página, tu botón «Salir» va a dejar la pantalla mintiendo hasta que alguien recargue. Suscríbete al aviso y pinta siempre desde ahí.</p><p>Los errores tienen nombre y conviene traducirlos: <code>Invalid login credentials</code> significa que el correo o la contraseña están mal, y a propósito no dice cuál de los dos; <code>Email not confirmed</code> significa que falta abrir el correo; <code>User already registered</code> aparece al registrarse con un correo que ya existe, aunque según la configuración Supabase puede devolver un usuario fantasma sin error para no revelar quién está dado de alta. Regla de oro: mensajes claros para el usuario legítimo, información cero para quien está adivinando.</p><p>Te importa aunque la IA escriba el código porque el caso feliz siempre funciona. Lo que tú revisas es lo otro: que la sesión sobreviva a un refresco, que dos pestañas se enteren del cambio, que la contraseña equivocada muestre un mensaje útil, que el correo sin confirmar se explique, y que no haya ni una contraseña ni la llave <code>service_role</code> en el JavaScript (m4-a19).</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>El login de tu sitio es el brazalete de un balneario. En la entrada te registran y te ponen uno en la muñeca; con él entras y sales del agua todas las veces que quieras sin volver a formarte, y el guardia del torniquete solo mira la muñeca, no tu cara. Cuando te lo cortan al salir, vuelves a ser visitante aunque sigas en el estacionamiento. Y el brazalete no se puede falsificar desde la alberca: lo puso la caseta, no tú.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>El login de Tacos El Volcán cabe en un archivo. Fíjate en tres cosas: la sesión inicial llega por el primer evento, la interfaz se pinta desde el aviso y el botón de salir no recarga la página.</p><pre><code>import { createClient } from '@supabase/supabase-js';\n\nconst supabase = createClient(URL, ANON_KEY);\n\n// 1) Registro: puede requerir confirmar el correo\nasync function registrarme(email, password) {\n  const { data, error } = await supabase.auth.signUp({ email, password });\n  if (error) return mostrarError(traducir(error.message));\n\n  // session === null cuando falta confirmar el correo\n  if (!data.session) return mostrarAviso('Revisa tu correo para activar la cuenta');\n  pintarSesion(data.session);\n}\n\n// 2) Entrada\nasync function entrar(email, password) {\n  const { data, error } = await supabase.auth.signInWithPassword({ email, password });\n  if (error) return mostrarError('Correo o contraseña incorrectos');\n  pintarSesion(data.session);\n}\n\n// 3) Salida\nasync function salir() {\n  await supabase.auth.signOut();\n  // no hace falta pintar aqui: el evento SIGNED_OUT lo hace\n}\n\n// 4) El aviso que mantiene la pantalla honesta\nsupabase.auth.onAuthStateChange((evento, sesion) => {\n  const correo = document.querySelector('#correo');\n  const btnSalir = document.querySelector('#btn-salir');\n\n  if (sesion) {\n    correo.textContent = sesion.user.email;\n    btnSalir.hidden = false;\n  } else {\n    correo.textContent = '';\n    btnSalir.hidden = true;\n  }\n});</code></pre><p>El resultado esperado, en orden: al entrar, el evento <code>SIGNED_IN</code> dispara y el correo del usuario aparece con el botón de salir; al refrescar la página, la sesión sigue ahí y el correo sigue puesto sin volver a escribir la contraseña; al pulsar salir, <code>SIGNED_OUT</code> limpia la pantalla y la persona queda como visitante. Si al refrescar se pierde la sesión, revisa que no estés creando el cliente dos veces con opciones distintas.</p><p><strong>Advertencia:</strong> nunca guardes la contraseña en tu base, en <code>localStorage</code> ni en una variable global «para no pedirla otra vez». Y no intentes validar el login en el frontend: cualquier <code>if (password === ...)</code> que escribas es visible con F12 y no protege nada. La validación ocurre en el servidor de Auth; tu trabajo es mostrar el resultado (m4-a15).</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Implementa el login con Supabase Auth en mi landing de Tacos El Volcán, en este archivo: [pega el HTML o el componente]. Necesito <code>signUp</code>, <code>signInWithPassword</code>, <code>signOut</code> y una suscripción a <code>onAuthStateChange</code> que sea la única fuente de verdad para pintar la interfaz. Estados obligatorios: cargando, sin sesión, con sesión. Con sesión se muestra el correo y un botón Salir; sin sesión, el formulario. Traduce los errores al español y usa el mismo mensaje para correo inexistente y contraseña incorrecta. Explica qué pasa cuando la confirmación por correo está activada y qué configuración debo revisar en Authentication → URL Configuration. No uses service_role, no guardes la contraseña en ningún lado y no valides credenciales en el frontend.\"</p></blockquote><p>Si no le pides explícitamente el estado «cargando», la IA casi siempre pinta el formulario durante medio segundo y luego lo cambia por el panel: el usuario ve un parpadeo y cree que lo sacó.</p>"
+              }
+            ],
+            ejercicios: [
+              {
+                tipo: "multiple",
+                pregunta: "¿Cuál es la forma correcta de mantener la interfaz al día cuando el usuario inicia o cierra sesión?",
+                opciones: [
+                  "Llamar a getSession() cada segundo con un temporizador",
+                  "Suscribirse a onAuthStateChange y pintar según la sesión que llega",
+                  "Guardar el correo en una variable global al cargar la página y confiar en ella",
+                  "Leer localStorage a mano en cada clic del usuario"
+                ],
+                correcta: 1
+              },
+              {
+                tipo: "ordenar",
+                instruccion: "Ordena lo que ocurre al iniciar sesión:",
+                elementos: [
+                  "El usuario escribe correo y contraseña",
+                  "signInWithPassword envía las credenciales",
+                  "Supabase valida y guarda la sesión en el navegador",
+                  "onAuthStateChange dispara el evento SIGNED_IN",
+                  "La interfaz muestra el correo y el botón Salir"
+                ]
+              },
+              {
+                tipo: "completar",
+                frase: "Para crear la cuenta se usa ____; para entrar con correo y contraseña, ____.",
+                banco: [
+                  "signUp",
+                  "signInWithPassword",
+                  "signOut",
+                  "getUser"
+                ],
+                respuestas: [
+                  "signUp",
+                  "signInWithPassword"
+                ]
+              },
+              {
+                tipo: "vf",
+                afirmacion: "Después de llamar a signOut, la cuenta del usuario se elimina de la base de datos.",
+                correcta: false,
+                explicacion: "signOut solo borra la sesión del navegador y revoca el token. La cuenta, sus pedidos y su historial siguen intactos. Borrar la cuenta es una operación distinta y mucho más delicada."
+              },
+              {
+                tipo: "quehace",
+                codigo: "const { data, error } = await supabase.auth.signInWithPassword({\n  email,\n  password\n});\n\nif (error) {\n  mostrarError('Correo o contraseña incorrectos');\n  return;\n}",
+                pregunta: "¿Qué hace este fragmento?",
+                opciones: [
+                  "Crea una cuenta nueva y confirma el correo",
+                  "Intenta iniciar sesión y, si falla, muestra un mensaje genérico sin revelar cuál dato está mal",
+                  "Cierra la sesión del usuario actual",
+                  "Valida la contraseña contra una tabla propia de usuarios"
+                ],
+                correcta: 1
+              }
+            ]
+          },
+          {
+            id: "m4-c13",
+            titulo: "PRÁCTICA: contenido solo para usuarios registrados",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>La página «mis pedidos» parece una pantalla, pero en realidad es una pregunta a la base: dame los pedidos de esta persona. La trampa consiste en creer que esconder el enlace del menú o poner un <code>if (!user) return</code> protege algo. El navegador es del usuario: puede abrir las herramientas de desarrollo, copiar la llave <code>anon</code> de tu JavaScript y llamar a la API directamente, sin pasar por tu HTML ni por tu <code>if</code>.</p><p>Lo que protege de verdad es la política RLS que ya escribiste en m4-c11. Tu consulta puede pedir la tabla completa y la base te va a entregar solo las filas cuyo <code>cliente_id</code> coincide con el usuario del token. El <code>.eq('cliente_id', user.id)</code> que la IA suele agregar es una optimización y una cortesía: hace la consulta más chica y más clara, pero si lo quitas, RLS sigue filtrando igual.</p><p>De ahí sale la distinción que ordena todo este módulo: la interfaz decide qué <strong>mostrar</strong>; la base decide qué <strong>entregar</strong>. La primera capa es comodidad y experiencia; la segunda es seguridad. Si solo tienes la primera, tienes una cortina, no una puerta.</p><p>En la práctica la pantalla tiene tres estados y hay que diseñarlos antes de escribir código: sin sesión (invita a entrar), con sesión y pedidos (lista con estado, total y fecha), con sesión y sin pedidos (mensaje de «todavía no has pedido», que no es lo mismo que «no pudimos cargar»). Mezclar el estado vacío con el error es el bug más común de estas pantallas: el usuario cree que perdió su historial cuando en realidad se cayó la red.</p><p>Un detalle fino que la IA suele pasar por alto: las <em>views</em> de Postgres se ejecutan con los permisos de quien las creó. Si para «simplificar» creas una vista sobre <code>pedidos</code> y la consultas desde el frontend, esa vista puede saltarse RLS. En Supabase se corrige con <code>security_invoker = true</code> o se evita la vista. Es exactamente el tipo de atajo que suena a buena idea y abre la puerta completa.</p><p>La prueba de fuego es simple: cierra sesión, abre la consola y pide <code>pedidos</code> con la llave <code>anon</code>. Si sale algo, tu <code>if</code> no servía de nada y tu política tiene un hueco. Corre esa prueba cada vez que agregues una pantalla nueva, no solo la primera vez.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>El <code>if</code> del frontend es la cortina del probador de una tienda de ropa: te da privacidad visual, pero cualquiera puede estirar la mano por arriba o entrar por el costado. RLS es la chapa de la puerta. Tú puedes decidir no anunciar el probador (esconder el enlace), y aun así la chapa es lo único que impide que el siguiente cliente abra y se lleve tu bolsa.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Así se ve la página <code>mis-pedidos.html</code>. La consulta no filtra por usuario a propósito, para que veas que el filtro real vive en la base:</p><pre><code>import { supabase } from './supabase-client.js';\n\nconst lista = document.querySelector('#lista');\nconst aviso = document.querySelector('#aviso');\n\nasync function cargarMisPedidos() {\n  const { data: { user } } = await supabase.auth.getUser();\n\n  // Capa 1: interfaz. Solo decide que se ve.\n  if (!user) {\n    lista.innerHTML = '';\n    aviso.innerHTML = 'Entra a tu cuenta para ver tus pedidos.';\n    return;\n  }\n\n  // Capa 2: la base. Aqui NO filtramos: RLS entrega solo lo del usuario.\n  const { data, error } = await supabase\n    .from('pedidos')\n    .select('id, estado, total, created_at, pedido_items(cantidad, platillos(nombre))')\n    .order('created_at', { ascending: false });\n\n  if (error) {\n    aviso.textContent = 'No pudimos cargar tus pedidos. Intenta de nuevo.';\n    return;\n  }\n\n  if (data.length === 0) {\n    aviso.textContent = 'Todavia no has hecho un pedido.';\n    return;\n  }\n\n  aviso.textContent = '';\n  lista.innerHTML = data.map(p =&gt; `\n    &lt;article&gt;\n      &lt;h3&gt;Pedido #${p.id.slice(0, 6)}&lt;/h3&gt;\n      &lt;p&gt;${p.estado} · $${p.total} · ${new Date(p.created_at).toLocaleDateString('es-MX')}&lt;/p&gt;\n      &lt;ul&gt;${p.pedido_items.map(i =&gt; `&lt;li&gt;${i.cantidad} × ${i.platillos.nombre}&lt;/li&gt;`).join('')}&lt;/ul&gt;\n    &lt;/article&gt;`).join('');\n}</code></pre><p>El <code>select</code> anidado trae los renglones del pedido y el nombre del platillo en una sola llamada, sin escribir SQL (m4-b13). Y como no hay <code>.eq</code>, la única razón por la que el cliente A no ve los pedidos del cliente B es la política:</p><pre><code>create policy cliente_ve_sus_pedidos\n  on public.pedidos for select\n  to authenticated\n  using (cliente_id = auth.uid());</code></pre><p>Verificación con dos sesiones: entra como cliente A, anota cuántos pedidos ves y el id del primero. Cierra sesión, entra como cliente B y confirma que no aparece ninguno de A. Después, sin sesión, ejecuta en la consola <code>await supabase.from('pedidos').select('*')</code>: debe devolver <code>[]</code>. Si devuelve filas, el problema no está en tu JavaScript.</p><p><strong>Advertencia:</strong> esconder el enlace en el menú, pedir contraseña en una pantalla intermedia o revisar el correo con un <code>if</code> son decisiones de diseño, no de seguridad. Cualquiera puede escribir la URL a mano. Y cuidado con los atajos: una vista sin <code>security_invoker</code>, una función con <code>security definer</code> o una consulta con <code>select('*, clientes(*))</code> pueden devolverte datos de otras personas aunque la tabla esté protegida. Si la IA te propone crear una vista «para simplificar», pídele que te explique cómo queda RLS antes de correrla.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Construye la página mis-pedidos.html de Tacos El Volcán sobre estos archivos: [pega tu cliente de Supabase y el HTML]. Reglas: (1) si no hay sesión, muestra una invitación a entrar y no consultes nada; (2) si hay sesión, trae pedidos con sus pedido_items y el nombre del platillo en un solo select, ordenados del más reciente al más viejo; (3) la seguridad la da RLS, no el frontend, así que no agregues filtros por cliente_id como si fueran protección y explícame qué política hace el trabajo; (4) distingue tres estados: error de red, sin pedidos y con pedidos, cada uno con su mensaje; (5) al final dame una prueba con curl usando el token de dos usuarios distintos y dime qué debo ver en cada caso. Si en algún punto usas una vista o un join que pueda saltarse RLS, avísame y justifícalo.\"</p></blockquote><p>Pedirle que no agregue el filtro como si fuera seguridad obliga a la IA a nombrar la política. Si no puede nombrarla, es que no existe.</p>"
+              }
+            ],
+            ejercicios: [
+              {
+                tipo: "multiple",
+                pregunta: "¿Qué impide realmente que un visitante sin sesión lea los pedidos de otra persona?",
+                opciones: [
+                  "El if que oculta el enlace de mis pedidos en el menú",
+                  "El .eq('cliente_id', user.id) que la IA agregó a la consulta",
+                  "La política RLS que compara cliente_id con auth.uid()",
+                  "Que la página se llame mis-pedidos y no pedidos"
+                ],
+                correcta: 2
+              },
+              {
+                tipo: "vf",
+                afirmacion: "Si quitas el .eq('cliente_id', user.id) de la consulta y RLS está bien configurado, el usuario sigue viendo solo sus pedidos.",
+                correcta: true,
+                explicacion: "El filtro del frontend es comodidad y optimización. La política RLS es la que decide fila por fila, así que la consulta puede pedir la tabla entera y aun así recibir solo lo propio (m4-b22)."
+              },
+              {
+                tipo: "quehace",
+                codigo: "const { data: { user } } = await supabase.auth.getUser();\n\nif (!user) {\n  return mostrarLogin();\n}\n\nconst { data } = await supabase.from('pedidos').select('*');",
+                pregunta: "¿Qué garantiza este fragmento?",
+                opciones: [
+                  "Que nadie sin sesión pueda leer la tabla pedidos",
+                  "Solo que la interfaz muestre el login; los datos quedan protegidos únicamente si hay una política RLS",
+                  "Que la consulta devuelva los pedidos de todos los usuarios",
+                  "Que se cree una sesión nueva automáticamente"
+                ],
+                correcta: 1
+              },
+              {
+                tipo: "completar",
+                frase: "La interfaz decide qué ____; la base decide qué ____.",
+                banco: [
+                  "mostrar",
+                  "entregar",
+                  "guardar",
+                  "cobrar"
+                ],
+                respuestas: [
+                  "mostrar",
+                  "entregar"
+                ]
+              },
+              {
+                tipo: "ordenar",
+                instruccion: "Ordena lo que hace la página mis-pedidos al abrirse:",
+                elementos: [
+                  "Revisar si hay sesión con getUser()",
+                  "Mostrar la invitación a entrar si no hay usuario",
+                  "Consultar pedidos y pedido_items con la sesión activa",
+                  "Revisar error antes de usar data",
+                  "Mostrar el estado vacío si el arreglo viene sin filas"
+                ]
+              }
+            ]
+          },
+          {
+            id: "m4-c14",
+            titulo: "PRÁCTICA: subir imágenes a Storage",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Las fotos de los platillos no van dentro de la base de datos. Cuando alguien intenta guardarlas ahí, casi siempre termina con una columna de texto gigante llena de base64: cada consulta del menú arrastra megabytes, el panel se pone lento y una foto de 4 MB puede tumbar la fila completa. Storage existe para separar las dos cosas: el archivo se guarda como archivo y la tabla guarda una ruta corta que apunta a él.</p><p>En Supabase Storage hay tres piezas. El <strong>bucket</strong> es el contenedor, se llama <code>platillos</code> y se configura una vez. El <strong>objeto</strong> es cada archivo, identificado por su ruta, algo como <code>platillos/8f3c....jpg</code>. Y las <strong>políticas</strong> son las mismas reglas de RLS que ya conoces, aplicadas a la tabla interna <code>storage.objects</code>: quién puede leer, quién puede subir, quién puede borrar.</p><p>Un bucket público no significa un bucket sin reglas. Significa que la lectura no pide token: cualquiera con la URL ve la imagen. Escribir sigue requiriendo una política. Esa distinción es la que hace que el menú funcione para visitantes y que un desconocido no pueda llenarte el almacenamiento con archivos.</p><p>El flujo tiene tres pasos y el tercero es el que más se olvida: subes el archivo con <code>upload()</code>, obtienes la URL con <code>getPublicUrl()</code> y guardas <strong>la ruta</strong> en la tabla. Guarda la ruta, no la URL completa: el día que cambies de dominio, de CDN o de proyecto, la ruta sigue sirviendo y la URL vieja se convierte en una lista de enlaces muertos.</p><p>Los límites se configuran en el bucket, no en el formulario: <code>file_size_limit</code> en bytes y <code>allowed_mime_types</code> con la lista de tipos aceptados. Validar en el navegador es cortesía para que el usuario no espere una subida que va a fallar; la única barrera que cuenta es la del bucket. Y el nombre del archivo lo generas tú: el nombre que trae la foto del celular puede repetirse, venir con acentos o con caracteres que rompen la ruta.</p><p>Te importa aunque la IA escriba el código porque la solución fácil que te va a proponer es base64 en la tabla, y porque «bucket público» suena a «sin configuración». Las dos decisiones se pagan caras y ninguna da error el primer día.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Un bucket público es el periódico mural de una escuela. Clavas ahí la foto del volcán y cualquiera que cruce el pasillo la ve, aunque no tenga llave del salón, y la puede fotografiar y reenviar. Por eso el mural es para fotos de platillos y no para actas de calificaciones. Y en la hoja de inscripción del alumno no pegas la foto otra vez: solo anotas en qué parte del mural quedó clavada, para poder encontrarla después.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Primero el bucket con sus límites y sus políticas. Este bloque se corre una vez en el SQL Editor:</p><pre><code>insert into storage.buckets (id, name, public, file_size_limit, allowed_mime_types)\nvalues (\n  'platillos',\n  'platillos',\n  true,\n  2097152,  -- 2 MB en bytes\n  array['image/jpeg', 'image/png', 'image/webp']\n)\non conflict (id) do update\n  set public = true,\n      file_size_limit = 2097152,\n      allowed_mime_types = array['image/jpeg', 'image/png', 'image/webp'];\n\n-- Cualquiera ve las fotos del menu\ncreate policy fotos_menu_lectura_publica\n  on storage.objects for select\n  to anon, authenticated\n  using (bucket_id = 'platillos');\n\n-- Solo con sesion se sube, y solo a este bucket\ncreate policy fotos_menu_subida_con_sesion\n  on storage.objects for insert\n  to authenticated\n  with check (bucket_id = 'platillos');\n\n-- Borrar: solo el dueno del archivo\ncreate policy fotos_menu_borrado_propio\n  on storage.objects for delete\n  to authenticated\n  using (bucket_id = 'platillos' and owner = auth.uid());</code></pre><p>Si tu panel de administración es solo para el dueño del negocio, cambia <code>to authenticated</code> por una condición que revise su rol (m4-c19). Con <code>authenticated</code> a secas, cualquier cliente registrado puede subir fotos.</p><p>Ahora la subida desde el panel, con nombre generado y ruta guardada en la tabla:</p><pre><code>async function subirFotoPlatillo(archivo, platilloId) {\n  // 1) Validacion de cortesia (la real esta en el bucket)\n  const MAX = 2 * 1024 * 1024;\n  if (archivo.size &gt; MAX) return alert('La imagen pasa de 2 MB');\n  if (!['image/jpeg', 'image/png', 'image/webp'].includes(archivo.type)) {\n    return alert('Solo JPG, PNG o WebP');\n  }\n\n  // 2) Nombre propio: nada de confiar en el del celular\n  const ext = archivo.name.split('.').pop().toLowerCase();\n  const ruta = `platillos/${crypto.randomUUID()}.${ext}`;\n\n  const { error } = await supabase.storage\n    .from('platillos')\n    .upload(ruta, archivo, { contentType: archivo.type, upsert: false });\n\n  if (error) return alert('No se pudo subir: ' + error.message);\n\n  // 3) En la tabla va la RUTA, no la URL completa\n  await supabase.from('platillos').update({ imagen_path: ruta }).eq('id', platilloId);\n\n  return ruta;\n}</code></pre><p>Para pintarla en el menú, la URL se arma al vuelo. Ojo: <code>getPublicUrl</code> es síncrono, no lleva <code>await</code>:</p><pre><code>const { data } = supabase.storage\n  .from('platillos')\n  .getPublicUrl(platillo.imagen_path);\n\nimg.src = data.publicUrl;\n// https://tu-proyecto.supabase.co/storage/v1/object/public/platillos/platillos/8f3c....jpg</code></pre><p>Verificación: sube una foto de 1 MB y confirma que aparece en el menú; intenta subir un PDF y un archivo de 5 MB y confirma que el bucket los rechaza aunque tu validación del navegador esté desactivada; borra una fila de <code>platillos</code> y revisa en Storage si el archivo sigue ahí. Ese último punto es el que sorprende a todos.</p><p><strong>Advertencia:</strong> un bucket público significa que cualquiera con la URL ve la imagen para siempre, sin sesión, y que la URL se puede compartir, pegar en un chat o indexar. Perfecto para tacos; catastrófico para INE, comprobantes de pago, contratos o fotos de clientes. Y borrar la fila de la tabla <strong>no borra el archivo</strong>: te quedan huérfanos ocupando espacio. Si el archivo es privado, el bucket es privado y se entrega con <code>createSignedUrl</code> que caduca (m4-b23).</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Configura Supabase Storage para las fotos de platillos de Tacos El Volcán. (1) Crea el bucket platillos público, con límite de 2 MB y solo JPG, PNG y WebP, en un bloque SQL idempotente. (2) Escribe las políticas de storage.objects para que cualquiera lea las fotos de ese bucket, solo usuarios con sesión suban, y cada quien borre lo que subió. (3) Dame una función subirFotoPlatillo(archivo, platilloId) que valide tamaño y tipo antes de subir, genere un nombre único, suba con upload(), y guarde únicamente la ruta en platillos.imagen_path. (4) Dame el código para pintar la imagen desde esa ruta con getPublicUrl. (5) Al final, dime qué queda expuesto con un bucket público y qué pasa con el archivo cuando borro la fila. Si para mi caso conviene un bucket privado, propónmelo con su razón.\"</p></blockquote><p>El punto 5 es obligatorio: sin él, la IA te entrega el código funcionando y ni una palabra sobre lo que acabas de hacer público.</p>"
+              }
+            ],
+            ejercicios: [
+              {
+                tipo: "multiple",
+                pregunta: "¿Dónde debe guardarse la foto de un platillo?",
+                opciones: [
+                  "En una columna text de platillos, convertida a base64",
+                  "En el bucket platillos, y en la tabla solo la ruta del archivo",
+                  "En el localStorage del visitante",
+                  "En una variable de entorno del proyecto"
+                ],
+                correcta: 1
+              },
+              {
+                tipo: "vf",
+                afirmacion: "Un bucket público permite que cualquiera lea los archivos, pero no que cualquiera suba archivos.",
+                correcta: true,
+                explicacion: "Público se refiere a la lectura: no pide token. La escritura sigue dependiendo de una política sobre storage.objects, y sin ella el upload falla por RLS."
+              },
+              {
+                tipo: "completar",
+                frase: "El límite de tamaño se configura en el bucket como ____, y los tipos permitidos en ____.",
+                banco: [
+                  "file_size_limit",
+                  "allowed_mime_types",
+                  "public",
+                  "name"
+                ],
+                respuestas: [
+                  "file_size_limit",
+                  "allowed_mime_types"
+                ]
+              },
+              {
+                tipo: "relacionar",
+                pares: [
+                  [
+                    "upload()",
+                    "Sube el archivo al bucket"
+                  ],
+                  [
+                    "getPublicUrl()",
+                    "Construye la URL de lectura a partir de la ruta"
+                  ],
+                  [
+                    "file_size_limit",
+                    "Rechaza archivos que pasan del peso permitido"
+                  ],
+                  [
+                    "Borrar la fila de platillos",
+                    "Deja el archivo huérfano en el bucket"
+                  ]
+                ]
+              },
+              {
+                tipo: "quehace",
+                codigo: "const ext = archivo.name.split('.').pop().toLowerCase();\nconst ruta = `platillos/${crypto.randomUUID()}.${ext}`;",
+                pregunta: "¿Qué logra generar la ruta así?",
+                opciones: [
+                  "Comprime la imagen antes de subirla",
+                  "Evita que dos archivos se sobrescriban y descarta los caracteres raros del nombre original",
+                  "Verifica que el archivo sea realmente una imagen",
+                  "Hace que el bucket deje de ser público"
+                ],
+                correcta: 1
+              }
+            ]
+          },
+          {
+            id: "m4-c15",
+            titulo: "Pedirle a la IA una función de servidor",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Todo lo que pusiste en el navegador es público: el HTML, el JavaScript, la llave <code>anon</code> y cualquier URL que aparezca en el código. Eso está bien para el menú, para el login y para leer lo que RLS permite leer. Pero hay tres cosas que no pueden vivir ahí. Los <strong>secretos</strong>: la llave de la pasarela de pagos, la del servicio de WhatsApp, la del correo. Las <strong>llamadas a terceros</strong> que necesitan ese secreto. Y las <strong>decisiones</strong> que el cliente no debe poder cambiar: el total del pedido, el descuento aplicado, si hay inventario, si eres administrador.</p><p>Para eso existe la función de servidor. En Supabase se llama Edge Function: código que corre en su nube, no en el navegador, y al que llamas por HTTP. El navegador manda una petición con los datos mínimos, la función hace el trabajo con sus secretos guardados como variables de entorno (m4-a19) y devuelve un resultado. El usuario nunca ve la llave, ni el código, ni la consulta que se ejecutó.</p><p>La parte que casi nadie hace antes de pedir el código es definir el contrato: qué recibe y qué devuelve. Entrada, un JSON pequeño con lo indispensable, por ejemplo los platillos y cantidades, el teléfono y una nota. Salida, un JSON con <code>ok</code>, el id del pedido y el total, o con <code>ok: false</code>, un código de error y un mensaje para mostrar. Más el código HTTP: 201 si se creó, 400 si los datos están mal, 401 si no hay sesión válida, 500 si algo se rompió del lado del servidor (m4-a5).</p><p>Con el contrato escrito, el brief se escribe solo. Cuatro preguntas y listo: ¿qué dispara la llamada?, ¿qué datos necesita?, ¿qué debe validar?, ¿qué devuelve cuando algo falla? Sin esas cuatro respuestas la IA inventa un contrato, y luego no sabes si el error viene de tu formulario o de una suposición suya.</p><p>Y la regla que separa una función útil de una puerta trasera: la función no confía en lo que le mandan. Recalcula los precios leyendo la tabla, valida cantidades, revisa que el usuario del token sea quien dice ser. El precio que manda el navegador es una sugerencia, no un hecho. Si la función hace caso al precio recibido, cualquiera compra veinte volcanes por un peso editando el JSON.</p><p>Te importa aunque la IA escriba el código porque esta es la decisión de arquitectura que más dinero mueve en todo el módulo: qué se queda en el navegador y qué se va al servidor. La IA te puede escribir la función en dos minutos; decidir que hacía falta, y con qué contrato, es tu trabajo (m4-c18).</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>La función de servidor es el bodeguero de una ferretería. Tú pides desde el mostrador y él entra por la puerta marcada «solo personal» a buscar la pieza; tiene la llave del almacén, conoce el inventario y decide si te la puede vender. Tú nunca entras, nunca ves el libro de existencias y nunca tocas la llave. Y si le pides «dame veinte tornillos al precio de uno», revisa la lista antes de cobrar: lo que dijiste en el mostrador no es lo que dice el sistema.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>El caso de Tacos El Volcán: el pedido por WhatsApp necesita mandar el mensaje con la llave de un proveedor, y el total no puede venir calculado del navegador. Ese es el brief. Primero el contrato, escrito antes de pedir código:</p><pre><code>FUNCION: crear-pedido\n\nENTRADA (body JSON)\n{\n  \"items\": [ { \"platillo_id\": \"uuid\", \"cantidad\": 2 } ],\n  \"telefono\": \"5551234567\",\n  \"nota\": \"sin cebolla\"\n}\n\nSALIDA 201\n{ \"ok\": true, \"pedido_id\": \"uuid\", \"total\": 168.00 }\n\nSALIDA 400\n{ \"ok\": false, \"error\": \"PLATILLO_NO_DISPONIBLE\",\n  \"mensaje\": \"El volcán está agotado hoy\" }\n\nSALIDA 401\n{ \"ok\": false, \"error\": \"SIN_SESION\" }\n\nNO RECIBE: precios, totales ni cliente_id (se calculan o se leen del token)</code></pre><p>Así se ve la función por dentro, en su forma mínima. No necesitas escribirla tú, pero sí reconocer las cinco partes: leer, identificar al usuario, validar, calcular y responder:</p><pre><code>Deno.serve(async (req) =&gt; {\n  const { items, telefono, nota } = await req.json();\n\n  if (!Array.isArray(items) || items.length === 0) {\n    return Response.json({ ok: false, error: 'SIN_ITEMS' }, { status: 400 });\n  }\n\n  // 1) Quien es: el id sale del token, no del body\n  const token = req.headers.get('Authorization')?.replace('Bearer ', '');\n  const { data: { user } } = await auth.getUser(token);\n  if (!user) {\n    return Response.json({ ok: false, error: 'SIN_SESION' }, { status: 401 });\n  }\n\n  // 2) Valida contra la base, no contra lo que mando el navegador\n  const { data: platillos } = await db\n    .from('platillos')\n    .select('id, precio, activo')\n    .in('id', items.map(i =&gt; i.platillo_id));\n\n  if (platillos.some(p =&gt; !p.activo)) {\n    return Response.json(\n      { ok: false, error: 'PLATILLO_NO_DISPONIBLE' },\n      { status: 400 }\n    );\n  }\n\n  // 3) Recalcula el total aqui, jamas lo aceptes del cliente\n  const total = items.reduce((suma, i) =&gt; {\n    const p = platillos.find(x =&gt; x.id === i.platillo_id);\n    return suma + p.precio * i.cantidad;\n  }, 0);\n\n  // 4) Inserta y responde\n  const { data: pedido } = await db\n    .from('pedidos')\n    .insert({ cliente_id: user.id, total, telefono, nota })\n    .select('id')\n    .single();\n\n  return Response.json({ ok: true, pedido_id: pedido.id, total }, { status: 201 });\n});</code></pre><p>Y así la llamas desde el sitio. Fíjate que el body no lleva ni precio ni total:</p><pre><code>const { data, error } = await supabase.functions.invoke('crear-pedido', {\n  body: {\n    items: carrito.map(i =&gt; ({ platillo_id: i.id, cantidad: i.cantidad })),\n    telefono,\n    nota\n  }\n});\n\nif (error || !data.ok) {\n  return mostrarError(data?.mensaje ?? 'No pudimos crear tu pedido');\n}\n\nmostrarConfirmacion(data.pedido_id, data.total);</code></pre><p><strong>Advertencia:</strong> los secretos de la función viven en sus variables de entorno, nunca en el código ni en el repositorio; si los pegas en el archivo, quedan en el historial de Git para siempre. Y si la función usa la llave <code>service_role</code> para escribir, se salta RLS por completo: eso significa que la validación de quién es el usuario la tienes que hacer tú dentro de la función, leyendo el token. Una función con <code>service_role</code> y sin validación es la puerta más grande que puedes abrir en un backend.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Necesito una Edge Function en Supabase llamada crear-pedido para Tacos El Volcán. Contrato: recibe { items: [{ platillo_id, cantidad }], telefono, nota } y devuelve 201 { ok: true, pedido_id, total }, 400 { ok: false, error, mensaje }, 401 { ok: false, error: 'SIN_SESION' }. Reglas: (1) no aceptes precios ni totales del body, recalcúlalos leyendo platillos; (2) verifica el token del usuario con el cliente de Supabase y usa su id, no un cliente_id recibido; (3) valida cantidades enteras entre 1 y 20 y que el platillo esté activo; (4) las llaves del proveedor de mensajes van en variables de entorno, y dime el nombre exacto de cada una; (5) no devuelvas stack traces al cliente, solo el código de error y un mensaje en español. Antes del código, escríbeme el contrato y las cuatro validaciones. Después, dame la llamada desde el frontend con functions.invoke y un ejemplo de respuesta de error.\"</p></blockquote><p>Pedir el contrato antes del código evita el clásico «ya te la hice» con un body distinto al que tu formulario manda. Y pedir los nombres de las variables de entorno te obliga a configurarlas antes de la primera prueba.</p>"
+              }
+            ],
+            ejercicios: [
+              {
+                tipo: "multiple",
+                pregunta: "¿Cuál de estas tareas NO es razón para mover lógica a una función de servidor?",
+                opciones: [
+                  "Guardar la llave de la pasarela de pagos",
+                  "Recalcular el total del pedido antes de guardarlo",
+                  "Cambiar el color del botón según la hora del día",
+                  "Verificar que el usuario sea administrador"
+                ],
+                correcta: 2
+              },
+              {
+                tipo: "vf",
+                afirmacion: "Si el navegador manda el precio de cada platillo, la función debe confiar en ese precio para no recalcular y ahorrar tiempo.",
+                correcta: false,
+                explicacion: "El body lo controla el usuario. La función recalcula el total leyendo platillos en la base, y solo usa del body los ids y las cantidades. Aceptar el precio recibido equivale a regalar el inventario."
+              },
+              {
+                tipo: "completar",
+                frase: "Los secretos de la función viven en sus ____, nunca en el ____ del navegador.",
+                banco: [
+                  "variables de entorno",
+                  "código",
+                  "header",
+                  "body"
+                ],
+                respuestas: [
+                  "variables de entorno",
+                  "código"
+                ]
+              },
+              {
+                tipo: "relacionar",
+                pares: [
+                  [
+                    "Llave de un proveedor de pagos",
+                    "Va en la función, nunca en el navegador"
+                  ],
+                  [
+                    "Precio final del pedido",
+                    "Se recalcula en la función leyendo la tabla"
+                  ],
+                  [
+                    "Menú público de platillos",
+                    "Puede leerse directo del navegador con RLS"
+                  ],
+                  [
+                    "Verificar si eres administrador",
+                    "Se decide en el servidor, no con un if del frontend"
+                  ]
+                ]
+              },
+              {
+                tipo: "quehace",
+                codigo: "const { items } = await req.json();\n\nif (!Array.isArray(items) || items.length === 0) {\n  return Response.json(\n    { ok: false, error: 'SIN_ITEMS' },\n    { status: 400 }\n  );\n}",
+                pregunta: "¿Qué hace este fragmento dentro de la función?",
+                opciones: [
+                  "Crea el pedido en la tabla y devuelve el total",
+                  "Rechaza la petición con código 400 si no llegó una lista de artículos válida",
+                  "Verifica la contraseña del usuario",
+                  "Sube una imagen al bucket platillos"
+                ],
+                correcta: 1
+              }
+            ]
+          },
+          {
+            id: "m4-c16",
+            titulo: "PRÁCTICA: tu primera función serverless",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Tu sitio de Tacos El Volcán ya guarda pedidos y ya tiene login. Todo eso ocurre en el navegador del visitante, con la llave pública de Supabase y las reglas de RLS. Pero hay tres cosas que el navegador no puede hacer sin exponerse: guardar una llave privada, hablar con un servicio que cobra por llamada y decidir si alguien es administrador. Para eso existe la <strong>función serverless</strong>.</p><p>Una función serverless es un archivo de JavaScript que <strong>no se descarga</strong> al navegador: se ejecuta en una máquina de Netlify, recibe una petición HTTP y devuelve una respuesta. “Serverless” no significa que no haya servidor; significa que no lo administras tú. Netlify se encarga del sistema operativo, los parches, el escalado y de tenerla disponible. Tú entregas un archivo y una promesa: qué recibe y qué devuelve.</p><p>La ruta sale del nombre del archivo. Cualquier archivo dentro de <code>netlify/functions</code> se publica como endpoint: <code>netlify/functions/hola.js</code> responde en <code>/.netlify/functions/hola</code>. Recibe un objeto <code>event</code> con el método, los headers, los query params y el body (m4-a11), y devuelve <code>{ statusCode, headers, body }</code>. Es la misma conversación HTTP del módulo, solo que ahora el que contesta eres tú (m4-a2).</p><p>Los secretos no van en el archivo. Van en <strong>variables de entorno</strong>: valores que se configuran en Netlify y llegan al código como <code>process.env.NOMBRE</code>. En tu máquina viven en un archivo <code>.env</code> que Git ignora; en producción, en el panel del sitio. El mismo código funciona en los dos lados porque lee la misma variable (m4-a19).</p><p>Tu primera función probablemente solo diga “hola”. No importa: acabas de construir el lugar donde después van el cobro, la verificación de rol, la llamada a una API externa y el envío de correo. Sin ese lugar, tu sitio es un folleto; con ese lugar, es un sistema. La unidad siguiente lo usa para algo real (m4-c17), y la c18 te da la regla para decidir qué se queda de cada lado.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Es la <strong>bomba presurizadora de un edificio</strong>. No está encendida todo el día esperando a que alguien abra una llave: está instalada, conectada y dormida. En el segundo en que un departamento abre la regadera, arranca, empuja el agua que ese departamento necesita y se apaga. Nadie contrató a un operador para vigilarla y nadie paga la energía de una bomba corriendo sin uso: se paga el arranque y el agua que pasó. Así funciona una función serverless: instalada en la plataforma, dormida hasta que llega una petición, despierta, atiende a esa petición y vuelve a dormir. Si nadie la llama en un mes, no hay bomba encendida ni factura corriendo.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Vas a crear una función que saluda, probarla en local, desplegarla y llamarla desde tu página. Cada paso trae su verificación, porque “ya quedó” sin comprobación es la frase que precede a la tarde perdida.</p><ol><li><strong>Crea el archivo</strong> <code>netlify/functions/hola.js</code> en la raíz de tu repositorio. La carpeta debe llamarse exactamente así; no va dentro de la carpeta que publicas, sino al lado.</li><li><strong>Pega el código</strong> y guarda. Fíjate en las tres piezas: de dónde sale el nombre, de dónde sale el saludo y qué forma tiene la respuesta.</li><li><strong>Pruébala en local</strong> con <code>npx netlify dev</code>. Abre la URL que imprime la terminal, agregando la ruta de la función.</li><li><strong>Despliega</strong>: si tu repositorio está conectado a Netlify, un <code>git push</code> basta; si no, usa <code>npx netlify deploy --prod</code>.</li><li><strong>Llámala desde tu página</strong> con <code>fetch</code> y pinta el resultado en un párrafo.</li></ol><pre><code>// netlify/functions/hola.js\nexports.handler = async (event) =&gt; {\n  const nombre = event.queryStringParameters?.nombre || 'mundo';\n  const saludo = process.env.SALUDO || 'Hola';\n\n  return {\n    statusCode: 200,\n    headers: { 'Content-Type': 'application/json; charset=utf-8' },\n    body: JSON.stringify({\n      mensaje: `${saludo}, ${nombre}.`,\n      ejecutado_en: new Date().toISOString()\n    })\n  };\n};</code></pre><pre><code>npx netlify dev\n# abre: http://localhost:8888/.netlify/functions/hola?nombre=Ana</code></pre><pre><code>&lt;p id=\"salida\"&gt;…&lt;/p&gt;\n&lt;script&gt;\n  fetch('/.netlify/functions/hola?nombre=Ana')\n    .then((r) =&gt; r.json())\n    .then((d) =&gt; {\n      document.querySelector('#salida').textContent = d.mensaje;\n    })\n    .catch(() =&gt; {\n      document.querySelector('#salida').textContent = 'La función no respondió.';\n    });\n&lt;/script&gt;</code></pre><p>La variable de entorno se configura en <strong>Site configuration → Environment variables</strong> del panel de Netlify, o desde la terminal con <code>npx netlify env:set SALUDO \"Buenas tardes\"</code>. Para local, agrega la misma línea a un archivo <code>.env</code> en la raíz. Después de cambiarla, vuelve a desplegar.</p><p><strong>Resultado esperado:</strong> la URL local y la pública devuelven algo como <code>{\"mensaje\":\"Buenas tardes, Ana.\",\"ejecutado_en\":\"2026-11-24T18:02:11.482Z\"}</code>, la fecha cambia en cada llamada y la página muestra el mensaje. En el panel, <strong>Functions → hola</strong> registra cada invocación.</p><p><strong>Advertencia:</strong> nunca subas <code>.env</code> al repositorio. No es un archivo de configuración cualquiera: es la lista de tus llaves. Un <code>.env</code> en GitHub es una llave publicada, y los bots que buscan llaves tardan minutos, no días. Agrégalo a <code>.gitignore</code> antes del primer commit. Si ya lo subiste, borrarlo del último commit no basta: sigue en el historial, así que hay que <strong>rotar la llave</strong> —generar una nueva y desactivar la vieja—, no solo esconder el archivo (m4-a19). Y no imprimas <code>process.env</code> en la respuesta “para depurar”: eso mueve el secreto del servidor al navegador.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Voy a crear mi primera función serverless en Netlify. Dame el archivo completo <code>netlify/functions/hola.js</code> en JavaScript, con <code>exports.handler</code>, que reciba un parámetro <code>nombre</code> por query string, use la variable de entorno <code>SALUDO</code> con un valor por omisión y devuelva JSON con <code>mensaje</code> y <code>ejecutado_en</code>. Incluye el <code>Content-Type</code> correcto. Después dime, paso a paso: cómo probarla en local con <code>netlify dev</code>, cómo desplegarla y cómo llamarla desde una página con <code>fetch</code>. Cierra con una lista de verificación y recuérdame qué debe ir en <code>.gitignore</code> y por qué no debo imprimir <code>process.env</code> en la respuesta.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              {
+                tipo: "multiple",
+                pregunta: "¿Dónde debe vivir el archivo para que Netlify lo publique como función?",
+                opciones: [
+                  "En la raíz del repositorio, junto a index.html",
+                  "En una carpeta public/",
+                  "En netlify/functions/",
+                  "En src/api/"
+                ],
+                correcta: 2
+              },
+              {
+                tipo: "vf",
+                afirmacion: "Una función serverless está encendida las 24 horas esperando peticiones; por eso hay que reiniciarla a mano cuando cambias el código.",
+                correcta: false,
+                explicacion: "Se ejecuta cuando llega una petición y se apaga al responder. Un nuevo deploy publica la versión nueva; no se reinicia a mano."
+              },
+              {
+                tipo: "completar",
+                frase: "El nombre del ____ define la URL de la función, y una llave se lee con process.env desde una variable de ____.",
+                banco: [
+                  "archivo",
+                  "entorno",
+                  "header",
+                  "body"
+                ],
+                respuestas: [
+                  "archivo",
+                  "entorno"
+                ]
+              },
+              {
+                tipo: "ordenar",
+                instruccion: "Ordena el camino de tu primera función hasta verla responder en el sitio publicado.",
+                elementos: [
+                  "Crear netlify/functions/hola.js",
+                  "Probar la URL en local con netlify dev",
+                  "Hacer commit y desplegar",
+                  "Abrir /.netlify/functions/hola en el sitio publicado"
+                ]
+              },
+              {
+                tipo: "quehace",
+                codigo: "const nombre = event.queryStringParameters?.nombre || \"mundo\";",
+                pregunta: "Si la función recibe una petición a /.netlify/functions/hola sin query string, ¿qué valor toma nombre?",
+                opciones: [
+                  "Lanza un error porque falta el parámetro",
+                  "null",
+                  "\"mundo\"",
+                  "El nombre del archivo: hola"
+                ],
+                correcta: 2
+              }
+            ]
+          },
+          {
+            id: "m4-c17",
+            titulo: "PRÁCTICA: consumir una API externa desde el servidor",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Tu función ya responde. El siguiente paso es que salga a la calle: llamar al servicio de otra empresa. En Tacos El Volcán el caso es concreto: el menú tiene precios en pesos, pero parte de los insumos se compran en dólares; quieres mostrar el tipo de cambio del día sin que nadie tenga que buscarlo. Ese dato no vive en tu base: vive en una API externa que exige una llave y cobra por llamada (m4-a20).</p><p>El flujo es siempre el mismo. Llega la petición a tu función, la función lee la llave de una variable de entorno, llama a la API externa con <code>fetch</code>, revisa que la respuesta sea correcta, extrae <strong>solo los campos que necesita</strong> y responde a tu página. La llave nunca viaja al navegador y la API externa nunca ve a tu usuario. Tu función es un intermediario con criterio, no un tubo.</p><p>Revisar la respuesta no es opcional. <code>fetch</code> no lanza error cuando el servidor responde 404 o 500: te entrega la respuesta y tú decides. <code>respuesta.ok</code> es verdadero solo entre 200 y 299. Si la API responde 401, tu llave es inválida; 429, se agotó la cuota; 5xx, el proveedor está caído. Tu función traduce cada caso a un mensaje que la página puede mostrar, en vez de reventar con un stack trace. Y como el proveedor puede tardar, se pone un límite de tiempo: sin él, tu función espera hasta que Netlify la corte.</p><p>El tipo de cambio no cambia cada segundo. Guardar la respuesta una hora con <code>Cache-Control</code> reduce llamadas, cuota y latencia. Es la misma idea de los límites de una API (m4-a20): cada llamada cuesta, y la mayoría de las visitas no necesitan una nueva.</p><p>Devolver solo lo necesario también es contrato y seguridad. Si entregas el JSON completo del proveedor, tu frontend se acostumbra a campos que no controlas, y el día que el proveedor los cambie se rompe tu página. Devuelve tres campos con nombres tuyos; así puedes cambiar de proveedor sin tocar la interfaz.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Es la <strong>central de radio de una flota de taxis</strong>. Tú no tienes radio ni licencia de frecuencia: llamas a la central y preguntas por tu unidad. La central tiene el equipo, conoce el canal y habla con el chofer; a ti solo te devuelve lo que necesitas: “va sobre la avenida 5, llega en ocho minutos”. No te pasa la frecuencia, ni la conversación completa, ni el nombre del chofer si no hace falta. La llave de la API es esa frecuencia: vive en la central, no en la mano del pasajero. Y si la central detecta que la frecuencia está saturada, te dice que esperes en vez de dejarte escuchando estática.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Vas a mostrar el tipo de cambio USD a MXN en el sitio. Uso <code>exchangerate-api.com</code> como ejemplo porque su plan gratuito alcanza de sobra; el mismo patrón sirve para clima, WhatsApp o pagos.</p><ol><li><strong>Crea la cuenta</strong> en el proveedor y copia la llave. No la pegues en el código ni en el chat de la IA.</li><li><strong>Guárdala como variable de entorno</strong>: <code>npx netlify env:set TIPO_CAMBIO_KEY \"tu-llave\"</code>. En local, agrega <code>TIPO_CAMBIO_KEY=tu-llave</code> a <code>.env</code>.</li><li><strong>Crea</strong> <code>netlify/functions/tipo-cambio.js</code> con el código de abajo. Observa que la función no devuelve la respuesta del proveedor: devuelve <code>base</code>, <code>mxn</code> y <code>actualizado</code>.</li><li><strong>Prueba</strong> con <code>curl.exe -i https://tu-sitio.netlify.app/.netlify/functions/tipo-cambio</code> y revisa status, headers y cuerpo.</li><li><strong>Úsala en la página</strong> con un <code>fetch</code> a tu propia función, nunca a la API externa.</li></ol><pre><code>// netlify/functions/tipo-cambio.js\nexports.handler = async () =&gt; {\n  const llave = process.env.TIPO_CAMBIO_KEY;\n\n  if (!llave) {\n    return {\n      statusCode: 500,\n      body: JSON.stringify({ error: 'Falta configurar TIPO_CAMBIO_KEY' })\n    };\n  }\n\n  try {\n    const respuesta = await fetch(\n      `https://v6.exchangerate-api.com/v6/${llave}/latest/USD`,\n      { signal: AbortSignal.timeout(5000) }\n    );\n\n    if (respuesta.status === 401 || respuesta.status === 403) {\n      return {\n        statusCode: 502,\n        body: JSON.stringify({ error: 'La llave del servicio no es válida' })\n      };\n    }\n\n    if (respuesta.status === 429) {\n      return {\n        statusCode: 503,\n        body: JSON.stringify({ error: 'Se agotó la cuota del servicio' })\n      };\n    }\n\n    if (!respuesta.ok) {\n      return {\n        statusCode: 502,\n        body: JSON.stringify({ error: 'El servicio de tipo de cambio no respondió' })\n      };\n    }\n\n    const datos = await respuesta.json();\n    const mxn = datos.conversion_rates?.MXN;\n\n    if (!mxn) {\n      return {\n        statusCode: 502,\n        body: JSON.stringify({ error: 'Respuesta inesperada del servicio' })\n      };\n    }\n\n    return {\n      statusCode: 200,\n      headers: {\n        'Content-Type': 'application/json; charset=utf-8',\n        'Cache-Control': 'public, max-age=3600'\n      },\n      body: JSON.stringify({\n        base: 'USD',\n        mxn: mxn,\n        actualizado: datos.time_last_update_utc\n      })\n    };\n  } catch (error) {\n    return {\n      statusCode: 504,\n      body: JSON.stringify({ error: 'El servicio tardó demasiado o no hubo conexión' })\n    };\n  }\n};</code></pre><pre><code>const r = await fetch('/.netlify/functions/tipo-cambio');\nconst { mxn } = await r.json();\ndocument.querySelector('#dolar').textContent =\n  `1 USD = ${mxn.toFixed(2)} MXN`;</code></pre><p><strong>Resultado esperado:</strong> el navegador recibe <code>{\"base\":\"USD\",\"mxn\":18.74,\"actualizado\":\"...\"}</code>. En la pestaña <em>Network</em> aparece una sola petición, a tu función, y en ningún lado aparece la llave. En los logs de Netlify se ven invocaciones y errores, pero no la URL completa con la llave dentro.</p><p><strong>Advertencia:</strong> en este proveedor la llave viaja dentro de la ruta de la URL. Eso significa que un log que guarda la URL completa guarda la llave: registra el estado y el tiempo, nunca la URL entera. Si la llave se filtró —la pegaste en un commit, en un log o en un chat— no la borres: <strong>rótala</strong>. Generar una nueva y desactivar la anterior es el único arreglo. Y no la pongas “temporalmente” en el frontend para probar: lo que se prueba en el navegador ya está publicado.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Convierte esta necesidad en una función de Netlify: quiero mostrar el tipo de cambio USD a MXN en mi sitio. La llave está en la variable de entorno <code>TIPO_CAMBIO_KEY</code>; no la escribas en el código ni la devuelvas en la respuesta. La función debe llamar a la API con <code>fetch</code>, usar un timeout de 5 segundos, distinguir llave inválida (401/403), cuota agotada (429), error del proveedor (5xx) y tiempo agotado, y devolver únicamente <code>base</code>, <code>mxn</code> y <code>actualizado</code> con cache de una hora. Incluye el <code>fetch</code> del frontend y una prueba con <code>curl</code>. Al final dime qué debo revisar para comprobar que la llave no se filtró y cómo rotarla si se filtró.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              {
+                tipo: "multiple",
+                pregunta: "¿Por qué la llamada a la API externa se hace desde la función y no desde el navegador?",
+                opciones: [
+                  "Porque la llave quedaría visible y cualquiera podría gastar tu cuota",
+                  "Porque el navegador no puede hacer fetch a otros dominios",
+                  "Porque las funciones siempre son más rápidas que el navegador",
+                  "Porque la API externa solo acepta JSON"
+                ],
+                correcta: 0
+              },
+              {
+                tipo: "vf",
+                afirmacion: "Devolver al navegador la respuesta completa de la API externa es buena práctica: así el frontend tiene más datos por si los necesita.",
+                correcta: false,
+                explicacion: "Acopla tu interfaz a un contrato ajeno y expone datos que no necesitas. Devuelve solo los campos que tu pantalla usa, con nombres tuyos."
+              },
+              {
+                tipo: "completar",
+                frase: "La llave se guarda en una variable de ____ y se lee con process.env; un 429 significa que se agotó la ____.",
+                banco: [
+                  "entorno",
+                  "cuota",
+                  "sesión",
+                  "caché"
+                ],
+                respuestas: [
+                  "entorno",
+                  "cuota"
+                ]
+              },
+              {
+                tipo: "relacionar",
+                pares: [
+                  [
+                    "401",
+                    "La llave es inválida o no tiene permiso"
+                  ],
+                  [
+                    "429",
+                    "Se agotó la cuota de llamadas"
+                  ],
+                  [
+                    "504",
+                    "La API externa no respondió a tiempo"
+                  ],
+                  [
+                    "Cache-Control",
+                    "Evita llamar a la API en cada visita"
+                  ]
+                ]
+              },
+              {
+                tipo: "ordenar",
+                instruccion: "Ordena lo que hace tu función cuando la llama el navegador.",
+                elementos: [
+                  "Recibir la petición",
+                  "Leer la llave de la variable de entorno",
+                  "Llamar a la API externa con un límite de tiempo",
+                  "Extraer solo los campos necesarios",
+                  "Responder el JSON a la página"
+                ]
+              }
+            ]
+          },
+          {
+            id: "m4-c18",
+            titulo: "Qué va en el navegador y qué va en el servidor",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Esta unidad decide si puedes dirigir un sistema o solo copiar código. La regla cabe en una línea y se evalúa en el examen: <strong>todo lo que sea secreto, costoso o verificable solo va al servidor</strong>. Lo demás puede vivir en el navegador. Si te preguntan dónde se valida el precio de un pedido, la respuesta es el servidor; y la razón no es desconfianza en el cliente, es que el navegador es del usuario y puede modificarse.</p><p><strong>Secreto</strong> es todo lo que da poder a quien lo tenga: una llave de API, la llave <code>service_role</code> de Supabase, la contraseña de la base, el token de otra persona. En el navegador no existen secretos: lo que se descarga se puede leer. El código del frontend se abre con Ctrl+U, con la pestaña <em>Sources</em> o con las herramientas de desarrollo; una llave escondida dentro de una variable sigue siendo texto en el archivo. Si el navegador la necesita para funcionar, es pública por definición.</p><p><strong>Costoso</strong> es lo que consume dinero, cuota o cómputo: una consulta que recorre doscientas mil filas, una llamada a una API que cobra por uso, generar un PDF, procesar una imagen, mandar un WhatsApp. Si esa operación vive en el cliente, cualquier visitante puede repetirla en un bucle desde la consola y la factura llega a tu nombre. En el servidor puedes limitar, cachear y registrar quién lo pidió.</p><p><strong>Verificable</strong> es todo lo que el sistema debe comprobar antes de creer: el precio, el total, el descuento, el rol, el stock, la identidad del dueño. No es que el usuario sea malicioso: es que el cliente es editable y también se equivoca. Un carrito con precios cacheados de ayer manda un total viejo sin mala intención. El servidor vuelve a leer el precio de la base y vuelve a calcular, aunque el número ya venga en la petición.</p><p>Del otro lado quedan las cosas que solo afectan cómo se ve o se siente: pintar HTML, formatear fechas y moneda, animaciones, validar el formato del correo para dar respuesta inmediata —y el servidor la repite—, recordar el tema claro u oscuro. La llave <code>anon</code> de Supabase también vive ahí, y eso no es un descuido: está diseñada para ser pública. Lo que protege los datos son las políticas de RLS, no el secreto de la llave (m4-b22); con RLS apagado, esa misma llave pública se vuelve una llave maestra. La que jamás toca el navegador es <code>service_role</code>: se salta RLS y da acceso total.</p><p>La frase para llevarte al examen: <strong>el cliente propone, el servidor decide</strong>. Si una decisión importante se toma leyendo <code>localStorage</code>, una línea en la consola la cambia. El panel de administración (m4-c19) y el buscador (m4-c20) viven o mueren por esta regla.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Es el <strong>aparador de una joyería y la bóveda del fondo</strong>. En el aparador de vidrio hay piezas de exhibición, letreros con precios y un cartel de horarios: cualquiera que pasa por la calle lo ve, y verlo no le da poder sobre nada. La bóveda es otra cosa: guarda el inventario real, la combinación y los registros de quién compró qué, y el empleado saca una charola a la vez, solo con lo que el cliente necesita ver. Si la combinación estuviera escrita en el vidrio del aparador, no importaría qué tan gruesa sea la puerta. En tu sistema, el aparador es el HTML y el JavaScript que se descarga; la bóveda es la base con RLS y las funciones del servidor.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Tres decisiones del mismo sistema, en su versión ingenua y en su versión correcta. La diferencia no es de estilo: es la que separa un pedido de 350 pesos de uno de 1 peso.</p><p><strong>1. El total del pedido.</strong> Si el navegador lo calcula y lo manda, el servidor no tiene forma de saber si es cierto.</p><pre><code>// MAL: el navegador manda el total ya calculado\nconst total = carrito.reduce((s, i) =&gt; s + i.precio * i.cantidad, 0);\nawait supabase.from('pedidos').insert({ cliente_id: 7, total });</code></pre><pre><code>// BIEN: el servidor ignora el total del cliente y lo recalcula\nconst { data: precios } = await supabase\n  .from('platillos')\n  .select('id, precio')\n  .in('id', items.map((i) =&gt; i.platillo_id));\n\nconst total = items.reduce((suma, item) =&gt; {\n  const p = precios.find((x) =&gt; x.id === item.platillo_id);\n  return suma + p.precio * item.cantidad;\n}, 0);</code></pre><p><strong>2. El rol de administrador.</strong> Ocultar el botón es una cortesía visual; esconder el panel en el HTML es lo mismo con más pasos.</p><pre><code>// MAL: el rol se decide en el navegador\nif (localStorage.getItem('rol') === 'admin') {\n  document.querySelector('#panel').hidden = false;\n}</code></pre><pre><code>-- BIEN: la base decide con el usuario del token (RLS encendido, m4-c11)\ncreate policy \"solo admin ve todos los pedidos\"\non pedidos for select to authenticated\nusing (\n  exists (\n    select 1 from perfiles\n    where perfiles.id = auth.uid()\n      and perfiles.rol = 'admin'\n  )\n);</code></pre><p><strong>3. La llave de una API externa.</strong> Si aparece en un <code>fetch</code> del frontend, está publicada: se ve en <em>Network</em>, en el código y en cualquier captura de pantalla. Vive en una variable de entorno y se usa solo dentro de la función (m4-c17).</p><p>Esto es lo que pasaría si cada cosa viviera en el cliente:</p><ul><li><strong>Precio y total:</strong> el cliente los cambia en DevTools y paga lo que quiera. El servidor debe recalcular con los precios de la base.</li><li><strong>Rol:</strong> <code>localStorage.setItem('rol','admin')</code> y entra al panel. El servidor debe consultar el rol en la base en cada petición.</li><li><strong>Stock:</strong> dos personas compran el último platillo a la vez y se venden dos. La validación y el descuento van en una transacción del servidor.</li><li><strong>Dueño de los datos:</strong> si el <code>cliente_id</code> lo manda el navegador, se cambia por otro y aparecen pedidos ajenos. El servidor usa el id del token, no el del body.</li><li><strong>Envío de correo o WhatsApp:</strong> cualquiera lo llama en bucle y tu dominio termina marcado como spam. Va en el servidor, con límite por usuario.</li></ul><p><strong>Resultado esperado:</strong> abre DevTools, intercepta la petición y cambia el total antes de enviarla; el pedido debe guardarse con el total correcto, no con el manipulado. Repite con una cuenta sin rol de administrador: debe recibir <code>403</code>, aunque el botón siga visible en su pantalla.</p><p><strong>Advertencia:</strong> si alguna vez pegas la llave <code>service_role</code> en el frontend “para probar rápido”, estás publicando la base completa: esa llave se salta RLS y permite leer, escribir y borrar todo. No hay botón que lo esconda y no hay usuario que lo atenúe; si se filtró, se rota de inmediato. Y recuerda la trampa de esta unidad: ocultar un botón no es proteger una acción, es decorarla (m4-c19).</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Actúa como revisor de seguridad de mi proyecto de Tacos El Volcán. Te voy a pasar las operaciones de mi sitio y quiero que clasifiques cada una en navegador o servidor usando esta regla: secreto, costoso o verificable va al servidor. Para cada operación dime qué pasa si se queda en el cliente, con el ataque o el error concreto, y muéstrame el antes y el después del código. Incluye precio total, rol de administrador, stock, filtro por cliente, llave de API externa y envío de mensajes. No me des teoría general: usa mis tablas <code>clientes</code>, <code>platillos</code>, <code>pedidos</code>, <code>pedido_items</code> y <code>resenas</code>, y termina con una prueba que pueda hacer en DevTools para comprobar que el servidor rechaza lo manipulado.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              {
+                tipo: "multiple",
+                pregunta: "¿Cuál de estas tareas puede quedarse en el navegador sin poner en riesgo el negocio?",
+                opciones: [
+                  "Calcular el total final que se cobra",
+                  "Decidir si el usuario es administrador",
+                  "Leer la llave service_role para consultar la base",
+                  "Avisar de inmediato si el correo parece inválido (sin sustituir la validación del servidor)"
+                ],
+                correcta: 3
+              },
+              {
+                tipo: "vf",
+                afirmacion: "La llave anon de Supabase debe mantenerse en secreto igual que la service_role.",
+                correcta: false,
+                explicacion: "La anon está diseñada para el navegador; lo que protege los datos es RLS. La service_role sí es secreta y además se salta RLS: esa nunca toca el frontend."
+              },
+              {
+                tipo: "completar",
+                frase: "Todo lo que sea ____, costoso o ____ va al servidor; el navegador debe recibir solo lo necesario para ____.",
+                banco: [
+                  "secreto",
+                  "verificable",
+                  "mostrar",
+                  "guardar",
+                  "firmar"
+                ],
+                respuestas: [
+                  "secreto",
+                  "verificable",
+                  "mostrar"
+                ]
+              },
+              {
+                tipo: "relacionar",
+                pares: [
+                  [
+                    "Precio total del pedido",
+                    "Servidor: recalcular con los precios de la base"
+                  ],
+                  [
+                    "Formato de una fecha",
+                    "Navegador: solo presentación"
+                  ],
+                  [
+                    "Rol de administrador",
+                    "Servidor: verificar contra la tabla de perfiles"
+                  ],
+                  [
+                    "Llave de una API externa",
+                    "Servidor: variable de entorno"
+                  ]
+                ]
+              },
+              {
+                tipo: "multiple",
+                pregunta: "Un cliente cambia el total en la consola del navegador y el pedido se guarda en 1 peso. ¿Cuál es la causa?",
+                opciones: [
+                  "Falta HTTPS en el sitio",
+                  "La tabla pedidos no tiene índice",
+                  "El servidor confió en un total calculado en el cliente",
+                  "RLS está encendido"
+                ],
+                correcta: 2
+              }
+            ]
+          },
+          {
+            id: "m4-c19",
+            titulo: "PRÁCTICA: panel de administración para tu negocio",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>El panel de administración es donde se opera el negocio: ver los pedidos que entraron, mover su estado, moderar una reseña. Es la pantalla más peligrosa de tu sistema, porque no solo lee: cambia y borra. Un clic equivocado deja a alguien sin pedido o borra una opinión que ya era evidencia de lo que pasó.</p><p>La tentación es esconder el botón. Eso sirve para que la interfaz no confunda, pero no protege nada: el panel es HTML y quien lo abre puede quitar el <code>hidden</code>, o llamar la función directamente con <code>curl</code>. La seguridad tiene tres capas y solo las dos últimas cuentan: la interfaz oculta (comodidad), la función verifica (no confía) y la base aplica RLS (última línea). Si la función falla, RLS sigue ahí; si RLS está mal, la función es el único filtro (m4-c11, m4-b22). <strong>Ocultar un botón es diseño; negarlo en el servidor es seguridad.</strong></p><p>El rol no se guarda en el navegador ni en un campo que el usuario pueda editar. En Supabase, <code>user_metadata</code> lo puede cambiar el propio usuario: sirve para un apodo, no para permisos. El rol va en una tabla <code>perfiles</code> que tú controlas, o en <code>app_metadata</code>, que solo se edita con la llave de servicio. La verificación se hace en el servidor en cada petición: revisar al iniciar sesión no basta, porque el rol puede cambiar y la sesión sigue viva.</p><p>La “ruta protegida” es un malentendido útil de corregir. El archivo HTML del panel puede ser público: no contiene datos. Lo que se protege es la respuesta de la función y las filas de la base. Si tu única defensa es que “nadie sabe la URL”, alguien la encuentra en el historial, en un enlace compartido o en el código.</p><p>Borrar una reseña es la operación más delicada. Un <code>DELETE</code> no tiene papelera. Antes de ofrecerlo, pregúntate si quieres borrar o moderar: una columna <code>visible</code> conserva la evidencia y se puede revertir. Si de verdad vas a borrar, registra quién lo hizo, cuándo y qué decía, y ten un respaldo probado antes (m4-b20).</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Es la <strong>puerta del almacén de una tienda departamental</strong>. El letrero de “solo personal autorizado” no detiene a nadie: es una sugerencia impresa. Lo que detiene es la chapa que solo abre con el gafete del empleado, y la lista de gafetes autorizados que vive en la oficina, no en el letrero. Si mañana ascienden a alguien, actualizan la lista en la oficina; el letrero no cambia. Ocultar el botón es el letrero; la función que revisa el rol es el lector de gafete; RLS es la chapa. Puedes quitar el letrero y la puerta sigue cerrada, pero si la chapa abre con cualquier tarjeta, el letrero más grande del mundo no te salva.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Vas a construir el panel de Tacos El Volcán con tres acciones: listar pedidos, cambiar estado y borrar una reseña. La regla de oro: cada acción vuelve a verificar el rol en el servidor, aunque la pantalla ya lo haya hecho.</p><ol><li><strong>Agrega el rol</strong> a tu tabla de perfiles —ligada al usuario de Supabase; si la tuya se llama distinto, cambia el nombre en el SQL— y hazte administrador. El rol por omisión es <code>cliente</code>.</li><li><strong>Crea la función <code>es_admin()</code></strong> y las políticas de RLS. Esta es la chapa: aunque alguien llame a Supabase directo con la llave anon, la base niega.</li><li><strong>Crea la función</strong> <code>netlify/functions/admin-pedidos.js</code>. Antes instala la dependencia con <code>npm install @supabase/supabase-js</code> y configura <code>SUPABASE_URL</code> y <code>SUPABASE_ANON_KEY</code> como variables de entorno. La función lee el token del header, valida la sesión, consulta el rol y solo entonces ejecuta.</li><li><strong>Conecta el panel</strong> mandando el token de la sesión en el header <code>Authorization</code>.</li><li><strong>Prueba con dos cuentas</strong>: la tuya con rol admin y una recién registrada. La segunda debe recibir <code>403</code> en todo.</li></ol><pre><code>-- 0. RLS encendido: sin esto, las políticas no se aplican\nalter table perfiles enable row level security;\nalter table pedidos enable row level security;\nalter table resenas enable row level security;\n\n-- 1. el rol vive en una tabla que tú controlas\nalter table perfiles\n  add column rol text not null default 'cliente'\n  check (rol in ('cliente', 'admin'));\n\nupdate perfiles set rol = 'admin'\nwhere id = 'uuid-de-tu-cuenta';\n\n-- 2. consulta el rol sin recursión de RLS\ncreate or replace function public.es_admin()\nreturns boolean\nlanguage sql\nsecurity definer\nset search_path = public\nstable\nas $$\n  select exists (\n    select 1 from perfiles\n    where id = auth.uid() and rol = 'admin'\n  );\n$$;\n\n-- 3. la base niega lo que la interfaz esconde\ncreate policy \"solo admin ve todos los pedidos\"\non pedidos for select to authenticated\nusing (es_admin());\n\ncreate policy \"solo admin actualiza pedidos\"\non pedidos for update to authenticated\nusing (es_admin())\nwith check (es_admin());\n\ncreate policy \"solo admin borra resenas\"\non resenas for delete to authenticated\nusing (es_admin());\n\n-- 4. el panel también lee los datos del cliente\ncreate policy \"solo admin ve clientes\"\non clientes for select to authenticated\nusing (es_admin());\n\n-- 5. cada usuario puede leer su propio perfil\ncreate policy \"cada quien ve su perfil\"\non perfiles for select to authenticated\nusing (id = auth.uid());</code></pre><pre><code>// netlify/functions/admin-pedidos.js\nconst { createClient } = require('@supabase/supabase-js');\n\nconst ESTADOS = ['pendiente', 'en_camino', 'entregado', 'cancelado'];\n\nasync function requireAdmin(event) {\n  const token = (event.headers.authorization || '').replace(/^Bearer /, '');\n  if (!token) {\n    return { error: { statusCode: 401, body: JSON.stringify({ error: 'Falta la sesión' }) } };\n  }\n\n  // Habla como el usuario: cada consulta pasa por RLS.\n  const supabase = createClient(\n    process.env.SUPABASE_URL,\n    process.env.SUPABASE_ANON_KEY,\n    {\n      global: { headers: { Authorization: `Bearer ${token}` } },\n      auth: { persistSession: false, autoRefreshToken: false }\n    }\n  );\n\n  const { data: { user }, error } = await supabase.auth.getUser(token);\n  if (error || !user) {\n    return { error: { statusCode: 401, body: JSON.stringify({ error: 'Sesión inválida' }) } };\n  }\n\n  const { data: perfil } = await supabase\n    .from('perfiles')\n    .select('rol')\n    .eq('id', user.id)\n    .maybeSingle();\n\n  if (perfil?.rol !== 'admin') {\n    return { error: { statusCode: 403, body: JSON.stringify({ error: 'No autorizado' }) } };\n  }\n\n  return { supabase, user };\n}\n\nexports.handler = async (event) =&gt; {\n  const { supabase, error } = await requireAdmin(event);\n  if (error) return error;\n\n  if (event.httpMethod === 'GET') {\n    const { data, error: dbError } = await supabase\n      .from('pedidos')\n      .select('id, estado, total, creado_en, clientes(nombre, telefono)')\n      .order('creado_en', { ascending: false })\n      .limit(100);\n\n    if (dbError) {\n      return { statusCode: 500, body: JSON.stringify({ error: 'No se pudieron leer los pedidos' }) };\n    }\n    return {\n      statusCode: 200,\n      headers: { 'Content-Type': 'application/json; charset=utf-8' },\n      body: JSON.stringify({ pedidos: data })\n    };\n  }\n\n  if (event.httpMethod === 'PATCH') {\n    const { pedido_id, estado } = JSON.parse(event.body || '{}');\n\n    if (!pedido_id || !ESTADOS.includes(estado)) {\n      return { statusCode: 400, body: JSON.stringify({ error: 'Pedido o estado inválido' }) };\n    }\n\n    const { data, error: dbError } = await supabase\n      .from('pedidos')\n      .update({ estado })\n      .eq('id', pedido_id)\n      .select('id, estado')\n      .maybeSingle();\n\n    if (dbError) {\n      return { statusCode: 500, body: JSON.stringify({ error: 'No se pudo actualizar' }) };\n    }\n    if (!data) {\n      return { statusCode: 404, body: JSON.stringify({ error: 'El pedido no existe' }) };\n    }\n    return {\n      statusCode: 200,\n      headers: { 'Content-Type': 'application/json; charset=utf-8' },\n      body: JSON.stringify({ pedido: data })\n    };\n  }\n\n  if (event.httpMethod === 'DELETE') {\n    const id = event.queryStringParameters?.resena_id;\n    if (!id) {\n      return { statusCode: 400, body: JSON.stringify({ error: 'Falta resena_id' }) };\n    }\n\n    const { data, error: dbError } = await supabase\n      .from('resenas')\n      .delete()\n      .eq('id', id)\n      .select('id');\n\n    if (dbError) {\n      return { statusCode: 500, body: JSON.stringify({ error: 'No se pudo borrar' }) };\n    }\n    if (!data.length) {\n      return { statusCode: 404, body: JSON.stringify({ error: 'La reseña no existe' }) };\n    }\n    return {\n      statusCode: 200,\n      headers: { 'Content-Type': 'application/json; charset=utf-8' },\n      body: JSON.stringify({ borrada: id })\n    };\n  }\n\n  return { statusCode: 405, body: JSON.stringify({ error: 'Método no permitido' }) };\n};</code></pre><pre><code>async function cargarPanel() {\n  const { data: { session } } = await supabase.auth.getSession();\n\n  if (!session) {\n    mostrar('Inicia sesión para ver el panel.');\n    return;\n  }\n\n  const r = await fetch('/.netlify/functions/admin-pedidos', {\n    headers: { Authorization: `Bearer ${session.access_token}` }\n  });\n\n  if (r.status === 401) mostrar('Tu sesión expiró. Vuelve a entrar.');\n  else if (r.status === 403) mostrar('Esta cuenta no tiene permiso de administración.');\n  else if (r.ok) pintarPedidos((await r.json()).pedidos);\n}\n\ncargarPanel();</code></pre><p><strong>Resultado esperado:</strong> con tu cuenta admin, <code>GET</code> devuelve los pedidos y <code>PATCH</code> cambia el estado. Con una cuenta nueva, las tres acciones devuelven <code>403</code>; sin token, <code>401</code>. Y si esa cuenta intenta leer <code>pedidos</code> directo desde Supabase con la llave anon, RLS le muestra solo los suyos.</p><p><strong>Advertencia:</strong> esta función usa la llave anon y el token del usuario, así que RLS se aplica a cada consulta. Si la cambias por <code>service_role</code> “para que vea todo”, te saltas RLS y la verificación de la función queda como único filtro: un error ahí ya no tiene red. La <code>service_role</code> vive solo en el servidor cuando de verdad la necesitas, nunca en el HTML ni en el repositorio; si se filtra, hay que rotarla y revisar qué se leyó. Y borrar una reseña no se deshace: antes de dar ese botón, ten respaldo del día (m4-b20), registra quién borró y considera moderar con una columna <code>visible</code> en lugar de eliminar. Un <code>DELETE</code> sin <code>WHERE</code> en este panel borra todas las reseñas del negocio (m4-b12).</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Constrúyeme el panel de administración de Tacos El Volcán con tres acciones: listar pedidos, cambiar estado y borrar una reseña. Requisitos que no se negocian: el rol se lee de la tabla <code>perfiles</code>, nunca de <code>user_metadata</code> ni de <code>localStorage</code>; la función de Netlify valida el token con <code>supabase.auth.getUser</code> y responde 401 sin sesión, 403 si el rol no es admin, 400 con datos inválidos y 405 con método incorrecto. Dame también las políticas RLS con una función <code>es_admin()</code> que no entre en recursión, y el <code>fetch</code> del frontend que manda el token. Al final incluye la prueba con dos cuentas y dime cómo comprobar que la base también niega el acceso directo con la llave anon. Si borro una reseña, muéstrame cómo registrar quién lo hizo y cómo recuperarla.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              {
+                tipo: "multiple",
+                pregunta: "¿Dónde debe verificarse que quien entra al panel es administrador?",
+                opciones: [
+                  "En el CSS que oculta el botón",
+                  "En localStorage al iniciar sesión",
+                  "En un comentario del HTML",
+                  "En el servidor, contra la base, en cada petición"
+                ],
+                correcta: 3
+              },
+              {
+                tipo: "vf",
+                afirmacion: "Guardar el rol en user_metadata de Supabase es seguro porque solo el servidor puede editarlo.",
+                correcta: false,
+                explicacion: "El propio usuario puede modificar su user_metadata. El rol va en una tabla que tú controlas o en app_metadata, y se verifica en el servidor en cada petición."
+              },
+              {
+                tipo: "completar",
+                frase: "El token viaja en el header ____ con el prefijo ____; si no hay sesión, la función responde ____.",
+                banco: [
+                  "Authorization",
+                  "Bearer",
+                  "401",
+                  "403",
+                  "Cookie"
+                ],
+                respuestas: [
+                  "Authorization",
+                  "Bearer",
+                  "401"
+                ]
+              },
+              {
+                tipo: "relacionar",
+                pares: [
+                  [
+                    "401",
+                    "No hay sesión o el token es inválido"
+                  ],
+                  [
+                    "403",
+                    "Hay sesión, pero el rol no es admin"
+                  ],
+                  [
+                    "405",
+                    "El método HTTP no está permitido"
+                  ],
+                  [
+                    "500",
+                    "La operación falló en la base"
+                  ]
+                ]
+              },
+              {
+                tipo: "quehace",
+                codigo: "const { data: perfil } = await supabase\n  .from('perfiles')\n  .select('rol')\n  .eq('id', user.id)\n  .maybeSingle();\n\nif (perfil?.rol !== 'admin') {\n  return { statusCode: 403, body: 'No autorizado' };\n}",
+                pregunta: "¿Qué garantiza este bloque antes de ejecutar la acción del panel?",
+                opciones: [
+                  "Que el usuario autenticado tenga rol admin en la base",
+                  "Que el token sea válido y no haya expirado",
+                  "Que el pedido que se quiere cambiar exista",
+                  "Que RLS esté apagado para esa tabla"
+                ],
+                correcta: 0
+              }
+            ]
+          },
+          {
+            id: "m4-c20",
+            titulo: "PRÁCTICA: buscador que consulta la base de datos",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>El buscador es la función que más rápido juzga un sitio. El cliente escribe “pastor” y espera ver el taco antes de levantar el dedo del teclado. Detrás de esa caja de texto hay una decisión de arquitectura: ¿el filtro ocurre en la base o en el navegador? La respuesta correcta casi nunca es “en el navegador”.</p><p>La solución ingenua es traer toda la tabla al navegador y filtrar con JavaScript. Con veinte platillos funciona y parece elegante. Con veinte mil pedidos, la primera visita descarga varios megabytes, el teléfono del cliente calienta, la memoria se llena de filas que nadie va a mirar y, de paso, expones columnas que no debían salir de la base. Además, filtrar en JavaScript no usa índices: recorres todo lo que bajaste, ya tarde.</p><p>En el servidor el filtro ocurre antes de transferir. La consulta lleva <code>WHERE</code>, un patrón y un <code>LIMIT</code>; la base filtra y, cuando el patrón lo permite, usa su índice para devolver veinte filas. El navegador recibe solo lo que va a pintar. Ese es el mismo principio de <code>SELECT</code> con columnas explícitas y <code>LIMIT</code> que ya viste (m4-b10).</p><p>Para texto hay dos herramientas. <code>ILIKE '%pastor%'</code> es simple y suficiente para un menú de cien platillos, pero el comodín al inicio impide usar un índice B-tree: la base tiene que revisar la tabla. Para búsquedas de verdad se usa <strong>texto completo</strong>: una columna <code>tsvector</code>, un índice GIN y <code>plainto_tsquery</code>, que entiende palabras y no solo pedazos de letra (m4-b16).</p><p>En el navegador quedan dos tareas. La primera es el <strong>debounce</strong>: esperar 300 milisegundos después de la última tecla antes de pedir, para no lanzar una petición por cada letra. La segunda es cancelar la petición anterior si el usuario siguió escribiendo. Después vienen los estados: cargando, resultados, sin resultados y error. Un estado vacío que dice “no hay datos” deja al usuario sin saber si escribió mal o si el negocio no tiene eso.</p><p>El buscador es un contrato de tres pasos: qué escribe el usuario, qué consulta se ejecuta y qué se muestra. Si el paso del medio trae la tabla completa, los otros dos no importan.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Es el <strong>mostrador de equipaje perdido de un aeropuerto</strong>. No vacían la bodega en la sala de espera para que tú revises maleta por maleta: describes la tuya —“verde, con ruedas, etiqueta roja”— y el empleado entra, consulta el registro y te trae tres candidatas. Si hablas a medias, espera a que termines la frase antes de caminar a la bodega; eso es el debounce. Si mientras tanto llegas con otra descripción, aborta la búsqueda anterior y empieza de nuevo. Y si no hay ninguna maleta que coincida, te lo dice con tus palabras: “no hay ninguna verde con ruedas”, no un “sin resultados” a secas. Traer la tabla completa al navegador sería vaciar la bodega en la sala de espera.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Vas a buscar platillos por nombre. Primero la consulta, después la función que la ejecuta y al final el comportamiento del input.</p><ol><li><strong>Escribe la consulta</strong> con columnas explícitas, filtro y límite. Si algún día la escribes a mano, el valor del usuario va como parámetro (<code>$1</code>), nunca concatenado.</li><li><strong>Crea</strong> <code>netlify/functions/buscar-platillos.js</code>; instala <code>@supabase/supabase-js</code> si aún no está en tu <code>package.json</code> y configura <code>SUPABASE_URL</code> y <code>SUPABASE_ANON_KEY</code> en Netlify. Como el menú es público, usa la llave anon y deja que RLS decida; si la tabla tuviera datos privados, la búsqueda iría con verificación de sesión (m4-c19).</li><li><strong>Conecta el input</strong> con debounce de 300 ms, mínimo dos caracteres y cancelación de la petición anterior.</li><li><strong>Distingue los estados</strong>: “escribe al menos 2 letras”, “buscando”, resultados, “no encontramos X” y error de red.</li></ol><pre><code>SELECT id, nombre, precio\nFROM platillos\nWHERE disponible = true\n  AND nombre ILIKE '%' || $1 || '%'\nORDER BY nombre\nLIMIT 20;</code></pre><p>Cuando el menú crezca, cambia a texto completo. La columna se calcula sola y el índice GIN hace la búsqueda por palabras:</p><pre><code>ALTER TABLE platillos\n  ADD COLUMN busqueda tsvector\n  GENERATED ALWAYS AS (\n    to_tsvector('spanish', nombre)\n  ) STORED;\n\nCREATE INDEX idx_platillos_busqueda\n  ON platillos USING GIN (busqueda);\n\nSELECT id, nombre, precio\nFROM platillos\nWHERE busqueda @@ plainto_tsquery('spanish', $1)\nORDER BY ts_rank(busqueda, plainto_tsquery('spanish', $1)) DESC\nLIMIT 20;</code></pre><p>El vector usa solo <code>nombre</code> para que la migración funcione con el esquema actual; si tu tabla tiene una columna de descripción, agrégala dentro del <code>to_tsvector</code>.</p><pre><code>// netlify/functions/buscar-platillos.js\nconst { createClient } = require('@supabase/supabase-js');\n\nconst supabase = createClient(\n  process.env.SUPABASE_URL,\n  process.env.SUPABASE_ANON_KEY\n);\n\nexports.handler = async (event) =&gt; {\n  const q = (event.queryStringParameters?.q || '').trim();\n  const limpio = q.replace(/[%_]/g, '');\n\n  if (limpio.length &lt; 2) {\n    return {\n      statusCode: 200,\n      headers: { 'Content-Type': 'application/json; charset=utf-8' },\n      body: JSON.stringify({ resultados: [], motivo: 'consulta_corta' })\n    };\n  }\n\n  const { data, error } = await supabase\n    .from('platillos')\n    .select('id, nombre, precio')\n    .eq('disponible', true)\n    .ilike('nombre', `%${limpio}%`)\n    .order('nombre')\n    .limit(20);\n\n  if (error) {\n    return {\n      statusCode: 500,\n      body: JSON.stringify({ error: 'No se pudo buscar' })\n    };\n  }\n\n  return {\n    statusCode: 200,\n    headers: { 'Content-Type': 'application/json; charset=utf-8' },\n    body: JSON.stringify({\n      resultados: data,\n      motivo: data.length ? 'ok' : 'sin_resultados'\n    })\n  };\n};</code></pre><pre><code>const input = document.querySelector('#buscar');\nconst lista = document.querySelector('#resultados');\nlet temporizador;\nlet controlador;\n\nfunction estado(texto) {\n  lista.replaceChildren();\n  const li = document.createElement('li');\n  li.textContent = texto;\n  lista.append(li);\n}\n\nfunction pintar(resultados, q) {\n  if (!resultados.length) {\n    estado(`No encontramos platillos para \"${q}\".`);\n    return;\n  }\n\n  lista.replaceChildren();\n  for (const p of resultados) {\n    const li = document.createElement('li');\n    li.textContent = `${p.nombre} — $${p.precio}`;\n    lista.append(li);\n  }\n}\n\ninput.addEventListener('input', () =&gt; {\n  const q = input.value.trim();\n  clearTimeout(temporizador);\n  controlador?.abort();\n\n  if (q.length &lt; 2) {\n    estado('Escribe al menos 2 letras.');\n    return;\n  }\n\n  estado('Buscando…');\n  temporizador = setTimeout(() =&gt; buscar(q), 300);\n});\n\nasync function buscar(q) {\n  controlador = new AbortController();\n  try {\n    const r = await fetch(\n      `/.netlify/functions/buscar-platillos?q=${encodeURIComponent(q)}`,\n      { signal: controlador.signal }\n    );\n    const { resultados } = await r.json();\n    pintar(resultados, q);\n  } catch (error) {\n    if (error.name !== 'AbortError') {\n      estado('No se pudo buscar. Intenta de nuevo.');\n    }\n  }\n}</code></pre><p><strong>Resultado esperado:</strong> al escribir “ta” aparece la petición en <em>Network</em>; al seguir escribiendo rápido hasta “taco”, solo sale una petición, la de la pausa final. La respuesta trae máximo veinte filas y tres campos. “xyz” muestra “No encontramos platillos para xyz”, no una lista vacía sin explicación. Escribir <code>%</code> no devuelve la tabla entera.</p><p><strong>Advertencia:</strong> nunca armes la consulta concatenando lo que escribe el usuario: <code>\"... where nombre like '%\" + q + \"%'\"</code> es una puerta abierta a inyección SQL (m4-a21). Usa parámetros o el cliente de Supabase, que los usa por ti. Tampoco devuelvas <code>select('*')</code>: puedes estar mandando el costo del proveedor o notas internas a cualquiera que abra <em>Network</em>. Y no quites el <code>LIMIT</code> “para que salgan todos”: una búsqueda sin límite es una descarga de la tabla con otro nombre.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Implementa un buscador de platillos para Tacos El Volcán. El filtro va en la base, no en el navegador: consulta <code>platillos</code> por nombre con <code>ILIKE</code> y <code>LIMIT</code> 20, devolviendo solo <code>id</code>, <code>nombre</code> y <code>precio</code> de los disponibles. Dame la función de Netlify completa y el JavaScript del input con debounce de 300 ms, mínimo 2 caracteres, cancelación con <code>AbortController</code> y estados separados para consulta corta, cargando, sin resultados y error. Explícame por qué un <code>ILIKE '%texto%'</code> no usa un índice B-tree y muéstrame la migración a texto completo con <code>tsvector</code> e índice GIN para cuando el menú crezca. Cierra con una prueba en Network y un <code>EXPLAIN ANALYZE</code> que compare las dos versiones.\"</p></blockquote>"
+              }
+            ],
+            ejercicios: [
+              {
+                tipo: "multiple",
+                pregunta: "¿Por qué no conviene traer toda la tabla platillos al navegador y filtrar con JavaScript?",
+                opciones: [
+                  "Porque el navegador no puede filtrar arreglos",
+                  "Porque Supabase prohíbe hacer SELECT *",
+                  "Porque transfiere y expone toda la tabla, no usa índices y empeora al crecer",
+                  "Porque JSON es más lento que SQL en cualquier caso"
+                ],
+                correcta: 2
+              },
+              {
+                tipo: "vf",
+                afirmacion: "Un filtro ILIKE '%texto%' aprovecha el índice B-tree de la columna nombre.",
+                correcta: false,
+                explicacion: "El comodín al inicio impide usar el índice B-tree: la base revisa la tabla. Para eso existe el texto completo con índice GIN o los índices de trigramas."
+              },
+              {
+                tipo: "completar",
+                frase: "El ____ espera unos milisegundos después de la última tecla; ____ cancela la petición anterior si el usuario sigue escribiendo.",
+                banco: [
+                  "debounce",
+                  "AbortController",
+                  "timeout",
+                  "LIMIT"
+                ],
+                respuestas: [
+                  "debounce",
+                  "AbortController"
+                ]
+              },
+              {
+                tipo: "relacionar",
+                pares: [
+                  [
+                    "ILIKE",
+                    "Coincidencia simple por patrón de texto"
+                  ],
+                  [
+                    "tsvector + GIN",
+                    "Búsqueda por palabras con índice"
+                  ],
+                  [
+                    "debounce",
+                    "Evita una petición por cada tecla"
+                  ],
+                  [
+                    "LIMIT 20",
+                    "Corta el resultado a veinte filas"
+                  ]
+                ]
+              },
+              {
+                tipo: "quehace",
+                codigo: "const limpio = q.replace(/[%_]/g, '');\nconst patron = `%${limpio}%`;",
+                pregunta: "¿Para qué sirve esta limpieza antes de buscar?",
+                opciones: [
+                  "Para quitar acentos y mayúsculas",
+                  "Para limitar el resultado a veinte filas",
+                  "Para convertir la búsqueda en texto completo",
+                  "Para que % y _ no actúen como comodines del usuario"
+                ],
+                correcta: 3
+              }
+            ]
+          },
+          {
+            id: "m4-c21",
+            titulo: "Depurar errores de backend con IA",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Cuando algo falla en el backend, el error casi nunca dice dónde está el problema: dice <strong>qué alcanzó a ver la última capa que se ejecutó</strong>. Un 500 puede venir de una variable mal escrita o de una consulta a una columna que no existe; un 403, de una política de RLS que rechazó una escritura. Si le pides a la IA que lo arregle con esa información, va a adivinar. Y las adivinanzas en backend se pagan caras: desactivar RLS, meter la <code>service_role</code> en el navegador o reescribir algo que ya funcionaba.</p><p>Depurar es un trabajo de <strong>ubicación</strong>, no de creatividad. Antes de tocar una línea hay que responder una pregunta: ¿en qué capa se rompió? Estas son las cinco, con la señal que deja cada una:</p><ul><li><strong>Red</strong>: la petición no llegó. URL mal escrita, DNS, CORS (m4-a18), timeout o internet del cliente. Señal: <code>Failed to fetch</code>, status 0, preflight bloqueado.</li><li><strong>Autenticación</strong>: no sabemos quién eres. Token ausente, vencido o de otro proyecto. Señal: 401.</li><li><strong>Autorización y RLS</strong>: sabemos quién eres, pero no puedes. Señal: 403, o un 200 con <code>[]</code> cuando esperabas filas (m4-b22).</li><li><strong>SQL y base</strong>: la consulta no se pudo ejecutar. Columna inexistente, tipo equivocado, <code>not null</code>, llave foránea, sintaxis. Señal: un <code>code</code> de Postgres como <code>23502</code>, <code>23503</code> o <code>42P01</code>.</li><li><strong>Código</strong>: la base respondió bien y tu función se cayó después. Un <code>undefined</code>, un JSON con otra forma, una variable que cambió de nombre. Señal: stack trace en los logs (m4-a25).</li></ul><p>El mensaje completo importa más de lo que parece. Un error de Supabase trae <code>message</code>, <code>code</code>, <code>details</code>, <code>hint</code> y <code>status</code>; una línea de log trae hora, ruta, método, duración y un identificador de la petición. Cada campo descarta capas. Si copias solo la primera línea, la IA tiene que inventar el resto del diagnóstico.</p><p>Y hay una parte que ningún error trae: <strong>el contexto</strong>. Qué esperabas que pasara, qué pasó en su lugar, qué probaste, qué no tocaste, si estás en local o en producción y qué cambiaste justo antes. Esa información convierte una respuesta genérica en un diagnóstico. La IA es muy buena encontrando patrones; si le das medio patrón, encuentra el patrón equivocado.</p><p>Tres señales que conviene memorizar: un <strong>401</strong> dice <em>no sé quién eres</em>; un <strong>403</strong> dice <em>sé quién eres y no puedes</em>; un <strong>200 con []</strong> suele decir <em>te conozco, pero no te dejo ver estas filas</em>. Con eso ya descartaste media base de datos antes de abrir el chat.</p><p>Esto te importa aunque la IA escriba el código, porque tú decides si el arreglo es aceptable. Si sabes que el error está en RLS, una respuesta que empieza con <em>cambia el frontend</em> la rechazas sin discusión. Si sabes que es un <code>not null</code>, no aceptas que te propongan borrar la columna. El criterio es tuyo; la escritura puede ser de la IA.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Es llamar al plomero y decirle <strong>se inunda la cocina</strong>. Con eso llega con el material completo y empieza a romper pared a ver qué encuentra. Si en cambio le dices: sale agua por la pared detrás del calentador, solo cuando pongo la lavadora, es agua limpia, ya cerré la llave de paso y sigue, y no he tocado el baño, llega directo a la unión que falla. La fuga es el error; la pared es la capa; la lavadora es la condición que lo dispara; lo que ya probaste es el descarte. Y cuidado con el plomero que, para que deje de salir agua, te propone cortar la tubería principal: ese es el que desactiva RLS.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Este es un error real de Supabase al insertar un pedido. Léelo completo antes de pedir ayuda:</p><pre><code>{\n  code: '42501',\n  message: 'new row violates row-level security policy for table &quot;pedidos&quot;',\n  details: null,\n  hint: null,\n  status: 403\n}</code></pre><p>El <code>42501</code> no es un problema de sesión: la petición llegó, el usuario está autenticado y Postgres la rechazó porque la tabla tiene RLS y no hay una política de <code>INSERT</code> que cubra esa fila. El arreglo es escribir la política que falta, no apagar RLS ni usar la llave maestra. Ahora compara con este otro resultado, que no trae error:</p><pre><code>GET /rest/v1/pedidos?select=id,total,estado\nStatus: 200 OK\nBody: []</code></pre><p>Si en el panel hay pedidos y la API devuelve una lista vacía, el problema tampoco es de sintaxis: es una política de <code>SELECT</code>, un filtro de más o la sesión equivocada. El código funcionó; el permiso no.</p><p>Con eso claro, el reporte se arma en seis pasos:</p><ol><li>Reproduce el fallo con la acción más pequeña posible: un clic, una petición, un registro.</li><li>Copia el error <strong>como texto</strong>, no como captura: status, code, message, details, hint, stack y request id.</li><li>Escribe en una línea qué esperabas y en otra qué pasó.</li><li>Anota lo que ya probaste y lo que revertiste. <em>Ya revisé la llave</em> no es un dato; <em>cambié la llave y el error siguió</em> sí.</li><li>Agrega entorno (local o producción) y el último cambio que hiciste antes del fallo.</li><li>Pide hipótesis y una prueba que las descarte antes de pedir código.</li></ol><p><strong>Verificación.</strong> Una buena respuesta de la IA empieza nombrando la capa y el dato que la sostiene, y propone una prueba pequeña antes del arreglo. Si empieza con un bloque de código sin explicar por qué, pídele el diagnóstico primero.</p><p><strong>Resultado esperado.</strong> Dos hipótesis ordenadas por probabilidad, una prueba para cada una y un cambio mínimo que puedas revertir. Nada de reescribir el archivo completo.</p><p><strong>Advertencia:</strong> si la solución que te dan para un error de permisos es desactivar RLS, cambiar a <code>service_role</code> o abrir la tabla a todos, no es una solución: es cambiar un error visible por una fuga silenciosa (m4-a29).</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Estoy depurando un error en el backend de Tacos El Volcán (Supabase + Netlify Functions). No me des código todavía. Primero ayúdame a ubicar la capa.</p><p>Síntoma: [qué acción hice y qué vi]. Error exacto: [pega status, code, message, details, hint y el stack completo]. Petición: [método, ruta y body sin datos personales]. Esperaba: [qué debía pasar]. Pasó: [qué pasó]. Ya probé: [lista de cosas, con resultado]. No he tocado: [lo que sigue igual]. Entorno: [local o producción]. Último cambio antes del fallo: [qué cambié].</p><p>Dime en qué capa está el problema (red, autenticación, RLS, SQL o código) y qué dato exacto del error te lo indica. Después dame las dos hipótesis más probables, ordenadas, y para cada una una prueba pequeña que la confirme o la descarte. Solo cuando una hipótesis quede confirmada, dame el cambio mínimo y cómo verificarlo. No desactives RLS, no uses la llave service_role en el frontend y no reescribas archivos completos.\"</p></blockquote><p>Si la IA te hace preguntas antes de responder, es buena señal: está buscando el dato que falta en vez de rellenarlo con una suposición.</p>"
+              }
+            ],
+            ejercicios: [
+              {
+                tipo: "multiple",
+                pregunta: "Tu función inserta un pedido y recibe <code>status 403</code> con <code>code 42501</code>. ¿Qué capa falló?",
+                opciones: [
+                  "Red: la petición nunca salió del navegador",
+                  "Autenticación: el token no existe o venció",
+                  "Permisos de la base: una política de RLS rechazó la escritura",
+                  "SQL: la consulta tiene un error de sintaxis"
+                ],
+                correcta: 2
+              },
+              {
+                tipo: "vf",
+                afirmacion: "Si la API responde 200 con una lista vacía, la consulta tiene un error de sintaxis y hay que reescribirla.",
+                correcta: false,
+                explicacion: "Un 200 con [] significa que la consulta se ejecutó bien y no devolvió filas. Las causas típicas son una política de RLS que filtra, un WHERE de más o una sesión distinta a la que crees. La sintaxis está bien; el permiso o el filtro no (m4-b22)."
+              },
+              {
+                tipo: "completar",
+                frase: "El código ____ indica que falta una sesión válida o que venció; el ____ indica que la sesión existe pero la operación no está permitida.",
+                banco: [
+                  "401",
+                  "403",
+                  "404",
+                  "500",
+                  "42501"
+                ],
+                respuestas: [
+                  "401",
+                  "403"
+                ]
+              },
+              {
+                tipo: "relacionar",
+                pares: [
+                  [
+                    "Failed to fetch o status 0",
+                    "La petición no salió: red o CORS"
+                  ],
+                  [
+                    "401",
+                    "No hay sesión válida o el token venció"
+                  ],
+                  [
+                    "403 con code 42501",
+                    "RLS rechazó la operación"
+                  ],
+                  [
+                    "23502",
+                    "Falta un valor obligatorio (not null)"
+                  ],
+                  [
+                    "TypeError: undefined",
+                    "El código recibió otra forma de datos"
+                  ]
+                ]
+              },
+              {
+                tipo: "ordenar",
+                instruccion: "Ordena el procedimiento para depurar un fallo de backend sin adivinar:",
+                elementos: [
+                  "Reproducir el fallo con la acción más pequeña",
+                  "Copiar el error completo como texto",
+                  "Identificar la capa con el status y el code",
+                  "Armar el reporte con esperado, obtenido y lo ya probado",
+                  "Pedir dos hipótesis y una prueba para cada una",
+                  "Aplicar el cambio mínimo y verificar"
+                ]
+              }
+            ]
+          },
+          {
+            id: "m4-c22",
+            titulo: "PRÁCTICA: leer logs y encontrar la causa real",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Un log es una línea que el sistema escribe solo cada vez que pasa algo. No es una opinión ni un resumen: es un registro con hora. En Netlify ves los logs de tus Functions (cada invocación, su status, su duración y lo que imprimió tu <code>console.log</code>); en Supabase ves los logs de la API, de Postgres, de Auth, de Storage y de las Edge Functions. Son dos vistas del mismo viaje: una desde la puerta y otra desde la cocina.</p><p>Una línea útil responde <strong>cuándo, dónde y a quién</strong>. Para eso necesita hora con zona, nivel (<code>INFO</code>, <code>WARN</code>, <code>ERROR</code>), función o ruta, método, status, duración y un <code>request_id</code> que permita pegar todas las líneas de la misma petición. Si tu función no imprime nada, el log de plataforma te dice que hubo un 500 pero no te dice por qué.</p><p>El error que ves en pantalla es un <strong>síntoma</strong>. El 500 es la respuesta final; la causa casi siempre está una o dos líneas antes, con el mismo <code>request_id</code>: la consulta que violó una restricción, el fetch que regresó 401, el objeto que llegó <code>undefined</code>. Y hay síntomas que ni parecen errores: una página que tarda cuatro segundos es síntoma; la causa puede ser una consulta sin índice (m4-b16) o una imagen de tres megas (m4-c25).</p><p>La hora engaña. Casi todos los logs de plataforma están en <strong>UTC</strong>, y en México son seis horas menos: un error a las 02:14 UTC es de las 20:14 del día anterior en CDMX. Si buscas en la ventana equivocada, concluyes que no hay logs cuando en realidad estabas mirando otro día.</p><p><strong>Lo que nunca debe aparecer en un log:</strong> contraseñas, tokens completos, llaves, números de tarjeta, CURP, direcciones, teléfonos completos ni cuerpos de request con datos personales. Los logs los lee el equipo, los guarda el proveedor y, si los pegas en un chat de IA, los lee un tercero. Registra el id del cliente, no su historial. Y no confundas logs con respaldo: la retención es de días, no de años, y desaparecen con el proyecto (m4-c23).</p><p>Leer logs es lo que separa <em>ya funciona otra vez</em> de <em>sé qué lo tumbó y no va a volver a pasar</em>. La diferencia entre esas dos frases es la diferencia entre un negocio que aprende y uno que reza.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Es la <strong>caja negra de un camión de reparto</strong>. Cuando el camión llega con la puerta abollada, la caja negra no escribe <em>choqué</em>: escribe que a las 14:31:58 se abrió la puerta trasera, a las 14:32:03 se detuvo el motor y a las 14:32:05 se encendió la alarma. El golpe es el síntoma; la puerta mal cerrada es la causa, y quedó registrada dos minutos antes. El mecánico no adivina: lee la caja en orden, con reloj en mano. Y la caja tampoco guarda la clave del chofer ni el número de la tarjeta con la que cargó diésel: si eso aparece ahí, el problema ya no es el golpe.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Estas cuatro líneas son de dos peticiones a la misma función. Lee primero las horas y después el contenido:</p><pre><code>02:14:07.512Z INFO  [crear-pedido] POST /api/pedidos 202 412ms req=8f3c\n02:14:08.990Z WARN  [crear-pedido] body sin cliente_id req=a91d\n02:14:09.003Z ERROR [crear-pedido] insert pedidos: null value in column &quot;cliente_id&quot; violates not-null constraint req=a91d\n02:14:09.004Z ERROR [crear-pedido] POST /api/pedidos 500 1870ms req=a91d</code></pre><p>La petición <code>8f3c</code> salió bien: 202 en 412 ms. La petición <code>a91d</code> falló: el <code>WARN</code> de las 08.990 avisó que el cuerpo llegó sin <code>cliente_id</code>, el <code>ERROR</code> de las 09.003 dice que Postgres rechazó el insert y el 500 de las 09.004 es solo la respuesta final. La causa es el dato faltante; el 500 es el síntoma. Arreglarlo en la base (quitando el <code>not null</code>) sería tapar el problema: el formulario debe validar antes (m4-a21).</p><p>Así se investiga, en orden:</p><ol><li>Define la ventana en hora local y conviértela a UTC. <em>Ayer de 20:00 a 21:00 en CDMX</em> es <em>02:00 a 03:00 UTC</em>.</li><li>En Netlify entra a <strong>Logs → Functions</strong>, elige la función <code>crear-pedido</code> y filtra por esa ventana.</li><li>Toma el <code>request_id</code> de la petición que falló y sigue todas sus líneas.</li><li>En Supabase entra a <strong>Logs</strong> y revisa <strong>API</strong> y <strong>Postgres</strong> en el mismo minuto: ahí ves si la petición llegó a la base y qué dijo.</li><li>Arma una línea de tiempo, de la primera a la última línea, con hora UTC y hora local.</li><li>Marca la primera línea anómala y escribe la causa en una frase. Si no puedes, falta un log: agrégalo con <code>request_id</code> y sin datos personales, y vuelve a reproducir.</li></ol><p><strong>Verificación.</strong> Después del arreglo, repite la misma acción: debe aparecer un 201 o 202 con duración parecida a las peticiones sanas, y ninguna línea <code>ERROR</code> de esa ruta en los siguientes diez minutos. Si el status cambió pero la duración se disparó, todavía hay algo.</p><p><strong>Resultado esperado.</strong> Una línea de tiempo de una petición y una frase que explique la causa, no un <em>lo arreglé y ya</em>. Esa frase es lo que evita que el mismo error vuelva en tres semanas.</p><p><strong>Advertencia:</strong> los logs no son un lugar privado y tampoco son un respaldo. Antes de pegarlos en una IA, quita correos, teléfonos, tokens y direcciones; y no cuentes con encontrar los de la semana pasada, porque la retención del plan gratuito es corta. Si necesitas auditoría, guarda un extracto propio en un lugar seguro.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Te pego un extracto de logs de una función de Netlify y de Supabase, ya redactado: sin tokens, correos, teléfonos ni direcciones. Quiero que: (1) agrupes las líneas por request_id y por minuto; (2) ordenes la línea de tiempo en UTC y en hora de CDMX; (3) marques la primera línea anómala; (4) separes el síntoma de la causa; (5) me digas qué dato falta para confirmar la causa y cómo obtenerlo. No propongas ningún cambio de código hasta que la causa esté sustentada por una línea del log.</p><p>Contexto: la acción era [crear un pedido desde el formulario], esperaba [201] y ocurrió [500]. Logs: [pega aquí].\"</p></blockquote><p>Si la IA te responde <em>el error es el 500</em>, corrígela: el 500 es el reporte del accidente, no el accidente. Pídele que nombre la línea exacta donde empieza el problema.</p>"
+              }
+            ],
+            ejercicios: [
+              {
+                tipo: "quehace",
+                codigo: "02:14:08.990Z WARN  [crear-pedido] body sin cliente_id req=a91d\n02:14:09.003Z ERROR [crear-pedido] insert pedidos: null value in column &quot;cliente_id&quot; violates not-null constraint req=a91d\n02:14:09.004Z ERROR [crear-pedido] POST /api/pedidos 500 1870ms req=a91d",
+                pregunta: "¿Cuál es la causa y cuál el síntoma?",
+                opciones: [
+                  "La causa es la falta de cliente_id; el síntoma es el 500",
+                  "La causa es el 500; el síntoma es el WARN",
+                  "La causa es la duración de 1870 ms; el síntoma es el POST",
+                  "La causa es el request_id; el síntoma es el nivel ERROR"
+                ],
+                correcta: 0
+              },
+              {
+                tipo: "vf",
+                afirmacion: "El status 500 que aparece al final del log es la causa del fallo.",
+                correcta: false,
+                explicacion: "El 500 es la respuesta final, o sea el síntoma. La causa está en una línea anterior de la misma petición: el WARN del cuerpo incompleto o el ERROR del insert. Leer de abajo hacia arriba sin ordenar por hora es la forma más común de confundirlos."
+              },
+              {
+                tipo: "completar",
+                frase: "Para reconstruir una petición se usa el ____ que aparece en cada línea; y los logs de la plataforma suelen estar en hora ____, seis horas adelante de CDMX.",
+                banco: [
+                  "request_id",
+                  "UTC",
+                  "status",
+                  "nivel",
+                  "local"
+                ],
+                respuestas: [
+                  "request_id",
+                  "UTC"
+                ]
+              },
+              {
+                tipo: "relacionar",
+                pares: [
+                  [
+                    "request_id",
+                    "Une las líneas de una misma petición"
+                  ],
+                  [
+                    "UTC",
+                    "Hora base de los logs; CDMX va seis horas atrás"
+                  ],
+                  [
+                    "500",
+                    "Síntoma: la petición terminó mal"
+                  ],
+                  [
+                    "WARN previo",
+                    "Pista de la causa antes del error final"
+                  ],
+                  [
+                    "Retención",
+                    "Días que el proveedor conserva los logs"
+                  ]
+                ]
+              },
+              {
+                tipo: "ordenar",
+                instruccion: "Ordena la investigación de un error que solo conoces por el reporte del cliente:",
+                elementos: [
+                  "Elegir la ventana de tiempo y pasarla a UTC",
+                  "Filtrar por la función o ruta que falló",
+                  "Agrupar las líneas por request_id",
+                  "Ordenar la línea de tiempo y ubicar la primera línea anómala",
+                  "Separar el síntoma de la causa",
+                  "Comprobar la causa con una reproducción controlada"
+                ]
+              }
+            ]
+          },
+          {
+            id: "m4-c23",
+            titulo: "PRÁCTICA: dejar tus respaldos automatizados",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Un respaldo no es un archivo que existe: es una copia de la que puedes <strong>volver a levantar el negocio</strong>. La diferencia se nota el día del problema. La idea general ya la trabajaste en (m4-b20); aquí la conviertes en algo que corre solo. Tener un archivo de 40 MB en una carpeta no sirve si al restaurarlo faltan las políticas de RLS, las fotos o la mitad de los pedidos. Lo que se prueba no es que el respaldo se creó, sino que <strong>se restauró y la app volvió a funcionar</strong>.</p><p>En Tacos El Volcán hay tres cosas que respaldar, y solo una vive en la base: las cinco tablas (<code>clientes</code>, <code>platillos</code>, <code>pedidos</code>, <code>pedido_items</code>, <code>resenas</code>), las fotos del bucket de Storage y la configuración (variables de entorno, funciones desplegadas, dominio). <code>pg_dump</code> baja la base completa, con esquema y datos, pero <strong>no baja las imágenes</strong>: en la tabla solo queda la ruta del archivo. Si restauras la base y no las fotos, el menú aparece con imágenes rotas.</p><p>La frecuencia se decide con dos preguntas: cuántos datos puedes perderte (RPO) y cuánto puedes tardar en volver (RTO). Para una taquería que recibe pedidos todo el día, perder un día de pedidos es grave; perder una hora, tolerable. Un respaldo diario a las 03:00 deja un RPO de 24 horas. Si cobras en línea, necesitas más frecuencia o point-in-time recovery, que es una función de planes pagados.</p><p>La retención importa tanto como la frecuencia. Si guardas solo la última copia y un error de borrado ocurre el lunes pero lo descubres el jueves, tus tres últimas copias ya traen el daño. Una política sana para un negocio pequeño: <strong>7 diarios, 4 semanales y 12 mensuales</strong>. La copia mensual te salva de errores silenciosos; la diaria te salva del accidente de ayer.</p><p>Y hay una regla que no se negocia: la copia tiene que vivir <strong>fuera del proveedor</strong>. Si tu único respaldo está en el mismo proyecto de Supabase, una suspensión de cuenta, un problema de facturación o un borrado del proyecto se lleva todo junto. La regla clásica es 3-2-1: tres copias, en dos lugares, una fuera. En la práctica: la base en Supabase, el dump en un bucket de AWS S3, Cloudflare R2 o Backblaze, y una copia mensual en un disco externo o en Drive. Automatizar es lo que separa un plan de una intención. Un workflow de GitHub Actions con un <code>cron</code> corre todos los días sin que nadie se acuerde; las credenciales viven en secretos, nunca en el repositorio. Los respaldos automáticos de Supabase Pro ayudan, pero su retención es corta y viven dentro del mismo proveedor: son la primera línea, no el plan completo.</p><p><strong>Advertencia:</strong> un respaldo que nunca restauraste no es un respaldo, es una esperanza. Y si el respaldo, la base y las fotos están en la misma cuenta, no tienes tres copias: tienes una sola con tres nombres.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Es la <strong>llave de repuesto de tu casa</strong>. Si la guardas en el mismo llavero, el día que te quedes afuera tienes dos llaves adentro y ninguna en la mano: por eso la copia vive en casa del vecino, que es otro proveedor. Y si nunca la metiste en la cerradura, no sabes si la copiaron mal, si es de otra puerta o si la cerradura cambió desde entonces. La revisas cada tanto: abres, cierras, la devuelves. El día del apuro no estás aprendiendo a usar la llave; ya sabes que gira.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>El respaldo mínimo de Tacos El Volcán son tres piezas: el volcado de la base, los archivos de Storage y la lista de variables de entorno (nombres, no valores). Empieza por la base, en PowerShell:</p><pre><code># La cadena de conexión se toma de Database → Connection string\n# y NO se escribe en un archivo del repositorio\n$fecha = Get-Date -Format 'yyyy-MM-dd'\n$env:DB_URL = 'postgresql://postgres.xxxx:TU_PASSWORD@aws-0-us-east-1.pooler.supabase.com:5432/postgres'\n\npg_dump $env:DB_URL --no-owner --no-privileges --format=custom --file=respaldo-volcan-$fecha.dump</code></pre><p><code>--format=custom</code> permite restaurar tablas sueltas con <code>pg_restore</code>; <code>--no-owner</code> evita que el dump exija los mismos roles de Supabase al restaurar en otro lado. Verifica que el archivo tenga las cinco tablas:</p><pre><code>pg_restore --list respaldo-volcan-$fecha.dump | Select-String 'TABLE DATA'</code></pre><p>Deben aparecer <code>clientes</code>, <code>platillos</code>, <code>pedidos</code>, <code>pedido_items</code> y <code>resenas</code>. Súbelo fuera de Supabase:</p><pre><code>aws s3 cp respaldo-volcan-$fecha.dump s3://respaldos-volcan/postgres/$fecha/ --sse AES256</code></pre><p>Si usas Cloudflare R2 o Backblaze en vez de S3, agrega <code>--endpoint-url</code> con el que te den y el cifrado que soporte tu proveedor; el resto del flujo es igual.</p><p>Ahora automatízalo. Este workflow corre a las 09:00 UTC, que son las 03:00 en CDMX:</p><pre><code>name: Respaldo diario de Tacos El Volcan\non:\n  schedule:\n    - cron: '0 9 * * *'\n  workflow_dispatch:\n\njobs:\n  respaldo:\n    runs-on: ubuntu-latest\n    steps:\n      - name: Instalar cliente de Postgres\n        run: sudo apt-get update &amp;&amp; sudo apt-get install -y postgresql-client\n      - name: Volcar la base\n        env:\n          DB_URL: ${{ secrets.SUPABASE_DB_URL }}\n        run: pg_dump $DB_URL --no-owner --no-privileges --format=custom --file=volcan-$(date +%F).dump\n      - name: Subir fuera de Supabase\n        env:\n          AWS_ACCESS_KEY_ID: ${{ secrets.S3_KEY_ID }}\n          AWS_SECRET_ACCESS_KEY: ${{ secrets.S3_SECRET }}\n          AWS_DEFAULT_REGION: us-east-1\n        run: aws s3 cp volcan-$(date +%F).dump s3://respaldos-volcan/postgres/ --sse AES256</code></pre><p>La retención se configura con una regla de ciclo de vida del bucket: 90 días en la carpeta diaria, y una copia mensual que se queda un año en otra carpeta. No borres a mano la copia vieja hasta que la nueva esté verificada.</p><p>Si no usas GitHub, el Programador de tareas de Windows puede correr el mismo comando cada día; GitHub Actions es más confiable porque no depende de que tu computadora esté encendida.</p><p>El plan completo, en orden:</p><ol><li>Generar el dump diario con <code>pg_dump</code>.</li><li>Verificar que el archivo abre y lista las cinco tablas.</li><li>Subirlo a un bucket fuera de Supabase.</li><li>Programarlo con GitHub Actions y secretos, no con la contraseña escrita.</li><li>Configurar retención de 7 diarios, 4 semanales y 12 mensuales.</li><li>Restaurar cada mes en un proyecto de prueba y comparar conteos.</li></ol><p><strong>La parte que casi nadie hace: restaurar.</strong> Una vez al mes, baja el respaldo más reciente y levántalo en un proyecto de prueba, nunca en el de producción. Si tienes Postgres local también sirve, pero un dump de Supabase trae políticas que usan el esquema <code>auth</code> y pueden fallar donde ese esquema no existe; un segundo proyecto de Supabase es el banco de pruebas más fiel.</p><pre><code>$env:PRUEBA_URL = 'postgresql://postgres.xxxx:TU_PASSWORD@aws-0-us-east-1.pooler.supabase.com:5432/postgres'\npg_restore --no-owner --no-privileges --dbname=$env:PRUEBA_URL respaldo-volcan-2026-11-18.dump\npsql $env:PRUEBA_URL -c \"select (select count(*) from clientes) as clientes, (select count(*) from platillos) as platillos, (select count(*) from pedidos) as pedidos, (select count(*) from pedido_items) as items, (select count(*) from resenas) as resenas;\"</code></pre><p>Los números deben coincidir con los de producción al momento del respaldo. Si el respaldo es de las 03:00 y ya hubo pedidos después, la diferencia debe ser exactamente esos pedidos, no cientos. Después abre la app apuntando a la base restaurada y confirma que el menú, el login y el panel funcionan.</p><p>El calendario queda así: <strong>diario</strong> a las 03:00, automático; <strong>lunes</strong>, revisar que el archivo de ayer existe y pesa lo esperado; <strong>mensual</strong>, restaurar y comparar conteos; <strong>trimestral</strong>, simular la caída total, medir cuánto tardas (RTO) y corregir el plan. Anota cada prueba con fecha y resultado.</p><p><strong>Verificación.</strong> El respaldo está probado cuando puedes decir: restauré, conté las cinco tablas, abrí la app y tardé X minutos. Si solo puedes decir <em>el archivo está en el bucket</em>, todavía no tienes respaldo.</p><p><strong>Resultado esperado.</strong> Un dump diario fuera de Supabase, una regla de retención, un recordatorio mensual y una restauración documentada con conteos que coinciden.</p><p><strong>Advertencia:</strong> no pongas la cadena de conexión ni las llaves del bucket en el repositorio, ni siquiera en un archivo que después borras: el historial de Git las conserva. Y recuerda que las fotos no vienen en <code>pg_dump</code>; un plan que solo respalda la base deja el menú sin imágenes.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Actúa como DBA de un negocio pequeño. Mi proyecto es Tacos El Volcán en Supabase (plan [gratuito o Pro]) con las tablas clientes, platillos, pedidos, pedido_items y resenas, más un bucket de Storage con las fotos del menú. Diseña un plan de respaldo que cumpla 3-2-1: (1) el comando pg_dump para Windows, sin credenciales escritas; (2) un workflow de GitHub Actions con cron en UTC equivalente a las 03:00 de CDMX, usando secretos; (3) un destino fuera de Supabase y cifrado; (4) retención de 7 diarios, 4 semanales y 12 mensuales; (5) un procedimiento de restauración paso a paso con verificación de conteos y una prueba de la app. Dime qué NO cubre el plan, por ejemplo las imágenes, y cómo cubrirlo. Si algún límite depende de mi plan, pregúntame en vez de asumirlo.\"</p></blockquote><p>Pídele también que te diga cuánto tarda una restauración completa. Ese número es tu RTO y es la diferencia entre negociar con calma y perder el fin de semana.</p>"
+              }
+            ],
+            ejercicios: [
+              {
+                tipo: "multiple",
+                pregunta: "¿Cuál es la única prueba real de que un respaldo sirve?",
+                opciones: [
+                  "Que el archivo exista en el bucket",
+                  "Que pese más de 10 MB",
+                  "Que lo hayas restaurado en otra base y la app funcione",
+                  "Que el proveedor diga que está completo"
+                ],
+                correcta: 2
+              },
+              {
+                tipo: "vf",
+                afirmacion: "Un respaldo guardado dentro del mismo proyecto de Supabase protege contra la suspensión o el borrado de la cuenta.",
+                correcta: false,
+                explicacion: "Si la cuenta o el proyecto desaparecen, el respaldo se va con ellos. La copia tiene que vivir fuera del proveedor; por eso la regla 3-2-1 pide al menos una copia en otro lugar."
+              },
+              {
+                tipo: "completar",
+                frase: "La regla 3-2-1 pide ____ copias de los datos, en ____ lugares distintos, y al menos una ____ del proveedor principal.",
+                banco: [
+                  "tres",
+                  "dos",
+                  "fuera",
+                  "dentro",
+                  "cifrada"
+                ],
+                respuestas: [
+                  "tres",
+                  "dos",
+                  "fuera"
+                ]
+              },
+              {
+                tipo: "relacionar",
+                pares: [
+                  [
+                    "RPO",
+                    "Cuántos datos puedes perderte"
+                  ],
+                  [
+                    "RTO",
+                    "Cuánto tardas en volver a operar"
+                  ],
+                  [
+                    "Retención",
+                    "Cuántas copias guardas y por cuánto tiempo"
+                  ],
+                  [
+                    "3-2-1",
+                    "Tres copias, dos lugares, una fuera"
+                  ],
+                  [
+                    "pg_restore",
+                    "Levantar un dump en otra base"
+                  ]
+                ]
+              },
+              {
+                tipo: "ordenar",
+                instruccion: "Ordena un simulacro de restauración mensual:",
+                elementos: [
+                  "Elegir el respaldo más reciente que no esté corrupto",
+                  "Crear un proyecto o base de prueba separada",
+                  "Restaurar el dump con pg_restore",
+                  "Comparar los conteos de las cinco tablas",
+                  "Abrir la app apuntando a la base restaurada",
+                  "Anotar el tiempo total y corregir el plan"
+                ]
+              }
+            ]
+          },
+          {
+            id: "m4-c24",
+            titulo: "PRÁCTICA: exportar todos tus datos",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Exportar y respaldar se parecen, pero no son lo mismo. Un respaldo existe para <strong>volver</strong> (m4-c23); un export existe para <strong>llevarte</strong> los datos a otro lado: a una hoja de cálculo, a otra plataforma o a las manos de un contador. Los dos tienen que estar completos, y los dos se prueban abriéndolos, no mirando que el archivo exista.</p><p>La confusión más cara es creer que un CSV por tabla es <em>tus datos</em>. Un CSV guarda <strong>filas</strong>; el esquema guarda las <strong>reglas</strong>: los tipos de cada columna, la llave primaria, las llaves foráneas, los índices, las restricciones y las políticas de RLS. Si solo te llevas los CSV, en el otro lado tienes cinco listas sueltas que no saben qué pedido pertenece a qué cliente. Reconstruir eso es arqueología, y se paga por hora.</p><p>Hay una tercera pieza que casi nadie exporta: las <strong>imágenes</strong>. En la base solo vive la ruta del archivo dentro del bucket; el archivo pesa megas y está en Storage. <code>pg_dump</code> no lo baja. Si te mudas con la base y sin las fotos, el menú queda con cuadros rotos y el respaldo se ve completo hasta que lo abres.</p><p>Los CSV tienen trampas de formato que sorprenden a todos. Excel convierte los teléfonos en números y les come el cero inicial, cambia las fechas según la configuración de la computadora y rompe los acentos si el archivo no está en UTF-8. Los campos con comas o saltos de línea necesitan comillas. Por eso: exporta en UTF-8, con encabezados, y revisa el resultado en un editor de texto antes de confiar en él. Abrirlo con doble clic no es revisarlo.</p><p>Exportar también es un derecho. Tus datos son tuyos y debes poder sacarlos sin pedir permiso ni esperar a que el proveedor te dé un botón. Y si un cliente te pide sus datos o su eliminación, tienes que poder encontrarlos en <code>clientes</code>, <code>pedidos</code>, <code>pedido_items</code> y <code>resenas</code>. Eso es parte de la Ley Federal de Protección de Datos Personales en México y de los derechos ARCO; en la práctica, es no tener datos regados en cinco lugares sin mapa.</p><p>Un export completo se reconoce por tres cosas: los conteos coinciden con la base, una muestra se puede reimportar sin errores y hay un manifiesto que dice qué contiene cada archivo, cuándo se generó y con qué hash. Sin eso, tienes una carpeta con archivos, no un export.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Es levantar la <strong>cosecha de una parcela rentada</strong>. Te llevas las cajas de jitomate, que son las filas en CSV, pero si no te llevas también el trazo de los surcos, las variedades sembradas y el calendario de riego, que son el esquema, el año siguiente tienes comida para un mes y ningún plan para volver a producir. Y hay una parte que no está en la parcela sino en el vivero: el injerto que compraste, que son las fotos en Storage. La cosecha es tuya y el dueño del terreno no te la puede retener, pero tampoco te la va a empacar.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>El objetivo es una carpeta llamada <code>export-volcan-2026-11-18</code> que puedas entregar a otro proveedor sin pedir permiso. Usa la cadena de conexión en <code>$env:DB_URL</code>, igual que en la unidad m4-c23. Primero, una tabla por archivo, con encabezados y UTF-8:</p><pre><code>psql $env:DB_URL -c \"\\copy (select * from clientes order by id) to 'clientes.csv' with (format csv, header true, encoding 'UTF8')\"\npsql $env:DB_URL -c \"\\copy (select * from platillos order by id) to 'platillos.csv' with (format csv, header true, encoding 'UTF8')\"\npsql $env:DB_URL -c \"\\copy (select * from pedidos order by id) to 'pedidos.csv' with (format csv, header true, encoding 'UTF8')\"\npsql $env:DB_URL -c \"\\copy (select * from pedido_items order by id) to 'pedido_items.csv' with (format csv, header true, encoding 'UTF8')\"\npsql $env:DB_URL -c \"\\copy (select * from resenas order by id) to 'resenas.csv' with (format csv, header true, encoding 'UTF8')\"</code></pre><p>Después, el esquema completo: tablas, tipos, llaves, índices, políticas RLS, funciones y triggers. Esto no incluye datos, y está bien: son las reglas.</p><pre><code>pg_dump $env:DB_URL --schema-only --no-owner --no-privileges --file=esquema-volcan.sql</code></pre><p>Tercera pieza: las fotos. En el panel entra a <strong>Storage → platillos</strong> y descarga el bucket completo, o hazlo por código con la API de Storage. Guarda los archivos con la misma ruta que tienen en la base; si cambias los nombres, las URLs dejan de funcionar. Cuarta: el manifiesto con conteos y hash.</p><pre><code>select (select count(*) from clientes) as clientes, (select count(*) from platillos) as platillos, (select count(*) from pedidos) as pedidos, (select count(*) from pedido_items) as items, (select count(*) from resenas) as resenas;</code></pre><pre><code>Get-FileHash .\\esquema-volcan.sql -Algorithm SHA256 | Format-List | Out-File manifiesto.txt\nGet-ChildItem *.csv | ForEach-Object { $_.Name + ' ' + (Get-Content $_.FullName).Count } | Out-File manifiesto.txt -Append</code></pre><p>Los usuarios de Auth no salen en esos CSV: se exportan desde <strong>Authentication → Users</strong> (o con la Admin API) a un archivo aparte. Ahí hay correos y metadatos personales, así que ese archivo lleva el mismo cuidado que la carpeta completa: cifrado y acceso limitado.</p><p><strong>Verificación.</strong> Abre un CSV en un editor de texto: los acentos deben verse bien, los teléfonos deben conservar el cero inicial y las comas deben estar entre comillas. Compara los conteos del manifiesto con los de la base. Busca <code>POLICY</code> dentro de <code>esquema-volcan.sql</code> para confirmar que las políticas de RLS viajaron. Reimporta una tabla en una base de prueba y compara tres filas al azar. Cuenta las imágenes descargadas contra las rutas que aparecen en <code>platillos</code>.</p><p><strong>Resultado esperado.</strong> Cinco CSV, un <code>esquema-volcan.sql</code>, una carpeta de imágenes y un <code>manifiesto.txt</code> con fecha, conteos y hash de cada archivo. Todo pesa lo que debe pesar y se puede abrir sin programas raros.</p><p><strong>Advertencia:</strong> un CSV con clientes es datos personales. No lo dejes en Descargas, no lo mandes por correo y no lo subas a un repositorio público. Cifra la carpeta, guárdala en un lugar con acceso controlado y borra las copias de trabajo cuando termines. Exportar no es lo mismo que publicar.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Necesito exportar todo lo que hay en mi proyecto de Tacos El Volcán en Supabase para poder mudarme a otro proveedor sin perder nada. Dame: (1) comandos de PowerShell con psql para exportar clientes, platillos, pedidos, pedido_items y resenas a CSV en UTF-8 con encabezados; (2) el comando para el esquema completo, incluyendo políticas RLS, índices, funciones y triggers; (3) cómo exportar las imágenes del bucket y por qué no vienen dentro del dump; (4) un manifiesto con conteos y hash para verificar que el export está completo; (5) una lista de lo que NO queda en esos archivos, por ejemplo usuarios de Auth, secuencias y variables de entorno. Sin credenciales en los comandos y sin asumir nombres de tablas que no te di.\"</p></blockquote><p>Cuando tengas el export, pídele que lo revise como si fuera el proveedor nuevo: si esa persona pudiera reconstruir el sistema solo con la carpeta, el export está completo.</p>"
+              }
+            ],
+            ejercicios: [
+              {
+                tipo: "multiple",
+                pregunta: "Si solo exportas los CSV de tus tablas, ¿qué te falta para poder reconstruir el sistema en otro proveedor?",
+                opciones: [
+                  "Nada: el CSV contiene todo",
+                  "Las reglas: tipos, llaves, relaciones, índices y políticas RLS",
+                  "Los acentos, que se pierden siempre",
+                  "El nombre del proyecto de Supabase"
+                ],
+                correcta: 1
+              },
+              {
+                tipo: "vf",
+                afirmacion: "Un pg_dump de la base incluye las fotos guardadas en el bucket de Storage.",
+                correcta: false,
+                explicacion: "El dump incluye las tablas y, dentro de ellas, la ruta del archivo; las imágenes viven en Storage y se descargan aparte. Si restauras solo la base, el menú queda con imágenes rotas."
+              },
+              {
+                tipo: "completar",
+                frase: "El CSV guarda las ____; el esquema guarda las ____; y las fotos del menú viven en ____, no dentro de Postgres.",
+                banco: [
+                  "filas",
+                  "reglas",
+                  "Storage",
+                  "llaves",
+                  "funciones"
+                ],
+                respuestas: [
+                  "filas",
+                  "reglas",
+                  "Storage"
+                ]
+              },
+              {
+                tipo: "relacionar",
+                pares: [
+                  [
+                    "clientes.csv",
+                    "Una fila por cliente, sin reglas ni relaciones"
+                  ],
+                  [
+                    "esquema-volcan.sql",
+                    "Tablas, llaves, índices y políticas RLS"
+                  ],
+                  [
+                    "bucket platillos",
+                    "Las fotos que el CSV no contiene"
+                  ],
+                  [
+                    "auth.users",
+                    "Correos y credenciales de los usuarios"
+                  ],
+                  [
+                    "manifiesto.txt",
+                    "Conteos y hash para comprobar el export"
+                  ]
+                ]
+              },
+              {
+                tipo: "ordenar",
+                instruccion: "Ordena el export completo de Tacos El Volcán:",
+                elementos: [
+                  "Exportar cada tabla a CSV en UTF-8",
+                  "Exportar el esquema completo con pg_dump --schema-only",
+                  "Descargar las imágenes del bucket",
+                  "Contar filas y calcular el hash de cada archivo",
+                  "Probar una muestra: reimportar una tabla y comparar",
+                  "Guardar la carpeta cifrada fuera del equipo y del proveedor"
+                ]
+              }
+            ]
+          },
+          {
+            id: "m4-c25",
+            titulo: "Costos: qué se paga realmente en un backend",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Un backend no se cobra como una página: se cobra como un servicio. Hay una parte fija, que pagas aunque nadie entre, y una parte variable, que crece con el uso. Entender cuál es cuál te permite decidir si tu negocio aguanta el plan gratuito, si necesita el plan Pro o si el problema no es el plan sino una foto de tres megas que se sirve diez mil veces al mes.</p><p>En Supabase hay cinco medidores: <strong>tamaño de la base</strong>, <strong>almacenamiento de archivos</strong>, <strong>egress</strong> (los datos que salen hacia tus usuarios), <strong>funciones</strong> (invocaciones y tiempo de ejecución) y <strong>usuarios activos</strong>. En Netlify los medidores son parecidos: ancho de banda, minutos de build y uso de Functions. Los precios y los límites cambian; los que aparecen aquí son de referencia y hay que confirmarlos en la página de precios antes de firmar. Lo que no cambia es la lógica: alguien paga por lo que sale y por lo que se guarda.</p><p>El plan gratuito de Supabase alcanza para aprender y para un proyecto sin tráfico: alrededor de 500 MB de base, 1 GB de archivos, 5 GB de egress, 50 mil usuarios activos y dos proyectos, con pausa por inactividad. El Pro cuesta del orden de 25 dólares al mes por proyecto y sube los topes a 8 GB de base, 100 GB de archivos, 250 GB de egress y 100 mil usuarios, además de respaldos diarios y de quitar la pausa. Los excedentes se cobran por GB o por unidad, así que el Pro no es un techo infinito: es un plan con más margen.</p><p>Netlify cobra por banda ancha, builds y Functions. El plan gratuito trae del orden de 100 GB de banda al mes y 300 minutos de build; el Pro cuesta cerca de 19 dólares por persona y mes y multiplica esos topes. Si tu sitio es estático y las fotos salen de Supabase, el consumo de Netlify es bajo; si además sirve imágenes o corre muchas Functions, se suma.</p><p>Lo que crece con el uso no es parejo. Las filas de pedidos pesan kilobytes: mil pedidos son menos de un mega. Las fotos pesan cientos de kilobytes cada una y se descargan en cada visita. El egress es peso por visita: una foto de 2 MB servida 10,000 veces son 20 GB, y ahí se va el plan gratuito. Una función que se llama en cada tecla del buscador, o un bot que reintenta cada minuto, también inflan la factura sin que vendas más tacos.</p><p>Por eso conviene calcular el <strong>costo por pedido</strong>. Si el fijo son 44 dólares al mes y tienes 1,500 pedidos, cada pedido carga 3 centavos de infraestructura; con 3,000 pedidos carga la mitad. El fijo se diluye; el variable no perdona. Un negocio que cobra 150 pesos por pedido aguanta esos centavos sin problema, pero uno que regala el envío y sirve fotos sin optimizar puede pagar más de infraestructura que de margen. Vigilar la factura es una rutina, no un susto. Una revisión al mes, un límite de gasto configurado y una optimización a la vez bastan para no despertar con un cargo raro. Y ahí está la buena noticia: casi todo el costo evitable de un backend pequeño está en las imágenes y en las llamadas repetidas, no en la base de datos.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Es el <strong>plan de datos de un celular</strong>. Hay una renta fija, el plan, y un consumo que nadie mira hasta que se acaba: datos, minutos, roaming. El plan gratis es prepago con tope: no pagas, pero si se acaba el paquete te quedas sin servicio o te bajan la velocidad, y si no recargas te suspenden la línea. El Pro es renta mensual con paquete incluido y cobro por excedente. Y el consumo no lo hace la app: lo hacen las personas que la usan. Las fotos del menú son los videos que nadie cree que gastan datos hasta que llega el recibo.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Revisión mensual de Tacos El Volcán, con números de ejemplo. Así se ve un proyecto que ya se salió del plan gratuito, y no por la base:</p><ul><li>Base de datos: 620 MB. El tope gratuito es 500 MB; el Pro incluye 8 GB.</li><li>Storage: 3.4 GB de fotos. El gratuito da 1 GB.</li><li>Egress: 48 GB al mes. El gratuito da 5 GB; el Pro incluye 250 GB.</li><li>Funciones: 220,000 invocaciones con 380 ms de promedio.</li><li>Usuarios activos: 1,200 al mes, muy por debajo de cualquier tope.</li></ul><p>El diagnóstico es claro: la base está apenas arriba, las fotos y la banda están muy arriba. Migrar a Pro resuelve el mes, pero no la tendencia. La cuenta queda así:</p><pre><code>Supabase Pro                  $25.00\nNetlify Pro                   $19.00\nExcedente de egress           variable\n-------------------------------------\nFijo mensual                  $44.00\n\n1,500 pedidos/mes  ->  $44 / 1,500 = $0.029 por pedido\n3,000 pedidos/mes  ->  $44 / 3,000 = $0.015 por pedido</code></pre><p>Ese cálculo es el costo fijo; los excedentes se suman aparte. Y si tu cuenta factura en México, al dólar hay que agregarle el impuesto y el tipo de cambio del día.</p><p>Las tres acciones que más bajan la factura, en orden:</p><ol><li><strong>Redimensionar las fotos antes de subirlas.</strong> Un menú no necesita 4000 píxeles: con 1200 de ancho y formato WebP, una foto baja de 2 MB a 150-250 KB. Es el 90% del egress.</li><li><strong>Servir la imagen transformada, no el original.</strong> Con Storage puedes pedir una versión más chica: <code>https://tuproyecto.supabase.co/storage/v1/render/image/public/platillos/taco-pastor.jpg?width=800&amp;quality=75</code>. La transformación es una función de planes pagados, pero aun así pesa mucho menos que el original.</li><li><strong>Cachear y no repetir llamadas.</strong> Encabezados de caché para las imágenes, <code>loading=&quot;lazy&quot;</code> en la galería y un buscador con retraso (debounce) para no llamar a la función en cada tecla.</li></ol><p>Para vigilar: en Supabase entra a <strong>Settings → Usage</strong> y revisa base, storage, egress y usuarios; en Netlify, a <strong>Team → Usage</strong> y a la configuración de facturación. Configura un límite de gasto o alerta para que el proveedor te avise antes de cobrar, no después. Aparta un proyecto para producción y otro para pruebas, y borra los experimentos que ya no uses: un proyecto olvidado también consume.</p><p><strong>Verificación.</strong> Debes poder mostrar una hoja de una página con el fijo, el variable, el costo por pedido a 1,500 y a 5,000 pedidos, los tres rubros que más crecen y las tres acciones con su ahorro estimado. Si no sabes qué porcentaje del egress son imágenes, todavía estás adivinando.</p><p><strong>Resultado esperado.</strong> Un número claro de cuánto cuesta operar un pedido, una alerta configurada y una optimización aplicada este mes. La factura deja de ser una sorpresa y se vuelve una decisión de diseño.</p><p><strong>Advertencia:</strong> una tarjeta sin límite más un proyecto de prueba olvidado más fotos sin optimizar es la receta de la factura sorpresa. El plan gratuito tampoco es infinito: si lo rebasas, te suspenden o te cobran, y si el proyecto se pausa, tu app se cae aunque el código esté perfecto (m4-b21).</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Estos son los números de mi backend este mes: base de datos [X MB], storage [X GB], egress [X GB], invocaciones de funciones [N] con duración promedio [X ms], y usuarios activos [N]. Mi negocio es Tacos El Volcán, espero 1,500 pedidos al mes y picos de 3,000 en diciembre. Estima la factura de Supabase y de Netlify separando costo fijo y costo variable, calcula el costo por pedido en los dos escenarios e identifica los tres rubros que más crecen. Propón tres acciones concretas para bajar el egress sin perder calidad de imagen y dime qué alerta o límite configurar. Si un precio o un límite depende del plan o cambió, dilo y pídeme el dato en vez de inventarlo.\"</p></blockquote><p>Pídele que te muestre el cálculo, no solo el total. Un total sin desglose no se puede discutir; un desglose sí, y casi siempre revela que el problema son las fotos.</p>"
+              }
+            ],
+            ejercicios: [
+              {
+                tipo: "multiple",
+                pregunta: "¿Qué rubro suele crecer más rápido y con menos aviso en un sitio como el de Tacos El Volcán?",
+                opciones: [
+                  "Las filas de pedidos, porque cada pedido pesa megabytes",
+                  "El egress, porque cada visita descarga las fotos del menú",
+                  "Los usuarios de Auth, porque la base los cobra por hora",
+                  "Los respaldos, porque se guardan dentro de la misma base"
+                ],
+                correcta: 1
+              },
+              {
+                tipo: "vf",
+                afirmacion: "En el plan gratuito de Supabase puedes crecer sin límite de banda ancha; lo único que cambia al pasar a Pro es el número de proyectos.",
+                correcta: false,
+                explicacion: "El plan gratuito tiene topes de base, storage, egress y usuarios. Al rebasarlos, el proyecto se degrada o se pausa, y la app deja de responder. Pro sube los topes y agrega respaldos y soporte, pero tampoco es ilimitado: los excedentes se cobran."
+              },
+              {
+                tipo: "completar",
+                frase: "El costo ____ se paga aunque nadie use la app; el costo ____ crece con el consumo, sobre todo con el ____ de las imágenes.",
+                banco: [
+                  "fijo",
+                  "variable",
+                  "egress",
+                  "storage",
+                  "soporte"
+                ],
+                respuestas: [
+                  "fijo",
+                  "variable",
+                  "egress"
+                ]
+              },
+              {
+                tipo: "relacionar",
+                pares: [
+                  [
+                    "Egress",
+                    "Peso de la imagen por veces que se sirve"
+                  ],
+                  [
+                    "Storage",
+                    "Fotos y archivos guardados"
+                  ],
+                  [
+                    "Funciones",
+                    "Invocaciones y tiempo de ejecución"
+                  ],
+                  [
+                    "Usuarios activos",
+                    "Personas que inician sesión al mes"
+                  ],
+                  [
+                    "Respaldos",
+                    "Copias retenidas y días de historial"
+                  ]
+                ]
+              },
+              {
+                tipo: "ordenar",
+                instruccion: "Ordena la revisión mensual de costos:",
+                elementos: [
+                  "Entrar a Usage de Supabase y de Netlify",
+                  "Anotar base, storage, egress, invocaciones y usuarios",
+                  "Separar costo fijo de costo variable",
+                  "Calcular el costo por pedido con el volumen del mes",
+                  "Comparar con el mes anterior y detectar el rubro que creció",
+                  "Aplicar una optimización y ajustar el límite de gasto"
+                ]
+              }
+            ]
+          },
+          {
+            id: "m4-c26",
+            titulo: "PRÁCTICA: medir y arreglar una consulta lenta",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>«Está lento» no es un diagnóstico, es una queja. Un diagnóstico tiene número: 4,312 milisegundos, 18,234 filas revisadas para devolver 12. La diferencia importa porque solo lo segundo se puede arreglar y luego volver a medir para comprobar que el arreglo sirvió. Medir no es un paso de lujo del oficio: es lo que separa «creo que ya quedó» de «tardaba 4.3 segundos y ahora tarda 84 milisegundos».</p><p>La herramienta se llama <code>EXPLAIN ANALYZE</code>. Se escribe delante de la consulta y la base no solo la planea: la ejecuta y te devuelve el plan real, nodo por nodo, con el tiempo que se llevó cada uno y cuántas filas tocó. Dos palabras del resultado lo dicen casi todo: <strong>Seq Scan</strong> significa que la base recorrió la tabla completa, fila por fila, porque no tenía otra forma de encontrar lo que le pediste; <strong>Index Scan</strong> significa que fue directo por el índice, como quien busca en el índice de un libro (m4-b16).</p><p>El dato que conviene recordar: un Seq Scan no es un error. Es correcto cuando de verdad necesitas casi toda la tabla —doce filas de doce— y es un desperdicio cuando pides doce de doscientas mil. La base elige Seq Scan porque no hay índice útil, porque el índice existe pero la consulta lo inutiliza (por ejemplo <code>where date(creado_en) = current_date</code>, que envuelve la columna en una función y borra la ventaja), o porque el planificador calcula que así conviene. Leer el plan es preguntarle a la base por qué decidió eso.</p><p>El protocolo es de laboratorio y tiene cuatro pasos: <strong>medir</strong>, <strong>leer el plan</strong>, <strong>cambiar una sola cosa</strong>, <strong>volver a medir con la misma consulta y los mismos datos</strong>. Si cambias el índice, la consulta y el <code>select *</code> al mismo tiempo, el número nuevo no te dice qué funcionó. Y si mides con la tabla de prueba de cuarenta filas, el índice no se va a notar: hay que medir con un volumen parecido al real.</p><p>Aquí es donde dirigir a la IA se vuelve distinto de copiarle. Ella escribe el índice en dos segundos; el juicio de qué medir, con qué datos y si el resultado devuelto es el mismo de antes, es tuyo. Pedirle el <em>antes</em> y el <em>después</em> —no solo el después— es la diferencia entre una consulta rápida y una consulta rápida que devuelve otra cosa.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Arreglar una consulta lenta sin medir es entrenar a un corredor a ojo. El entrenador serio no dice «se ve más rápido»: cronometra los cien metros, graba el video y lo revisa fotograma por fotograma para ver en qué zancada se pierde el paso. Eso es <code>EXPLAIN ANALYZE</code>: el cronómetro y el video juntos. El Seq Scan es ese fotograma donde el pie cae mal y arrastra medio segundo. El índice es corregir la pisada: un cambio, no cinco. Y la comprobación final es volver a correr exactamente los mismos cien metros, con el mismo cronómetro, y poner los dos tiempos lado a lado. Si además cambiaste la distancia, el número nuevo no significa nada.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Este es el reporte de ventas de los últimos treinta días de Tacos El Volcán, uno de los que más pesa en el panel del dueño:</p><pre><code>select p.id, p.creado_en, sum(i.cantidad * i.precio_unitario) as total\nfrom pedidos p\njoin pedido_items i on i.pedido_id = p.id\nwhere p.creado_en &gt;= now() - interval '30 days'\n  and p.estado &lt;&gt; 'cancelado'\ngroup by p.id, p.creado_en\norder by p.creado_en desc;</code></pre><p>Antes de tocar nada, se mide. El plan recortado dice esto:</p><pre><code>Seq Scan on pedidos p  (cost=0.00..6180.00 rows=18234 width=24)\n                       (actual time=0.041..512.907 rows=18234 loops=1)\n  Filter: ((creado_en &gt;= (now() - '30 days'::interval))\n           AND (estado &lt;&gt; 'cancelado'))\n  Rows Removed by Filter: 181766\nExecution Time: 4312.114 ms</code></pre><p>La frase que lo explica todo es <code>Rows Removed by Filter: 181766</code>: la base abrió doscientas mil filas para quedarse con dieciocho mil, y tardó cuatro segundos. El arreglo es un índice en la columna por la que filtra, creado de forma que no bloquee las escrituras:</p><pre><code>create index concurrently idx_pedidos_creado_en\n  on pedidos (creado_en);\n\nanalyze pedidos;   -- actualiza las estadísticas del planificador</code></pre><p>Y se vuelve a medir con la misma consulta:</p><pre><code>Index Scan using idx_pedidos_creado_en on pedidos p\n  (cost=0.42..1120.30 rows=18234 width=24)\n  (actual time=0.038..41.220 rows=18234 loops=1)\nExecution Time: 84.603 ms</code></pre><p>De 4,312 ms a 84 ms: cincuenta y una veces más rápido, con las mismas 18,234 filas devueltas. Ese último detalle no es adorno: es la prueba de que el índice no cambió la respuesta. Si el filtro fuerte fuera el estado —solo el 2% de los pedidos están pendientes—, un índice parcial como <code>where estado = 'pendiente'</code> serviría todavía mejor, porque solo indexa lo que buscas.</p><p><strong>Advertencia:</strong> <code>create index</code> normal bloquea las escrituras de la tabla mientras se construye; en producción usa <code>concurrently</code>, que no puede correr dentro de una transacción. Y no indexees «por si acaso»: cada índice se paga en cada <code>insert</code> y en cada <code>update</code>, y una tabla con nueve índices se vuelve lenta para escribir (m4-b16).</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Esta consulta tarda 4.3 s sobre una tabla de 200,000 pedidos: [pega la consulta]. Te pego también el EXPLAIN ANALYZE completo: [pégalo]. Quiero que (1) me digas qué nodo se lleva el tiempo y por qué, (2) si hay un Seq Scan, expliques qué condición lo provoca, (3) propongas UN solo cambio, (4) me des el SQL exacto para aplicarlo sin bloquear escrituras, y (5) me des una tabla de antes y después con filas devueltas, tiempo del plan y tiempo total. No cambies el resultado de la consulta: dime cómo comprobar que devuelve exactamente las mismas filas.\"</p></blockquote><p>Si la IA contesta «agregué un índice» sin darte los dos tiempos, no terminó el trabajo. El entregable es la comparación, no el índice.</p>"
+              }
+            ],
+            ejercicios: [
+              {
+                tipo: "multiple",
+                pregunta: "¿Qué te da EXPLAIN ANALYZE que EXPLAIN a secas no te da?",
+                opciones: [
+                  "Ejecuta la consulta y reporta tiempos y filas reales de cada nodo",
+                  "El contenido completo de las filas devueltas",
+                  "La estructura de la tabla con sus índices",
+                  "Un índice recomendado listo para copiar"
+                ],
+                correcta: 0
+              },
+              {
+                tipo: "vf",
+                afirmacion: "Un Seq Scan siempre indica un problema que hay que arreglar agregando un índice.",
+                correcta: false,
+                explicacion: "Un Seq Scan es correcto cuando la consulta necesita casi toda la tabla. Solo es un problema cuando abre miles de filas para devolver unas cuantas."
+              },
+              {
+                tipo: "completar",
+                frase: "El nodo ____ recorre la tabla completa; el nodo ____ va directo por el índice.",
+                banco: [
+                  "Seq Scan",
+                  "Index Scan",
+                  "Full Join",
+                  "Merge"
+                ],
+                respuestas: [
+                  "Seq Scan",
+                  "Index Scan"
+                ]
+              },
+              {
+                tipo: "ordenar",
+                instruccion: "Ordena el protocolo para arreglar una consulta lenta:",
+                elementos: [
+                  "Medir la consulta con un volumen de datos parecido al real",
+                  "Leer el plan y ubicar el nodo que se lleva el tiempo",
+                  "Hacer un solo cambio: índice o reescritura",
+                  "Volver a medir con la misma consulta y los mismos datos",
+                  "Comparar filas devueltas y tiempos de antes y después"
+                ]
+              },
+              {
+                tipo: "quehace",
+                codigo: "create index idx_pedidos_fecha on pedidos (creado_en);\n\nselect count(*) from pedidos\nwhere date(creado_en) = current_date;",
+                pregunta: "¿Por qué el índice no ayuda a esa consulta?",
+                opciones: [
+                  "Porque date(creado_en) envuelve la columna en una función y el índice de la columna queda inutilizable",
+                  "Porque count(*) nunca usa índices",
+                  "Porque el índice se creó con el nombre equivocado",
+                  "Porque current_date no existe en Postgres"
+                ],
+                correcta: 0
+              }
+            ]
+          },
+          {
+            id: "m4-c27",
+            titulo: "Migrar datos de un lado a otro sin perder nada",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Migrar es mover datos que ya existen de un lugar o de una forma a otra: el Excel donde se llevaban los pedidos a la tabla <code>pedidos</code>, un proyecto de Supabase a otro, o una columna <code>telefono</code> con tres números dentro a una tabla de contactos. No es copiar y pegar. Es una operación con cuatro fases y un orden: <strong>exportar, transformar, importar, verificar</strong>.</p><p><strong>Exportar</strong> es sacar el original sin tocarlo, en el formato más crudo posible: CSV, JSON, un dump. El original se queda quieto y sirve de referencia para comparar al final. <strong>Transformar</strong> es traducir: los encabezados del Excel a los nombres de tus columnas, el texto «$180.50» a <code>numeric(10,2)</code>, «12/03/2026» a una fecha real, «CDMX» a un id de catálogo. <strong>Importar</strong> es escribir en el destino. <strong>Verificar</strong> es demostrar que llegó todo.</p><p>La regla que evita desastres: se migra primero a un entorno de prueba —un proyecto aparte, una tabla de aterrizaje, una copia— y solo cuando los números cuadran se repite el procedimiento sobre producción, con respaldo verificado y una ventana de tiempo elegida (m4-b19, m4-c23). «Lo pruebo directo en producción porque son poquitos» es la frase que introduce la pérdida de datos.</p><p>Verificar no es que el script no marcó error. Un import puede terminar en «success» y haber perdido veinte filas porque un cliente no tenía teléfono y el <code>join</code> las descartó en silencio. Se verifica con números: cuántas filas había, cuántas llegaron, cuánto sumaban los totales de un lado y del otro, cuántos registros quedaron huérfanos, cuántos se duplicaron. Y con una muestra: veinte filas al azar, abiertas lado a lado.</p><p>Dos detalles técnicos que se cobran caro. Primero, el orden: las llaves foráneas obligan a importar padres antes que hijos —<code>clientes</code> y <code>platillos</code> antes de <code>pedidos</code>, y <code>pedidos</code> antes de <code>pedido_items</code> (m4-b8)—. Segundo, la idempotencia: si vuelves a correr el script, no debe duplicar. Se resuelve con una tabla de aterrizaje que se vacía, o con una llave de origen y <code>on conflict do nothing</code>. El dato memorable: los datos no se pierden en las filas que fallan, se pierden en las que se descartan sin que nadie las cuente.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Migrar datos es cambiar los peces de una pecera a otra. Nadie voltea la pecera sobre la nueva. Primero sacas agua a una cubeta limpia (exportar), aclimatas al pez y lo pasas con red (transformar), lo sueltas en la pecera nueva que ya está ciclada (importar) y vuelves a contar: entraron siete, hay siete (verificar). La pecera vieja sigue montada con su filtro encendido una semana más, por si algo salió mal. Y si al contar falta uno, no lo buscas en el piso: revisas la red, que es donde se quedan pegados.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>El negocio tenía 1,200 pedidos en una hoja de cálculo y hay que llevarlos a las tablas de Tacos El Volcán. El primer paso es una tabla de aterrizaje: todo entra como texto, sin validar, para poder mirar lo que llegó antes de convertirlo.</p><pre><code>create table pedidos_import (\n  folio text,\n  fecha text,\n  telefono_cliente text,\n  estado text,\n  total text\n);\n\n\\copy pedidos_import from 'pedidos.csv' with (format csv, header true);\n\nselect count(*) from pedidos_import;   -- 1200</code></pre><p>Después se transforma y se importa, con una columna de folio de origen que sirve para rastrear cada fila y para no duplicarla si el script se corre dos veces:</p><pre><code>alter table pedidos add column folio_origen text;\ncreate unique index idx_pedidos_folio on pedidos (folio_origen);\n\ninsert into pedidos (folio_origen, cliente_id, estado, creado_en)\nselect i.folio,\n       c.id,\n       case lower(trim(i.estado))\n         when 'pagado' then 'pagado'\n         when 'entregado' then 'entregado'\n         else 'pendiente'\n       end,\n       to_timestamp(i.fecha, 'DD/MM/YYYY HH24:MI')\nfrom pedidos_import i\njoin clientes c on c.telefono = i.telefono_cliente\non conflict (folio_origen) do nothing;</code></pre><p>Y esta es la parte que casi nadie escribe: la verificación. Cuatro números y una muestra, no un «ya quedó».</p><pre><code>select\n  (select count(*) from pedidos_import) as filas_origen,\n  (select count(*) from pedidos where folio_origen is not null) as filas_destino,\n  (select count(*) from pedidos_import i\n     left join clientes c on c.telefono = i.telefono_cliente\n     where c.id is null) as sin_cliente,\n  (select count(*) from (\n     select folio from pedidos_import group by folio having count(*) &gt; 1\n   ) d) as folios_repetidos;\n\n-- esperado: 1200 | 1200 | 0 | 0</code></pre><p>Si <code>sin_cliente</code> sale en 3, no lo arreglas en producción: esos tres clientes se crean antes o se corrige el CSV, y se vuelve a correr el mismo script. Como es idempotente, repetirlo no duplica nada. La suma del dinero se compara igual: el total del CSV contra <code>sum(cantidad * precio_unitario)</code> de los renglones migrados.</p><p><strong>Advertencia:</strong> nunca corras una migración contra producción sin un respaldo que ya restauraste en algún lado (m4-b20, m4-c23); «tengo respaldo» sin restauración probada es una suposición. Y cuidado con el <code>truncate</code> de la tabla de aterrizaje: si escribes el nombre de la tabla real, no hay <code>where</code> que te salve. Prueba siempre en un proyecto aparte con una copia y, si los datos traen teléfonos o direcciones, usa una copia anonimizada.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Necesito migrar [N] registros de [origen: CSV de Excel / otro proyecto] a las tablas [nombres] de mi base. Trabaja en cuatro fases y no pases a la siguiente sin mi confirmación: (1) exportación y tabla de aterrizaje con todo como texto; (2) transformación con el mapeo columna por columna, incluyendo cómo convertir fechas y dinero; (3) importación idempotente, en el orden que exigen las llaves foráneas, con una columna de folio de origen para no duplicar; (4) verificación con consultas que comparen conteos, sumas, huérfanos y duplicados. Antes de ejecutar nada, dime qué filas se van a descartar y por qué. Asume que primero lo corro en un entorno de prueba, no en producción.\"</p></blockquote><p>La frase de las filas descartadas es la que atrapa el error caro: un <code>join</code> que pierde registros no avisa, solo deja de contar.</p>"
+              }
+            ],
+            ejercicios: [
+              {
+                tipo: "multiple",
+                pregunta: "¿Cuál es el orden correcto de una migración?",
+                opciones: [
+                  "Importar, exportar, verificar, transformar",
+                  "Exportar, transformar, importar, verificar",
+                  "Verificar, importar, exportar, transformar",
+                  "Transformar, verificar, exportar, importar"
+                ],
+                correcta: 1
+              },
+              {
+                tipo: "vf",
+                afirmacion: "Si el script de importación terminó sin errores, puedes dar por hecho que todos los registros llegaron.",
+                correcta: false,
+                explicacion: "Un join puede descartar filas en silencio y el script termina en success. Se verifica comparando conteos, sumas, huérfanos y duplicados."
+              },
+              {
+                tipo: "completar",
+                frase: "Antes de tocar producción, la migración se corre en un ____ con una copia; y el script debe ser ____ para que repetirlo no duplique filas.",
+                banco: [
+                  "entorno de prueba",
+                  "idempotente",
+                  "respaldo",
+                  "índice"
+                ],
+                respuestas: [
+                  "entorno de prueba",
+                  "idempotente"
+                ]
+              },
+              {
+                tipo: "relacionar",
+                pares: [
+                  [
+                    "Exportar",
+                    "Sacar el original sin tocarlo y guardarlo como referencia"
+                  ],
+                  [
+                    "Transformar",
+                    "Convertir formatos, nombres y tipos de dato"
+                  ],
+                  [
+                    "Importar",
+                    "Escribir en el destino respetando el orden de las llaves foráneas"
+                  ],
+                  [
+                    "Verificar",
+                    "Comparar conteos, sumas, huérfanos y duplicados"
+                  ]
+                ]
+              },
+              {
+                tipo: "ordenar",
+                instruccion: "Ordena la importación para que ninguna llave foránea apunte a una fila que todavía no existe:",
+                elementos: [
+                  "clientes",
+                  "platillos",
+                  "pedidos",
+                  "pedido_items"
+                ]
+              }
+            ]
+          },
+          {
+            id: "m4-c28",
+            titulo: "Tu flujo completo de backend dirigido con IA",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Ya tienes todas las piezas. Lo que falta no es otra herramienta: es el orden en que se usan. Un backend dirigido con IA se construye con un flujo de ocho pasos que se repite igual en cada proyecto, y ese flujo —no el código— es lo que te vuelve alguien capaz de construir el siguiente sistema sin empezar de cero.</p><p>Los ocho pasos: <strong>brief</strong>, qué debe recordar el sistema y qué preguntas del negocio debe contestar (m4-c1); <strong>modelo</strong>, entidades y relaciones en papel (m4-c2); <strong>tablas</strong>, SQL con tipos, llaves y restricciones (m4-c4); <strong>RLS</strong>, quién puede ver y escribir cada fila (m4-c11); <strong>frontend</strong>, conectar el sitio del Módulo 3 y mostrar datos reales (m4-c7); <strong>función de servidor</strong>, lo que necesita secreto o validación que el navegador no puede dar (m4-c15); <strong>respaldo</strong>, copia automática y restauración probada (m4-c23); <strong>medición</strong>, logs, tiempos y costo (m4-c22, m4-c26).</p><p>La regla que hace que funcione: <strong>un paso por prompt, con su verificación, y no avanzar hasta que la verificación pase</strong>. «Hazme el backend completo de una taquería» produce una avalancha de código que se ve impresionante y no puedes auditar: nadie sabe qué política quedó, ni si el respaldo existe, ni por qué el formulario guarda dos veces. Ocho prompts chicos con una prueba cada uno producen un sistema que entiendes y puedes defender.</p><p>Cada paso tiene además una pregunta distinta que hacerle a la IA. En el brief, que te haga preguntas a ti. En el modelo, que no escriba código todavía. En las tablas, que justifique cada tipo y cada restricción. En RLS, que te dé la política y la prueba con dos usuarios. En el frontend, que pida solo las columnas que la pantalla usa. En la función, que te diga dónde vive el secreto. En el respaldo, que te diga cómo restaurar, no solo cómo copiar. En la medición, que te diga qué número debe mejorar y cuánto es hoy.</p><p>El flujo también sirve para volver. Cuando algo se rompe seis meses después, no empiezas por el código: recorres los pasos hacia atrás hasta encontrar el primero que no cumple su verificación. Eso convierte un «se rompió todo» en una pregunta concreta: ¿el dato está?, ¿la política lo deja salir?, ¿la consulta lo pide bien?</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Es la lista de verificación que el piloto canta antes de despegar. No importa que lleve diez mil horas: la lista está laminada, los pasos van siempre en el mismo orden, cada punto se dice en voz alta y se toca con el dedo. No es desconfianza del piloto, es que el orden es más confiable que la memoria. Saltarse «combustible» porque «ya lo revisé» es exactamente cómo se cae un avión que estaba bien. Y fíjate en la parte que casi nadie copia: la lista no dice «revisar», dice «verificar presión de aceite entre cuarenta y sesenta»: cada punto trae su número. Si un punto no cuadra, no se despega; se corrige ahí mismo.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Este es el flujo completo con su verificación al lado. La columna de la derecha es la que convierte el paso en algo terminado o no terminado:</p><pre><code>BRIEF     qué debe recordar + 3 preguntas del negocio  → 1 página, cero código\nMODELO    entidades, relaciones, cardinalidad         → cada pregunta tiene consulta\nTABLAS    SQL con pk, fk, numeric(10,2), checks       → un insert inválido falla\nRLS       políticas por tabla                         → A no ve lo de B\nFRONTEND  conectar, formulario, estados vacío/error   → recargas y el dato sigue\nFUNCIÓN   secretos, validación fuerte, API externa    → la llave no está en el bundle\nRESPALDO  copia diaria + restauración probada         → restauraste y contaste filas\nMEDICIÓN  logs, EXPLAIN ANALYZE, costo mensual        → número de antes y de después</code></pre><p>Así se ve un prompt de un solo paso, el de RLS. Nota lo que pide y lo que prohíbe:</p><pre><code>Paso 4 de 8: RLS. Tablas: pedidos y pedido_items.\nContexto: un cliente debe ver solo sus pedidos; el dueño ve todos.\nEntrégame: las políticas de select, insert y update, y dos pruebas\ncon sesiones distintas (cliente A y cliente B). No avances al paso 5.\nSi mi modelo no permite escribir esa política, dímelo antes.</code></pre><p>En Tacos El Volcán ese flujo se ve así: el brief dice que el dueño necesita saber qué se vendió hoy; el modelo une <code>pedidos</code> con <code>pedido_items</code>; las tablas nacen con <code>precio_unitario</code> copiado; la política deja al cliente ver solo lo suyo; el formulario público inserta; una función de servidor manda el aviso por WhatsApp sin exponer la llave; el respaldo corre a las tres de la mañana; y el reporte se mide hasta bajar de cuatro segundos a menos de cien milisegundos.</p><p><strong>Advertencia:</strong> la llave <code>service_role</code> no se pega en el chat, ni en el código del navegador, ni en una captura de pantalla (m4-a19, m4-c10): se salta RLS por completo. Y el respaldo no es el paso que se deja «para cuando haya tiempo»: es el único que se hace antes de tener algo que perder.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Actúa como mi arquitecto de backend y vamos a construir mi sistema en ocho pasos: brief, modelo, tablas, RLS, frontend, función de servidor, respaldo y medición. Reglas: en cada paso hazme máximo tres preguntas, espera mi confirmación, entrega solo el artefacto de ese paso y su verificación concreta, y no me des el paso siguiente hasta que yo escriba «verificado». Si detectas que un paso anterior quedó mal, detente y dímelo en vez de seguir. Empieza por el brief: pregúntame qué debe recordar el negocio y qué decisiones quiero poder tomar con esos datos.\"</p></blockquote><p>Esa última instrucción —detenerse cuando un paso anterior está mal— es la que evita construir cuatro pisos sobre un cimiento flojo.</p>"
+              }
+            ],
+            ejercicios: [
+              {
+                tipo: "ordenar",
+                instruccion: "Ordena el flujo de construcción de un backend dirigido con IA:",
+                elementos: [
+                  "Brief: qué debe recordar el sistema",
+                  "Modelo: entidades y relaciones",
+                  "Tablas: tipos, llaves y restricciones",
+                  "RLS: quién ve cada fila",
+                  "Frontend: conectar y mostrar datos reales",
+                  "Función de servidor para lo que necesita secreto",
+                  "Respaldo automatizado y restauración probada",
+                  "Medición: logs, tiempos y costo"
+                ]
+              },
+              {
+                tipo: "multiple",
+                pregunta: "¿Cuál es la señal de que un paso del flujo terminó?",
+                opciones: [
+                  "La IA dijo que ya quedó",
+                  "El código compila sin errores",
+                  "Su verificación pasó con datos reales",
+                  "La pantalla se ve bonita"
+                ],
+                correcta: 2
+              },
+              {
+                tipo: "vf",
+                afirmacion: "Si el frontend esconde el botón de borrar para ciertos usuarios, ya no hace falta una política RLS en esa tabla.",
+                correcta: false,
+                explicacion: "Esconder un botón es cosmético: cualquiera puede llamar a la API directamente. La política RLS es la que impide la operación en la base (m4-c11)."
+              },
+              {
+                tipo: "relacionar",
+                pares: [
+                  [
+                    "Brief",
+                    "Qué preguntas del negocio debe contestar el sistema"
+                  ],
+                  [
+                    "Tablas",
+                    "Tipos, llaves primarias, foráneas y restricciones"
+                  ],
+                  [
+                    "RLS",
+                    "Qué filas puede leer o escribir cada usuario"
+                  ],
+                  [
+                    "Función de servidor",
+                    "Secretos y validación que no pueden vivir en el navegador"
+                  ],
+                  [
+                    "Respaldo",
+                    "Copia automática y restauración comprobada"
+                  ]
+                ]
+              },
+              {
+                tipo: "completar",
+                frase: "Se avanza un ____ a la vez, con su ____, y no se pasa al siguiente hasta que pase.",
+                banco: [
+                  "paso",
+                  "verificación",
+                  "deploy",
+                  "índice"
+                ],
+                respuestas: [
+                  "paso",
+                  "verificación"
+                ]
+              }
+            ]
+          },
+          {
+            id: "m4-c29",
+            titulo: "El sistema completo: interfaz + servidor + datos",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Un sistema completo son tres capas y un viaje de ida y vuelta. La <strong>interfaz</strong> es lo que la persona toca: el formulario de pedido, el botón, la lista del panel. El <strong>servidor</strong> es quien decide y valida: recibe la petición, comprueba quién eres, aplica las reglas y responde. Los <strong>datos</strong> son lo que sobrevive: las filas en las tablas, las imágenes en el bucket, el respaldo de anoche.</p><p>Sigue un pedido de Tacos El Volcán de principio a fin. Ana abre el sitio, arma su pedido y pulsa «Confirmar». Ese clic dispara un evento en el componente, y el componente llama al cliente de Supabase con un <code>insert</code> que lleva el id del cliente, el estado y los renglones. La petición sale con la llave <code>anon</code> y el token de su sesión (m4-b26). En el servidor, Postgres revisa la política RLS de <code>pedidos</code>: si el <code>cliente_id</code> del cuerpo no coincide con el usuario del token, la rechaza antes de escribir nada. Si pasa, inserta, un trigger calcula el total y el servidor devuelve <code>201 Created</code> con la fila nueva. La interfaz recibe ese objeto, muestra el folio y limpia el formulario. Diez segundos después, el panel del dueño —otra pantalla, otra sesión, otra política— ve el pedido aparecer (m4-c19). Y a las tres de la mañana, el respaldo se lleva una copia de todo (m4-c23).</p><p>Nombrar cada pieza es lo que te permite diagnosticar. «No guarda» puede ser: el componente no dispara el submit, el <code>insert</code> va a la tabla equivocada, la política lo rechaza, falta un <code>not null</code>, o el dato sí se guardó y la pantalla no se refrescó. Cinco causas, cinco lugares distintos. Si no sabes cómo se llama cada pieza, no puedes preguntar en cuál falló; si lo sabes, la pregunta se vuelve una prueba.</p><p>Antes de publicar se revisa el viaje completo, no las pantallas por separado: dos cuentas distintas (una no debe ver lo de la otra), una sesión cerrada (no debe ver nada), un formulario con datos malos (debe decirlo, no guardar), una imagen subida (debe servirse desde su bucket con su política) (m4-c14), y una restauración del respaldo (debe devolver los conteos). Ese recorrido es tu garantía; el diseño bonito es otra cosa.</p><p>La ventaja de pensar en capas es que el pánico se convierte en método: ante cualquier falla preguntas en qué capa se rompió, y esa pregunta tiene respuesta observable —un estado HTTP, un error en la consola, una fila que existe o no existe—.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Un sistema completo es un cajero automático. La pantalla y el teclado son la interfaz: te piden el monto y te muestran el recibo. El switch del banco es el servidor: verifica tu tarjeta, revisa tu saldo y autoriza o niega. La bóveda y el libro contable son los datos: el billete físico y el registro que dice que a las 19:42 retiraste quinientos. Si te quedas mirando la pantalla, no ves nada de lo que importa. Y la prueba de que el sistema está bien armado es la que casi nadie considera: si la red se cae justo entre «autorizado» y «entregar el billete», el cajero no puede haber descontado sin haber entregado, ni haber entregado dos veces. Cada capa sabe qué hacer cuando la de al lado falla, y todo queda anotado en el libro.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Esta es la pieza de interfaz que dispara el pedido. Fíjate en que pide de vuelta la fila creada y en que revisa el error antes de pintar nada:</p><pre><code>const { data, error } = await supabase\n  .from('pedidos')\n  .insert({ cliente_id: user.id, estado: 'pendiente' })\n  .select('id, creado_en')\n  .single();\n\nif (error) {\n  mostrar('No pudimos registrar tu pedido. Intenta de nuevo.');\n  console.error(error.message);\n  return;\n}\nmostrar('Pedido ' + data.id.slice(0, 6) + ' registrado');</code></pre><p>Y este es el viaje completo cuando todo sale bien, con el nombre de cada pieza en su capa:</p><pre><code>[UI]    click «Confirmar» → POST /rest/v1/pedidos\n[SRV]   token válido · auth.uid() = 3f2a…\n[DATA]  policy pedidos_insert: cliente_id = auth.uid()  ✓\n[DATA]  insert → id 9c1e… · trigger total = 186.00\n[SRV]   201 Created\n[UI]    pinta folio 9c1e y limpia el formulario</code></pre><p>Y así se ve el mismo viaje cuando la capa del servidor dice que no. La diferencia entre estos dos bloques es toda tu capacidad de depurar:</p><pre><code>[UI]    click «Confirmar» → POST /rest/v1/pedidos\n[SRV]   401 Unauthorized · JWT expired\n[UI]    «Tu sesión venció. Vuelve a entrar.»</code></pre><p>Antes de publicar, esta es la revisión mínima. Cada punto se prueba, no se supone: entrar con una cuenta de cliente y crear un pedido; entrar con otra y comprobar que no lo ve; cerrar sesión y comprobar que la lista privada queda vacía; mandar el formulario con teléfono inválido; subir una foto de platillo y abrir su URL; y restaurar el respaldo en un proyecto aparte comparando los conteos.</p><p><strong>Advertencia:</strong> probar con tu cuenta de dueño no prueba RLS: la política del dueño deja ver todo y todo va a parecer correcto. Prueba con dos cuentas de cliente y una sin sesión. Y si algo falla, no «arregles» apagando RLS (m4-c11): cambias un error visible por una fuga silenciosa.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Voy a recorrer un pedido de punta a punta en mi sistema y quiero el mapa de las tres capas con el nombre exacto de cada pieza: componente, evento, llamada al cliente, política RLS, tabla, trigger, función y bucket. Para cada paso dame el request y el response esperados, qué fila debe quedar en la base y qué error se ve si esa capa falla. Al final, una lista de verificación previa a publicar de diez puntos, cada uno con cómo se prueba y qué resultado es correcto. Si algo de mi diseño no cierra entre capas, dímelo antes de escribir código.\"</p></blockquote><p>Pedir «qué error se ve si esta capa falla» es lo que te da un mapa de diagnóstico en lugar de un diagrama bonito.</p>"
+              }
+            ],
+            ejercicios: [
+              {
+                tipo: "ordenar",
+                instruccion: "Ordena el recorrido de un pedido por las tres capas:",
+                elementos: [
+                  "Ana llena el formulario y pulsa Confirmar",
+                  "El componente llama a supabase.from('pedidos').insert(...)",
+                  "La petición viaja con la llave anon y el token de su sesión",
+                  "Postgres aplica la política RLS de pedidos",
+                  "Se inserta la fila y el trigger calcula el total",
+                  "El servidor responde 201 con la fila creada",
+                  "La interfaz muestra el folio y el panel del dueño lo ve"
+                ]
+              },
+              {
+                tipo: "relacionar",
+                pares: [
+                  [
+                    "Interfaz",
+                    "Componente, evento submit y estado de la pantalla"
+                  ],
+                  [
+                    "Servidor",
+                    "Política RLS, validación y función de servidor"
+                  ],
+                  [
+                    "Datos",
+                    "Tabla pedidos, bucket de imágenes y respaldo"
+                  ],
+                  [
+                    "Antes de publicar",
+                    "Probar con dos cuentas y una sin sesión"
+                  ]
+                ]
+              },
+              {
+                tipo: "multiple",
+                pregunta: "El pedido sí quedó en la tabla, pero la pantalla no lo muestra. ¿Dónde buscas primero?",
+                opciones: [
+                  "En el render de la interfaz y en lo que devolvió la llamada, no en la base",
+                  "En el respaldo de la noche anterior",
+                  "En la configuración de DNS del dominio",
+                  "En los estilos del botón Confirmar"
+                ],
+                correcta: 0
+              },
+              {
+                tipo: "vf",
+                afirmacion: "Si el panel del dueño ve todos los pedidos de todos los clientes, entonces RLS está mal configurado.",
+                correcta: false,
+                explicacion: "La política del dueño puede permitir ver todo a propósito. Lo que se prueba es que un cliente no vea los pedidos de otro, y eso requiere dos cuentas de cliente."
+              },
+              {
+                tipo: "quehace",
+                codigo: "const { data, error } = await supabase\n  .from('pedidos')\n  .insert({ cliente_id: otroId, estado: 'pendiente' })\n  .select('id')\n  .single();\n\nif (error) return mostrar(error.message);\nreturn mostrar(data.id);",
+                pregunta: "La política exige que cliente_id = auth.uid(), pero otroId es de otro cliente. ¿Qué ocurre?",
+                opciones: [
+                  "El error llega en error, no se pinta ningún id y no se escribe la fila",
+                  "Se guarda la fila con cliente_id vacío",
+                  "Se lanza una excepción que tumba la aplicación",
+                  "Devuelve 201 sin fila y la interfaz muestra undefined"
+                ],
+                correcta: 0
+              }
+            ]
+          },
+          {
+            id: "m4-c30",
+            titulo: "Repaso + arranque del proyecto final del módulo",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>PRA-403 empezó con una pregunta que no tenía nada de técnica: ¿qué debería recordar tu negocio? De ahí salió todo lo demás. El brief definió qué se guarda y para qué (m4-c1); el modelo convirtió esa lista en tablas y relaciones (m4-c2); las tablas pusieron tipos, llaves y restricciones (m4-c4); RLS y el login decidieron quién ve qué (m4-c11, m4-c12); Storage guardó las imágenes (m4-c14); las funciones de servidor se quedaron con lo que no puede vivir en el navegador (m4-c15); el panel y el buscador le dieron al dueño una forma de trabajar (m4-c19, m4-c20). Después vinieron las partes que solo se valoran cuando fallan: leer logs (m4-c22), respaldar (m4-c23), exportar (m4-c24), migrar (m4-c27) y medir (m4-c26).</p><p>El proyecto final no es un examen de sintaxis: es la prueba de que el dato sobrevive al viaje. Un sistema de pedidos, citas o inventario para un negocio real, con seis cosas que ya sabes hacer: <strong>login</strong>, <strong>RLS</strong>, <strong>panel</strong>, <strong>buscador</strong>, <strong>imágenes</strong> y <strong>respaldo</strong>. Si esas seis están y se pueden demostrar, el proyecto está bien; si el diseño es espectacular y un cliente puede ver los pedidos de otro, no está.</p><p>«Demostrar» es la palabra clave. No se entrega una promesa. Se entrega: dos cuentas distintas donde cada una ve solo lo suyo, una cuenta sin sesión que no ve nada, un pedido creado desde la interfaz que aparece en la tabla y en el panel, una búsqueda que filtra en la base y no en el navegador (m4-c20), una imagen que se sirve desde su bucket, y un respaldo restaurado con los conteos intactos. Cada una de esas pruebas es una frase que puedes decir sin adjetivos.</p><p>El arranque es hoy y en este orden: una página de brief, el modelo de cuatro a seis tablas, el orden de construcción en seis sesiones y la checklist de entrega pegada donde la veas. No empieces por el diseño bonito ni por la pantalla que más te gusta: empieza por el dato que, si se pierde, te cuesta dinero.</p><p>Y una cosa más, la que de verdad te llevas del módulo: ya no dependes de que la IA acierte. Puedes pedirle, medirle, verificarlo y decirle que no. Eso es dirigir. El siguiente sistema que construyas —otro negocio, otro giro, otro país— va a usar este mismo flujo, y va a tardar la mitad.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Es entregar las llaves de una casa que construiste. No la entregas el día que tiene paredes: la entregas cuando abres y cierras cada puerta, pruebas cada llave en su cerradura, abres cada llave de paso y verificas que salga agua, y enciendes la luz de cada cuarto. Dejas una copia de las llaves con alguien de confianza y le muestras dónde están el registro de agua y el switch general: eso es el respaldo y la documentación. La casa puede tener los muebles que quieras; si una llave no abre, todavía no se entrega. Y el día que el nuevo dueño te llame porque algo gotea, no vas a adivinar: abres el plano y sabes qué tubería va a ese baño.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Esta es la checklist de entrega del proyecto final. Se marca con una prueba, no con una intención:</p><pre><code>ENTREGA DEL PROYECTO FINAL · PRA-403\n\n[ ] Brief de una página con las preguntas del negocio\n[ ] Modelo de 4 a 6 tablas con pk, fk y tipos correctos\n[ ] Login funcionando (registro, entrar, salir)\n[ ] RLS activo en TODAS las tablas, con políticas de select/insert/update\n[ ] Panel de administración con al menos un CRUD completo\n[ ] Buscador que filtra en la base, no en el navegador\n[ ] Imágenes en Storage con su política de lectura\n[ ] Formulario público que valida y guarda de verdad\n[ ] Respaldo automático + UNA restauración probada\n[ ] Función de servidor para lo que necesita secreto\n[ ] Prueba con 2 cuentas: A no ve lo de B\n[ ] Prueba sin sesión: no ve nada privado\n[ ] Datos de prueba borrados con WHERE, no con TRUNCATE\n[ ] README de 10 líneas: qué hace, cómo se corre, cómo se restaura</code></pre><p>Y estas son las consultas que respaldan las casillas más importantes. La primera encuentra renglones huérfanos; la segunda te da los números que vas a comparar antes y después de restaurar:</p><pre><code>-- 1) integridad: ningún renglón apunta a un pedido inexistente\nselect count(*) as huerfanos\nfrom pedido_items i\nleft join pedidos p on p.id = i.pedido_id\nwhere p.id is null;          -- debe ser 0\n\n-- 2) fotografía para comparar la restauración\nselect\n  (select count(*) from clientes) as clientes,\n  (select count(*) from pedidos) as pedidos,\n  (select count(*) from pedido_items) as renglones,\n  (select coalesce(sum(cantidad * precio_unitario), 0)\n     from pedido_items) as vendido;</code></pre><p>El plan de seis sesiones es el orden en que se construye, no una sugerencia. Cada sesión termina con su verificación:</p><pre><code>S1  brief + modelo            → cada pregunta tiene su consulta\nS2  tablas + datos de prueba  → un insert inválido falla\nS3  login + RLS               → la cuenta B no ve lo de A\nS4  panel + buscador          → el filtro corre en la base\nS5  imágenes + función        → la URL sirve y la llave no se expone\nS6  respaldo + pruebas + README → restauraste y los conteos cuadran</code></pre><p>Hoy, antes de abrir el editor, escribe el brief. Una página, sin código, con tres preguntas que el negocio necesita contestar y una frase sobre quién puede ver qué. Ese documento es el que evita que las seis sesiones se conviertan en seis semanas de pantallas que no guardan nada.</p><p><strong>Advertencia:</strong> un respaldo que nunca restauraste es una esperanza, no un respaldo (m4-b20). Antes de entregar, restaura en un proyecto aparte y compara los conteos. Y no borres los datos de prueba con un <code>delete</code> sin <code>where</code> ni con <code>truncate</code> sobre una tabla que ya tiene pedidos reales: usa un <code>where</code> que puedas leer en voz alta.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Actúa como jurado del proyecto final de PRA-403. Primero hazme doce preguntas de defensa, una a la vez, sobre mi sistema: modelo, RLS, login, panel, buscador, imágenes y respaldo. No me des la respuesta: anota mis fallas y al final dime a qué lección volver (por ejemplo m4-c11, m4-c20 o m4-c23). Después, con lo que fallé, ayúdame a escribir el brief de una página de mi proyecto y un plan de seis sesiones con un entregable verificable por sesión. No escribas código todavía: quiero el plan y la checklist.\"</p></blockquote><p>Si el jurado te hace doce preguntas y contestas ocho con una prueba, ya tienes proyecto. Las otras cuatro son tu plan de la semana.</p>"
+              }
+            ],
+            ejercicios: [
+              {
+                tipo: "multiple",
+                pregunta: "¿Qué demuestra que RLS está bien configurado?",
+                opciones: [
+                  "Que el botón de borrar no se vea para ciertos usuarios",
+                  "Que con dos cuentas distintas cada una vea solo sus filas",
+                  "Que la tabla esté marcada como privada en el panel",
+                  "Que la llave anon no aparezca en el código"
+                ],
+                correcta: 1
+              },
+              {
+                tipo: "vf",
+                afirmacion: "Un respaldo es confiable cuando el archivo se generó sin errores.",
+                correcta: false,
+                explicacion: "La confianza viene de haber restaurado ese respaldo y comparado los conteos. Un archivo que nunca se restauró es una esperanza (m4-b20)."
+              },
+              {
+                tipo: "completar",
+                frase: "Antes de entregar se restaura el ____ en un proyecto aparte y se comparan los ____ de antes y después.",
+                banco: [
+                  "respaldo",
+                  "conteos",
+                  "logs",
+                  "índices"
+                ],
+                respuestas: [
+                  "respaldo",
+                  "conteos"
+                ]
+              },
+              {
+                tipo: "relacionar",
+                pares: [
+                  [
+                    "Login",
+                    "Quién eres"
+                  ],
+                  [
+                    "RLS",
+                    "Qué filas puedes ver o escribir"
+                  ],
+                  [
+                    "Panel",
+                    "Operar el negocio sin tocar SQL"
+                  ],
+                  [
+                    "Buscador",
+                    "Filtrar en la base, no en el navegador"
+                  ],
+                  [
+                    "Respaldo",
+                    "Recuperar el sistema después de una pérdida"
+                  ]
+                ]
+              },
+              {
+                tipo: "ordenar",
+                instruccion: "Ordena el plan de seis sesiones del proyecto final:",
+                elementos: [
+                  "Brief y modelo",
+                  "Tablas y datos de prueba",
+                  "Login y RLS",
+                  "Panel y buscador",
+                  "Imágenes y función de servidor",
+                  "Respaldo, pruebas y README"
+                ]
+              },
+              {
+                tipo: "quehace",
+                codigo: "select count(*) as huerfanos\nfrom pedido_items i\nleft join pedidos p on p.id = i.pedido_id\nwhere p.id is null;",
+                pregunta: "¿Qué comprueba esta consulta?",
+                opciones: [
+                  "Cuántos renglones apuntan a un pedido que no existe",
+                  "Cuánto se vendió en total",
+                  "Qué clientes no han pedido nunca",
+                  "Qué platillos están duplicados"
+                ],
+                correcta: 0
+              },
+              {
+                tipo: "multiple",
+                pregunta: "El formulario público guarda bien y el panel del dueño funciona, pero un cliente puede ver el pedido de otro. ¿Cuál es la causa más probable?",
+                opciones: [
+                  "Falta una política que compare cliente_id con auth.uid()",
+                  "Falta un índice en pedidos.cliente_id",
+                  "El respaldo automático no corrió",
+                  "El bucket de imágenes es privado"
+                ],
+                correcta: 0
+              },
+              {
+                tipo: "vf",
+                afirmacion: "Si el proyecto se ve bien en pantalla y no marca errores en la consola, ya se puede entregar.",
+                correcta: false,
+                explicacion: "Falta lo que no se ve: dos cuentas aisladas, sesión cerrada sin acceso, integridad sin huérfanos y un respaldo restaurado. Eso es lo que se entrega."
+              }
+            ]
+          },
       ] }
     }
   }
