@@ -9273,36 +9273,2164 @@ window.DEV_SYSTEM_LECCIONES = {
     titulo: "El motor por dentro: backend, datos y seguridad",
     materias: {
       "a": { nombre: "Del navegador al servidor", codigo: "BCK-401", icono: "🛰", lecciones: [
-          { id: "m4-a1", titulo: "¿Qué pasa realmente cuando tu app pide datos?", proximamente: true },
-          { id: "m4-a2", titulo: "Cliente y servidor: quién hace qué y por qué importa", proximamente: true },
-          { id: "m4-a3", titulo: "HTTP por dentro: la conversación completa", proximamente: true },
-          { id: "m4-a4", titulo: "Los métodos: GET, POST, PUT, PATCH y DELETE", proximamente: true },
-          { id: "m4-a5", titulo: "Códigos de estado: 200, 401, 404, 500 y los que vas a ver", proximamente: true },
-          { id: "m4-a6", titulo: "Headers: los metadatos de cada petición", proximamente: true },
-          { id: "m4-a7", titulo: "El cuerpo de la petición: JSON en acción", proximamente: true },
-          { id: "m4-a8", titulo: "¿Qué es una API? (y por qué hoy todo es una API)", proximamente: true },
-          { id: "m4-a9", titulo: "REST: el estilo que domina la web", proximamente: true },
-          { id: "m4-a10", titulo: "Endpoints: diseñar las ventanillas de tu sistema", proximamente: true },
-          { id: "m4-a11", titulo: "Parámetros: query, path y body", proximamente: true },
-          { id: "m4-a12", titulo: "Probar una API sin escribir código", proximamente: true },
-          { id: "m4-a13", titulo: "Autenticación I: demostrar quién eres", proximamente: true },
-          { id: "m4-a14", titulo: "Autenticación II: tokens y JWT explicados sin misterio", proximamente: true },
-          { id: "m4-a15", titulo: "Autorización: una cosa es quién eres y otra qué puedes hacer", proximamente: true },
-          { id: "m4-a16", titulo: "Contraseñas: por qué nunca se guardan tal cual", proximamente: true },
-          { id: "m4-a17", titulo: "Sesiones vs tokens: dos formas de recordarte", proximamente: true },
-          { id: "m4-a18", titulo: "CORS: el error que todo principiante sufre", proximamente: true },
-          { id: "m4-a19", titulo: "Variables de entorno: dónde viven los secretos", proximamente: true },
-          { id: "m4-a20", titulo: "Rate limiting: protegerte del abuso", proximamente: true },
-          { id: "m4-a21", titulo: "Validación: nunca confíes en lo que manda el cliente", proximamente: true },
-          { id: "m4-a22", titulo: "Webhooks: cuando el servidor te busca a ti", proximamente: true },
-          { id: "m4-a23", titulo: "Serverless: backend sin administrar servidores", proximamente: true },
-          { id: "m4-a24", titulo: "Node.js y Express en concepto", proximamente: true },
-          { id: "m4-a25", titulo: "Logs: los ojos de tu servidor", proximamente: true },
-          { id: "m4-a26", titulo: "Errores: cómo responder cuando algo falla", proximamente: true },
-          { id: "m4-a27", titulo: "Documentar tu API para que otros (y tu IA) la entiendan", proximamente: true },
-          { id: "m4-a28", titulo: "Versionado: cambiar sin romperle a nadie", proximamente: true },
-          { id: "m4-a29", titulo: "Seguridad: las 5 fallas que más dinero cuestan", proximamente: true },
-          { id: "m4-a30", titulo: "Repaso integrador del servidor (mega-quiz jugable)", proximamente: true },
+          {
+            id: "m4-a1",
+            titulo: "¿Qué pasa realmente cuando tu app pide datos?",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Cuando presionas <strong>Ver pedidos</strong> en tu app no estás abriendo una pantalla: estás lanzando un viaje. Ese viaje tiene siete paradas y entenderlo es la diferencia entre <em>pedirle cosas a la IA</em> y <em>saber qué pedirle cuando algo falla</em>:</p><ol><li><strong>Tu código pide.</strong> Un <code>fetch()</code> (lo viste en m3-b19) arma una petición HTTP: método, URL y headers.</li><li><strong>El DNS traduce.</strong> El dominio <code>api.mitienda.mx</code> se convierte en una dirección IP. Sin esa traducción, la petición no sabe a dónde ir.</li><li><strong>Se abre el canal.</strong> El navegador conecta con el servidor y, con HTTPS, cifra la conversación.</li><li><strong>La petición viaja</strong> al servidor con lo que pides y, si hace falta, los datos que mandas.</li><li><strong>El servidor trabaja.</strong> Valida quién eres, decide qué puedes ver y consulta la base de datos (m4-b9).</li><li><strong>La respuesta regresa</strong> con un código de estado, headers y un cuerpo — casi siempre JSON (m4-a7).</li><li><strong>Tu app pinta.</strong> El JSON se convierte en filas, tarjetas o totales en pantalla (m3-b10).</li></ol><p>Todo eso pasa en 100 a 300 milisegundos. Dato memorable: <strong>la pantalla no tiene los datos, los pide</strong>. Por eso al recargar sin internet ves un error en vez de la lista: la copia vivía en el servidor, no en tu teléfono.</p><p>Una petición real se ve así:</p><pre><code>GET /api/pedidos?estado=pendiente HTTP/1.1\nHost: api.mitienda.mx\nAuthorization: Bearer eyJhbGciOi...\nAccept: application/json</code></pre><p>Y la respuesta:</p><pre><code>HTTP/1.1 200 OK\nContent-Type: application/json\n\n{\"pedidos\":[{\"id\":42,\"cliente\":\"Ana\",\"total\":350}]}</code></pre><p><strong>Ojo con el token:</strong> ese <code>Authorization</code> es la llave de tu sesión. Quien lo tenga puede actuar como tú hasta que expire. Nunca lo pegues en capturas, en un chat público ni en un repositorio (m4-a19).</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Pides comida en un restaurante y ocurre exactamente el mismo viaje. Tú eres el <strong>cliente</strong>; el <strong>mesero</strong> es HTTP, que lleva tu pedido y trae la respuesta; la <strong>cocina</strong> es el servidor, que decide si hay ingredientes y cómo prepararlo; la <strong>despensa</strong> es la base de datos. El <strong>menú</strong> es la API: la lista de cosas que puedes pedir y cómo pedirlas.</p><p>Nunca entras a la cocina ni tomas tú la despensa. Pides por el mesero y esperas. Si el platillo no existe, vuelve un <em>no hay</em> (404); si no te identificaste, vuelve un <em>no puedes</em> (401); si la cocina se incendió, vuelve un <em>falló el sistema</em> (500). Y cuando la cocina tarda, tú ves el plato vacío con el tenedor en la mano: eso es el estado de <em>cargando</em> en tu interfaz.</p><p>El restaurante atiende a muchos clientes a la vez y no recuerda tu pedido de ayer: cada orden es una conversación nueva. Guardar la memoria (quién eres, qué pediste) es trabajo aparte — de eso se encargan las sesiones y los tokens (m4-a17).</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Vas a ver el viaje con tus ojos. Abre tu proyecto, presiona <strong>F12</strong> y ve a la pestaña <em>Network</em> (Red). Deja la pestaña abierta, haz clic en el botón que carga datos y observa la fila que aparece.</p><p>El código que dispara todo suele ser tan corto como esto:</p><pre><code>const res = await fetch(\"/api/pedidos\");\nconst datos = await res.json();\nconsole.log(datos);</code></pre><p>En Network verás columnas que cuentan la historia: <strong>Name</strong> (la ruta), <strong>Status</strong> (el código), <strong>Type</strong> (JSON), <strong>Time</strong> (cuánto tardó). Haz clic en la fila y revisa:</p><ul><li><strong>Headers</strong> — método, URL, código de estado y headers de ida y vuelta.</li><li><strong>Payload</strong> — lo que tu app mandó (si mandó algo).</li><li><strong>Response</strong> — el JSON que devolvió el servidor. Ese es el dato real, no lo que la pantalla muestra.</li><li><strong>Timing</strong> — dónde se fue el tiempo. Si <em>Waiting (TTFB)</em> es alto, el cuello de botella está en el servidor o en la base, no en tu CSS.</li></ul><p><strong>Advertencia:</strong> si el Status es <code>401</code>, el problema no es de diseño ni de datos: tu sesión no está autenticada (m4-a5 y m4-a13). Cambiar colores no lo va a arreglar. Y si en <em>Response</em> ves un error con rutas de archivos o consultas SQL, no lo publiques: estás filtrando información interna (m4-a26).</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Actúa como ingeniero de backend explicándole esto a alguien que dirige con IA. Tengo esta petición en la pestaña Network de DevTools: [pega método, URL, status y el cuerpo de la respuesta]. Explícame el viaje completo que ocurrió —cliente, DNS, servidor, base de datos y regreso—, dime en qué parada falló si el status no es 2xx, y qué debo revisar yo antes de pedirle un cambio a la IA. No escribas código todavía.\"</p></blockquote><p>Pedir el diagnóstico antes de la solución es el hábito que separa al director del que solo copia y pega.</p>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "multiple", pregunta: "En el viaje de una petición, ¿quién consulta la base de datos?", opciones: ["El navegador del usuario", "El servidor, después de validar la petición", "El CSS de la página", "El DNS"], correcta: 1 },
+              { tipo: "ordenar", instruccion: "Ordena el viaje de una petición de datos:", elementos: ["Tu app llama a fetch()", "El DNS traduce el dominio a una IP", "La petición llega al servidor", "El servidor consulta la base de datos", "El servidor responde con JSON", "Tu código pinta los datos en pantalla"] },
+              { tipo: "vf", afirmacion: "Los datos que ves en pantalla viven en el teléfono del usuario, por eso siguen ahí sin internet.", correcta: false, explicacion: "la pantalla solo muestra una respuesta; los datos viven en el servidor y en la base de datos. Sin conexión no llega una respuesta nueva." },
+              { tipo: "completar", frase: "Tu app es el ____, la computadora que responde es el ____ y los datos viven en la ____.", banco: ["cliente", "servidor", "base de datos", "navegador"], respuestas: ["cliente", "servidor", "base de datos"] },
+              { tipo: "quehace", codigo: "GET /api/pedidos?estado=pendiente HTTP/1.1\nHost: api.mitienda.mx\nAuthorization: Bearer eyJhbGciOi...\nAccept: application/json", pregunta: "¿Qué está pidiendo esta petición?", opciones: ["Los pedidos pendientes, identificándose con un token", "Que se borren los pedidos pendientes", "Que se cree un pedido nuevo", "Una imagen del servidor"], correcta: 0 }
+            ]
+          },
+          {
+            id: "m4-a2",
+            titulo: "Cliente y servidor: quién hace qué y por qué importa",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p><strong>Cliente</strong> es el programa que tienes enfrente: el navegador, la app del celular, la terminal. <strong>Servidor</strong> es la computadora remota que responde. La regla que ordena todo: <strong>el cliente propone, el servidor decide</strong>.</p><p>El cliente se encarga de lo que se ve y se toca: mostrar la interfaz, capturar lo que escribes, pedir datos y manejar los estados de cargando, vacío y error (m3-c15). El servidor se encarga de lo que no se puede confiar a nadie: verificar quién eres, decidir qué puedes hacer, validar los datos y guardarlos.</p><p>Mira las dos mitades de una misma función. En el navegador:</p><pre><code>const res = await fetch(\"/api/pedidos\", {\n  headers: { Authorization: \"Bearer \" + token }\n});\nconst pedidos = await res.json();</code></pre><p>En el servidor (Express, en concepto — m4-a24):</p><pre><code>app.get(\"/api/pedidos\", verificarToken, async (req, res) =&gt; {\n  const pedidos = await db.pedidos.find({ usuarioId: req.usuario.id });\n  res.json(pedidos);\n});</code></pre><p>El cliente <em>pide</em>; el servidor <em>filtra por el usuario del token</em> y responde. Nota lo importante: el cliente no dice \"dame los pedidos del usuario 7\". El servidor saca el usuario del token y no le da opción de pedir los ajenos.</p><p><strong>Advertencia real:</strong> todo lo que va al navegador es público — HTML, CSS, JavaScript, comentarios y llaves incluidas. Esconder un botón con CSS no protege nada: cualquiera puede llamar la ruta directamente. La protección vive en el servidor (m4-a15), en las reglas de la base de datos (m4-b22) y en las variables de entorno (m4-a19). Si encuentras una llave secreta en el código del cliente, considérala filtrada y cámbiala.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Es una <strong>ventanilla bancaria</strong>. Tú llenas la solicitud en el mostrador (cliente): escribes qué quieres, firmas y entregas. El cajero (servidor) revisa tu identidad, consulta la bóveda (base de datos) y decide si el movimiento procede. No entras a la bóveda, no tomas el dinero y no decides tu propio saldo.</p><p>Si el cajero solo creyera lo que dice el formulario, cualquiera escribiría \"transferir un millón\" y ya. Por eso el servidor vuelve a validar todo, aunque el cliente ya lo haya revisado. Y si el sistema se cae, el cajero te dice \"no puedo atenderte ahora\" (5xx): no es que tu solicitud esté mal, es que el banco falló.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Comprueba con tus ojos qué es público y qué no. Abre cualquier sitio y usa <strong>Ctrl+U</strong> (ver código fuente): verás HTML, CSS y JavaScript del cliente. Busca ahí el código del servidor: no está. El servidor nunca manda su receta, solo el resultado.</p><p>Ahora abre <strong>F12 → Network</strong>, recarga y haz clic en la petición principal. En <em>Response</em> verás lo que el servidor devolvió, por ejemplo:</p><pre><code>{\"usuario\":\"ana\",\"pedidos\":[{\"id\":42,\"total\":350}]}</code></pre><p>Eso es la respuesta, no la lógica. No puedes ver cómo decidió qué pedidos darte — y así debe ser.</p><p>Prueba con una API pública para ver el contraste: abre <code>https://api.github.com/users/octocat</code> en el navegador. Recibes JSON con datos del usuario, pero no el código de GitHub. Esa es la frontera cliente-servidor en una sola pantalla.</p><p><strong>Advertencia:</strong> si en <em>Ctrl+U</em> o en el bundle de JavaScript encuentras algo como <code>sk_live_...</code>, <code>service_role</code> o una contraseña, no lo compartas ni lo subas a GitHub: rota la llave de inmediato (m4-a19).</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Estoy decidiendo qué parte de mi app va en el cliente y qué parte en el servidor. La función es: [describe, por ejemplo: aplicar un cupón de descuento]. Hazme tres preguntas para detectar si hay una regla de negocio, un permiso o un secreto involucrado; después dime dónde debe vivir cada pieza y por qué. Si algo debe validarse en el servidor, dilo explícitamente aunque también se valide en el cliente.\"</p></blockquote><p>Ese prompt evita el error clásico de \"lo valido en el navegador y ya\": te obliga a decidir con criterio de servidor.</p>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "relacionar", pares: [["Cliente", "Muestra la interfaz y captura los datos"], ["Servidor", "Valida permisos y consulta la base de datos"], ["Base de datos", "Guarda los registros que persisten"], ["API", "El contrato de rutas entre cliente y servidor"]] },
+              { tipo: "multiple", pregunta: "Un usuario oculta con CSS el botón de eliminar. ¿Está protegido el borrado?", opciones: ["Sí, si el botón no se ve nadie puede borrar", "No: cualquiera puede llamar la ruta directamente; el servidor debe verificar el permiso", "Sí, CSS cifra la acción", "Solo si usa el modo incógnito"], correcta: 1 },
+              { tipo: "vf", afirmacion: "El código del servidor se puede leer con Ctrl+U desde el navegador.", correcta: false, explicacion: "Ctrl+U muestra solo el código del cliente (HTML, CSS y JS); la lógica del servidor nunca viaja al navegador." },
+              { tipo: "completar", frase: "El cliente ____ los datos; el servidor ____ si tienes permiso y los guarda.", banco: ["pide", "decide", "pinta", "borra"], respuestas: ["pide", "decide"] },
+              { tipo: "quehace", codigo: "app.delete(\"/api/pedidos/:id\", verificarToken, async (req, res) => {\n  ...\n});", pregunta: "¿Qué garantiza <code>verificarToken</code> en esta ruta?", opciones: ["Que solo un usuario autenticado pueda intentar borrar", "Que el botón se oculte en la interfaz", "Que el borrado sea más rápido", "Que se cree un pedido nuevo"], correcta: 0 }
+            ]
+          },
+          {
+            id: "m4-a3",
+            titulo: "HTTP por dentro: la conversación completa",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>HTTP es un protocolo de <strong>texto</strong>: la conversación entre cliente y servidor se puede leer. Cada intercambio tiene dos mensajes, uno de ida y uno de vuelta, y ambos comparten la misma estructura de tres partes.</p><p><strong>La petición</strong> (request):</p><pre><code>POST /api/pedidos HTTP/1.1\nHost: api.mitienda.mx\nContent-Type: application/json\nAuthorization: Bearer eyJhbGciOi...\n\n{\"cliente\":\"Ana\",\"total\":350}</code></pre><p><strong>La respuesta</strong> (response):</p><pre><code>HTTP/1.1 201 Created\nContent-Type: application/json\nLocation: /api/pedidos/43\n\n{\"id\":43,\"cliente\":\"Ana\",\"total\":350}</code></pre><p>Las tres partes son:</p><ul><li><strong>Línea inicial.</strong> En la petición: método, ruta y versión. En la respuesta: versión, código y frase.</li><li><strong>Headers.</strong> Metadatos en pares <code>Nombre: valor</code>: quién manda, qué formato trae, cuánto mide el cuerpo (m4-a6).</li><li><strong>Cuerpo.</strong> Los datos. En la petición es lo que mandas; en la respuesta es lo que recibes (m4-a7).</li></ul><p>Entre headers y cuerpo hay una <strong>línea en blanco</strong>. No es decoración: es la señal que le dice al receptor \"se acabaron los metadatos, empieza el contenido\". Si esa línea falta, el cuerpo se interpreta como otro header.</p><p>Y el rasgo que explica media materia: HTTP es <strong>stateless</strong> (sin estado). Cada petición es independiente; el servidor no recuerda la anterior. Por eso existen las cookies y los tokens: para reenviar la identidad en cada mensaje (m4-a17).</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Es una <strong>carta certificada</strong>. En el sobre escribes el destinatario, el remitente y el tipo de contenido (los headers); adentro va la hoja con el mensaje (el cuerpo). El cartero no lee la carta: solo usa el sobre para entregarla.</p><p>El servidor contesta con otra carta: la primera línea dice cómo le fue (\"recibida\", \"rechazada\", \"no existe\"), luego vienen sus sellos y por último el contenido. Y cada carta es independiente: el empleado de la ventanilla no recuerda la carta que mandaste ayer. Si quieres que sepa quién eres, tienes que volver a identificarte en cada envío. Esa falta de memoria es el <em>stateless</em> de HTTP.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>La forma más rápida de ver HTTP crudo es pedirle a DevTools que te lo copie. En <strong>F12 → Network</strong>, haz clic derecho sobre una petición → <em>Copy</em> → <em>Copy as cURL</em>. Obtienes algo así:</p><pre><code>curl 'https://api.github.com/users/octocat' \\\n  -H 'Accept: application/vnd.github+json'</code></pre><p>Pégalo en la terminal (en PowerShell usa <code>curl.exe</code>, no el alias <code>curl</code>) y agrega <code>-i</code> para ver también los headers de respuesta:</p><pre><code>HTTP/2 200\ncontent-type: application/json; charset=utf-8\nx-ratelimit-remaining: 59\n\n{\"login\":\"octocat\",\"id\":583231,...}</code></pre><p>Lee la respuesta en orden: la primera línea te dice la versión y el resultado; los headers, el contexto; después de la línea en blanco, el cuerpo. Si ves <code>HTTP/2</code> o <code>HTTP/3</code>, no te asustes: cambia el transporte, no la estructura de la conversación.</p><p><strong>Advertencia:</strong> <em>Copy as cURL</em> copia también tus cookies y tu header <code>Authorization</code>. Si pegas eso en un chat, un issue o una captura, regalas tu sesión. Borra esas líneas antes de compartir nada (m4-a19).</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Te voy a pegar una petición HTTP cruda y su respuesta. Sepáralas en sus tres partes —línea inicial, headers y cuerpo—, explícame en una tabla qué hace cada header y dime si el cuerpo es JSON válido. Si ves un token o una cookie, no lo repitas en tu respuesta: solo señálalo para que yo lo borre antes de compartir la captura.\"</p></blockquote><p>Pedir que no repita el secreto es tan importante como el análisis: un chat también es un lugar público para tus llaves.</p>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "relacionar", pares: [["Línea inicial de la petición", "Método, ruta y versión"], ["Headers", "Metadatos en pares Nombre: valor"], ["Línea en blanco", "Separa los headers del cuerpo"], ["Cuerpo", "Los datos que se envían o se reciben"]] },
+              { tipo: "ordenar", instruccion: "Ordena las partes de una petición HTTP de arriba a abajo:", elementos: ["Línea inicial (método, ruta, versión)", "Headers", "Línea en blanco", "Cuerpo"] },
+              { tipo: "multiple", pregunta: "¿Qué separa los headers del cuerpo en un mensaje HTTP?", opciones: ["Una coma", "Una línea en blanco", "El símbolo #", "Nada, van juntos"], correcta: 1 },
+              { tipo: "vf", afirmacion: "HTTP recuerda la petición anterior, así que el servidor ya sabe quién eres en la siguiente.", correcta: false, explicacion: "HTTP es stateless: cada petición es independiente. La identidad se reenvía con cookies o tokens (m4-a17)." },
+              { tipo: "completar", frase: "La primera línea de la respuesta trae la ____ de HTTP y el código de ____; el cuerpo viaja después de una línea en ____.", banco: ["versión", "estado", "blanco", "cifrado"], respuestas: ["versión", "estado", "blanco"] }
+            ]
+          },
+          {
+            id: "m4-a4",
+            titulo: "Los métodos: GET, POST, PUT, PATCH y DELETE",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>El <strong>método</strong> HTTP es el verbo de la petición: dice qué intentas hacer con un recurso. No es decoración — el servidor, los navegadores, los cachés y los proxies lo usan para decidir cómo comportarse. Estos son los cinco que vas a usar todos los días:</p><ul><li><strong>GET</strong> — leer. No lleva cuerpo y no debe modificar nada. Es <em>safe</em> (seguro) e <em>idempotente</em>: pedirlo una o diez veces deja el mismo estado.</li><li><strong>POST</strong> — crear o ejecutar una acción. Lleva cuerpo. <strong>No</strong> es idempotente: mandarlo dos veces crea dos registros.</li><li><strong>PUT</strong> — reemplazar el recurso completo. Si mandas solo un campo, los demás se pierden o se vacían. Es idempotente.</li><li><strong>PATCH</strong> — modificar una parte. Mandas solo lo que cambia. Es el método del \"cambia este precio y deja lo demás igual\".</li><li><strong>DELETE</strong> — borrar. Es idempotente: borrar dos veces deja el mismo estado final, aunque la segunda respuesta pueda ser 404.</li></ul><p><strong>Idempotente</strong> no significa \"misma respuesta\": significa \"mismo estado final\". Esa distinción te va a salvar en reintentos de red y en integraciones de pago.</p><p>En la práctica, contra <code>/api/productos/42</code>:</p><pre><code>GET    /api/productos/42                 → leer el producto\nPOST   /api/productos                    → crear uno nuevo\nPUT    /api/productos/42                 → reemplazarlo completo\nPATCH  /api/productos/42  {\"precio\":199} → cambiar solo el precio\nDELETE /api/productos/42                 → borrarlo</code></pre><p><strong>Advertencia:</strong> nunca uses GET para borrar, cerrar sesión o cobrar. El navegador puede precargar enlaces, un crawler puede seguirlos y los parámetros quedan en el historial y en los logs. Y jamás pongas contraseñas o tokens en la URL: viajan visibles en logs y capturas (m4-a11).</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Piensa en un almacén con un mostrador. <strong>GET</strong> es \"muéstrame esa caja\". <strong>POST</strong> es \"agrega una caja nueva\". <strong>PUT</strong> es \"reemplaza esta caja por esta otra completa\". <strong>PATCH</strong> es \"cambia solo la etiqueta de esta caja\". <strong>DELETE</strong> es \"tira esta caja\".</p><p>La diferencia entre POST y PUT se ve al repetir la orden: si pides dos veces \"agrega una caja\", terminas con dos cajas nuevas (POST). Si pides dos veces \"reemplaza la caja 42 por esta\", terminas con una sola caja 42 (PUT). Esa es la idempotencia: repetir no multiplica el efecto.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Vas a probar los métodos contra una API real sin escribir una app. Abre la terminal y usa <code>curl.exe</code> en Windows (o <code>curl</code> en Mac/Linux):</p><pre><code>curl.exe -i https://api.github.com/users/octocat\ncurl.exe -i -X PATCH https://api.tusitio.mx/api/productos/42 -H \"Content-Type: application/json\" -d \"{\\\"precio\\\":199}\"</code></pre><p>El primero es un GET y debe devolver <code>200</code>. El segundo intenta un PATCH: si tu API no existe o no tienes token, devolverá <code>401</code>, <code>403</code> o <code>404</code> — y eso también es información útil (m4-a5). Lo que importa es leer el método en la primera línea y comprobar que la ruta responde como esperabas.</p><p>Después repite la misma llamada dos veces y observa el resultado en tu base de datos: con POST verás dos filas nuevas; con PUT o PATCH, una sola fila modificada. Esa prueba de cinco segundos te enseña más que memorizar la tabla.</p><p><strong>Ojo:</strong> si en tu código aparece una ruta como <code>GET /api/pedidos/42/eliminar</code>, trátala como un foco rojo: un enlace, un prefetch del navegador o un bot podría borrar datos sin que nadie haya hecho clic en un botón de borrar.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Tengo estas rutas de mi API: [pega la lista]. Revísalas como arquitecto REST: dime si el método corresponde a la acción, marca cualquier GET que modifique datos, cualquier POST que en realidad sea una lectura y cualquier PUT que debería ser PATCH. Devuélveme la tabla corregida con método, ruta y qué regresa cada una, y explica en una línea cada cambio. No escribas la implementación todavía.\"</p></blockquote><p>Auditar métodos antes de programar evita el bug que nadie encuentra: el que borra cuando solo quería consultar.</p>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "relacionar", pares: [["GET", "Leer sin modificar"], ["POST", "Crear un recurso nuevo"], ["PUT", "Reemplazar el recurso completo"], ["PATCH", "Modificar solo una parte"], ["DELETE", "Borrar el recurso"]] },
+              { tipo: "multiple", pregunta: "Quieres cambiar únicamente el precio de un producto. ¿Qué método corresponde?", opciones: ["PUT, porque reemplaza todo", "PATCH, porque modifica solo una parte", "GET, porque es más rápido", "POST, porque crea el precio"], correcta: 1 },
+              { tipo: "vf", afirmacion: "Enviar dos veces el mismo POST crea dos registros; enviar dos veces el mismo DELETE deja el mismo estado final.", correcta: true, explicacion: "POST no es idempotente; DELETE sí: el estado final es el mismo aunque la segunda respuesta sea 404." },
+              { tipo: "completar", frase: "____ lee sin modificar; ____ crea un recurso nuevo; ____ reemplaza el recurso completo.", banco: ["GET", "POST", "PUT", "PATCH"], respuestas: ["GET", "POST", "PUT"] },
+              { tipo: "quehace", codigo: "GET /api/pedidos/42/eliminar", pregunta: "¿Qué problema tiene esta ruta?", opciones: ["Usa GET para una acción destructiva: un enlace o un prefetch podría borrar el pedido sin confirmación", "Ninguno, GET es el método universal", "Solo le falta un header Content-Type", "Debería usar POST para leer mejor"], correcta: 0 }
+            ]
+          },
+          {
+            id: "m4-a5",
+            titulo: "Códigos de estado: 200, 401, 404, 500 y los que vas a ver",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Toda respuesta HTTP empieza con un <strong>código de estado</strong> de tres dígitos. El primer dígito es la familia y te dice de inmediato de quién es el problema:</p><ul><li><strong>1xx</strong> — informativo. Raro en el día a día (ej. <code>101</code> al cambiar a WebSocket).</li><li><strong>2xx</strong> — salió bien. <code>200 OK</code>, <code>201 Created</code> (se creó algo), <code>204 No Content</code> (todo bien, sin cuerpo).</li><li><strong>3xx</strong> — redirección. <code>301</code>/<code>302</code> te mandan a otra URL; <code>304 Not Modified</code> le dice al navegador \"usa tu copia en caché\".</li><li><strong>4xx</strong> — el error es del cliente. <code>400</code> petición mal formada, <code>401</code> no autenticado, <code>403</code> sin permiso, <code>404</code> no existe, <code>409</code> conflicto (duplicado), <code>422</code> datos inválidos, <code>429</code> demasiadas peticiones.</li><li><strong>5xx</strong> — el error es del servidor. <code>500</code> falla interna, <code>502</code> pasarela con respuesta inválida, <code>503</code> servicio no disponible.</li></ul><p>Regla memorable: <strong>4xx = tú; 5xx = yo</strong>. Si ves 4xx, revisa lo que mandaste; si ves 5xx, el problema está del lado del servidor y tú no lo arreglas cambiando el formulario.</p><p>La confusión número uno del principiante es <strong>401 vs 403</strong>. <code>401 Unauthorized</code> significa \"no sé quién eres\" (falta el token, expiró o es inválido). <code>403 Forbidden</code> significa \"sé quién eres, pero no puedes hacer esto\" (m4-a13 y m4-a15).</p><p>Así se ven en crudo:</p><pre><code>HTTP/1.1 401 Unauthorized\nWWW-Authenticate: Bearer\n\n{\"error\":\"token inválido o expirado\"}</code></pre><pre><code>HTTP/1.1 403 Forbidden\n\n{\"error\":\"no tienes permiso para ver este pedido\"}</code></pre><p><strong>Advertencia:</strong> no devuelvas <code>200 OK</code> con un error adentro. Rompe clientes, monitores y cachés, y hace que un fallo parezca éxito. Y nunca mandes al usuario el stack trace, la consulta SQL ni rutas internas en un 500: eso es material para atacantes (m4-a26). El detalle va en los logs del servidor (m4-a25), no en la respuesta.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Es el semáforo de una ventanilla. <strong>2xx</strong> es luz verde: \"listo, aquí está\". <strong>3xx</strong> es \"pase a la ventanilla 4\". <strong>4xx</strong> es \"su papeleo está mal\": falta una firma (400), no sé quién es usted (401), sé quién es pero no tiene permiso (403), ese trámite no existe (404), ya lo hizo dos veces (409), sus datos no son válidos (422), vino demasiadas veces hoy (429). <strong>5xx</strong> es \"se nos rompió el sistema\": no es culpa suya, regrese después (503) o es un fallo interno (500).</p><p>La distinción 401/403 es la del guardia: \"no sé quién eres, identifícate\" versus \"ya sé quién eres, pero esta puerta no es para ti\".</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Provoca los códigos a propósito, uno por uno, y míralos en <strong>F12 → Network</strong>. Es la forma más rápida de reconocerlos para siempre:</p><ul><li><strong>200</strong> — abre cualquier página que cargue bien.</li><li><strong>401</strong> — intenta entrar a tu app sin sesión, o con un token vencido. Mira el header <code>WWW-Authenticate</code>.</li><li><strong>403</strong> — entra con una cuenta normal a una ruta de administrador.</li><li><strong>404</strong> — escribe una ruta que no exista: <code>/api/no-existe</code>.</li><li><strong>500</strong> — rompe algo a propósito en desarrollo (una variable indefinida) y observa la respuesta. Debe ser un mensaje genérico, sin stack trace.</li></ul><p>Una respuesta típica de error bien hecha:</p><pre><code>HTTP/1.1 422 Unprocessable Entity\nContent-Type: application/json\n\n{\"error\":\"el correo no tiene formato válido\",\"campo\":\"correo\"}</code></pre><p>Fíjate en lo que <em>no</em> trae: ni SQL, ni rutas del servidor, ni la versión de la base de datos. Mensaje útil para el usuario, detalle completo en los logs.</p><p><strong>Dato que ahorra horas:</strong> un error de <strong>CORS</strong> en la consola (m4-a18) muchas veces no es un código de estado: el navegador bloquea la respuesta antes de que puedas leerla. No confundas \"failed to fetch\" con un 500.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Estoy revisando los códigos de estado de mi API. Te pego estos casos: [lista de situaciones]. Para cada uno dime el código correcto, si el cuerpo debe llevar algo y qué mensaje es seguro mostrarle al usuario. Marca especialmente dónde estoy devolviendo 200 con un error dentro o exponiendo detalles internos, y explícame cómo corregirlo sin revelar información del servidor.\"</p></blockquote><p>Revisar códigos con la IA es barato; descubrir en producción que tu API decía \"ok\" mientras fallaba, no.</p>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "relacionar", pares: [["200", "La petición salió bien"], ["201", "Se creó un recurso"], ["401", "No sé quién eres"], ["403", "Sé quién eres, pero no tienes permiso"], ["404", "El recurso no existe"], ["500", "Falló el servidor"]] },
+              { tipo: "multiple", pregunta: "Escribes mal la contraseña al iniciar sesión. ¿Qué código es el correcto?", opciones: ["403, porque no tienes permiso", "401, porque no se pudo autenticar", "404, porque el usuario no existe", "500, porque el login falló"], correcta: 1 },
+              { tipo: "vf", afirmacion: "Un 500 significa que el usuario mandó datos inválidos.", correcta: false, explicacion: "los datos inválidos son 400 o 422; el 500 es una falla interna del servidor (4xx = cliente, 5xx = servidor)." },
+              { tipo: "completar", frase: "Los códigos ____ son errores del cliente; los ____ son errores del servidor.", banco: ["4xx", "5xx", "2xx", "3xx"], respuestas: ["4xx", "5xx"] },
+              { tipo: "quehace", codigo: "HTTP/1.1 200 OK\nContent-Type: application/json\n\n{\"ok\": false, \"error\": \"no autorizado\"}", pregunta: "¿Qué está mal en esta respuesta?", opciones: ["Usa 200 para un fallo de autorización: debería ser 401 (o 403) para que el cliente y los monitores lo detecten", "Nada, el JSON explica el error", "Falta el header Content-Type", "Debería usar 500 porque el usuario se equivocó"], correcta: 0 }
+            ]
+          },
+          {
+            id: "m4-a6",
+            titulo: "Headers: los metadatos de cada petición",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Los <strong>headers</strong> son los metadatos de la petición: pares <code>Nombre: valor</code> que van antes de la línea en blanco y describen el mensaje sin ser el mensaje. El cuerpo lleva el <em>qué</em>; los headers llevan <em>cómo leerlo, quién lo manda y qué espera de vuelta</em> (m4-a3).</p><p>Estos son los que vas a ver en casi todas partes:</p><ul><li><strong>Host</strong> — a qué dominio va dirigida la petición. Obligatorio en HTTP/1.1.</li><li><strong>Content-Type</strong> — el formato del cuerpo que mandas: <code>application/json</code>, <code>application/x-www-form-urlencoded</code> o <code>multipart/form-data</code> si son archivos.</li><li><strong>Accept</strong> — el formato que aceptas de vuelta. Si pides JSON y el servidor solo sabe dar XML, lo correcto es un <code>406</code>.</li><li><strong>Authorization</strong> — la credencial: <code>Bearer &lt;token&gt;</code>. Es el header más delicado de todos (m4-a13).</li><li><strong>Content-Length</strong> — cuántos bytes mide el cuerpo.</li><li><strong>Cookie</strong> — lo que el navegador reenvía solo en cada petición al mismo dominio (m4-a17).</li></ul><p>En la respuesta aparecen otros que también cuentan la historia:</p><pre><code>HTTP/1.1 200 OK\nContent-Type: application/json; charset=utf-8\nCache-Control: no-store\nAccess-Control-Allow-Origin: https://mitienda.mx\nSet-Cookie: sesion=abc123; HttpOnly; Secure; SameSite=Lax</code></pre><p>Dos detalles que evitan confusiones. Primero: los <strong>nombres</strong> de los headers no distinguen mayúsculas — <code>Content-Type</code> y <code>content-type</code> son el mismo header; los <strong>valores</strong> sí distinguen. Segundo: un header puede repetirse (<code>Set-Cookie</code> suele venir varias veces), y ahí el orden importa.</p><p><strong>Advertencia real:</strong> nunca uses un header que manda el cliente como prueba de identidad. Si tu servidor lee <code>X-Usuario-Id: 7</code> y confía en él, cualquiera lo cambia con curl y entra como el usuario 7. La identidad sale del token verificado en el servidor (m4-a15), no de una etiqueta que el visitante escribió.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Una petición HTTP es un <strong>paquete con guía de envío</strong>. La caja es el cuerpo: adentro va lo que realmente quieres mandar. La guía pegada por fuera dice qué contiene, cuánto pesa, quién lo manda y qué debe hacer el repartidor si no encuentra a nadie: eso son los headers. El repartidor no abre la caja; usa la guía para manejarla.</p><p>Si la guía dice \"frágil\" y la caja trae piedras, el problema no es el contenido: es que la etiqueta miente. Lo mismo pasa con <code>Content-Type: application/json</code> sobre un cuerpo que no es JSON: el servidor intenta tratarlo como tal y falla.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Abre <strong>F12 → Network</strong>, haz clic en cualquier petición y quédate en la pestaña <em>Headers</em>. Verás dos bloques: <strong>Request Headers</strong> (lo que mandó tu navegador: <code>Accept</code>, <code>User-Agent</code>, <code>Cookie</code> y <code>Authorization</code> si hay sesión) y <strong>Response Headers</strong> (lo que contestó el servidor: <code>Content-Type</code>, <code>Cache-Control</code>, <code>Set-Cookie</code>). Ese panel es la verdad de la conversación: si tu app \"no manda el token\", aquí lo compruebas en dos segundos.</p><p>Para verte a ti mismo del otro lado, pide una API que refleje tus headers:</p><pre><code>curl.exe -i https://httpbin.org/headers -H \"Accept: application/json\"</code></pre><p>La respuesta te devuelve tu <code>User-Agent</code>, tu <code>Accept</code> y todo lo que mandaste. Agrega uno propio y vuelve a correrlo:</p><pre><code>curl.exe -i https://httpbin.org/headers -H \"X-Cliente: mi-app\" -H \"Accept: application/json\"</code></pre><p>Ahí aparece el par nuevo en el espejo. Eso es todo lo que es un header: una etiqueta que viaja con el mensaje. Y si copias una petición con <em>Copy as cURL</em>, verás los headers escritos como <code>-H \"Nombre: valor\"</code> (m4-a3).</p><p><strong>Advertencia:</strong> ese <em>Copy as cURL</em> arrastra tu <code>Authorization</code> y tus cookies. No lo pegues en un chat, un issue ni una captura: un token filtrado es una sesión regalada (m4-a19). HTTPS cifra el mensaje completo, headers incluidos, pero no lo salva de tus propias capturas.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Actúa como ingeniero de backend revisando mi API. Te pego los headers de una petición y su respuesta: [pégalos aquí, borrando el valor real del token]. Explícame qué hace cada uno, marca los que exponen información sensible o interna, dime cuáles son obligatorios para que mi API funcione y cuáles debería agregar para caché y seguridad. Si algún header de la petición se está usando para decidir permisos, señálalo como riesgo: el cliente puede escribir lo que quiera ahí.\"</p></blockquote><p>Ese último punto es el que evita la falla más común: creer que un header que manda el cliente es una prueba de identidad.</p>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "multiple", pregunta: "¿Qué header declara el formato del cuerpo que estás enviando?", opciones: ["Accept", "Content-Type", "Authorization", "Host"], correcta: 1 },
+              { tipo: "relacionar", pares: [["Content-Type", "Formato del cuerpo que envías"], ["Accept", "Formato que esperas de vuelta"], ["Authorization", "La credencial de la sesión"], ["Host", "El dominio al que va dirigida la petición"], ["Cache-Control", "Reglas sobre guardar la respuesta en caché"]] },
+              { tipo: "vf", afirmacion: "Los nombres de los headers distinguen mayúsculas de minúsculas, así que Content-Type y content-type son headers distintos.", correcta: false, explicacion: "los nombres de los headers son case-insensitive: Content-Type y content-type son el mismo header. Los valores sí distinguen mayúsculas." },
+              { tipo: "completar", frase: "El header ____ declara el formato del cuerpo que envías; el header ____ declara el formato que aceptas de vuelta.", banco: ["Content-Type", "Accept", "Host", "Cookie"], respuestas: ["Content-Type", "Accept"] },
+              { tipo: "quehace", codigo: "POST /api/pedidos HTTP/1.1\nHost: api.mitienda.mx\nX-Usuario-Id: 7\nContent-Type: application/json\n\n{\"total\":350}", pregunta: "El servidor usa X-Usuario-Id para decidir de quién es el pedido. ¿Cuál es el riesgo?", opciones: ["Ninguno, el header viaja cifrado con HTTPS", "Cualquiera puede cambiar ese header con curl y crear pedidos a nombre de otro usuario: la identidad debe salir de un token verificado", "Solo es un problema si el usuario usa el modo incógnito", "El riesgo es que el pedido se cree dos veces"], correcta: 1 }
+            ]
+          },
+          {
+            id: "m4-a7",
+            titulo: "El cuerpo de la petición: JSON en acción",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>El <strong>cuerpo</strong> (body) es la parte del mensaje que lleva los datos. En una petición es lo que mandas —el formulario convertido en JSON—; en una respuesta es lo que recibes —la lista de pedidos o el usuario recién creado—. Los headers dicen <em>cómo</em> leerlo; el cuerpo es <em>lo que se lee</em> (m4-a3).</p><p>El formato que domina la web es <strong>JSON</strong> (JavaScript Object Notation). No es un lenguaje ni una base de datos: es texto con una forma acordada. Con estas seis reglas dejas de equivocarte:</p><ul><li>Los objetos van entre llaves <code>{ }</code> y los arreglos entre corchetes <code>[ ]</code>.</li><li>Las claves <strong>siempre</strong> van entre comillas dobles: <code>\"cliente\"</code>, no <code>cliente</code>.</li><li>Los textos también van entre comillas dobles. Las comillas simples no son JSON válido.</li><li>Los números y los booleanos van sin comillas: <code>350</code>, <code>true</code>.</li><li>No hay coma después del último elemento ni comentarios.</li><li>El valor vacío se escribe <code>null</code>, no <code>undefined</code> ni <code>None</code>.</li></ul><p>Así se ve una petición que crea un pedido:</p><pre><code>POST /api/pedidos HTTP/1.1\nHost: api.mitienda.mx\nContent-Type: application/json\nAuthorization: Bearer eyJhbGciOi...\nContent-Length: 45\n\n{\"cliente\":\"Ana\",\"total\":350,\"urgente\":false}</code></pre><p>Y la respuesta:</p><pre><code>HTTP/1.1 201 Created\nContent-Type: application/json\n\n{\"id\":43,\"cliente\":\"Ana\",\"total\":350,\"urgente\":false,\"creadoEn\":\"2026-10-20T18:04:00Z\"}</code></pre><p>El header <code>Content-Type: application/json</code> no es opcional. Sin él, el servidor puede leer el cuerpo como texto plano y contestarte <code>400</code> o guardar basura. Si el cuerpo y el header no coinciden, gana el header: el servidor intenta parsear como JSON algo que no lo es y falla.</p><p><strong>Advertencia real:</strong> el cuerpo llega desde el cliente, y el cliente es territorio enemigo. Que tu formulario valide no significa que el servidor deba confiar: cualquiera manda <code>\"total\": -500</code> o un campo de 40 MB con curl (m4-a21). Valida tipo, rango y tamaño en el servidor, y ponle un límite al cuerpo. Y nunca metas contraseñas, datos de tarjeta ni tokens de terceros en un JSON que se loguea: los logs son el lugar más común donde se filtran.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>El mensaje HTTP es un <strong>paquete con guía de envío</strong>. La guía por fuera dice qué contiene y cuánto pesa: los headers. Lo que va adentro de la caja es el cuerpo. JSON es el <strong>empaque estándar</strong>: una caja con divisiones donde cada etiqueta va entre comillas y cada valor tiene su lugar.</p><p>Si metes una etiqueta sin comillas o dejas una coma colgando, la caja no cierra y quien la recibe no puede abrirla. El JSON no queda \"más o menos bien\": está roto, y el servidor responde <code>400</code> sin siquiera mirar tu lógica.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Manda tu primer cuerpo real contra una API de prueba:</p><pre><code>curl.exe -i -X POST https://httpbin.org/post -H \"Content-Type: application/json\" -d '{\"cliente\":\"Ana\",\"total\":350}'</code></pre><p>La respuesta te devuelve en <code>\"json\"</code> exactamente lo que mandaste. Ahora quita una llave o agrega una coma al final y vuelve a correrlo: recibes un <code>400</code>. Ese es el error de JSON más común del mundo, y ya lo reconoces cuando lo ves.</p><p>Mira el mismo cuerpo desde el navegador. Abre <strong>F12 → Network</strong>, haz clic en un POST de tu app y entra a la pestaña <em>Payload</em>. Ahí está el JSON tal como viajó, no como lo ves en tu código. Si el servidor dice que falta un campo, compara ese panel con lo que creías estar mandando: casi siempre el bug vive en esa diferencia.</p><p>En JavaScript, el viaje de ida y vuelta son dos funciones: <code>JSON.stringify()</code> convierte un objeto en texto para enviarlo y <code>JSON.parse()</code> convierte el texto recibido en objeto. Prueba esto en la consola:</p><pre><code>JSON.parse('{\"cliente\":\"Ana\",}')\n// SyntaxError: Unexpected token } in JSON</code></pre><p>El error te dice algo muy concreto: sobra una coma. <strong>Advertencia:</strong> nunca uses <code>eval()</code> para leer JSON. <code>JSON.parse()</code> solo acepta datos, no ejecuta código; <code>eval()</code> sí lo ejecuta, y eso es una puerta abierta a ejecución remota (m4-a29).</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Tengo este JSON que manda mi frontend: [pégalo aquí, sin datos reales de clientes]. Valídalo: dime si es JSON válido, qué campos deberían ser obligatorios, qué tipos conviene exigir en el servidor y qué datos no deberían viajar nunca en el cuerpo (contraseñas en claro, tokens de terceros, datos de tarjeta). Devuélveme el esquema de validación en lenguaje simple y una lista de casos de prueba con los que yo pueda romperlo a propósito. No implementes todavía.\"</p></blockquote><p>Pedir los casos de prueba antes del código te convierte en el que audita, no en el que reza para que funcione.</p>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "multiple", pregunta: "¿Cuál de estos cuerpos es JSON válido?", opciones: ["{\"cliente\":\"Ana\",\"total\":350}", "{cliente:\"Ana\", total:350}", "{\"cliente\":\"Ana\",\"total\":350,}", "{'cliente':'Ana','total':350}"], correcta: 0 },
+              { tipo: "quehace", codigo: "{\n  \"cliente\": \"Ana\",\n  \"total\": 350,\n}", pregunta: "¿Qué le pasa a este cuerpo?", opciones: ["Es válido, JSON permite comas finales", "No es JSON válido: sobra una coma después del último campo", "Falta el header Authorization", "Los números deben ir entre comillas"], correcta: 1 },
+              { tipo: "vf", afirmacion: "GET puede llevar cuerpo, por eso se usa para mandar filtros complejos.", correcta: false, explicacion: "el cuerpo de GET no tiene semántica definida y muchos servidores y proxies lo ignoran. Los filtros van en la query string (m4-a11)." },
+              { tipo: "completar", frase: "En JSON, las claves y los textos van entre comillas ____, y los números van ____ comillas.", banco: ["dobles", "sin", "simples", "con"], respuestas: ["dobles", "sin"] },
+              { tipo: "ordenar", instruccion: "Ordena lo que pasa al enviar un formulario como JSON:", elementos: ["Reúnes los datos en un objeto de JavaScript", "Los conviertes a texto con JSON.stringify()", "Envías el POST con Content-Type: application/json", "El servidor valida el cuerpo y lo guarda", "Responde 201 con el objeto creado"] }
+            ]
+          },
+          {
+            id: "m4-a8",
+            titulo: "¿Qué es una API? (y por qué hoy todo es una API)",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Una <strong>API</strong> (Application Programming Interface) es un <strong>contrato</strong>: la lista de cosas que un programa puede pedirle a otro, cómo pedirlas y qué va a recibir. No es una base de datos, no es un servidor y no es magia. Es una interfaz, igual que la pantalla de un cajero automático es la interfaz entre tú y el banco.</p><p>Hoy casi todo es una API porque los sistemas dejaron de ser islas. Tu app no guarda los pagos: le pide a la API de Stripe que cobre. No manda WhatsApp: llama a la API de WhatsApp. No calcula el mapa: consulta la API de Google Maps. En cada caso hay un contrato con nombres, formatos y límites.</p><p>La diferencia que más te va a servir es <strong>sitio web vs API</strong>:</p><ul><li>Un <strong>sitio web</strong> responde HTML pensado para ojos humanos. <code>GET https://mitienda.mx/pedidos</code> te devuelve la página con la tabla.</li><li>Una <strong>API web</strong> responde datos pensados para programas, casi siempre JSON. <code>GET https://api.mitienda.mx/pedidos</code> te devuelve <code>[{\"id\":42,\"total\":350}]</code>.</li></ul><p>El mismo backend alimenta los dos: el sitio pinta el HTML y la app móvil consume la API. Por eso \"todo es una API\": es la puerta única a los datos y a las reglas de un negocio.</p><p>Una llamada real a una API pública:</p><pre><code>GET https://api.github.com/users/octocat HTTP/1.1\nAccept: application/vnd.github+json</code></pre><pre><code>HTTP/1.1 200 OK\nContent-Type: application/json\n\n{\"login\":\"octocat\",\"name\":\"The Octocat\",\"public_repos\":8,\"created_at\":\"2011-01-25T18:44:36Z\"}</code></pre><p>Fíjate en lo que <em>no</em> viene: ni el HTML del perfil, ni el código de GitHub. Solo el dato. Ese recorte es la API.</p><p><strong>Advertencia real:</strong> una API key que viaja al navegador ya no es secreta. Si la pones en tu JavaScript, cualquiera la lee con Ctrl+U y te cobra la factura (m4-a19, m4-c18). Las llaves van en el servidor, en variables de entorno. Y CORS no protege una API: es una regla del navegador que un script con curl ignora por completo (m4-a18).</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Ya viste el menú del restaurante en m4-a1. Aquí importa la otra cara: el <strong>menú es el contrato</strong>. Dice qué platillos existen, cómo se llaman y qué incluye cada uno. No dice cómo se cocinan ni te deja entrar a la cocina.</p><p>Una API es ese menú para programas. Tú (o tu app) pides del menú, la cocina (el servidor) trabaja y recibes el platillo (los datos). Si pides algo que no está en el menú, recibes un <code>404</code>; si no te identificaste, un <code>401</code>. Y el menú cambia cuando el restaurante quiere: por eso existe el versionado (m4-a28).</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Compara las dos caras del mismo servicio. Abre en el navegador <code>https://github.com/octocat</code> y después <code>https://api.github.com/users/octocat</code>. El primero te da una página con botones y tipografía; el segundo, un bloque de JSON crudo. Mismo dueño, mismo dato, distinto consumidor.</p><p>Ahora mira cómo una app real consume una API. Abre <strong>F12 → Network</strong>, filtra por <em>Fetch/XHR</em> y recarga cualquier sitio moderno. Verás peticiones a rutas como <code>/api/...</code> cuyo <em>Response</em> es JSON. Lo que la pantalla muestra llegó por ahí.</p><p>Prueba una API pública con la terminal y lee los headers de límite:</p><pre><code>curl.exe -i https://api.github.com/users/octocat</code></pre><p>En la respuesta aparece algo como <code>x-ratelimit-remaining: 59</code>: el contrato también incluye cuántas veces puedes llamar (m4-a20). Si lo ignoras, un día recibes <code>429 Too Many Requests</code> y no sabrás por qué.</p><p><strong>Advertencia:</strong> cuando una API te pida una llave, pregúntate siempre dónde va a vivir. Si la pegas en el frontend, publícala. Si la llamada necesita secreto, hazla desde una función de servidor (m4-c16).</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Actúa como arquitecto de APIs. Voy a conectar mi frontend con [servicio externo o backend propio]. Explícame en lenguaje simple: qué endpoints necesito, qué datos entran y salen de cada uno, dónde debe vivir la llave o el token (navegador o servidor) y qué pasa si alguien lee mi JavaScript. Si detectas una operación que no se puede hacer de forma segura desde el navegador, dímelo antes de escribir código.\"</p></blockquote><p>Ese prompt te obliga a decidir el lugar de cada secreto antes de que la IA te lo esconda en un archivo del cliente.</p>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "multiple", pregunta: "¿Qué distingue una API web de un sitio web?", opciones: ["La API devuelve datos para programas; el sitio devuelve HTML para personas", "La API no usa HTTP", "El sitio web no puede usar JSON", "La API solo funciona sin internet"], correcta: 0 },
+              { tipo: "relacionar", pares: [["API", "Contrato de qué puedes pedir y qué recibes"], ["Sitio web", "HTML pensado para ojos humanos"], ["API key", "Credencial de la aplicación"], ["Token de usuario", "Identidad de una persona con sesión"], ["JSON", "Formato habitual de los datos que viajan"]] },
+              { tipo: "vf", afirmacion: "Si una API key está en el JavaScript del navegador, sigue siendo secreta porque el código está ofuscado.", correcta: false, explicacion: "todo lo que llega al navegador es público: la ofuscación solo estorba un rato. Una llave en el cliente se considera filtrada (m4-a19)." },
+              { tipo: "completar", frase: "Un sitio web devuelve ____ para personas; una API devuelve ____ para programas.", banco: ["HTML", "JSON", "CSS", "código"], respuestas: ["HTML", "JSON"] },
+              { tipo: "quehace", codigo: "fetch(\"https://api.stripe.com/v1/charges\", {\n  method: \"POST\",\n  headers: { Authorization: \"sk_live_51H...\" }\n});", pregunta: "¿Qué problema tiene este código en el frontend?", opciones: ["Ninguno, HTTPS cifra la llave", "Expone una llave secreta en el navegador: cualquiera la lee y cobra a tu cuenta. Esa llamada debe salir de un servidor", "Falta el header Accept", "Stripe no usa JSON"], correcta: 1 }
+            ]
+          },
+          {
+            id: "m4-a9",
+            titulo: "REST: el estilo que domina la web",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p><strong>REST</strong> (Representational State Transfer) no es un protocolo ni una librería: es un <strong>estilo de arquitectura</strong> que Roy Fielding describió en su tesis del año 2000. No se instala ni se importa; se sigue o no se sigue. Una API que lo sigue se llama <em>RESTful</em>.</p><p>De sus restricciones, estas cuatro son las que vas a notar todos los días:</p><ul><li><strong>Recursos, no acciones.</strong> La URL nombra <em>cosas</em> (sustantivos en plural): <code>/pedidos</code>, <code>/clientes</code>, <code>/productos</code>. El verbo no va en la URL: va en el método HTTP (m4-a4).</li><li><strong>Un recurso, una URL.</strong> <code>/pedidos/42</code> es el pedido 42 y siempre será el mismo, se consulte, se modifique o se borre.</li><li><strong>Representaciones.</strong> El recurso vive en el servidor; lo que viaja es una representación, normalmente JSON, aunque podría ser XML o CSV.</li><li><strong>Stateless.</strong> Cada petición lleva todo lo necesario para entenderse, incluida la identidad. El servidor no guarda el hilo de la conversación (m4-a17).</li></ul><p>Compara las dos columnas:</p><pre><code>RESTful                              No RESTful\nGET  /api/pedidos                    GET  /api/getPedidos\nGET  /api/pedidos/42                 GET  /api/pedido?id=42&amp;accion=ver\nPOST /api/pedidos                    POST /api/crearPedido\nPATCH /api/pedidos/42                POST /api/pedidos/42/modificar\nDELETE /api/pedidos/42               GET  /api/pedidos/42/borrar</code></pre><p>La columna izquierda se lee sola: <em>en pedidos, dame el 42</em>. La derecha obliga a inventar un verbo nuevo por cada operación y crece sin control.</p><p><strong>Advertencia:</strong> REST no es una ley y no todo encaja. Acciones que no son CRUD —cobrar, enviar un correo, generar un reporte— suelen necesitar rutas como <code>POST /api/pedidos/42/pagar</code>, y está bien. Lo que sí es obligatorio es la consistencia: si tu API mezcla <code>/crearPedido</code>, <code>/pedidos/nuevo</code> y <code>/api/v1/orders</code>, quien la consuma —o la IA que la programe— va a adivinar mal. Y jamás pongas acciones destructivas en GET: un crawler o un prefetch puede ejecutarlas sin que nadie haga clic (m4-a4).</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Es una <strong>biblioteca</strong>. Cada libro es un recurso y su ubicación es la URL: <code>/estantes/novela/42</code>. Para consultarlo, lo lees (GET); para reemplazarlo por otra edición, lo cambias completo (PUT); para arreglar una página, la corriges (PATCH); para darlo de baja, lo retiras (DELETE). Nunca pides \"el libro que se lee\" ni \"la acción de leer el 42\": pides el libro.</p><p>La bibliotecaria no recuerda qué pediste ayer. Si vuelves, te identificas otra vez. Esa falta de memoria es el <em>stateless</em>, y es lo que permite atender a miles de personas a la vez sin confusiones.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>La API de GitHub es un buen museo de REST. Prueba estas rutas y lee la forma de la URL antes de mirar el resultado:</p><pre><code>curl.exe -i https://api.github.com/users/octocat/repos\ncurl.exe -i https://api.github.com/repos/vercel/next.js/issues/1/comments</code></pre><p>En la primera, los repositorios de un usuario son un recurso dentro de un usuario. En la segunda, los comentarios de un issue. Todo son sustantivos en plural, anidados como máximo un par de niveles, y el método decide la acción.</p><p>Ahora observa lo que <em>no</em> hace: no hay <code>/getRepos</code> ni <code>/users/octocat/repos/crear</code>. Para crear un repo, GitHub usa <code>POST /user/repos</code>. Esa coherencia es lo que permite que cualquiera use la API sin leer veinte páginas de instrucciones.</p><p><strong>Ojo con el pragmatismo:</strong> GitHub también tiene <code>GET /search/code</code>, que es más una acción que un recurso. Los estilos puros existen en los libros; en producción se mezclan con criterio. Lo que no se negocia es que la API sea predecible y que las acciones destructivas nunca viajen en un GET.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Actúa como revisor de APIs REST. Te paso estas rutas: [lista]. Reescríbelas en estilo REST: recursos en plural, sin verbos en la URL, con el método HTTP correcto. Para cada cambio dime qué método queda, qué regresa y qué código de estado usa al crear, al borrar y cuando falta permiso. Si alguna operación no encaja en REST, dímelo y propón la excepción más clara en lugar de forzarla.\"</p></blockquote><p>Pedir la excepción explícita evita que la IA invente un híbrido silencioso que después nadie entiende.</p>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "multiple", pregunta: "¿Cuál de estas rutas es RESTful para leer el pedido 42?", opciones: ["GET /api/pedidos/42", "GET /api/getPedido?id=42", "GET /api/pedidos/ver/42", "GET /api/pedido/42/leer"], correcta: 0 },
+              { tipo: "relacionar", pares: [["Recursos", "Sustantivos en plural en la URL"], ["Métodos", "Verbos HTTP que indican la acción"], ["Stateless", "Cada petición lleva su propia identidad"], ["Representación", "El JSON que viaja en el cuerpo"]] },
+              { tipo: "vf", afirmacion: "REST es un protocolo que se instala en el servidor.", correcta: false, explicacion: "REST es un estilo de arquitectura descrito por Fielding; no se instala ni se importa. HTTP sí es el protocolo que suele usarse para implementarlo." },
+              { tipo: "completar", frase: "En REST la URL nombra ____ y el método HTTP indica la ____ sobre ese recurso.", banco: ["recursos", "acción", "tablas", "velocidad"], respuestas: ["recursos", "acción"] },
+              { tipo: "quehace", codigo: "GET /api/pedidos/42/borrar HTTP/1.1\nHost: api.mitienda.mx", pregunta: "¿Qué tiene de malo esta ruta?", opciones: ["Nada, es una forma válida de borrar", "Usa GET para una acción destructiva y pone un verbo en la URL: debería ser DELETE /api/pedidos/42", "Le falta el header Content-Type", "Debería usar POST para leer"], correcta: 1 }
+            ]
+          },
+          {
+            id: "m4-a10",
+            titulo: "Endpoints: diseñar las ventanillas de tu sistema",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Un <strong>endpoint</strong> es una ventanilla de tu sistema: la combinación exacta de <strong>método + ruta</strong> que atiende una operación. <code>GET /api/v1/pedidos</code> es una ventanilla; <code>POST /api/v1/pedidos</code> es otra, en la misma dirección pero para otra cosa. Diseñarlas bien separa una API que se puede usar de una que hay que descifrar.</p><p>Estas son las reglas que uso y que le pido a la IA:</p><ul><li><strong>Sustantivos en plural y en minúsculas</strong>: <code>/pedidos</code>, <code>/clientes</code>. Si el nombre es compuesto, guion: <code>/ordenes-compra</code>. Nada de <code>/Pedidos</code> ni <code>/orden_compra</code>.</li><li><strong>Sin verbos en la ruta.</strong> El método ya dice qué pasa (m4-a4): <code>POST /pedidos</code>, no <code>/pedidos/crear</code>.</li><li><strong>El identificador va en la ruta</strong>: <code>/pedidos/42</code>. Los filtros van en la query (m4-a11): <code>/pedidos?estado=pendiente</code>.</li><li><strong>Anida como máximo dos niveles</strong>: <code>/clientes/7/pedidos</code> se entiende; <code>/clientes/7/pedidos/42/items/3/descuentos</code> es un laberinto.</li><li><strong>Versión desde el día uno</strong>: <code>/api/v1/...</code> (m4-a28).</li><li><strong>Una sola forma de error</strong> para toda la API: mismo JSON, mismo campo.</li></ul><p>El CRUD completo de un recurso, en seis líneas:</p><pre><code>GET    /api/v1/pedidos              → lista (con paginación)\nGET    /api/v1/pedidos/42           → uno\nPOST   /api/v1/pedidos              → crea, responde 201 + Location\nPATCH  /api/v1/pedidos/42           → modifica los campos enviados\nPUT    /api/v1/pedidos/42           → reemplaza completo\nDELETE /api/v1/pedidos/42           → borra, responde 204</code></pre><p>Y una respuesta de lista que no se rompe al crecer:</p><pre><code>HTTP/1.1 200 OK\nContent-Type: application/json\n\n{\"datos\":[{\"id\":42,\"total\":350}],\"pagina\":1,\"total\":137}</code></pre><p><strong>Advertencia real:</strong> una URL difícil de adivinar no protege nada. <code>/api/v1/pedidos/42</code> se prueba con 41, 43 y 44 en un bucle de tres líneas. Cada endpoint debe verificar permiso por sí mismo (m4-a15), idealmente con reglas en la base (m4-b22). Y no devuelvas la fila completa \"por si acaso\": si la tabla tiene <code>costo_interno</code> o <code>notas_privadas</code>, acabas de filtrar tu negocio.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Es una <strong>oficina de trámites</strong>. Hay una ventanilla para pagar, otra para recoger documentos y otra para dar de baja un servicio. Cada una tiene un número y atiende una sola cosa. Si mezclas trámites en la misma ventanilla, la fila se detiene y nadie sabe qué entregar.</p><p>El endpoint es esa ventanilla con su letrero: <em>método + ruta</em>. Y el letrero debe decir qué trámite es, no \"ventanilla número 7\". Si el usuario (o la IA) tiene que preguntar qué hace cada ventanilla, el diseño falló.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Diseña las ventanillas de un negocio de pedidos antes de escribir una línea de código. Empieza por la lista y verifica cada una con curl:</p><pre><code>curl.exe -i https://api.tusitio.mx/api/v1/pedidos\ncurl.exe -i https://api.tusitio.mx/api/v1/pedidos/42\ncurl.exe -i https://api.tusitio.mx/api/v1/pedidos/999999\ncurl.exe -i -X DELETE https://api.tusitio.mx/api/v1/pedidos/42</code></pre><p>Lee los códigos, no solo el cuerpo: la lista debe dar <code>200</code>; el pedido inexistente, <code>404</code>; el borrado sin token, <code>401</code>; y un método que la ruta no admite, <code>405 Method Not Allowed</code>. Ese último código es el que casi nadie configura, y es el que le dice a un integrador que se equivocó de ventanilla.</p><p>Después abre <strong>F12 → Network</strong> en tu propia app y compara las rutas que llama el frontend con la tabla que diseñaste. Si aparece una ruta que no está en la tabla, o hay dos formas de hacer lo mismo, ya tienes deuda técnica visible.</p><p><strong>Advertencia:</strong> no expongas los nombres internos de tus tablas ni IDs autoincrementales en la documentación pública sin pensar en la enumeración. Y recuerda: ocultar una ruta no es autorizar; el permiso se verifica en cada endpoint (m4-a15).</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Actúa como diseñador de APIs. Mi sistema es [describe el negocio] y necesito estas operaciones: [lista]. Propón la tabla de endpoints: método, ruta versionada, qué recibe, qué devuelve, código de estado en éxito y en error, y quién puede llamarlo. Usa sustantivos en plural, sin verbos en la ruta y máximo dos niveles de anidación. Antes de la tabla, hazme las preguntas que te falten sobre permisos y datos sensibles.\"</p></blockquote><p>Si la IA empieza por la tabla sin preguntar por permisos, ya sabes qué le falta: la parte que protege el negocio.</p>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "multiple", pregunta: "¿Cuál es el endpoint correcto para crear un pedido nuevo?", opciones: ["POST /api/v1/pedidos", "GET /api/v1/pedidos/crear", "POST /api/v1/pedidos/crear", "PUT /api/v1/pedidos"], correcta: 0 },
+              { tipo: "relacionar", pares: [["GET /api/v1/pedidos", "Listar pedidos"], ["POST /api/v1/pedidos", "Crear un pedido"], ["PATCH /api/v1/pedidos/42", "Modificar campos del pedido 42"], ["DELETE /api/v1/pedidos/42", "Borrar el pedido 42"]] },
+              { tipo: "completar", frase: "En un endpoint los ____ van en plural y los filtros van en la ____, no en la ruta.", banco: ["sustantivos", "query", "métodos", "cabecera"], respuestas: ["sustantivos", "query"] },
+              { tipo: "vf", afirmacion: "Una URL impredecible como /api/v1/pedidos/9f3a2 es suficiente para proteger los pedidos de otros usuarios.", correcta: false, explicacion: "la oscuridad no es seguridad: los IDs se enumeran o se filtran, y cada endpoint debe verificar permiso por sí mismo (m4-a15)." },
+              { tipo: "quehace", codigo: "POST /api/v1/pedidos/42/crear HTTP/1.1\nHost: api.mitienda.mx\nContent-Type: application/json\n\n{\"cliente\":\"Ana\",\"total\":350}", pregunta: "¿Qué está mal en este endpoint?", opciones: ["Nada, es la forma estándar de crear", "Pone un verbo en la ruta y apunta a un recurso que ya existe: para crear debería ser POST /api/v1/pedidos", "Falta el header Accept", "Debería usar GET porque envía un cuerpo"], correcta: 1 }
+            ]
+          },
+          {
+            id: "m4-a11",
+            titulo: "Parámetros: query, path y body",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Una petición HTTP puede llevar datos en tres lugares distintos, y confundirlos es la causa número uno de APIs que \"no encuentran\" lo que les pides. Los tres:</p><ul><li><strong>Path</strong> (ruta): identifica <em>cuál</em> recurso. En <code>/api/v1/pedidos/42</code>, el <code>42</code> es un parámetro de ruta. Es obligatorio y forma parte de la dirección.</li><li><strong>Query string</strong>: lo que va después del signo <code>?</code>. Filtra, ordena o pagina: <code>/api/v1/pedidos?estado=pendiente&amp;limite=20</code>. Es opcional y cada par es <code>clave=valor</code> unido por <code>&amp;</code>.</li><li><strong>Body</strong> (cuerpo): el contenido que creas o cambias. Va en JSON con <code>POST</code>, <code>PUT</code> o <code>PATCH</code> (m4-a4), nunca en un <code>GET</code>.</li></ul><p>La regla para decidir: <strong>path = cuál; query = cuáles de esos y cómo los quiero; body = qué contiene</strong>. Si el dato identifica un recurso, va en la ruta. Si solo ajusta la consulta, va en la query. Si es el contenido de una creación o un cambio, va en el cuerpo.</p><p>Así se ve una petición que usa los tres a la vez:</p><pre><code>PATCH /api/v1/pedidos/42?notificar=true HTTP/1.1\nHost: api.mitienda.mx\nContent-Type: application/json\nAuthorization: Bearer eyJhbGciOi...\n\n{\"estado\":\"enviado\",\"guia\":\"MX-7781\"}</code></pre><p>El <code>42</code> dice cuál pedido; <code>?notificar=true</code> ajusta el comportamiento; el cuerpo lleva lo que cambia. En Express se leen como <code>req.params.id</code>, <code>req.query.notificar</code> y <code>req.body.estado</code>.</p><p>Dos detalles que muerden. Primero: <strong>todo lo que llega por URL es texto</strong>. <code>?limite=20</code> llega como la cadena <code>\"20\"</code>; si tu código compara con <code>=== 20</code>, falla. Conviértelo y valídalo (m4-a21). Segundo: los caracteres especiales se codifican — un espacio se vuelve <code>%20</code> y una <code>&amp;</code> dentro de un valor, <code>%26</code> —, porque si no, rompen la estructura de la URL.</p><p><strong>Advertencia real:</strong> nunca pongas contraseñas, tokens ni datos personales en la query string. Aunque HTTPS cifre el viaje, la URL completa queda en el historial del navegador, en los logs del servidor y del proxy, y en el header <code>Referer</code> cuando el usuario hace clic en un enlace. Un token en la URL es un token filtrado (m4-a19). Y del otro lado: el <code>id</code> de la ruta no prueba que el recurso sea tuyo; el servidor debe verificar propiedad en cada petición (m4-a15).</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Es un <strong>trámite de archivo</strong>. El <strong>path</strong> es el número de expediente: <em>expediente 42</em>. Sin él no sabes de qué hablas. La <strong>query</strong> es cómo pides la copia: <em>solo las hojas de este año, en orden, las primeras 20</em>. Y el <strong>body</strong> es el formulario que entregas cuando quieres agregar o corregir algo: ahí va el contenido nuevo.</p><p>Si metes el contenido del formulario en el número de expediente, el archivista no sabe qué hacer. Si pides \"expediente 42, año 2026, color azul\" mezclado en el identificador, tampoco. Cada dato tiene su casilla, y elegir la casilla correcta es la mitad del trabajo.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Vas a verlo en vivo. Primero, un path puro:</p><pre><code>curl.exe -i \"https://jsonplaceholder.typicode.com/posts/1\"</code></pre><p>Cambia el <code>1</code> por <code>2</code> y obtienes otro recurso. Ese número es el path param: si lo quitas, la ruta deja de tener sentido y responde <code>404</code>.</p><p>Ahora una query con dos parámetros:</p><pre><code>curl.exe -i \"https://jsonplaceholder.typicode.com/posts?userId=1&amp;_limit=3\"</code></pre><p>Las comillas importan en PowerShell: sin ellas, <code>&amp;</code> se interpreta como un operador y el comando se rompe. La respuesta trae solo los posts del usuario 1, máximo 3. Cambia <code>userId</code> y observa cómo cambia el conjunto, no la ruta.</p><p>Para el body, usa <code>httpbin.org</code>, que devuelve exactamente lo que recibió. Guarda este JSON en un archivo <code>pedido.json</code>:</p><pre><code>{\"cliente\":\"Ana\",\"total\":350}</code></pre><p>Y mándalo así:</p><pre><code>curl.exe -i -X POST \"https://httpbin.org/post\" -H \"Content-Type: application/json\" -d \"@pedido.json\"</code></pre><p>En la respuesta verás un campo <code>json</code> con tus datos y un campo <code>headers</code> con el <code>Content-Type</code> que mandaste. Si olvidas ese header, el servidor recibe texto plano y no JSON: por eso el body y su header viajan juntos (m4-a6).</p><p>Por último, abre <strong>F12 → Network</strong>, haz una búsqueda en tu app y revisa la petición: en <em>Payload</em> verás la query desglosada en una tabla y, si hubo body, el JSON enviado. Ahí compruebas en qué casilla quedó cada dato.</p><p><strong>Advertencia:</strong> los ejemplos públicos son de lectura. No mandes datos reales de clientes a servicios de prueba y no pruebes <code>DELETE</code> contra producción para ver qué pasa. Los logs del servidor guardan la URL completa, con query incluida (m4-a25).</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Tengo este endpoint: [método y ruta]. Necesito mandar estos datos: [lista de campos]. Dime cuáles van en el path, cuáles en la query y cuáles en el body, y justifica cada uno en una línea. Después escríbeme la petición completa en curl para Windows PowerShell y el objeto JSON del body. Si algún campo es un identificador de usuario, un token o un dato sensible, adviérteme antes de ponerlo en la URL.\"</p></blockquote><p>Ese último filtro es el que evita que tu propio prompt te enseñe a filtrar secretos.</p>"
+              }
+            ],
+            ejercicios: [
+              { tipo: "multiple", pregunta: "En <code>GET /api/v1/pedidos/42?incluir=items</code>, ¿qué es cada parte?", opciones: ["42 es un parámetro de ruta e incluir=items es un parámetro de query", "Los dos son parámetros de query", "42 es un parámetro de body e incluir=items es de ruta", "Los dos son parámetros de ruta"], correcta: 0 },
+              { tipo: "relacionar", pares: [["Path", "Identifica cuál recurso, por ejemplo /pedidos/42"], ["Query string", "Filtra, ordena o pagina la respuesta"], ["Body", "Lleva el contenido que se crea o se modifica"], ["Content-Type", "Declara el formato del cuerpo enviado"]] },
+              { tipo: "completar", frase: "El ____ identifica cuál recurso; la ____ filtra u ordena la lista; el ____ lleva el contenido que se crea o se modifica.", banco: ["path", "query", "body", "header"], respuestas: ["path", "query", "body"] },
+              { tipo: "vf", afirmacion: "Puedes mandar la contraseña en la query string porque HTTPS cifra la URL y nadie más la ve.", correcta: false, explicacion: "HTTPS cifra el tránsito, pero la URL completa queda en el historial, en los logs y en el header Referer. Las credenciales van en el body y nunca en la URL (m4-a19)." },
+              { tipo: "quehace", codigo: "PATCH /api/v1/pedidos/42?notificar=true HTTP/1.1\nHost: api.mitienda.mx\nContent-Type: application/json\n\n{\"estado\":\"enviado\"}", pregunta: "¿Qué está pidiendo esta petición?", opciones: ["Cambiar el estado del pedido 42 y solicitar una notificación", "Crear el pedido 42 con estado enviado", "Borrar el pedido 42 y notificar al cliente", "Leer el pedido 42 sin modificarlo"], correcta: 0 }
+            ]
+          },
+          {
+            id: "m4-a12",
+            titulo: "Probar una API sin escribir código",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Para saber si una API funciona no necesitas la interfaz. Ni un formulario, ni un botón, ni una línea de JavaScript. Necesitas mandar la petición y leer la respuesta tal como llega. Eso se hace con una herramienta de cliente HTTP, y hay tres que vas a ver en cualquier equipo: <strong>curl</strong> (un comando que ya viene en Windows, Mac y Linux), <strong>Postman</strong> (una aplicación de escritorio) y <strong>Thunder Client</strong> (una extensión dentro de VS Code).</p><p>Las tres hacen lo mismo: arman una petición HTTP —método, URL, headers y cuerpo (m4-a3)—, la envían y te muestran la respuesta en crudo: el <strong>status</strong>, los headers y el <strong>body</strong>. La diferencia es la comodidad. curl escribe la petición en una línea; Postman y Thunder Client la muestran en campos con nombre y te dejan guardarla.</p><p>¿Por qué probar sin la interfaz? Porque separa dos problemas que en pantalla se ven idénticos. Si el botón de “ver pedidos” no muestra nada, no sabes si falló el servidor o si tu frontend está leyendo mal la respuesta. Si llamas al endpoint directamente y recibes <code>200</code> con datos, el servidor está bien y el problema vive en la interfaz. Si recibes <code>401</code>, el problema es la credencial. Esa separación te ahorra horas.</p><p>Tres piezas hacen que la prueba sea repetible:</p><ul><li><strong>Request guardada.</strong> En Postman y Thunder Client, una petición se guarda con nombre dentro de una colección (“Pedidos / listar”). Mañana la abres y la repites sin reconstruirla.</li><li><strong>Variables de entorno.</strong> La URL base y el token se guardan aparte, como <code>{{baseUrl}}</code> y <code>{{token}}</code>. Cambias de local a producción con un clic y no vuelves a pegar el token en cada request.</li><li><strong>La pestaña de auth.</strong> Ahí eliges “Bearer token” y la herramienta arma el header <code>Authorization</code> por ti, sin que lo escribas a mano (m4-a6).</li></ul><p>Un detalle que casi todos ignoran al principio: mira el <strong>body crudo</strong>, no solo la vista bonita. Postman colorea el JSON y lo formatea; si el servidor devolvió una página de error en HTML o un texto que empieza con <code>&lt;</code>, la vista bonita puede confundirte. La pestaña <em>Raw</em> es la única versión sin maquillaje.</p><p><strong>Dato que se queda:</strong> si la pantalla dice una cosa y el body crudo dice otra, la verdad es el body crudo.</p><p>Te importa aunque la IA escriba el código porque probar es tu forma de auditar. Cuando la IA te entregue un endpoint nuevo, tu primer paso no es conectarlo al frontend: es llamarlo con curl y ver el status. Y cuando algo falle, el texto exacto de la petición es lo mejor que le puedes pegar a la IA para que diagnostique sin adivinar.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Es el <strong>banco de pruebas de un taller de motos</strong>. Antes de montar el motor en la moto, el mecánico lo fija en una bancada, le conecta la manguera de gasolina y los cables del encendido, y lo enciende ahí solo, con el medidor de revoluciones a la vista. No necesita la moto armada, ni las llantas, ni el asiento: necesita saber si el motor prende y qué sale por el escape. Si falla en la bancada, el problema es del motor; si prende bien pero la moto no avanza, el problema está en la transmisión. El status es el medidor; el body es lo que sale por el escape; la petición guardada es la tarjeta con los ajustes clavada en la pared, para repetir la misma prueba mañana; y el pase del técnico es el token: sin él, el motor prende pero el sistema no te deja tocar nada.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Empieza contra un servicio que devuelve un espejo de lo que mandaste, así ves la mecánica completa sin depender de tu propia API:</p><pre><code>curl.exe -i \"https://httpbin.org/get?negocio=tacos&amp;ciudad=puebla\"</code></pre><p>La bandera <code>-i</code> es la importante: incluye los headers de la respuesta, así que ves la primera línea con el status (<code>200</code>) y el <code>Content-Type</code>. Sin <code>-i</code> solo verías el cuerpo y te perderías la mitad de la historia (m4-a5).</p><p>Ahora un POST con cuerpo, en Windows PowerShell:</p><pre><code>curl.exe -i -X POST https://httpbin.org/post -H \"Content-Type: application/json\" -d '{\"correo\":\"ana@ejemplo.mx\"}'</code></pre><p>Las comillas simples del cuerpo son a propósito: en PowerShell evitan pelear con el escapado de las comillas dobles del JSON. Y si tu URL lleva <code>&amp;</code>, enciérrala en comillas dobles o PowerShell la corta ahí mismo.</p><p>El salto a tu API es el mismo comando con el header de autorización:</p><pre><code>curl.exe -i https://api.tacoselevolcan.mx/api/v1/pedidos\ncurl.exe -i https://api.tacoselevolcan.mx/api/v1/pedidos -H \"Authorization: Bearer eyJhbGciOi...\"</code></pre><pre><code>HTTP/1.1 200 OK\nContent-Type: application/json\n\n{\"datos\":[{\"id\":42,\"total\":350,\"estado\":\"pendiente\"}],\"pagina\":1,\"total\":137}</code></pre><p>El primero debe dar <code>401</code>: no mandaste credencial. El segundo, <code>200</code> con la lista. Ese par de comandos, guardado en un archivo de texto, es tu prueba de humo cada vez que tocas el backend.</p><p>En Postman o Thunder Client el flujo es: nueva request, método y <code>{{baseUrl}}/api/v1/pedidos</code>, pestaña <em>Auth</em>, <em>Bearer token</em>, <code>{{token}}</code>, <em>Send</em>. Guarda la request en una colección y el token en un entorno, nunca dentro de la request. Después revisa el status en la esquina y el body en la pestaña <em>Raw</em>.</p><p><strong>Advertencia:</strong> una colección exportada se lleva los tokens que guardaste dentro, y una captura de pantalla de Postman muestra tu <code>Authorization</code> completo. No compartas colecciones ni pantallazos con sesión activa, y usa un entorno de pruebas con datos falsos en lugar de tu token de producción (m4-a19).</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Voy a probar este endpoint antes de conectar el frontend: [método y ruta]. Escríbeme la petición exacta en curl para Windows PowerShell, con headers y un cuerpo de ejemplo con datos falsos. Después dime qué debo ver, campo por campo, para considerarla exitosa: qué status, qué headers y qué forma debe tener el body. Agrega tres peticiones de error a propósito —sin token, con token vencido y con un id inexistente— y qué status espero en cada una. Si en mi ejemplo el token o algún dato sensible queda en la URL o en un log, señálalo.\"</p></blockquote><p>Con esas cuatro peticiones ya tienes una prueba de humo que puedes repetir cada vez que la IA cambie el backend.</p>"
+              }
+            ],
+            ejercicios: [
+              {
+                tipo: "multiple",
+                pregunta: "¿Cuál es la ventaja principal de probar un endpoint con curl o Postman antes de conectar el frontend?",
+                opciones: [
+                  "Que la respuesta llega más rápido",
+                  "Que separas si el problema está en el servidor o en la interfaz",
+                  "Que evita tener que usar HTTPS",
+                  "Que reemplaza la necesidad de una base de datos"
+                ],
+                correcta: 1
+              },
+              {
+                tipo: "relacionar",
+                pares: [
+                  [
+                    "curl",
+                    "Comando de terminal que envía la petición"
+                  ],
+                  [
+                    "Postman",
+                    "Aplicación con colecciones de requests guardadas"
+                  ],
+                  [
+                    "Thunder Client",
+                    "Extensión para probar APIs dentro del editor"
+                  ],
+                  [
+                    "Variables de entorno",
+                    "Guardan la URL base y el token fuera de la request"
+                  ]
+                ]
+              },
+              {
+                tipo: "vf",
+                afirmacion: "Si Postman muestra la respuesta con colores y formato, ya no hace falta revisar el body crudo.",
+                correcta: false,
+                explicacion: "la vista bonita formatea y puede ocultar que el servidor devolvió HTML o texto plano; la pestaña Raw muestra lo que llegó de verdad."
+              },
+              {
+                tipo: "completar",
+                frase: "El ____ dice qué pasó (200, 401, 500) y el ____ trae los datos exactos que respondió el servidor.",
+                banco: [
+                  "status",
+                  "body",
+                  "header",
+                  "token"
+                ],
+                respuestas: [
+                  "status",
+                  "body"
+                ]
+              },
+              {
+                tipo: "quehace",
+                codigo: "curl.exe -i -X DELETE https://api.tacoselevolcan.mx/api/v1/pedidos/42\n\nHTTP/1.1 401 Unauthorized\n\n{\"error\":\"falta el token\"}",
+                pregunta: "¿Qué te dice este resultado?",
+                opciones: [
+                  "Que el pedido 42 no existe",
+                  "Que falta la credencial: la petición viajó sin token, así que el servidor no sabe quién eres",
+                  "Que el método DELETE está prohibido en toda la API",
+                  "Que hay que cambiar DELETE por GET para que funcione"
+                ],
+                correcta: 1
+              }
+            ]
+          },
+          {
+            id: "m4-a13",
+            titulo: "Autenticación I: demostrar quién eres",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p><strong>Autenticar</strong> es comprobar que eres quien dices ser. Nada más. No es decidir qué puedes hacer, no es darte acceso a todo y no es lo mismo que tener permiso. Esa segunda pregunta —qué puedes hacer— se llama <strong>autorización</strong> y es la unidad siguiente (m4-a15). Confundirlas es el error que produce la mayoría de las fugas de datos pequeñas.</p><p>Hay tres familias de pruebas de identidad, y conviene conocerlas porque cada una falla distinto:</p><ul><li><strong>Algo que sabes</strong>: usuario y contraseña, un PIN. Falla cuando se filtra, se reutiliza o se adivina.</li><li><strong>Algo que tienes</strong>: un código <strong>OTP</strong> (one-time password, contraseña de un solo uso) que llega por SMS, WhatsApp o una app autenticadora; también una llave física.</li><li><strong>Algo que eres</strong>: huella, Face ID. Falla si el sensor falla, y no se puede cambiar como una contraseña.</li></ul><p>Cuando pides dos familias distintas —contraseña más código al teléfono— eso es <strong>MFA</strong> (autenticación multifactor). Dos contraseñas no son MFA: son dos veces el mismo factor.</p><p>La tercera vía que ya usaste mil veces es <strong>“Continuar con Google”</strong>. Ahí tu app no ve la contraseña: manda al usuario a Google, Google lo autentica y regresa un comprobante firmado que tu servidor verifica. Ese modelo se llama <strong>OAuth</strong> (y con la capa de identidad encima, OpenID Connect, aunque en la práctica todo el mundo le dice OAuth). La ventaja es que tu sistema nunca toca la contraseña de Google; la desventaja es que dependes de un tercero y de que el usuario tenga cuenta ahí.</p><p>Y aquí está la parte que hay que memorizar: <strong>la autenticación no dice qué puedes hacer</strong>. Un cliente y el dueño del negocio pueden entrar por el mismo formulario, con la misma contraseña válida. Lo que los separa no es el login: es lo que cada endpoint decida después. “Ya inicié sesión” no significa “puedo ver todo”; significa “el sistema sabe quién soy”.</p><p>Por eso los códigos de estado se separan: <code>401</code> es “no sé quién eres” (falta la credencial o es inválida) y <code>403</code> es “sé quién eres, pero no puedes hacer esto” (m4-a5). Un login mal construido es el que responde <code>200</code> con un usuario y luego deja pasar cualquier petición.</p><p>Te importa porque el login es la puerta de tu negocio y las decisiones no las toma la IA: si aceptas registro libre, si exiges teléfono verificado, si permites Google para clientes pero no para empleados, cuántos intentos toleras antes de bloquear (m4-a20). Eso es política del negocio, y solo tú la puedes definir.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Es el <strong>mostrador de documentación antes de abordar</strong>. Ahí no te preguntan a dónde vas: te piden el pasaporte y lo cotejan con tu cara. Eso es autenticarte. Si además piden el segundo documento o el código que llegó a tu teléfono, es el segundo factor. Con eso te imprimen un <strong>pase de abordar</strong>: un comprobante que dice quién eres y a qué vuelo entraste, válido solo para ese vuelo y esa fecha. “Continuar con Google” es presentar un pasaporte emitido por otro país que el mostrador ya reconoce: no tuvo que investigarte, confió en la autoridad que te emitió el documento. Y el pase no te deja entrar a la cabina del piloto: te deja subir a tu asiento. La identidad quedó probada; los permisos son otra puerta, con otro mostrador.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>El login completo son dos peticiones: la que falla y la que funciona. Esta es la que falla:</p><pre><code>POST /api/v1/auth/login HTTP/1.1\nHost: api.tacoselevolcan.mx\nContent-Type: application/json\n\n{\"correo\":\"ana@ejemplo.mx\",\"contrasena\":\"incorrecta\"}</code></pre><pre><code>HTTP/1.1 401 Unauthorized\nContent-Type: application/json\n\n{\"error\":\"correo o contraseña incorrectos\"}</code></pre><p>Fíjate en el mensaje: no dice “esa contraseña no es” ni “el correo no existe”. Es el mismo para los dos casos a propósito. Si el servidor responde “el correo no está registrado”, acabas de regalar una lista de clientes: se prueba un correo a la vez y se anota cuáles existen. Eso se llama enumeración de usuarios.</p><p>La que funciona:</p><pre><code>HTTP/1.1 200 OK\nContent-Type: application/json\n\n{\"access_token\":\"eyJhbGciOi...\",\"expira_en\":900,\"usuario\":{\"id\":7,\"nombre\":\"Ana\",\"rol\":\"cliente\"}}</code></pre><p>Ese <code>access_token</code> es lo que vas a mandar en cada petición siguiente, y de eso trata <strong>m4-a14</strong>. Si tu negocio pide segundo factor, la respuesta del login sería un paso intermedio: <code>{\"requiere_otp\":true,\"reto\":\"r_8f2\"}</code>, y el cliente manda el código en una segunda llamada.</p><p>Con “Continuar con Google” el flujo cambia de forma. El navegador sale hacia Google con un <code>client_id</code>, un <code>redirect_uri</code> y un <code>scope</code>; Google regresa a tu <code>redirect_uri</code> con un <code>code</code> de un solo uso; y tu <strong>servidor</strong> cambia ese código por el perfil del usuario. Ese último paso va en el servidor y no en el navegador, porque incluye un secreto de tu aplicación (m4-a19).</p><p><strong>Advertencia:</strong> nunca registres en logs la contraseña ni el código OTP, y no los pongas en la URL: las URLs quedan en el historial del navegador, en los logs del servidor y en el header <code>Referer</code> (m4-a25). Tampoco reveles en el login si el correo existe. Y aunque la IA te entregue un formulario que “ya funciona”, exige HTTPS: sin él, la contraseña viaja legible por la red.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Voy a implementar el login de [describe el sistema: clientes, empleados, administradores]. Antes de escribir código, hazme un diagrama de pasos de la autenticación que propones: qué prueba de identidad usa, si pide segundo factor, cómo maneja la sesión y qué recibe el frontend. Después dime: qué mensajes de error exactos debo mostrar para no revelar si un correo está registrado, qué datos NO deben quedar en logs, y qué endpoints tendrían que distinguir entre cliente y administrador —sin implementar todavía la autorización, solo marcándolos para la unidad m4-a15—. Si mi diseño acepta un código OTP de seis dígitos, dime cuántos intentos debo permitir y por qué.\"</p></blockquote><p>El último punto separa un login de juguete de uno real: un código de seis dígitos sin límite de intentos se adivina en una tarde.</p>"
+              }
+            ],
+            ejercicios: [
+              {
+                tipo: "multiple",
+                pregunta: "Un usuario con sesión iniciada intenta ver el pedido de otra persona y el servidor lo permite. ¿Qué falló?",
+                opciones: [
+                  "La autenticación: no se validó la contraseña",
+                  "La autorización: se comprobó quién es, pero no si podía ver ese pedido",
+                  "El cifrado de la conexión",
+                  "El código de estado, que debería ser 201"
+                ],
+                correcta: 1
+              },
+              {
+                tipo: "relacionar",
+                pares: [
+                  [
+                    "Contraseña",
+                    "Algo que sabes"
+                  ],
+                  [
+                    "Código OTP",
+                    "Algo que tienes"
+                  ],
+                  [
+                    "Huella o Face ID",
+                    "Algo que eres"
+                  ],
+                  [
+                    "Continuar con Google",
+                    "Identidad confirmada por un tercero de confianza"
+                  ]
+                ]
+              },
+              {
+                tipo: "vf",
+                afirmacion: "Pedir la contraseña dos veces es autenticación de dos factores.",
+                correcta: false,
+                explicacion: "MFA exige dos familias distintas: algo que sabes, algo que tienes o algo que eres. Dos contraseñas son el mismo factor repetido."
+              },
+              {
+                tipo: "completar",
+                frase: "La ____ comprueba quién eres; la ____ decide qué puedes hacer con esa identidad.",
+                banco: [
+                  "autenticación",
+                  "autorización",
+                  "sesión",
+                  "encriptación"
+                ],
+                respuestas: [
+                  "autenticación",
+                  "autorización"
+                ]
+              },
+              {
+                tipo: "quehace",
+                codigo: "HTTP/1.1 401 Unauthorized\n\n{\"error\":\"el correo ana@ejemplo.mx no está registrado\"}",
+                pregunta: "¿Qué problema tiene este mensaje de error?",
+                opciones: [
+                  "Ninguno, es más útil para el usuario",
+                  "Revela si un correo existe en el sistema y permite enumerar clientes; debería ser un mensaje genérico",
+                  "Debería ser 403 porque es un problema de permisos",
+                  "Le falta indicar cuál era la contraseña correcta"
+                ],
+                correcta: 1
+              }
+            ]
+          },
+          {
+            id: "m4-a14",
+            titulo: "Autenticación II: tokens y JWT explicados sin misterio",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Un <strong>token</strong> es una cadena de texto que el servidor te entrega al autenticarte y que presentas en cada petición siguiente como prueba de que ya te identificaste. Viaja en el header <code>Authorization: Bearer &lt;token&gt;</code> (m4-a6). “Bearer” significa literalmente portador: quien lo traiga, entra. Por eso un token es tan delicado como una contraseña, y a veces más, porque da acceso sin pedir nada más.</p><p>El formato más común es <strong>JWT</strong> (JSON Web Token). Se ve como tres bloques de letras separados por puntos:</p><pre><code>eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0MiIsInJvbCI6ImNsaWVudGUiLCJleHAiOjE3NjQwMDAwMDB9.3f9c1a7b8e2d4c6f0a9b1d3e5f7</code></pre><p>Son exactamente tres partes, y cada una tiene un trabajo:</p><ul><li><strong>Header</strong> — cómo está hecho el token: el algoritmo de firma y el tipo (<code>{\"alg\":\"HS256\",\"typ\":\"JWT\"}</code>).</li><li><strong>Payload</strong> — los datos: quién eres y qué aplica a esta sesión. Los campos estándar se llaman <em>claims</em>: <code>sub</code> (el id del usuario), <code>rol</code>, <code>iat</code> (cuándo se emitió), <code>exp</code> (cuándo expira).</li><li><strong>Signature</strong> — la firma: el servidor calcula un hash del header y del payload con una llave secreta. Si alguien cambia un solo carácter del payload, la firma deja de cuadrar y el servidor rechaza el token.</li></ul><p>Aquí está el malentendido que hay que desactivar de una vez: <strong>un JWT está firmado, no cifrado</strong>. Las tres partes son base64url, que es una codificación, no un cifrado. Cualquiera que tenga el token puede pegar el payload en un decodificador y leer tu id, tu rol y tu fecha de expiración. La firma garantiza <em>integridad</em> (nadie lo modificó), no <em>confidencialidad</em> (nadie lo leyó). Conclusión práctica: nunca metas datos sensibles en el payload, ni contraseñas, ni números de tarjeta, ni datos personales que no necesitas.</p><p>Segundo malentendido: <strong>dónde guardarlo</strong>. La tentación es <code>localStorage</code>, porque es fácil. Pero <code>localStorage</code> es legible por cualquier JavaScript de tu página: un solo XSS —un comentario, un script de terceros, una librería comprometida— y el atacante se lleva el token (m4-a29). Si puedes evitarlo, guárdalo en una cookie <code>HttpOnly; Secure; SameSite</code>, que el JavaScript de la página no puede leer (m4-a17). Si tu arquitectura no te deja usar cookies, al menos mantenlo en memoria y acorta su vida.</p><p>Tercer punto: <strong>expiración</strong>. Todo token debe caducar, y pronto: quince minutos es una cifra razonable para uno de acceso, con un <em>refresh token</em> de vida más larga para renovarlo. La razón es que un JWT no se puede cancelar fácilmente: el servidor no lleva una lista de tokens vivos, así que un token robado sirve hasta que expira. Cuanto más corto, menos daño. Si necesitas revocar de inmediato, necesitas estado en el servidor: ahí entras al mundo de las sesiones (m4-a17).</p><p><strong>Dato que se queda:</strong> un JWT no es una caja fuerte, es una carta con sello. Se puede leer completa, pero no se puede alterar sin que se note.</p><p>Te importa porque la IA te va a entregar un login que devuelve un token, y las tres preguntas que debes hacer son siempre las mismas: ¿qué lleva dentro?, ¿cuánto dura? y ¿dónde lo guarda el frontend? Si no te sabes las respuestas, no sabes qué tan expuesto está tu negocio.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Es un <strong>boleto de cine con tres cuerpos desprendibles</strong>. El primero dice cómo está hecho el boleto y con qué tinta se selló. El segundo trae tus datos y la función para la que vale. El tercero es el <strong>sello en seco de la taquilla</strong>: un relieve que no se puede copiar sin el cuño. La puerta no descifra el sello, lo compara con el suyo; si alguien borra tu nombre del segundo cuerpo y escribe otro, el sello deja de coincidir y el de la puerta lo nota de inmediato. Pero nadie te prometió privacidad: el boleto va en la mano, a la vista, y cualquiera en la fila lee a qué función entraste y a qué hora vence. Y si te lo roban, el ladrón entra con tu boleto, porque en la puerta no preguntan por tu cara: piden boleto.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Así se ve un login que devuelve un JWT y una petición que lo usa:</p><pre><code>POST /api/v1/auth/login HTTP/1.1\nContent-Type: application/json\n\n{\"correo\":\"ana@ejemplo.mx\",\"contrasena\":\"...\"}</code></pre><pre><code>HTTP/1.1 200 OK\nContent-Type: application/json\n\n{\"access_token\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0MiIsInJvbCI6ImNsaWVudGUiLCJleHAiOjE3NjQwMDAwMDB9.3f9c1a7b...\",\"token_type\":\"Bearer\",\"expira_en\":900}</code></pre><p>Decodifica el payload con la terminal, sin instalar nada:</p><pre><code>node -e \"const p='eyJzdWIiOiI0MiIsInJvbCI6ImNsaWVudGUiLCJleHAiOjE3NjQwMDAwMDB9'; console.log(Buffer.from(p,'base64url').toString())\"\n{\"sub\":\"42\",\"rol\":\"cliente\",\"exp\":1764000000}</code></pre><p>Ahí lo tienes: legible, sin llave, sin misterio. Ese <code>exp</code> es una fecha Unix en segundos; cuando pase, el servidor debe responder <code>401</code> con “token expirado”. Y date cuenta de algo: el payload dice <code>rol: cliente</code>, pero el rol no lo decide el boleto, lo decide el servidor cuando consulta tus permisos (m4-a15).</p><p>Así se usa el token:</p><pre><code>curl.exe -i https://api.tacoselevolcan.mx/api/v1/pedidos -H \"Authorization: Bearer eyJhbGciOi...\"</code></pre><p>En el navegador, ese header aparece en <strong>F12 → Network → Headers → Request Headers</strong>. Si abres el sitio y no lo ves, el frontend no está mandando la sesión; si lo ves con un token de hace tres días, el problema es la renovación. Copiar una petición con <em>Copy as cURL</em> se lleva el token incluido (m4-a12).</p><p><strong>Advertencia:</strong> pegar un token real en jwt.io o en cualquier decodificador en línea es publicarlo: el payload se lee completo y el token sigue siendo válido hasta que expire. Para revisar uno, decodifícalo en tu máquina con el comando de arriba. Y si tu código guarda el token en <code>localStorage</code>, trátalo como una decisión consciente con riesgo de XSS, no como el camino por defecto (m4-a29).</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Estoy implementando autenticación con JWT en [describe la app: Next.js, Supabase, Express, etc.]. Antes de escribir código, respóndeme: 1) qué claims debe llevar el payload y cuáles NO debo meter porque serían datos sensibles o innecesarios; 2) cuánto debe durar el access token y cómo se renueva; 3) dónde debo guardarlo en mi caso concreto y qué riesgo asumo con cada opción (cookie HttpOnly, localStorage o memoria); 4) qué debe pasar cuando expira y qué cuando el usuario cierra sesión, si un JWT no se puede revocar. Señala cualquier parte de mi diseño donde un token pudiera terminar en un log, en una URL o en el código del cliente.\"</p></blockquote><p>La cuarta pregunta es la que casi nadie hace, y es la que explica por qué “cerrar sesión” a veces no cierra nada.</p>"
+              }
+            ],
+            ejercicios: [
+              {
+                tipo: "multiple",
+                pregunta: "¿Cuál de las tres partes de un JWT impide que alguien cambie el rol de “cliente” a “admin”?",
+                opciones: [
+                  "El header",
+                  "El payload",
+                  "La firma",
+                  "Los puntos que separan las partes"
+                ],
+                correcta: 2
+              },
+              {
+                tipo: "ordenar",
+                instruccion: "Ordena las tres partes de un JWT, de izquierda a derecha:",
+                elementos: [
+                  "Header: algoritmo y tipo de token",
+                  "Payload: claims como sub, rol y exp",
+                  "Signature: firma calculada por el servidor"
+                ]
+              },
+              {
+                tipo: "vf",
+                afirmacion: "Un JWT está cifrado, así que nadie puede leer su contenido sin la llave secreta.",
+                correcta: false,
+                explicacion: "está firmado, no cifrado. Las partes son base64url y cualquiera las decodifica; la firma solo impide modificarlo."
+              },
+              {
+                tipo: "completar",
+                frase: "El JWT está ____ pero no ____: cualquiera puede leer el payload, pero no alterarlo sin romper la firma.",
+                banco: [
+                  "firmado",
+                  "cifrado",
+                  "comprimido",
+                  "hasheado"
+                ],
+                respuestas: [
+                  "firmado",
+                  "cifrado"
+                ]
+              },
+              {
+                tipo: "quehace",
+                codigo: "localStorage.setItem(\"token\", data.access_token);",
+                pregunta: "¿Qué riesgo tiene esta línea?",
+                opciones: [
+                  "Ninguno, localStorage es privado del sitio",
+                  "Cualquier JavaScript inyectado en la página (XSS) puede leer el token y usarlo; conviene una cookie HttpOnly si es posible",
+                  "El token se borra cada vez que se recarga la página",
+                  "localStorage solo funciona en sitios con HTTPS"
+                ],
+                correcta: 1
+              }
+            ]
+          },
+          {
+            id: "m4-a15",
+            titulo: "Autorización: una cosa es quién eres y otra qué puedes hacer",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Si la autenticación responde “¿quién eres?”, la <strong>autorización</strong> responde “¿qué puedes hacer tú, siendo quien eres?”. Son dos preguntas, dos momentos y dos capas de código. Un sistema puede autenticar perfecto y estar abierto de par en par: el login funciona, y cualquier cliente con sesión puede leer los pedidos de todos.</p><p>Se implementa con dos piezas que conviene no confundir:</p><ul><li><strong>Rol</strong>: una etiqueta que agrupa capacidades. <code>admin</code>, <code>empleado</code>, <code>cliente</code>. El modelo se llama RBAC (role-based access control) y es el que usa la mayoría de los negocios pequeños.</li><li><strong>Permiso</strong>: la acción concreta sobre un recurso. <code>pedidos:leer</code>, <code>pedidos:borrar</code>, <code>precios:editar</code>. Los roles son paquetes de permisos.</li></ul><p>La regla que evita desastres es el <strong>mínimo privilegio</strong>: cada quien tiene exactamente lo que necesita para su trabajo, nada más. Un empleado que toma pedidos no necesita borrar clientes; un contador no necesita cambiar precios. Cada permiso de más es una puerta que alguien va a dejar abierta.</p><p>Y ahora el clásico, el error más común de las aplicaciones hechas con prisa: el <strong>IDOR</strong> (Insecure Direct Object Reference). El usuario está logueado, la API verifica su sesión, y la petición <code>GET /api/v1/pedidos/42</code> devuelve el pedido 42 sin preguntar de quién es. Cambias el número a 43 y ves el pedido de otra persona. No hay hackeo sofisticado: es cambiar un número en la URL (m4-a11).</p><p>La causa no es la falta de login: es que el endpoint comprobó <em>identidad</em> y no <em>propiedad</em>. La consulta fue <code>WHERE id = 42</code> cuando debía ser <code>WHERE id = 42 AND cliente_id = 7</code>. En un panel de administración el mismo descuido deja ver la facturación completa de la empresa desde una cuenta de cliente.</p><p>De ahí la regla que hay que tatuarse: <strong>el servidor decide, no la interfaz</strong>. Ocultar el botón de borrar en el HTML no protege nada: cualquiera puede llamar al endpoint con curl y sin botón (m4-a12). La interfaz es una cortesía para el usuario; el permiso es una verificación en el servidor, endpoint por endpoint. Y si además usas una base con RLS, esa es una segunda capa, no un reemplazo (m4-b22).</p><p>Detalle fino: cuando un recurso existe pero no es tuyo, muchos sistemas responden <code>404</code> en lugar de <code>403</code> para no confirmar que el pedido 43 existe. Es una decisión legítima: informa menos. Lo que nunca es legítimo es responder <code>200</code> con los datos ajenos.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Es el <strong>guardarropa de un club</strong>. Al entrar dejas el abrigo y te dan una ficha con un número: la 12. Para recogerlo entregas la ficha. Un buen encargado no se limita a leer el número y buscar el abrigo: coteja la ficha con tu número de socio, porque si solo compara números, cualquiera que memorice un 12 —o que traiga una ficha dibujada— se lleva el abrigo de otro. Eso es exactamente un IDOR: el número de la ficha es el id de la URL. Y el club tiene roles: el socio deja abrigo y pasa al salón, el invitado deja abrigo pero no pasa, el personal entra a la trastienda donde están todos los abrigos. Estar dentro del club no te da la trastienda; ser socio no te convierte en encargado.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Este es el bug en su forma más pequeña y más común:</p><pre><code>GET /api/v1/pedidos/42 HTTP/1.1\nAuthorization: Bearer &lt;token de Ana&gt;\n\nHTTP/1.1 200 OK\n{\"id\":42,\"cliente_id\":7,\"total\":350}</code></pre><p>Y este es el mismo request cambiando un dígito:</p><pre><code>GET /api/v1/pedidos/43 HTTP/1.1\nAuthorization: Bearer &lt;token de Ana&gt;\n\nHTTP/1.1 200 OK\n{\"id\":43,\"cliente_id\":9,\"total\":1280,\"direccion\":\"...\"}</code></pre><p>Ana nunca debió ver el pedido 43. El endpoint sí verificó que el token fuera válido; lo que no verificó es que el pedido le perteneciera. En SQL la diferencia es una línea:</p><pre><code>-- vulnerable: cualquiera con sesión lee cualquier pedido\nSELECT * FROM pedidos WHERE id = 43;\n\n-- correcto: el dueño va en la condición\nSELECT * FROM pedidos WHERE id = 43 AND cliente_id = 7;</code></pre><p>En código, la verificación se ve así (pseudo, para que la reconozcas cuando la IA la escriba):</p><pre><code>const pedido = await db.pedido.findFirst({\n  where: { id, cliente_id: req.usuario.id }\n});\nif (!pedido) return res.status(404).json({ error: \"no encontrado\" });</code></pre><p>Prueba tu propio sistema con dos cuentas: entra con la cuenta A, copia el id de un pedido, sal, entra con la cuenta B y pide ese id con curl (m4-a12). Si recibes datos, tienes IDOR. La prueba toma dos minutos y encuentra fallas que una revisión de pantallas nunca ve.</p><p><strong>Advertencia:</strong> cualquier endpoint que reciba un <code>id</code> por la URL y lo use como única condición de búsqueda es sospechoso, aunque el botón esté oculto y la ruta sea difícil de adivinar. Ocultar no es autorizar, y una URL “rara” no es un permiso: los ids se filtran en correos, capturas de pantalla y logs. Si tus endpoints solo comprueban que hay sesión, no tienes autorización; tienes autenticación con una puerta abierta.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Actúa como auditor de autorización. Te paso la lista de endpoints de mi API: [método, ruta y qué hace cada uno]. Para cada uno dime: 1) qué roles pueden llamarlo; 2) qué condición de propiedad debe cumplirse además del rol (por ejemplo, que el pedido pertenezca al cliente que llama); 3) qué debe responder cuando el recurso existe pero es de otro usuario, y por qué elegirías 403 o 404. Marca en rojo cualquier endpoint que hoy solo verifique que hay sesión. No escribas código: quiero la tabla de reglas primero, para revisarla con el dueño del negocio.\"</p></blockquote><p>Esa tabla es el documento que después le pides implementar a la IA y que tú puedes probar, endpoint por endpoint.</p>"
+              }
+            ],
+            ejercicios: [
+              {
+                tipo: "multiple",
+                pregunta: "Cambias /api/v1/pedidos/42 por /api/v1/pedidos/43 con tu propia sesión y ves el pedido de otro cliente. ¿Cómo se llama esa falla?",
+                opciones: [
+                  "XSS",
+                  "IDOR: referencia directa insegura a un objeto",
+                  "Rate limiting insuficiente",
+                  "Error de CORS"
+                ],
+                correcta: 1
+              },
+              {
+                tipo: "relacionar",
+                pares: [
+                  [
+                    "Rol",
+                    "Agrupa capacidades: admin, empleado, cliente"
+                  ],
+                  [
+                    "Permiso",
+                    "Acción concreta sobre un recurso: pedidos:borrar"
+                  ],
+                  [
+                    "IDOR",
+                    "Pedir el recurso de otro cambiando el id"
+                  ],
+                  [
+                    "Mínimo privilegio",
+                    "Dar solo lo necesario para el trabajo"
+                  ],
+                  [
+                    "403",
+                    "Sé quién eres, pero no puedes hacer esto"
+                  ]
+                ]
+              },
+              {
+                tipo: "vf",
+                afirmacion: "Si el botón de eliminar pedido solo se muestra a los administradores, la operación queda protegida.",
+                correcta: false,
+                explicacion: "la interfaz es solo una cortesía; cualquiera puede llamar el endpoint directamente con curl. El permiso se verifica en el servidor, en cada endpoint (m4-a12)."
+              },
+              {
+                tipo: "completar",
+                frase: "La ____ dice quién eres; la ____ decide qué puedes hacer. Un endpoint que comprueba lo primero pero no lo segundo es vulnerable a ____.",
+                banco: [
+                  "autenticación",
+                  "autorización",
+                  "IDOR",
+                  "XSS"
+                ],
+                respuestas: [
+                  "autenticación",
+                  "autorización",
+                  "IDOR"
+                ]
+              },
+              {
+                tipo: "quehace",
+                codigo: "app.get(\"/api/v1/pedidos/:id\", async (req, res) => {\n  const pedido = await db.pedido.findUnique({\n    where: { id: Number(req.params.id) }\n  });\n  res.json(pedido);\n});",
+                pregunta: "¿Qué le falta a este endpoint?",
+                opciones: [
+                  "Nada: el token ya garantiza que el pedido es suyo",
+                  "Verificar que el pedido pertenezca al usuario que llama (o que sea admin): busca solo por id",
+                  "Cambiar el 200 por un 201",
+                  "Agregar el header Content-Type"
+                ],
+                correcta: 1
+              }
+            ]
+          },
+          {
+            id: "m4-a16",
+            titulo: "Contraseñas: por qué nunca se guardan tal cual",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Cada vez que alguien se registra, tu sistema recibe una contraseña. La pregunta no es si guardarla, sino cómo. Y la respuesta corta es: <strong>no se guarda</strong>. Se guarda una huella de ella, calculada con una función de una sola vía, de modo que el sistema pueda comprobar más tarde si la contraseña coincide sin tener nunca la contraseña.</p><p>Esa función se llama <strong>hash</strong>. Toma cualquier texto y devuelve una cadena de longitud fija. Es determinista (el mismo texto da el mismo hash) y es irreversible: no existe una operación que te devuelva el texto original. El <strong>cifrado</strong> es lo contrario: se puede revertir con la llave correcta. Por eso guardar contraseñas “cifradas” es un error: si tu sistema puede descifrarlas, cualquiera que robe la llave también puede.</p><p>Un hash solo no basta. Si dos usuarios eligen la misma contraseña, tendrían el mismo hash, y una tabla precalculada de millones de contraseñas comunes —una <em>rainbow table</em>— los delataría al instante. La solución es el <strong>salt</strong>: un valor aleatorio distinto para cada usuario que se mezcla con la contraseña antes de calcular el hash y se guarda junto a él. Así, dos contraseñas idénticas producen hashes distintos y la tabla precalculada deja de servir. El salt no es secreto; su trabajo es hacer cada hash único.</p><p>Y falta la velocidad. Un algoritmo como SHA-256 está diseñado para ser rapidísimo: una tarjeta gráfica prueba miles de millones de combinaciones por segundo. Para contraseñas necesitas lo opuesto: <strong>bcrypt</strong> o <strong>argon2</strong> son lentos a propósito y su costo es configurable. Un bcrypt con costo 12 tarda una fracción de segundo; parece poco, pero multiplicado por millones de intentos convierte un ataque de horas en uno de siglos. Nunca uses MD5, SHA-1 ni SHA-256 solos para contraseñas, por muy “seguro” que suene el nombre.</p><p>Ahora la parte que a la gente le cuesta aceptar: <strong>ni el dueño del sistema puede ver las contraseñas, y eso es una virtud</strong>. Si no puedes verlas, no puedes filtrarlas por accidente, no puedes venderlas, no te las pueden robar de un correo y no puedes usarlas como excusa. Cuando un cliente dice “olvidé mi contraseña”, el sistema no la recupera: le ofrece <strong>restablecerla</strong> con un enlace de un solo uso que expira en minutos. El soporte nunca pregunta “¿cuál era tu contraseña?”; eso no es soporte, es una vulnerabilidad con teléfono.</p><p><strong>Dato que se queda:</strong> tu sistema no debe poder decirte la contraseña de nadie. Solo puede decir “coincide” o “no coincide”.</p><p>Te importa porque esto es una decisión de arquitectura, no de estilo. Si la IA te entrega un login que guarda la columna <code>contrasena</code> en la tabla, todo funciona igual de bien y es una bomba de tiempo. Revisar esa columna toma un minuto y evita el día en que te roben la base completa.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Es la <strong>trituradora de papel de una oficina</strong>. Cuando un empleado entrega su hoja con la clave, no la guardas en un cajón: la metes a la trituradora. Lo que queda no se puede volver a armar, ni con paciencia ni con cinta. Para comprobar mañana que la hoja era la correcta, no buscas el original: pides una copia, la trituras con la misma mezcla y comparas el montón con el que guardaste en la bolsa etiquetada. La bolsa es el hash; los recortes de periódico que echaste junto con la hoja son el salt, y por eso dos empleados con la misma clave generan montones diferentes. La trituradora es lenta a propósito, porque si tritura un millón de hojas por segundo, quien robe las bolsas puede probar un millón de claves por segundo. Y nadie en la oficina, ni el dueño del edificio, puede leer lo que quedó: esa es la razón por la que las bolsas no sirven de nada si se las llevan.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Así se ve el error y la corrección en la base de datos:</p><pre><code>-- MAL: la contraseña tal cual, legible para cualquiera con acceso\nINSERT INTO usuarios (correo, contrasena)\nVALUES ('ana@ejemplo.mx', 'Tacos2026!');\n\n-- BIEN: solo el hash, con algoritmo y salt incluidos en la cadena\nINSERT INTO usuarios (correo, contrasena_hash)\nVALUES ('ana@ejemplo.mx', '$2b$12$K9xQ1r7...');</code></pre><p>Ese <code>$2b$12$...</code> no es basura: dice que es bcrypt (<code>2b</code>), que el costo es 12 y que los siguientes caracteres son el salt; el resto es el hash. Toda la información necesaria para verificar está en esa cadena, y ninguna parte permite reconstruir la contraseña.</p><p>En código, el registro y el login son dos llamadas:</p><pre><code>const hash = await bcrypt.hash(contrasena, 12);   // al registrarse\nawait db.usuarios.create({ correo, contrasena_hash: hash });\n\n// al entrar\nconst ok = await bcrypt.compare(contrasena, usuario.contrasena_hash);\nif (!ok) return res.status(401).json({ error: \"correo o contraseña incorrectos\" });</code></pre><p>Nunca compares hashes con <code>===</code> a mano ni escribas tu propia función de hash: <code>bcrypt.compare</code> hace la comparación en tiempo constante y maneja el salt por ti. Y no hashees la contraseña en el navegador “para mayor seguridad”: ese hash viajaría y se convertiría en la nueva contraseña. El hash se calcula en el servidor.</p><p><strong>Advertencia:</strong> una contraseña no debe viajar nunca por correo, ni por WhatsApp, ni en un mensaje de soporte, ni en la URL, ni en un log. Un <code>console.log(req.body)</code> en el login escribe la contraseña en claro en tus logs, y los logs se comparten, se exportan y se filtran (m4-a25). Tampoco la mandes en un correo de bienvenida: el usuario la elige, no se la asignas tú. Y si tu base permite consultar la columna <code>contrasena</code> de un usuario, esa columna no debería existir.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Revisa cómo estoy guardando las contraseñas en [describe el stack: Supabase, Express + Postgres, etc.]. Te pego el código de registro, login y recuperación, sin contraseñas reales. Dime: 1) si estoy usando hash o cifrado, y qué algoritmo exactamente; 2) si el costo o las rondas son adecuados hoy; 3) si el salt es único por usuario; 4) todos los lugares donde una contraseña podría terminar en logs, correos, URLs o en el frontend; 5) cómo debería ser el flujo de “olvidé mi contraseña” para que nadie pueda recuperarla, solo restablecerla. Si mi tabla tiene una columna que guarda la contraseña en claro, dímelo primero y con todas sus letras.\"</p></blockquote><p>Ese último punto parece obvio hasta que ves cuántos proyectos pequeños tienen esa columna “temporal” que se quedó para siempre.</p>"
+              }
+            ],
+            ejercicios: [
+              {
+                tipo: "multiple",
+                pregunta: "¿Cómo debe guardarse una contraseña?",
+                opciones: [
+                  "Cifrada con una llave que solo el administrador conoce",
+                  "Con un hash lento y salt único, como bcrypt o argon2",
+                  "Con SHA-256, que es más seguro que bcrypt",
+                  "En texto plano, pero en una tabla con permisos restringidos"
+                ],
+                correcta: 1
+              },
+              {
+                tipo: "relacionar",
+                pares: [
+                  [
+                    "Hash",
+                    "Una sola vía: no se puede revertir"
+                  ],
+                  [
+                    "Cifrado",
+                    "Reversible con la llave correcta"
+                  ],
+                  [
+                    "Salt",
+                    "Valor único por usuario que hace distinto cada hash"
+                  ],
+                  [
+                    "bcrypt / argon2",
+                    "Lentos a propósito para frenar los ataques"
+                  ],
+                  [
+                    "Restablecer",
+                    "La única forma correcta de “recuperar” una contraseña"
+                  ]
+                ]
+              },
+              {
+                tipo: "vf",
+                afirmacion: "El administrador de la base debe poder ver las contraseñas para ayudar a un cliente que olvidó la suya.",
+                correcta: false,
+                explicacion: "si puede verlas, puede filtrarlas o usarlas. El olvido se resuelve con un enlace de restablecimiento de un solo uso, no con la contraseña original."
+              },
+              {
+                tipo: "completar",
+                frase: "El ____ es irreversible, el ____ es reversible con la llave, y el ____ hace que dos contraseñas iguales produzcan hashes distintos.",
+                banco: [
+                  "hash",
+                  "cifrado",
+                  "salt",
+                  "token"
+                ],
+                respuestas: [
+                  "hash",
+                  "cifrado",
+                  "salt"
+                ]
+              },
+              {
+                tipo: "quehace",
+                codigo: "app.post(\"/api/v1/auth/login\", (req, res) => {\n  console.log(\"intento:\", req.body.correo, req.body.contrasena);\n  // ...\n});",
+                pregunta: "¿Qué problema tiene este código?",
+                opciones: [
+                  "Ninguno, es solo para depurar",
+                  "Escribe la contraseña en claro en los logs, donde cualquiera con acceso los lee",
+                  "Le falta el header Content-Type",
+                  "Debería usar console.error en lugar de console.log"
+                ],
+                correcta: 1
+              }
+            ]
+          },
+          {
+            id: "m4-a17",
+            titulo: "Sesiones vs tokens: dos formas de recordarte",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>HTTP no tiene memoria (m4-a3): cada petición llega sola y el servidor no sabe si la anterior venía del mismo cliente. Pero tu panel de administración necesita saber quién eres en cada clic. Para eso existen dos estrategias, y casi todas las apps usan una de las dos: <strong>sesiones</strong> y <strong>tokens</strong>.</p><p><strong>La sesión vive en el servidor.</strong> Cuando inicias sesión, el servidor crea un registro —usuario 7, entró a las 9:14, expira mañana— y le manda al navegador una cookie con un identificador opaco: <code>sesion=8f3a1c9e7b2d4a6f</code>. Ese valor no significa nada por sí solo; es un número de ficha. En cada petición siguiente el navegador reenvía la cookie y el servidor busca el registro para saber quién eres. El estado está en el servidor; el cliente solo carga la ficha.</p><p><strong>El token vive en el cliente.</strong> El servidor firma un paquete con tus datos —usuario, rol, expiración— y te lo entrega. En cada petición lo mandas en <code>Authorization: Bearer ...</code> y el servidor solo verifica la firma; no consulta ninguna tabla. Eso es <em>stateless</em>: cualquier servidor de tu flota puede atenderte porque no necesita recordar nada. El precio es que el token, una vez emitido, es válido hasta que expira.</p><p>La diferencia se nota el día que quieres <strong>cerrar una sesión</strong>. Con sesión en servidor, revocar es borrar la fila: la siguiente petición con esa cookie recibe <code>401</code> y se acabó. Con token, el servidor ya no tiene dónde borrar: el token sigue siendo matemáticamente válido. Las salidas son dos, y conviene saberlas antes de necesitarlas: expiraciones cortas (15 minutos) con un refresh token que sí se puede revocar, o una lista de tokens quemados que el servidor consulta en cada petición.</p><p>¿Cuál usar en tu proyecto? Si es una app web con panel de administración, un solo servidor y necesitas poder sacar a alguien al instante, la sesión con cookie <code>HttpOnly</code> es la opción aburrida y correcta. Si vas a servir una app móvil, varios servicios o una API para terceros, el token gana porque no obliga a compartir una tabla de sesiones entre todos. Lo que nunca funciona es mezclar las dos a medias: cookie para entrar y token que nadie revoca para salir.</p><p>Te importa aunque la IA escriba el código porque el bug clásico no se ve en pantalla: el botón \"Cerrar sesión\" borra el token del navegador, la interfaz te manda al login y la sesión sigue viva en el servidor. Si alguien copió esa cookie o ese token, entra sin problema. Tú vas a ser quien pregunte: \"¿esto revoca de verdad del lado del servidor?\" (m4-a15).</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Es el guardarropa de un salón de baile contra el boleto de un concierto. En el salón dejas el abrigo y te dan una ficha de plástico con un número: la ficha no describe el abrigo, solo apunta a un perchero que el guardarropa controla. Si la pierdes, pides otra; si el guardarropa cierra, tu abrigo deja de existir para todos — así se revoca una sesión. El boleto de concierto es lo contrario: lleva un sello holográfico y el portero lo mira al trasluz para dejarte pasar, sin llamar a taquilla. Funciona en cualquier puerta y no necesita lista, pero si te lo roban, esa persona entra contigo hasta que termine el evento; para anularlo antes tendrías que repartir a cada portero una lista de boletos quemados.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Así se ve una sesión. El login responde con una cookie y el navegador la reenvía solo en cada petición al mismo dominio:</p><pre><code>HTTP/1.1 200 OK\nSet-Cookie: sesion=8f3a1c9e7b2d4a6f; HttpOnly; Secure; SameSite=Lax; Max-Age=86400\n\n{\"ok\":true,\"usuario\":\"ana\"}</code></pre><pre><code>GET /api/mis-pedidos HTTP/1.1\nHost: api.tacoselvolcan.mx\nCookie: sesion=8f3a1c9e7b2d4a6f</code></pre><p>Y así se ve un token. La diferencia de fondo es que aquí el servidor no guarda nada: solo comprueba la firma.</p><pre><code>POST /api/login\nContent-Type: application/json\n\n{\"correo\":\"ana@tacoselvolcan.mx\",\"password\":\"...\"}</code></pre><pre><code>HTTP/1.1 200 OK\nContent-Type: application/json\n\n{\"token\":\"eyJhbGciOiJIUzI1NiJ9.eyJ1c3VhcmlvIjo3LCJyb2wiOiJhZG1pbiIsImV4cCI6MTc2MTg0fQ.7sK2...\"}</code></pre><p>Abre DevTools y decodifica la parte de en medio de un JWT (con <code>atob()</code> o en jwt.io) para ver su contenido. El contenido del token es algo así: <code>{\"usuario\":7,\"rol\":\"admin\",\"exp\":1761840000}</code>. Eso es todo: el token <strong>no está cifrado, está firmado</strong>. Cualquiera puede leerlo; solo el servidor puede alterarlo sin que la firma se rompa. Por eso jamás metas contraseñas, datos de tarjeta ni información privada de tus clientes dentro de un token.</p><p><strong>Advertencia:</strong> guardar el token en <code>localStorage</code> lo deja al alcance de cualquier script inyectado en la página. Una cookie <code>HttpOnly</code> no se puede leer desde JavaScript, y esa es justamente su ventaja (m4-a29). Y si tu logout solo borra el token del navegador sin avisar al servidor, la sesión sigue abierta del otro lado.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Estoy decidiendo entre sesiones con cookie y tokens JWT para [describe tu app: panel web, app móvil, API para terceros]. Hazme una tabla comparativa con estas filas: dónde vive el estado, cómo se revoca una sesión activa, qué pasa si hay varios servidores, qué pasa si roban la credencial y cuánto trabajo da implementarlo. Después recomiéndame una opción para mi caso y dime exactamente qué configuración de cookie necesito (HttpOnly, Secure, SameSite) o, si eliges token, cuánto debe durar y cómo se refresca. No escribas código todavía: primero quiero entender la decisión y sus riesgos.\"</p></blockquote><p>La pregunta que separa una respuesta buena de una copiada es \"cómo se revoca\": si la IA no la contesta, el diseño está incompleto.</p>"
+              }
+            ],
+            ejercicios: [
+              {
+                tipo: "multiple",
+                pregunta: "En una sesión clásica con cookie, ¿dónde vive el estado de quién eres y qué puedes hacer?",
+                opciones: [
+                  "En la cookie del navegador, que guarda el rol y los permisos",
+                  "En un registro del servidor; la cookie solo lleva un identificador",
+                  "En el HTML de la página, en un campo oculto",
+                  "En la URL, para que el servidor la lea más rápido"
+                ],
+                correcta: 1
+              },
+              {
+                tipo: "relacionar",
+                pares: [
+                  [
+                    "Cookie de sesión",
+                    "El servidor guarda el estado y el cliente lleva un identificador"
+                  ],
+                  [
+                    "Token firmado",
+                    "El cliente lleva el estado y el servidor solo verifica la firma"
+                  ],
+                  [
+                    "Revocar una sesión",
+                    "Borrar el registro en el servidor"
+                  ],
+                  [
+                    "Revocar un token",
+                    "Expiración corta o lista de tokens bloqueados"
+                  ]
+                ]
+              },
+              {
+                tipo: "vf",
+                afirmacion: "Un JWT está cifrado, así que nadie puede leer los datos que lleva dentro.",
+                correcta: false,
+                explicacion: "un JWT está firmado, no cifrado: cualquiera puede decodificar su contenido. La firma impide alterarlo, no leerlo; por eso no debe llevar contraseñas ni datos sensibles (m4-a16)."
+              },
+              {
+                tipo: "completar",
+                frase: "En una sesión, el ____ guarda el estado y el navegador solo lleva un ____; en un token, el estado viaja ____ dentro de la credencial.",
+                banco: [
+                  "servidor",
+                  "identificador",
+                  "firmado",
+                  "cifrado"
+                ],
+                respuestas: [
+                  "servidor",
+                  "identificador",
+                  "firmado"
+                ]
+              },
+              {
+                tipo: "quehace",
+                codigo: "Set-Cookie: sesion=8f3a1c9e7b2d4a6f; HttpOnly; Secure; SameSite=Lax",
+                pregunta: "¿Qué impide la bandera <code>HttpOnly</code> en esta cookie?",
+                opciones: [
+                  "Que la cookie viaje sin cifrar por la red",
+                  "Que JavaScript en la página pueda leer la cookie con document.cookie",
+                  "Que la cookie se guarde más de un día",
+                  "Que el usuario pueda cerrar sesión"
+                ],
+                correcta: 1
+              }
+            ]
+          },
+          {
+            id: "m4-a18",
+            titulo: "CORS: el error que todo principiante sufre",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Estás probando tu primer formulario conectado a una API. El código se ve bien, el servidor está prendido, y la consola escupe esto:</p><pre><code>Access to fetch at 'https://api.tacoselvolcan.mx/api/platillos' from origin 'http://localhost:5173' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.</code></pre><p>Lo primero que hay que entender: <strong>CORS lo aplica el navegador</strong>, no el servidor. Tu página vive en un <em>origen</em> —la combinación de protocolo, dominio y puerto: <code>http://localhost:5173</code>. La API vive en otro: <code>https://api.tacoselvolcan.mx</code>. Por la política de mismo origen, JavaScript no puede leer respuestas de otro origen a menos que ese otro origen lo autorice explícitamente. Esa autorización se llama CORS (Cross-Origin Resource Sharing).</p><p>El detalle que desarma la confusión: <strong>la petición sí llegó</strong>. El servidor la procesó y contestó; incluso puede haber creado el pedido. Lo que pasa es que el navegador, al ver la respuesta, revisa si trae el header <code>Access-Control-Allow-Origin</code> con tu origen. Si no viene, no te entrega el cuerpo y lo reporta como error. Por eso en la pestaña Network puedes ver un <code>200</code> que la consola marca como fallido. No es contradicción: es el navegador protegiéndote.</p><p>La solución no está en el frontend. Se arregla en el servidor, agregando el header correcto:</p><pre><code>Access-Control-Allow-Origin: http://localhost:5173</code></pre><p>Si además mandas cookies, no puedes usar <code>*</code>: el servidor debe nombrar el origen exacto y agregar <code>Access-Control-Allow-Credentials: true</code>. Y si la petición \"no es simple\" —lleva <code>Content-Type: application/json</code>, usa <code>PUT</code> o <code>DELETE</code>, o manda <code>Authorization</code>— el navegador primero hace una pregunta con el método <code>OPTIONS</code>. Eso es el <strong>preflight</strong>: \"¿me dejas mandar un POST con JSON desde este origen?\". Si el servidor no contesta esa pregunta con los headers de permiso, la petición real nunca sale.</p><p>Y una advertencia que vale oro: <strong>CORS no protege tu API</strong>. Cualquiera con <code>curl</code> ignora CORS por completo, porque no hay navegador de por medio. CORS protege al usuario de que una página ajena lea datos con su sesión; la seguridad de tus datos depende de autenticación, autorización y validación (m4-a13, m4-a21). Confundir las dos cosas es el segundo error más caro después de creer que se arregla en el frontend.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Es la ventanilla de una paquetería. El paquete con tu pedido sí llegó y está sobre el mostrador, pero la ventanilla no te lo entrega si el remitente no anotó a tu empresa como destinataria autorizada. La ventanilla no opina sobre el contenido: solo compara tu nombre con la lista. Y aquí la ventanilla es el navegador, no el servidor: el servidor ya armó el paquete y lo dejó listo; quien se niega a dártelo es la ventanilla. Por eso gritarle al mostrador no sirve de nada: hay que pedirle al remitente que agregue tu nombre a la lista.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Reproduce el error en dos minutos y compruébalo tú mismo. Abre la consola de cualquier página en <code>https://ejemplo.com</code> y ejecuta:</p><pre><code>fetch(\"https://api.github.com/users/octocat\")\n  .then(r => r.json())\n  .then(d => console.log(d))\n  .catch(e => console.error(\"falló:\", e))</code></pre><p>Verás el bloqueo por CORS en la consola. Ahora haz la misma petición desde la terminal:</p><pre><code>curl.exe -i https://api.github.com/users/octocat</code></pre><p>Responde <code>200</code> sin quejarse. Esa diferencia es la prueba de que el problema no es el servidor ni tu código de red: es el navegador aplicando una regla que solo existe dentro de él.</p><p>El arreglo del lado del servidor, en Express, se ve así:</p><pre><code>const cors = require(\"cors\");\n\napp.use(cors({\n  origin: [\"http://localhost:5173\", \"https://tacoselvolcan.mx\"],\n  credentials: true\n}));</code></pre><p>Y así se ve el preflight en Network: primero un <code>OPTIONS</code> con <code>Access-Control-Request-Method: POST</code>, y la respuesta que lo autoriza:</p><pre><code>HTTP/1.1 204 No Content\nAccess-Control-Allow-Origin: http://localhost:5173\nAccess-Control-Allow-Methods: GET, POST, PATCH, DELETE\nAccess-Control-Allow-Headers: Content-Type, Authorization\nAccess-Control-Max-Age: 86400</code></pre><p><strong>Advertencia:</strong> no \"arregles\" esto desactivando la seguridad del navegador, instalando extensiones que la apagan ni poniendo <code>Access-Control-Allow-Origin: *</code> con cookies en producción. Lo primero esconde el síntoma en tu máquina y explota en la del cliente; lo segundo es imposible (el navegador rechaza el comodín con credenciales) o, si lo combinas mal, abre la puerta a que cualquier sitio lea datos con la sesión de tus usuarios (m4-a19).</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Tengo este error de CORS en la consola: [pega el mensaje completo]. Mi frontend corre en [URL y puerto] y mi API está en [URL]. Antes de darme código, explícame quién bloquea qué y confírmame si la petición llegó al servidor. Después dame la configuración exacta del lado del servidor para [framework: Express, FastAPI, Next.js...], nombrando mi origen real, sin usar comodín si hay cookies, y muéstrame cómo debería verse el preflight OPTIONS en la pestaña Network. Si mi problema no es CORS sino otro, dímelo en vez de inventar una solución.\"</p></blockquote><p>Ese último renglón te salva de la IA que \"arregla\" CORS cuando el error real era un 500 camuflado.</p>"
+              }
+            ],
+            ejercicios: [
+              {
+                tipo: "multiple",
+                pregunta: "¿Quién aplica la política de CORS?",
+                opciones: [
+                  "El servidor de la API, antes de procesar la petición",
+                  "El navegador, al decidir si entrega la respuesta a la página",
+                  "El proveedor de internet",
+                  "El framework del frontend"
+                ],
+                correcta: 1
+              },
+              {
+                tipo: "quehace",
+                codigo: "curl.exe -i https://api.tacoselvolcan.mx/api/platillos\n\nHTTP/1.1 200 OK\nContent-Type: application/json\n\n[{\"id\":1,\"nombre\":\"Volcán Especial\"}]",
+                pregunta: "La misma petición funciona con curl pero falla con CORS en el navegador. ¿Qué confirma eso?",
+                opciones: [
+                  "Que el servidor está caído y curl usa caché",
+                  "Que el servidor responde bien y es el navegador quien bloquea la lectura por falta de permiso del origen",
+                  "Que curl tiene permisos especiales que el navegador no puede tener",
+                  "Que hace falta cambiar el método a POST"
+                ],
+                correcta: 1
+              },
+              {
+                tipo: "vf",
+                afirmacion: "El error de CORS se corrige agregando el header Access-Control-Allow-Origin en el fetch del frontend.",
+                correcta: false,
+                explicacion: "ese header lo debe enviar el servidor en su respuesta. Si el frontend pudiera autorizarse a sí mismo, la política no serviría de nada."
+              },
+              {
+                tipo: "completar",
+                frase: "Antes de un POST con JSON o un header Authorization, el navegador manda una petición ____ al servidor; el header ____ indica qué orígenes pueden leer la respuesta.",
+                banco: [
+                  "OPTIONS",
+                  "Access-Control-Allow-Origin",
+                  "HEAD",
+                  "Authorization"
+                ],
+                respuestas: [
+                  "OPTIONS",
+                  "Access-Control-Allow-Origin"
+                ]
+              },
+              {
+                tipo: "relacionar",
+                pares: [
+                  [
+                    "Origin",
+                    "Protocolo, dominio y puerto desde donde sale la petición"
+                  ],
+                  [
+                    "Preflight",
+                    "Petición OPTIONS que pregunta si se permite la petición real"
+                  ],
+                  [
+                    "Access-Control-Allow-Origin",
+                    "Lista de orígenes que pueden leer la respuesta"
+                  ],
+                  [
+                    "Access-Control-Allow-Credentials",
+                    "Permite que la petición incluya cookies"
+                  ]
+                ]
+              }
+            ]
+          },
+          {
+            id: "m4-a19",
+            titulo: "Variables de entorno: dónde viven los secretos",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Tu código y tu configuración son dos cosas distintas, aunque vivan en la misma carpeta. El código es la receta: cómo se calcula un total, cómo se valida un correo. La configuración son los datos del ambiente: la contraseña de la base de datos, la llave de Supabase, la del servicio de IA, la URL de la API. Mezclarlos parece cómodo hasta el día que compartes el proyecto.</p><p>La solución estándar es un archivo <code>.env</code>: texto plano con pares <code>NOMBRE=valor</code>, uno por línea. El runtime lo carga al arrancar y tu código lo lee por nombre, casi siempre con <code>process.env.NOMBRE</code> en Node. Nunca escribes la llave en el código; escribes \"dame la llave que se llama SUPABASE_SERVICE_KEY\" y el ambiente te la entrega.</p><p>De ahí salen tres reglas que no se negocian:</p><ul><li><strong>El <code>.env</code> real nunca se sube al repositorio.</strong> Va en <code>.gitignore</code> desde el primer commit, antes de que exista.</li><li><strong>Se versiona el <code>.env.example</code></strong>: el mismo archivo con valores falsos o vacíos. Sirve para que otro —o tú en otra máquina— sepa qué variables necesita el proyecto sin ver ninguna llave.</li><li><strong>En producción no hay <code>.env</code> en tu laptop.</strong> Las variables se configuran en el panel del proveedor: Netlify, Vercel, Supabase, Railway. El deploy las inyecta al construir o al arrancar.</li></ul><p>El detalle que más se pasa por alto: en el frontend no existen secretos. Todo lo que compile hacia el navegador es público, incluidas las variables. En Vite solo se exponen las que empiezan con <code>VITE_</code>; en Next.js, las que empiezan con <code>NEXT_PUBLIC_</code>. Ese prefijo no es un candado: es un letrero que dice \"esto lo va a leer cualquiera con Ctrl+U\". La llave de servicio de Supabase, la de OpenAI o la de Stripe van en el servidor, siempre (m4-a8).</p><p>¿Por qué te importa si la IA escribe el código? Porque el primer prompt de muchas personas es \"pégame la llave aquí para que funcione\" y la IA, obediente, la escribe en un archivo que luego se sube a GitHub. Un repositorio público con una llave de AWS o de Supabase es una invitación con fecha. Los bots que rastrean GitHub no duermen, y una llave filtrada se cosecha en minutos: alguien levanta servidores a tu nombre, descarga tu base completa o te consume el saldo de IA en una noche.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Es una tienda de renta de autos. El contrato con tarifas, modelos y horarios se puede pegar en la vitrina: es información que cualquiera puede leer sin consecuencias, igual que tu código. Las llaves físicas de cada auto no se pegan en el parabrisas: viven en la caja fuerte del mostrador y solo el encargado las saca cuando hacen falta. Una variable de entorno es esa caja fuerte: el código pide \"la llave del auto 3\" por su nombre y el sistema se la pasa por dentro, sin que la llave aparezca nunca en la vitrina. El que pega la llave en el parabrisas \"para no perderla\" no está organizando nada: está regalando el auto al primer visitante.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Así se ve un proyecto sano. El <code>.env</code> real se queda en tu máquina; el <code>.env.example</code> es el que se commitea, con los nombres y sin los valores:</p><pre><code># .env  (NO se sube al repo)\nSUPABASE_URL=https://xyzcompany.supabase.co\nSUPABASE_SERVICE_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6...\nOPENAI_API_KEY=sk-proj-abc123def456...\nPORT=3000</code></pre><pre><code># .env.example  (SÍ se sube)\nSUPABASE_URL=https://tu-proyecto.supabase.co\nSUPABASE_SERVICE_KEY=tu_service_key_aqui\nOPENAI_API_KEY=tu_api_key_aqui\nPORT=3000</code></pre><p>Y así se ve el <code>.gitignore</code> que impide el accidente. El orden importa: esto se crea antes del primer commit, no después del primer susto.</p><pre><code>.env\n.env.local\n.env.*.local\nnode_modules/</code></pre><p>En el código, lee la variable y falla fuerte si no existe. Es mejor un servidor que no arranca que uno que arranca sin llave y falla a la primera venta:</p><pre><code>const llave = process.env.SUPABASE_SERVICE_KEY;\nif (!llave) {\n  console.error(\"Falta SUPABASE_SERVICE_KEY en el entorno\");\n  process.exit(1);\n}</code></pre><p>Si la olvidas, el error típico es <code>Error: supabaseUrl is required.</code> o un <code>undefined</code> que viaja hasta la consulta. Ahora la prueba de fuego: <code>git check-ignore -v .env</code>. Si responde con la regla que lo ignora, estás bien; si no responde nada, tu archivo está a un <code>git add .</code> de distancia del mundo.</p><p><strong>Advertencia:</strong> si una llave ya se subió, borrar el commit no la borra. Queda en el historial, en los forks, en los cachés y en los mirrors. El orden correcto es: <strong>rotar la llave en el proveedor</strong> (generar una nueva y desactivar la vieja), revisar el consumo y los accesos de esos días, sacar el secreto del código y limpiar el historial. Y si la pegaste en un chat con IA, una captura o un issue, trátala como filtrada aunque el repo sea privado (m4-a3).</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Voy a conectar [servicio: Supabase, OpenAI, Stripe] a mi proyecto de [stack]. Antes de escribir código, dime: 1) qué variables de entorno necesito y qué nombre exacto debe tener cada una; 2) en qué archivo del proyecto se leen y si ese archivo corre en el servidor o en el navegador; 3) si algún prefijo tipo VITE_ o NEXT_PUBLIC_ haría que la llave termine expuesta en el bundle; 4) qué debo poner en .gitignore y en .env.example. No escribas ningún valor real en el código ni en tus ejemplos: usa placeholders. Al final, dame los pasos para configurar esas variables en el panel de [Netlify/Supabase/Vercel].\"</p></blockquote><p>Pedir explícitamente los placeholders evita que la IA te devuelva un archivo con una llave inventada que luego alguien pega tal cual en producción.</p>"
+              }
+            ],
+            ejercicios: [
+              {
+                tipo: "multiple",
+                pregunta: "¿Cuál de estos archivos debe estar en .gitignore desde el primer commit?",
+                opciones: [
+                  ".env.example",
+                  ".env",
+                  "README.md",
+                  "package.json"
+                ],
+                correcta: 1
+              },
+              {
+                tipo: "vf",
+                afirmacion: "Si subiste una llave por accidente, basta con borrar ese commit del repositorio para que quede segura.",
+                correcta: false,
+                explicacion: "la llave sigue en el historial, en forks, cachés y mirrors. Lo primero es rotarla en el proveedor; limpiar el historial es el segundo paso, no el único."
+              },
+              {
+                tipo: "completar",
+                frase: "El archivo ____ guarda los valores reales y no se sube; el código los lee con ____; el archivo ____ documenta los nombres con valores falsos.",
+                banco: [
+                  ".env",
+                  "process.env",
+                  ".env.example",
+                  "package.json"
+                ],
+                respuestas: [
+                  ".env",
+                  "process.env",
+                  ".env.example"
+                ]
+              },
+              {
+                tipo: "ordenar",
+                instruccion: "Ordena la respuesta correcta al descubrir que filtraste una llave en GitHub:",
+                elementos: [
+                  "Rotar la llave en el proveedor y desactivar la vieja",
+                  "Revisar consumo y accesos de los últimos días",
+                  "Quitar el secreto del código y agregar .env a .gitignore",
+                  "Limpiar el historial del repositorio y avisar si hubo datos expuestos"
+                ]
+              },
+              {
+                tipo: "quehace",
+                codigo: "// en un componente del frontend\nconst key = import.meta.env.VITE_SUPABASE_SERVICE_KEY;\nconst supabase = createClient(url, key);",
+                pregunta: "¿Qué está mal en este código?",
+                opciones: [
+                  "Nada, las variables de entorno siempre son privadas",
+                  "La llave de servicio queda dentro del bundle que descarga el navegador: cualquiera la lee y salta las reglas de la base de datos",
+                  "Falta el header Content-Type",
+                  "VITE_ hace que la llave se cifre automáticamente"
+                ],
+                correcta: 1
+              }
+            ]
+          },
+          {
+            id: "m4-a20",
+            titulo: "Rate limiting: protegerte del abuso",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p><strong>Rate limiting</strong> es poner un techo al número de peticiones que un cliente puede hacer en un periodo. No es un castigo: es una regla de la casa, como el máximo de boletos por persona. Se define con tres datos: <em>quién</em> (una IP, un usuario, una llave de API), <em>cuánto</em> (5 intentos, 100 peticiones) y <em>en qué ventana</em> (por minuto, por 15 minutos, por día).</p><p>Sin ese techo pasan cuatro cosas, y las cuatro cuestan dinero. Primero, <strong>fuerza bruta</strong>: un script prueba 10,000 contraseñas contra <code>/api/login</code> en un rato; si tu contraseña es \"Tacos2026\", no importa qué tan bien la hayas hasheado (m4-a16). Segundo, <strong>scraping</strong>: alguien se lleva tu menú completo, tus precios y tu lista de clientes. Tercero, <strong>facturas</strong>: cada llamada a un modelo de IA, cada SMS o cada consulta a un servicio externo se cobra; un endpoint abierto es una tarjeta sin PIN. Cuarto, <strong>bucles</strong>: tu propio frontend con un <code>useEffect</code> mal escrito puede mandar 40 peticiones por segundo sin que nadie sea malintencionado.</p><p>Cuando el límite se rebasa, la respuesta correcta es <code>429 Too Many Requests</code>, no un <code>403</code> ni un <code>500</code>. Y viene con un header que casi nadie usa y que cambia la experiencia: <code>Retry-After</code>, los segundos que hay que esperar. Un cliente bien hecho lo lee y espera; uno mal hecho reintenta en loop y se queda bloqueado más tiempo.</p><pre><code>HTTP/1.1 429 Too Many Requests\nRetry-After: 847\nRateLimit-Limit: 5\nRateLimit-Remaining: 0\n\n{\"error\":\"demasiados intentos de inicio de sesión\",\"reintentaEn\":847}</code></pre><p>El límite por IP es el más fácil de implementar y el más injusto: en una oficina, un café o una escuela, cientos de personas comparten una sola IP pública (NAT), y si bloqueas esa IP, bloqueas a todos. Por eso los endpoints sensibles se limitan por <strong>cuenta</strong> (el correo que intenta entrar) además de por IP, y las APIs serias limitan por <strong>llave</strong>. En producción, detrás de un proxy o balanceador, hay que configurar <code>trust proxy</code> para leer la IP real; si no, todos tus usuarios parecen uno solo.</p><p>Te importa porque es la diferencia entre un martes normal y un lunes con la cuenta de OpenAI en cero. Y porque el endpoint más atacado de cualquier app no es el catálogo: es el login. Pregúntale a la IA \"¿qué pasa si alguien manda 10,000 peticiones aquí?\" y si la respuesta es \"nada\", falta trabajo (m4-a19).</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Es la taquilla de un cine con un solo empleado. Puede atender a mucha gente, pero no a cualquier ritmo: vende máximo cuatro boletos por persona y, si alguien insiste en comprar cincuenta para revenderlos, le dice \"ahora no, regrese en treinta segundos\". El empleado no cierra el cine ni se enoja: pone un límite por persona, por ventana de tiempo, y avisa cuándo volver — ese aviso es el <code>Retry-After</code>. Sin taquilla que cuente, el revendedor se lleva la función completa mientras tus clientes reales hacen fila y se van.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Prueba el abuso en tu propio login de desarrollo. Un ciclo de seis intentos con contraseña equivocada es suficiente para que un límite bien puesto se active:</p><pre><code>for ($i=1; $i -le 6; $i++) {\n  curl.exe -s -o NUL -w \"%{http_code}\\n\" -X POST https://api.tacoselvolcan.mx/api/login `\n    -H \"Content-Type: application/json\" `\n    -d '{\"correo\":\"ana@tacoselvolcan.mx\",\"password\":\"equivocada\"}'\n}</code></pre><p>Sin límite verás seis <code>401</code>. Con límite verás cuatro o cinco <code>401</code> y luego un <code>429</code> con <code>Retry-After</code>. Ese cambio en la sexta línea es todo el objetivo de la unidad.</p><p>La implementación típica en Express ocupa tres líneas y va solo en las rutas sensibles, no en toda la app:</p><pre><code>const rateLimit = require(\"express-rate-limit\");\n\nconst limiteLogin = rateLimit({\n  windowMs: 15 * 60 * 1000,\n  max: 5,\n  standardHeaders: true,\n  message: { error: \"demasiados intentos, espera unos minutos\" }\n});\n\napp.post(\"/api/login\", limiteLogin, intentarLogin);</code></pre><p>Y del lado del cliente, la regla es igual de importante: cuando recibas <code>429</code>, <strong>no reintentes de inmediato</strong>. Lee <code>Retry-After</code>, espera ese tiempo y, si insistes, hazlo con <em>backoff</em> exponencial (1 s, 2 s, 4 s, 8 s) y un poco de aleatoriedad para que diez clientes no despierten al mismo tiempo.</p><p><strong>Advertencia:</strong> un endpoint de IA sin límite es una factura abierta. Un solo script puede mandar miles de prompts por hora y tú lo descubres cuando llega el correo del proveedor. Pon límite por usuario y por día, y un tope de gasto en el panel del proveedor: el límite técnico y el financiero son dos cinturones distintos (m4-a19).</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Audita mi API para abuso. Estas son mis rutas: [pega la lista con métodos]. Para cada una dime: qué daño causa alguien que la llama 10,000 veces, si debe llevar rate limiting, con qué identidad conviene contar (IP, usuario o llave), qué ventana y qué cupo recomiendas, y qué código de estado y headers debe devolver al excederse. Prioriza login, registro, recuperación de contraseña y cualquier ruta que llame a un servicio de pago o de IA. Al final dame la configuración para [framework] y un plan de backoff para el cliente, sin usar comodines ni bloqueos permanentes.\"</p></blockquote><p>Pedir el daño concreto antes del cupo evita el límite decorativo: el que se pone en el catálogo y no en el login.</p>"
+              }
+            ],
+            ejercicios: [
+              {
+                tipo: "multiple",
+                pregunta: "¿Qué código de estado corresponde cuando un cliente rebasa el límite de peticiones?",
+                opciones: [
+                  "403 Forbidden",
+                  "429 Too Many Requests",
+                  "500 Internal Server Error",
+                  "401 Unauthorized"
+                ],
+                correcta: 1
+              },
+              {
+                tipo: "quehace",
+                codigo: "HTTP/1.1 429 Too Many Requests\nRetry-After: 60\n\n{\"error\":\"demasiados intentos\"}",
+                pregunta: "Tu app recibe esta respuesta. ¿Qué debe hacer?",
+                opciones: [
+                  "Reintentar de inmediato hasta que pase",
+                  "Esperar al menos 60 segundos antes de volver a intentar",
+                  "Cambiar el método a GET y repetir",
+                  "Mostrar un error 500 al usuario"
+                ],
+                correcta: 1
+              },
+              {
+                tipo: "vf",
+                afirmacion: "Limitar por dirección IP es suficiente, porque cada usuario tiene una IP única.",
+                correcta: false,
+                explicacion: "muchas personas comparten una IP pública por NAT (oficinas, escuelas, cafés). Por eso se limita también por cuenta o por llave de API."
+              },
+              {
+                tipo: "completar",
+                frase: "Al rebasar el límite se responde ____; el header ____ indica cuántos segundos esperar antes de reintentar.",
+                banco: [
+                  "429",
+                  "Retry-After",
+                  "503",
+                  "Cache-Control"
+                ],
+                respuestas: [
+                  "429",
+                  "Retry-After"
+                ]
+              },
+              {
+                tipo: "ordenar",
+                instruccion: "Ordena cómo se diseña un límite para el endpoint de login:",
+                elementos: [
+                  "Identificar el daño: fuerza bruta y costo por intento",
+                  "Elegir la identidad a contar: correo y IP",
+                  "Definir ventana y cupo: 5 intentos cada 15 minutos",
+                  "Responder 429 con Retry-After al excederse",
+                  "Medir los bloqueos y ajustar el cupo"
+                ]
+              }
+            ]
+          },
+          {
+            id: "m4-a21",
+            titulo: "Validación: nunca confíes en lo que manda el cliente",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Tu formulario tiene <code>required</code>, <code>type=\"number\"</code> y un <code>min=\"1\"</code>. Se ve blindado. Pero el formulario no es la puerta: es un letrero. Cualquiera puede abrir DevTools, cambiar el HTML, y mandar la petición con <code>curl</code> sin pasar por tu página. El servidor recibe exactamente lo que el cliente quiso mandar, incluido un precio de <code>-500</code> o una cantidad de <code>99999</code>.</p><p>Por eso la regla es una sola: <strong>valida en el servidor, siempre</strong>. La validación del navegador es experiencia de usuario —evita que alguien escriba letras en un campo de teléfono y tenga que esperar un viaje de red para enterarse—, no seguridad. La del servidor es la que decide qué entra a tu base de datos.</p><p>Validar significa revisar, como mínimo, cinco cosas por campo: que <strong>exista</strong> (los obligatorios), que sea del <strong>tipo</strong> correcto (número, texto, booleano), que respete la <strong>longitud</strong> (un nombre de 2 a 80 caracteres), que esté en <strong>rango</strong> (cantidad entre 1 y 20, precio mayor a 0) y que cumpla el <strong>formato</strong> (correo, teléfono, fecha). Y una sexta que casi todos olvidan: rechazar campos que no esperabas, para que nadie te cuele un <code>rol: \"admin\"</code> en el cuerpo de un registro.</p><p>Hay dos ideas que se confunden y conviene separar. <strong>Validar</strong> es decidir si el dato se acepta o se rechaza; si no cumple, respondes <code>400</code> o <code>422</code> con el campo y el motivo. <strong>Sanitizar</strong> es neutralizar lo peligroso cuando el dato ya es válido pero se va a mostrar o a consultar: escapar HTML al pintarlo y usar consultas parametrizadas al buscar en la base. Un nombre como <code>&lt;script&gt;alert(1)&lt;/script&gt;</code> es un nombre válido —letras y símbolos—; lo que no puede pasar es que el navegador lo ejecute (m4-a29).</p><p>Y hay una validación que no es de forma sino de negocio, y es la que más dinero salva: <strong>el precio no lo pone el cliente</strong>. Si tu API acepta el total que llega en el cuerpo, alguien manda <code>{\"total\":1}</code> por un pedido de 500 pesos. El servidor debe leer los precios de la base, multiplicar por la cantidad validada y calcular el total él mismo. Lo mismo con el <code>usuario_id</code>: sale del token verificado, nunca del cuerpo (m4-a15).</p><p>Te importa porque la IA genera validaciones incompletas con una facilidad enorme: revisa que el campo exista y sigue adelante. Tú eres quien pregunta \"¿y si mando un negativo? ¿y si mando texto donde va un número? ¿y si mando el precio yo?\". Esa pregunta, hecha antes del deploy, es la diferencia entre un bug y una pérdida (m4-a20).</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Es la báscula de la Central de Abastos. Llega un camión con un manifiesto que dice \"cinco toneladas de jitomate\" y el guardia de la entrada no firma el manifiesto: sube el camión a la báscula y pesa. El manifiesto lo escribió el que trae la mercancía, así que es una promesa, no un hecho. Si el camión trae piedras envueltas en cajas de jitomate, la báscula lo delata antes de que entre al mercado. La validación del servidor es esa báscula: el cuerpo de la petición es el manifiesto del cliente, y por muy oficial que se vea, no se firma sin pesarlo.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Así se ve el agujero. Un pedido con cantidad negativa y precio negativo entra como si nada:</p><pre><code>curl.exe -i -X POST https://api.tacoselvolcan.mx/api/pedidos `\n  -H \"Content-Type: application/json\" `\n  -H \"Authorization: Bearer ...\" `\n  -d '{\"platilloId\":12,\"cantidad\":-3,\"precio\":-500}'</code></pre><pre><code>HTTP/1.1 201 Created\nContent-Type: application/json\n\n{\"id\":88,\"total\":1500,\"estado\":\"pendiente\"}</code></pre><p>Un pedido con cantidad <code>-3</code> y precio <code>-500</code> acaba de generar un saldo a favor. Ese es el bug que no aparece en la demo y sí en la primera semana de producción.</p><p>Con validación en el servidor, la misma petición se rechaza antes de tocar la base:</p><pre><code>const Pedido = z.object({\n  platilloId: z.number().int().positive(),\n  cantidad: z.number().int().min(1).max(20)\n});\n\nconst r = Pedido.safeParse(req.body);\nif (!r.success) {\n  return res.status(422).json({ error: \"datos inválidos\", campos: r.error.flatten().fieldErrors });\n}</code></pre><pre><code>HTTP/1.1 422 Unprocessable Entity\nContent-Type: application/json\n\n{\"error\":\"datos inválidos\",\"campos\":{\"cantidad\":\"debe ser un entero entre 1 y 20\"}}</code></pre><p>Fíjate en lo que ya no está en el cuerpo: el precio. No se valida porque no se recibe. El servidor lo busca en la tabla <code>platillos</code> y calcula el total. Esa es la validación que ninguna IA pone si no se la pides.</p><p><strong>Advertencia:</strong> nunca confíes en un dato que el cliente eligió, ni siquiera si el campo está oculto o deshabilitado en el HTML: los dos se editan en un segundo. Tampoco en el <code>usuario_id</code>, el <code>rol</code> ni el <code>total</code>. Y si tu validación solo vive en el navegador, no tienes validación: tienes una sugerencia.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Revisa este endpoint como si fueras un atacante y luego como defensor. Ruta: [método y ruta]. Cuerpo que recibe: [pega el JSON de ejemplo]. 1) Dime qué campos acepta hoy y cuáles debería rechazar por tipo, longitud, rango y formato. 2) Señala cualquier dato que el cliente no debería poder decidir (precios, totales, ids de usuario, roles, estado) y de dónde debe salir en su lugar. 3) Escríbeme el esquema de validación en [Zod/Joi/Pydantic], con los mensajes de error en español. 4) Dame diez payloads maliciosos para probarlo, incluidos negativos, ceros, texto donde va un número y campos extra. 5) Explica qué se valida y qué se sanitiza al mostrar la respuesta.\"</p></blockquote><p>Los diez payloads son el entregable más valioso: convierten la revisión en una prueba que puedes repetir después de cada cambio.</p>"
+              }
+            ],
+            ejercicios: [
+              {
+                tipo: "multiple",
+                pregunta: "¿Dónde debe vivir la validación que protege tus datos?",
+                opciones: [
+                  "En el HTML, con required y min",
+                  "En el servidor, antes de escribir en la base de datos",
+                  "En el CSS, marcando el campo en rojo",
+                  "En el navegador, con JavaScript del frontend"
+                ],
+                correcta: 1
+              },
+              {
+                tipo: "quehace",
+                codigo: "POST /api/pedidos\nContent-Type: application/json\n\n{\"platilloId\":12,\"cantidad\":-3,\"precio\":-500}\n\nHTTP/1.1 201 Created\n{\"id\":88,\"total\":1500}",
+                pregunta: "¿Qué riesgo concreto revela esta respuesta?",
+                opciones: [
+                  "Ninguno, el total se calculó bien",
+                  "La API aceptó cantidad y precio negativos: se puede generar saldo a favor o alterar el inventario",
+                  "Falta el header Authorization",
+                  "El pedido debería responder 500"
+                ],
+                correcta: 1
+              },
+              {
+                tipo: "vf",
+                afirmacion: "Si el campo tiene required y type=\"number\" en el HTML, el servidor puede confiar en que el dato llegó bien.",
+                correcta: false,
+                explicacion: "el HTML se edita en DevTools y la petición se puede hacer con curl. La validación del navegador es UX; la del servidor es la que protege la base (m4-c)."
+              },
+              {
+                tipo: "completar",
+                frase: "Validar es decidir si el dato se ____ o se ____; sanitizar es ____ lo peligroso al mostrarlo o consultarlo.",
+                banco: [
+                  "acepta",
+                  "rechaza",
+                  "neutralizar",
+                  "cifrar"
+                ],
+                respuestas: [
+                  "acepta",
+                  "rechaza",
+                  "neutralizar"
+                ]
+              },
+              {
+                tipo: "relacionar",
+                pares: [
+                  [
+                    "Validar tipo y rango",
+                    "Rechazar con 422 lo que no cumple el esquema"
+                  ],
+                  [
+                    "Sanitizar al mostrar",
+                    "Escapar HTML para que no se ejecute un script"
+                  ],
+                  [
+                    "Consulta parametrizada",
+                    "Evitar que el texto del usuario se interprete como SQL"
+                  ],
+                  [
+                    "Calcular el total en el servidor",
+                    "Impedir que el cliente decida el precio"
+                  ]
+                ]
+              }
+            ]
+          },
+          {
+            id: "m4-a22",
+            titulo: "Webhooks: cuando el servidor te busca a ti",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Hasta ahora tu app siempre ha hecho lo mismo: <strong>preguntar</strong>. Llama, espera y recibe. El <strong>webhook</strong> invierte la dirección. Tú le entregas al proveedor una URL tuya y el proveedor te manda un <code>POST</code> a esa URL en el instante en que pasa algo: un pago aprobado, un mensaje de WhatsApp entrante, un pedido nuevo en la tienda, un push a tu repositorio. El que avisa es el otro.</p><p>La alternativa se llama <em>polling</em>: preguntar cada 30 segundos \"¿ya pagó?\". Son casi tres mil preguntas al día para recibir un aviso que quizá nunca llega, y cuando llega puede llegar hasta medio minuto tarde. El webhook no es una tecnología nueva: es <strong>HTTP al revés</strong> (m4-a3). Sigue siendo un <code>POST</code> con headers y cuerpo JSON (m4-a7), solo que ahora el cliente es el proveedor y el servidor eres tú (m4-a2).</p><p>Recibir webhooks trae tres obligaciones que no se negocian:</p><ul><li><strong>Verificar la firma.</strong> El proveedor firma cada envío con un secreto que solo ustedes dos conocen. Si no verificas, cualquiera que descubra tu URL manda un <code>POST</code> que dice \"pago aprobado\" y se lleva los tacos gratis.</li><li><strong>Responder 200 rápido.</strong> El proveedor espera unos segundos; si no contestas o contestas con error, reintenta. Tu respuesta no es para el usuario: es un acuse de recibo.</li><li><strong>Ser idempotente.</strong> El mismo evento puede llegar dos o tres veces —por un reintento, por una falla de red, porque el proveedor no vio tu <code>200</code>—. Recibirlo dos veces no debe cobrar dos veces ni mandar dos veces el pedido a la cocina.</li></ul><p>La forma estándar de cumplir la tercera: cada evento trae un <code>id</code>. Antes de procesar, revisa si ese <code>id</code> ya existe en una tabla de eventos; si existe, respondes <code>200</code> y te retiras sin tocar nada. Si no existe, haces el trabajo y lo registras <strong>en la misma transacción</strong> (m4-b18): o quedan los dos, el cambio y el registro, o no queda ninguno.</p><p>Por qué te importa si la IA escribe el handler: los webhooks son la puerta por donde entra el dinero. \"Recibe el webhook y marca el pedido como pagado\" es una instrucción que la IA cumple al pie de la letra —sin firma, sin idempotencia y sin transacción, porque no se lo pediste—. Esa omisión se ve en producción como pedidos duplicados o comida regalada, y nunca aparece en la prueba feliz.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Es la <strong>alarma de humo conectada a la estación de bomberos</strong>. Sin alarma tendrías que llamar cada cinco minutos para preguntar si hay fuego: eso es polling. Con alarma, el sensor vive en tu bodega y, en el instante en que detecta humo, transmite el aviso. Tú no llamas a nadie; el aviso te busca.</p><p>Pero la central no se fía de cualquier llamada: cada sensor trae un <strong>código de instalación</strong> que se verifica antes de mover un camión —esa es la firma—. Y si el sensor repite el aviso tres veces porque no le llegó la confirmación, la central no manda tres camiones: anota \"incendio en bodega 3\" una sola vez y cierra el reporte. Eso es idempotencia. La central tampoco se queda veinte minutos al teléfono: confirma \"recibido\" y cuelga; el trabajo pesado lo hace después, con el parte en la mano.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Así llega un webhook de pago, en crudo:</p><pre><code>POST /webhooks/pagos HTTP/1.1\nHost: api.tacoselvolcan.mx\nContent-Type: application/json\nX-Signature: t=1732485600,v1=9c1f4b7e...\n\n{\"id\":\"evt_8812\",\"tipo\":\"pago.aprobado\",\"datos\":{\"pedido_id\":42,\"monto\":350}}</code></pre><p>El handler mínimo verifica la firma antes de creer nada del cuerpo, revisa el <code>id</code> del evento, actualiza el pedido y responde <code>200</code>:</p><pre><code>const crypto = require(\"crypto\");\n\napp.post(\"/webhooks/pagos\", express.raw({ type: \"application/json\" }), async (req, res) =&gt; {\n  const firma = req.headers[\"x-signature\"];              // viene como t=...,v1=...\n  const esperada = crypto\n    .createHmac(\"sha256\", process.env.WEBHOOK_SECRET)\n    .update(req.body)                                    // cuerpo crudo, sin parsear\n    .digest(\"hex\");\n\n  if (!firma || !firma.includes(esperada)) return res.sendStatus(401);\n\n  const evento = JSON.parse(req.body);\n  const yaProcesado = await db.eventos.findOne({ id: evento.id });\n  if (yaProcesado) return res.sendStatus(200);           // reintento: no hacer nada\n\n  await db.transaccion(async (tx) =&gt; {\n    await tx.pedidos.update(evento.datos.pedido_id, { estado: \"pagado\" });\n    await tx.eventos.insert({ id: evento.id, tipo: evento.tipo });\n  });\n\n  res.sendStatus(200);                                   // acuse rápido\n});</code></pre><p>Dos detalles de producción: compara la firma con una función de tiempo constante en vez de un <code>includes</code> simple, y no mandes correos ni generes facturas antes de responder. Lo que tarde más de un par de segundos, a una cola; el webhook solo confirma.</p><p><strong>Advertencia:</strong> nunca confíes en un webhook por su origen aparente ni por un parámetro en la URL como <code>?token=abc</code>. La única prueba válida es la firma calculada con el secreto. Y jamás pongas ese secreto en el código ni en el repositorio: si se filtra, cualquiera puede fabricar avisos de pago (m4-a19).</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Voy a recibir webhooks de [proveedor] en la ruta /webhooks/[evento]. Genera el handler completo con: 1) verificación de firma HMAC usando el secreto de una variable de entorno, sobre el cuerpo crudo; 2) idempotencia con una tabla de eventos y el id del aviso; 3) transacción para que el cambio y el registro queden juntos; 4) respuesta 200 inmediata y trabajo pesado fuera de la respuesta; 5) log con id del evento y resultado, sin datos del cliente. Dime también qué tabla necesito crear y qué pruebas debo correr para simular un envío duplicado.\"</p></blockquote><p>Ese prompt convierte \"recibe el webhook\" en un contrato verificable. Si la IA se salta la firma o la tabla de eventos, tienes con qué reclamarle.</p>"
+              }
+            ],
+            ejercicios: [
+              {
+                tipo: "multiple",
+                pregunta: "¿Por qué hay que verificar la firma de un webhook antes de procesarlo?",
+                opciones: [
+                  "Para que el mensaje llegue más rápido",
+                  "Porque sin firma cualquiera que conozca la URL puede mandar un aviso falso",
+                  "Porque el proveedor cobra menos si se verifica",
+                  "Para comprimir el cuerpo JSON"
+                ],
+                correcta: 1
+              },
+              {
+                tipo: "ordenar",
+                instruccion: "Ordena lo que hace un handler de webhook bien construido:",
+                elementos: [
+                  "Llega el POST del proveedor",
+                  "Verificas la firma con el secreto",
+                  "Compruebas si el id del evento ya se procesó",
+                  "Actualizas el pedido y registras el evento en una transacción",
+                  "Respondes 200 para cerrar la conversación"
+                ]
+              },
+              {
+                tipo: "vf",
+                afirmacion: "Si tu handler responde 500, el proveedor puede reintentar el envío y tu lógica correr dos veces: por eso hay que ser idempotente.",
+                correcta: true,
+                explicacion: "los reintentos existen justamente para los casos en que no respondiste 2xx; sin idempotencia, el reintento duplica el efecto."
+              },
+              {
+                tipo: "completar",
+                frase: "En un webhook la dirección se invierte: el ____ te avisa a ti, en lugar de que tu app ____ cada cierto tiempo.",
+                banco: [
+                  "proveedor",
+                  "pregunte",
+                  "usuario",
+                  "responda"
+                ],
+                respuestas: [
+                  "proveedor",
+                  "pregunte"
+                ]
+              },
+              {
+                tipo: "quehace",
+                codigo: "curl.exe -X POST https://api.tacoselvolcan.mx/webhooks/pagos -H \"Content-Type: application/json\" -d \"{\\\"tipo\\\":\\\"pago.aprobado\\\",\\\"pedido_id\\\":42}\"",
+                pregunta: "Tu handler acepta esta petición y marca el pedido 42 como pagado. ¿Qué falla?",
+                opciones: [
+                  "Nada: es exactamente lo que manda el proveedor",
+                  "Falta la firma: cualquiera puede mandar este POST y regalar pedidos",
+                  "El método debería ser GET",
+                  "Falta el header Accept"
+                ],
+                correcta: 1
+              }
+            ]
+          },
+          {
+            id: "m4-a23",
+            titulo: "Serverless: backend sin administrar servidores",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p><strong>Serverless</strong> no significa que no haya servidores: significa que tú no los administras. Escribes una función, la subes a una plataforma y la plataforma se encarga de todo lo demás. Cuando llega una petición, levanta un entorno, mete tu código, lo ejecuta y lo apaga. Si nadie llama, no hay nada encendido y no pagas nada.</p><p>Los nombres que vas a escuchar: <strong>AWS Lambda</strong> (el original), <strong>Netlify Functions</strong> y <strong>Vercel</strong> (las que usarás en tus proyectos), <strong>Cloudflare Workers</strong> y <strong>Supabase Edge Functions</strong> (que corren cerca del usuario, no en un solo país). Todas ofrecen lo mismo con distinto envoltorio: una URL, un archivo con una función, un <code>deploy</code>.</p><p>El costo de ese arranque se llama <strong>cold start</strong>. Si tu función no se ha usado en un rato, la plataforma tiene que crear el contenedor, cargar el runtime y tu código: entre 200 milisegundos y un par de segundos antes de que tu primera línea corra. Las siguientes peticiones encuentran el entorno caliente y responden al instante. Dato memorable: <strong>el servidor no desaparece; lo que desaparece es tu trabajo de administrarlo</strong>.</p><p>El modelo de cobro también cambia: pagas por invocación y por tiempo de ejecución, no por tener una máquina prendida todo el mes. Una función que nadie llama cuesta cero. Una que se llama un millón de veces al mes ya es una línea en la factura que conviene calcular antes, no después.</p><p>Y hay límites que definen el diseño. Cada plataforma impone un <strong>tiempo máximo por invocación</strong> —10 segundos es el valor típico en Netlify, y AWS Lambda llega a 15 minutos—, una memoria fija y un paquete de código de tamaño acotado. Además, cada invocación es <strong>sin estado</strong>: lo que guardaste en una variable de memoria puede no existir en la siguiente llamada. Por eso <strong>no conviene</strong> serverless para procesos largos (generar un PDF de 200 páginas, procesar video, importar cincuenta mil filas), para conexiones que deben seguir abiertas (WebSocket, colas de horas), para cargas altas y constantes —donde un servidor fijo sale más barato— ni cuando necesitas control fino del sistema operativo o binarios pesados.</p><p>Para ti, que diriges a la IA, esto es el terreno donde va a vivir el webhook de la unidad anterior (m4-a22) y donde la IA te va a proponer media docena de soluciones distintas. Saber que existe un reloj corriendo y un estado que no persiste es lo que evita que apruebes un diseño que se corta a la mitad.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Es la <strong>planta de luz de renta</strong>. No la tienes encendida todo el año quemando diésel: está instalada, apagada, y en el segundo en que se va la luz arranca sola, alimenta la casa y se apaga cuando vuelve. Pagas por el tiempo que trabaja, no por tenerla ahí parada.</p><p>Ese arranque tiene un costo: entre que se va la luz y que el motor toma velocidad pasan unos segundos en los que la casa está a oscuras. Ese es el <strong>cold start</strong>: la primera petición después de un rato de silencio paga el precio de encender; las siguientes encuentran el motor caliente. Y como toda planta rentada, tiene el tanque limitado: si el trabajo dura más de lo que aguanta, se apaga a media tarea. Por eso no le pides que alimente una fábrica.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Una función de Netlify es un archivo dentro de <code>netlify/functions/</code>. La plataforma le da una URL pública y la ejecuta cuando alguien la llama:</p><pre><code>// netlify/functions/pagar.js\nexports.handler = async (event) =&gt; {\n  const { pedidoId, monto } = JSON.parse(event.body);\n\n  if (!pedidoId || !monto) {\n    return { statusCode: 400, body: JSON.stringify({ error: \"faltan datos\" }) };\n  }\n\n  const inicio = Date.now();\n  await db.pedidos.update(pedidoId, { pagado: true });\n  console.log(JSON.stringify({ fn: \"pagar\", ms: Date.now() - inicio }));\n\n  return { statusCode: 200, body: JSON.stringify({ ok: true }) };\n};</code></pre><p>Después del deploy queda disponible en <code>https://tacoselvolcan.netlify.app/.netlify/functions/pagar</code> y la llamas con curl o con <code>fetch</code> como cualquier endpoint. Prueba dos veces seguidas y compara los tiempos en el panel de la función: la primera llamada del día suele tardar varias veces más que la segunda. Ese es el cold start medido con tus propios ojos, y es la razón por la que no pones una función detrás de cada clic de tu interfaz.</p><p><strong>Advertencia:</strong> una función desplegada es una <strong>URL pública</strong>. Si no verifica quién llama, es un endpoint abierto que cualquiera puede usar para gastar tu cuota o mover tus datos. Y jamás metas llaves dentro del archivo: van en variables de entorno de la plataforma (m4-a19). Tampoco pongas ahí una llave de servicio de tu base si la función la puede llamar el navegador sin autenticación.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Tengo esta tarea de backend: [describe]. Antes de recomendarme serverless, hazme cuatro preguntas: cuánto puede tardar en el peor caso, cuántas veces se va a llamar al día, si necesita recordar algo entre llamadas y si depende de binarios o procesos del sistema. Con mis respuestas dime si conviene una función serverless o un servidor fijo, qué plataforma encaja (Netlify, Vercel, Supabase Edge), cuál es el límite de tiempo y memoria, y qué pasa exactamente si me paso. Si no conviene serverless, dilo sin adornos.\"</p></blockquote><p>Ese prompt invierte la conversación: la IA deja de venderte la tecnología de moda y empieza a evaluar tu caso.</p>"
+              }
+            ],
+            ejercicios: [
+              {
+                tipo: "multiple",
+                pregunta: "¿Cuál de estas tareas NO conviene resolver con una función serverless?",
+                opciones: [
+                  "Recibir un webhook de pago y actualizar un pedido",
+                  "Generar un video de 40 minutos con ffmpeg",
+                  "Validar un formulario y guardar un registro",
+                  "Responder un endpoint que consulta una tabla"
+                ],
+                correcta: 1
+              },
+              {
+                tipo: "vf",
+                afirmacion: "Serverless significa que ya no hay servidores de por medio.",
+                correcta: false,
+                explicacion: "los servidores siguen existiendo: lo que desaparece es tu trabajo de administrarlos. Por eso hay cold start y límites."
+              },
+              {
+                tipo: "completar",
+                frase: "El retraso extra de la primera invocación después de un rato sin uso se llama ____, y cada ejecución es ____: la memoria no sobrevive entre llamadas.",
+                banco: [
+                  "cold start",
+                  "sin estado",
+                  "warm start",
+                  "con estado"
+                ],
+                respuestas: [
+                  "cold start",
+                  "sin estado"
+                ]
+              },
+              {
+                tipo: "ordenar",
+                instruccion: "Ordena lo que pasa en un cold start:",
+                elementos: [
+                  "Llega la primera petición después de un rato sin uso",
+                  "La plataforma levanta un contenedor y arranca el runtime",
+                  "Se carga tu código y se abre la conexión a la base",
+                  "Tu función ejecuta y responde",
+                  "La instancia queda disponible para la siguiente petición"
+                ]
+              },
+              {
+                tipo: "quehace",
+                codigo: "exports.handler = async () =&gt; {\n  const reporte = await generarPdfDe200Paginas();\n  return { statusCode: 200, body: reporte };\n};",
+                pregunta: "¿Cuál es el riesgo principal de esta función?",
+                opciones: [
+                  "Que el PDF salga con otro diseño",
+                  "Que exceda el límite de tiempo de la plataforma y se corte a la mitad",
+                  "Que no se pueda llamar por HTTPS",
+                  "Que consuma demasiada memoria del navegador"
+                ],
+                correcta: 1
+              }
+            ]
+          },
+          {
+            id: "m4-a24",
+            titulo: "Node.js y Express en concepto",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p><strong>Node.js</strong> es el motor de JavaScript fuera del navegador. El mismo lenguaje que usaste para pintar tarjetas (m3-b10) ahora corre en una computadora que puede abrir archivos, hablar con una base de datos y escuchar en un puerto para recibir peticiones. El navegador te da <code>window</code> y el DOM; Node te da el sistema de archivos y la red. Ninguno tiene lo del otro, y esa diferencia es la frontera entre cliente y servidor (m4-a2).</p><p><strong>Express</strong> es un framework que va encima de Node y resuelve dos cosas: <strong>rutas</strong> y <strong>middleware</strong>. Sin Express tendrías que escribir a mano el servidor HTTP, leer el cuerpo, separar la URL y decidir qué hacer con cada combinación. Con Express eso se reduce a declarar: \"cuando llegue un <code>GET</code> a esta ruta, ejecuta esta función\".</p><p>La forma mínima de una ruta es siempre la misma: <code>app.get(\"/ruta\", handler)</code>. El <code>handler</code> recibe dos objetos: <code>req</code>, la petición —con <code>req.params</code>, <code>req.query</code>, <code>req.body</code> y <code>req.headers</code>, justo las tres casillas de m4-a11— y <code>res</code>, la respuesta, con la que decides el código y el cuerpo: <code>res.json(datos)</code>, <code>res.status(404).json(...)</code>. Cambia <code>get</code> por <code>post</code>, <code>patch</code> o <code>delete</code> y tienes el resto de los métodos (m4-a4).</p><p>El <strong>middleware</strong> es la pieza que hay que entender. Es una función con tres argumentos —<code>req</code>, <code>res</code> y <code>next</code>— que corre <em>antes</em> de tu ruta y puede hacer tres cosas: mirar la petición, modificarla, o cortarla. Si llama a <code>next()</code>, la petición sigue al siguiente eslabón; si responde sin llamarlo, el viaje termina ahí. Parsear el JSON del cuerpo, escribir un log (m4-a25), limitar la cantidad de peticiones (m4-a20) o verificar el token son middlewares. Y el <strong>orden importa</strong>: se ejecutan en el orden en que los declaraste. Si pones la ruta antes del guardia, la ruta queda abierta.</p><p>No necesitas memorizar la sintaxis. Necesitas <strong>reconocer la forma</strong> para auditar lo que la IA escribe: ¿dónde está el guardia?, ¿el cuerpo se parsea antes de leerlo?, ¿el manejador de errores está al final y con cuatro argumentos? Con esas tres preguntas detectas la mayoría de los backends inseguros que se generan solos (m4-a26).</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Es la <strong>terminal de autobuses</strong> de una ciudad. Cada boleto dice un destino, y el destino decide el andén: <code>/platillos</code> sale del andén 3, <code>/pedidos</code> del 5. Eso es el <em>routing</em> de Express: mirar la ruta y mandar la petición con quien le toca.</p><p>Antes de subir, todo pasajero cruza la misma fila de revisiones, en orden: boleto en mano, detector de metales, guardarropa. Si en la primera estación no trae boleto, no llega a la segunda. Cada estación puede dejarte pasar (<code>next()</code>) o devolverte; ese pasillo es el <strong>middleware</strong>, y su orden es la seguridad del edificio. Node, debajo, es el patio con los motores encendidos: la infraestructura que hace que todo se mueva.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Este es un servidor completo de verdad, con las cuatro piezas que siempre vas a encontrar:</p><pre><code>const express = require(\"express\");\nconst app = express();\n\napp.use(express.json());                    // 1. parsea el body JSON\n\napp.use((req, res, next) =&gt; {               // 2. logger\n  console.log(req.method, req.path);\n  next();                                   // sin next() la petición se cuelga\n});\n\nfunction requiereSesion(req, res, next) {   // 3. guardia\n  if (!req.headers.authorization) return res.status(401).json({ error: \"falta token\" });\n  next();\n}\n\napp.get(\"/api/v1/platillos\", async (req, res) =&gt; {   // 4. ruta\n  const platillos = await db.platillos.findMany();\n  res.json(platillos);\n});\n\napp.listen(3000);</code></pre><p>Léelo de arriba abajo como se ejecuta: primero se registra el parser, después el logger, después el guardia y al final la ruta. Si mueves la línea de <code>app.get</code> arriba de <code>requiereSesion</code>, el endpoint queda público y la prueba sigue pasando: el error no se nota hasta que alguien lo encuentra. Ese es el tipo de bug que se audita leyendo el orden, no probando el final.</p><p><strong>Advertencia:</strong> nunca pongas secretos en este archivo. Cadenas de conexión, llaves de servicio y contraseñas van en variables de entorno (m4-a19). Y si ves <code>app.get(\"/admin\", ...)</code> sin ningún middleware de sesión delante, ya encontraste el hueco antes de que lo encuentre otro.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Te paso mi archivo server.js: [pégalo]. No lo reescribas todavía. 1) Explícame en orden qué hace cada línea y en qué orden se ejecutan los middlewares. 2) Marca cada ruta que quede sin verificación de sesión o sin validación de datos, y dime qué riesgo tiene. 3) Revisa si el manejador de errores está al final y con cuatro argumentos. 4) Al terminar, dame la lista de cambios ordenada por gravedad. No agregues dependencias nuevas.\"</p></blockquote><p>Pedir la auditoría antes de la reescritura evita que la IA \"arregle\" el archivo borrando justo el middleware que te protegía.</p>"
+              }
+            ],
+            ejercicios: [
+              {
+                tipo: "relacionar",
+                pares: [
+                  [
+                    "Node.js",
+                    "Ejecuta JavaScript fuera del navegador"
+                  ],
+                  [
+                    "Express",
+                    "Framework de rutas y middleware"
+                  ],
+                  [
+                    "req",
+                    "Trae params, query, body y headers"
+                  ],
+                  [
+                    "res",
+                    "Decide el código de estado y el cuerpo"
+                  ],
+                  [
+                    "next",
+                    "Deja pasar la petición al siguiente eslabón"
+                  ]
+                ]
+              },
+              {
+                tipo: "multiple",
+                pregunta: "¿Qué hace un middleware que responde sin llamar a next()?",
+                opciones: [
+                  "Corta la cadena: la petición no llega a la ruta",
+                  "Duplica la petición para reintentarla",
+                  "La manda al navegador para que la repita",
+                  "La guarda para ejecutarla al final"
+                ],
+                correcta: 0
+              },
+              {
+                tipo: "ordenar",
+                instruccion: "Ordena los eslabones tal como deben declararse en Express:",
+                elementos: [
+                  "express.json() para parsear el cuerpo",
+                  "Logger de peticiones",
+                  "Verificación de sesión",
+                  "La ruta que responde los datos",
+                  "Manejador de errores al final"
+                ]
+              },
+              {
+                tipo: "completar",
+                frase: "En Express, ____ trae lo que llegó en la petición y ____ construye lo que se devuelve; ____ permite que la petición siga al siguiente middleware.",
+                banco: [
+                  "req",
+                  "res",
+                  "next",
+                  "app"
+                ],
+                respuestas: [
+                  "req",
+                  "res",
+                  "next"
+                ]
+              },
+              {
+                tipo: "quehace",
+                codigo: "app.get(\"/api/v1/pedidos/:id\", async (req, res) =&gt; {\n  const pedido = await db.pedidos.findOne(req.params.id);\n  res.json(pedido);\n});",
+                pregunta: "¿Qué le falta a esta ruta antes de considerarla segura?",
+                opciones: [
+                  "Nada, con el id en la ruta ya está protegida",
+                  "Verificar la sesión y que el pedido pertenezca a ese usuario",
+                  "Cambiar get por post",
+                  "Agregar un header Content-Type"
+                ],
+                correcta: 1
+              }
+            ]
+          },
+          {
+            id: "m4-a25",
+            titulo: "Logs: los ojos de tu servidor",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Un <strong>log</strong> es el registro escrito de lo que hizo tu servidor, en orden y con hora. No es el <code>console.log</code> que pusiste para depurar y olvidaste borrar: es la caja negra del sistema. Cuando un cliente dice \"hice mi pedido y no llegó\", el log es lo que te permite responder en dos minutos en vez de en dos horas.</p><p>Lo que sí se registra, en cada petición: el método y la ruta, el código de estado, cuánto tardó, qué usuario lo hizo (su id, nunca su contraseña) y un <strong>identificador de petición</strong> que puedas buscar después. Además, los eventos de negocio que importan —pedido creado, pago rechazado, webhook recibido (m4-a22)— y los errores con su detalle técnico (m4-a26).</p><p>Lo que <strong>nunca</strong> se registra: contraseñas (ni siquiera hasheadas), tokens o JWT completos, cookies, números de tarjeta, identificaciones oficiales, y el cuerpo entero de un formulario \"por si acaso\". La razón es simple y se olvida seguido: los logs se copian a Slack, se mandan a un servicio externo, se conservan meses y los lee más gente de la que puede entrar a la base de datos. Un secreto en un log es un secreto filtrado, aunque nadie lo haya abierto.</p><p>Los <strong>niveles</strong> existen para que puedas filtrar sin leerlo todo. <code>info</code>: pasó lo normal (petición atendida, pedido creado). <code>warn</code>: pasó algo raro pero seguimos (reintento, dato sospechoso, respuesta lenta). <code>error</code>: falló y alguien debe enterarse. <code>debug</code> es para desarrollo y se apaga en producción. Si todo es <em>error</em>, nada es error: la alerta se vuelve ruido y nadie la mira.</p><p>Y el detalle que separa un log útil de una línea inútil: el <strong>contexto</strong>. \"error\" no dice nada. \"Hora exacta, ruta, usuario, identificador de petición, duración y qué se intentaba\" te deja reconstruir la escena. Con ese identificador puedes pedirle al cliente una sola cosa —el folio de su error— y encontrar su caso entre cien mil líneas.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Es la <strong>bitácora del velador</strong>. Cada ronda queda anotada con hora: \"23:40, portón norte, sin novedad\". Cuando a la mañana siguiente alguien pregunta qué pasó, la bitácora responde en segundos: qué ronda, a qué hora, por dónde. Sin hora ni lugar, \"hubo un ruido\" no sirve para nada.</p><p>El velador anota lo normal, lo raro (\"portón entreabierto, lo cerré\") y lo grave (\"se metieron por la bodega\") en la misma libreta, con distinto énfasis: esos son los niveles <em>info</em>, <em>warn</em> y <em>error</em>. Y hay una regla que ningún velador rompe: <strong>jamás escribe la combinación de la caja fuerte en la bitácora</strong>. La libreta la lee el gerente, el de la limpieza y el de la aseguradora; un secreto ahí deja de ser secreto.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Compara dos líneas. La primera es la que se escribe sin pensar, y probablemente sea la más peligrosa de tu proyecto:</p><pre><code>console.log(\"login:\", req.body);\n// {\"correo\":\"ana@correo.mx\",\"password\":\"Taco1234\"}</code></pre><p>La segunda registra lo mismo —que alguien entró— sin guardar la llave de la casa:</p><pre><code>{\"nivel\":\"info\",\"hora\":\"2026-11-24T18:03:12Z\",\"request_id\":\"req_7f2a\",\n \"metodo\":\"PATCH\",\"ruta\":\"/api/v1/pedidos/42\",\"status\":200,\n \"usuario\":\"u_881\",\"duracion_ms\":1240}</code></pre><p>Esa forma se genera sola con un middleware. Nota que el cuerpo nunca se toca: solo se registra lo que necesitas para investigar:</p><pre><code>app.use((req, res, next) =&gt; {\n  const inicio = Date.now();\n  res.on(\"finish\", () =&gt; {\n    console.log(JSON.stringify({\n      nivel: res.statusCode &gt;= 500 ? \"error\" : \"info\",\n      hora: new Date().toISOString(),\n      request_id: req.id,\n      metodo: req.method,\n      ruta: req.originalUrl,\n      status: res.statusCode,\n      usuario: req.usuario?.id || null,\n      duracion_ms: Date.now() - inicio\n    }));\n  });\n  next();\n});</code></pre><p>Y cuando un cliente reporta un fallo, buscas por su <code>request_id</code>: <code>Select-String -Path logs\\app.log -Pattern \"req_7f2a\"</code>. Ahí está la historia completa de esa petición, sin preguntarle nada más.</p><p><strong>Advertencia:</strong> si descubres un token o una contraseña en tus logs, no basta con borrar la línea. El archivo ya se copió, se respaldó o se envió al servicio de monitoreo: trata ese secreto como filtrado y rótalo (m4-a19). Y recuerda que la URL completa, incluida la query (m4-a11), también queda registrada.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Revisa estos logs de mi API: [pega 10 o 15 líneas]. 1) Señala todo dato personal o secreto que aparezca y dime qué tan grave es. 2) Propón un formato JSON único con hora, request_id, método, ruta, status, id de usuario y duración. 3) Escríbeme el middleware de Express que lo genere sin tocar el cuerpo de la petición. 4) Dame una regla de qué sí y qué no loguear en mi negocio, con dos ejemplos de cada lado. No repitas en tu respuesta ningún token que veas en los logs.\"</p></blockquote><p>La última línea es tan importante como el análisis: si pegas logs con secretos en un chat, ya los filtraste.</p>"
+              }
+            ],
+            ejercicios: [
+              {
+                tipo: "multiple",
+                pregunta: "¿Cuál de estos datos NUNCA debe aparecer en un log?",
+                opciones: [
+                  "El código de estado de la respuesta",
+                  "El identificador del usuario",
+                  "La contraseña que llegó en el formulario",
+                  "La duración de la petición"
+                ],
+                correcta: 2
+              },
+              {
+                tipo: "vf",
+                afirmacion: "Si un token aparece en un log, basta con borrar esa línea del archivo para que el problema quede resuelto.",
+                correcta: false,
+                explicacion: "el log ya pudo copiarse, respaldarse o enviarse a un servicio externo: el secreto se considera filtrado y hay que rotarlo (m4-a19)."
+              },
+              {
+                tipo: "relacionar",
+                pares: [
+                  [
+                    "info",
+                    "Petición atendida sin novedad"
+                  ],
+                  [
+                    "warn",
+                    "Reintento o respuesta lenta: algo raro pero seguimos"
+                  ],
+                  [
+                    "error",
+                    "Falló algo y alguien debe enterarse"
+                  ],
+                  [
+                    "request_id",
+                    "Permite encontrar todas las líneas de una misma petición"
+                  ]
+                ]
+              },
+              {
+                tipo: "completar",
+                frase: "Un log sin ____ no sirve: debe decir la hora, la ruta, el usuario y cuánto ____ la operación.",
+                banco: [
+                  "contexto",
+                  "duró",
+                  "contraseña",
+                  "color"
+                ],
+                respuestas: [
+                  "contexto",
+                  "duró"
+                ]
+              },
+              {
+                tipo: "quehace",
+                codigo: "{\"nivel\":\"info\",\"mensaje\":\"login ok\",\"body\":{\"correo\":\"ana@correo.mx\",\"password\":\"Taco1234\"}}",
+                pregunta: "¿Qué problema tiene esta línea de log?",
+                opciones: [
+                  "Ninguno, el login salió bien",
+                  "Registra la contraseña en claro: cualquiera con acceso a los logs la puede leer",
+                  "Le falta el código de estado",
+                  "Debería usar nivel error"
+                ],
+                correcta: 1
+              }
+            ]
+          },
+          {
+            id: "m4-a26",
+            titulo: "Errores: cómo responder cuando algo falla",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>El camino feliz es la mitad del backend. La otra mitad son los errores, y cada uno es una conversación con tres preguntas: qué pasó, de quién es la culpa y qué puede hacer la persona que está enfrente. Una API que responde bien cuando todo sale bien y responde basura cuando algo falla no está terminada.</p><p>En el código, la herramienta es <code>try/catch</code>: envuelves lo que puede fallar y decides qué hacer si falla. Dos trampas frecuentes: <code>try/catch</code> no atrapa una promesa que no esperaste con <code>await</code>, y Express no captura solo los errores de una función <code>async</code> —tienes que envolverla o delegar al manejador central—. Si el error se escapa, el proceso puede caerse y el cliente recibe un <code>500</code> sin explicación.</p><p>El código correcto depende de la causa, no del gusto (m4-a5): <code>400</code> cuando la petición está mal formada o le falta un campo obligatorio; <code>401</code> cuando no sé quién eres; <code>403</code> cuando sé quién eres pero no puedes hacer esto; <code>404</code> cuando el recurso no existe; <code>409</code> cuando choca con el estado actual —correo ya registrado—; <code>422</code> cuando la forma es válida pero los datos no —un correo sin arroba—; <code>429</code> cuando hay demasiadas peticiones (m4-a20); y <code>500</code> cuando falló algo que no esperabas. La confusión clásica es 400 contra 422: si el JSON ni siquiera se puede leer, es 400; si se leyó pero el contenido no cumple las reglas, es 422 (m4-a21).</p><p>Y una sola forma de error para toda la API:</p><pre><code>{\"error\":{\"codigo\":\"correo_invalido\",\n         \"mensaje\":\"Escribe un correo con formato válido, por ejemplo ana@correo.mx\",\n         \"campo\":\"correo\",\n         \"request_id\":\"req_7f2a\"}}</code></pre><p>Mismo envoltorio siempre, para que el cliente programe una vez. El mensaje debe ser <strong>accionable</strong>: \"el correo ya está registrado, ¿quieres iniciar sesión?\" sirve; \"Error 23505\" no. Lo que <strong>nunca</strong> viaja al cliente es el stack trace: el detalle técnico completo —rutas de archivos, versiones, consultas SQL, a veces credenciales de conexión— se queda en el log con su <code>request_id</code> (m4-a25), y al usuario le llega un mensaje seguro con ese folio para que puedas rastrear su caso.</p><p>Si la IA escribe tu backend, el camino feliz va a estar impecable y los errores van a ser un <code>catch</code> que imprime en consola y devuelve <code>500</code> para todo. Revisar eso no requiere programar: requiere leer si los códigos distinguen causas, si el formato es único y si el stack se está escapando por la puerta de enfrente.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Es el <strong>taller mecánico</strong>. Cuando recoges el carro, el mecánico no te pega el escáner completo en el parabrisas: te dice \"se gastaron las balatas, son 800 pesos, está listo a las cinco\". Eso es un mensaje accionable: qué pasó, cuánto cuesta y qué sigue.</p><p>El diagnóstico completo —códigos, voltajes, la ficha con el número de motor— se queda en el <strong>expediente del taller</strong>, donde lo lee quien va a reparar. Si el mecánico te entregara esa hoja, no te ayudaría a manejar: te daría un mapa del taller y de sus puntos flojos. Al cliente, el mensaje claro; al expediente, el detalle.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Así responde una API que no debería existir en producción:</p><pre><code>HTTP/1.1 500 Internal Server Error\nContent-Type: text/html\n\nError: connect ECONNREFUSED 10.0.4.12:5432\n    at Pool.&lt;anonymous&gt; (/app/node_modules/pg/lib/pool.js:14:9)\n    at /app/src/db.js:22:5\n    at processTicksAndRejections (node:internal/process/task_queues:95:5)</code></pre><p>Le acabas de contar al mundo la IP de tu base, el motor que usas, la versión de tu runtime y en qué archivo está el problema. Eso es un mapa para atacar. La misma falla, bien manejada:</p><pre><code>HTTP/1.1 500 Internal Server Error\nContent-Type: application/json\n\n{\"error\":{\"codigo\":\"interno\",\"mensaje\":\"No pudimos completar la operación. Intenta de nuevo en unos minutos.\",\"request_id\":\"req_9c31\"}}</code></pre><p>Y en el log queda todo lo que el cliente no necesita ver. El manejador central de Express se declara al final y con <strong>cuatro</strong> argumentos: si le quitas el cuarto, Express lo trata como middleware normal y nunca lo llama como manejador de errores.</p><pre><code>app.use((err, req, res, next) =&gt; {\n  const id = crypto.randomUUID();\n\n  console.error(JSON.stringify({\n    nivel: \"error\", request_id: id, metodo: req.method, ruta: req.path,\n    usuario: req.usuario?.id || null, mensaje: err.message, stack: err.stack\n  }));\n\n  res.status(err.status || 500).json({\n    error: {\n      codigo: err.codigo || \"interno\",\n      mensaje: err.publico || \"No pudimos completar la operación. Intenta de nuevo.\",\n      request_id: id\n    }\n  });\n});</code></pre><p><strong>Advertencia:</strong> un stack trace en producción no es un detalle de estilo, es una fuga de información. Puede revelar rutas internas, versiones con vulnerabilidades conocidas y hasta la cadena de conexión de la base. Si hoy devuelves <code>err.stack</code> al cliente, quítalo antes de tu próximo deploy, y revisa que el <code>500</code> tampoco incluya el mensaje crudo de la base de datos (m4-a25).</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Voy a estandarizar los errores de mi API. 1) Te paso este handler y estas rutas: [pega]. Dime en qué casos devuelvo un código equivocado y cuál corresponde (400, 401, 403, 404, 409, 422 o 500). 2) Define un formato JSON único de error con codigo, mensaje, campo opcional y request_id. 3) Reescribe los mensajes para que sean accionables para el usuario final, en español claro. 4) Marca cualquier lugar donde hoy se filtre un stack trace o un mensaje crudo de la base, y muévelo al log. 5) Entrégame las pruebas que debo correr para cada caso.\"</p></blockquote><p>Con eso la IA no solo corrige: te deja la lista de verificación para que el siguiente error no vuelva a salir crudo.</p>"
+              }
+            ],
+            ejercicios: [
+              {
+                tipo: "relacionar",
+                pares: [
+                  [
+                    "401",
+                    "No sé quién eres: falta el token o expiró"
+                  ],
+                  [
+                    "403",
+                    "Sé quién eres, pero no puedes hacer esto"
+                  ],
+                  [
+                    "404",
+                    "El recurso que pides no existe"
+                  ],
+                  [
+                    "422",
+                    "Llegó bien formado, pero los datos no son válidos"
+                  ],
+                  [
+                    "500",
+                    "Falló algo inesperado en el servidor"
+                  ]
+                ]
+              },
+              {
+                tipo: "multiple",
+                pregunta: "El usuario manda un correo con formato inválido y todo lo demás correcto. ¿Qué código corresponde?",
+                opciones: [
+                  "400, porque la petición está mal formada",
+                  "422, porque el formato es válido pero el dato no cumple las reglas",
+                  "500, porque el servidor no pudo guardarlo",
+                  "404, porque ese correo no existe"
+                ],
+                correcta: 1
+              },
+              {
+                tipo: "vf",
+                afirmacion: "En producción, el stack trace debe guardarse en el log con un request_id, pero nunca enviarse en la respuesta al cliente.",
+                correcta: true,
+                explicacion: "el detalle sirve para diagnosticar; exponerlo revela rutas, versiones y a veces credenciales de conexión."
+              },
+              {
+                tipo: "completar",
+                frase: "El manejador de errores de Express se declara al ____ y con ____ argumentos; si le falta el último, nunca se ejecuta como tal.",
+                banco: [
+                  "final",
+                  "cuatro",
+                  "inicio",
+                  "dos"
+                ],
+                respuestas: [
+                  "final",
+                  "cuatro"
+                ]
+              },
+              {
+                tipo: "quehace",
+                codigo: "HTTP/1.1 500 Internal Server Error\nContent-Type: application/json\n\n{\"error\":\"SequelizeConnectionError: password authentication failed for user 'postgres' at /app/src/db.js:14\"}",
+                pregunta: "¿Qué está mal en esta respuesta?",
+                opciones: [
+                  "Nada, el 500 es el código correcto",
+                  "El código está bien pero filtra el stack y el usuario de la base: eso va al log, no al cliente",
+                  "Debería ser 401 porque falló la autenticación",
+                  "Le falta el header Location"
+                ],
+                correcta: 1
+              }
+            ]
+          },
+          {
+            id: "m4-a27",
+            titulo: "Documentar tu API para que otros (y tu IA) la entiendan",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Documentar una API es dejar escrito, en un solo lugar, <strong>qué endpoints existen, qué recibe cada uno, qué devuelve, qué errores puede dar y cómo se autentica quien llama</strong>. No es un adorno para la galería: es el contrato de tu sistema (m4-a8) en versión legible para humanos. Sin él, cada persona que quiera usar tu API —otro desarrollador, tu yo de dentro de seis meses o la IA a la que le pidas un cambio— tiene que adivinar leyendo el código.</p><p>El estándar que domina se llama <strong>OpenAPI</strong>: un archivo en YAML o JSON que describe la API de forma que <em>también una máquina la entiende</em>. <strong>Swagger</strong> es el nombre histórico del estándar y hoy el de las herramientas que lo leen: le das tu archivo y te dibuja una página donde cada endpoint aparece con sus campos, sus ejemplos y un botón para probarlo. La diferencia en una línea: <strong>OpenAPI es la especificación; Swagger es el visor</strong>. Y como el archivo es legible por máquinas, sirve a tres consumidores a la vez: la persona que integra, la herramienta que genera la documentación y la IA que va a modificar el código.</p><p>Lo que separa una doc útil de una doc decorativa es justo lo que casi nadie escribe: <strong>los errores y la autenticación</strong>. Que <code>GET /v1/productos</code> devuelva una lista es la mitad del asunto. La otra mitad: qué header hay que mandar, qué pasa si el token expiró, qué código llega si el usuario no tiene permiso, cuántos resultados devuelve como máximo y cómo se pagina. Quien integra no se atora en el caso feliz; se atora en el <code>401</code> que no sabe interpretar (m4-a5).</p><p>Para la IA, la documentación es la diferencia entre ayudarte e <em>inventar</em>. Si le pides \"agrega un filtro por categoría\" sin contexto, va a suponer nombres de campos: escribirá <code>precio</code> cuando tu campo se llama <code>precio_mxn</code>, o <code>clienteId</code> cuando es <code>cliente_id</code>. Si le pegas el <code>openapi.yaml</code>, trabaja sobre los nombres reales y sus respuestas respetan el contrato. Documentar es, en la práctica, darle a la IA el manual del sistema en vez de dejarla adivinar cómo está armado.</p><p><strong>Advertencia:</strong> la documentación casi siempre es pública. Nunca pongas en los ejemplos tokens reales, llaves de servicio, URLs internas ni datos de clientes. Un ejemplo con <code>Authorization: Bearer eyJhbGci...</code> copiado de producción es un secreto publicado con formato de manual (m4-a19). Usa valores falsos y evidentes: <code>Bearer TOKEN_DE_EJEMPLO</code>.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Es el <strong>manual de servicio del taller</strong>. Cuando llevas un coche a un mecánico que no conoce ese modelo, abre el manual: torque de cada tornillo, qué aceite lleva y —lo más útil— la tabla de <strong>códigos de falla</strong>: \"luz 3 = sensor de oxígeno\". Sin manual, el mecánico desarma para descubrir, cobra horas de diagnóstico y a veces rompe una pieza que no estaba mal. Con manual, va directo a la falla. Tu API es el coche y quien la integra es el mecánico: si no le dejas el manual con sus códigos de error, va a desarmar tu sistema a prueba y error, y esas horas las acabas pagando tú.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Una especificación mínima de OpenAPI se ve así. No la escribes a mano: se la pides a la IA y la revisas.</p><pre><code>openapi: 3.0.3\ninfo:\n  title: API Ferretería El Tornillo\n  version: \"1.0.0\"\nservers:\n  - url: https://api.eltornillo.mx/v1\npaths:\n  /productos:\n    get:\n      summary: Lista los productos del catálogo\n      security:\n        - bearerAuth: []\n      parameters:\n        - name: categoria\n          in: query\n          schema: { type: string }\n      responses:\n        \"200\":\n          description: Lista de productos\n        \"401\":\n          description: Token ausente o expirado\n        \"429\":\n          description: Demasiadas peticiones (m4-a20)\ncomponents:\n  securitySchemes:\n    bearerAuth:\n      type: http\n      scheme: bearer\n      bearerFormat: JWT</code></pre><p>Ese archivo, cargado en Swagger UI, se convierte en una página donde puedes probar el endpoint sin escribir código (m4-a12). Para el día a día, la versión corta en Markdown también funciona, y muchas veces comunica mejor:</p><pre><code>## GET /v1/productos\nRequiere: Authorization: Bearer TOKEN_DE_EJEMPLO\nQuery: ?categoria=tornillos&amp;limite=20   (limite máximo: 100)\n\n200 → [{ \"sku\": \"T-104\", \"nombre\": \"Tornillo 1/4\", \"precio_mxn\": 3.5 }]\n401 → { \"error\": \"token_invalido\", \"mensaje\": \"El token expiró, vuelve a iniciar sesión\" }\n429 → { \"error\": \"rate_limit\", \"mensaje\": \"Máximo 60 peticiones por minuto\" }</code></pre><p>Lo importante no es el formato sino la cobertura. Por cada endpoint: método, ruta, autenticación requerida, parámetros, un ejemplo de respuesta feliz y la tabla de errores con sus límites. Si un campo no está ahí, para quien integra no existe.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Tengo estos endpoints: [pega rutas y métodos]. Genera un archivo openapi.yaml en versión 3.0.3 que documente cada uno con: autenticación requerida, parámetros, ejemplo de respuesta 200 y los errores 400, 401, 403, 404, 429 y 500 con su mensaje. Usa exactamente los nombres de campos que aparecen en mi código; si te falta un dato, pregúntame en vez de inventarlo. Al final, dime qué endpoints quedaron incompletos y por qué.\"</p></blockquote><p>La frase \"pregúntame en vez de inventarlo\" es la que evita que tu documentación se vuelva ficción bien formateada.</p>"
+              }
+            ],
+            ejercicios: [
+              {
+                tipo: "multiple",
+                pregunta: "¿Qué es OpenAPI?",
+                opciones: [
+                  "Un archivo que describe tu API y que también pueden leer las máquinas",
+                  "Una base de datos donde se guardan los endpoints",
+                  "Un método HTTP para documentar",
+                  "Un servicio de hosting exclusivo para APIs"
+                ],
+                correcta: 0
+              },
+              {
+                tipo: "vf",
+                afirmacion: "Si tu API funciona bien, documentarla es opcional, porque el código ya dice todo lo necesario.",
+                correcta: false,
+                explicacion: "El código dice cómo está hecho, no cómo se usa. Sin un contrato legible cada integración se vuelve adivinanza, y la IA inventa nombres de campos cuando no tiene la especificación (m4-a8)."
+              },
+              {
+                tipo: "completar",
+                frase: "____ es la especificación que describe los endpoints y ____ la herramienta que la convierte en una página para probarlos.",
+                banco: [
+                  "OpenAPI",
+                  "Swagger",
+                  "Postman",
+                  "REST"
+                ],
+                respuestas: [
+                  "OpenAPI",
+                  "Swagger"
+                ]
+              },
+              {
+                tipo: "relacionar",
+                pares: [
+                  [
+                    "OpenAPI",
+                    "El archivo que describe la API"
+                  ],
+                  [
+                    "Swagger UI",
+                    "La página interactiva para probarla"
+                  ],
+                  [
+                    "securitySchemes",
+                    "La sección que documenta cómo autenticarse"
+                  ],
+                  [
+                    "429 documentado",
+                    "El límite de peticiones explicado a quien integra"
+                  ]
+                ]
+              },
+              {
+                tipo: "quehace",
+                codigo: "responses:\n  \"200\":\n    description: Lista de productos\n  \"401\":\n    description: Token ausente o expirado",
+                pregunta: "¿Qué está declarando este fragmento de OpenAPI?",
+                opciones: [
+                  "Que ese endpoint puede responder con éxito o con un problema de token",
+                  "Que el endpoint solo acepta dos peticiones por minuto",
+                  "Que el endpoint devuelve una lista de tokens",
+                  "Que el endpoint no requiere autenticación"
+                ],
+                correcta: 0
+              }
+            ]
+          },
+          {
+            id: "m4-a28",
+            titulo: "Versionado: cambiar sin romperle a nadie",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Versionar una API es ponerle un número a una promesa: la de que no la vas a romper. Ese número vive en la ruta —<code>/v1/productos</code>, <code>/v2/productos</code>— y significa que mientras alguien llame a <code>/v1</code>, tú te comprometes a responderle con los mismos campos y el mismo significado. Cuando necesitas cambiar algo que rompe esa promesa, no lo cambias: abres <code>/v2</code> y dejas las dos versiones conviviendo el tiempo necesario.</p><p>Un cambio es <strong>compatible</strong> cuando un cliente que ya funcionaba sigue funcionando sin tocar una línea: agregar un campo nuevo a la respuesta, agregar un endpoint, aceptar un parámetro opcional, sumar un valor a un filtro. Es <strong>incompatible</strong> todo lo que altera lo que el cliente ya recibía: borrar o renombrar un campo, cambiar su tipo (de número a texto), cambiar su significado, volver obligatorio un campo que era opcional, cambiar un código de estado o el formato de una fecha. La regla corta: <strong>agregar es barato, quitar es caro</strong>.</p><p>¿Por qué no borrar un campo \"que ya nadie usa\"? Porque no controlas a todos los que lo leen. Hay un frontend que se actualiza cuando quiere, apps móviles que viven meses en teléfonos sin actualizar, integraciones de terceros que no sabes que existen y scripts de alguien que corre cada noche. El error clásico: renombrar <code>total</code> a <code>total_mxn</code> un martes en la tarde. Tus pruebas pasan; el teléfono de un cliente falla tres días después y nadie relaciona una cosa con la otra.</p><p>De ahí el <strong>periodo de convivencia</strong>: <code>/v1</code> y <code>/v2</code> funcionan a la vez durante semanas o meses. Anuncias la fecha de retiro en un changelog, por correo y —sobre todo— en la respuesta misma, con los headers <code>Deprecation</code> y <code>Sunset</code>. Mides en los logs cuántas peticiones siguen entrando a <code>/v1</code> (m4-a25) y solo lo apagas cuando ese número llega a cero. Noventa días es un mínimo razonable para una API pública.</p><p>Y no es solo para terceros: <strong>tu propio frontend es un cliente</strong>. Cuando la app que tú mismo hiciste empieza a mostrar precios vacíos después de un deploy, casi siempre es un cambio que se hizo \"directo en producción\" sin versión ni aviso.</p><p><strong>Advertencia:</strong> los cambios incompatibles no fallan con alarma. Fallan en silencio del lado de quien te consume: pantallas vacías, cobros mal calculados, integraciones que dejan de sincronizar. Si vas a cambiar o quitar un campo que ya devuelves, trátalo como un <code>DELETE</code> sin <code>WHERE</code> (m4-b12): primero mides a quién afecta, luego avisas, y solo después apagas.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Es una <strong>obra vial con carril provisional</strong>. No puedes cerrar la carretera para ponerle asfalto nuevo: hay gente que la usa todos los días. Entonces construyes la vialidad nueva al lado (<code>/v2</code>), dejas la vieja abierta con sus señalamientos intactos (<code>/v1</code>) y pones letreros con fecha: \"esta ruta cierra el 31 de marzo, use la nueva\". Nadie quita el puente el día que inaugura el otro: lo quita cuando el conteo de autos dice que ya nadie lo cruza. Si lo cierras antes, los que venían por la vieja se estrellan contra las vallas.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Así se ve un cambio incompatible hecho bien. En <code>/v1</code>, <code>total</code> es un número:</p><pre><code>GET /v1/pedidos/42\n\n{\n  \"id\": 42,\n  \"cliente\": \"Ana\",\n  \"total\": 350\n}</code></pre><p>En <code>/v2</code> el negocio ya necesita moneda y datos de contacto, así que <code>total</code> cambia de forma y <code>cliente</code> deja de ser texto:</p><pre><code>GET /v2/pedidos/42\n\n{\n  \"id\": 42,\n  \"cliente\": { \"nombre\": \"Ana\", \"telefono\": \"555-1234\" },\n  \"total\": { \"monto\": 350, \"moneda\": \"MXN\" }\n}</code></pre><p>Ese cambio <strong>rompe</strong> a cualquiera que haga <code>pedido.total * 1.16</code>: ahora <code>total</code> es un objeto. Por eso vive en otra versión. Cuando anuncias el retiro, lo dices en la respuesta misma:</p><pre><code>HTTP/1.1 200 OK\nDeprecation: true\nSunset: Wed, 31 Mar 2027 23:59:59 GMT\nLink: &lt;https://api.eltornillo.mx/v2/pedidos/42&gt;; rel=\"successor-version\"</code></pre><p>Mientras tanto, agregar <code>telefono</code> como campo nuevo dentro de <code>/v1</code> habría sido compatible y no obligaba a versionar nada. La versión se paga solo cuando el cambio de verdad rompe; usarla para cada detalle la vuelve ruido.</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Voy a cambiar mi API así: [describe el cambio]. Dime si es compatible o incompatible con los clientes actuales y por qué. Si es incompatible, propón el plan completo: qué va en /v2, qué se queda en /v1, cuánto dura la convivencia, qué headers Deprecation y Sunset pongo con fecha concreta, qué texto va en el changelog y qué debo medir en los logs para saber cuándo apagar /v1 con seguridad.\"</p></blockquote><p>Pídele también que te liste qué clientes podrían romperse: el frontend, una app móvil, un webhook (m4-a22) o una hoja de cálculo conectada. Ahí aparecen los que se te olvidan.</p>"
+              }
+            ],
+            ejercicios: [
+              {
+                tipo: "multiple",
+                pregunta: "¿Cuál de estos cambios es incompatible con tus clientes actuales?",
+                opciones: [
+                  "Agregar un campo nuevo a la respuesta",
+                  "Renombrar el campo total por total_mxn",
+                  "Agregar un endpoint nuevo",
+                  "Agregar un parámetro de query opcional"
+                ],
+                correcta: 1
+              },
+              {
+                tipo: "relacionar",
+                pares: [
+                  [
+                    "Agregar un campo nuevo al response",
+                    "Compatible"
+                  ],
+                  [
+                    "Borrar un campo que ya devolvías",
+                    "Incompatible"
+                  ],
+                  [
+                    "Agregar un endpoint nuevo",
+                    "Compatible"
+                  ],
+                  [
+                    "Cambiar total de número a texto",
+                    "Incompatible"
+                  ]
+                ]
+              },
+              {
+                tipo: "vf",
+                afirmacion: "Puedes apagar /v1 el mismo día que publicas /v2 si lo avisaste en redes sociales.",
+                correcta: false,
+                explicacion: "El aviso no alcanza a quien no lo lee. La convivencia existe para migrar y medir: sin headers Sunset, sin changelog y sin revisar los logs, apagar /v1 rompe a quien todavía lo usa (m4-a25)."
+              },
+              {
+                tipo: "completar",
+                frase: "La versión viaja en la ____ de la ruta, el aviso se manda en el header ____ y la fecha de apagado en ____.",
+                banco: [
+                  "URL",
+                  "Deprecation",
+                  "Sunset",
+                  "CORS"
+                ],
+                respuestas: [
+                  "URL",
+                  "Deprecation",
+                  "Sunset"
+                ]
+              },
+              {
+                tipo: "ordenar",
+                instruccion: "Ordena los pasos para retirar una versión sin romperle a nadie:",
+                elementos: [
+                  "Publicar /v2 con el cambio",
+                  "Anunciar la fecha con los headers Deprecation y Sunset",
+                  "Medir cuántos clientes siguen llamando /v1",
+                  "Migrar o avisar a los que quedan",
+                  "Apagar /v1 cuando el tráfico sea cero"
+                ]
+              }
+            ]
+          },
+          {
+            id: "m4-a29",
+            titulo: "Seguridad: las 5 fallas que más dinero cuestan",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Hay cinco fallas que se repiten en casi todas las historias de datos filtrados, cobros duplicados y noches sin dormir. No son ataques sofisticados de película: son descuidos de configuración con consecuencias caras. Estas son, en orden de frecuencia:</p><ul><li><strong>Secretos en el código o en el repositorio.</strong> Una llave de servicio pegada en el frontend, en un commit o en un <code>.env</code> que sí se subió. En cuanto toca un repo público, bots lo escanean y en minutos alguien ya la está usando (m4-a19).</li><li><strong>RLS o permisos mal configurados.</strong> La base con RLS apagado o con una política <code>using (true)</code>: con la llave pública del frontend cualquiera lee toda la tabla, con teléfonos y direcciones incluidos (m4-b22).</li><li><strong>Inyección SQL.</strong> Si pegas lo que escribe el usuario dentro de la consulta, ese usuario puede escribir instrucciones. Un <code>' OR '1'='1</code> en un login mal hecho devuelve la tabla completa (m4-a21).</li><li><strong>Autenticación débil.</strong> Contraseñas sin hash, login sin límite de intentos, tokens que nunca expiran, una sola contraseña compartida por todo el equipo (m4-a16, m4-a17, m4-a20).</li><li><strong>Falta de respaldos.</strong> No es un hack: es un <code>DELETE</code> sin <code>WHERE</code> (m4-b12), una migración que sale mal (m4-b19) o un proveedor que se cae. Sin copia, el incidente se vuelve permanente (m4-b20).</li></ul><p>Cuatro de las cinco son <strong>configuración</strong>, no código: se detectan revisando, no programando. Y las cinco comparten el mismo patrón: el sistema hizo exactamente lo que le pediste, pero le pediste algo abierto.</p><p><strong>Advertencia:</strong> estas fallas no se prueban en producción. Para saber si tu tabla está expuesta, abre una ventana de incógnito con la llave pública (<code>anon</code>) y consulta: si ves filas de otros usuarios, ya está abierta y cada minuto cuenta. Si una llave se filtró, <strong>no basta borrar el archivo ni el commit</strong>: hay que <strong>rotarla</strong> —revocarla y emitir otra—, porque el historial de Git conserva el commit anterior y los bots ya se llevaron una copia. Y antes de \"arreglar\" nada en la base, confirma que el respaldo del día existe (m4-b20).</p><p>¿Por qué te importa si tú diriges y no programas? Porque estas cinco preguntas son las que te va a hacer un cliente grande, un auditor o tu aseguradora antes de firmar. Y porque ninguna IA te va a decir \"oye, tu RLS está apagado\" si tú no se lo preguntas.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Es la <strong>ronda de cierre de la casa antes de un viaje largo</strong>. Revisas cinco puntos: la llave escondida en la maceta (el secreto en el repo), la ventana del baño que nadie cerró con pasador (RLS apagado), la libreta de visitas donde cualquiera escribe su nombre y, si agrega \"y de paso abre la bodega\", el guardia obediente lo hace (inyección), la cerradura de perilla que se abre con una tarjeta de plástico (autenticación débil) y la carpeta de escrituras y fotos que no tiene copia en ningún lado (respaldos). Los ladrones no buscan la puerta más difícil: prueban las cinco fáciles. Y el guardia no es tonto; está haciendo caso de una instrucción que nadie separó del dato.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>La falla número tres, en su forma más común:</p><pre><code>// VULNERABLE: el texto del usuario se pega dentro de la consulta\nconst sql = \"SELECT * FROM clientes WHERE email = '\" + email + \"'\";\nawait db.query(sql);</code></pre><p>Si <code>email</code> llega como <code>' OR '1'='1</code>, la consulta final queda así:</p><pre><code>SELECT * FROM clientes WHERE email = '' OR '1'='1'</code></pre><p>Y <code>'1'='1'</code> siempre es verdad: devuelve <strong>todos</strong> los clientes. La versión segura separa el dato de la instrucción:</p><pre><code>// SEGURO: la consulta es fija y el dato viaja aparte\nconst sql = \"SELECT * FROM clientes WHERE email = $1\";\nawait db.query(sql, [email]);</code></pre><p>Con parámetros, <code>' OR '1'='1</code> se busca como texto literal y no encuentra a nadie. La misma idea aplica en Supabase: no armes filtros concatenando strings (m4-a21).</p><p>La falla número dos se ve así en SQL:</p><pre><code>alter table pedidos enable row level security;\n\n-- Sin políticas, nadie ve nada.\n-- Con esta política, todos ven todo:\ncreate policy \"todos_ven_todo\" on pedidos\n  for select using (true);</code></pre><p>Encender RLS no es suficiente: hay que escribir la política que compara la fila con el usuario. Y la número uno, en su versión más silenciosa:</p><pre><code>// Mal: la llave de servicio dentro del código\nconst SERVICE_KEY = \"eyJhbGciOiJIUzI1NiIsInR5cCI6...\";</code></pre><p>Bien: la llave vive en una variable de entorno del servidor, el archivo <code>.env</code> está en <code>.gitignore</code> y el frontend nunca la ve (m4-a19).</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Audita mi proyecto contra estas cinco fallas: secretos en el código o en el historial de Git, RLS o permisos mal configurados, inyección SQL en mis consultas, autenticación débil y respaldos inexistentes. Para cada una dime: si estoy expuesto, la evidencia exacta (archivo, línea o consulta), qué tan grave es en una escala de 1 a 5, el arreglo paso a paso y cómo compruebo que quedó cerrada. No me muestres llaves completas: nómbralas por ubicación. Si algo requiere tocar producción, dime primero qué respaldo debo verificar.\"</p></blockquote><p>Ese prompt te da un informe de auditoría, no un susto. Y la última frase evita que el arreglo se convierta en el segundo incidente.</p>"
+              }
+            ],
+            ejercicios: [
+              {
+                tipo: "multiple",
+                pregunta: "Tu tabla pedidos tiene RLS apagado y el frontend usa la llave pública anon. ¿Qué puede hacer alguien con esa llave?",
+                opciones: [
+                  "Nada: la llave anon no tiene permisos por sí sola",
+                  "Leer y posiblemente modificar todas las filas de la tabla",
+                  "Solo ver la estructura de la tabla, no los datos",
+                  "Solo entrar si adivina la contraseña del administrador"
+                ],
+                correcta: 1
+              },
+              {
+                tipo: "relacionar",
+                pares: [
+                  [
+                    "Llave de servicio dentro de app.js",
+                    "Secreto filtrado"
+                  ],
+                  [
+                    "RLS apagado con llave anon",
+                    "Tabla completa expuesta"
+                  ],
+                  [
+                    "\"SELECT ... WHERE id = \" + id",
+                    "Inyección SQL"
+                  ],
+                  [
+                    "Login sin límite de intentos",
+                    "Autenticación débil"
+                  ],
+                  [
+                    "Nunca probar una restauración",
+                    "Respaldo que no sirve"
+                  ]
+                ]
+              },
+              {
+                tipo: "vf",
+                afirmacion: "Si borras el commit donde subiste una llave secreta, la llave queda segura.",
+                correcta: false,
+                explicacion: "El historial de Git conserva el commit y los bots ya copiaron la llave. La única salida es rotarla: revocarla y emitir otra (m4-a19)."
+              },
+              {
+                tipo: "completar",
+                frase: "Las consultas ____ mantienen la instrucción fija y mandan el dato aparte, que es la defensa contra la ____ SQL.",
+                banco: [
+                  "parametrizadas",
+                  "inyección",
+                  "concatenadas",
+                  "réplica"
+                ],
+                respuestas: [
+                  "parametrizadas",
+                  "inyección"
+                ]
+              },
+              {
+                tipo: "quehace",
+                codigo: "const sql = \"SELECT * FROM clientes WHERE email = '\" + email + \"'\";\nawait db.query(sql);",
+                pregunta: "Si email llega con el valor ' OR '1'='1, ¿qué devuelve la consulta?",
+                opciones: [
+                  "Ningún cliente",
+                  "Todos los clientes de la tabla",
+                  "Un error de sintaxis",
+                  "Solo el cliente cuyo email es literalmente ' OR '1'='1"
+                ],
+                correcta: 1
+              }
+            ]
+          },
+          {
+            id: "m4-a30",
+            titulo: "Repaso integrador del servidor (mega-quiz jugable)",
+            proximamente: false,
+            secciones: [
+              {
+                tipo: "concepto",
+                titulo: "Concepto",
+                html: "<p>Treinta lecciones después, BCK-401 ya no es una lista de temas: es un recorrido. Este repaso te lo devuelve en un solo mapa —<strong>reconocer, no memorizar</strong>:</p><ul><li><strong>La conversación</strong> — HTTP como diálogo, métodos, códigos, headers y body (m4-a3 a m4-a7). Una petición es una frase con verbo, destinatario y contenido.</li><li><strong>El diseño</strong> — API, REST, endpoints y parámetros (m4-a8 a m4-a11), más el versionado (m4-a28): qué ofreces y con qué reglas.</li><li><strong>La puerta</strong> — autenticación, tokens, autorización, contraseñas y sesiones (m4-a13 a m4-a17): quién eres y qué puedes hacer.</li><li><strong>El blindaje</strong> — CORS, secretos, rate limiting, validación e inyección (m4-a18 a m4-a21, m4-a29): lo que evita que el sistema haga lo que no debe.</li><li><strong>La operación</strong> — webhooks, serverless, Express, logs, errores y documentación (m4-a22 a m4-a27): cómo se mantiene vivo y entendible.</li><li><strong>Los datos</strong> — RLS y respaldos (m4-b22, m4-b20): la última línea, donde un error cuesta todo.</li></ul><p>Cada bloque responde una pregunta distinta sobre el mismo viaje: ¿qué entra? (HTTP), ¿a dónde llega? (endpoints), ¿quién puede entrar? (autenticación), ¿qué se le permite hacer? (autorización y RLS), ¿qué pasa cuando falla? (errores y logs), ¿cómo lo entiende el siguiente? (documentación y versiones) y ¿qué pasa si se pierde? (respaldos).</p><p>El mega-quiz de abajo no te pide definir términos. Te pone situaciones: un <code>401</code> intermitente, un pedido duplicado, un campo que desapareció, una consulta que tarda. Diagnosticar es la habilidad real del módulo: la IA escribe el arreglo; tú decides qué arreglar y cómo comprobar que quedó bien.</p><p>Si resuelves los 8 ejercicios sin ayuda, ya sabes dirigir un backend. No memorizaste Express: sabes leer el sistema y hacer las preguntas correctas.</p>"
+              },
+              {
+                tipo: "analogia",
+                titulo: "Analogía",
+                html: "<p>Es la <strong>red de agua de una ciudad</strong> en un día de mantenimiento. La planta potabilizadora es el servidor; cada toma con medidor es un endpoint; el contrato del medidor es la autenticación (solo pasa agua a quien tiene cuenta) y el reglamento de uso es la autorización. El filtro de la toma es la validación: atrapa lo que no debe pasar. El regulador de presión es el rate limiting: sin él, alguien abre diez llaves y deja sin agua a la colonia entera. Las cámaras y el libro de bitácora son los logs; el plano de la red es la documentación; cambiar una tubería sin dejar sin agua al barrio es el versionado; el rondín de fugas es la auditoría de las cinco fallas; y la cisterna de reserva son los respaldos, cuyo valor solo descubres el día que se corta la línea principal. Cuando hay una fuga, el buen ingeniero no abre más la llave: cierra la sección, mide la presión y consulta el plano.</p>"
+              },
+              {
+                tipo: "practica",
+                titulo: "Cómo se ve en la práctica",
+                html: "<p>Un caso completo, del tipo que llega por WhatsApp un viernes a las 6 de la tarde:</p><blockquote><p>\"Se duplicaron 12 pedidos ayer, algunos clientes ven pedidos que no son suyos, y tres personas dicen que las saca la sesión cada rato.\"</p></blockquote><p>Tres síntomas, tres lugares distintos. El diagnóstico va del más grave al más molesto:</p><ol><li><strong>Primero, los datos ajenos.</strong> Si alguien ve pedidos de otro, es permisos, no suerte. Revisa RLS (m4-b22) y que el endpoint filtre por el usuario del token, no por un <code>cliente_id</code> que llega en la URL (m4-a15). Prueba con dos cuentas distintas, no con una.</li><li><strong>Luego, los duplicados.</strong> Casi siempre es un reintento: el celular perdió la respuesta, volvió a mandar el <code>POST</code> y el servidor lo trató como nuevo. Se arregla con idempotencia: el cliente manda una <code>Idempotency-Key</code> y el servidor no crea dos veces el mismo pedido (m4-a4, m4-a10).</li><li><strong>Al final, las sesiones caídas.</strong> Un token que expira en 15 minutos sin refresh, un <code>exp</code> mal calculado o varios servidores con secretos distintos (m4-a17, m4-a19).</li><li><strong>Antes de tocar nada:</strong> confirma el respaldo del día (m4-b20). Un diagnóstico que borra evidencia no sirve.</li></ol><p>Los logs te dicen cuál es cuál:</p><pre><code>2026-11-20T18:04:12Z POST /v1/pedidos 201 312ms cliente:88\n2026-11-20T18:04:13Z POST /v1/pedidos 201 289ms cliente:88\n2026-11-20T18:05:41Z GET  /v1/pedidos 401  12ms token:expirado\n2026-11-20T18:05:42Z GET  /v1/pedidos 401  10ms token:expirado</code></pre><p>Dos <code>POST</code> con un segundo de diferencia: eso no es doble clic, es reintento. Los <code>401</code> en ráfaga son el token venciendo sin refresh. Y no aparece ni un <code>403</code>: el problema de datos ajenos no está en la autenticación, está en los permisos; por eso la revisión empieza en RLS y no en el login (m4-a5). Para medir el alcance: <code>select cliente_id, count(*) from pedidos group by cliente_id order by count desc limit 5;</code> — si un cliente acumula 12 pedidos en la misma hora, ahí está el patrón (m4-b15).</p>"
+              },
+              {
+                tipo: "prompt",
+                titulo: "Díselo a la IA",
+                html: "<blockquote><p>\"Actúa como examinador de mi módulo de backend (BCK-401). Hazme un examen de 8 preguntas sobre HTTP, APIs, autenticación, autorización, RLS, rate limiting, validación, errores, documentación, versionado y respaldos. Una a la vez, sin darme opciones: yo respondo libre y tú no corriges hasta el final. Al terminar, dame una tabla con: pregunta, si acerté, qué me faltó y a qué lección exacta de BCK-401 debo volver (por ejemplo m4-a15 o m4-b22). Empieza por la pregunta 1.\"</p></blockquote><p>La última columna es la que vale: no un porcentaje, una ruta de regreso a la lección que te falta.</p>"
+              }
+            ],
+            ejercicios: [
+              {
+                tipo: "multiple",
+                pregunta: "Un celular pierde la respuesta y reintenta el POST. Se crearon dos pedidos. ¿Qué falta?",
+                opciones: [
+                  "Un código 404 en la respuesta",
+                  "Idempotencia: que el mismo POST repetido no cree dos recursos",
+                  "El header CORS",
+                  "Un Content-Type distinto"
+                ],
+                correcta: 1
+              },
+              {
+                tipo: "completar",
+                frase: "La ____ prueba quién eres y la ____ decide qué puedes ver; en Supabase, esa segunda capa se implementa con ____.",
+                banco: [
+                  "autenticación",
+                  "autorización",
+                  "RLS",
+                  "CORS"
+                ],
+                respuestas: [
+                  "autenticación",
+                  "autorización",
+                  "RLS"
+                ]
+              },
+              {
+                tipo: "relacionar",
+                pares: [
+                  [
+                    "401",
+                    "No demostró quién es"
+                  ],
+                  [
+                    "403",
+                    "Sí es quien dice, pero no puede"
+                  ],
+                  [
+                    "RLS",
+                    "Permisos fila por fila en la base"
+                  ],
+                  [
+                    "OpenAPI",
+                    "El contrato legible de la API"
+                  ],
+                  [
+                    "Sunset",
+                    "La fecha en que una versión deja de existir"
+                  ]
+                ]
+              },
+              {
+                tipo: "vf",
+                afirmacion: "Un 403 y un 401 significan lo mismo: el usuario no está registrado.",
+                correcta: false,
+                explicacion: "401 es \"no sé quién eres\" (falta o falló la credencial); 403 es \"sé quién eres y no tienes permiso\". Confundirlos manda a depurar el login cuando el problema es de permisos (m4-a5, m4-a15)."
+              },
+              {
+                tipo: "ordenar",
+                instruccion: "Ordena el viaje de una petición autenticada que crea un pedido:",
+                elementos: [
+                  "El navegador manda la petición con el token en Authorization",
+                  "El servidor valida el token y obtiene el id del usuario",
+                  "El servidor revisa si ese usuario tiene permiso para la acción",
+                  "Se valida el body contra el esquema esperado",
+                  "La base aplica RLS y devuelve solo las filas permitidas",
+                  "El servidor responde 201 con el recurso creado"
+                ]
+              },
+              {
+                tipo: "quehace",
+                codigo: "const { data, error } = await supabase\n  .from(\"pedidos\")\n  .select(\"*\")\n  .eq(\"cliente_id\", user.id);",
+                pregunta: "¿Qué protege realmente que un usuario no vea pedidos ajenos?",
+                opciones: [
+                  "Nada: el .eq solo filtra la consulta que tú escribiste",
+                  "El .eq y, sobre todo, una política de RLS que compare cliente_id con auth.uid()",
+                  "El token JWT, porque viaja cifrado",
+                  "La llave anon, porque es privada"
+                ],
+                correcta: 1
+              },
+              {
+                tipo: "multiple",
+                pregunta: "Encuentras la llave service_role en un repositorio público. ¿Qué haces primero?",
+                opciones: [
+                  "Borrar el archivo y seguir trabajando",
+                  "Rotar la llave (revocarla y emitir otra) y revisar qué se accedió",
+                  "Cambiarle el nombre al archivo",
+                  "Nada: si el repo es público, la llave ya es pública pero no sirve"
+                ],
+                correcta: 1
+              },
+              {
+                tipo: "multiple",
+                pregunta: "Necesitas que total pase de número a objeto {monto, moneda}. ¿Qué haces?",
+                opciones: [
+                  "Cambiarlo en /v1 y avisar por correo",
+                  "Publicar /v2 con el nuevo formato y mantener /v1 con fecha de apagado",
+                  "Agregar el campo moneda y listo",
+                  "Borrar total y que cada cliente lo calcule"
+                ],
+                correcta: 1
+              }
+            ]
+          },
       ] },
       "b": { nombre: "Bases de datos", codigo: "DAT-402", icono: "🗄", lecciones: [
           { id: "m4-b1", titulo: "¿Qué es una base de datos? (y por qué no es un Excel grande)", proximamente: true },
